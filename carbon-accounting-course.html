@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carbon Accounting — A Guided Course</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f7faf5;
+  --surface2: #eef3eb;
+  --card: #f2f7f0;
+  --border: #d4ddd0;
+  --text: #1a2318;
+  --text-muted: #5a6a54;
+  --accent: #2d8a1e;
+  --accent-dim: #3a9e2a;
+  --accent-glow: rgba(45, 138, 30, 0.1);
+  --warm: #b8880a;
+  --warm-dim: #d4a012;
+  --coral: #d4603a;
+  --blue: #2a7ab5;
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'Instrument Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  position: sticky; top: 52px; z-index: 100;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+}
+.progress-inner {
+  max-width: 760px; margin: 0 auto; padding: 0 1.5rem;
+  display: flex; gap: 6px;
+}
+.prog-dot {
+  flex: 1; height: 4px; border-radius: 2px;
+  background: var(--border); transition: background 0.4s;
+}
+.prog-dot.done { background: var(--accent); }
+.prog-dot.active { background: var(--accent); animation: pulse 2s infinite; }
+.l2-active .prog-dot.done, .l2-active .prog-dot.active { background: var(--warm); }
+.l3-active .prog-dot.done, .l3-active .prog-dot.active { background: var(--blue); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+/* NAV */
+.course-nav {
+  position: sticky; top: 0; left: 0; right: 0; z-index: 999;
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 32px; display: flex; align-items: center; gap: 24px;
+}
+.course-nav .logo { font-family: var(--font-display); font-size: 18px; color: var(--accent); white-space: nowrap; }
+.course-nav .logo span { color: var(--text-muted); font-size: 14px; font-family: var(--font-body); margin-left: 8px; }
+.level-tabs { display: flex; gap: 4px; margin-left: auto; }
+.level-tab {
+  padding: 6px 16px; border-radius: 6px; cursor: pointer;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
+  background: transparent; color: var(--text-muted); border: 1px solid transparent;
+  transition: all 0.3s;
+}
+.level-tab:hover { color: var(--text); background: var(--surface2); }
+.level-tab.active { background: var(--accent-dim); color: var(--text); border-color: var(--accent); }
+.level-tab.completed { background: transparent; color: var(--accent); border-color: var(--accent-dim); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  padding: 120px 48px 80px;
+  background: radial-gradient(ellipse at 30% 50%, rgba(124,204,92,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(232,200,74,0.04) 0%, transparent 50%);
+  position: relative;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+}
+.hero-tag {
+  font-family: var(--font-mono); font-size: 13px; color: var(--accent);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--accent); }
+.hero h1 {
+  font-family: var(--font-display); font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.1; color: var(--text); max-width: 800px; margin-bottom: 24px;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-sub {
+  font-size: 18px; color: var(--text-muted); max-width: 560px; margin-bottom: 40px;
+}
+.start-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 32px; background: var(--accent); color: var(--bg);
+  font-weight: 700; font-size: 15px; border: none; border-radius: 8px;
+  cursor: pointer; transition: all 0.3s; position: relative; z-index: 1;
+}
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); }
+
+/* SECTIONS */
+.level-section { display: none; padding: 100px 0 80px; }
+.level-section.active { display: block; }
+.container { max-width: 820px; margin: 0 auto; padding: 0 32px; }
+
+.level-header {
+  padding: 40px 0 60px; text-align: center;
+  border-bottom: 1px solid var(--border); margin-bottom: 60px;
+}
+.level-header .level-number {
+  font-family: var(--font-mono); font-size: 13px; color: var(--accent);
+  letter-spacing: 0.2em; text-transform: uppercase;
+}
+.level-header h2 {
+  font-family: var(--font-display); font-size: 36px; margin: 12px 0 16px;
+}
+.level-header .time-est {
+  font-size: 14px; color: var(--text-muted);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+/* MODULES */
+.module {
+  margin-bottom: 64px; padding-bottom: 64px;
+  border-bottom: 1px solid var(--border);
+}
+.module:last-child { border-bottom: none; }
+.module-number {
+  font-family: var(--font-mono); font-size: 12px; color: var(--accent-dim);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;
+}
+.module h3 {
+  font-family: var(--font-display); font-size: 28px; margin-bottom: 20px;
+}
+.module p { color: var(--text-muted); margin-bottom: 20px; }
+.module p strong { color: var(--text); font-weight: 600; }
+
+/* ANALOGY BOX */
+.analogy {
+  background: linear-gradient(135deg, rgba(124,204,92,0.08), rgba(124,204,92,0.02));
+  border: 1px solid var(--accent-dim);
+  border-radius: 12px; padding: 24px 28px; margin: 28px 0;
+  position: relative;
+}
+.analogy::before {
+  content: '💡'; position: absolute; top: -14px; left: 20px;
+  background: var(--bg); padding: 0 8px; font-size: 20px;
+}
+.analogy .label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;
+}
+.analogy p { color: var(--text); margin-bottom: 0; font-size: 16px; }
+
+/* EXAMPLE BOX */
+.example-box {
+  background: var(--surface);
+  border: 1px solid var(--border); border-left: 3px solid var(--warm);
+  border-radius: 8px; padding: 24px 28px; margin: 28px 0;
+}
+.example-box .label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--warm);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px;
+}
+.example-box p { margin-bottom: 8px; }
+.example-box p:last-child { margin-bottom: 0; }
+
+/* DIAGRAM */
+.diagram-wrap {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 32px; margin: 32px 0; overflow-x: auto;
+}
+.diagram-wrap .label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 20px;
+}
+.scope-diagram { display: flex; flex-direction: column; gap: 16px; }
+.scope-row {
+  display: flex; align-items: stretch; gap: 12px; min-height: 72px;
+}
+.scope-label {
+  min-width: 110px; padding: 12px 16px; border-radius: 8px;
+  font-weight: 700; font-size: 14px; display: flex; flex-direction: column;
+  justify-content: center; flex-shrink: 0;
+}
+.scope-label small { font-weight: 400; font-size: 11px; opacity: 0.8; margin-top: 2px; }
+.scope-1 .scope-label { background: var(--accent); color: var(--bg); }
+.scope-2 .scope-label { background: var(--warm); color: var(--bg); }
+.scope-3 .scope-label { background: var(--coral); color: #fff; }
+.scope-items {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; flex: 1;
+}
+.scope-item {
+  padding: 8px 14px; background: var(--card); border: 1px solid var(--border);
+  border-radius: 6px; font-size: 13px; color: var(--text-muted);
+}
+
+/* INTERACTIVE QUIZ */
+.quiz-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 32px; margin: 32px 0;
+}
+.quiz-card .label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--blue);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px;
+}
+.quiz-card .question {
+  font-family: var(--font-display); font-size: 20px; margin-bottom: 20px;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt {
+  padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px;
+  cursor: pointer; transition: all 0.3s; background: var(--surface2);
+  font-size: 15px; color: var(--text-muted);
+}
+.quiz-opt:hover { border-color: var(--accent-dim); color: var(--text); }
+.quiz-opt.correct { border-color: var(--accent); background: rgba(124,204,92,0.1); color: var(--accent); }
+.quiz-opt.wrong { border-color: var(--coral); background: rgba(232,124,92,0.1); color: var(--coral); }
+.quiz-opt.disabled { pointer-events: none; }
+.quiz-feedback {
+  margin-top: 16px; padding: 16px; border-radius: 8px; display: none;
+  font-size: 15px; line-height: 1.6;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct-fb { background: rgba(124,204,92,0.08); border: 1px solid var(--accent-dim); color: var(--accent); }
+.quiz-feedback.wrong-fb { background: rgba(232,124,92,0.08); border: 1px solid rgba(232,124,92,0.3); color: var(--coral); }
+
+/* CHECKPOINT */
+.checkpoint {
+  text-align: center; padding: 48px 32px; margin: 48px 0;
+  background: radial-gradient(ellipse at center, var(--accent-glow), transparent 70%);
+  border-radius: 16px;
+}
+.checkpoint h4 { font-family: var(--font-display); font-size: 24px; margin-bottom: 12px; }
+.checkpoint p { color: var(--text-muted); margin-bottom: 24px; }
+.checkpoint-btn {
+  padding: 14px 32px; background: var(--accent); color: var(--bg);
+  font-weight: 700; font-size: 15px; border: none; border-radius: 8px;
+  cursor: pointer; transition: all 0.3s;
+}
+.checkpoint-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); }
+
+/* DRAG-DROP EXERCISE */
+.drag-exercise { margin: 32px 0; }
+.drag-exercise .label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--warm);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px;
+}
+.drag-bank {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+  padding: 16px; background: var(--surface2); border-radius: 8px;
+  min-height: 50px;
+}
+.drag-item {
+  padding: 8px 16px; background: var(--card); border: 1px solid var(--border);
+  border-radius: 6px; cursor: grab; font-size: 14px; transition: all 0.2s;
+  user-select: none;
+}
+.drag-item:active { cursor: grabbing; transform: scale(1.05); }
+.drag-item.placed { opacity: 0.3; pointer-events: none; }
+.drop-zones { display: flex; gap: 16px; flex-wrap: wrap; }
+.drop-zone {
+  flex: 1; min-width: 200px; border: 2px dashed var(--border);
+  border-radius: 10px; padding: 16px; min-height: 120px;
+  transition: all 0.3s;
+}
+.drop-zone.over { border-color: var(--accent); background: var(--accent-glow); }
+.drop-zone .zone-title {
+  font-weight: 700; font-size: 14px; margin-bottom: 10px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.drop-zone .zone-items { display: flex; flex-direction: column; gap: 6px; }
+.drop-zone .zone-items .drag-item { cursor: pointer; }
+.drop-zone .zone-items .drag-item.correct-place { border-color: var(--accent); background: rgba(124,204,92,0.1); }
+.drop-zone .zone-items .drag-item.wrong-place { border-color: var(--coral); background: rgba(232,124,92,0.1); }
+
+.check-btn {
+  margin-top: 16px; padding: 10px 24px; background: var(--accent-dim);
+  color: var(--text); border: none; border-radius: 6px; cursor: pointer;
+  font-weight: 600; font-size: 14px; transition: all 0.3s;
+}
+.check-btn:hover { background: var(--accent); color: var(--bg); }
+
+/* CALCULATOR */
+.calc-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px; margin: 32px 0;
+}
+.calc-card .label {
+  font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px;
+}
+.calc-row {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.calc-row label { font-size: 14px; color: var(--text-muted); min-width: 180px; }
+.calc-row input, .calc-row select {
+  padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text); font-family: var(--font-mono);
+  font-size: 14px; width: 160px;
+}
+.calc-row input:focus, .calc-row select:focus { outline: none; border-color: var(--accent); }
+.calc-result {
+  margin-top: 20px; padding: 20px; background: var(--card);
+  border-radius: 8px; text-align: center;
+}
+.calc-result .number {
+  font-family: var(--font-mono); font-size: 36px; color: var(--accent);
+  font-weight: 700;
+}
+.calc-result .unit { font-size: 14px; color: var(--text-muted); }
+
+/* TABLE */
+.data-table {
+  width: 100%; border-collapse: collapse; margin: 24px 0;
+  font-size: 14px;
+}
+.data-table th {
+  text-align: left; padding: 12px 16px; background: var(--surface2);
+  border-bottom: 2px solid var(--border); font-weight: 600;
+  color: var(--text-muted); font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.data-table td {
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.data-table tr:hover td { background: var(--surface); color: var(--text); }
+
+/* FLOW DIAGRAM */
+.flow-diagram {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin: 28px 0; flex-wrap: wrap;
+}
+.flow-step {
+  padding: 14px 20px; background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 14px; text-align: center;
+  font-weight: 500; min-width: 120px;
+}
+.flow-arrow {
+  color: var(--accent-dim); font-size: 20px; padding: 0 8px;
+}
+
+/* KEY TERM */
+.key-term {
+  color: var(--accent); border-bottom: 1px dashed var(--accent-dim);
+  cursor: help; position: relative;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .course-nav { padding: 10px 16px; gap: 12px; flex-wrap: wrap; }
+  .level-tabs { margin-left: 0; }
+  .hero { padding: 100px 24px 60px; }
+  .container { padding: 0 20px; }
+  .scope-row { flex-direction: column; }
+  .scope-label { min-width: auto; }
+  .drop-zones { flex-direction: column; }
+  .calc-row { flex-direction: column; align-items: flex-start; }
+  .calc-row input, .calc-row select { width: 100%; }
+  .flow-diagram { flex-direction: column; }
+  .flow-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="course-nav">
+  <div class="logo">CO₂ <span>Carbon Accounting</span></div>
+  <div class="level-tabs">
+    <div class="level-tab" data-level="1" onclick="showLevel(1)">Level 1</div>
+    <div class="level-tab" data-level="2" onclick="showLevel(2)">Level 2</div>
+    <div class="level-tab" data-level="3" onclick="showLevel(3)">Level 3</div>
+  </div>
+</nav>
+
+<!-- PROGRESS DOTS -->
+<div class="progress-bar" id="progress-bar">
+  <div class="progress-inner" id="progress"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-tag">Guided Course · 3 Levels · ~6 Hours</div>
+  <h1>Learn <em>Carbon Accounting</em> — the skill companies can't hire fast enough</h1>
+  <p class="hero-sub">GHG Protocol & Scope 1/2/3 emissions measurement is the #1 in-demand sustainability skill in 2026. This course teaches it from zero, using analogies you already understand.</p>
+  <button class="start-btn" onclick="showLevel(1)">Start Level 1 → Beginner</button>
+</section>
+
+<!-- ======================== LEVEL 1 ======================== -->
+<section class="level-section" id="level-1">
+<div class="container">
+  <div class="level-header">
+    <div class="level-number">Level 1 of 3</div>
+    <h2>The Foundations</h2>
+    <div class="time-est">⏱ ~2 hours · Beginner</div>
+  </div>
+
+  <!-- MODULE 1.1 -->
+  <div class="module" data-step="1">
+    <div class="module-number">Module 1.1</div>
+    <h3>What Even Is Carbon Accounting?</h3>
+    <p>Imagine your electricity bill. Every month, someone reads your meter, records how many kilowatt-hours you used, and sends you a number. You didn't generate the electricity yourself — but you're accountable for how much you consumed.</p>
+    <p><strong>Carbon accounting works the same way, but for greenhouse gases.</strong> Instead of kilowatt-hours, you're measuring tonnes of CO₂-equivalent (tCO₂e). Instead of one meter, you have hundreds of "meters" across your entire business — fuel tanks, electricity sockets, delivery trucks, flights, supply chains.</p>
+    <div class="analogy">
+      <div class="label">Analogy</div>
+      <p>Think of your personal bank statement. Every transaction is logged — coffee, rent, groceries. Carbon accounting is like building a "bank statement" for a company's emissions. Every activity that produces greenhouse gases gets logged, categorised, and totalled up.</p>
+    </div>
+    <p>The output? A <strong>carbon footprint</strong> — a single number (in tCO₂e) that tells a company "this is how much you contributed to climate change this year." That number drives regulation, investor decisions, and strategy.</p>
+  </div>
+
+  <!-- MODULE 1.2 -->
+  <div class="module" data-step="2">
+    <div class="module-number">Module 1.2</div>
+    <h3>Why the World Suddenly Needs This Skill</h3>
+    <p>Until recently, only large energy companies cared about carbon numbers. That changed fast. Here's the chain reaction:</p>
+    <div class="example-box">
+      <div class="label">Real-World Context · 2026</div>
+      <p><strong>Regulations:</strong> The EU's CSRD (Corporate Sustainability Reporting Directive) now requires ~50,000 companies to report emissions. The SEC in the US has tightened climate disclosure rules for public companies. Australia's climate reporting regime kicked in for large reporters.</p>
+      <p><strong>Investors:</strong> ESG-focused investments are projected at $33.9 trillion. Investors won't put money in what they can't measure.</p>
+      <p><strong>Talent gap:</strong> 63% of companies report being understaffed in this area. Demand vastly outpaces supply.</p>
+    </div>
+    <p>The punchline: if you learn to measure emissions accurately, you become one of the most sought-after professionals in sustainability. The GHG Protocol — which we'll learn next — is the "GAAP of carbon." It's the universal language.</p>
+  </div>
+
+  <!-- MODULE 1.3 -->
+  <div class="module" data-step="3">
+    <div class="module-number">Module 1.3</div>
+    <h3>The GHG Protocol — Your Rulebook</h3>
+    <p>The <strong>Greenhouse Gas Protocol</strong> is the world's most widely used standard for measuring emissions. Think of it as the "accounting standards" (like GAAP or IFRS) but for carbon. Over 92% of Fortune 500 companies use it.</p>
+    <p>It was created by the World Resources Institute (WRI) and the World Business Council for Sustainable Development (WBCSD). It defines:</p>
+    <div class="flow-diagram">
+      <div class="flow-step">What gases to count</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">How to categorise sources</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">How to calculate</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">How to report</div>
+    </div>
+    <p>It covers seven greenhouse gases, but for simplicity, everything gets converted into one unit: <strong>tonnes of CO₂-equivalent (tCO₂e)</strong>. Methane is ~80× more potent than CO₂ over 20 years, so 1 tonne of methane = ~28 tCO₂e (over 100 years). This conversion is called the <strong>Global Warming Potential (GWP)</strong>.</p>
+    <div class="analogy">
+      <div class="label">Analogy</div>
+      <p>It's like converting all currencies to USD so you can add them up. You wouldn't add yen and euros directly. GWP lets you add methane, nitrous oxide, and CO₂ into one total.</p>
+    </div>
+  </div>
+
+  <!-- MODULE 1.4 -->
+  <div class="module" data-step="4">
+    <div class="module-number">Module 1.4</div>
+    <h3>Scope 1, 2, and 3 — The Big Framework</h3>
+    <p>This is the single most important concept in carbon accounting. The GHG Protocol splits all emissions into three "scopes" based on <strong>where they come from relative to your company.</strong></p>
+    <div class="diagram-wrap">
+      <div class="label">Visual · The Three Scopes</div>
+      <div class="scope-diagram">
+        <div class="scope-row scope-1">
+          <div class="scope-label">Scope 1<small>Direct</small></div>
+          <div class="scope-items">
+            <div class="scope-item">Company vehicles (petrol/diesel)</div>
+            <div class="scope-item">Gas boilers on-site</div>
+            <div class="scope-item">Factory furnaces</div>
+            <div class="scope-item">Refrigerant leaks</div>
+          </div>
+        </div>
+        <div class="scope-row scope-2">
+          <div class="scope-label">Scope 2<small>Indirect — Energy</small></div>
+          <div class="scope-items">
+            <div class="scope-item">Purchased electricity</div>
+            <div class="scope-item">Purchased heating/cooling</div>
+            <div class="scope-item">Purchased steam</div>
+          </div>
+        </div>
+        <div class="scope-row scope-3">
+          <div class="scope-label">Scope 3<small>Indirect — Value Chain</small></div>
+          <div class="scope-items">
+            <div class="scope-item">Business travel</div>
+            <div class="scope-item">Employee commuting</div>
+            <div class="scope-item">Purchased goods</div>
+            <div class="scope-item">Shipping/logistics</div>
+            <div class="scope-item">Product use by customer</div>
+            <div class="scope-item">Waste disposal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="analogy">
+      <div class="label">Analogy</div>
+      <p><strong>Scope 1</strong> = calories you burn by running (your body, your fuel).<br>
+      <strong>Scope 2</strong> = calories in the food you bought and ate (someone else produced it, but you consumed it).<br>
+      <strong>Scope 3</strong> = the entire food supply chain — the farmer, the truck, the packaging, the grocery store. You didn't control any of it, but your purchase decision drove it.</p>
+    </div>
+    <p>Here's the kicker: <strong>Scope 3 typically accounts for 70–90% of a company's total footprint</strong>, yet only ~15% of companies currently report it. This is where the biggest skill gap is — and where your value as a carbon accountant skyrockets.</p>
+  </div>
+
+  <!-- MODULE 1.5 -->
+  <div class="module" data-step="5">
+    <div class="module-number">Module 1.5</div>
+    <h3>The Basic Calculation</h3>
+    <p>Every emissions calculation in carbon accounting follows one core formula:</p>
+    <div class="example-box">
+      <div class="label">The Formula</div>
+      <p style="font-family: var(--font-mono); font-size: 18px; color: var(--accent); text-align: center; padding: 12px 0;">
+        Activity Data × Emission Factor = tCO₂e
+      </p>
+      <p><strong>Activity Data:</strong> How much of something you did (e.g., 10,000 kWh of electricity, 5,000 litres of diesel)</p>
+      <p><strong>Emission Factor:</strong> How much CO₂e each unit produces (e.g., 0.82 kgCO₂e per kWh in Australia for grid electricity)</p>
+    </div>
+    <div class="analogy">
+      <div class="label">Analogy</div>
+      <p>It's like calculating your grocery bill. "Quantity × Price = Total." Activity data is the quantity, emission factor is the price, and tCO₂e is your total bill. The "price list" (emission factors) comes from government databases.</p>
+    </div>
+
+    <div class="calc-card">
+      <div class="label">Try It · Mini Calculator</div>
+      <p style="margin-bottom:16px; color: var(--text-muted); font-size:14px;">Calculate the emissions from an office's electricity use:</p>
+      <div class="calc-row">
+        <label>Annual electricity (kWh):</label>
+        <input type="number" id="calc1-kwh" value="50000" oninput="calcEmissions1()">
+      </div>
+      <div class="calc-row">
+        <label>Grid emission factor:</label>
+        <select id="calc1-ef" onchange="calcEmissions1()">
+          <option value="0.68">Australia (0.68 kgCO₂e/kWh)</option>
+          <option value="0.39">USA avg (0.39 kgCO₂e/kWh)</option>
+          <option value="0.21">UK (0.21 kgCO₂e/kWh)</option>
+          <option value="0.05">France (0.05 kgCO₂e/kWh)</option>
+        </select>
+      </div>
+      <div class="calc-result">
+        <div class="number" id="calc1-result">34.0</div>
+        <div class="unit">tCO₂e per year (Scope 2)</div>
+      </div>
+    </div>
+    <p>Notice how the <strong>same office</strong> in France emits ~14× less than in Australia? That's because France uses mostly nuclear power. This is why emission factors matter enormously — and why location-based vs. market-based accounting exists (we'll cover that in Level 2).</p>
+  </div>
+
+  <!-- MODULE 1.6 - Quiz -->
+  <div class="module" data-step="6">
+    <div class="module-number">Module 1.6</div>
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-card">
+      <div class="label">Question 1 of 3</div>
+      <div class="question">A company uses natural gas to heat its factory. Which scope is this?</div>
+      <div class="quiz-options" id="q1">
+        <div class="quiz-opt" onclick="checkQuiz('q1',this,0)">Scope 2 — because gas is purchased energy</div>
+        <div class="quiz-opt" onclick="checkQuiz('q1',this,1)">Scope 1 — because the gas is burned on-site by the company</div>
+        <div class="quiz-opt" onclick="checkQuiz('q1',this,2)">Scope 3 — because the gas comes from a supplier</div>
+      </div>
+      <div class="quiz-feedback" id="q1-fb"></div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="label">Question 2 of 3</div>
+      <div class="question">What does "tCO₂e" stand for?</div>
+      <div class="quiz-options" id="q2">
+        <div class="quiz-opt" onclick="checkQuiz('q2',this,0)">Tonnes of carbon dioxide equivalent</div>
+        <div class="quiz-opt" onclick="checkQuiz('q2',this,1)">Total carbon output, estimated</div>
+        <div class="quiz-opt" onclick="checkQuiz('q2',this,2)">Tonnes of carbon, excluding offsets</div>
+      </div>
+      <div class="quiz-feedback" id="q2-fb"></div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="label">Question 3 of 3</div>
+      <div class="question">An employee flies from Sydney to Melbourne for a meeting. Which scope?</div>
+      <div class="quiz-options" id="q3">
+        <div class="quiz-opt" onclick="checkQuiz('q3',this,0)">Scope 1 — the plane burns jet fuel</div>
+        <div class="quiz-opt" onclick="checkQuiz('q3',this,1)">Scope 2 — it's indirect energy</div>
+        <div class="quiz-opt" onclick="checkQuiz('q3',this,2)">Scope 3 — business travel is a value-chain emission</div>
+      </div>
+      <div class="quiz-feedback" id="q3-fb"></div>
+    </div>
+  </div>
+
+  <!-- MODULE 1.7 -->
+  <div class="module" data-step="7">
+    <div class="module-number">Module 1.7</div>
+    <h3>Drag & Sort: Classify These Emissions</h3>
+    <div class="drag-exercise" id="dragEx1">
+      <div class="label">Exercise · Drag each item to the correct scope</div>
+      <div class="drag-bank" id="dragBank1">
+        <div class="drag-item" draggable="true" data-correct="1" data-id="d1">Company car (diesel)</div>
+        <div class="drag-item" draggable="true" data-correct="2" data-id="d2">Office electricity bill</div>
+        <div class="drag-item" draggable="true" data-correct="3" data-id="d3">Courier deliveries to customers</div>
+        <div class="drag-item" draggable="true" data-correct="1" data-id="d4">On-site gas generator</div>
+        <div class="drag-item" draggable="true" data-correct="3" data-id="d5">Purchased office furniture</div>
+        <div class="drag-item" draggable="true" data-correct="2" data-id="d6">District heating</div>
+        <div class="drag-item" draggable="true" data-correct="3" data-id="d7">Staff commuting</div>
+        <div class="drag-item" draggable="true" data-correct="1" data-id="d8">Refrigerant leak from AC</div>
+      </div>
+      <div class="drop-zones">
+        <div class="drop-zone" data-scope="1" id="dz1">
+          <div class="zone-title" style="color:var(--accent)">Scope 1 · Direct</div>
+          <div class="zone-items"></div>
+        </div>
+        <div class="drop-zone" data-scope="2" id="dz2">
+          <div class="zone-title" style="color:var(--warm)">Scope 2 · Energy</div>
+          <div class="zone-items"></div>
+        </div>
+        <div class="drop-zone" data-scope="3" id="dz3">
+          <div class="zone-title" style="color:var(--coral)">Scope 3 · Value Chain</div>
+          <div class="zone-items"></div>
+        </div>
+      </div>
+      <button class="check-btn" onclick="checkDrag('dragEx1')">Check Answers</button>
+    </div>
+  </div>
+
+  <div class="checkpoint" data-step="7">
+    <h4>Level 1 Complete 🌱</h4>
+    <p>You now understand the language of carbon accounting: scopes, emission factors, tCO₂e, and the GHG Protocol. That's genuinely more than most people in corporate jobs know.</p>
+    <button class="checkpoint-btn" onclick="completeLevel(1); showLevel(2);">Continue to Level 2 →</button>
+  </div>
+</div>
+</section>
+
+<!-- ======================== LEVEL 2 ======================== -->
+<section class="level-section" id="level-2">
+<div class="container">
+  <div class="level-header">
+    <div class="level-number">Level 2 of 3</div>
+    <h2>Building a Real Inventory</h2>
+    <div class="time-est">⏱ ~2 hours · Above Beginner</div>
+  </div>
+
+  <!-- MODULE 2.1 -->
+  <div class="module" data-step="8">
+    <div class="module-number">Module 2.1</div>
+    <h3>Organisational Boundaries — Who Counts What?</h3>
+    <p>Before measuring a single tonne of CO₂, you need to draw a line around what's "yours." The GHG Protocol gives you two approaches:</p>
+    <div class="example-box">
+      <div class="label">Two Approaches</div>
+      <p><strong>Equity Share:</strong> You report emissions proportional to your ownership. If you own 30% of a joint venture, you report 30% of its emissions.</p>
+      <p><strong>Operational Control:</strong> If you control the operations, you report 100% of emissions — even if you only own 30%. This is the most commonly used approach because it's cleaner.</p>
+    </div>
+    <div class="analogy">
+      <div class="label">Analogy</div>
+      <p>Imagine a shared house. <strong>Equity share</strong> = you split the electricity bill based on how many rooms each person owns. <strong>Operational control</strong> = whoever controls the thermostat pays the full bill. Most companies prefer "whoever holds the thermostat" because it's simpler to manage.</p>
+    </div>
+  </div>
+
+  <!-- MODULE 2.2 -->
+  <div class="module" data-step="9">
+    <div class="module-number">Module 2.2</div>
+    <h3>Scope 2 Deep Dive: Location vs. Market-Based</h3>
+    <p>This is one of the trickiest (and most practical) distinctions you'll encounter. The GHG Protocol requires companies to report Scope 2 in two ways:</p>
+    <div class="example-box">
+      <div class="label">The Two Methods</div>
+      <p><strong>Location-based:</strong> Uses the average grid emission factor where you physically are. "The grid in NSW emits 0.68 kgCO₂e per kWh, so that's what we report."</p>
+      <p><strong>Market-based:</strong> Uses the emission factor from your specific energy contract. If you signed a Power Purchase Agreement (PPA) with a wind farm, your market-based factor might be near zero.</p>
+    </div>
+    <div class="analogy">
+      <div class="label">Analogy</div>
+      <p>It's like measuring your diet by <strong>what's available at the supermarket</strong> (location-based) vs. <strong>what you actually put in your trolley</strong> (market-based). If you deliberately choose organic, your "market-based" footprint is different from the average shopper.</p>
+    </div>
+    <p>This matters because companies can reduce their <em>market-based</em> Scope 2 to near-zero by buying renewable energy certificates (RECs) or signing PPAs — even while the grid they plug into is still coal-heavy. Critics call this "greenwashing." Defenders call it "driving demand for renewables." You'll encounter this debate constantly.</p>
+
+    <div class="calc-card">
+      <div class="label">Try It · Location vs. Market-Based</div>
+      <p style="margin-bottom:16px; color: var(--text-muted); font-size:14px;">Same office, two different numbers:</p>
+      <div class="calc-row">
+        <label>Annual electricity (kWh):</label>
+        <input type="number" id="calc2-kwh" value="100000" oninput="calcScope2()">
+      </div>
+      <div class="calc-row">
+        <label>Grid (location-based):</label>
+        <select id="calc2-loc" onchange="calcScope2()">
+          <option value="0.68">Australia (0.68)</option>
+          <option value="0.39">USA (0.39)</option>
+          <option value="0.21">UK (0.21)</option>
+        </select>
+      </div>
+      <div class="calc-row">
+        <label>Your contract (market-based):</label>
+        <select id="calc2-mkt" onchange="calcScope2()">
+          <option value="0.68">Grid default (same as location)</option>
+          <option value="0.30">Partial green energy contract</option>
+          <option value="0.05">100% renewable PPA</option>
+          <option value="0.0">Zero-emission certificate</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:16px;margin-top:20px;flex-wrap:wrap;">
+        <div class="calc-result" style="flex:1;min-width:180px;">
+          <div class="number" id="calc2-loc-result" style="color:var(--warm)">68.0</div>
+          <div class="unit">tCO₂e Location-based</div>
+        </div>
+        <div class="calc-result" style="flex:1;min-width:180px;">
+          <div class="number" id="calc2-mkt-result">68.0</div>
+          <div class="unit">tCO₂e Market-based</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 2.3 -->
+  <div class="module" data-step="10">
+    <div class="module-number">Module 2.3</div>
+    <h3>The 15 Categories of Scope 3</h3>
+    <p>Scope 3 is where most of a company's footprint hides — and where the measurement gets hard. The GHG Protocol defines <strong>15 categories</strong>, split into upstream (before you) and downstream (after you).</p>
+    <div class="diagram-wrap">
+      <div class="label">Visual · Scope 3 Categories</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>#</th><th>Category</th><th>Direction</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Purchased goods & services</td><td>Upstream</td><td>Raw materials, office supplies</td></tr>
+          <tr><td>2</td><td>Capital goods</td><td>Upstream</td><td>Machinery, buildings</td></tr>
+          <tr><td>3</td><td>Fuel & energy (not in S1/S2)</td><td>Upstream</td><td>Extraction & transport of fuel</td></tr>
+          <tr><td>4</td><td>Upstream transportation</td><td>Upstream</td><td>Inbound freight</td></tr>
+          <tr><td>5</td><td>Waste from operations</td><td>Upstream</td><td>Landfill, recycling processing</td></tr>
+          <tr><td>6</td><td>Business travel</td><td>Upstream</td><td>Flights, hotels</td></tr>
+          <tr><td>7</td><td>Employee commuting</td><td>Upstream</td><td>Driving, public transport</td></tr>
+          <tr><td>8</td><td>Upstream leased assets</td><td>Upstream</td><td>Leased office not in S1/S2</td></tr>
+          <tr><td>9</td><td>Downstream transportation</td><td>Downstream</td><td>Outbound freight to customers</td></tr>
+          <tr><td>10</td><td>Processing of sold products</td><td>Downstream</td><td>Customer manufacturing</td></tr>
+          <tr><td>11</td><td>Use of sold products</td><td>Downstream</td><td>Customer using your appliance</td></tr>
+          <tr><td>12</td><td>End-of-life treatment</td><td>Downstream</td><td>Product disposal/recycling</td></tr>
+          <tr><td>13</td><td>Downstream leased assets</td><td>Downstream</td><td>Buildings you lease out</td></tr>
+          <tr><td>14</td><td>Franchises</td><td>Downstream</td><td>Franchise store emissions</td></tr>
+          <tr><td>15</td><td>Investments</td><td>Downstream</td><td>Financed emissions</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>You don't have to report all 15. You conduct a <strong>materiality screen</strong> — identify which categories are relevant and significant for your business. A software company won't care about Category 10 (processing of sold products), but a steel manufacturer will.</p>
+  </div>
+
+  <!-- MODULE 2.4 -->
+  <div class="module" data-step="11">
+    <div class="module-number">Module 2.4</div>
+    <h3>Data Collection — The Real Job</h3>
+    <p>Here's the truth nobody tells you: 80% of a carbon accountant's job is data collection, not calculation. The formula is simple. Getting accurate activity data is the hard part.</p>
+    <div class="flow-diagram">
+      <div class="flow-step">Identify sources</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Request data from teams</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Clean & validate</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Apply emission factors</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Review & report</div>
+    </div>
+    <div class="example-box">
+      <div class="label">Real-World Pain Points</div>
+      <p><strong>Data quality hierarchy</strong> (best to worst): Metered data → Utility bills → Estimates from building size → Industry averages. You'll almost always use a mix.</p>
+      <p><strong>Common nightmare:</strong> A factory in Vietnam can tell you their electricity bill in VND per month, but not their kWh. You need to reverse-engineer kWh from the tariff rate. This kind of detective work is the daily reality.</p>
+      <p><strong>Tools used:</strong> Persefoni, Watershed, Sphera, Salesforce Net Zero Cloud — or honestly, Excel for most mid-market companies.</p>
+    </div>
+  </div>
+
+  <!-- MODULE 2.5 -->
+  <div class="module" data-step="12">
+    <div class="module-number">Module 2.5</div>
+    <h3>Emission Factors — Your Price List</h3>
+    <p>Emission factors are published by governments and scientific bodies. Choosing the right one is critical — a wrong factor can swing your result by 50%.</p>
+    <table class="data-table">
+      <thead><tr><th>Source</th><th>Region</th><th>Best For</th></tr></thead>
+      <tbody>
+        <tr><td>NGA Factors (Aust. Gov)</td><td>Australia</td><td>Scope 1 & 2 in Australia</td></tr>
+        <tr><td>DEFRA</td><td>UK</td><td>Transport, business travel globally</td></tr>
+        <tr><td>EPA eGRID</td><td>USA</td><td>US electricity grids</td></tr>
+        <tr><td>ecoinvent / GaBi</td><td>Global</td><td>Scope 3, lifecycle analysis</td></tr>
+        <tr><td>IEA</td><td>Global</td><td>Country-level electricity factors</td></tr>
+      </tbody>
+    </table>
+    <div class="analogy">
+      <div class="label">Analogy</div>
+      <p>Emission factor databases are like exchange rate tables. You wouldn't use last year's exchange rate for this year's foreign transaction. Similarly, you should use the most current emission factors from the most geographically specific source available.</p>
+    </div>
+  </div>
+
+  <!-- MODULE 2.6 Quiz -->
+  <div class="module" data-step="13">
+    <div class="module-number">Module 2.6</div>
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-card">
+      <div class="label">Question 1 of 2</div>
+      <div class="question">Your company buys 100% renewable energy certificates. What happens to your Scope 2 emissions?</div>
+      <div class="quiz-options" id="q4">
+        <div class="quiz-opt" onclick="checkQuiz('q4',this,0)">Both location and market-based go to zero</div>
+        <div class="quiz-opt" onclick="checkQuiz('q4',this,1)">Location-based stays the same; market-based drops to near zero</div>
+        <div class="quiz-opt" onclick="checkQuiz('q4',this,2)">All Scope 2 is eliminated permanently</div>
+      </div>
+      <div class="quiz-feedback" id="q4-fb"></div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="label">Question 2 of 2</div>
+      <div class="question">An employee drives their personal car to work every day. Which Scope 3 category is this?</div>
+      <div class="quiz-options" id="q5">
+        <div class="quiz-opt" onclick="checkQuiz('q5',this,0)">Category 6 — Business travel</div>
+        <div class="quiz-opt" onclick="checkQuiz('q5',this,1)">Category 7 — Employee commuting</div>
+        <div class="quiz-opt" onclick="checkQuiz('q5',this,2)">Category 4 — Upstream transportation</div>
+      </div>
+      <div class="quiz-feedback" id="q5-fb"></div>
+    </div>
+  </div>
+
+  <!-- MODULE 2.7 -->
+  <div class="module" data-step="14">
+    <div class="module-number">Module 2.7</div>
+    <h3>Building a Scope 1 Inventory — Walkthrough</h3>
+    <p>Let's do a complete mini-inventory for a fictional small manufacturer, "GreenParts Pty Ltd" in Melbourne. They have:</p>
+
+    <div class="calc-card">
+      <div class="label">Walkthrough · GreenParts Scope 1</div>
+      <table class="data-table">
+        <thead><tr><th>Source</th><th>Activity Data</th><th>Emission Factor</th><th>tCO₂e</th></tr></thead>
+        <tbody>
+          <tr><td>2 × delivery vans (diesel)</td><td>18,000 L/yr</td><td>2.68 kgCO₂e/L</td><td>48.2</td></tr>
+          <tr><td>Natural gas (factory heating)</td><td>120,000 kWh/yr</td><td>0.184 kgCO₂e/kWh</td><td>22.1</td></tr>
+          <tr><td>Forklift (LPG)</td><td>3,200 L/yr</td><td>1.54 kgCO₂e/L</td><td>4.9</td></tr>
+          <tr><td>Refrigerant top-up (R410A)</td><td>5 kg/yr</td><td>2,088 kgCO₂e/kg</td><td>10.4</td></tr>
+          <tr><td colspan="3" style="font-weight:700;text-align:right;">Total Scope 1:</td><td style="font-weight:700;color:var(--accent)">85.6</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Notice the refrigerant? Only 5 kg leaked, but it's a potent greenhouse gas — 2,088× the warming effect of CO₂. This surprises people every time. Refrigerant management is a "quick win" most companies overlook.</p>
+  </div>
+
+  <div class="checkpoint" data-step="14">
+    <h4>Level 2 Complete 📊</h4>
+    <p>You now understand how to set boundaries, distinguish location vs. market-based reporting, navigate Scope 3 categories, and build an actual emissions inventory. You're job-ready for junior carbon accounting roles.</p>
+    <button class="checkpoint-btn" onclick="completeLevel(2); showLevel(3);">Continue to Level 3 →</button>
+  </div>
+</div>
+</section>
+
+<!-- ======================== LEVEL 3 ======================== -->
+<section class="level-section" id="level-3">
+<div class="container">
+  <div class="level-header">
+    <div class="level-number">Level 3 of 3</div>
+    <h2>Professional-Grade Reporting</h2>
+    <div class="time-est">⏱ ~2 hours · Intermediate</div>
+  </div>
+
+  <!-- MODULE 3.1 -->
+  <div class="module" data-step="15">
+    <div class="module-number">Module 3.1</div>
+    <h3>The Reporting Landscape — ISSB, CSRD, and SEC</h3>
+    <p>Carbon accounting doesn't exist in a vacuum. It feeds into <strong>mandatory disclosure frameworks</strong> that are reshaping corporate reporting worldwide. Here are the three you need to know:</p>
+    <div class="example-box">
+      <div class="label">The Big Three Frameworks · 2026</div>
+      <p><strong>ISSB (IFRS S1 & S2):</strong> Global baseline standards from the International Sustainability Standards Board. S2 specifically covers climate-related disclosures. Now mandatory in multiple jurisdictions including Australia and the UK. Designed to link sustainability data to financial value creation.</p>
+      <p><strong>EU CSRD:</strong> The Corporate Sustainability Reporting Directive — requires ~50,000 EU-connected companies to disclose using European Sustainability Reporting Standards (ESRS). Requires third-party assurance (audit). Far more prescriptive than ISSB.</p>
+      <p><strong>SEC Climate Rules (US):</strong> Public companies must include material climate risks in annual filings. More limited in scope than CSRD but significant for US-listed companies.</p>
+    </div>
+    <div class="analogy">
+      <div class="label">Analogy</div>
+      <p>Think of these like tax codes in different countries. The underlying maths (carbon accounting) is the same everywhere — just like profit is profit. But how you file, what you disclose, and who audits it depends on which jurisdiction your company operates in. A multinational might need to comply with all three.</p>
+    </div>
+  </div>
+
+  <!-- MODULE 3.2 -->
+  <div class="module" data-step="16">
+    <div class="module-number">Module 3.2</div>
+    <h3>Base Year, Recalculation & Tracking Reductions</h3>
+    <p>Companies don't just measure once — they set a <strong>base year</strong> and track progress against it. This is where the "accounting" part really earns its name.</p>
+    <div class="example-box">
+      <div class="label">How It Works</div>
+      <p><strong>Base year:</strong> The reference year against which reductions are measured (e.g., "We'll reduce 42% from our 2020 baseline by 2030").</p>
+      <p><strong>Recalculation trigger:</strong> If the company acquires or divests a business, changes methodology, or discovers a significant error, you must <em>recalculate</em> the base year so comparisons remain valid.</p>
+      <p><strong>Threshold:</strong> Most companies set a significance threshold (e.g., 5%). Changes below that threshold don't trigger recalculation.</p>
+    </div>
+    <div class="analogy">
+      <div class="label">Analogy</div>
+      <p>It's like adjusting for inflation in financial comparisons. Saying "revenue grew 20% since 2020" is meaningless if you acquired three companies in that time. You need to restate the baseline so you're comparing like with like. Same logic applies to emissions.</p>
+    </div>
+
+    <div class="calc-card">
+      <div class="label">Try It · Reduction Tracker</div>
+      <p style="margin-bottom:16px; color: var(--text-muted); font-size:14px;">How much has this company reduced from baseline?</p>
+      <div class="calc-row">
+        <label>Base year emissions (tCO₂e):</label>
+        <input type="number" id="calc3-base" value="12500" oninput="calcReduction()">
+      </div>
+      <div class="calc-row">
+        <label>Current year emissions (tCO₂e):</label>
+        <input type="number" id="calc3-current" value="8750" oninput="calcReduction()">
+      </div>
+      <div class="calc-row">
+        <label>Target reduction (%):</label>
+        <input type="number" id="calc3-target" value="42" oninput="calcReduction()">
+      </div>
+      <div class="calc-result">
+        <div class="number" id="calc3-result" style="font-size:28px;">30.0% reduced</div>
+        <div class="unit" id="calc3-status">12.0 percentage points to go to reach target</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 3.3 -->
+  <div class="module" data-step="17">
+    <div class="module-number">Module 3.3</div>
+    <h3>Scope 3 Calculation Methods</h3>
+    <p>Scope 3 is where you earn your salary. The GHG Protocol offers several calculation approaches, each with trade-offs between accuracy and effort:</p>
+    <div class="diagram-wrap">
+      <div class="label">Visual · Data Hierarchy for Scope 3</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <div style="padding:14px 20px;background:var(--accent);color:var(--bg);border-radius:8px 8px 0 0;font-weight:700;">
+          🎯 Supplier-specific data <span style="font-weight:400;font-size:13px;">— Actual emissions from your supplier</span>
+        </div>
+        <div style="padding:14px 20px;background:var(--accent-dim);color:var(--text);border-radius:0;">
+          📦 Hybrid method <span style="font-weight:400;font-size:13px;">— Mix of supplier data + industry averages</span>
+        </div>
+        <div style="padding:14px 20px;background:var(--warm-dim);color:var(--text);border-radius:0;">
+          📊 Average-data method <span style="font-weight:400;font-size:13px;">— Industry average EF × quantity purchased</span>
+        </div>
+        <div style="padding:14px 20px;background:rgba(232,124,92,0.3);color:var(--text);border-radius:0 0 8px 8px;">
+          💰 Spend-based method <span style="font-weight:400;font-size:13px;">— $ spent × spend emission factor (least accurate)</span>
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:var(--text-muted);">↑ Most accurate &nbsp;&nbsp;&nbsp; ↓ Least accurate (but easiest to start with)</p>
+    </div>
+    <p>Most companies <strong>start with spend-based</strong> for their first inventory (because they already have financial data), then progressively improve to supplier-specific data over 2–3 years. Your job is to build a roadmap for this data maturity journey.</p>
+    <div class="example-box">
+      <div class="label">Real Example · Spend-Based Calculation</div>
+      <p>A company spent $2 million on IT equipment. The EEIO (Environmentally Extended Input-Output) database says the "computer equipment" sector emits ~0.35 kgCO₂e per dollar spent.</p>
+      <p style="font-family:var(--font-mono);color:var(--accent);text-align:center;padding:8px 0;">$2,000,000 × 0.35 kgCO₂e/$ = 700 tCO₂e</p>
+      <p>Rough? Yes. Better than nothing? Absolutely. You'd then prioritise getting supplier-specific data from your top 5 IT vendors to refine this.</p>
+    </div>
+  </div>
+
+  <!-- MODULE 3.4 -->
+  <div class="module" data-step="18">
+    <div class="module-number">Module 3.4</div>
+    <h3>Assurance & Verification — Getting Audited</h3>
+    <p>Just like financial statements need an audit, carbon inventories increasingly need <strong>third-party assurance</strong>. The CSRD requires it. ISSB-aligned regimes are moving toward it.</p>
+    <p>There are two levels:</p>
+    <div class="example-box">
+      <div class="label">Assurance Levels</div>
+      <p><strong>Limited assurance:</strong> "Nothing came to our attention that suggests material misstatement." It's a lighter review — the auditor checks your methodology and samples your data. Think of it like a spot-check tax audit.</p>
+      <p><strong>Reasonable assurance:</strong> "We are confident the report is fairly stated." This is a full audit, like a financial audit. It's where the market is heading but most companies start with limited.</p>
+    </div>
+    <p>What auditors look for: documented methodology, clear boundary definitions, consistent emission factor sources, evidence trails for activity data, and proper base year recalculation policies. If you can produce an inventory that survives an audit, you're at a professional level.</p>
+  </div>
+
+  <!-- MODULE 3.5 -->
+  <div class="module" data-step="19">
+    <div class="module-number">Module 3.5</div>
+    <h3>Science-Based Targets (SBTi)</h3>
+    <p>Once you have an inventory, the next question is: "How much do we need to reduce?" The <strong>Science Based Targets initiative (SBTi)</strong> answers this by defining reduction pathways aligned with limiting warming to 1.5°C.</p>
+    <div class="flow-diagram">
+      <div class="flow-step">Measure baseline</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Set SBTi target</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Submit for validation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Report progress annually</div>
+    </div>
+    <div class="example-box">
+      <div class="label">What SBTi Requires</div>
+      <p><strong>Near-term targets:</strong> 5–10 year horizon. Must cover Scope 1 & 2, and Scope 3 if it's >40% of total.</p>
+      <p><strong>Net-zero targets:</strong> Long-term (by 2050). Requires reducing at least 90% of emissions, with only residual emissions offset.</p>
+      <p><strong>Key rule:</strong> Carbon offsets cannot count toward near-term target progress. You must actually reduce, not just buy credits.</p>
+    </div>
+  </div>
+
+  <!-- MODULE 3.6 -->
+  <div class="module" data-step="20">
+    <div class="module-number">Module 3.6</div>
+    <h3>Check Your Understanding</h3>
+
+    <div class="quiz-card">
+      <div class="label">Question 1 of 2</div>
+      <div class="question">A company acquires a factory that emits 5,000 tCO₂e/yr. What should happen to their base year?</div>
+      <div class="quiz-options" id="q6">
+        <div class="quiz-opt" onclick="checkQuiz('q6',this,0)">Nothing — acquisitions don't affect historical data</div>
+        <div class="quiz-opt" onclick="checkQuiz('q6',this,1)">Recalculate the base year to include the factory, so the comparison is fair</div>
+        <div class="quiz-opt" onclick="checkQuiz('q6',this,2)">Start a new base year from scratch</div>
+      </div>
+      <div class="quiz-feedback" id="q6-fb"></div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="label">Question 2 of 2</div>
+      <div class="question">Under SBTi, can a company use carbon offsets to meet its near-term reduction target?</div>
+      <div class="quiz-options" id="q7">
+        <div class="quiz-opt" onclick="checkQuiz('q7',this,0)">Yes, as long as they're certified offsets</div>
+        <div class="quiz-opt" onclick="checkQuiz('q7',this,1)">No — offsets don't count toward near-term target progress</div>
+        <div class="quiz-opt" onclick="checkQuiz('q7',this,2)">Only for Scope 3 categories</div>
+      </div>
+      <div class="quiz-feedback" id="q7-fb"></div>
+    </div>
+  </div>
+
+  <!-- MODULE 3.7 -->
+  <div class="module" data-step="21">
+    <div class="module-number">Module 3.7</div>
+    <h3>Where to Go From Here</h3>
+    <p>You've completed the course. Here's what to pursue next to turn this into a career or professional skill:</p>
+    <div class="example-box">
+      <div class="label">Next Steps</div>
+      <p><strong>Certifications:</strong> GHG Management Institute's "GHG Inventory Quantifier" certificate. ISO 14064 Lead Verifier training. The GARP SCR (Sustainability and Climate Risk) certificate.</p>
+      <p><strong>Tools to learn:</strong> Persefoni, Watershed, or Sphera for enterprise carbon management. But honestly, advanced Excel/Google Sheets skills will carry you far — most real-world inventories still live in spreadsheets.</p>
+      <p><strong>Frameworks to read:</strong> The full GHG Protocol Corporate Standard (free PDF). The Scope 3 Calculation Guidance document. ISSB IFRS S2.</p>
+      <p><strong>Practice:</strong> Calculate your own household carbon footprint using the methods from this course. Then try a hypothetical company. The skill is in the data-gathering and judgment calls, not the maths.</p>
+    </div>
+  </div>
+
+  <div class="checkpoint" data-step="21">
+    <h4>Course Complete 🏆</h4>
+    <p>You've gone from zero to intermediate across the GHG Protocol, Scope 1/2/3 accounting, data collection, reporting frameworks, base year management, assurance, and science-based targets. This is genuinely the skillset that job listings are screaming for right now.</p>
+    <button class="checkpoint-btn" onclick="completeLevel(3); alert('🎉 Congratulations! You\'ve completed the full Carbon Accounting course.');">Finish Course</button>
+  </div>
+</div>
+</section>
+
+<script>
+// STATE
+const TOTAL_STEPS = 21;
+let completedSteps = new Set();
+let levelCompleted = { 1: false, 2: false, 3: false };
+
+// QUIZ ANSWERS
+const quizAnswers = {
+  q1: { correct: 1, right: "Correct! Natural gas burned on-site is a direct emission — the company owns the combustion. Scope 2 is for purchased electricity/heat/steam only.", wrong: "Not quite. The key question is: does the company physically burn the fuel? Yes — so it's Scope 1 (direct). Scope 2 is reserved for purchased electricity, heat, or steam." },
+  q2: { correct: 0, right: "Correct! Tonnes of CO₂-equivalent — the universal unit that converts all greenhouse gases into one comparable number using Global Warming Potential.", wrong: "Close, but tCO₂e stands for Tonnes of Carbon Dioxide Equivalent. The 'e' means equivalent — it accounts for converting other gases (methane, N₂O, etc.) into CO₂-comparable units." },
+  q3: { correct: 2, right: "Correct! Business travel is Scope 3, Category 6. The airline burns the fuel (their Scope 1), but the trip was driven by your company's operations.", wrong: "Think about control. Your company didn't burn the jet fuel — the airline did. But the trip happened because of your business. That makes it Scope 3 (value chain), specifically Category 6: Business Travel." },
+  q4: { correct: 1, right: "Correct! RECs only affect market-based reporting. Location-based always reflects the physical grid you're connected to, regardless of what certificates you buy.", wrong: "RECs reduce your market-based number to near zero, but the location-based figure stays the same — it reflects the actual grid mix where your building sits. You must report both." },
+  q5: { correct: 1, right: "Correct! Employee commuting is Category 7. Category 6 (Business Travel) is for trips taken for work purposes. The daily commute is separate.", wrong: "Daily commuting to the office is Category 7. Category 6 covers business travel — trips taken specifically for work tasks like client meetings or conferences." },
+  q6: { correct: 1, right: "Correct! Structural changes like acquisitions trigger base year recalculation. Otherwise you'd show a fake 'increase' that's really just a bigger boundary.", wrong: "Acquisitions are a classic recalculation trigger. If you don't restate the base year, your year-on-year comparison is meaningless — you'd be comparing a smaller company to a larger one." },
+  q7: { correct: 1, right: "Correct! SBTi explicitly states that offsets cannot count toward near-term science-based targets. Companies must achieve actual emission reductions.", wrong: "Under SBTi rules, carbon offsets and credits are encouraged as extra climate action — but they cannot substitute for actual emission reductions in near-term targets." },
+};
+
+function checkQuiz(id, el, idx) {
+  const q = quizAnswers[id];
+  const opts = document.querySelectorAll(`#${id} .quiz-opt`);
+  const fb = document.getElementById(`${id}-fb`);
+  opts.forEach(o => { o.classList.add('disabled'); });
+  if (idx === q.correct) {
+    el.classList.add('correct');
+    fb.className = 'quiz-feedback show correct-fb';
+    fb.textContent = q.right;
+  } else {
+    el.classList.add('wrong');
+    opts[q.correct].classList.add('correct');
+    fb.className = 'quiz-feedback show wrong-fb';
+    fb.textContent = q.wrong;
+  }
+  markStepComplete(el.closest('.module'));
+}
+
+// CALCULATORS
+function calcEmissions1() {
+  const kwh = parseFloat(document.getElementById('calc1-kwh').value) || 0;
+  const ef = parseFloat(document.getElementById('calc1-ef').value);
+  const result = (kwh * ef / 1000).toFixed(1);
+  document.getElementById('calc1-result').textContent = result;
+}
+
+function calcScope2() {
+  const kwh = parseFloat(document.getElementById('calc2-kwh').value) || 0;
+  const loc = parseFloat(document.getElementById('calc2-loc').value);
+  const mkt = parseFloat(document.getElementById('calc2-mkt').value);
+  document.getElementById('calc2-loc-result').textContent = (kwh * loc / 1000).toFixed(1);
+  document.getElementById('calc2-mkt-result').textContent = (kwh * mkt / 1000).toFixed(1);
+}
+
+function calcReduction() {
+  const base = parseFloat(document.getElementById('calc3-base').value) || 1;
+  const current = parseFloat(document.getElementById('calc3-current').value) || 0;
+  const target = parseFloat(document.getElementById('calc3-target').value) || 0;
+  const pct = ((base - current) / base * 100).toFixed(1);
+  const gap = (target - pct).toFixed(1);
+  document.getElementById('calc3-result').textContent = `${pct}% reduced`;
+  if (gap <= 0) {
+    document.getElementById('calc3-status').textContent = `✅ Target met! ${Math.abs(gap)} percentage points ahead.`;
+    document.getElementById('calc3-result').style.color = 'var(--accent)';
+  } else {
+    document.getElementById('calc3-status').textContent = `${gap} percentage points to go to reach ${target}% target`;
+    document.getElementById('calc3-result').style.color = 'var(--warm)';
+  }
+}
+
+// DRAG & DROP
+document.addEventListener('DOMContentLoaded', () => {
+  initDragDrop('dragEx1');
+  calcEmissions1();
+});
+
+function initDragDrop(exId) {
+  const ex = document.getElementById(exId);
+  const items = ex.querySelectorAll('.drag-item[draggable]');
+  const zones = ex.querySelectorAll('.drop-zone');
+  const bank = ex.querySelector('.drag-bank');
+
+  items.forEach(item => {
+    item.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', item.dataset.id);
+    });
+    item.addEventListener('click', () => {
+      if (item.closest('.zone-items')) {
+        const bankItem = bank.querySelector(`[data-id="${item.dataset.id}"]`) || item;
+        bankItem.classList.remove('placed');
+        if (item.parentElement.classList.contains('zone-items')) item.remove();
+        if (!bank.contains(bankItem)) bank.appendChild(bankItem);
+        bankItem.setAttribute('draggable','true');
+      }
+    });
+  });
+
+  zones.forEach(zone => {
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('over');
+      const id = e.dataTransfer.getData('text/plain');
+      const original = bank.querySelector(`[data-id="${id}"]`);
+      if (!original) return;
+      original.classList.add('placed');
+      original.removeAttribute('draggable');
+      const clone = original.cloneNode(true);
+      clone.classList.remove('placed');
+      clone.classList.remove('correct-place','wrong-place');
+      clone.removeAttribute('draggable');
+      clone.addEventListener('click', () => {
+        original.classList.remove('placed');
+        original.setAttribute('draggable','true');
+        clone.remove();
+      });
+      zone.querySelector('.zone-items').appendChild(clone);
+    });
+  });
+}
+
+function checkDrag(exId) {
+  const ex = document.getElementById(exId);
+  const zones = ex.querySelectorAll('.drop-zone');
+  zones.forEach(zone => {
+    const scope = zone.dataset.scope;
+    zone.querySelectorAll('.zone-items .drag-item').forEach(item => {
+      if (item.dataset.correct === scope) {
+        item.classList.add('correct-place');
+        item.classList.remove('wrong-place');
+      } else {
+        item.classList.add('wrong-place');
+        item.classList.remove('correct-place');
+      }
+    });
+  });
+  markStepComplete(ex.closest('.module'));
+}
+
+// PROGRESS
+let currentObserver = null;
+
+function markStepComplete(moduleEl) {
+  // no-op, progress is now scroll-based dots
+}
+
+function updateProgress() {
+  // no-op, handled by observer
+}
+
+function completeLevel(n) {
+  levelCompleted[n] = true;
+  document.querySelector(`.level-tab[data-level="${n}"]`).classList.add('completed');
+}
+
+// LEVEL NAVIGATION
+function showLevel(n) {
+  currentLevel = n;
+  document.getElementById('hero').style.display = 'none';
+  document.querySelectorAll('.level-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(`level-${n}`).classList.add('active');
+  document.querySelectorAll('.level-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.level-tab[data-level="${n}"]`).classList.add('active');
+
+  // Update progress bar color per level
+  const pb = document.getElementById('progress-bar');
+  pb.className = 'progress-bar' + (n === 2 ? ' l2-active' : n === 3 ? ' l3-active' : '');
+
+  // Rebuild progress dots
+  const prog = document.getElementById('progress');
+  const section = document.getElementById('level-' + n);
+  const mods = section.querySelectorAll('.module, .checkpoint');
+  prog.innerHTML = '';
+  for (let i = 0; i < mods.length; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'prog-dot' + (i === 0 ? ' active' : '');
+    prog.appendChild(dot);
+  }
+
+  window.scrollTo(0, 0);
+  setupObserver();
+}
+
+let currentLevel = 1;
+
+function setupObserver() {
+  if (currentObserver) currentObserver.disconnect();
+  const section = document.getElementById('level-' + currentLevel);
+  const mods = section.querySelectorAll('.module, .checkpoint');
+  const dots = document.querySelectorAll('.prog-dot');
+  const visibleSet = new Set();
+
+  currentObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const idx = Array.from(mods).indexOf(entry.target);
+      if (entry.isIntersecting) visibleSet.add(idx);
+      else visibleSet.delete(idx);
+    });
+    if (visibleSet.size === 0) return;
+    const current = Math.max(...visibleSet);
+    dots.forEach((dot, i) => {
+      dot.classList.remove('active', 'done');
+      if (i < current) dot.classList.add('done');
+      else if (i === current) { dot.classList.add('done'); dot.classList.add('active'); }
+    });
+  }, { threshold: 0.15 });
+
+  mods.forEach(m => currentObserver.observe(m));
+}
+</script>
+</body>
+</html>
