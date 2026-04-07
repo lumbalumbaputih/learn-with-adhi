@@ -69,6 +69,7 @@
   .theme-toggle {
     position: relative;
     width: 52px; height: 28px;
+    --toggle-icon-size: .72rem;
     background: var(--toggle-bg);
     border-radius: 99px;
     border: none;
@@ -89,7 +90,7 @@
   .theme-toggle .icon {
     position: absolute;
     top: 50%; transform: translateY(-50%);
-    font-size: .72rem;
+    font-size: var(--toggle-icon-size);
     pointer-events: none;
     transition: opacity .25s;
   }
