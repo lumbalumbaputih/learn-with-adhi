@@ -287,11 +287,12 @@ courses.forEach(c => {
   grid.appendChild(a);
 });
 
-// Theme toggle — remembers preference
+// Theme toggle — remembers preference, defaults to system
 const toggle = document.getElementById('themeToggle');
 const root = document.documentElement;
 const saved = localStorage.getItem('theme');
-if (saved) root.setAttribute('data-theme', saved);
+const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+root.setAttribute('data-theme', saved || systemTheme);
 toggle.addEventListener('click', () => {
   const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   root.setAttribute('data-theme', next);
