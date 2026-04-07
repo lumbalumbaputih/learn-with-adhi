@@ -44,6 +44,8 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     line-height: 1.6;
     transition: background .35s, color .35s;
     -webkit-tap-highlight-color: transparent;
@@ -134,6 +136,7 @@
     max-width: 960px;
     margin: 0 auto;
     padding: 0 24px 80px;
+    flex: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
     gap: 24px;
