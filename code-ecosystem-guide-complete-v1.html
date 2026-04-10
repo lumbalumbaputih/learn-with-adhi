@@ -182,7 +182,7 @@
         background: var(--toggle-knob);
         transition: transform 0.25s ease;
       }
-      :root[data-theme="light"] .theme-toggle::after {
+      :root[data-theme="dark"] .theme-toggle::after {
         transform: translateX(20px);
       }
       .level-nav-inner {
@@ -4441,14 +4441,6 @@
     <script>
       const root = document.documentElement;
       const themeToggle = document.getElementById("themeToggle");
-      const savedTheme = localStorage.getItem("theme");
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-      root.setAttribute(
-        "data-theme",
-        savedTheme || systemTheme,
-      );
 
       themeToggle.addEventListener("click", () => {
         const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
