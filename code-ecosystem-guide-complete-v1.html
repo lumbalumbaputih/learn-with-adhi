@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Code Ecosystem Guide - Complete</title>
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem("theme");
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+        document.documentElement.setAttribute("data-theme", savedTheme || systemTheme);
+      })();
+    </script>
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
@@ -45,6 +54,34 @@
         --red-light: #fcebeb;
         --green: #1d6b4f;
         --green-light: #e8f5ee;
+        --toggle-track: #ebeae3;
+        --toggle-knob: #1a1a18;
+      }
+      :root[data-theme="dark"] {
+        --bg: #0d1117;
+        --card: #161b22;
+        --text: #e6edf3;
+        --muted: #9da7b2;
+        --accent: #6ee7b7;
+        --accent-light: #143227;
+        --accent2: #f59e0b;
+        --accent2-light: #3a2a11;
+        --border: #2d333b;
+        --code-bg: #1f2630;
+        --coral: #fb923c;
+        --coral-light: #3b251b;
+        --purple: #a78bfa;
+        --purple-light: #2a2543;
+        --blue: #60a5fa;
+        --blue-light: #1c2a3d;
+        --pink: #f472b6;
+        --pink-light: #3d2130;
+        --red: #f87171;
+        --red-light: #3b2020;
+        --green: #34d399;
+        --green-light: #143227;
+        --toggle-track: #273142;
+        --toggle-knob: #e6edf3;
       }
       body {
         font-family: "DM Sans", sans-serif;
@@ -52,6 +89,7 @@
         color: var(--text);
         line-height: 1.75;
         font-size: 16px;
+        transition: background 0.3s ease, color 0.3s ease;
       }
       h1,
       h2,
@@ -100,6 +138,52 @@
         background: var(--card);
         border-bottom: 1px solid var(--border);
         padding: 0;
+      }
+      .top-actions {
+        position: fixed;
+        top: 10px;
+        right: 14px;
+        z-index: 1200;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .backlink {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--muted);
+        text-decoration: none;
+        padding: 0.45rem 0.6rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--card);
+      }
+      .backlink:hover {
+        color: var(--text);
+        border-color: var(--accent);
+      }
+      .theme-toggle {
+        width: 44px;
+        height: 24px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--toggle-track);
+        cursor: pointer;
+        position: relative;
+      }
+      .theme-toggle::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--toggle-knob);
+        transition: transform 0.25s ease;
+      }
+      :root[data-theme="dark"] .theme-toggle::after {
+        transform: translateX(20px);
       }
       .level-nav-inner {
         max-width: 760px;
@@ -692,10 +776,17 @@
           font-size: 0.78rem;
           padding: 12px 4px;
         }
+        .backlink {
+          display: none;
+        }
       }
     </style>
   </head>
   <body>
+    <div class="top-actions">
+      <a class="backlink" href="https://learn.tokocurahaustralia.com" target="_blank" rel="noopener noreferrer">Toko Curah Learning ↗</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+    </div>
     <!-- LEVEL NAVIGATION -->
     <nav class="level-nav">
       <div class="level-nav-inner">
@@ -4348,6 +4439,15 @@
     </section>
 
     <script>
+      const root = document.documentElement;
+      const themeToggle = document.getElementById("themeToggle");
+
+      themeToggle.addEventListener("click", () => {
+        const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+      });
+
       const levelModuleCounts = { 1: 9, 2: 8, 3: 8 };
       let currentLevel = 1;
 

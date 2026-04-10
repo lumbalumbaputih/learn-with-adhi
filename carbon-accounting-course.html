@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carbon Accounting — A Guided Course</title>
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem("theme");
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+        document.documentElement.setAttribute("data-theme", savedTheme || systemTheme);
+      })();
+    </script>
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
@@ -32,9 +41,33 @@
         --warm-dim: #d4a012;
         --coral: #d4603a;
         --blue: #2a7ab5;
+        --on-accent: #ffffff;
+        --nav-bg: rgba(255, 255, 255, 0.92);
+        --toggle-track: #e5ece2;
+        --toggle-knob: #2d8a1e;
         --font-display: "DM Serif Display", serif;
         --font-body: "Instrument Sans", sans-serif;
         --font-mono: "JetBrains Mono", monospace;
+      }
+      :root[data-theme="dark"] {
+        --bg: #0b1110;
+        --surface: #101917;
+        --surface2: #16211e;
+        --card: #1a2622;
+        --border: #2d3e38;
+        --text: #e4efe9;
+        --text-muted: #9bb0a7;
+        --accent: #6ee7b7;
+        --accent-dim: #34d399;
+        --accent-glow: rgba(110, 231, 183, 0.2);
+        --warm: #facc15;
+        --warm-dim: #eab308;
+        --coral: #fb923c;
+        --blue: #60a5fa;
+        --on-accent: #0b1110;
+        --nav-bg: rgba(11, 17, 16, 0.92);
+        --toggle-track: #22312d;
+        --toggle-knob: #e4efe9;
       }
       * {
         margin: 0;
@@ -51,6 +84,7 @@
         font-size: 17px;
         line-height: 1.7;
         overflow-x: hidden;
+        transition: background 0.3s ease, color 0.3s ease;
       }
 
       /* PROGRESS BAR */
@@ -108,7 +142,7 @@
         left: 0;
         right: 0;
         z-index: 999;
-        background: rgba(255, 255, 255, 0.92);
+        background: var(--nav-bg);
         backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--border);
         padding: 12px 32px;
@@ -230,7 +264,7 @@
         gap: 10px;
         padding: 16px 32px;
         background: var(--accent);
-        color: var(--bg);
+        color: var(--on-accent);
         font-weight: 700;
         font-size: 15px;
         border: none;
@@ -431,7 +465,53 @@
       }
       .scope-3 .scope-label {
         background: var(--coral);
-        color: #fff;
+        color: var(--on-accent);
+      }
+      .top-actions {
+        position: fixed;
+        top: 10px;
+        right: 14px;
+        z-index: 1200;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .backlink {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-muted);
+        text-decoration: none;
+        padding: 7px 10px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--surface);
+      }
+      .backlink:hover {
+        color: var(--text);
+        border-color: var(--accent);
+      }
+      .theme-toggle {
+        width: 44px;
+        height: 24px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--toggle-track);
+        cursor: pointer;
+        position: relative;
+      }
+      .theme-toggle::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--toggle-knob);
+        transition: transform 0.25s ease;
+      }
+      :root[data-theme="dark"] .theme-toggle::after {
+        transform: translateX(20px);
       }
       .scope-items {
         display: flex;
@@ -823,10 +903,17 @@
         .flow-arrow {
           transform: rotate(90deg);
         }
+        .backlink {
+          display: none;
+        }
       }
     </style>
   </head>
   <body>
+    <div class="top-actions">
+      <a class="backlink" href="https://learn.tokocurahaustralia.com" target="_blank" rel="noopener noreferrer">Toko Curah Learning ↗</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+    </div>
     <!-- NAV -->
     <nav class="course-nav">
       <div class="logo">CO₂ <span>Carbon Accounting</span></div>
@@ -2247,6 +2334,15 @@
     </section>
 
     <script>
+      const root = document.documentElement;
+      const themeToggle = document.getElementById("themeToggle");
+
+      themeToggle.addEventListener("click", () => {
+        const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+      });
+
       // STATE
       const TOTAL_STEPS = 21;
       let completedSteps = new Set();
