@@ -1,0 +1,8 @@
+---
+const { title, href } = Astro.props;
+---
+<section class="next-up">
+  <p class="eyebrow" style="margin:0;">What to read next</p>
+  <h3 style="margin:0.4rem 0 0.5rem;">{title}</h3>
+  <a class="btn" href={href}>Open next course</a>
+</section>

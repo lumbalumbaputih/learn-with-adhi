@@ -1,0 +1,7 @@
+---
+const { variant = 'info', title } = Astro.props;
+---
+<aside class={`callout callout-${variant}`}>
+  {title && <strong>{title}</strong>}
+  <div><slot /></div>
+</aside>

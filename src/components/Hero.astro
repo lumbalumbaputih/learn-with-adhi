@@ -1,0 +1,13 @@
+---
+const { eyebrow, title, intro, cta = '#content-start' } = Astro.props;
+---
+<section class="hero">
+  <div class="hero-box">
+    <div class="eyebrow">{eyebrow}</div>
+    <h1 class="hero-title">{title}</h1>
+    <p class="hero-intro">{intro}</p>
+    <div class="btn-row">
+      <a class="btn btn-secondary" href={cta}>Start</a>
+    </div>
+  </div>
+</section>

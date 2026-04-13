@@ -1,0 +1,33 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/components.css';
+import '../styles/utilities.css';
+
+const { title = 'Learn with Adhi', description = 'Learning hub', breadcrumb, courseKey } = Astro.props;
+---
+<!doctype html>
+<html lang="en" data-course={courseKey}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+    <script is:inline>
+      (function() {
+        var saved = localStorage.getItem('theme');
+        var sys = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', saved || sys);
+      })();
+    </script>
+  </head>
+  <body>
+    <Nav breadcrumb={breadcrumb} />
+    <slot />
+    <Footer />
+  </body>
+</html>

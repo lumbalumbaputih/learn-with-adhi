@@ -1,26 +1,32 @@
 # Learn with Adhi
 
-A simple static learning hub built with HTML, CSS, and vanilla JavaScript.
+Unified Astro redesign for the Learn with Adhi hub and five courses.
 
-## Pages
+## Stack
 
-- `index.html` — Home page with course cards and dark/light theme toggle
-- `code-ecosystem-guide-complete-v1.html` — Code ecosystem learning course
-- `carbon-accounting-course.html` — Carbon accounting guided course
+- Astro
+- MDX content collections
+- Vanilla CSS design tokens with Menor palette
 
-## How to run locally
-
-Because this is a static site, you can open `index.html` directly in your browser.
-
-If you prefer a local server, run any static server command, for example:
+## Local development
 
 ```bash
-python3 -m http.server 8000
+npm install
+npm run dev
 ```
 
-Then open `http://localhost:8000` in your browser.
+Build for production:
 
-## Notes
+```bash
+npm run build
+npm run preview
+```
 
-- Theme preference on the home page is saved in browser `localStorage`.
-- No build step is required.
+## Structure
+
+- `src/pages/index.astro`: learning hub
+- `src/pages/[slug].astro`: dynamic course pages
+- `src/content/courses/*.mdx`: five course contents
+- `src/components/*`: shared component system
+- `src/styles/*`: tokens, base, and component styles
+- `legacy/*`: previous static HTML files kept for rollback

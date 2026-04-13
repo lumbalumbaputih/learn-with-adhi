@@ -1,0 +1,26 @@
+---
+const { id, question, options = [], answer = 0, explanation = '' } = Astro.props;
+---
+<div class="quiz" data-quiz={id}>
+  <p><strong>{question}</strong></p>
+  <div>
+    {options.map((opt, idx) => (
+      <button class="quiz-option" type="button" data-index={idx}>{opt}</button>
+    ))}
+  </div>
+  <p class="quiz-feedback" aria-live="polite"></p>
+</div>
+<script is:inline define:vars={{ id, answer, explanation }}>
+  const quizBox = document.querySelector(`[data-quiz="${id}"]`);
+  if (quizBox) {
+    const feedback = quizBox.querySelector('.quiz-feedback');
+    quizBox.querySelectorAll('.quiz-option').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const picked = Number(btn.getAttribute('data-index'));
+        const isCorrect = picked === Number(answer);
+        feedback.textContent = isCorrect ? `Correct: ${explanation}` : `Try again: ${explanation}`;
+        feedback.style.color = isCorrect ? 'var(--menor-hijau-betawi)' : 'var(--menor-jingga-bis-kota)';
+      });
+    });
+  }
+</script>

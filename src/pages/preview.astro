@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ModuleHeader from '../components/ModuleHeader.astro';
+import Callout from '../components/Callout.astro';
+import Accordion from '../components/Accordion.astro';
+import Quiz from '../components/Quiz.astro';
+import KeyTerm from '../components/KeyTerm.astro';
+import DiagramFrame from '../components/DiagramFrame.astro';
+import Progress from '../components/Progress.astro';
+import NextUp from '../components/NextUp.astro';
+---
+<BaseLayout title="Component preview | Learn with Adhi" description="Preview all shared components" courseKey="code">
+  <Hero eyebrow="Preview" title="Design system preview" intro="This page validates every shared component in both themes." />
+  <main>
+    <article class="content">
+      <Progress count={6} active={3} />
+      <ModuleHeader number={1} title="Callouts" />
+      <Callout variant="info" title="Info">Useful context for learners.</Callout>
+      <Callout variant="tip" title="Tip">A practical shortcut that helps in tasks.</Callout>
+      <Callout variant="warning" title="Warning">Watch this common mistake.</Callout>
+      <Callout variant="example" title="Example">This callout uses dark text on yellow.</Callout>
+
+      <ModuleHeader number={2} title="Accordion and quiz" />
+      <Accordion title="Why this redesign matters">
+        A unified system keeps every course consistent and easier to maintain.
+      </Accordion>
+      <Quiz id="preview-quiz" question="Which palette powers this redesign?" options={["Menor", "Nord", "Solarized"]} answer={0} explanation="The redesign uses the Menor colour palette." />
+
+      <ModuleHeader number={3} title="Key terms and diagrams" />
+      <p>The <KeyTerm term="Scope 3" definition="Indirect value chain emissions" /> category usually dominates emissions reporting.</p>
+      <DiagramFrame caption="Simple process flow">
+        <svg viewBox="0 0 420 80" width="100%" height="80" role="img" aria-label="Flow diagram">
+          <rect x="10" y="20" width="120" height="40" rx="8" fill="var(--accent-1)" />
+          <rect x="150" y="20" width="120" height="40" rx="8" fill="var(--accent-2)" />
+          <rect x="290" y="20" width="120" height="40" rx="8" fill="var(--menor-hijau-betawi)" />
+        </svg>
+      </DiagramFrame>
+      <NextUp title="Carbon Accounting" href="/carbon-accounting/" />
+    </article>
+  </main>
+</BaseLayout>

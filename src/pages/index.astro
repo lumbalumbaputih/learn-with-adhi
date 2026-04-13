@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CourseCard from '../components/CourseCard.astro';
+import { courses } from '../data/courses';
+---
+<BaseLayout title="Learn with Adhi" description="Free and open courses for coding, sustainability, and AI.">
+  <section class="hero">
+    <div class="hero-box" style="background:var(--surface);color:var(--text);border:1px solid var(--border);">
+      <div class="eyebrow" style="color:var(--text-dim);">Free and open courses</div>
+      <h1 class="hero-title">Learn something <span class="accent">worth knowing</span></h1>
+      <p class="hero-intro muted">Practical courses on coding, sustainability, AI capability, and IELTS preparation.</p>
+    </div>
+  </section>
+  <main>
+    <section class="course-grid" aria-label="Course list">
+      {courses.map((course) => <CourseCard course={course} />)}
+    </section>
+  </main>
+</BaseLayout>

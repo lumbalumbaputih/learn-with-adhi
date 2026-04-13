@@ -1,0 +1,6 @@
+---
+const { number, title } = Astro.props;
+---
+<div class="module-header" id={`module-${number}`}>
+  <h2><span class="module-number">{String(number).padStart(2, '0')}</span>{title}</h2>
+</div>

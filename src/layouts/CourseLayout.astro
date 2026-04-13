@@ -1,0 +1,26 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Progress from '../components/Progress.astro';
+import NextUp from '../components/NextUp.astro';
+
+const { frontmatter } = Astro.props;
+const nextMap = {
+  'code-for-non-coders': { href: '/carbon-accounting/', title: 'Carbon Accounting' },
+  'carbon-accounting': { href: '/ai-capability/', title: 'Bridging the AI Gap' },
+  'ai-capability': { href: '/ielts-bahasa-hacking/', title: 'Bahasa Hacking' },
+  'ielts-bahasa-hacking': { href: '/ielts-band7-precision/', title: 'Band 7 Precision Lab' },
+  'ielts-band7-precision': { href: '/', title: 'Back to learning hub' },
+};
+const nextUp = nextMap[frontmatter.slug];
+---
+<BaseLayout title={`${frontmatter.title} | Learn with Adhi`} description={frontmatter.description} breadcrumb={frontmatter.title} courseKey={frontmatter.courseKey}>
+  <Hero eyebrow={frontmatter.eyebrow} title={frontmatter.title} intro={frontmatter.description} />
+  <main id="content-start">
+    <Progress count={5} active={2} />
+    <article class="content">
+      <slot />
+      <NextUp title={nextUp.title} href={nextUp.href} />
+    </article>
+  </main>
+</BaseLayout>

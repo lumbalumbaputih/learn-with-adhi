@@ -1,0 +1,6 @@
+---
+const { count = 5, active = 1 } = Astro.props;
+---
+<div class="progress" aria-label="Section progress">
+  {Array.from({ length: count }).map((_, idx) => <span class={`progress-dot ${idx + 1 <= active ? 'active' : ''}`}></span>)}
+</div>

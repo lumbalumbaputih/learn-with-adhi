@@ -1,0 +1,9 @@
+---
+const { course } = Astro.props;
+---
+<a class="course-card" href={`/${course.slug}/`} style={`--accent:${course.accent};`}>
+  <p class="meta"><span class="dot"></span>{course.icon} {course.level}</p>
+  <h2 style="font-size:1.35rem;margin:0.4rem 0;">{course.title}</h2>
+  <p class="muted">{course.description}</p>
+  <p class="meta" style="font-size:var(--fs-small);">{course.tags.join(' · ')}</p>
+</a>

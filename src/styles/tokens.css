@@ -1,0 +1,113 @@
+:root {
+  color-scheme: light dark;
+
+  --menor-hijau-betawi: #19ae5d;
+  --menor-biru-abang: #1c5ddc;
+  --menor-kuning-gigi-balang: #feb52b;
+  --menor-jingga-bis-kota: #fc351c;
+  --menor-pink-none: #eb30a2;
+  --menor-biru-pesisir: #00aaff;
+  --menor-putih: #ffffff;
+
+  --fs-display: clamp(2.4rem, 6vw, 4.2rem);
+  --fs-h1: clamp(1.8rem, 4vw, 2.6rem);
+  --fs-h2: clamp(1.4rem, 3vw, 1.8rem);
+  --fs-h3: 1.2rem;
+  --fs-body: 1rem;
+  --fs-small: 0.88rem;
+  --fs-micro: 0.72rem;
+  --lh-body: 1.65;
+  --lh-tight: 1.15;
+
+  --accent-1: var(--menor-biru-abang);
+  --accent-2: var(--menor-pink-none);
+  --accent-ink: var(--menor-putih);
+  --ink-strong: #141419;
+}
+
+:root[data-theme='light'] {
+  --bg: #fafaf7;
+  --bg-subtle: #f2f1ec;
+  --surface: #ffffff;
+  --surface-hover: #faf9f4;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.14);
+  --text: #141419;
+  --text-dim: #5a5b66;
+  --text-muted: #9a9ba6;
+  --shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.12);
+
+  --accent-hijau-betawi: var(--menor-hijau-betawi);
+  --accent-biru-abang: var(--menor-biru-abang);
+  --accent-kuning-gb: var(--menor-kuning-gigi-balang);
+  --accent-jingga-bk: var(--menor-jingga-bis-kota);
+  --accent-pink-none: var(--menor-pink-none);
+  --accent-biru-pesisir: var(--menor-biru-pesisir);
+}
+
+:root[data-theme='dark'] {
+  --bg: #0b0b12;
+  --bg-subtle: #12121c;
+  --surface: #171722;
+  --surface-hover: #1d1d2a;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.2);
+  --text: #ececf0;
+  --text-dim: #9092a3;
+  --text-muted: #555664;
+  --shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.6);
+
+  --accent-hijau-betawi: #2ec272;
+  --accent-biru-abang: #3a79ec;
+  --accent-kuning-gb: #ffc649;
+  --accent-jingga-bk: #ff5a43;
+  --accent-pink-none: #f054b5;
+  --accent-biru-pesisir: #1fbaff;
+}
+
+:root[data-theme='dark'][data-course='code'] {
+  --accent-1: var(--accent-biru-abang);
+  --accent-2: var(--accent-pink-none);
+}
+:root[data-theme='dark'][data-course='carbon'] {
+  --accent-1: var(--accent-hijau-betawi);
+  --accent-2: var(--accent-kuning-gb);
+}
+:root[data-theme='dark'][data-course='ai'] {
+  --accent-1: var(--accent-biru-pesisir);
+  --accent-2: var(--accent-jingga-bk);
+}
+:root[data-theme='dark'][data-course='bahasa'] {
+  --accent-1: var(--accent-kuning-gb);
+  --accent-2: var(--accent-jingga-bk);
+}
+:root[data-theme='dark'][data-course='precision'] {
+  --accent-1: var(--accent-biru-abang);
+  --accent-2: var(--accent-hijau-betawi);
+}
+
+:root[data-course='code'] {
+  --accent-1: var(--menor-biru-abang);
+  --accent-2: var(--menor-pink-none);
+  --accent-ink: var(--menor-putih);
+}
+:root[data-course='carbon'] {
+  --accent-1: var(--menor-hijau-betawi);
+  --accent-2: var(--menor-kuning-gigi-balang);
+  --accent-ink: var(--menor-putih);
+}
+:root[data-course='ai'] {
+  --accent-1: var(--menor-biru-pesisir);
+  --accent-2: var(--menor-jingga-bis-kota);
+  --accent-ink: var(--menor-putih);
+}
+:root[data-course='bahasa'] {
+  --accent-1: var(--menor-kuning-gigi-balang);
+  --accent-2: var(--menor-jingga-bis-kota);
+  --accent-ink: #141419;
+}
+:root[data-course='precision'] {
+  --accent-1: var(--menor-biru-abang);
+  --accent-2: var(--menor-hijau-betawi);
+  --accent-ink: var(--menor-putih);
+}

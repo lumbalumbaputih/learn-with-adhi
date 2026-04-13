@@ -2,9 +2,10 @@
   "name": "learn-with-adhi",
   "version": "1.0.0",
   "description": "A simple static learning hub built with HTML, CSS, and vanilla JavaScript.",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "repository": {
     "type": "git",
@@ -13,7 +14,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/lumbalumbaputih/learn-with-adhi/issues"
   },

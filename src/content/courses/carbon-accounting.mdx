@@ -1,0 +1,53 @@
+---
+layout: ../../layouts/CourseLayout.astro
+slug: carbon-accounting
+title: Carbon Accounting
+eyebrow: Course 02 · Sustainability
+description: Learn Scope 1, Scope 2, and Scope 3 accounting with practical reporting foundations.
+icon: 🌍
+tags: [Sustainability, Climate]
+level: Beginner
+kombinasi: K4
+courseKey: carbon
+updated: 2026-04-14
+---
+
+import ModuleHeader from '../../components/ModuleHeader.astro';
+import Callout from '../../components/Callout.astro';
+import DiagramFrame from '../../components/DiagramFrame.astro';
+import Quiz from '../../components/Quiz.astro';
+import KeyTerm from '../../components/KeyTerm.astro';
+
+<ModuleHeader number={1} title="Why carbon accounting matters" />
+
+Carbon accounting helps organisations quantify emissions and identify reduction priorities. Consistent measurement enables better decisions over time.
+
+A baseline period gives you a stable starting point. Without a baseline, progress claims are hard to compare year over year.
+
+<Callout variant="info" title="Key term">
+  <KeyTerm term="GHG Protocol" definition="A global standard for emissions accounting" /> is the common reference used by most organisations.
+</Callout>
+
+<ModuleHeader number={2} title="Scope 1, 2, and 3" />
+
+Scope 1 covers direct emissions from controlled sources. Scope 2 covers purchased energy. Scope 3 covers value chain emissions.
+
+<DiagramFrame caption="Scope model overview">
+  <svg viewBox="0 0 520 170" width="100%" height="170" role="img" aria-label="Scope diagram">
+    <rect x="20" y="25" width="150" height="120" rx="10" fill="var(--accent-1)" />
+    <rect x="185" y="25" width="150" height="120" rx="10" fill="var(--accent-2)" />
+    <rect x="350" y="25" width="150" height="120" rx="10" fill="var(--menor-biru-abang)" />
+  </svg>
+</DiagramFrame>
+
+<Callout variant="warning" title="Common trap">
+  Scope 3 is often the largest category, but it is also the easiest to underestimate without supplier data.
+</Callout>
+
+<ModuleHeader number={3} title="Reporting and action" />
+
+Build a repeatable data collection process first, then improve precision in each cycle. Reliable direction beats perfect but delayed reports.
+
+Use activity data, apply emission factors, and document assumptions. Transparent notes make audits and reviews easier.
+
+<Quiz id="carbon-quiz-1" question="Which scope usually includes upstream suppliers and downstream use?" options={["Scope 1", "Scope 2", "Scope 3"]} answer={2} explanation="Scope 3 captures value chain emissions across upstream and downstream activities." />

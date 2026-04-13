@@ -1,0 +1,14 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+const { breadcrumb } = Astro.props;
+---
+<nav class="site-nav">
+  <a class="logo" href="/">
+    <span class="logo-mark">✦</span>
+    <span class="logo-title">Learn with Adhi<span class="logo-subtitle">Learning Hub</span></span>
+  </a>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    {breadcrumb && <span class="breadcrumb">Hub / {breadcrumb}</span>}
+    <ThemeToggle />
+  </div>
+</nav>

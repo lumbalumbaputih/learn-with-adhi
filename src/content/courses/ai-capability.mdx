@@ -1,0 +1,47 @@
+---
+layout: ../../layouts/CourseLayout.astro
+slug: ai-capability
+title: Bridging the AI Gap
+eyebrow: Course 03 · AI Capability
+description: Build practical AI capability with workflows, critical review, and responsible use.
+icon: 🤖
+tags: [AI, Practical Skills]
+level: Beginner
+kombinasi: K5
+courseKey: ai
+updated: 2026-04-14
+---
+
+import ModuleHeader from '../../components/ModuleHeader.astro';
+import Callout from '../../components/Callout.astro';
+import Accordion from '../../components/Accordion.astro';
+import Quiz from '../../components/Quiz.astro';
+import KeyTerm from '../../components/KeyTerm.astro';
+
+<ModuleHeader number={1} title="Capability before hype" />
+
+AI capability is the ability to define problems, choose the right tool, and verify outputs. It is not only about prompts.
+
+A strong workflow starts with a clear task, relevant context, and success criteria.
+
+<Callout variant="tip" title="Key term">
+  <KeyTerm term="human-in-the-loop" definition="Human review and decision making remain part of the process" /> keeps quality and accountability in place.
+</Callout>
+
+<ModuleHeader number={2} title="Prompting and verification" />
+
+Effective prompts are structured and specific. You should request format, scope, constraints, and evidence.
+
+Always verify important outputs with source checks. Confidence is not evidence.
+
+<Accordion title="How to review AI output quickly">
+  Check factual claims, then inspect logic, then review tone and policy alignment.
+</Accordion>
+
+<ModuleHeader number={3} title="Responsible adoption" />
+
+Set guardrails for privacy, bias, and security before scaling usage. Team adoption works best when everyone uses a shared review checklist.
+
+Pilot with small internal tasks, measure improvements, and publish lessons learned.
+
+<Quiz id="ai-quiz-1" question="What is the safest default for business-critical AI output?" options={["Publish immediately", "Treat output as draft and verify", "Skip human review"]} answer={1} explanation="High impact outputs should be treated as drafts until verified." />
