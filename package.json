@@ -1,0 +1,26 @@
+{
+  "name": "learn-with-adhi",
+  "version": "1.0.0",
+  "description": "A simple static learning hub built with HTML, CSS, and vanilla JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lumbalumbaputih/learn-with-adhi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lumbalumbaputih/learn-with-adhi/issues"
+  },
+  "homepage": "https://github.com/lumbalumbaputih/learn-with-adhi#readme",
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.3",
+    "@astrojs/sitemap": "^3.7.2",
+    "astro": "^6.1.6"
+  }
+}
