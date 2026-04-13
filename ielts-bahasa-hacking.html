@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Hacking — IELTS for Indonesian Speakers</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0f0f13;
+    --surface: #1a1a24;
+    --surface2: #242436;
+    --accent: #6c5ce7;
+    --accent2: #a29bfe;
+    --green: #00b894;
+    --red: #e17055;
+    --orange: #fdcb6e;
+    --text: #e8e8f0;
+    --text2: #9090a8;
+    --radius: 16px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,15,19,.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(108,92,231,.2);
+    padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .topbar h1 { font-size: 18px; font-weight: 800; }
+  .topbar h1 span { color: var(--accent2); }
+  .xp-bar-wrap { display: flex; align-items: center; gap: 10px; }
+  .xp-bar { width: 120px; height: 8px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+  .xp-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 99px; transition: width .5s; }
+  .xp-label { font-size: 12px; color: var(--text2); font-weight: 600; }
+  .streak-badge { background: var(--surface2); padding: 4px 12px; border-radius: 99px; font-size: 13px; font-weight: 600; }
+  .streak-badge i { color: var(--orange); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px 100px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid rgba(108,92,231,.15);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+    transition: transform .2s;
+  }
+  .card:hover { transform: translateY(-2px); }
+  .card h2 { font-size: 22px; margin-bottom: 8px; }
+  .card h3 { font-size: 16px; color: var(--accent2); margin-bottom: 12px; font-weight: 600; }
+  .card p { color: var(--text2); margin-bottom: 14px; font-size: 15px; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px;
+    border: none; border-radius: 12px;
+    font-family: inherit; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #5a4bd6; transform: scale(1.03); }
+  .btn-secondary { background: var(--surface2); color: var(--text); }
+  .btn-secondary:hover { background: #2e2e44; }
+  .btn-success { background: var(--green); color: #fff; }
+  .btn-danger { background: var(--red); color: #fff; }
+  .btn-sm { padding: 8px 16px; font-size: 13px; border-radius: 8px; }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tab {
+    padding: 10px 20px; border-radius: 12px;
+    background: var(--surface2); color: var(--text2);
+    border: none; font-family: inherit; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+  }
+  .tab.active { background: var(--accent); color: #fff; }
+  .tab:hover:not(.active) { background: #2e2e44; color: var(--text); }
+
+  /* ── QUIZ ── */
+  .quiz-option {
+    display: block; width: 100%;
+    padding: 14px 18px; margin-bottom: 10px;
+    background: var(--surface2); border: 2px solid transparent;
+    border-radius: 12px; color: var(--text);
+    font-family: inherit; font-size: 15px; text-align: left;
+    cursor: pointer; transition: all .15s;
+  }
+  .quiz-option:hover { border-color: var(--accent); background: #2a2a40; }
+  .quiz-option.correct { border-color: var(--green); background: rgba(0,184,148,.12); }
+  .quiz-option.wrong { border-color: var(--red); background: rgba(225,112,85,.12); }
+  .quiz-option.selected { border-color: var(--accent2); }
+
+  .explanation {
+    margin-top: 14px; padding: 16px;
+    background: rgba(108,92,231,.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    font-size: 14px; line-height: 1.7;
+  }
+  .explanation .indo { color: var(--orange); font-weight: 600; }
+  .explanation .eng { color: var(--green); font-weight: 600; }
+
+  /* ── PROGRESS GRID ── */
+  .progress-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin: 16px 0; }
+  .progress-item {
+    background: var(--surface2); border-radius: 12px; padding: 16px; text-align: center;
+  }
+  .progress-item .num { font-size: 28px; font-weight: 800; color: var(--accent2); }
+  .progress-item .label { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+  /* ── BAND DESC ── */
+  .band-card {
+    padding: 16px; border-radius: 12px; margin-bottom: 10px;
+    border-left: 4px solid;
+  }
+  .band-card.b4 { background: rgba(225,112,85,.08); border-color: var(--red); }
+  .band-card.b5 { background: rgba(253,203,110,.08); border-color: var(--orange); }
+  .band-card.b6 { background: rgba(0,184,148,.08); border-color: var(--green); }
+  .band-card .band-num { font-size: 20px; font-weight: 800; }
+  .band-card p { font-size: 13px; margin-top: 6px; }
+
+  /* ── WRITING ── */
+  .writing-area {
+    width: 100%; min-height: 180px; padding: 16px;
+    background: var(--surface2); border: 2px solid rgba(108,92,231,.2);
+    border-radius: 12px; color: var(--text);
+    font-family: inherit; font-size: 15px; line-height: 1.7;
+    resize: vertical;
+  }
+  .writing-area:focus { outline: none; border-color: var(--accent); }
+  .writing-area::placeholder { color: var(--text2); }
+
+  .word-count { font-size: 13px; color: var(--text2); margin-top: 8px; text-align: right; }
+
+  /* ── SPEAKING ── */
+  .timer-display {
+    font-size: 64px; font-weight: 800; text-align: center;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent2);
+    margin: 20px 0;
+  }
+  .timer-display.warning { color: var(--orange); }
+  .timer-display.danger { color: var(--red); }
+
+  /* ── MISTAKE PATTERNS ── */
+  .pattern-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 12px;
+  }
+  .pattern-box {
+    padding: 14px; border-radius: 12px; font-size: 14px;
+  }
+  .pattern-box.wrong-way {
+    background: rgba(225,112,85,.08); border: 1px solid rgba(225,112,85,.2);
+  }
+  .pattern-box.right-way {
+    background: rgba(0,184,148,.08); border: 1px solid rgba(0,184,148,.2);
+  }
+  .pattern-box .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .pattern-box.wrong-way .label { color: var(--red); }
+  .pattern-box.right-way .label { color: var(--green); }
+
+  /* ── LISTENING ── */
+  .audio-sim {
+    background: var(--surface2); border-radius: 12px; padding: 20px;
+    margin: 16px 0;
+  }
+  .audio-sim .transcript {
+    font-size: 15px; line-height: 2;
+    max-height: 0; overflow: hidden; transition: max-height .5s;
+  }
+  .audio-sim .transcript.show { max-height: 500px; }
+  .gap { display: inline-block; min-width: 80px; border-bottom: 2px dashed var(--accent); padding: 2px 4px; }
+  .gap input {
+    background: transparent; border: none; color: var(--accent2);
+    font-family: inherit; font-size: 15px; width: 100px;
+    outline: none;
+  }
+
+  /* ── MODULE LIST ── */
+  .module-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px; background: var(--surface2);
+    border-radius: 12px; margin-bottom: 8px;
+    cursor: pointer; transition: all .2s;
+  }
+  .module-item:hover { background: #2e2e44; }
+  .module-item.locked { opacity: .4; cursor: not-allowed; }
+  .module-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 800;
+  }
+  .module-icon.done { background: rgba(0,184,148,.15); color: var(--green); }
+  .module-icon.current { background: rgba(108,92,231,.15); color: var(--accent2); }
+  .module-icon.locked { background: var(--surface); color: var(--text2); }
+  .module-info h4 { font-size: 15px; font-weight: 600; }
+  .module-info p { font-size: 12px; color: var(--text2); }
+
+  /* ── CHECKLIST ── */
+  .checklist-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+    font-size: 14px;
+  }
+  .check-box {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid var(--text2); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; flex-shrink: 0;
+  }
+  .check-box.checked { background: var(--green); border-color: var(--green); }
+
+  /* ── MISC ── */
+  .tag { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  .tag-listen { background: rgba(108,92,231,.15); color: var(--accent2); }
+  .tag-read { background: rgba(0,184,148,.15); color: var(--green); }
+  .tag-write { background: rgba(253,203,110,.15); color: var(--orange); }
+  .tag-speak { background: rgba(225,112,85,.15); color: var(--red); }
+  .tag-hack { background: rgba(162,155,254,.15); color: var(--accent2); }
+
+  .divider { height: 1px; background: rgba(255,255,255,.06); margin: 20px 0; }
+
+  .hero-emoji { font-size: 48px; margin-bottom: 12px; }
+
+  .fade-in { animation: fadeIn .4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  .flex-between { display: flex; justify-content: space-between; align-items: center; }
+  .flex-center { display: flex; align-items: center; gap: 8px; }
+  .mt-8 { margin-top: 8px; } .mt-16 { margin-top: 16px; } .mt-24 { margin-top: 24px; }
+  .mb-8 { margin-bottom: 8px; } .mb-16 { margin-bottom: 16px; }
+  .text-sm { font-size: 13px; } .text-muted { color: var(--text2); }
+  .text-center { text-align: center; }
+
+  @media (max-width: 600px) {
+    .pattern-row { grid-template-columns: 1fr; }
+    .progress-grid { grid-template-columns: repeat(2, 1fr); }
+    .tabs { gap: 4px; }
+    .tab { padding: 8px 14px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  BAHASA HACKING — IELTS COURSE ENGINE
+// ══════════════════════════════════════════════════════
+
+const STATE = {
+  screen: 'home', // home, diagnostic, modules, module-detail, practice, results
+  tab: 'overview',
+  xp: 0,
+  streak: 0,
+  diagnosticStep: 0,
+  diagnosticAnswers: [],
+  diagnosticDone: false,
+  diagnosticScore: null,
+  currentModule: null,
+  currentExercise: 0,
+  exerciseAnswers: {},
+  writingText: '',
+  speakingTime: 0,
+  speakingRunning: false,
+  speakingPhase: 'prep', // prep, speak
+  completedModules: [],
+  dailyChecklist: {},
+  unlockedModules: [0],
+};
+
+// ── DIAGNOSTIC QUESTIONS ──
+const DIAGNOSTIC = [
+  {
+    q: "Choose the correct sentence:",
+    opts: [
+      "I am agree with your opinion.",
+      "I agree with your opinion.",
+      "I am agree with your opinion about it.",
+      "I agree about your opinion."
+    ],
+    correct: 1,
+    explain: `<span class="indo">"Saya setuju"</span> becomes just <span class="eng">"I agree"</span> — no "am" needed! In Indonesian we might say "Saya setuju" which feels like "I am agree" but English doesn't use "be + agree". Also, it's "agree WITH" not "agree about".`,
+    skill: 'grammar'
+  },
+  {
+    q: "Fill the gap: ___ water in the glass is dirty.",
+    opts: ["A", "An", "The", "(nothing)"],
+    correct: 2,
+    explain: `We use <span class="eng">"the"</span> because we're talking about SPECIFIC water (in that glass). Indonesian doesn't have articles — no "a/an/the" — so this is the #1 trap for Indonesian speakers. If it's specific → <span class="eng">the</span>. If it's one of many → <span class="eng">a/an</span>.`,
+    skill: 'grammar'
+  },
+  {
+    q: "Which sentence is correct?",
+    opts: [
+      "She go to school yesterday.",
+      "She went to school yesterday.",
+      "She is go to school yesterday.",
+      "She was go to school yesterday."
+    ],
+    correct: 1,
+    explain: `Indonesian uses time markers ("kemarin") instead of changing the verb. English CHANGES the verb: go → <span class="eng">went</span>. "Yesterday" = past tense, always. This is huge for IELTS Writing — inconsistent tenses drop you to Band 4.`,
+    skill: 'grammar'
+  },
+  {
+    q: "Choose the best paraphrase of: 'Many people think social media is bad for children.'",
+    opts: [
+      "Social media is bad for children, many people think.",
+      "It is widely believed that social media has a negative impact on young people.",
+      "Many people think social media is bad for children.",
+      "Social media bad for children."
+    ],
+    correct: 1,
+    explain: `IELTS loves paraphrasing. Option B uses <span class="eng">"It is widely believed"</span> (passive) and <span class="eng">"negative impact on young people"</span> (synonyms). This shows vocabulary range — the difference between Band 4.5 and 5.5+.`,
+    skill: 'vocabulary'
+  },
+  {
+    q: "What does 'Nevertheless' mean?",
+    opts: [
+      "Because of this",
+      "For example",
+      "Despite that / However",
+      "In addition"
+    ],
+    correct: 2,
+    explain: `<span class="eng">"Nevertheless"</span> = <span class="indo">"Meskipun demikian" / "Namun"</span>. Linking words like this are GOLD for IELTS Writing. Band 5+ needs you to connect ideas with words like however, furthermore, consequently, nevertheless.`,
+    skill: 'vocabulary'
+  },
+  {
+    q: `Read this: "The government allocated $2 million for the new park project." What did the government do?`,
+    opts: [
+      "Built a park",
+      "Set aside money for a park",
+      "Rejected the park project",
+      "Visited the park"
+    ],
+    correct: 1,
+    explain: `<span class="eng">"Allocated"</span> = <span class="indo">"mengalokasikan / menyediakan"</span>. In IELTS Reading, you'll see academic vocabulary like this constantly. You don't need to know every word — but you DO need to guess from context. "$2 million" + "for" = giving money for something.`,
+    skill: 'reading'
+  },
+  {
+    q: "You hear: 'The lecture will take place on the THIRD floor.' Which floor?",
+    opts: ["1st", "2nd", "3rd", "4th"],
+    correct: 2,
+    explain: `Listening for specific details like numbers, dates, and floors is a core IELTS Listening skill. The trap: Indonesian speakers sometimes confuse ordinal numbers (third/thirteen/thirty). Practice hearing the difference!`,
+    skill: 'listening'
+  },
+  {
+    q: "In IELTS Speaking Part 2, you get a topic card. How long do you speak?",
+    opts: [
+      "30 seconds",
+      "1 minute",
+      "1-2 minutes",
+      "5 minutes"
+    ],
+    correct: 2,
+    explain: `You get 1 minute to prepare, then speak for <span class="eng">1-2 minutes</span>. Most Indonesian speakers stop at 40 seconds because they run out of things to say. The trick: use the bullet points on the card as a structure. We'll practice this!`,
+    skill: 'speaking'
+  },
+  {
+    q: "Choose the correct preposition: 'I am interested ___ learning English.'",
+    opts: ["to", "in", "for", "about"],
+    correct: 1,
+    explain: `<span class="indo">"Tertarik"</span> maps to <span class="eng">"interested IN"</span>. Indonesian prepositions don't match English ones. Common traps: interested IN (not "to"), depend ON (not "to"), consist OF (not "from"), good AT (not "in").`,
+    skill: 'grammar'
+  },
+  {
+    q: "Which is the better IELTS Writing Task 2 introduction?",
+    opts: [
+      "In this essay I will discuss about pollution and give my opinion.",
+      "Environmental pollution has become a pressing concern in many countries, and there is ongoing debate about the most effective solutions.",
+      "Pollution is very bad. I think we should stop it.",
+      "Nowadays, many people discuss about pollution."
+    ],
+    correct: 1,
+    explain: `Option B is Band 6+ material: it paraphrases the topic, uses academic vocabulary (<span class="eng">"pressing concern"</span>, <span class="eng">"ongoing debate"</span>), and sets up the essay. Note: it's "discuss pollution" NOT <span class="indo">"discuss about"</span> — that's a direct translation from "membahas tentang".`,
+    skill: 'writing'
+  }
+];
+
+// ── MODULES ──
+const MODULES = [
+  {
+    id: 0,
+    title: "The Indonesian Trap Map",
+    emoji: "🗺️",
+    tag: "hack",
+    tagLabel: "BAHASA HACK",
+    desc: "Learn the 10 most common mistakes Indonesian speakers make — and kill them forever.",
+    duration: "20 min",
+    exercises: [
+      {
+        type: 'pattern',
+        title: 'Article Blindness',
+        indo: 'Saya beli buku di toko.',
+        wrong: 'I buy book at shop.',
+        right: 'I bought a book at the shop.',
+        explain: 'Indonesian has NO articles (a/an/the). English needs them. Rule of thumb: first mention = "a/an", already known = "the", general/uncountable = no article.',
+        practice: {
+          q: 'Fix this: "She is ___ teacher at ___ university in Jakarta."',
+          opts: ['a, a', 'the, the', 'a, the', 'a, a'],
+          correct: 0,
+          why: '"A teacher" (one of many teachers) and "a university" (one of many). If we said THE university, it means one specific known university.'
+        }
+      },
+      {
+        type: 'pattern',
+        title: 'Tense Blindness',
+        indo: 'Kemarin saya pergi ke pasar.',
+        wrong: 'Yesterday I go to market.',
+        right: 'Yesterday I went to the market.',
+        explain: 'Indonesian uses time words (kemarin, besok, sudah) instead of changing verbs. English CHANGES the verb form. Past = changed verb. This is non-negotiable for Band 5+.',
+        practice: {
+          q: 'Fix this: "Last week, she ___ (study) very hard for the exam."',
+          opts: ['study', 'studied', 'is studying', 'was study'],
+          correct: 1,
+          why: '"Last week" = past time → past tense → "studied". Simple as that.'
+        }
+      },
+      {
+        type: 'pattern',
+        title: '"Discuss About" & Friends',
+        indo: 'Kita membahas tentang masalah itu.',
+        wrong: 'We discuss about that problem.',
+        right: 'We discussed that problem.',
+        explain: '"Membahas tentang" translates literally to "discuss about" but in English, "discuss" already includes "about". Same pattern: "enter the room" (not "enter into"), "emphasize the point" (not "emphasize on").',
+        practice: {
+          q: 'Which is correct?',
+          opts: ['She emphasized on the importance of education.', 'She emphasized the importance of education.', 'She emphasized about the importance of education.', 'She emphasized to the importance of education.'],
+          correct: 1,
+          why: '"Emphasize" doesn\'t need a preposition — the meaning is already inside the verb.'
+        }
+      },
+      {
+        type: 'pattern',
+        title: 'Subject-Verb Agreement',
+        indo: 'Anak-anak bermain di taman.',
+        wrong: 'The children plays in the park.',
+        right: 'The children play in the park.',
+        explain: 'Indonesian verbs never change form. English verbs change based on singular/plural subjects. "He plays" but "They play". "She goes" but "We go".',
+        practice: {
+          q: 'Fix this: "The number of students ___ increasing every year."',
+          opts: ['are', 'is', 'were', 'have been'],
+          correct: 1,
+          why: '"The number of" is singular (one number), so use "is". But "A number of students ARE..." (meaning many students). Tricky!'
+        }
+      },
+      {
+        type: 'pattern',
+        title: 'Preposition Roulette',
+        indo: 'Saya tinggal di Jakarta.',
+        wrong: 'I live in Jakarta. (this one is actually right!)',
+        right: 'But: I arrive AT the airport (not "arrive in/to the airport")',
+        explain: 'Indonesian "di" can be in/at/on. "Ke" can be to/into. There\'s no shortcut — you need to learn preposition + verb combos. The big ones: depend ON, interested IN, good AT, arrive AT, consist OF.',
+        practice: {
+          q: 'Choose: "The results depend ___ many factors."',
+          opts: ['to', 'on', 'from', 'in'],
+          correct: 1,
+          why: '"Depend ON" — always. "Tergantung pada" = depend on. Never "depend to".'
+        }
+      },
+      {
+        type: 'pattern',
+        title: '"I am Agree" Syndrome',
+        indo: 'Saya setuju.',
+        wrong: 'I am agree.',
+        right: 'I agree.',
+        explain: '"Saya setuju" structure looks like "I am agree" but "agree" is a VERB in English, not an adjective. You don\'t need "am". Same mistake: "I am understand" → "I understand". But "I am happy" is correct because "happy" IS an adjective.',
+        practice: {
+          q: 'Which is WRONG?',
+          opts: ['I am interested.', 'I am agree.', 'I am tired.', 'I am Indonesian.'],
+          correct: 1,
+          why: '"Agree" is a verb → "I agree". The others are adjectives/nouns after "am" which is correct: "I am [adjective/noun]".'
+        }
+      }
+    ]
+  },
+  {
+    id: 1,
+    title: "Listening: Ear Training",
+    emoji: "👂",
+    tag: "listen",
+    tagLabel: "LISTENING",
+    desc: "Train your ears for numbers, spelling, and the 'answer before you hear it' technique.",
+    duration: "25 min",
+    exercises: [
+      {
+        type: 'info',
+        title: 'The 3 Listening Hacks',
+        content: `
+          <p><strong>Hack #1: Read questions FIRST.</strong> You get time before each section. USE IT. Underline keywords. Predict what type of answer you need (name? number? place?).</p>
+          <p style="margin-top:12px"><strong>Hack #2: Listen for signpost words.</strong> "However", "but", "actually", "in fact" — these signal the REAL answer is coming. The first thing you hear is often the WRONG answer (a trap).</p>
+          <p style="margin-top:12px"><strong>Hack #3: Spelling kills.</strong> "Forty" not "fourty". "Wednesday" not "Wensday". "Accommodation" (double c, double m). Practice spelling common IELTS words.</p>
+        `
+      },
+      {
+        type: 'listening-numbers',
+        title: 'Number Confusion Drill',
+        instruction: 'Indonesian speakers often confuse similar-sounding numbers. Pick the number you "hear" (read aloud in your head):',
+        pairs: [
+          { display: 'THIRTEEN', opts: ['13', '30'], correct: 0, tip: 'thir-TEEN (stress on TEEN) vs THIR-ty (stress on THIR)' },
+          { display: 'FIFTY', opts: ['15', '50'], correct: 1, tip: 'fif-TEEN vs FIF-ty — listen for the ending: -teen vs -ty' },
+          { display: 'EIGHTY', opts: ['18', '80'], correct: 1, tip: 'eight-TEEN vs EIGH-ty' },
+        ]
+      },
+      {
+        type: 'spelling-drill',
+        title: 'Spelling Bee: IELTS Edition',
+        instruction: 'These words appear constantly in IELTS Listening. Type the correct spelling:',
+        words: [
+          { hint: 'A place to stay (hotel alternative, double c, double m)', answer: 'accommodation' },
+          { hint: 'The surroundings we live in (starts with e)', answer: 'environment' },
+          { hint: 'Day after Tuesday', answer: 'wednesday' },
+          { hint: 'Number: 4 × 10', answer: 'forty' },
+          { hint: 'Absolutely needed (starts with n)', answer: 'necessary' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: "Reading: Speed & Strategy",
+    emoji: "📖",
+    tag: "read",
+    tagLabel: "READING",
+    desc: "Stop reading every word. Learn to scan, skim, and find answers in under 20 minutes per passage.",
+    duration: "25 min",
+    exercises: [
+      {
+        type: 'info',
+        title: 'Why Indonesian Readers Struggle',
+        content: `
+          <p>Indonesian reading style = read every word carefully, top to bottom. IELTS reading requires the OPPOSITE:</p>
+          <p style="margin-top:12px"><strong>Skim first (2 min):</strong> Read the title, first sentence of each paragraph, and last paragraph. Get the BIG PICTURE.</p>
+          <p style="margin-top:12px"><strong>Then scan:</strong> Read the questions. Find KEYWORDS in the question. Scan the text for those keywords or their SYNONYMS.</p>
+          <p style="margin-top:12px"><strong>The synonym trap:</strong> IELTS almost NEVER uses the exact same word as the text. "Increase" in the text → "rise" in the question. "Children" → "young people". Build your synonym brain!</p>
+        `
+      },
+      {
+        type: 'synonym-match',
+        title: 'Synonym Speed Round',
+        instruction: 'Match each word to its synonym — this is exactly what IELTS Reading tests:',
+        pairs: [
+          { word: 'Increase', opts: ['Decrease', 'Rise', 'Stop', 'Change'], correct: 1 },
+          { word: 'Important', opts: ['Small', 'Significant', 'Different', 'Simple'], correct: 1 },
+          { word: 'Difficult', opts: ['Easy', 'Challenging', 'Boring', 'Interesting'], correct: 1 },
+          { word: 'Show', opts: ['Hide', 'Tell', 'Demonstrate', 'Ask'], correct: 2 },
+          { word: 'Enough', opts: ['Sufficient', 'Extra', 'Little', 'More'], correct: 0 },
+        ]
+      },
+      {
+        type: 'info',
+        title: 'TRUE / FALSE / NOT GIVEN — The Hardest Question Type',
+        content: `
+          <p>This is where most Indonesian speakers lose marks. Here's the cheat code:</p>
+          <p style="margin-top:12px"><strong>TRUE:</strong> The text says the same thing (maybe in different words).</p>
+          <p style="margin-top:12px"><strong>FALSE:</strong> The text says the OPPOSITE.</p>
+          <p style="margin-top:12px"><strong>NOT GIVEN:</strong> The text doesn't talk about this AT ALL. Don't use your own knowledge! If the text doesn't mention it, it's NOT GIVEN — even if you know the answer in real life.</p>
+          <p style="margin-top:12px;color:var(--orange)">⚠️ Common trap: You read something RELATED but not exactly the same. That's usually NOT GIVEN, not TRUE.</p>
+        `
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: "Writing Task 2: Essay Machine",
+    emoji: "✍️",
+    tag: "write",
+    tagLabel: "WRITING",
+    desc: "Build a Band 5.5+ essay from scratch using the IDEA-E formula.",
+    duration: "30 min",
+    exercises: [
+      {
+        type: 'info',
+        title: 'The IDEA-E Formula',
+        content: `
+          <p>Forget complicated essay structures. Every body paragraph follows this:</p>
+          <div style="margin:16px 0;padding:20px;background:var(--surface2);border-radius:12px;">
+            <p><strong style="color:var(--accent2)">I</strong> — <strong>Idea</strong> (topic sentence: one clear opinion)</p>
+            <p><strong style="color:var(--accent2)">D</strong> — <strong>Detail</strong> (explain what you mean)</p>
+            <p><strong style="color:var(--accent2)">E</strong> — <strong>Example</strong> (give a specific example)</p>
+            <p><strong style="color:var(--accent2)">A</strong> — <strong>Analysis</strong> (explain WHY this matters)</p>
+            <p><strong style="color:var(--accent2)">E</strong> — <strong>End</strong> (link back to the question)</p>
+          </div>
+          <p>This alone can take you from Band 4.5 to 5.5 because it gives your essay STRUCTURE, which is 25% of your Writing score.</p>
+        `
+      },
+      {
+        type: 'writing-practice',
+        title: 'Practice: Write ONE Body Paragraph',
+        prompt: 'Topic: "Some people believe that university education should be free. To what extent do you agree or disagree?"',
+        instruction: 'Write ONE body paragraph (about 60-80 words) using the IDEA-E formula. Focus on ONE reason only.',
+        hints: [
+          'I — Start with: "One key reason why university should [not] be free is..."',
+          'D — Explain that reason in 1-2 sentences',
+          'E — Give a specific example (a country, a situation)',
+          'A — Explain why this example supports your point',
+          'E — End with a sentence linking back to the topic'
+        ]
+      },
+      {
+        type: 'info',
+        title: 'Indonesian Writing Killers (Avoid These!)',
+        content: `
+          <div style="margin-bottom:12px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div style="padding:14px;border-radius:12px;background:rgba(225,112,85,.08);border:1px solid rgba(225,112,85,.2);">
+                <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px;">❌ BAND 4</div>
+                <p style="font-size:14px">"In this modern era, technology is very important for our life."</p>
+              </div>
+              <div style="padding:14px;border-radius:12px;background:rgba(0,184,148,.08);border:1px solid rgba(0,184,148,.2);">
+                <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">✅ BAND 6</div>
+                <p style="font-size:14px">"Technology has become an essential part of daily life in many countries."</p>
+              </div>
+            </div>
+          </div>
+          <p style="margin-top:12px"><strong>Kill these phrases:</strong></p>
+          <p style="color:var(--red);margin-top:8px">"In this modern era" → just say "Today" or "Currently"</p>
+          <p style="color:var(--red);margin-top:4px">"As we know" → the examiner doesn't know. State your point directly.</p>
+          <p style="color:var(--red);margin-top:4px">"I am agree" → "I agree" or "I strongly believe"</p>
+          <p style="color:var(--red);margin-top:4px">"And etc" → just "etc." (no "and")</p>
+          <p style="color:var(--red);margin-top:4px">"Discuss about" → "discuss" (no "about")</p>
+        `
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: "Speaking: Talk Like a Human",
+    emoji: "🗣️",
+    tag: "speak",
+    tagLabel: "SPEAKING",
+    desc: "Practice Part 2 long turns with a real timer. Build confidence with the STAR method.",
+    duration: "20 min",
+    exercises: [
+      {
+        type: 'info',
+        title: 'Why Indonesian Speakers Go Silent',
+        content: `
+          <p>Three reasons Indonesian speakers freeze in IELTS Speaking:</p>
+          <p style="margin-top:12px"><strong>1. Trying to be perfect.</strong> You translate from Indonesian in your head, get stuck on grammar, and go silent. STOP translating. Fluency matters more than accuracy at Band 5.</p>
+          <p style="margin-top:12px"><strong>2. One-word answers.</strong> Examiner: "Do you like cooking?" You: "Yes." That's Band 3. Instead: "Yes, I really enjoy cooking, especially Indonesian food like nasi goreng. I usually cook on weekends when I have more free time."</p>
+          <p style="margin-top:12px"><strong>3. No structure for Part 2.</strong> You get a topic card with bullet points. USE THEM. Each bullet = 15-20 seconds of talking. That's your 1-2 minutes filled.</p>
+        `
+      },
+      {
+        type: 'speaking-practice',
+        title: 'Part 2: Timed Practice',
+        card: {
+          topic: 'Describe a meal you enjoyed recently.',
+          bullets: [
+            'What the meal was',
+            'Where you had it',
+            'Who you were with',
+            'And explain why you enjoyed it'
+          ]
+        },
+        prepTime: 60,
+        speakTime: 120
+      },
+      {
+        type: 'speaking-practice',
+        title: 'Part 2: Another One',
+        card: {
+          topic: 'Describe a place in your country you would recommend to visitors.',
+          bullets: [
+            'Where it is',
+            'What you can see and do there',
+            'How you know about this place',
+            'And explain why you recommend it'
+          ]
+        },
+        prepTime: 60,
+        speakTime: 120
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: "Vocabulary Power-Ups",
+    emoji: "⚡",
+    tag: "hack",
+    tagLabel: "LEVEL UP",
+    desc: "The 50 words that separate Band 4.5 from Band 5.5. Learn them with Indonesian context.",
+    duration: "20 min",
+    exercises: [
+      {
+        type: 'vocab-cards',
+        title: 'Band 5.5 Vocabulary (with Indonesian)',
+        cards: [
+          { word: 'Significant', indo: 'Signifikan / Penting', example: 'There has been a significant increase in pollution.', band4: 'very big', tip: 'Use instead of "very big" or "very important"' },
+          { word: 'Furthermore', indo: 'Selain itu / Lebih lanjut', example: 'The plan is expensive. Furthermore, it may not work.', band4: 'and also', tip: 'Use to add another point in essays' },
+          { word: 'Consequently', indo: 'Akibatnya / Oleh karena itu', example: 'It rained heavily; consequently, the event was cancelled.', band4: 'so', tip: 'Use to show cause→effect' },
+          { word: 'Despite', indo: 'Meskipun', example: 'Despite the rain, the match continued.', band4: 'but', tip: '"Despite" + noun/gerund. "Although" + clause.' },
+          { word: 'Contribute to', indo: 'Berkontribusi pada', example: 'Factories contribute to air pollution.', band4: 'make... bad', tip: 'Very common in IELTS topics' },
+          { word: 'Tend to', indo: 'Cenderung', example: 'Young people tend to prefer technology.', band4: 'usually... mostly', tip: 'Shows you can hedge — examiners love this' },
+          { word: 'In contrast', indo: 'Sebaliknya', example: 'Cities are busy. In contrast, rural areas are peaceful.', band4: 'but', tip: 'Great for comparing two things' },
+          { word: 'Essential', indo: 'Penting / Esensial', example: 'Clean water is essential for good health.', band4: 'very important', tip: 'Stronger than "important"' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 6,
+    title: "30-Day Battle Plan",
+    emoji: "📅",
+    tag: "hack",
+    tagLabel: "STRATEGY",
+    desc: "Your daily 45-minute routine. What to do every single day for 30 days.",
+    duration: "10 min",
+    exercises: [
+      {
+        type: 'plan',
+        title: 'Daily 45-Minute Routine',
+        weeks: [
+          {
+            label: 'Week 1-2: Foundation',
+            days: [
+              { time: '10 min', task: 'Grammar Fix', detail: 'Do 1 Indonesian Trap exercise from Module 1. Fix ONE pattern per day.' },
+              { time: '15 min', task: 'Listening', detail: 'Watch 1 YouTube video in English (TED-Ed, BBC Learning English). Write down 5 new words you hear.' },
+              { time: '10 min', task: 'Vocabulary', detail: 'Learn 3 new Band 5.5 words from Module 6. Write a sentence with each.' },
+              { time: '10 min', task: 'Speaking', detail: 'Record yourself answering 1 Part 1 question (e.g., "Do you like your hometown?"). Listen back. Repeat until smooth.' },
+            ]
+          },
+          {
+            label: 'Week 3-4: Build Up',
+            days: [
+              { time: '10 min', task: 'Reading', detail: 'Do 1 reading passage (from IELTS practice books or ielts.org). Time yourself: 20 min max per passage.' },
+              { time: '15 min', task: 'Writing', detail: 'Write 1 IDEA-E paragraph. Check for Indonesian traps (articles, tenses, "discuss about").' },
+              { time: '10 min', task: 'Listening', detail: 'Do 1 IELTS Listening section. Check answers. Note mistakes.' },
+              { time: '10 min', task: 'Speaking', detail: 'Do 1 Part 2 topic with timer (Module 5). Record and listen back.' },
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];
+
+// ── SPEAKING TOPIC BANK ──
+const EXTRA_TOPICS = [
+  { topic: 'Describe a skill you learned as a child.', bullets: ['What the skill was', 'Who taught you', 'How you learned it', 'How you feel about it now'] },
+  { topic: 'Describe a time you helped someone.', bullets: ['Who you helped', 'What the situation was', 'How you helped them', 'How you felt afterwards'] },
+  { topic: 'Describe a book or movie you enjoyed.', bullets: ['What it was about', 'When you read/watched it', 'Why you chose it', 'Why you enjoyed it'] },
+];
+
+// ══════════════════════════════════════════════════════
+//  RENDERER
+// ══════════════════════════════════════════════════════
+
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    ${renderTopbar()}
+    <div class="container fade-in">
+      ${renderScreen()}
+    </div>
+  `;
+  attachEvents();
+}
+
+function renderTopbar() {
+  const maxXP = 1000;
+  const pct = Math.min((STATE.xp / maxXP) * 100, 100);
+  const level = Math.floor(STATE.xp / 100) + 1;
+  return `
+    <div class="topbar">
+      <h1>🧠 <span>Bahasa</span>Hacking</h1>
+      <div class="xp-bar-wrap">
+        <div class="xp-bar"><div class="xp-bar-fill" style="width:${pct}%"></div></div>
+        <span class="xp-label">Lvl ${level} · ${STATE.xp} XP</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderScreen() {
+  switch (STATE.screen) {
+    case 'home': return renderHome();
+    case 'diagnostic': return renderDiagnostic();
+    case 'modules': return renderModules();
+    case 'module-detail': return renderModuleDetail();
+    case 'results': return renderResults();
+    default: return renderHome();
+  }
+}
+
+// ── HOME ──
+function renderHome() {
+  return `
+    <div class="text-center" style="padding:40px 0 20px">
+      <div class="hero-emoji">🇮🇩 → 🎯</div>
+      <h2 style="font-size:28px;margin-bottom:8px;">Bahasa Hacking</h2>
+      <p style="color:var(--text2);max-width:500px;margin:0 auto;">IELTS prep designed for the <strong>Indonesian brain</strong>. We fix the exact mistakes your bahasa creates — articles, tenses, prepositions — and build you up from 4.5 to 5.5+.</p>
+    </div>
+
+    <div class="card" style="text-align:center;border-color:rgba(108,92,231,.3);">
+      <h3>🎮 Start Here: Diagnostic Quiz</h3>
+      <p>10 questions to find your weak spots. Takes 5 minutes.</p>
+      <button class="btn btn-primary" onclick="startDiagnostic()">Take the Quiz →</button>
+      ${STATE.diagnosticDone ? `<p class="mt-8 text-sm" style="color:var(--green)">✓ Completed! Score: ${STATE.diagnosticScore}/10</p>` : ''}
+    </div>
+
+    ${STATE.diagnosticDone ? `
+    <div class="card" style="text-align:center;">
+      <h3>📚 Jump to Course Modules</h3>
+      <p>7 modules from beginner traps to exam strategy.</p>
+      <button class="btn btn-primary" onclick="goModules()">Open Modules →</button>
+    </div>
+    ` : ''}
+
+    <div class="card">
+      <h3>How This Course Works</h3>
+      <p>This isn't a boring textbook. It's a targeted system built around the specific mistakes Indonesian speakers make in IELTS.</p>
+      <div class="divider"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+        <div>
+          <strong style="color:var(--accent2)">🗺️ Trap Map</strong>
+          <p class="text-sm text-muted mt-8">Identifies your L1 interference — the mistakes your Indonesian brain creates automatically.</p>
+        </div>
+        <div>
+          <strong style="color:var(--green)">⚡ Band Jumps</strong>
+          <p class="text-sm text-muted mt-8">Focused on the specific things that move you from 4.5 → 5.0 → 5.5. No wasted effort.</p>
+        </div>
+        <div>
+          <strong style="color:var(--orange)">🎯 Practice Mode</strong>
+          <p class="text-sm text-muted mt-8">Speaking timer, writing prompts, and grammar drills — all inside this app.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Band Score Reality Check</h3>
+      <div class="band-card b4 mt-16">
+        <div class="band-num" style="color:var(--red)">Band 4-4.5</div>
+        <p>Basic competence. Frequent errors. Limited vocabulary. Can communicate simple ideas but struggles with complex topics. <strong>This is where most Indonesian speakers start.</strong></p>
+      </div>
+      <div class="band-card b5 mt-8">
+        <div class="band-num" style="color:var(--orange)">Band 5-5.5</div>
+        <p>Modest competence. Noticeable errors but meaning is usually clear. Can handle familiar topics. <strong>Achievable in 2-3 months with daily practice.</strong></p>
+      </div>
+      <div class="band-card b6 mt-8">
+        <div class="band-num" style="color:var(--green)">Band 6-6.5</div>
+        <p>Competent. Generally effective despite some errors. Good vocabulary range. <strong>Requires consistent effort over 4-6 months.</strong></p>
+      </div>
+    </div>
+  `;
+}
+
+// ── DIAGNOSTIC ──
+function renderDiagnostic() {
+  const step = STATE.diagnosticStep;
+  if (step >= DIAGNOSTIC.length) return renderDiagnosticResults();
+
+  const q = DIAGNOSTIC[step];
+  const answered = STATE.diagnosticAnswers[step] !== undefined;
+  const selected = STATE.diagnosticAnswers[step];
+
+  return `
+    <div class="flex-between mb-16">
+      <span class="text-sm text-muted">Question ${step + 1} of ${DIAGNOSTIC.length}</span>
+      <span class="tag tag-${q.skill}">${q.skill.toUpperCase()}</span>
+    </div>
+    <div style="height:4px;background:var(--surface2);border-radius:99px;margin-bottom:24px;">
+      <div style="height:100%;width:${((step + 1) / DIAGNOSTIC.length) * 100}%;background:var(--accent);border-radius:99px;transition:width .3s;"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:18px;margin-bottom:20px;">${q.q}</h2>
+      ${q.opts.map((opt, i) => {
+        let cls = 'quiz-option';
+        if (answered) {
+          if (i === q.correct) cls += ' correct';
+          else if (i === selected && i !== q.correct) cls += ' wrong';
+        }
+        return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="answerDiagnostic(${i})">${opt}</button>`;
+      }).join('')}
+
+      ${answered ? `
+        <div class="explanation">
+          ${selected === q.correct ? '✅ <strong>Correct!</strong>' : '❌ <strong>Not quite.</strong>'}<br><br>
+          ${q.explain}
+        </div>
+        <div class="mt-16" style="text-align:right;">
+          <button class="btn btn-primary" onclick="nextDiagnostic()">
+            ${step + 1 >= DIAGNOSTIC.length ? 'See Results →' : 'Next Question →'}
+          </button>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function renderDiagnosticResults() {
+  const score = STATE.diagnosticAnswers.filter((a, i) => a === DIAGNOSTIC[i].correct).length;
+  STATE.diagnosticScore = score;
+  STATE.diagnosticDone = true;
+
+  const skills = { grammar: 0, vocabulary: 0, reading: 0, listening: 0, speaking: 0, writing: 0 };
+  const skillTotal = { grammar: 0, vocabulary: 0, reading: 0, listening: 0, speaking: 0, writing: 0 };
+  DIAGNOSTIC.forEach((q, i) => {
+    skillTotal[q.skill]++;
+    if (STATE.diagnosticAnswers[i] === q.correct) skills[q.skill]++;
+  });
+
+  let band = 3.5;
+  if (score >= 9) band = 6;
+  else if (score >= 7) band = 5.5;
+  else if (score >= 5) band = 5;
+  else if (score >= 3) band = 4.5;
+  else band = 4;
+
+  // Unlock all modules after diagnostic
+  STATE.unlockedModules = MODULES.map((_, i) => i);
+
+  return `
+    <div class="card text-center">
+      <div class="hero-emoji">📊</div>
+      <h2>Diagnostic Results</h2>
+      <p class="mt-8">You got <strong style="color:var(--accent2)">${score}/10</strong> correct</p>
+      <p class="text-sm text-muted">Estimated band: <strong style="font-size:20px;color:${band >= 5.5 ? 'var(--green)' : band >= 5 ? 'var(--orange)' : 'var(--red)'}">${band}</strong></p>
+    </div>
+
+    <div class="card">
+      <h3>Skill Breakdown</h3>
+      <div class="progress-grid mt-16">
+        ${Object.entries(skillTotal).filter(([k, v]) => v > 0).map(([skill, total]) => {
+          const got = skills[skill];
+          const pct = Math.round((got / total) * 100);
+          const color = pct >= 70 ? 'var(--green)' : pct >= 40 ? 'var(--orange)' : 'var(--red)';
+          return `
+            <div class="progress-item">
+              <div class="num" style="color:${color}">${pct}%</div>
+              <div class="label">${skill.toUpperCase()}</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Your Priority Fix List</h3>
+      <p class="mt-8">${score <= 5 ? `Your biggest gaps are in <strong>grammar</strong> and <strong>vocabulary</strong> — exactly what Module 1 (Indonesian Trap Map) and Module 6 (Vocabulary Power-Ups) target. Start there.` : `Good foundation! Focus on <strong>writing structure</strong> (Module 4) and <strong>speaking fluency</strong> (Module 5) to push past Band 5.`}</p>
+      <div class="mt-16">
+        <button class="btn btn-primary" onclick="goModules()">Start the Course →</button>
+        <button class="btn btn-secondary" onclick="goHome()" style="margin-left:8px;">Back to Home</button>
+      </div>
+    </div>
+  `;
+}
+
+// ── MODULES LIST ──
+function renderModules() {
+  return `
+    <div class="flex-between mb-16">
+      <h2>Course Modules</h2>
+      <button class="btn btn-secondary btn-sm" onclick="goHome()">← Home</button>
+    </div>
+    ${MODULES.map((m, i) => {
+      const done = STATE.completedModules.includes(i);
+      const unlocked = STATE.unlockedModules.includes(i);
+      const iconCls = done ? 'done' : unlocked ? 'current' : 'locked';
+      return `
+        <div class="module-item ${unlocked ? '' : 'locked'}" onclick="${unlocked ? `openModule(${i})` : ''}">
+          <div class="module-icon ${iconCls}">${done ? '✓' : m.emoji}</div>
+          <div class="module-info" style="flex:1">
+            <h4>${m.title}</h4>
+            <p>${m.desc}</p>
+          </div>
+          <div>
+            <span class="tag tag-${m.tag}">${m.tagLabel}</span>
+            <p class="text-sm text-muted mt-8">${m.duration}</p>
+          </div>
+        </div>
+      `;
+    }).join('')}
+  `;
+}
+
+// ── MODULE DETAIL ──
+function renderModuleDetail() {
+  const m = MODULES[STATE.currentModule];
+  const ex = m.exercises[STATE.currentExercise];
+  if (!ex) return renderModuleComplete();
+
+  return `
+    <div class="flex-between mb-16">
+      <div>
+        <button class="btn btn-secondary btn-sm" onclick="goModules()">← Modules</button>
+        <span class="text-sm text-muted" style="margin-left:12px;">${m.emoji} ${m.title}</span>
+      </div>
+      <span class="text-sm text-muted">${STATE.currentExercise + 1} / ${m.exercises.length}</span>
+    </div>
+    <div style="height:4px;background:var(--surface2);border-radius:99px;margin-bottom:24px;">
+      <div style="height:100%;width:${((STATE.currentExercise + 1) / m.exercises.length) * 100}%;background:var(--accent);border-radius:99px;transition:width .3s;"></div>
+    </div>
+    ${renderExercise(ex)}
+  `;
+}
+
+function renderExercise(ex) {
+  switch (ex.type) {
+    case 'pattern': return renderPatternExercise(ex);
+    case 'info': return renderInfoExercise(ex);
+    case 'writing-practice': return renderWritingExercise(ex);
+    case 'speaking-practice': return renderSpeakingExercise(ex);
+    case 'vocab-cards': return renderVocabCards(ex);
+    case 'synonym-match': return renderSynonymMatch(ex);
+    case 'plan': return renderPlan(ex);
+    case 'listening-numbers': return renderListeningNumbers(ex);
+    case 'spelling-drill': return renderSpellingDrill(ex);
+    default: return renderInfoExercise(ex);
+  }
+}
+
+function renderPatternExercise(ex) {
+  const key = `pattern_${STATE.currentModule}_${STATE.currentExercise}`;
+  const answered = STATE.exerciseAnswers[key] !== undefined;
+  const selected = STATE.exerciseAnswers[key];
+
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <div class="pattern-row mt-16">
+        <div class="pattern-box wrong-way">
+          <div class="label">🇮🇩 Indonesian thinking</div>
+          <p>"${ex.indo}"</p>
+          <p style="margin-top:8px;color:var(--red)">→ "${ex.wrong}"</p>
+        </div>
+        <div class="pattern-box right-way">
+          <div class="label">✅ Correct English</div>
+          <p>"${ex.right}"</p>
+        </div>
+      </div>
+      <div class="explanation">${ex.explain}</div>
+    </div>
+
+    <div class="card">
+      <h3>Quick Practice</h3>
+      <p class="mb-16">${ex.practice.q}</p>
+      ${ex.practice.opts.map((opt, i) => {
+        let cls = 'quiz-option';
+        if (answered) {
+          if (i === ex.practice.correct) cls += ' correct';
+          else if (i === selected && i !== ex.practice.correct) cls += ' wrong';
+        }
+        return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="answerExercise('${key}', ${i}, ${ex.practice.correct})">${opt}</button>`;
+      }).join('')}
+      ${answered ? `<div class="explanation">${selected === ex.practice.correct ? '✅ ' : '❌ '}${ex.practice.why}</div>` : ''}
+      ${answered ? `<div class="mt-16" style="text-align:right;"><button class="btn btn-primary" onclick="nextExercise()">Continue →</button></div>` : ''}
+    </div>
+  `;
+}
+
+function renderInfoExercise(ex) {
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <div class="mt-16">${ex.content}</div>
+      <div class="mt-24" style="text-align:right;">
+        <button class="btn btn-primary" onclick="nextExercise()">Got It →</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderWritingExercise(ex) {
+  const wc = STATE.writingText.trim().split(/\s+/).filter(w => w).length;
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <p class="mt-8" style="color:var(--accent2);font-weight:600;">${ex.prompt}</p>
+      <p class="mt-8 text-muted">${ex.instruction}</p>
+      <div class="mt-16" style="background:var(--surface2);padding:16px;border-radius:12px;">
+        <p class="text-sm" style="color:var(--accent2);font-weight:600;margin-bottom:8px;">💡 IDEA-E Hints (click to expand)</p>
+        <div id="writing-hints" style="display:none;">
+          ${ex.hints.map(h => `<p class="text-sm text-muted" style="margin-top:4px;">• ${h}</p>`).join('')}
+        </div>
+        <button class="btn btn-secondary btn-sm mt-8" onclick="toggleHints()">Show/Hide Hints</button>
+      </div>
+      <textarea class="writing-area mt-16" placeholder="Start writing here..."
+        oninput="updateWriting(this.value)">${STATE.writingText}</textarea>
+      <div class="word-count">${wc} words ${wc >= 60 && wc <= 80 ? '✅ Good length!' : wc > 80 ? '⚠️ A bit long for one paragraph' : '(aim for 60-80)'}</div>
+      <div class="mt-16 flex-between">
+        <button class="btn btn-secondary btn-sm" onclick="checkWritingTraps()">🔍 Check for Indonesian Traps</button>
+        <button class="btn btn-primary" onclick="nextExercise()">Continue →</button>
+      </div>
+      <div id="writing-feedback" class="mt-16"></div>
+    </div>
+  `;
+}
+
+function renderSpeakingExercise(ex) {
+  const phase = STATE.speakingPhase;
+  const time = STATE.speakingTime;
+  const maxTime = phase === 'prep' ? ex.prepTime : ex.speakTime;
+  const remaining = maxTime - time;
+  const mins = Math.floor(remaining / 60);
+  const secs = remaining % 60;
+  const timerClass = remaining <= 10 ? 'danger' : remaining <= 30 ? 'warning' : '';
+
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <div class="mt-16" style="background:var(--surface2);padding:20px;border-radius:12px;">
+        <p style="font-weight:600;color:var(--accent2);margin-bottom:12px;">📋 ${ex.card.topic}</p>
+        <p class="text-sm text-muted">You should say:</p>
+        ${ex.card.bullets.map(b => `<p class="text-sm" style="margin-top:4px;">• ${b}</p>`).join('')}
+      </div>
+
+      <div class="text-center mt-24">
+        <p style="font-weight:600;color:${phase === 'prep' ? 'var(--orange)' : 'var(--green)'}">
+          ${phase === 'prep' ? '📝 PREPARATION TIME' : '🎙️ SPEAK NOW'}
+        </p>
+        <div class="timer-display ${timerClass}">${mins}:${secs.toString().padStart(2, '0')}</div>
+        <div style="display:flex;gap:12px;justify-content:center;">
+          ${!STATE.speakingRunning ? `
+            <button class="btn btn-primary" onclick="startSpeakingTimer(${maxTime})">
+              ${phase === 'prep' ? '▶ Start Prep Timer' : '▶ Start Speaking Timer'}
+            </button>
+          ` : `
+            <button class="btn btn-danger" onclick="stopSpeakingTimer()">⏹ Stop</button>
+          `}
+          ${phase === 'prep' && !STATE.speakingRunning && time === 0 ? '' : `
+            ${phase === 'prep' ? `<button class="btn btn-success" onclick="switchToSpeak()">Skip to Speaking →</button>` : ''}
+          `}
+        </div>
+        ${phase === 'speak' && !STATE.speakingRunning && time > 0 ? `
+          <div class="mt-16">
+            <p class="text-sm text-muted">How did it go? Record yourself next time to hear your mistakes!</p>
+            <button class="btn btn-primary mt-8" onclick="nextExercise()">Continue →</button>
+          </div>
+        ` : ''}
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Pro Tips While You Speak</h3>
+      <p class="text-sm text-muted mt-8">• Don't just list facts — explain WHY and HOW</p>
+      <p class="text-sm text-muted mt-8">• Use fillers naturally: "Well...", "Let me think...", "Actually..."</p>
+      <p class="text-sm text-muted mt-8">• If you forget a word, describe it: "the thing you use to..." </p>
+      <p class="text-sm text-muted mt-8">• Speak at a steady pace — rushing = more mistakes</p>
+    </div>
+  `;
+}
+
+function renderVocabCards(ex) {
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <p class="text-muted">These words alone can bump your Vocabulary score. Each one replaces a "Band 4" word.</p>
+    </div>
+    ${ex.cards.map((c, i) => `
+      <div class="card" style="border-left:3px solid var(--accent);">
+        <div class="flex-between">
+          <h3 style="font-size:20px;">${c.word}</h3>
+          <span class="text-sm" style="color:var(--orange);">🇮🇩 ${c.indo}</span>
+        </div>
+        <p class="mt-8" style="font-style:italic;">"${c.example}"</p>
+        <div class="mt-8" style="display:flex;gap:12px;align-items:center;">
+          <span class="text-sm" style="color:var(--red);text-decoration:line-through;">Band 4: "${c.band4}"</span>
+          <span class="text-sm">→</span>
+          <span class="text-sm" style="color:var(--green);font-weight:600;">Band 5.5: "${c.word.toLowerCase()}"</span>
+        </div>
+        <p class="text-sm text-muted mt-8">💡 ${c.tip}</p>
+      </div>
+    `).join('')}
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn btn-primary" onclick="nextExercise()">Continue →</button>
+    </div>
+  `;
+}
+
+function renderSynonymMatch(ex) {
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <p class="text-muted mb-16">${ex.instruction}</p>
+      ${ex.pairs.map((p, pi) => {
+        const key = `syn_${STATE.currentModule}_${STATE.currentExercise}_${pi}`;
+        const answered = STATE.exerciseAnswers[key] !== undefined;
+        const selected = STATE.exerciseAnswers[key];
+        return `
+          <div style="margin-bottom:16px;padding:16px;background:var(--surface2);border-radius:12px;">
+            <p style="font-weight:600;margin-bottom:8px;">${p.word} = ?</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              ${p.opts.map((o, oi) => {
+                let cls = 'btn btn-sm btn-secondary';
+                if (answered && oi === p.correct) cls = 'btn btn-sm btn-success';
+                else if (answered && oi === selected && oi !== p.correct) cls = 'btn btn-sm btn-danger';
+                return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="answerExercise('${key}', ${oi}, ${p.correct})">${o}</button>`;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('')}
+      <div style="text-align:right;">
+        <button class="btn btn-primary" onclick="nextExercise()">Continue →</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderListeningNumbers(ex) {
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <p class="text-muted mb-16">${ex.instruction}</p>
+      ${ex.pairs.map((p, pi) => {
+        const key = `listen_${STATE.currentModule}_${STATE.currentExercise}_${pi}`;
+        const answered = STATE.exerciseAnswers[key] !== undefined;
+        const selected = STATE.exerciseAnswers[key];
+        return `
+          <div style="margin-bottom:16px;padding:16px;background:var(--surface2);border-radius:12px;">
+            <p style="font-weight:600;font-size:20px;color:var(--accent2);margin-bottom:8px;">"${p.display}"</p>
+            <div style="display:flex;gap:8px;">
+              ${p.opts.map((o, oi) => {
+                let cls = 'btn btn-secondary';
+                if (answered && oi === p.correct) cls = 'btn btn-success';
+                else if (answered && oi === selected && oi !== p.correct) cls = 'btn btn-danger';
+                return `<button class="${cls}" ${answered ? 'disabled' : ''} onclick="answerExercise('${key}', ${oi}, ${p.correct})">${o}</button>`;
+              }).join('')}
+            </div>
+            ${answered ? `<p class="text-sm text-muted mt-8">💡 ${p.tip}</p>` : ''}
+          </div>
+        `;
+      }).join('')}
+      <div style="text-align:right;">
+        <button class="btn btn-primary" onclick="nextExercise()">Continue →</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderSpellingDrill(ex) {
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <p class="text-muted mb-16">${ex.instruction}</p>
+      ${ex.words.map((w, wi) => {
+        const key = `spell_${STATE.currentModule}_${STATE.currentExercise}_${wi}`;
+        const answered = STATE.exerciseAnswers[key] !== undefined;
+        const userAnswer = STATE.exerciseAnswers[key];
+        const correct = answered && userAnswer.toLowerCase().trim() === w.answer;
+        return `
+          <div style="margin-bottom:16px;padding:16px;background:var(--surface2);border-radius:12px;">
+            <p class="text-sm text-muted">${w.hint}</p>
+            <div style="display:flex;gap:8px;margin-top:8px;align-items:center;">
+              <input type="text" id="spell_${wi}" placeholder="Type here..."
+                style="flex:1;padding:10px;background:var(--surface);border:2px solid ${answered ? (correct ? 'var(--green)' : 'var(--red)') : 'rgba(108,92,231,.2)'};border-radius:8px;color:var(--text);font-family:inherit;font-size:15px;outline:none;"
+                ${answered ? 'disabled' : ''}
+                value="${answered ? userAnswer : ''}"
+                onkeydown="if(event.key==='Enter')checkSpelling(${wi},'${w.answer}')">
+              ${!answered ? `<button class="btn btn-primary btn-sm" onclick="checkSpelling(${wi},'${w.answer}')">Check</button>` : ''}
+            </div>
+            ${answered ? `<p class="text-sm mt-8" style="color:${correct ? 'var(--green)' : 'var(--red)'}">
+              ${correct ? '✅ Correct!' : `❌ It's "${w.answer}"`}
+            </p>` : ''}
+          </div>
+        `;
+      }).join('')}
+      <div style="text-align:right;">
+        <button class="btn btn-primary" onclick="nextExercise()">Continue →</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderPlan(ex) {
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <p class="text-muted">Follow this every day for 30 days. Consistency beats intensity.</p>
+    </div>
+    ${ex.weeks.map(week => `
+      <div class="card">
+        <h3 style="color:var(--accent2)">${week.label}</h3>
+        ${week.days.map(d => `
+          <div style="display:flex;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+            <div style="min-width:60px;font-weight:700;color:var(--accent2);font-size:14px;">${d.time}</div>
+            <div style="flex:1">
+              <p style="font-weight:600;font-size:14px;">${d.task}</p>
+              <p class="text-sm text-muted">${d.detail}</p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('')}
+
+    <div class="card" style="text-align:center;">
+      <h3>Free Resources</h3>
+      <p class="text-muted mt-8">These are all you need:</p>
+      <div style="text-align:left;margin-top:16px;">
+        <p class="text-sm" style="margin-bottom:8px;">📺 <strong>YouTube:</strong> BBC Learning English, E2 IELTS, IELTS Liz</p>
+        <p class="text-sm" style="margin-bottom:8px;">🌐 <strong>Practice tests:</strong> ielts.org/prepare (free sample tests)</p>
+        <p class="text-sm" style="margin-bottom:8px;">📱 <strong>App:</strong> IELTS Prep by British Council (free)</p>
+        <p class="text-sm" style="margin-bottom:8px;">📖 <strong>Book:</strong> Cambridge IELTS 15-18 (practice tests with answers)</p>
+      </div>
+      <button class="btn btn-primary mt-16" onclick="nextExercise()">Complete Module →</button>
+    </div>
+  `;
+}
+
+function renderModuleComplete() {
+  const m = MODULES[STATE.currentModule];
+  if (!STATE.completedModules.includes(STATE.currentModule)) {
+    STATE.completedModules.push(STATE.currentModule);
+    STATE.xp += 100;
+    // Unlock next module
+    const next = STATE.currentModule + 1;
+    if (next < MODULES.length && !STATE.unlockedModules.includes(next)) {
+      STATE.unlockedModules.push(next);
+    }
+  }
+  return `
+    <div class="card text-center">
+      <div class="hero-emoji">🎉</div>
+      <h2>Module Complete!</h2>
+      <p class="mt-8">${m.emoji} ${m.title}</p>
+      <p class="mt-8" style="color:var(--green);font-weight:600;">+100 XP</p>
+      <div class="mt-24">
+        <button class="btn btn-primary" onclick="goModules()">Back to Modules</button>
+      </div>
+    </div>
+  `;
+}
+
+// ══════════════════════════════════════════════════════
+//  ACTIONS
+// ══════════════════════════════════════════════════════
+
+function goHome() { STATE.screen = 'home'; render(); }
+function goModules() { STATE.screen = 'modules'; render(); }
+function startDiagnostic() {
+  STATE.screen = 'diagnostic';
+  STATE.diagnosticStep = 0;
+  STATE.diagnosticAnswers = [];
+  render();
+}
+
+function answerDiagnostic(i) {
+  if (STATE.diagnosticAnswers[STATE.diagnosticStep] !== undefined) return;
+  STATE.diagnosticAnswers[STATE.diagnosticStep] = i;
+  if (i === DIAGNOSTIC[STATE.diagnosticStep].correct) STATE.xp += 10;
+  render();
+}
+
+function nextDiagnostic() {
+  STATE.diagnosticStep++;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function openModule(i) {
+  STATE.currentModule = i;
+  STATE.currentExercise = 0;
+  STATE.writingText = '';
+  STATE.speakingTime = 0;
+  STATE.speakingRunning = false;
+  STATE.speakingPhase = 'prep';
+  STATE.screen = 'module-detail';
+  render();
+  window.scrollTo(0, 0);
+}
+
+function answerExercise(key, selected, correct) {
+  if (STATE.exerciseAnswers[key] !== undefined) return;
+  STATE.exerciseAnswers[key] = selected;
+  if (selected === correct) STATE.xp += 10;
+  render();
+}
+
+function nextExercise() {
+  STATE.currentExercise++;
+  STATE.writingText = '';
+  STATE.speakingTime = 0;
+  STATE.speakingRunning = false;
+  STATE.speakingPhase = 'prep';
+  render();
+  window.scrollTo(0, 0);
+}
+
+function updateWriting(val) {
+  STATE.writingText = val;
+  const wc = val.trim().split(/\s+/).filter(w => w).length;
+  const wcEl = document.querySelector('.word-count');
+  if (wcEl) {
+    wcEl.textContent = `${wc} words ${wc >= 60 && wc <= 80 ? '✅ Good length!' : wc > 80 ? '⚠️ A bit long for one paragraph' : '(aim for 60-80)'}`;
+  }
+}
+
+function toggleHints() {
+  const el = document.getElementById('writing-hints');
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function checkWritingTraps() {
+  const text = STATE.writingText.toLowerCase();
+  const traps = [];
+  if (text.includes('discuss about')) traps.push('🔴 "discuss about" → should be just "discuss"');
+  if (text.includes('i am agree')) traps.push('🔴 "I am agree" → should be "I agree"');
+  if (text.includes('in this modern era')) traps.push('🟡 "In this modern era" is overused — try "Currently" or "Today"');
+  if (text.includes('as we know')) traps.push('🟡 "As we know" — just state your point directly');
+  if (text.includes('and etc')) traps.push('🔴 "and etc" → just "etc."');
+  if (text.includes('according to me')) traps.push('🔴 "According to me" → "In my opinion" or "I believe"');
+  if (text.match(/\b(is|are|am)\s+(agree|understand|know|think)\b/)) traps.push('🔴 Found "be + verb" pattern — remove the "is/am/are"');
+  if (!text.match(/\b(the|a|an)\b/) && text.length > 50) traps.push('🟡 No articles found — did you forget "a/an/the"?');
+  if (text.match(/\b(furthermore|however|consequently|nevertheless|moreover|in contrast)\b/)) traps.push('🟢 Nice linking words! Band 5.5+ material.');
+
+  const el = document.getElementById('writing-feedback');
+  if (el) {
+    if (traps.length === 0 && text.length > 20) {
+      el.innerHTML = '<div class="explanation" style="border-color:var(--green)">✅ No obvious Indonesian traps detected! Good job. Keep checking for article and tense consistency.</div>';
+    } else if (text.length <= 20) {
+      el.innerHTML = '<div class="explanation">Write more text first, then check again!</div>';
+    } else {
+      el.innerHTML = `<div class="explanation">${traps.join('<br>')}</div>`;
+    }
+  }
+}
+
+let speakingInterval = null;
+function startSpeakingTimer(maxTime) {
+  STATE.speakingRunning = true;
+  STATE.speakingTime = 0;
+  render();
+  speakingInterval = setInterval(() => {
+    STATE.speakingTime++;
+    const phase = STATE.speakingPhase;
+    const ex = MODULES[STATE.currentModule].exercises[STATE.currentExercise];
+    const max = phase === 'prep' ? ex.prepTime : ex.speakTime;
+    if (STATE.speakingTime >= max) {
+      clearInterval(speakingInterval);
+      STATE.speakingRunning = false;
+      if (phase === 'prep') {
+        switchToSpeak();
+        return;
+      }
+    }
+    render();
+  }, 1000);
+}
+
+function stopSpeakingTimer() {
+  clearInterval(speakingInterval);
+  STATE.speakingRunning = false;
+  render();
+}
+
+function switchToSpeak() {
+  clearInterval(speakingInterval);
+  STATE.speakingPhase = 'speak';
+  STATE.speakingTime = 0;
+  STATE.speakingRunning = false;
+  render();
+}
+
+function checkSpelling(index, answer) {
+  const input = document.getElementById(`spell_${index}`);
+  if (!input) return;
+  const key = `spell_${STATE.currentModule}_${STATE.currentExercise}_${index}`;
+  STATE.exerciseAnswers[key] = input.value;
+  render();
+}
+
+function attachEvents() {
+  // Events are attached inline via onclick
+}
+
+// ── INIT ──
+render();
+</script>
+</body>
+</html>
