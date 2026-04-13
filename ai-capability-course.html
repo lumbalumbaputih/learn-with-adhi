@@ -11,45 +11,45 @@
   document.documentElement.setAttribute("data-theme", savedTheme || systemTheme);
 })();
 </script>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f5f7fb;
+  --bg: #fafaf7;
   --surface: #ffffff;
-  --surface2: #eef2f8;
-  --border: #d7deea;
-  --text: #1e293b;
-  --text-dim: #64748b;
-  --text-strong: #0f172a;
-  --accent: #d95d36;
-  --accent2: #c98209;
-  --green: #1f9d62;
-  --blue: #2563eb;
-  --purple: #7c3aed;
+  --surface2: #e8f4ff;
+  --border: rgba(0,0,0,0.08);
+  --text: #141419;
+  --text-dim: #5a5b66;
+  --text-strong: #0b0b12;
+  --accent: #00aaff;
+  --accent2: #fc351c;
+  --green: #19ae5d;
+  --blue: #1c5ddc;
+  --purple: #eb30a2;
   --on-accent: #ffffff;
-  --toggle-track: #e2e8f0;
-  --toggle-knob: #0f172a;
-  --mono: 'IBM Plex Mono', monospace;
-  --serif: 'Source Serif 4', Georgia, serif;
-  --sans: 'DM Sans', system-ui, sans-serif;
+  --toggle-track: #e2e2ea;
+  --toggle-knob: #141419;
+  --mono: "DM Sans", monospace;
+  --serif: "DM Serif Display", serif;
+  --sans: "DM Sans", system-ui, sans-serif;
 }
 
 :root[data-theme="dark"] {
-  --bg: #0c0f14;
-  --surface: #151921;
-  --surface2: #1c2230;
-  --border: #2a3042;
-  --text: #cdd4e0;
-  --text-dim: #7a8499;
+  --bg: #0b0b12;
+  --surface: #17172200;
+  --surface2: #0d1e2e;
+  --border: rgba(255,255,255,0.10);
+  --text: #ececf0;
+  --text-dim: #9092a3;
   --text-strong: #ffffff;
-  --accent: #e8734a;
-  --accent2: #f5a623;
-  --green: #4ecf8b;
-  --blue: #5b9cf5;
-  --purple: #a78bfa;
-  --on-accent: #0c0f14;
-  --toggle-track: #1c2230;
-  --toggle-knob: #e8734a;
+  --accent: #1fbaff;
+  --accent2: #ff5a43;
+  --green: #2ec272;
+  --blue: #3a79ec;
+  --purple: #f054b5;
+  --on-accent: #0b0b12;
+  --toggle-track: #1d1d2a;
+  --toggle-knob: #ececf0;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -86,7 +86,7 @@ header .tag {
 }
 
 header h1 {
-  font-family: var(--serif);
+  font-family: "DM Serif Display", serif;
   font-size: 2rem;
   font-weight: 700;
   color: var(--text-strong);
@@ -139,7 +139,7 @@ header .subtitle {
 .module.active { display: block; }
 
 .module h2 {
-  font-family: var(--serif);
+  font-family: "DM Serif Display", serif;
   font-size: 1.4rem;
   color: var(--text-strong);
   margin-bottom: .25rem;
@@ -415,12 +415,12 @@ const MODULES = [
               </linearGradient>
             </defs>
             <rect x="20" y="20" width="260" height="80" rx="6" fill="url(#g1)" stroke="#e8734a" stroke-width="1"/>
-            <text x="35" y="48" fill="#e8734a" font-family="IBM Plex Mono" font-size="10" font-weight="600">GROUP A — "AI is overhyped"</text>
+            <text x="35" y="48" fill="#ff5a43" font-family="DM Sans" font-size="10" font-weight="600">GROUP A — "AI is overhyped"</text>
             <text x="35" y="68" fill="#cdd4e0" font-family="DM Sans" font-size="11">Free tier · chatbots · voice mode</text>
             <text x="35" y="84" fill="#7a8499" font-family="DM Sans" font-size="10">Judges AI by consumer chat & viral fails</text>
 
             <rect x="320" y="20" width="260" height="80" rx="6" fill="url(#g2)" stroke="#4ecf8b" stroke-width="1"/>
-            <text x="335" y="48" fill="#4ecf8b" font-family="IBM Plex Mono" font-size="10" font-weight="600">GROUP B — "AI is transformative"</text>
+            <text x="335" y="48" fill="#2ec272" font-family="DM Sans" font-size="10" font-weight="600">GROUP B — "AI is transformative"</text>
             <text x="335" y="68" fill="#cdd4e0" font-family="DM Sans" font-size="11">Paid frontier · agentic · code/research</text>
             <text x="335" y="84" fill="#7a8499" font-family="DM Sans" font-size="10">Judges AI by professional output quality</text>
 
