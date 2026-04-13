@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Band 7 Precision Lab — IELTS Academic Upgrade</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0e1a;
+    --surface: #131927;
+    --surface2: #1c2437;
+    --accent: #3b82f6;
+    --accent2: #60a5fa;
+    --gold: #f59e0b;
+    --gold2: #fbbf24;
+    --green: #10b981;
+    --red: #ef4444;
+    --orange: #f97316;
+    --purple: #a78bfa;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --radius: 16px;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,14,26,.88); backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(59,130,246,.15);
+    padding: 12px 24px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .topbar h1 { font-size: 17px; font-weight: 800; letter-spacing: -.3px; }
+  .topbar h1 span { color: var(--gold); }
+  .score-pill { background: var(--surface2); padding: 5px 14px; border-radius: 99px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .score-pill .current { color: var(--text2); }
+  .score-pill .arrow { color: var(--gold); }
+  .score-pill .target { color: var(--gold); font-weight: 800; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px 100px; }
+
+  .card { background: var(--surface); border: 1px solid rgba(59,130,246,.1); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; transition: transform .2s; }
+  .card:hover { transform: translateY(-1px); }
+  .card h2 { font-size: 21px; margin-bottom: 8px; letter-spacing: -.3px; }
+  .card h3 { font-size: 15px; color: var(--accent2); margin-bottom: 12px; font-weight: 600; }
+  .card p { color: var(--text2); margin-bottom: 12px; font-size: 15px; }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border: none; border-radius: 10px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #2563eb; transform: scale(1.02); }
+  .btn-gold { background: linear-gradient(135deg, var(--gold), #d97706); color: #fff; }
+  .btn-gold:hover { transform: scale(1.02); }
+  .btn-secondary { background: var(--surface2); color: var(--text); }
+  .btn-secondary:hover { background: #252d42; }
+  .btn-success { background: var(--green); color: #fff; }
+  .btn-danger { background: var(--red); color: #fff; }
+  .btn-sm { padding: 7px 14px; font-size: 13px; border-radius: 8px; }
+  .btn:disabled { opacity: .35; cursor: not-allowed; }
+
+  .tabs { display: flex; gap: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tab { padding: 9px 18px; border-radius: 10px; background: var(--surface2); color: var(--text2); border: none; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; }
+  .tab.active { background: var(--accent); color: #fff; }
+  .tab:hover:not(.active) { background: #252d42; color: var(--text); }
+
+  .quiz-option { display: block; width: 100%; padding: 13px 16px; margin-bottom: 8px; background: var(--surface2); border: 2px solid transparent; border-radius: 10px; color: var(--text); font-family: inherit; font-size: 14px; text-align: left; cursor: pointer; transition: all .12s; }
+  .quiz-option:hover { border-color: var(--accent); background: #1f2940; }
+  .quiz-option.correct { border-color: var(--green); background: rgba(16,185,129,.08); }
+  .quiz-option.wrong { border-color: var(--red); background: rgba(239,68,68,.08); }
+
+  .explanation { margin-top: 14px; padding: 16px; background: rgba(59,130,246,.06); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; font-size: 14px; line-height: 1.7; }
+  .explanation .b6 { color: var(--orange); font-weight: 600; }
+  .explanation .b7 { color: var(--green); font-weight: 600; }
+
+  .progress-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin: 16px 0; }
+  .progress-item { background: var(--surface2); border-radius: 10px; padding: 14px; text-align: center; }
+  .progress-item .num { font-size: 26px; font-weight: 800; }
+  .progress-item .label { font-size: 11px; color: var(--text2); margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+  .comp-box { padding: 16px; border-radius: 12px; font-size: 14px; line-height: 1.7; }
+  .comp-box.b6-box { background: rgba(249,115,22,.06); border: 1px solid rgba(249,115,22,.15); }
+  .comp-box.b7-box { background: rgba(16,185,129,.06); border: 1px solid rgba(16,185,129,.15); }
+  .comp-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .comp-box.b6-box .comp-label { color: var(--orange); }
+  .comp-box.b7-box .comp-label { color: var(--green); }
+
+  .writing-area { width: 100%; min-height: 200px; padding: 16px; background: var(--surface2); border: 2px solid rgba(59,130,246,.15); border-radius: 12px; color: var(--text); font-family: inherit; font-size: 15px; line-height: 1.8; resize: vertical; }
+  .writing-area:focus { outline: none; border-color: var(--accent); }
+  .writing-area::placeholder { color: var(--text2); }
+  .word-count { font-size: 13px; color: var(--text2); margin-top: 8px; text-align: right; }
+
+  .timer-display { font-size: 56px; font-weight: 800; text-align: center; font-variant-numeric: tabular-nums; color: var(--accent2); margin: 16px 0; }
+  .timer-display.warning { color: var(--gold); }
+  .timer-display.danger { color: var(--red); }
+
+  .module-item { display: flex; align-items: center; gap: 14px; padding: 14px; background: var(--surface2); border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: all .2s; }
+  .module-item:hover { background: #252d42; }
+  .module-item.locked { opacity: .35; cursor: not-allowed; }
+  .module-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .module-icon.done { background: rgba(16,185,129,.12); color: var(--green); }
+  .module-icon.current { background: rgba(59,130,246,.12); color: var(--accent2); }
+  .module-icon.locked { background: var(--surface); color: var(--text2); }
+
+  .tag { display: inline-block; padding: 3px 9px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  .tag-listen { background: rgba(96,165,250,.12); color: var(--accent2); }
+  .tag-read { background: rgba(16,185,129,.12); color: var(--green); }
+  .tag-write { background: rgba(245,158,11,.12); color: var(--gold); }
+  .tag-speak { background: rgba(239,68,68,.12); color: var(--red); }
+  .tag-strat { background: rgba(167,139,250,.12); color: var(--purple); }
+
+  .collocation-card { background: var(--surface2); border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+  .collocation-card .word { font-size: 17px; font-weight: 700; color: var(--gold2); }
+  .collocation-card .wrong-coll { color: var(--red); text-decoration: line-through; font-size: 13px; }
+  .collocation-card .right-coll { color: var(--green); font-weight: 600; font-size: 13px; }
+
+  .divider { height: 1px; background: rgba(255,255,255,.04); margin: 20px 0; }
+  .hero-emoji { font-size: 44px; margin-bottom: 10px; }
+  .fade-in { animation: fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .flex-between { display: flex; justify-content: space-between; align-items: center; }
+  .flex-center { display: flex; align-items: center; gap: 8px; }
+  .mt-8 { margin-top: 8px; } .mt-16 { margin-top: 16px; } .mt-24 { margin-top: 24px; }
+  .mb-8 { margin-bottom: 8px; } .mb-16 { margin-bottom: 16px; }
+  .text-sm { font-size: 13px; } .text-muted { color: var(--text2); } .text-center { text-align: center; }
+
+  .highlight-strip { padding: 3px 7px; border-radius: 4px; font-weight: 600; font-size: 13px; }
+  .hl-green { background: rgba(16,185,129,.12); color: var(--green); }
+  .hl-red { background: rgba(239,68,68,.12); color: var(--red); }
+  .hl-gold { background: rgba(245,158,11,.12); color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .comparison { grid-template-columns: 1fr; }
+    .progress-grid { grid-template-columns: repeat(2, 1fr); }
+    .tab { padding: 7px 12px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ══════════════════════════════════════════════════
+//  BAND 7 PRECISION LAB
+// ══════════════════════════════════════════════════
+
+const S = {
+  screen: 'home',
+  xp: 0,
+  dStep: 0,
+  dAnswers: [],
+  dDone: false,
+  dScore: null,
+  curMod: null,
+  curEx: 0,
+  exAns: {},
+  writingText: '',
+  speakPhase: 'prep',
+  speakTime: 0,
+  speakRunning: false,
+  completedMods: [],
+  unlockedMods: [0],
+};
+
+// ── DIAGNOSTIC: BAND 6 vs 7 PRECISION ──
+const DIAG = [
+  {
+    q: "Which sentence uses a LESS COMMON collocation correctly?",
+    opts: [
+      "The government made a decision to increase taxes.",
+      "The government reached a decision to raise taxes.",
+      "The government did a decision to increase taxes.",
+      "The government took a decision to make taxes higher."
+    ],
+    correct: 1,
+    explain: `<span class="b6">"Made a decision"</span> is fine but common (Band 6). <span class="b7">"Reached a decision"</span> is a stronger collocation that shows range. "Did a decision" is just wrong. At Band 7, examiners look for LESS COMMON but NATURAL word combinations.`,
+    cat: 'vocab'
+  },
+  {
+    q: "Choose the sentence with the best COHESION (linking between ideas):",
+    opts: [
+      "Many people work from home. It saves time. Companies like it too.",
+      "Many people work from home because it saves commuting time, and this flexibility tends to benefit employers as well.",
+      "Many people work from home. Moreover, it saves time. Furthermore, companies like it too.",
+      "Many people work from home, saving time, and companies like it."
+    ],
+    correct: 1,
+    explain: `Band 6 = linking words everywhere ("Moreover, Furthermore"). Band 7 = ideas flow NATURALLY with subordinate clauses, relative clauses, and logical connectors that don't feel forced. Option B uses <span class="b7">"because"</span>, <span class="b7">"and this flexibility tends to"</span> — smooth, not mechanical.`,
+    cat: 'writing'
+  },
+  {
+    q: "What's wrong with: 'The chart illustrates the amount of people who used public transport.'",
+    opts: [
+      "Nothing, it's correct",
+      "'Amount' should be 'number' (people are countable)",
+      "'Illustrates' should be 'shows'",
+      "'Who' should be 'that'"
+    ],
+    correct: 1,
+    explain: `<span class="b7">"Number"</span> for countable nouns (people, cars, books). <span class="b6">"Amount"</span> for uncountable nouns (water, money, time). This distinction is a classic Band 6→7 separator in Task 1. Examiners notice it immediately.`,
+    cat: 'writing'
+  },
+  {
+    q: "In IELTS Reading, a 'matching headings' question says the answer is in Paragraph C. You find a sentence that partly matches. What do you do?",
+    opts: [
+      "Choose it — partial match is good enough",
+      "Read the WHOLE paragraph to check if the heading captures the MAIN idea, not just a detail",
+      "Look for exact word matches between heading and paragraph",
+      "Skip it and come back later"
+    ],
+    correct: 1,
+    explain: `Band 6 readers match keywords. Band 7 readers understand that headings must capture the <span class="b7">main idea of the ENTIRE paragraph</span>, not just one sentence. A detail in Paragraph C might match a heading, but if the paragraph is mostly about something else, that heading is wrong.`,
+    cat: 'reading'
+  },
+  {
+    q: "You hear a speaker say: 'Well, initially I thought it was going to be straightforward, but actually, it turned out to be far more complex than anyone had anticipated.' What is the speaker's main point?",
+    opts: [
+      "The task was easy",
+      "The task was unexpectedly difficult",
+      "Nobody wanted to do the task",
+      "The task is still ongoing"
+    ],
+    correct: 1,
+    explain: `Band 7 listening requires tracking <span class="b7">discourse shifts</span>: "initially I thought... BUT actually... far more complex than anticipated." The speaker CORRECTS their initial impression. Band 6 candidates sometimes latch onto "straightforward" and pick the wrong answer.`,
+    cat: 'listening'
+  },
+  {
+    q: "Which sentence shows GRAMMATICAL RANGE (a Band 7 requirement)?",
+    opts: [
+      "People should exercise. It is good for health. They will feel better.",
+      "If people exercised regularly, they would likely experience significant improvements in both physical and mental well-being.",
+      "People who exercise they feel better because exercise is good.",
+      "Exercising is very very important for people who want good health."
+    ],
+    correct: 1,
+    explain: `Band 7 = <span class="b7">complex structures used accurately</span>. Option B uses a conditional ("If people exercised...would likely"), an adverb ("regularly"), and parallel structure ("both physical and mental"). Band 6 tends to use only simple and compound sentences.`,
+    cat: 'grammar'
+  },
+  {
+    q: "In Speaking Part 3, the examiner asks: 'Do you think technology will replace teachers?' Which response is Band 7?",
+    opts: [
+      "Yes, I think so because technology is very advanced now.",
+      "No, I don't think so. Teachers are important.",
+      "That's an interesting question. I think technology will certainly play a larger role in education, but I doubt it could fully replace teachers, particularly when it comes to things like emotional support and critical thinking, which require a human element.",
+      "I am not sure about this topic."
+    ],
+    correct: 2,
+    explain: `Band 7 Speaking Part 3 needs: <span class="b7">extended answers, hedging language</span> ("I doubt", "particularly when it comes to"), <span class="b7">specific examples or reasoning</span>, and <span class="b7">discourse markers</span> that feel natural. Band 6 gives opinions without developing them.`,
+    cat: 'speaking'
+  },
+  {
+    q: "In Task 1 Academic, what does 'selecting key features' mean?",
+    opts: [
+      "Describe every single data point in the chart",
+      "Pick only the most significant trends, comparisons, or changes and describe those",
+      "Just describe the highest and lowest values",
+      "Write about what might happen in the future based on the data"
+    ],
+    correct: 1,
+    explain: `Band 6 writers describe everything (data dump). Band 7 writers <span class="b7">select and highlight the most significant features</span>: main trends, notable exceptions, key comparisons. This is literally 25% of your Task 1 score (Task Achievement). Don't describe every number — analyse.`,
+    cat: 'writing'
+  },
+  {
+    q: "Which sentence correctly uses a PARTICIPLE CLAUSE (a Band 7 grammar feature)?",
+    opts: [
+      "Having completed the project, the team celebrated their success.",
+      "The team completed the project and they celebrated.",
+      "The project was completed and the team celebrated.",
+      "After the team was completing the project they celebrated."
+    ],
+    correct: 0,
+    explain: `<span class="b7">"Having completed..."</span> is a perfect participle clause — it shows one action finished before another. This is a Band 7 grammar structure. Band 6 would write "After they completed the project, they celebrated" which is correct but simpler.`,
+    cat: 'grammar'
+  },
+  {
+    q: "What is the BIGGEST difference between Band 6 and Band 7 in Writing?",
+    opts: [
+      "Band 7 writes longer essays",
+      "Band 7 uses bigger words",
+      "Band 7 presents a clear position throughout with well-supported ideas and fewer errors",
+      "Band 7 uses more linking words"
+    ],
+    correct: 2,
+    explain: `The real gap: Band 7 = <span class="b7">clear position THROUGHOUT</span> (not just in the conclusion), <span class="b7">well-extended ideas</span> (not just stated), and errors that are <span class="b7">rare and don't impede communication</span>. It's not about length or fancy words — it's about clarity, development, and accuracy.`,
+    cat: 'writing'
+  },
+];
+
+// ── MODULES ──
+const MODS = [
+  {
+    id: 0, title: "The Band 6→7 Gap Analysis", emoji: "🔬", tag: "strat", tagLabel: "STRATEGY",
+    desc: "Understand exactly what examiners look for at Band 7 that Band 6 doesn't deliver.", duration: "15 min",
+    exercises: [
+      {
+        type: 'info', title: 'What Band 7 Actually Means',
+        content: `
+          <p>Band 7 isn't "better Band 6." It's a qualitative shift. Here's what the examiner is checking:</p>
+          <div class="comparison mt-16">
+            <div class="comp-box b6-box">
+              <div class="comp-label">Band 6 — Competent</div>
+              <p>✓ Generally effective communication</p>
+              <p>✓ Uses linking words (sometimes mechanically)</p>
+              <p>✓ Adequate vocabulary for the task</p>
+              <p>✓ Mix of simple and complex sentences</p>
+              <p>✓ Errors occur but meaning is clear</p>
+            </div>
+            <div class="comp-box b7-box">
+              <div class="comp-label">Band 7 — Good</div>
+              <p>✓ Presents a clear position <strong>throughout</strong></p>
+              <p>✓ Ideas flow <strong>logically without forced linking</strong></p>
+              <p>✓ Uses <strong>less common vocabulary</strong> with awareness of collocation</p>
+              <p>✓ <strong>Variety</strong> of complex structures, <strong>majority error-free</strong></p>
+              <p>✓ Errors are <strong>rare</strong> and don't impede</p>
+            </div>
+          </div>
+          <p class="mt-16">The four killers that keep people at Band 6:</p>
+          <p class="mt-8"><strong style="color:var(--gold)">1. Collocation errors</strong> — Using words that don't naturally go together</p>
+          <p class="mt-8"><strong style="color:var(--gold)">2. Mechanical cohesion</strong> — "Firstly... Secondly... Moreover..." without real flow</p>
+          <p class="mt-8"><strong style="color:var(--gold)">3. Underdeveloped ideas</strong> — Stating opinions without explaining WHY</p>
+          <p class="mt-8"><strong style="color:var(--gold)">4. Grammar ceiling</strong> — Only using simple + compound sentences, never conditionals, passives, cleft sentences, participle clauses</p>
+        `
+      },
+      {
+        type: 'info', title: 'The 4-Week Strategy',
+        content: `
+          <p>Band 7 is achievable from 6 in <strong>6-10 weeks</strong> of focused daily practice. Here's the formula:</p>
+          <div style="margin:16px 0;padding:18px;background:var(--surface2);border-radius:12px;">
+            <p><strong style="color:var(--accent2)">Week 1-2:</strong> Collocation mastery + Grammar range upgrade</p>
+            <p class="mt-8"><strong style="color:var(--accent2)">Week 3-4:</strong> Writing precision (Task 1 data language + Task 2 argument structure)</p>
+            <p class="mt-8"><strong style="color:var(--accent2)">Week 5-6:</strong> Speaking fluency + Reading speed under pressure</p>
+            <p class="mt-8"><strong style="color:var(--accent2)">Week 7+:</strong> Full practice tests under timed conditions, error analysis</p>
+          </div>
+          <p>This course front-loads the <strong>highest-impact changes</strong>: the things that move your score the fastest.</p>
+        `
+      }
+    ]
+  },
+  {
+    id: 1, title: "Collocation Surgery", emoji: "🔗", tag: "strat", tagLabel: "VOCABULARY",
+    desc: "The #1 thing that separates Band 6 from Band 7: natural word combinations.", duration: "25 min",
+    exercises: [
+      {
+        type: 'info', title: 'Why Collocations Matter So Much',
+        content: `
+          <p>A Band 6 candidate might write: <span class="hl-red highlight-strip">"do a big effect"</span></p>
+          <p class="mt-8">A Band 7 candidate writes: <span class="hl-green highlight-strip">"have a significant impact"</span></p>
+          <p class="mt-16">Both mean the same thing. But "have an impact" is a <strong>natural collocation</strong> — words that native speakers automatically pair together. "Do an effect" sounds wrong even though the grammar is fine. This is what the band descriptor means by <strong>"awareness of style and collocation."</strong></p>
+          <p class="mt-16">The good news: there are only about 50-60 collocations that appear frequently in IELTS topics. Master those, and your Lexical Resource score jumps.</p>
+        `
+      },
+      {
+        type: 'collocation-quiz', title: 'Collocation Precision Drill',
+        instruction: 'Choose the natural collocation. Both options are grammatically correct — only one sounds natural.',
+        items: [
+          { stem: '___ a decision', opts: ['Make', 'Do'], correct: 0, explain: 'MAKE a decision (not "do"). But: DO research, DO homework, DO business.' },
+          { stem: '___ an important role', opts: ['Make', 'Play'], correct: 1, explain: 'PLAY a role / PLAY a part. Never "make a role."' },
+          { stem: '___ attention to', opts: ['Pay', 'Give'], correct: 0, explain: 'PAY attention to. You can "give attention" but "pay attention" is the standard collocation for IELTS.' },
+          { stem: 'a ___ increase', opts: ['strong', 'sharp'], correct: 1, explain: 'A SHARP increase/decrease/rise/fall. "Strong" works with "performance" or "economy" but not with statistical changes.' },
+          { stem: '___ measures', opts: ['Take', 'Make'], correct: 0, explain: 'TAKE measures (to solve a problem). Also: take action, take steps, take responsibility.' },
+          { stem: '___ the gap between', opts: ['Bridge', 'Close'], correct: 0, explain: 'BRIDGE the gap (figurative). You can also "narrow" the gap. "Close the gap" works but "bridge" is more sophisticated.' },
+          { stem: '___ into account', opts: ['Take', 'Put'], correct: 0, explain: 'TAKE into account / TAKE into consideration. This is essential for Task 2 discussion essays.' },
+          { stem: '___ a challenge', opts: ['Face', 'Meet'], correct: 0, explain: 'FACE a challenge / POSE a challenge. Both work but "face" is more common in IELTS contexts.' },
+        ]
+      },
+      {
+        type: 'info', title: 'The Collocation Families',
+        content: `
+          <p>IELTS topics repeat. These collocation families cover 80% of what you'll need:</p>
+          <div class="collocation-card mt-16">
+            <div class="word">MAKE vs DO</div>
+            <p class="text-sm mt-8"><strong>MAKE:</strong> a decision, progress, an effort, a contribution, a mistake, a comparison, an impact</p>
+            <p class="text-sm mt-8"><strong>DO:</strong> research, damage, harm, business, work, exercise, a task</p>
+          </div>
+          <div class="collocation-card">
+            <div class="word">Data Description (Task 1)</div>
+            <p class="text-sm mt-8"><span class="right-coll">sharp increase</span> · <span class="right-coll">gradual decline</span> · <span class="right-coll">peaked at</span> · <span class="right-coll">remained stable</span> · <span class="right-coll">fluctuated between</span> · <span class="right-coll">stood at</span> · <span class="right-coll">accounted for</span></p>
+          </div>
+          <div class="collocation-card">
+            <div class="word">Opinion Essays (Task 2)</div>
+            <p class="text-sm mt-8"><span class="right-coll">widely believed</span> · <span class="right-coll">raise awareness</span> · <span class="right-coll">pose a threat</span> · <span class="right-coll">bear in mind</span> · <span class="right-coll">draw a conclusion</span> · <span class="right-coll">outweigh the drawbacks</span></p>
+          </div>
+          <div class="collocation-card">
+            <div class="word">Cause & Effect</div>
+            <p class="text-sm mt-8"><span class="right-coll">lead to</span> · <span class="right-coll">result in</span> · <span class="right-coll">stem from</span> · <span class="right-coll">give rise to</span> · <span class="right-coll">be attributed to</span> · <span class="right-coll">a contributing factor</span></p>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    id: 2, title: "Grammar Range Upgrade", emoji: "⚙️", tag: "strat", tagLabel: "GRAMMAR",
+    desc: "The 5 structures that instantly signal 'Band 7' to examiners.", duration: "25 min",
+    exercises: [
+      {
+        type: 'info', title: 'The Band 7 Grammar Toolkit',
+        content: `
+          <p>Band 6 grammar is correct but limited. Band 7 needs <strong>variety</strong> and <strong>flexibility</strong>. Here are the 5 structures you must add:</p>
+          <div style="margin:16px 0;padding:18px;background:var(--surface2);border-radius:12px;">
+            <p><strong style="color:var(--gold)">1.</strong> Conditionals (2nd & 3rd)</p>
+            <p><strong style="color:var(--gold)">2.</strong> Participle clauses</p>
+            <p><strong style="color:var(--gold)">3.</strong> Cleft sentences</p>
+            <p><strong style="color:var(--gold)">4.</strong> Inversion</p>
+            <p><strong style="color:var(--gold)">5.</strong> Passive reporting structures</p>
+          </div>
+          <p>You don't need ALL of these in every essay. Use 2-3 naturally and your Grammar Range score jumps.</p>
+        `
+      },
+      {
+        type: 'grammar-transform', title: 'Structure #1: Conditionals',
+        b6: "If the government invests more money, education will improve.",
+        b7: "If the government were to invest more in education, it would likely lead to significant improvements in academic outcomes.",
+        explain: "The 2nd conditional ('were to invest... would likely lead to') shows hypothetical reasoning. Adding 'likely' shows hedging. 'Significant improvements in academic outcomes' replaces 'education will improve' with precise vocabulary.",
+        practice: {
+          q: "Transform to a Band 7 conditional: 'If people use less plastic, the environment will be better.'",
+          opts: [
+            "If people were to reduce their plastic consumption, it would have a considerable positive impact on the environment.",
+            "If people will use less plastic, environment gets better.",
+            "When people use less plastic, the environment is better.",
+            "People should use less plastic for better environment."
+          ],
+          correct: 0,
+          why: "'Were to reduce' (2nd conditional) + 'their plastic consumption' (precise noun phrase) + 'considerable positive impact' (strong collocation)."
+        }
+      },
+      {
+        type: 'grammar-transform', title: 'Structure #2: Participle Clauses',
+        b6: "The number of tourists increased. This put pressure on local infrastructure.",
+        b7: "The number of tourists increased significantly, putting considerable pressure on local infrastructure.",
+        explain: "Participle clauses (-ing) combine two sentences smoothly. They show result, reason, or simultaneous action. This is a Band 7 favourite because it creates sentence variety without forcing it.",
+        practice: {
+          q: "Combine using a participle clause: 'Carbon emissions rose sharply. This caused global temperatures to increase.'",
+          opts: [
+            "Carbon emissions rose sharply, causing global temperatures to increase.",
+            "Carbon emissions rose sharply and this caused global temperatures to increase.",
+            "Because carbon emissions rose sharply, global temperatures increased.",
+            "Carbon emissions rose sharply. Moreover, global temperatures increased."
+          ],
+          correct: 0,
+          why: "'-ing' participle ('causing') smoothly links the cause to the effect in one sentence. Natural and sophisticated."
+        }
+      },
+      {
+        type: 'grammar-transform', title: 'Structure #3: Cleft Sentences & Inversion',
+        b6: "Technology causes the biggest change in education.",
+        b7: "It is technology that has brought about the most significant transformation in education.",
+        explain: "'It is... that...' cleft sentences add emphasis. Inversion ('Not only does X... but it also...', 'Rarely do we see...') creates academic register. Use sparingly — one per essay is enough.",
+        practice: {
+          q: "Which uses a cleft sentence or inversion correctly?",
+          opts: [
+            "Not only does regular exercise improve physical health, but it also enhances mental well-being.",
+            "Exercise not only improves physical health but also mental well-being.",
+            "Regular exercise improves physical and mental health.",
+            "It is exercise which is good for health."
+          ],
+          correct: 0,
+          why: "'Not only does... but it also...' is inverted word order — the auxiliary 'does' comes before the subject. This is textbook Band 7 grammar."
+        }
+      },
+      {
+        type: 'grammar-transform', title: 'Structure #4: Passive Reporting',
+        b6: "People believe that education is important.",
+        b7: "Education is widely believed to be fundamental to social progress.",
+        explain: "Passive reporting ('It is argued that...', 'X is considered to be...', 'It has been suggested that...') sounds academic and removes the vague 'people' subject. Essential for Task 2 introductions.",
+        practice: {
+          q: "Transform: 'Many experts say that climate change is the biggest threat.'",
+          opts: [
+            "Climate change is widely regarded as the most pressing threat facing humanity.",
+            "Many experts say climate change is the biggest threat.",
+            "It is said by many experts that climate change is the biggest threat.",
+            "Climate change is the biggest threat, experts say."
+          ],
+          correct: 0,
+          why: "'Is widely regarded as' (passive reporting) + 'the most pressing threat facing humanity' (strong collocation + participle). Clean, academic, Band 7."
+        }
+      }
+    ]
+  },
+  {
+    id: 3, title: "Writing Task 1: Data Surgeon", emoji: "📊", tag: "write", tagLabel: "WRITING",
+    desc: "Master the academic language of charts, graphs, and processes at Band 7 level.", duration: "30 min",
+    exercises: [
+      {
+        type: 'info', title: 'The Band 7 Task 1 Framework',
+        content: `
+          <p>Band 6 Task 1 = describes data. Band 7 Task 1 = <strong>analyses</strong> data. Here's the structure:</p>
+          <div style="margin:16px 0;padding:18px;background:var(--surface2);border-radius:12px;">
+            <p><strong style="color:var(--accent2)">Paragraph 1 — Overview (2-3 sentences)</strong></p>
+            <p class="text-sm text-muted">Paraphrase the question + state 2 KEY features. This is worth 25% of your score. Many Band 6 writers skip it entirely.</p>
+            <p class="mt-16"><strong style="color:var(--accent2)">Paragraph 2 — Detail Group A</strong></p>
+            <p class="text-sm text-muted">Describe the first main trend/group with specific data.</p>
+            <p class="mt-16"><strong style="color:var(--accent2)">Paragraph 3 — Detail Group B</strong></p>
+            <p class="text-sm text-muted">Describe the second trend/group. Compare with Group A where relevant.</p>
+          </div>
+          <p class="mt-16" style="color:var(--gold)">⚠️ NO conclusion needed for Task 1. NO opinions. Just data.</p>
+        `
+      },
+      {
+        type: 'info', title: 'Band 7 Data Language',
+        content: `
+          <div class="comparison">
+            <div class="comp-box b6-box">
+              <div class="comp-label">Band 6 language</div>
+              <p>"The number went up"</p>
+              <p>"It was the highest"</p>
+              <p>"There was a big increase"</p>
+              <p>"It went down a lot"</p>
+              <p>"About 40%"</p>
+            </div>
+            <div class="comp-box b7-box">
+              <div class="comp-label">Band 7 language</div>
+              <p>"The figure rose steadily from X to Y"</p>
+              <p>"X peaked at approximately 450"</p>
+              <p>"There was a sharp surge of nearly 30%"</p>
+              <p>"X experienced a dramatic decline"</p>
+              <p>"Roughly 40% / just under half"</p>
+            </div>
+          </div>
+          <p class="mt-16"><strong>Key verbs:</strong> rose, climbed, surged, soared, increased (UP) · fell, dropped, declined, plummeted, dipped (DOWN) · remained stable, levelled off, plateaued (FLAT) · fluctuated, varied (UNSTABLE)</p>
+          <p class="mt-8"><strong>Key adverbs:</strong> sharply, dramatically, steadily, gradually, marginally, slightly, significantly</p>
+          <p class="mt-8"><strong>Approximation:</strong> approximately, roughly, just under/over, nearly, around, in the region of</p>
+        `
+      },
+      {
+        type: 'rewrite-drill', title: 'Upgrade These Sentences',
+        instruction: 'Select the Band 7 version of each sentence:',
+        items: [
+          {
+            b6: "The number of students increased from 200 to 500 between 2010 and 2020.",
+            opts: [
+              "The number of students experienced a significant rise, climbing from 200 to 500 over the decade from 2010 to 2020.",
+              "Students increased a lot from 200 to 500 in the period of 2010-2020.",
+              "Between 2010 and 2020 the students went from 200 to 500 which is a big increase.",
+              "200 students became 500 students over ten years."
+            ],
+            correct: 0,
+            why: "'Experienced a significant rise' (collocation) + 'climbing from X to Y' (participle clause) + 'over the decade' (precise time reference)."
+          },
+          {
+            b6: "Japan had the most tourists and Brazil had the least.",
+            opts: [
+              "Japan attracted the highest number of tourists, whereas Brazil recorded the fewest.",
+              "Japan was the most and Brazil was the least for tourists.",
+              "The most tourists went to Japan but the least went to Brazil.",
+              "Japan had more tourists than Brazil which had less."
+            ],
+            correct: 0,
+            why: "'Attracted' (sophisticated verb) + 'the highest number' (precise) + 'whereas' (formal comparison) + 'recorded the fewest' (collocation for countable)."
+          },
+        ]
+      },
+      {
+        type: 'writing-practice', title: 'Write a Task 1 Overview',
+        prompt: 'Imagine a bar chart showing internet usage in 5 countries (USA: 87%, UK: 82%, Japan: 78%, Brazil: 59%, India: 34%) in 2020.',
+        instruction: 'Write ONLY the overview paragraph (2-3 sentences). Identify the key features — do NOT list every number.',
+        hints: [
+          'Start with: "Overall, ..." or "It is clear that..."',
+          'Mention the general pattern (Western countries higher)',
+          'Mention the extremes (USA highest, India lowest)',
+          'Use approximation language, not exact numbers',
+        ]
+      }
+    ]
+  },
+  {
+    id: 4, title: "Writing Task 2: Argument Architect", emoji: "🏗️", tag: "write", tagLabel: "WRITING",
+    desc: "Build essays with the structural integrity that Band 7 demands.", duration: "30 min",
+    exercises: [
+      {
+        type: 'info', title: 'The Band 7 Essay Blueprint',
+        content: `
+          <p>Band 7 Task 2 has ONE non-negotiable: <strong>a clear position presented and supported throughout the response.</strong> Not just in the conclusion. Throughout.</p>
+          <div style="margin:16px 0;padding:18px;background:var(--surface2);border-radius:12px;font-size:14px;">
+            <p><strong style="color:var(--accent2)">Introduction (40-50 words)</strong></p>
+            <p class="text-muted">Paraphrase topic → state your position clearly. No "In this essay I will discuss..."</p>
+            <p class="mt-16"><strong style="color:var(--accent2)">Body 1 (80-100 words)</strong></p>
+            <p class="text-muted">Topic sentence (your first reason) → Explanation → Specific example → Analysis of why this matters</p>
+            <p class="mt-16"><strong style="color:var(--accent2)">Body 2 (80-100 words)</strong></p>
+            <p class="text-muted">Topic sentence (second reason OR counterargument + rebuttal) → Same pattern</p>
+            <p class="mt-16"><strong style="color:var(--accent2)">Conclusion (30-40 words)</strong></p>
+            <p class="text-muted">Restate position + summarise key reasons. Nothing new.</p>
+          </div>
+          <p class="mt-16" style="color:var(--gold)">⚠️ Total: 260-290 words is ideal. Quality over quantity.</p>
+        `
+      },
+      {
+        type: 'info', title: 'Band 6 vs Band 7 Introductions',
+        content: `
+          <p><strong>Topic:</strong> "Some people think that governments should spend money on public transport rather than roads. To what extent do you agree?"</p>
+          <div class="comparison mt-16">
+            <div class="comp-box b6-box">
+              <div class="comp-label">Band 6</div>
+              <p>"Nowadays, transport is a very important topic. Some people think the government should spend money on public transport, while others think they should spend on roads. In this essay, I will discuss both sides and give my opinion."</p>
+              <p class="mt-8 text-sm" style="color:var(--orange)">Problems: "Nowadays" opener, announces essay structure, doesn't take a clear position yet.</p>
+            </div>
+            <div class="comp-box b7-box">
+              <div class="comp-label">Band 7</div>
+              <p>"There is ongoing debate about whether government transport budgets should prioritise public transit systems over road infrastructure. While both require investment, I would argue that allocating a greater share of funding to public transport is likely to yield more sustainable long-term benefits."</p>
+              <p class="mt-8 text-sm" style="color:var(--green)">Strengths: Paraphrases topic precisely, position is clear from sentence 2, uses hedging ("I would argue", "is likely to").</p>
+            </div>
+          </div>
+        `
+      },
+      {
+        type: 'writing-practice', title: 'Write a Band 7 Introduction',
+        prompt: '"Some people believe that children should begin their formal education at a very early age. Others think they should not start school until they are at least seven. Discuss both views and give your own opinion."',
+        instruction: 'Write ONLY the introduction (40-50 words). Paraphrase the topic and state your clear position.',
+        hints: [
+          'Do NOT start with "Nowadays" or "In this modern era"',
+          'Paraphrase: "formal education" → "schooling", "very early age" → "as young as four or five"',
+          'State your position: "I am inclined to believe that..." or "I would argue that..."',
+          'Use hedging: "tends to", "is likely to", "may", "could"',
+        ]
+      },
+      {
+        type: 'info', title: 'The Hedging Toolkit (Band 7 Secret Weapon)',
+        content: `
+          <p>Band 6 writers make absolute claims: <span class="hl-red highlight-strip">"Technology IS bad for children."</span></p>
+          <p class="mt-8">Band 7 writers hedge: <span class="hl-green highlight-strip">"Excessive screen time may have detrimental effects on children's development."</span></p>
+          <p class="mt-16">Hedging shows academic maturity. Examiners notice it immediately. Key hedging tools:</p>
+          <div style="margin:16px 0;padding:16px;background:var(--surface2);border-radius:12px;font-size:14px;line-height:2;">
+            <p><strong>Modal verbs:</strong> may, might, could, would, can, tend to</p>
+            <p><strong>Adverbs:</strong> arguably, perhaps, possibly, potentially, likely, seemingly</p>
+            <p><strong>Phrases:</strong> "it could be argued that", "there is evidence to suggest", "this is likely to", "it is generally accepted that"</p>
+            <p><strong>Qualifiers:</strong> "to a certain extent", "in many cases", "for the most part", "under certain circumstances"</p>
+          </div>
+          <p class="mt-16">Rule: Use hedging for general claims. Use strong language only for well-supported facts.</p>
+        `
+      }
+    ]
+  },
+  {
+    id: 5, title: "Reading: Band 7 Tactics", emoji: "🎯", tag: "read", tagLabel: "READING",
+    desc: "Master the question types that separate 6 from 7: matching headings, summary completion, and inference.", duration: "25 min",
+    exercises: [
+      {
+        type: 'info', title: 'Band 7 Reading: Time is Everything',
+        content: `
+          <p>At Band 6, you can answer most questions but run out of time. Band 7 requires finishing 40 questions in 60 minutes with accuracy. That's 1.5 minutes per question.</p>
+          <p class="mt-16"><strong style="color:var(--gold)">The time killer:</strong> Re-reading passages because you didn't read strategically the first time.</p>
+          <p class="mt-16"><strong>The Band 7 reading strategy:</strong></p>
+          <div style="margin:16px 0;padding:18px;background:var(--surface2);border-radius:12px;font-size:14px;">
+            <p><strong>Step 1 (2 min):</strong> Skim the passage. Read first + last sentence of each paragraph. Get the structure.</p>
+            <p class="mt-8"><strong>Step 2 (1 min):</strong> Read ALL questions for this passage. Identify question types.</p>
+            <p class="mt-8"><strong>Step 3:</strong> Answer in order of difficulty: TRUE/FALSE/NOT GIVEN and MCQ first (specific location). Matching headings and summary completion last (requires full understanding).</p>
+            <p class="mt-8"><strong>Step 4:</strong> If stuck for more than 2 minutes on one question, MOVE ON. Come back if time allows.</p>
+          </div>
+        `
+      },
+      {
+        type: 'reading-strategy', title: 'Inference Questions (The Band 7 Separator)',
+        passage: "While urban farming has gained considerable popularity in recent years, its contribution to overall food security remains modest. Most urban farms operate on a small scale and rely heavily on volunteer labour, making them economically unviable as primary food sources. However, advocates argue that their value extends beyond mere food production, encompassing community building, education, and environmental awareness.",
+        questions: [
+          {
+            q: "The author suggests that urban farming:",
+            opts: [
+              "Is a complete failure",
+              "Has benefits beyond food production but is limited as a food source",
+              "Will replace traditional farming",
+              "Is only useful for education"
+            ],
+            correct: 1,
+            why: "The passage says contribution to food security is 'modest' and farms are 'economically unviable as primary food sources' BUT 'their value extends beyond mere food production.' You need to synthesise both sides — not just pick up one keyword."
+          },
+          {
+            q: "The word 'encompassing' is closest in meaning to:",
+            opts: ["Limiting", "Including", "Replacing", "Questioning"],
+            correct: 1,
+            why: "'Encompassing' = including/covering. Context helps: 'value extends beyond food production, encompassing community building, education...' — it's listing things the value includes."
+          }
+        ]
+      },
+      {
+        type: 'info', title: 'TRUE / FALSE / NOT GIVEN: The Precision Method',
+        content: `
+          <p>At Band 6, you get most T/F/NG right. At Band 7, you need to get <strong>nearly all</strong> right. The mistakes happen with NOT GIVEN.</p>
+          <p class="mt-16"><strong>The decision tree:</strong></p>
+          <div style="margin:16px 0;padding:18px;background:var(--surface2);border-radius:12px;font-size:14px;">
+            <p>1. Find the <strong>relevant section</strong> of the text (if you can't find it → likely NOT GIVEN)</p>
+            <p class="mt-8">2. Does the text <strong>directly confirm</strong> the statement? → TRUE</p>
+            <p class="mt-8">3. Does the text <strong>directly contradict</strong> the statement? → FALSE</p>
+            <p class="mt-8">4. Does the text <strong>talk about this topic</strong> but not confirm or deny this specific claim? → NOT GIVEN</p>
+            <p class="mt-8">5. Does the text <strong>not mention this at all</strong>? → NOT GIVEN</p>
+          </div>
+          <p class="mt-16" style="color:var(--gold)">⚠️ The trap: A statement that SEEMS logical based on the passage but isn't actually stated. Your job is to report what the TEXT says, not what makes sense.</p>
+        `
+      }
+    ]
+  },
+  {
+    id: 6, title: "Speaking: Part 3 Masterclass", emoji: "🎤", tag: "speak", tagLabel: "SPEAKING",
+    desc: "Part 3 is where Band 7 is won or lost. Learn to discuss abstract ideas with depth.", duration: "25 min",
+    exercises: [
+      {
+        type: 'info', title: 'Why Part 3 is the Band 7 Battleground',
+        content: `
+          <p>Parts 1 and 2 can get you Band 6. Part 3 is where the examiner decides between 6 and 7.</p>
+          <p class="mt-16"><strong>Band 6 Part 3:</strong> Short answers, single perspective, basic vocabulary.</p>
+          <p class="mt-8"><strong>Band 7 Part 3:</strong> Extended answers (20-30 seconds each), multiple perspectives, hedging, specific examples, discourse markers.</p>
+          <p class="mt-16"><strong>The PEEC framework for Part 3:</strong></p>
+          <div style="margin:16px 0;padding:18px;background:var(--surface2);border-radius:12px;">
+            <p><strong style="color:var(--accent2)">P</strong> — <strong>Position</strong>: State your view with hedging</p>
+            <p><strong style="color:var(--accent2)">E</strong> — <strong>Explain</strong>: Develop the reasoning</p>
+            <p><strong style="color:var(--accent2)">E</strong> — <strong>Example</strong>: Give a concrete example</p>
+            <p><strong style="color:var(--accent2)">C</strong> — <strong>Contrast</strong>: Acknowledge the other side briefly</p>
+          </div>
+        `
+      },
+      {
+        type: 'speaking-model', title: 'Band 6 vs Band 7 Answers',
+        question: "Do you think money can buy happiness?",
+        b6: "I think money can buy happiness to some extent because if you have money you can buy things you want and live comfortably. But sometimes money can't buy everything like love and health.",
+        b7: "That's a nuanced question. I'd say money certainly contributes to happiness up to a point — there's actually research suggesting that beyond a certain income threshold, additional wealth has diminishing returns in terms of well-being. For instance, being able to afford healthcare and education obviously reduces stress. Having said that, I think genuine fulfilment tends to come from relationships and a sense of purpose, which aren't really things you can purchase. So I suppose it depends on how you define happiness.",
+        analysis: [
+          { label: "Hedging", detail: "\"I'd say\", \"certainly...up to a point\", \"I suppose\", \"tends to\"" },
+          { label: "Discourse markers", detail: "\"Having said that\", \"For instance\", \"So\"" },
+          { label: "Less common vocab", detail: "\"diminishing returns\", \"threshold\", \"fulfilment\", \"genuine\"" },
+          { label: "Acknowledges complexity", detail: "\"it depends on how you define happiness\" — shows analytical thinking" },
+        ]
+      },
+      {
+        type: 'speaking-practice', title: 'Part 3 Practice: Technology & Education',
+        card: {
+          topic: "How has technology changed the way people learn?",
+          bullets: [
+            "Think: online courses, access to information, attention spans",
+            "Use PEEC: Position → Explain → Example → Contrast",
+            "Aim for 25-30 seconds",
+            "Use hedging: \"tends to\", \"arguably\", \"it could be said that\""
+          ]
+        },
+        prepTime: 15,
+        speakTime: 45
+      },
+      {
+        type: 'speaking-practice', title: 'Part 3 Practice: Environment',
+        card: {
+          topic: "Should individuals or governments be more responsible for protecting the environment?",
+          bullets: [
+            "This is a 'both sides' question — acknowledge both",
+            "Use contrast: \"While individuals can..., it is arguably governments that...\"",
+            "Give a specific example for one side",
+            "End with your position using hedging"
+          ]
+        },
+        prepTime: 15,
+        speakTime: 45
+      }
+    ]
+  },
+  {
+    id: 7, title: "Listening: Section 3 & 4 Warfare", emoji: "🎧", tag: "listen", tagLabel: "LISTENING",
+    desc: "Sections 3 and 4 separate Band 6 from 7. Master academic discussions and lectures.", duration: "20 min",
+    exercises: [
+      {
+        type: 'info', title: 'Section 3 & 4: What Changes',
+        content: `
+          <p>Sections 1-2 = survival English (booking a room, campus tour). Sections 3-4 = academic English (tutorial discussions, lectures). This is where Band 7 marks are won.</p>
+          <p class="mt-16"><strong style="color:var(--gold)">Section 3 traps:</strong></p>
+          <p class="mt-8">• <strong>Two speakers disagreeing</strong> — you need to track WHO thinks WHAT</p>
+          <p class="mt-8">• <strong>Self-correction</strong> — "I think we should... actually, no, let's..." — the SECOND answer is usually correct</p>
+          <p class="mt-8">• <strong>Paraphrasing</strong> — the question says "drawback" but the speaker says "one concern would be..."</p>
+          <p class="mt-16"><strong style="color:var(--gold)">Section 4 traps:</strong></p>
+          <p class="mt-8">• <strong>Speed</strong> — no pauses, one speaker, academic vocabulary</p>
+          <p class="mt-8">• <strong>Signposting</strong> — "Moving on to...", "What's particularly interesting is..." — these signal answers are coming</p>
+          <p class="mt-8">• <strong>Spelling academic terms</strong> — you must spell them correctly</p>
+        `
+      },
+      {
+        type: 'info', title: 'The Prediction Technique',
+        content: `
+          <p>Before each section plays, you get 30 seconds to read the questions. Band 7 candidates use this time to <strong>predict answer types</strong>:</p>
+          <div style="margin:16px 0;">
+            <div class="collocation-card">
+              <p><strong>Gap-fill: "The study involved ___ participants"</strong></p>
+              <p class="text-sm mt-8">Prediction: a NUMBER. Listen for numbers specifically.</p>
+            </div>
+            <div class="collocation-card">
+              <p><strong>Gap-fill: "The main ___ of the research was..."</strong></p>
+              <p class="text-sm mt-8">Prediction: a NOUN (aim/objective/focus/limitation). Listen for topic-framing language.</p>
+            </div>
+            <div class="collocation-card">
+              <p><strong>MCQ: "What does the professor suggest about X?"</strong></p>
+              <p class="text-sm mt-8">Prediction: listen for the professor's OPINION, not facts. Look for hedging: "I would say...", "It seems..."</p>
+            </div>
+          </div>
+          <p class="mt-8"><strong>Word limit matters.</strong> If it says "NO MORE THAN TWO WORDS" and you write three, it's marked wrong even if the content is correct. Always check.</p>
+        `
+      },
+      {
+        type: 'info', title: 'Signpost Words Cheat Sheet',
+        content: `
+          <p>These words tell you the answer is coming in the next few seconds:</p>
+          <div style="margin:16px 0;padding:18px;background:var(--surface2);border-radius:12px;font-size:14px;line-height:2.2;">
+            <p><span class="hl-gold highlight-strip">Introduction:</span> "What I'd like to focus on...", "The main point here is...", "Let's begin with..."</p>
+            <p><span class="hl-gold highlight-strip">Addition:</span> "On top of that...", "What's more...", "Another key factor is..."</p>
+            <p><span class="hl-gold highlight-strip">Contrast/Correction:</span> "Having said that...", "Actually...", "On the other hand...", "In reality..."</p>
+            <p><span class="hl-gold highlight-strip">Emphasis:</span> "What's particularly noteworthy is...", "The crucial thing is...", "Interestingly..."</p>
+            <p><span class="hl-gold highlight-strip">Conclusion:</span> "So to sum up...", "The key takeaway is...", "In essence..."</p>
+          </div>
+          <p class="mt-8">When you hear a contrast word, the answer is almost always what comes AFTER it, not before.</p>
+        `
+      }
+    ]
+  },
+  {
+    id: 8, title: "The 8-Week Battle Plan", emoji: "📅", tag: "strat", tagLabel: "STRATEGY",
+    desc: "Your daily routine from Band 6 to Band 7. What to do, when, and why.", duration: "10 min",
+    exercises: [
+      {
+        type: 'plan', title: '60-Minute Daily Routine',
+        weeks: [
+          {
+            label: 'Week 1-2: Foundation Upgrade',
+            days: [
+              { time: '15 min', task: 'Collocation Training', detail: 'Learn 5 new collocations from Module 2. Write them in sentences. Test yourself on yesterday\'s collocations.' },
+              { time: '15 min', task: 'Grammar Structures', detail: 'Practice ONE Band 7 structure (Module 3). Write 3 sentences using it. Try to use it in speaking too.' },
+              { time: '15 min', task: 'Academic Reading', detail: 'Read one article from The Guardian, BBC, or The Economist. Underline 5 useful phrases. Note collocations.' },
+              { time: '15 min', task: 'Speaking Record', detail: 'Answer 2 Part 3 questions using PEEC framework. Record, listen back, note errors.' },
+            ]
+          },
+          {
+            label: 'Week 3-4: Writing Focus',
+            days: [
+              { time: '20 min', task: 'Task 1 Practice', detail: 'Write one Task 1 response. Focus: overview paragraph, data language, 150+ words. Check collocations.' },
+              { time: '20 min', task: 'Task 2 Practice', detail: 'Write one body paragraph using Band 7 structures. Check: clear topic sentence? Specific example? Hedging?' },
+              { time: '10 min', task: 'Error Log Review', detail: 'Review yesterday\'s writing. Mark every grammar error, collocation error, and repetition. Fix them.' },
+              { time: '10 min', task: 'Listening Section 3/4', detail: 'Do one Section 3 or 4 from Cambridge IELTS. Analyse every wrong answer: WHY did you get it wrong?' },
+            ]
+          },
+          {
+            label: 'Week 5-6: Timed Practice',
+            days: [
+              { time: '60 min', task: 'Full Reading Test', detail: '3 passages, 60 minutes, strict timing. Score yourself. Target: 30+/40.' },
+              { time: '60 min', task: 'Full Listening Test', detail: '4 sections, ~30 minutes. Score yourself. Target: 30+/40.' },
+              { time: '60 min', task: 'Full Writing Test', detail: 'Task 1 (20 min) + Task 2 (40 min). Use every Band 7 structure you\'ve learned.' },
+              { time: '15 min', task: 'Speaking Mock', detail: 'Full Parts 1-3 with a partner or recording. Self-assess: Did I use hedging? Complex grammar? Collocations?' },
+            ]
+          },
+          {
+            label: 'Week 7-8: Full Mock Tests',
+            days: [
+              { time: '3 hrs', task: 'Full Mock Test', detail: 'Do a complete Cambridge IELTS practice test under exam conditions. No phone. No breaks between sections.' },
+              { time: '30 min', task: 'Error Analysis', detail: 'Go through every wrong answer. Categorise: vocabulary gap, time pressure, misread question, careless error.' },
+              { time: '30 min', task: 'Weak Area Drill', detail: 'Whatever category had the most errors — drill that specific skill.' },
+              { time: '15 min', task: 'Confidence Speaking', detail: 'Answer 3 random Part 3 questions with no prep. This is exam simulation.' },
+            ]
+          }
+        ]
+      },
+      {
+        type: 'info', title: 'Resources for Band 7',
+        content: `
+          <p><strong>Essential books:</strong></p>
+          <p class="text-sm text-muted mt-8">• Cambridge IELTS 16-19 (real past papers)</p>
+          <p class="text-sm text-muted mt-8">• "English Collocations in Use: Advanced" by Michael McCarthy & Felicity O'Dell</p>
+          <p class="text-sm text-muted mt-8">• "Academic Writing Practice for IELTS" by Sam McCarter</p>
+          <p class="mt-16"><strong>Free resources:</strong></p>
+          <p class="text-sm text-muted mt-8">• IELTS Liz (YouTube) — best free Task 1 & 2 tutorials</p>
+          <p class="text-sm text-muted mt-8">• E2 IELTS (YouTube) — speaking mock tests and strategies</p>
+          <p class="text-sm text-muted mt-8">• The Guardian / BBC / The Economist — read daily for vocabulary and collocations</p>
+          <p class="text-sm text-muted mt-8">• IELTS.org — free sample tests</p>
+          <p class="mt-16"><strong>Paid (worth it):</strong></p>
+          <p class="text-sm text-muted mt-8">• IELTS writing correction service (e.g., IELTS Advantage, Writing9) — you NEED human feedback on writing</p>
+          <p class="text-sm text-muted mt-8">• A speaking partner or tutor for weekly mock Part 3s</p>
+        `
+      }
+    ]
+  }
+];
+
+// ══════════════════════════════════════════════════
+//  RENDER ENGINE
+// ══════════════════════════════════════════════════
+
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = `${renderTopbar()}<div class="container fade-in">${renderScreen()}</div>`;
+}
+
+function renderTopbar() {
+  const lvl = Math.floor(S.xp / 150) + 1;
+  const pct = Math.min((S.xp / 1500) * 100, 100);
+  return `<div class="topbar">
+    <h1>🎯 Band 7 <span>Precision Lab</span></h1>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="score-pill"><span class="current">6.0</span><span class="arrow">→</span><span class="target">7.0</span></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:80px;height:6px;background:var(--surface2);border-radius:99px;overflow:hidden;">
+          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:99px;transition:width .5s;"></div>
+        </div>
+        <span style="font-size:11px;color:var(--text2);font-weight:600;">Lvl ${lvl}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderScreen() {
+  switch(S.screen) {
+    case 'home': return renderHome();
+    case 'diagnostic': return renderDiag();
+    case 'modules': return renderMods();
+    case 'module-detail': return renderModDetail();
+    default: return renderHome();
+  }
+}
+
+function renderHome() {
+  return `
+    <div class="text-center" style="padding:36px 0 16px">
+      <div class="hero-emoji">🔬</div>
+      <h2 style="font-size:26px;margin-bottom:6px;">Band 7 Precision Lab</h2>
+      <p style="color:var(--text2);max-width:520px;margin:0 auto;">You're already competent. Now it's about <strong>precision</strong> — collocations, grammar range, argument structure, and the subtle things that push a 6.0 to a 7.0 in IELTS Academic.</p>
+    </div>
+    <div class="card" style="text-align:center;border-color:rgba(245,158,11,.2);">
+      <h3 style="color:var(--gold);">🧪 Diagnostic: Are You Band 6 or Already Close to 7?</h3>
+      <p>10 precision questions testing the exact skills that separate the two bands.</p>
+      <button class="btn btn-gold" onclick="startDiag()">Take the Diagnostic →</button>
+      ${S.dDone ? `<p class="mt-8 text-sm" style="color:var(--green)">✓ Done! Score: ${S.dScore}/10</p>` : ''}
+    </div>
+    ${S.dDone ? `<div class="card" style="text-align:center;"><h3>📚 Course Modules</h3><p>9 modules targeting every Band 7 criterion.</p><button class="btn btn-primary" onclick="goMods()">Open Modules →</button></div>` : ''}
+    <div class="card">
+      <h3>The Band 6→7 Reality</h3>
+      <div class="comparison mt-16">
+        <div class="comp-box b6-box">
+          <div class="comp-label">What Band 6 looks like</div>
+          <p>Uses linking words but sometimes mechanically. Vocabulary is adequate but not precise. Grammar is a mix of simple and complex, with noticeable errors. Ideas are relevant but underdeveloped. Can discuss topics but lacks depth in speaking.</p>
+        </div>
+        <div class="comp-box b7-box">
+          <div class="comp-label">What Band 7 requires</div>
+          <p>Ideas flow logically without forcing connectors. Uses less common vocabulary with collocation awareness. Complex grammar used flexibly with majority of sentences error-free. Arguments are well-supported with relevant examples. Speaks fluently with natural discourse markers and hedging.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>What This Course Covers</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:16px;">
+        <div><strong style="color:var(--gold)">🔗 Collocations</strong><p class="text-sm text-muted mt-8">The #1 vocabulary gap. Learn natural word pairings.</p></div>
+        <div><strong style="color:var(--accent2)">⚙️ Grammar Range</strong><p class="text-sm text-muted mt-8">5 structures that signal Band 7 to examiners.</p></div>
+        <div><strong style="color:var(--green)">✍️ Writing Precision</strong><p class="text-sm text-muted mt-8">Task 1 data language + Task 2 argument architecture.</p></div>
+        <div><strong style="color:var(--red)">🎤 Speaking Depth</strong><p class="text-sm text-muted mt-8">Part 3 extended answers with PEEC framework.</p></div>
+      </div>
+    </div>
+  `;
+}
+
+// ── DIAGNOSTIC ──
+function renderDiag() {
+  if (S.dStep >= DIAG.length) return renderDiagResults();
+  const q = DIAG[S.dStep];
+  const answered = S.dAnswers[S.dStep] !== undefined;
+  const sel = S.dAnswers[S.dStep];
+  return `
+    <div class="flex-between mb-16">
+      <span class="text-sm text-muted">Question ${S.dStep+1} / ${DIAG.length}</span>
+      <span class="tag tag-${q.cat === 'vocab' ? 'strat' : q.cat === 'grammar' ? 'strat' : q.cat === 'writing' ? 'write' : q.cat === 'reading' ? 'read' : q.cat === 'listening' ? 'listen' : 'speak'}">${q.cat.toUpperCase()}</span>
+    </div>
+    <div style="height:4px;background:var(--surface2);border-radius:99px;margin-bottom:20px;">
+      <div style="height:100%;width:${((S.dStep+1)/DIAG.length)*100}%;background:var(--gold);border-radius:99px;transition:width .3s;"></div>
+    </div>
+    <div class="card">
+      <h2 style="font-size:17px;margin-bottom:18px;">${q.q}</h2>
+      ${q.opts.map((o,i) => {
+        let c = 'quiz-option';
+        if (answered) { if (i===q.correct) c+=' correct'; else if (i===sel&&i!==q.correct) c+=' wrong'; }
+        return `<button class="${c}" ${answered?'disabled':''} onclick="aDiag(${i})">${o}</button>`;
+      }).join('')}
+      ${answered ? `<div class="explanation">${sel===q.correct?'✅ <strong>Correct!</strong>':'❌ <strong>Not quite.</strong>'}<br><br>${q.explain}</div>
+      <div class="mt-16" style="text-align:right;"><button class="btn btn-primary" onclick="nDiag()">${S.dStep+1>=DIAG.length?'See Results →':'Next →'}</button></div>` : ''}
+    </div>
+  `;
+}
+
+function renderDiagResults() {
+  const score = S.dAnswers.filter((a,i) => a===DIAG[i].correct).length;
+  S.dScore = score; S.dDone = true;
+  S.unlockedMods = MODS.map((_,i)=>i);
+  const cats = {}; const catT = {};
+  DIAG.forEach((q,i) => { catT[q.cat]=(catT[q.cat]||0)+1; if(S.dAnswers[i]===q.correct) cats[q.cat]=(cats[q.cat]||0)+1; });
+  let est = score >= 9 ? '7.0+' : score >= 7 ? '6.5-7.0' : score >= 5 ? '6.0-6.5' : '5.5-6.0';
+  return `
+    <div class="card text-center">
+      <div class="hero-emoji">📊</div>
+      <h2>Diagnostic Results</h2>
+      <p class="mt-8"><strong style="color:var(--accent2);font-size:24px;">${score}/10</strong></p>
+      <p class="text-sm text-muted">Estimated readiness: <strong style="color:var(--gold);font-size:18px;">${est}</strong></p>
+    </div>
+    <div class="card">
+      <h3>Skill Breakdown</h3>
+      <div class="progress-grid mt-16">
+        ${Object.entries(catT).map(([cat,total]) => {
+          const got = cats[cat]||0;
+          const pct = Math.round((got/total)*100);
+          const col = pct>=70?'var(--green)':pct>=40?'var(--gold)':'var(--red)';
+          return `<div class="progress-item"><div class="num" style="color:${col}">${pct}%</div><div class="label">${cat}</div></div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <h3>Priority Actions</h3>
+      ${score <= 6 ? `<p class="mt-8">Your main gaps are in <strong>collocations and grammar range</strong>. Start with Module 2 (Collocation Surgery) and Module 3 (Grammar Upgrade) — these have the fastest impact on your score.</p>` :
+        `<p class="mt-8">You're close to Band 7 already. Focus on <strong>writing structure</strong> (Modules 4-5) and <strong>speaking depth</strong> (Module 7) to lock it in.</p>`}
+      <div class="mt-16">
+        <button class="btn btn-gold" onclick="goMods()">Start the Course →</button>
+        <button class="btn btn-secondary" onclick="goHome()" style="margin-left:8px;">Home</button>
+      </div>
+    </div>
+  `;
+}
+
+// ── MODULES LIST ──
+function renderMods() {
+  return `
+    <div class="flex-between mb-16"><h2>Course Modules</h2><button class="btn btn-secondary btn-sm" onclick="goHome()">← Home</button></div>
+    ${MODS.map((m,i) => {
+      const done = S.completedMods.includes(i);
+      const unlocked = S.unlockedMods.includes(i);
+      return `<div class="module-item ${unlocked?'':'locked'}" onclick="${unlocked?`openMod(${i})`:''}">
+        <div class="module-icon ${done?'done':unlocked?'current':'locked'}">${done?'✓':m.emoji}</div>
+        <div style="flex:1"><h4 style="font-size:14px;font-weight:600;">${m.title}</h4><p style="font-size:12px;color:var(--text2);">${m.desc}</p></div>
+        <div><span class="tag tag-${m.tag}">${m.tagLabel}</span><p class="text-sm text-muted mt-8">${m.duration}</p></div>
+      </div>`;
+    }).join('')}
+  `;
+}
+
+// ── MODULE DETAIL ──
+function renderModDetail() {
+  const m = MODS[S.curMod];
+  const ex = m.exercises[S.curEx];
+  if (!ex) return renderModComplete();
+  return `
+    <div class="flex-between mb-16">
+      <div><button class="btn btn-secondary btn-sm" onclick="goMods()">← Modules</button><span class="text-sm text-muted" style="margin-left:12px;">${m.emoji} ${m.title}</span></div>
+      <span class="text-sm text-muted">${S.curEx+1} / ${m.exercises.length}</span>
+    </div>
+    <div style="height:4px;background:var(--surface2);border-radius:99px;margin-bottom:20px;">
+      <div style="height:100%;width:${((S.curEx+1)/m.exercises.length)*100}%;background:var(--accent);border-radius:99px;transition:width .3s;"></div>
+    </div>
+    ${renderEx(ex)}
+  `;
+}
+
+function renderEx(ex) {
+  switch(ex.type) {
+    case 'info': return renderInfo(ex);
+    case 'collocation-quiz': return renderCollQuiz(ex);
+    case 'grammar-transform': return renderGrammarTransform(ex);
+    case 'writing-practice': return renderWriting(ex);
+    case 'speaking-practice': return renderSpeaking(ex);
+    case 'speaking-model': return renderSpeakingModel(ex);
+    case 'rewrite-drill': return renderRewriteDrill(ex);
+    case 'reading-strategy': return renderReadingStrategy(ex);
+    case 'plan': return renderPlan(ex);
+    default: return renderInfo(ex);
+  }
+}
+
+function renderInfo(ex) {
+  return `<div class="card"><h2>${ex.title}</h2><div class="mt-16">${ex.content}</div><div class="mt-24" style="text-align:right;"><button class="btn btn-primary" onclick="nextEx()">Got It →</button></div></div>`;
+}
+
+function renderCollQuiz(ex) {
+  return `<div class="card"><h2>${ex.title}</h2><p class="text-muted mb-16">${ex.instruction}</p>
+    ${ex.items.map((item,ii) => {
+      const key = `coll_${S.curMod}_${S.curEx}_${ii}`;
+      const ans = S.exAns[key]; const done = ans!==undefined;
+      return `<div style="margin-bottom:14px;padding:14px;background:var(--surface2);border-radius:10px;">
+        <p style="font-weight:600;margin-bottom:8px;">${item.stem}</p>
+        <div style="display:flex;gap:8px;">
+          ${item.opts.map((o,oi) => {
+            let c = 'btn btn-sm btn-secondary';
+            if (done && oi===item.correct) c='btn btn-sm btn-success';
+            else if (done && oi===ans && oi!==item.correct) c='btn btn-sm btn-danger';
+            return `<button class="${c}" ${done?'disabled':''} onclick="aEx('${key}',${oi},${item.correct})">${o}</button>`;
+          }).join('')}
+        </div>
+        ${done?`<p class="text-sm text-muted mt-8">💡 ${item.explain}</p>`:''}
+      </div>`;
+    }).join('')}
+    <div style="text-align:right;"><button class="btn btn-primary" onclick="nextEx()">Continue →</button></div>
+  </div>`;
+}
+
+function renderGrammarTransform(ex) {
+  const key = `gram_${S.curMod}_${S.curEx}`;
+  const ans = S.exAns[key]; const done = ans!==undefined;
+  return `
+    <div class="card">
+      <h2>${ex.title}</h2>
+      <div class="comparison mt-16">
+        <div class="comp-box b6-box"><div class="comp-label">Band 6</div><p>"${ex.b6}"</p></div>
+        <div class="comp-box b7-box"><div class="comp-label">Band 7</div><p>"${ex.b7}"</p></div>
+      </div>
+      <div class="explanation mt-16">${ex.explain}</div>
+    </div>
+    <div class="card">
+      <h3>Your Turn</h3>
+      <p class="mb-16">${ex.practice.q}</p>
+      ${ex.practice.opts.map((o,i) => {
+        let c = 'quiz-option';
+        if (done) { if (i===ex.practice.correct) c+=' correct'; else if (i===ans&&i!==ex.practice.correct) c+=' wrong'; }
+        return `<button class="${c}" ${done?'disabled':''} onclick="aEx('${key}',${i},${ex.practice.correct})">${o}</button>`;
+      }).join('')}
+      ${done?`<div class="explanation">${ans===ex.practice.correct?'✅ ':'❌ '}${ex.practice.why}</div>`:''}
+      ${done?`<div class="mt-16" style="text-align:right;"><button class="btn btn-primary" onclick="nextEx()">Continue →</button></div>`:''}
+    </div>
+  `;
+}
+
+function renderWriting(ex) {
+  const wc = S.writingText.trim().split(/\s+/).filter(w=>w).length;
+  return `<div class="card">
+    <h2>${ex.title}</h2>
+    <p class="mt-8" style="color:var(--gold);font-weight:600;">${ex.prompt}</p>
+    <p class="mt-8 text-muted">${ex.instruction}</p>
+    <div class="mt-16" style="background:var(--surface2);padding:14px;border-radius:10px;">
+      <p class="text-sm" style="color:var(--accent2);font-weight:600;">💡 Hints</p>
+      <div id="whints" style="display:none;margin-top:8px;">
+        ${ex.hints.map(h=>`<p class="text-sm text-muted" style="margin-top:4px;">• ${h}</p>`).join('')}
+      </div>
+      <button class="btn btn-secondary btn-sm mt-8" onclick="document.getElementById('whints').style.display=document.getElementById('whints').style.display==='none'?'block':'none'">Show/Hide</button>
+    </div>
+    <textarea class="writing-area mt-16" placeholder="Start writing..." oninput="S.writingText=this.value;document.getElementById('wc').textContent=this.value.trim().split(/\\s+/).filter(w=>w).length+' words';">${S.writingText}</textarea>
+    <div class="word-count" id="wc">${wc} words</div>
+    <div class="mt-16 flex-between">
+      <button class="btn btn-secondary btn-sm" onclick="checkB7Writing()">🔍 Band 7 Check</button>
+      <button class="btn btn-primary" onclick="nextEx()">Continue →</button>
+    </div>
+    <div id="wfeedback" class="mt-16"></div>
+  </div>`;
+}
+
+function renderSpeaking(ex) {
+  const ph = S.speakPhase;
+  const max = ph==='prep'?ex.prepTime:ex.speakTime;
+  const rem = max - S.speakTime;
+  const m = Math.floor(rem/60); const s = rem%60;
+  const tc = rem<=5?'danger':rem<=15?'warning':'';
+  return `<div class="card">
+    <h2>${ex.title}</h2>
+    <div class="mt-16" style="background:var(--surface2);padding:18px;border-radius:10px;">
+      <p style="font-weight:600;color:var(--gold);margin-bottom:10px;">📋 ${ex.card.topic}</p>
+      ${ex.card.bullets.map(b=>`<p class="text-sm" style="margin-top:4px;">• ${b}</p>`).join('')}
+    </div>
+    <div class="text-center mt-24">
+      <p style="font-weight:600;color:${ph==='prep'?'var(--gold)':'var(--green)'}">${ph==='prep'?'📝 PREP TIME':'🎙️ SPEAK NOW'}</p>
+      <div class="timer-display ${tc}">${m}:${s.toString().padStart(2,'0')}</div>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        ${!S.speakRunning?`<button class="btn btn-primary" onclick="startTimer(${max})">${ph==='prep'?'▶ Start Prep':'▶ Start Speaking'}</button>`
+          :`<button class="btn btn-danger" onclick="stopTimer()">⏹ Stop</button>`}
+        ${ph==='prep'&&!S.speakRunning&&S.speakTime>0?`<button class="btn btn-success" onclick="toSpeak()">Skip to Speaking →</button>`:''}
+        ${ph==='prep'&&!S.speakRunning&&S.speakTime===0?`<button class="btn btn-secondary" onclick="toSpeak()">Skip Prep</button>`:''}
+      </div>
+      ${ph==='speak'&&!S.speakRunning&&S.speakTime>0?`<div class="mt-16"><p class="text-sm text-muted">Self-assess: Did you use hedging? Discourse markers? Specific examples?</p><button class="btn btn-primary mt-8" onclick="nextEx()">Continue →</button></div>`:''}
+    </div>
+  </div>`;
+}
+
+function renderSpeakingModel(ex) {
+  return `<div class="card">
+    <h2>${ex.title}</h2>
+    <p style="font-weight:600;color:var(--gold);margin:12px 0;">Q: "${ex.question}"</p>
+    <div class="comparison">
+      <div class="comp-box b6-box"><div class="comp-label">Band 6 Answer</div><p>"${ex.b6}"</p></div>
+      <div class="comp-box b7-box"><div class="comp-label">Band 7 Answer</div><p>"${ex.b7}"</p></div>
+    </div>
+    <div class="mt-16" style="background:var(--surface2);padding:16px;border-radius:10px;">
+      <p class="text-sm" style="font-weight:600;color:var(--accent2);margin-bottom:8px;">Why the Band 7 answer works:</p>
+      ${ex.analysis.map(a=>`<p class="text-sm mt-8"><span class="hl-green highlight-strip">${a.label}</span> ${a.detail}</p>`).join('')}
+    </div>
+    <div class="mt-24" style="text-align:right;"><button class="btn btn-primary" onclick="nextEx()">Continue →</button></div>
+  </div>`;
+}
+
+function renderRewriteDrill(ex) {
+  return `<div class="card"><h2>${ex.title}</h2><p class="text-muted mb-16">${ex.instruction}</p>
+    ${ex.items.map((item,ii) => {
+      const key = `rw_${S.curMod}_${S.curEx}_${ii}`;
+      const ans = S.exAns[key]; const done = ans!==undefined;
+      return `<div style="margin-bottom:16px;padding:16px;background:var(--surface2);border-radius:10px;">
+        <p class="text-sm text-muted mb-8">Band 6 original:</p>
+        <p style="font-weight:600;margin-bottom:12px;">"${item.b6}"</p>
+        <p class="text-sm text-muted mb-8">Choose the Band 7 version:</p>
+        ${item.opts.map((o,oi) => {
+          let c = 'quiz-option';
+          if (done) { if (oi===item.correct) c+=' correct'; else if (oi===ans&&oi!==item.correct) c+=' wrong'; }
+          return `<button class="${c}" style="font-size:13px;padding:10px 14px;" ${done?'disabled':''} onclick="aEx('${key}',${oi},${item.correct})">${o}</button>`;
+        }).join('')}
+        ${done?`<div class="explanation">${ans===item.correct?'✅ ':'❌ '}${item.why}</div>`:''}
+      </div>`;
+    }).join('')}
+    <div style="text-align:right;"><button class="btn btn-primary" onclick="nextEx()">Continue →</button></div>
+  </div>`;
+}
+
+function renderReadingStrategy(ex) {
+  return `<div class="card">
+    <h2>${ex.title}</h2>
+    <div style="margin:16px 0;padding:18px;background:var(--surface2);border-radius:10px;font-size:14px;line-height:1.8;font-style:italic;">
+      "${ex.passage}"
+    </div>
+    ${ex.questions.map((q,qi) => {
+      const key = `read_${S.curMod}_${S.curEx}_${qi}`;
+      const ans = S.exAns[key]; const done = ans!==undefined;
+      return `<div style="margin-bottom:16px;padding:16px;background:var(--surface2);border-radius:10px;">
+        <p style="font-weight:600;margin-bottom:10px;">${q.q}</p>
+        ${q.opts.map((o,oi) => {
+          let c = 'quiz-option';
+          if (done) { if (oi===q.correct) c+=' correct'; else if (oi===ans&&oi!==q.correct) c+=' wrong'; }
+          return `<button class="${c}" ${done?'disabled':''} onclick="aEx('${key}',${oi},${q.correct})">${o}</button>`;
+        }).join('')}
+        ${done?`<div class="explanation">${ans===q.correct?'✅ ':'❌ '}${q.why}</div>`:''}
+      </div>`;
+    }).join('')}
+    <div style="text-align:right;"><button class="btn btn-primary" onclick="nextEx()">Continue →</button></div>
+  </div>`;
+}
+
+function renderPlan(ex) {
+  return `<div class="card"><h2>${ex.title}</h2><p class="text-muted">Consistency over intensity. Every single day.</p></div>
+    ${ex.weeks.map(w=>`<div class="card"><h3 style="color:var(--gold)">${w.label}</h3>
+      ${w.days.map(d=>`<div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);">
+        <div style="min-width:55px;font-weight:700;color:var(--accent2);font-size:13px;">${d.time}</div>
+        <div style="flex:1"><p style="font-weight:600;font-size:13px;">${d.task}</p><p class="text-sm text-muted">${d.detail}</p></div>
+      </div>`).join('')}
+    </div>`).join('')}
+    <div style="text-align:right;"><button class="btn btn-primary" onclick="nextEx()">Complete Module →</button></div>
+  `;
+}
+
+function renderModComplete() {
+  const m = MODS[S.curMod];
+  if (!S.completedMods.includes(S.curMod)) { S.completedMods.push(S.curMod); S.xp += 150; }
+  return `<div class="card text-center"><div class="hero-emoji">🎉</div><h2>Module Complete!</h2><p class="mt-8">${m.emoji} ${m.title}</p><p class="mt-8" style="color:var(--gold);font-weight:600;">+150 XP</p><div class="mt-24"><button class="btn btn-gold" onclick="goMods()">Back to Modules</button></div></div>`;
+}
+
+// ── ACTIONS ──
+function goHome() { S.screen='home'; render(); }
+function goMods() { S.screen='modules'; render(); }
+function startDiag() { S.screen='diagnostic'; S.dStep=0; S.dAnswers=[]; render(); }
+function aDiag(i) { if(S.dAnswers[S.dStep]!==undefined) return; S.dAnswers[S.dStep]=i; if(i===DIAG[S.dStep].correct) S.xp+=15; render(); }
+function nDiag() { S.dStep++; render(); window.scrollTo(0,0); }
+function openMod(i) { S.curMod=i; S.curEx=0; S.writingText=''; S.speakTime=0; S.speakRunning=false; S.speakPhase='prep'; S.screen='module-detail'; render(); window.scrollTo(0,0); }
+function aEx(key,sel,cor) { if(S.exAns[key]!==undefined) return; S.exAns[key]=sel; if(sel===cor) S.xp+=15; render(); }
+function nextEx() { S.curEx++; S.writingText=''; S.speakTime=0; S.speakRunning=false; S.speakPhase='prep'; render(); window.scrollTo(0,0); }
+
+function checkB7Writing() {
+  const t = S.writingText.toLowerCase();
+  const fb = [];
+  if (t.match(/\b(nowadays|in this modern era|as we know)\b/)) fb.push('🔴 Cliché opener detected — remove "Nowadays" / "In this modern era" / "As we know"');
+  if (t.match(/\b(firstly|secondly|thirdly|moreover|furthermore|in addition)\b/g)?.length > 2) fb.push('🟡 Too many mechanical connectors — vary your cohesion devices');
+  if (t.match(/\b(would|could|may|might|tend to|arguably|likely|perhaps)\b/)) fb.push('🟢 Hedging language detected — nice!');
+  if (t.match(/\b(having .+ed|being .+ed|,\s*\w+ing\b)/)) fb.push('🟢 Participle clause detected — Band 7 grammar!');
+  if (t.match(/\b(not only|it is .+ that|rarely|seldom|never before)\b/)) fb.push('🟢 Complex structure (cleft/inversion) detected!');
+  if (t.match(/\b(very|really|a lot|so much|big|small|good|bad)\b/g)?.length > 2) fb.push('🟡 Consider replacing basic adjectives: "very big" → "substantial", "very good" → "considerable"');
+  if (!t.match(/\b(significant|considerable|substantial|fundamental|crucial|prevalent)\b/) && t.length > 80) fb.push('🟡 No "less common" vocabulary detected — try upgrading some word choices');
+  if (t.match(/\b(is widely|is generally|is commonly|is often regarded)\b/)) fb.push('🟢 Passive reporting structure — excellent!');
+  const el = document.getElementById('wfeedback');
+  if (el) {
+    if (t.length < 30) el.innerHTML = '<div class="explanation">Write more first!</div>';
+    else if (fb.length === 0) el.innerHTML = '<div class="explanation" style="border-color:var(--green)">✅ No obvious issues. Check your collocations and make sure every idea is fully developed.</div>';
+    else el.innerHTML = `<div class="explanation">${fb.join('<br>')}</div>`;
+  }
+}
+
+let tmr = null;
+function startTimer(max) {
+  S.speakRunning = true; S.speakTime = 0; render();
+  tmr = setInterval(() => {
+    S.speakTime++;
+    const ex = MODS[S.curMod].exercises[S.curEx];
+    const m = S.speakPhase==='prep' ? ex.prepTime : ex.speakTime;
+    if (S.speakTime >= m) { clearInterval(tmr); S.speakRunning=false; if(S.speakPhase==='prep'){toSpeak();return;} }
+    render();
+  }, 1000);
+}
+function stopTimer() { clearInterval(tmr); S.speakRunning=false; render(); }
+function toSpeak() { clearInterval(tmr); S.speakPhase='speak'; S.speakTime=0; S.speakRunning=false; render(); }
+
+render();
+</script>
+</body>
+</html>
