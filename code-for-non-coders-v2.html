@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How to Code for Non-Coders — Learn with Adhi</title>
+  <title>How to Code for Non-Coders â Learn with Adhi</title>
   <script>
     (function(){
       var s=localStorage.getItem('theme');
@@ -15,7 +15,7 @@
   <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <style>
-/* ═══ MENOR DESIGN TOKENS ═══════════════════════════════════════════════ */
+/* âââ MENOR DESIGN TOKENS âââââââââââââââââââââââââââââââââââââââââââââââ */
 :root {
   /* Raw Menor palette */
   --c-hijau:   #19ae5d;
@@ -26,7 +26,7 @@
   --c-pesisir: #00aaff;
   --c-putih:   #ffffff;
 
-  /* Course identity — K1: Biru Abang + Pink None */
+  /* Course identity â K1: Biru Abang + Pink None */
   --c-primary: #1c5ddc;
   --c-accent:  #eb30a2;
   --c-ink:     #ffffff;
@@ -104,7 +104,7 @@
   --c-pink-dim:    #f054b5;
 }
 
-/* ═══ RESET ══════════════════════════════════════════════════════════════ */
+/* âââ RESET ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; color-scheme: light dark; }
 
@@ -127,7 +127,7 @@ h1, h2, h3 {
 a { color: var(--c-primary-dim); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-/* ═══ SCROLL PROGRESS BAR ════════════════════════════════════════════════ */
+/* âââ SCROLL PROGRESS BAR ââââââââââââââââââââââââââââââââââââââââââââââââ */
 #progress-rail {
   position: fixed; top: 0; left: 0; right: 0;
   height: var(--progress-h);
@@ -141,13 +141,13 @@ a:hover { text-decoration: underline; }
   transition: width .12s linear;
 }
 
-/* ═══ LAYOUT ═════════════════════════════════════════════════════════════ */
+/* âââ LAYOUT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .app {
   display: flex;
   min-height: 100vh;
 }
 
-/* ─── Sidebar ─────────────────────────────────────────────────────────── */
+/* âââ Sidebar âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .sidebar {
   position: fixed;
   top: 0; left: 0;
@@ -334,7 +334,7 @@ a:hover { text-decoration: underline; }
 }
 [data-theme="light"] .theme-toggle::after { transform: translateX(22px); }
 
-/* ─── Content area ────────────────────────────────────────────────────── */
+/* âââ Content area ââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .content {
   margin-left: var(--sidebar-w);
   flex: 1;
@@ -415,7 +415,7 @@ a:hover { text-decoration: underline; }
   background: var(--c-primary-dim);
 }
 
-/* ═══ MODULE CARD ════════════════════════════════════════════════════════ */
+/* âââ MODULE CARD ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .module {
   --module-accent: var(--c-primary);
   max-width: 820px;
@@ -486,7 +486,7 @@ a:hover { text-decoration: underline; }
   line-height: 1.75;
 }
 
-/* ═══ CONTENT COMPONENTS ════════════════════════════════════════════════ */
+/* âââ CONTENT COMPONENTS ââââââââââââââââââââââââââââââââââââââââââââââââ */
 
 /* Analogy box */
 .analogy {
@@ -534,7 +534,7 @@ a:hover { text-decoration: underline; }
   font-size: var(--fs-sm);
   color: var(--text);
 }
-.warning::before { content: "⚠️  "; }
+.warning::before { content: "â ï¸  "; }
 
 /* Diagram wrapper */
 .diagram {
@@ -574,7 +574,7 @@ code, .cmd {
 .comment { color: var(--text-muted); font-style: italic; }
 .str { color: var(--c-hijau-dim); }
 .flag { color: var(--c-pesisir-dim); }
-.version { color: var(--c-accent-dim); }
+.version { display: none; }
 
 /* Command grid */
 .cmd-grid {
@@ -653,7 +653,7 @@ code, .cmd {
 }
 .check-item:last-child { border-bottom: none; }
 .check-item::before {
-  content: "○";
+  content: "â";
   color: var(--c-primary-dim);
   font-size: 1rem;
   flex-shrink: 0;
@@ -832,10 +832,10 @@ code, .cmd {
 /* Container (inside module) */
 .container { max-width: 100%; }
 
-/* Old footer inside modules — hide */
+/* Old footer inside modules â hide */
 .footer { display: none; }
 
-/* ═══ MOBILE ═════════════════════════════════════════════════════════════ */
+/* âââ MOBILE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .mobile-header {
   display: none;
   position: fixed;
@@ -880,7 +880,7 @@ code, .cmd {
   .sidebar-overlay.show { display: block; }
 }
 
-/* ── Orphaned pre-module content (intro sections from original file) ── */
+/* ââ Orphaned pre-module content (intro sections from original file) ââ */
 .level-section > .container,
 .level-section > .hero,
 .level-section > .hero.container {
@@ -910,7 +910,7 @@ code, .cmd {
 }
 
 
-/* ── SVG diagram dark-mode overrides ────────────────────────────────── */
+/* ââ SVG diagram dark-mode overrides ââââââââââââââââââââââââââââââââââ */
 [data-theme="dark"] svg .rest-text,
 [data-theme="dark"] svg .rest-sub,
 [data-theme="dark"] svg .rest-label,
@@ -918,7 +918,7 @@ code, .cmd {
 
 [data-theme="dark"] svg .rest-arrow { stroke: var(--text-muted) !important; }
 
-/* Generic SVG text in dark mode — catches other diagram labels */
+/* Generic SVG text in dark mode â catches other diagram labels */
 [data-theme="dark"] svg text:not([fill^="#0"]):not([fill^="#1"]):not([fill^="#2"]):not([fill^="#3"]):not([fill^="#f"]):not([fill^="#e"]):not([fill="white"]):not([fill="#fff"]) {
   fill: var(--text-dim);
 }
@@ -933,7 +933,7 @@ code, .cmd {
 
 <!-- Mobile header -->
 <header class="mobile-header">
-  <button class="burger" id="burger" aria-label="Open menu">☰</button>
+  <button class="burger" id="burger" aria-label="Open menu">â°</button>
   <span class="brand">How to Code for Non-Coders</span>
   <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme" style="position:static;transform:none;"></button>
 </header>
@@ -943,13 +943,13 @@ code, .cmd {
 
 <div class="app">
 
-  <!-- ── SIDEBAR ── -->
+  <!-- ââ SIDEBAR ââ -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-      <div class="brand-icon">💻</div>
+      <div class="brand-icon">ð»</div>
       <div class="brand-name">
         How to Code for Non-Coders
-        <small>Kombinasi 1 · Biru Abang</small>
+        <small>Kombinasi 1 Â· Biru Abang</small>
       </div>
     </div>
 
@@ -962,24 +962,24 @@ code, .cmd {
     <div class="module-list" id="module-list"></div>
 
     <div class="sidebar-footer">
-      <a class="back-link" href="index.html">← All courses</a>
+      <a class="back-link" href="index.html">â All courses</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
     </div>
   </aside>
 
-  <!-- ── CONTENT ── -->
+  <!-- ââ CONTENT ââ -->
   <main class="content" id="content">
 
     <!-- LEVEL 1 -->
     <section class="level-section active" id="level-1">
       
   <div class="level-hero">
-    <div class="level-badge">Level 1 · The Foundation</div>
+    <div class="level-badge">Level 1 Â· The Foundation</div>
     <h1>How the Web Actually Works</h1>
-    <p>Build your mental map of how websites and apps are made. No background required — just curiosity.</p>
+    <p>Build your mental map of how websites and apps are made. No background required â just curiosity.</p>
     <div class="level-meta">
-      <span class="level-meta-item"><span class="level-meta-dot"></span>8 modules · 115 min</span>
-      <span class="level-meta-item"><span class="level-meta-dot" style="background:var(--c-accent)"></span>Course · How to Code for Non-Coders</span>
+      <span class="level-meta-item"><span class="level-meta-dot"></span>8 modules Â· 115 min</span>
+      <span class="level-meta-item"><span class="level-meta-dot" style="background:var(--c-accent)"></span>Course Â· How to Code for Non-Coders</span>
     </div>
   </div>
 <div class="container">
@@ -2508,12 +2508,12 @@ code, .cmd {
     <section class="level-section" id="level-2">
       
   <div class="level-hero">
-    <div class="level-badge">Level 2 · Going Deeper</div>
+    <div class="level-badge">Level 2 Â· Going Deeper</div>
     <h1>Tools Developers Use Daily</h1>
     <p>Go from understanding the web to understanding how developers build on it every day.</p>
     <div class="level-meta">
-      <span class="level-meta-item"><span class="level-meta-dot"></span>7 modules · 125 min</span>
-      <span class="level-meta-item"><span class="level-meta-dot" style="background:var(--c-accent)"></span>Course · How to Code for Non-Coders</span>
+      <span class="level-meta-item"><span class="level-meta-dot"></span>7 modules Â· 125 min</span>
+      <span class="level-meta-item"><span class="level-meta-dot" style="background:var(--c-accent)"></span>Course Â· How to Code for Non-Coders</span>
     </div>
   </div>
 <div class="container">
@@ -3774,12 +3774,12 @@ code, .cmd {
     <section class="level-section" id="level-3">
       
   <div class="level-hero">
-    <div class="level-badge">Level 3 · Professional Stack</div>
+    <div class="level-badge">Level 3 Â· Professional Stack</div>
     <h1>Production-Grade Engineering</h1>
     <p>The patterns, tools, and concepts behind real production systems.</p>
     <div class="level-meta">
-      <span class="level-meta-item"><span class="level-meta-dot"></span>7 modules · 130 min</span>
-      <span class="level-meta-item"><span class="level-meta-dot" style="background:var(--c-accent)"></span>Course · How to Code for Non-Coders</span>
+      <span class="level-meta-item"><span class="level-meta-dot"></span>7 modules Â· 130 min</span>
+      <span class="level-meta-item"><span class="level-meta-dot" style="background:var(--c-accent)"></span>Course Â· How to Code for Non-Coders</span>
     </div>
   </div>
 <div class="container">
@@ -4631,7 +4631,7 @@ code, .cmd {
 </div>
 
 <script>
-// ─── Course data ─────────────────────────────────────────────────────────
+// âââ Course data âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const COURSE = {
   levels: [
     {
@@ -4647,7 +4647,7 @@ const COURSE = {
         { id:"l1-m6", num:6, title:"APIs: how apps talk to each other", time:20 },
         { id:"l1-m7", num:7, title:"Domains and DNS: the phone book of the internet", time:10 },
         { id:"l1-m8", num:8, title:"Environment variables: your secret vault", time:10 },
-        { id:"l1-final", num:"✓", title:"Your complete checklist", time:0 },
+        { id:"l1-final", num:"â", title:"Your complete checklist", time:0 },
       ]
     },
     {
@@ -4662,7 +4662,7 @@ const COURSE = {
         { id:"l2-m5", num:5, title:"Browser DevTools: your X-ray glasses", time:15 },
         { id:"l2-m6", num:6, title:"Reading error messages: they're trying to help you", time:20 },
         { id:"l2-m7", num:7, title:"Reading documentation: the instruction manual", time:15 },
-        { id:"l2-final", num:"✓", title:"Level 2 checklist", time:0 },
+        { id:"l2-final", num:"â", title:"Level 2 checklist", time:0 },
       ]
     },
     {
@@ -4677,13 +4677,13 @@ const COURSE = {
         { id:"l3-m5", num:5, title:"Webhooks: call me when it happens", time:15 },
         { id:"l3-m6", num:6, title:"Security basics: locking the doors", time:15 },
         { id:"l3-m7", num:7, title:"Planning projects: the architect's blueprint", time:20 },
-        { id:"l3-final", num:"✓", title:"Level 3 checklist", time:0 },
+        { id:"l3-final", num:"â", title:"Level 3 checklist", time:0 },
       ]
     }
   ]
 };
 
-// ─── Theme ───────────────────────────────────────────────────────────────
+// âââ Theme âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const root = document.documentElement;
 const saved = localStorage.getItem('theme');
 const sys = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -4695,7 +4695,7 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   localStorage.setItem('theme', next);
 });
 
-// ─── Scroll progress bar ─────────────────────────────────────────────────
+// âââ Scroll progress bar âââââââââââââââââââââââââââââââââââââââââââââââââ
 const fill = document.getElementById('progress-fill');
 function updateProgress() {
   const el = document.documentElement;
@@ -4704,7 +4704,7 @@ function updateProgress() {
 }
 document.addEventListener('scroll', updateProgress, { passive: true });
 
-// ─── Sidebar: render module list ─────────────────────────────────────────
+// âââ Sidebar: render module list âââââââââââââââââââââââââââââââââââââââââ
 let activeLevel = 1;
 
 function renderModuleList(levelId) {
@@ -4718,7 +4718,7 @@ function renderModuleList(levelId) {
     </a>
   `).join('');
 
-  // Click → smooth scroll + close mobile sidebar
+  // Click â smooth scroll + close mobile sidebar
   list.querySelectorAll('.mod-item').forEach(item => {
     item.addEventListener('click', e => {
       e.preventDefault();
@@ -4729,7 +4729,7 @@ function renderModuleList(levelId) {
   });
 }
 
-// ─── Level switching ─────────────────────────────────────────────────────
+// âââ Level switching âââââââââââââââââââââââââââââââââââââââââââââââââââââ
 document.querySelectorAll('.level-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     const lvl = parseInt(tab.dataset.level);
@@ -4749,7 +4749,7 @@ document.querySelectorAll('.level-tab').forEach(tab => {
   });
 });
 
-// ─── IntersectionObserver: highlight active module in sidebar ────────────
+// âââ IntersectionObserver: highlight active module in sidebar ââââââââââââ
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -4768,7 +4768,7 @@ function observeModules(levelId) {
   });
 }
 
-// ─── Mobile sidebar ───────────────────────────────────────────────────────
+// âââ Mobile sidebar âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('sidebar-overlay');
 
@@ -4786,7 +4786,7 @@ function closeSidebar() {
 document.getElementById('burger').addEventListener('click', openSidebar);
 overlay.addEventListener('click', closeSidebar);
 
-// ─── Init ─────────────────────────────────────────────────────────────────
+// âââ Init âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const savedLevel = parseInt(localStorage.getItem('lastLevel')) || 1;
 if (savedLevel !== 1) {
   activeLevel = savedLevel;
