@@ -560,8 +560,8 @@ a:hover { text-decoration: underline; }
   font-size: 0.85rem;
   line-height: 1.65;
   color: var(--text);
-  white-space: pre;
 }
+.code-block.tree { white-space: pre; }
 code, .cmd {
   font-family: "DM Sans", monospace;
   font-size: 0.85em;
@@ -1558,7 +1558,7 @@ table.compare tr:last-child td { border-bottom: none; }
             typical project looks like:
           </p>
 
-          <div class="code-block">
+          <div class="code-block tree">
             <span class="comment">my-project/</span>
             <span class="comment"> &#9500;&#9472;&#9472;</span> index.html
             <span class="comment"># Main page (the "front door")</span>
