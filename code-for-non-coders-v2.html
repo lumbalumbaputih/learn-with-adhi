@@ -560,6 +560,7 @@ a:hover { text-decoration: underline; }
   font-size: 0.85rem;
   line-height: 1.65;
   color: var(--text);
+  white-space: pre;
 }
 code, .cmd {
   font-family: "DM Sans", monospace;
@@ -639,6 +640,29 @@ code, .cmd {
 @media (max-width: 600px) {
   .compare, .side-by-side { grid-template-columns: 1fr; }
 }
+table.compare {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  margin: 20px 0;
+}
+table.compare th,
+table.compare td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  min-width: 120px;
+}
+table.compare th {
+  font-weight: 700;
+  color: var(--text);
+  background: var(--surface2);
+}
+table.compare tr:last-child td { border-bottom: none; }
 
 /* Checklist */
 .checklist { margin: 20px 0; }
@@ -652,6 +676,7 @@ code, .cmd {
   color: var(--text-dim);
 }
 .check-item:last-child { border-bottom: none; }
+.check-item input[type="checkbox"] { display: none; }
 .check-item::before {
   content: "○";
   color: var(--c-primary-dim);
