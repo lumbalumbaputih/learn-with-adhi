@@ -1,0 +1,4753 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Code for Non-Coders — Learn with Adhi</title>
+  <script>
+    (function(){
+      var s=localStorage.getItem('theme');
+      var d=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+      document.documentElement.setAttribute('data-theme',s||d);
+    })();
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <style>
+/* ═══ MENOR DESIGN TOKENS ═══════════════════════════════════════════════ */
+:root {
+  /* Raw Menor palette */
+  --c-hijau:   #19ae5d;
+  --c-biru:    #1c5ddc;
+  --c-kuning:  #feb52b;
+  --c-jingga:  #fc351c;
+  --c-pink:    #eb30a2;
+  --c-pesisir: #00aaff;
+  --c-putih:   #ffffff;
+
+  /* Course identity — K1: Biru Abang + Pink None */
+  --c-primary: #1c5ddc;
+  --c-accent:  #eb30a2;
+  --c-ink:     #ffffff;
+
+  /* Layout */
+  --sidebar-w: 288px;
+  --progress-h: 3px;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+
+  /* Typography */
+  --fs-display: clamp(2rem, 4vw, 3rem);
+  --fs-h1: clamp(1.5rem, 3vw, 2rem);
+  --fs-h2: clamp(1.2rem, 2.5vw, 1.5rem);
+  --fs-h3: 1.1rem;
+  --fs-body: 1rem;
+  --fs-sm: 0.875rem;
+  --fs-xs: 0.75rem;
+}
+
+[data-theme="light"] {
+  --bg:           #fafaf7;
+  --bg-subtle:    #f2f1ec;
+  --surface:      #ffffff;
+  --surface2:     #f5f4ef;
+  --border:       rgba(0,0,0,0.08);
+  --border-md:    rgba(0,0,0,0.13);
+  --text:         #141419;
+  --text-dim:     #5a5b66;
+  --text-muted:   #9a9ba6;
+  --sidebar-bg:   #f5f4ef;
+  --sidebar-text: #141419;
+  --code-bg:      #f0efe9;
+  --shadow:       0 4px 24px -4px rgba(0,0,0,0.10);
+  --shadow-lg:    0 20px 60px -15px rgba(0,0,0,0.12);
+  --toggle-track: #e2e2ea;
+  --toggle-knob:  #141419;
+
+  /* Dark variants for light mode */
+  --c-primary-dim: #1c5ddc;
+  --c-accent-dim:  #eb30a2;
+  --c-hijau-dim:   #19ae5d;
+  --c-kuning-dim:  #feb52b;
+  --c-jingga-dim:  #fc351c;
+  --c-pesisir-dim: #00aaff;
+  --c-pink-dim:    #eb30a2;
+}
+
+[data-theme="dark"] {
+  --bg:           #0b0b12;
+  --bg-subtle:    #12121c;
+  --surface:      #17172280;
+  --surface2:     #1d1d2a;
+  --border:       rgba(255,255,255,0.09);
+  --border-md:    rgba(255,255,255,0.15);
+  --text:         #ececf0;
+  --text-dim:     #9092a3;
+  --text-muted:   #555664;
+  --sidebar-bg:   #0f0f1a;
+  --sidebar-text: #ececf0;
+  --code-bg:      #12121c;
+  --shadow:       0 4px 24px -4px rgba(0,0,0,0.4);
+  --shadow-lg:    0 20px 60px -15px rgba(0,0,0,0.6);
+  --toggle-track: #1d1d2a;
+  --toggle-knob:  #ececf0;
+
+  /* Lifted Menor colours for dark backgrounds */
+  --c-primary-dim: #3a79ec;
+  --c-accent-dim:  #f054b5;
+  --c-hijau-dim:   #2ec272;
+  --c-kuning-dim:  #ffc649;
+  --c-jingga-dim:  #ff5a43;
+  --c-pesisir-dim: #1fbaff;
+  --c-pink-dim:    #f054b5;
+}
+
+/* ═══ RESET ══════════════════════════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; color-scheme: light dark; }
+
+body {
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  transition: background .3s, color .3s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3 {
+  font-family: "DM Serif Display", serif;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+a { color: var(--c-primary-dim); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ═══ SCROLL PROGRESS BAR ════════════════════════════════════════════════ */
+#progress-rail {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--progress-h);
+  background: var(--border);
+  z-index: 300;
+}
+#progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--c-primary), var(--c-accent));
+  transition: width .12s linear;
+}
+
+/* ═══ LAYOUT ═════════════════════════════════════════════════════════════ */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ─── Sidebar ─────────────────────────────────────────────────────────── */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), background .3s;
+  overflow: hidden;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--c-primary);
+  display: grid; place-items: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--sidebar-text);
+}
+.brand-name small {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* Level tabs */
+.level-nav {
+  display: flex;
+  gap: 6px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.level-tab {
+  flex: 1;
+  padding: 7px 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  font-family: "DM Sans", sans-serif;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+}
+.level-tab.active {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  color: #fff;
+}
+.level-tab:not(.active):hover {
+  border-color: var(--c-primary);
+  color: var(--c-primary-dim);
+}
+
+/* Module list */
+.module-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.mod-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all .18s;
+  text-decoration: none;
+}
+.mod-item:hover {
+  background: var(--surface2);
+  border-left-color: var(--border-md);
+}
+.mod-item.active {
+  background: var(--surface2);
+  border-left-color: var(--c-primary);
+}
+
+.mod-item-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: grid; place-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: background .18s, color .18s;
+}
+.mod-item.active .mod-item-num {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  color: #fff;
+}
+
+.mod-item-text {
+  flex: 1;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-dim);
+  line-height: 1.35;
+  transition: color .18s;
+}
+.mod-item.active .mod-item-text { color: var(--text); }
+
+.mod-item-time {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: 10px;
+}
+
+.back-link {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-dim);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color .2s;
+}
+.back-link:hover { color: var(--text); text-decoration: none; }
+
+.theme-toggle {
+  position: relative;
+  width: 46px; height: 24px;
+  border-radius: 99px;
+  background: var(--toggle-track);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .3s;
+}
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--toggle-knob);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+[data-theme="light"] .theme-toggle::after { transform: translateX(22px); }
+
+/* ─── Content area ────────────────────────────────────────────────────── */
+.content {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+}
+
+/* Level sections */
+.level-section {
+  display: none;
+  padding-bottom: 80px;
+}
+.level-section.active { display: block; }
+
+/* Level hero */
+.level-hero {
+  padding: 56px 48px 48px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--c-primary) 6%, transparent),
+    transparent 60%
+  );
+  position: relative;
+  overflow: hidden;
+}
+.level-hero::after {
+  content: "";
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  opacity: .04;
+  filter: blur(60px);
+  pointer-events: none;
+}
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-primary-dim);
+  background: color-mix(in srgb, var(--c-primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-primary) 25%, transparent);
+  border-radius: 99px;
+  padding: 4px 12px;
+  margin-bottom: 20px;
+}
+.level-hero h1 {
+  font-size: var(--fs-display);
+  margin-bottom: 14px;
+  max-width: 640px;
+}
+.level-hero p {
+  color: var(--text-dim);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  max-width: 560px;
+  line-height: 1.7;
+}
+.level-meta {
+  display: flex;
+  gap: 20px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.level-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.level-meta-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--c-primary-dim);
+}
+
+/* ═══ MODULE CARD ════════════════════════════════════════════════════════ */
+.module {
+  --module-accent: var(--c-primary);
+  margin: 32px 40px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--module-accent);
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  box-shadow: var(--shadow);
+  transition: border-color .2s, box-shadow .2s;
+}
+.module:target,
+.module.in-view {
+  box-shadow: var(--shadow-lg);
+}
+
+.module-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.module-num {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: var(--module-accent);
+  color: #fff;
+  display: grid; place-items: center;
+  font-size: 1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-family: "DM Sans", sans-serif;
+}
+
+.module-header h2 {
+  flex: 1;
+  font-size: var(--fs-h2);
+  font-family: "DM Serif Display", serif;
+  letter-spacing: -0.01em;
+}
+
+.module-time {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.module > p {
+  color: var(--text);
+  margin-bottom: 20px;
+  max-width: 72ch;
+  line-height: 1.75;
+}
+
+/* ═══ CONTENT COMPONENTS ════════════════════════════════════════════════ */
+
+/* Analogy box */
+.analogy {
+  background: color-mix(in srgb, var(--module-accent) 8%, var(--surface2));
+  border: 1px solid color-mix(in srgb, var(--module-accent) 20%, transparent);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin: 20px 0;
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  color: var(--text);
+}
+.analogy.coral {
+  background: color-mix(in srgb, var(--c-jingga-dim) 8%, var(--surface2));
+  border-color: color-mix(in srgb, var(--c-jingga-dim) 20%, transparent);
+}
+.analogy strong { color: var(--text); }
+
+/* Key concept */
+.key-concept {
+  background: color-mix(in srgb, var(--c-primary) 7%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--c-primary) 20%, transparent);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+.key-concept h3 {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--c-primary-dim);
+  margin-bottom: 10px;
+  font-family: "DM Sans", sans-serif;
+}
+.key-concept p { color: var(--text-dim); margin-bottom: 0; font-size: var(--fs-sm); }
+
+/* Warning */
+.warning {
+  background: color-mix(in srgb, var(--c-jingga-dim) 8%, var(--surface2));
+  border: 1px solid color-mix(in srgb, var(--c-jingga-dim) 25%, transparent);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+.warning::before { content: "⚠️  "; }
+
+/* Diagram wrapper */
+.diagram {
+  margin: 24px 0;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+}
+.diagram svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Code block */
+.code-block, pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin: 20px 0;
+  overflow-x: auto;
+  font-family: "DM Sans", monospace;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+code, .cmd {
+  font-family: "DM Sans", monospace;
+  font-size: 0.85em;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+}
+.prompt { color: var(--text-muted); }
+.comment { color: var(--text-muted); font-style: italic; }
+.str { color: var(--c-hijau-dim); }
+.flag { color: var(--c-pesisir-dim); }
+.version { color: var(--c-accent-dim); }
+
+/* Command grid */
+.cmd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.cmd-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  transition: border-color .18s, transform .18s;
+}
+.cmd-card:hover {
+  border-color: var(--c-primary);
+  transform: translateY(-2px);
+}
+.cmd-name {
+  font-family: "DM Sans", monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--c-primary-dim);
+  margin-bottom: 6px;
+}
+.cmd-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+/* Steps */
+.steps { margin: 20px 0; }
+.step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--c-primary);
+  color: #fff;
+  display: grid; place-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Compare / side by side */
+.compare, .side-by-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+@media (max-width: 600px) {
+  .compare, .side-by-side { grid-template-columns: 1fr; }
+}
+
+/* Checklist */
+.checklist { margin: 20px 0; }
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.check-item:last-child { border-bottom: none; }
+.check-item::before {
+  content: "○";
+  color: var(--c-primary-dim);
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+  line-height: 1.2;
+}
+
+/* Flow diagram components */
+.flow-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  padding: 20px;
+  background: var(--surface2);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+.flow-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+.flow-box.highlight {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  color: #fff;
+}
+.flow-box.green {
+  background: color-mix(in srgb, var(--c-hijau-dim) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--c-hijau-dim) 30%, transparent);
+  color: var(--c-hijau-dim);
+}
+.flow-arrow { color: var(--text-muted); font-size: 1.1rem; flex-shrink: 0; }
+.flow-label { font-size: var(--fs-xs); color: var(--text-muted); text-align: center; }
+
+/* File boxes */
+.file-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin: 12px 0;
+}
+.file-title {
+  font-family: "DM Sans", monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.file-ext { color: var(--c-accent-dim); }
+.file-desc { font-size: var(--fs-sm); color: var(--text-dim); }
+
+/* Time estimate */
+.time-est {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 3px 10px;
+  margin-bottom: 20px;
+}
+
+/* Quiz */
+.quiz {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin: 24px 0;
+}
+.quiz h3 {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--c-accent-dim);
+  margin-bottom: 14px;
+  font-family: "DM Sans", sans-serif;
+}
+.quiz p { color: var(--text); margin-bottom: 16px; }
+.quiz-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: "DM Sans", sans-serif;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: all .15s;
+}
+.quiz-option:hover { border-color: var(--c-accent); background: var(--bg); }
+.quiz-option.correct { border-color: var(--c-hijau-dim); background: color-mix(in srgb, var(--c-hijau-dim) 10%, var(--surface)); }
+.quiz-option.wrong   { border-color: var(--c-jingga-dim); background: color-mix(in srgb, var(--c-jingga-dim) 10%, var(--surface)); }
+.quiz-result { font-size: var(--fs-sm); margin-top: 10px; min-height: 20px; font-weight: 500; }
+
+/* Next level CTA */
+.next-level {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--c-primary) 10%, var(--surface)),
+    color-mix(in srgb, var(--c-accent) 8%, var(--surface))
+  );
+  border: 1px solid color-mix(in srgb, var(--c-primary) 20%, transparent);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+  margin: 32px 40px;
+  text-align: center;
+}
+.next-level h3 {
+  font-size: var(--fs-h2);
+  margin-bottom: 10px;
+}
+.next-level p { color: var(--text-dim); margin-bottom: 20px; }
+.btn-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: var(--c-primary);
+  color: #fff;
+  border: none;
+  border-radius: 99px;
+  font-family: "DM Sans", sans-serif;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s, transform .2s;
+}
+.btn-next:hover { opacity: .88; transform: translateY(-2px); }
+
+/* Summary grid */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+
+/* Hero (inside module) */
+.hero {
+  padding: 0;
+  margin-bottom: 20px;
+}
+.hero-badge {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--c-primary-dim);
+  background: color-mix(in srgb, var(--c-primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-primary) 20%, transparent);
+  border-radius: 99px;
+  padding: 3px 10px;
+  margin-bottom: 14px;
+}
+
+/* Container (inside module) */
+.container { max-width: 100%; }
+
+/* Old footer inside modules — hide */
+.footer { display: none; }
+
+/* ═══ MOBILE ═════════════════════════════════════════════════════════════ */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: var(--sidebar-bg);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 250;
+}
+.mobile-header .brand { font-size: var(--fs-sm); font-weight: 600; }
+.burger {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  background: none; border: none; cursor: pointer;
+  color: var(--text); font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .mobile-header { display: flex; }
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .content {
+    margin-left: 0;
+    padding-top: 52px;
+  }
+  .level-hero { padding: 32px 20px 28px; }
+  .module { margin: 20px 16px; padding: 24px 20px; }
+  .next-level { margin: 20px 16px; padding: 24px 20px; }
+  .sidebar-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 199;
+    display: none;
+  }
+  .sidebar-overlay.show { display: block; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll progress -->
+<div id="progress-rail"><div id="progress-fill"></div></div>
+
+<!-- Mobile header -->
+<header class="mobile-header">
+  <button class="burger" id="burger" aria-label="Open menu">☰</button>
+  <span class="brand">How to Code for Non-Coders</span>
+  <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme" style="position:static;transform:none;"></button>
+</header>
+
+<!-- Sidebar overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<div class="app">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">💻</div>
+      <div class="brand-name">
+        How to Code for Non-Coders
+        <small>Kombinasi 1 · Biru Abang</small>
+      </div>
+    </div>
+
+    <nav class="level-nav" aria-label="Course levels">
+      <button class="level-tab active" data-level="1">L1</button>
+      <button class="level-tab" data-level="2">L2</button>
+      <button class="level-tab" data-level="3">L3</button>
+    </nav>
+
+    <div class="module-list" id="module-list"></div>
+
+    <div class="sidebar-footer">
+      <a class="back-link" href="index.html">← All courses</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
+    </div>
+  </aside>
+
+  <!-- ── CONTENT ── -->
+  <main class="content" id="content">
+
+    <!-- LEVEL 1 -->
+    <section class="level-section active" id="level-1">
+      
+  <div class="level-hero">
+    <div class="level-badge">Level 1 · The Foundation</div>
+    <h1>How the Web Actually Works</h1>
+    <p>Build your mental map of how websites and apps are made. No background required — just curiosity.</p>
+    <div class="level-meta">
+      <span class="level-meta-item"><span class="level-meta-dot"></span>8 modules · 115 min</span>
+      <span class="level-meta-item"><span class="level-meta-dot" style="background:var(--c-accent)"></span>Course · How to Code for Non-Coders</span>
+    </div>
+  </div>
+<div class="container">
+        <!-- HERO -->
+        <div class="hero">
+          <div class="hero-badge">FOR NON-CODERS WHO USE AI</div>
+          <h1>You don't need to code.<br />You need to <em>ship</em>.</h1>
+          <p>
+            AI writes the code. This guide teaches you everything
+            <em>around</em> the code: how to publish it, connect it to services,
+            and understand what is going on.
+          </p>
+          <div class="time-est">
+            <span>&#9201; ~2 hours</span>
+            <span>&#128218; 8 modules</span>
+            <span>&#127919; 0 coding required</span>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 1: THE BIG PICTURE -->
+        <!-- ============================================ -->
+        <div class="module" id="l1-mod1" data-title="The big picture" data-time="10" data-accent="#1c5ddc" style="--module-accent:#1c5ddc">
+          <div class="module-header">
+            <div class="module-num">1</div>
+            <h2>The big picture</h2>
+            <span class="module-time">10 min</span>
+          </div>
+
+          <p>
+            Before we dive in, you need a mental map of how everything connects.
+            Let's use an analogy you already understand.
+          </p>
+
+          <div class="analogy">
+            <strong>Think of a restaurant.</strong><br />
+            Your website or app is a restaurant. There are distinct parts that
+            work together, and none of them is "the code." The code is just the
+            recipe. Here's the full picture:
+          </div>
+
+          <div class="diagram">
+            <svg viewBox="0 0 680 520" xmlns="http://www.w3.org/2000/svg">
+              <style>
+                .rest-box {
+                  rx: 12;
+                  stroke-width: 1.2;
+                }
+                .rest-text {
+                  font-family: "DM Sans", sans-serif;
+                  font-size: 13px;
+                  fill: #1a1a18;
+                  font-weight: 500;
+                }
+                .rest-sub {
+                  font-family: "DM Sans", sans-serif;
+                  font-size: 11px;
+                  fill: #6b6a65;
+                }
+                .rest-emoji {
+                  font-size: 24px;
+                  font-family: sans-serif;
+                }
+                .rest-arrow {
+                  stroke: #b4b2a9;
+                  stroke-width: 1.2;
+                  fill: none;
+                  marker-end: url(#rarrow);
+                }
+                .rest-label {
+                  font-family: "DM Sans", sans-serif;
+                  font-size: 10px;
+                  fill: #6b6a65;
+                  text-anchor: middle;
+                }
+              </style>
+              <defs>
+                <marker
+                  id="rarrow"
+                  viewBox="0 0 10 10"
+                  refX="8"
+                  refY="5"
+                  markerWidth="6"
+                  markerHeight="6"
+                  orient="auto"
+                >
+                  <path
+                    d="M2 2L8 5L2 8"
+                    fill="none"
+                    stroke="#B4B2A9"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </marker>
+              </defs>
+
+              <!-- Your Code -->
+              <rect
+                x="240"
+                y="30"
+                width="200"
+                height="80"
+                fill="#E8F5EE"
+                stroke="#1D6B4F"
+                class="rest-box"
+              />
+              <text
+                x="340"
+                y="60"
+                text-anchor="middle"
+                class="rest-text"
+                fill="#1D6B4F"
+              >
+                Your code (the recipes)
+              </text>
+              <text x="340" y="78" text-anchor="middle" class="rest-sub">
+                HTML, CSS, JS files
+              </text>
+              <text x="340" y="95" text-anchor="middle" class="rest-sub">
+                AI writes these for you
+              </text>
+
+              <!-- Arrow down -->
+              <line x1="340" y1="110" x2="340" y2="150" class="rest-arrow" />
+              <text x="370" y="135" class="rest-label">uploaded to</text>
+
+              <!-- Hosting -->
+              <rect
+                x="200"
+                y="155"
+                width="280"
+                height="80"
+                fill="#E6F1FB"
+                stroke="#185FA5"
+                class="rest-box"
+              />
+              <text
+                x="340"
+                y="185"
+                text-anchor="middle"
+                class="rest-text"
+                fill="#185FA5"
+              >
+                Hosting (the building)
+              </text>
+              <text x="340" y="203" text-anchor="middle" class="rest-sub">
+                Netlify, Vercel, GitHub Pages
+              </text>
+              <text x="340" y="220" text-anchor="middle" class="rest-sub">
+                Keeps your site running 24/7
+              </text>
+
+              <!-- Arrow down -->
+              <line x1="340" y1="235" x2="340" y2="275" class="rest-arrow" />
+              <text x="372" y="260" class="rest-label">found via</text>
+
+              <!-- Domain -->
+              <rect
+                x="220"
+                y="280"
+                width="240"
+                height="70"
+                fill="#FAEEDA"
+                stroke="#854F0B"
+                class="rest-box"
+              />
+              <text
+                x="340"
+                y="308"
+                text-anchor="middle"
+                class="rest-text"
+                fill="#854F0B"
+              >
+                Domain (the address)
+              </text>
+              <text x="340" y="326" text-anchor="middle" class="rest-sub">
+                www.yoursite.com
+              </text>
+              <text x="340" y="343" text-anchor="middle" class="rest-sub">
+                How people find you
+              </text>
+
+              <!-- API box (right side) -->
+              <rect
+                x="500"
+                y="155"
+                width="160"
+                height="80"
+                fill="#FAECE7"
+                stroke="#D85A30"
+                class="rest-box"
+              />
+              <text
+                x="580"
+                y="183"
+                text-anchor="middle"
+                class="rest-text"
+                fill="#D85A30"
+              >
+                APIs (delivery
+              </text>
+              <text
+                x="580"
+                y="199"
+                text-anchor="middle"
+                class="rest-text"
+                fill="#D85A30"
+              >
+                services)
+              </text>
+              <text x="580" y="218" text-anchor="middle" class="rest-sub">
+                Weather, maps, AI, etc.
+              </text>
+
+              <!-- Arrow from hosting to API -->
+              <line x1="480" y1="195" x2="498" y2="195" class="rest-arrow" />
+              <text x="489" y="188" class="rest-label">talks to</text>
+
+              <!-- Git box (left side) -->
+              <rect
+                x="20"
+                y="155"
+                width="160"
+                height="80"
+                fill="#EEEDFE"
+                stroke="#534AB7"
+                class="rest-box"
+              />
+              <text
+                x="100"
+                y="183"
+                text-anchor="middle"
+                class="rest-text"
+                fill="#534AB7"
+              >
+                Git (version
+              </text>
+              <text
+                x="100"
+                y="199"
+                text-anchor="middle"
+                class="rest-text"
+                fill="#534AB7"
+              >
+                control)
+              </text>
+              <text x="100" y="218" text-anchor="middle" class="rest-sub">
+                Tracks every change
+              </text>
+
+              <!-- Arrow from Git to Hosting -->
+              <line x1="180" y1="195" x2="198" y2="195" class="rest-arrow" />
+              <text x="189" y="188" class="rest-label">deploys</text>
+
+              <!-- Terminal at bottom -->
+              <rect
+                x="140"
+                y="410"
+                width="400"
+                height="70"
+                fill="#F4F3EE"
+                stroke="#B4B2A9"
+                class="rest-box"
+              />
+              <text x="340" y="438" text-anchor="middle" class="rest-text">
+                Terminal (your remote control)
+              </text>
+              <text x="340" y="458" text-anchor="middle" class="rest-sub">
+                You type commands here to control everything above
+              </text>
+
+              <!-- Arrows from terminal up -->
+              <line
+                x1="240"
+                y1="410"
+                x2="100"
+                y2="240"
+                class="rest-arrow"
+                stroke-dasharray="4 3"
+              />
+              <line
+                x1="340"
+                y1="410"
+                x2="340"
+                y2="355"
+                class="rest-arrow"
+                stroke-dasharray="4 3"
+              />
+              <line
+                x1="440"
+                y1="410"
+                x2="540"
+                y2="240"
+                class="rest-arrow"
+                stroke-dasharray="4 3"
+              />
+
+              <!-- YOU label -->
+              <rect
+                x="280"
+                y="490"
+                width="120"
+                height="28"
+                rx="14"
+                fill="#1D6B4F"
+              />
+              <text
+                x="340"
+                y="509"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="12"
+                fill="white"
+                font-weight="600"
+              >
+                YOU ARE HERE
+              </text>
+              <line
+                x1="340"
+                y1="490"
+                x2="340"
+                y2="480"
+                stroke="#1D6B4F"
+                stroke-width="1.5"
+                fill="none"
+                marker-end="url(#rarrow)"
+              />
+            </svg>
+          </div>
+
+          <p>
+            Every module in this guide covers one of those boxes. By the end,
+            you'll know what each one does, how they connect, and how to work
+            with them, even though AI writes the actual code.
+          </p>
+
+          <div class="key-concept">
+            <h3>Key takeaway</h3>
+            <p>
+              Coding is just one skill in a chain of ten. Publishing, connecting
+              services, managing versions, and understanding file structures are
+              equally important. These are the skills this guide teaches you.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 2: FILES THAT MAKE WEBSITES -->
+        <!-- ============================================ -->
+        <div class="module" id="l1-mod2" data-title="The three files behind every website" data-time="15" data-accent="#feb52b" style="--module-accent:#feb52b">
+          <div class="module-header">
+            <div class="module-num">2</div>
+            <h2>The three files behind every website</h2>
+            <span class="module-time">15 min</span>
+          </div>
+
+          <p>
+            Every website you've ever visited is made of just three types of
+            files. You don't need to write them (AI does that), but you need to
+            recognise what they are, like knowing the difference between flour,
+            eggs, and sugar even if a chef does the baking.
+          </p>
+
+          <div class="analogy">
+            <strong>Think of a human body.</strong><br />
+            <strong>HTML</strong> is the skeleton: the structure, the bones. It
+            defines what's on the page (headings, paragraphs, buttons,
+            images).<br /><br />
+            <strong>CSS</strong> is the clothing and appearance: colours, fonts,
+            spacing, layout. It makes the skeleton look good.<br /><br />
+            <strong>JavaScript (JS)</strong> is the muscles and brain: it makes
+            things move and react. Click a button? JS handles that. Load new
+            data without refreshing? JS.
+          </div>
+
+          <div class="diagram">
+            <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+              <style>
+                .file-box {
+                  rx: 10;
+                  stroke-width: 1.5;
+                }
+                .file-title {
+                  font-family: "DM Sans", sans-serif;
+                  font-size: 14px;
+                  font-weight: 600;
+                }
+                .file-ext {
+                  font-family: "JetBrains Mono", monospace;
+                  font-size: 11px;
+                }
+                .file-desc {
+                  font-family: "DM Sans", sans-serif;
+                  font-size: 11px;
+                  fill: #6b6a65;
+                }
+              </style>
+              <!-- HTML -->
+              <rect
+                x="30"
+                y="30"
+                width="190"
+                height="140"
+                fill="#E8F5EE"
+                stroke="#1D6B4F"
+                class="file-box"
+              />
+              <text
+                x="125"
+                y="65"
+                text-anchor="middle"
+                class="file-title"
+                fill="#1D6B4F"
+              >
+                HTML
+              </text>
+              <text
+                x="125"
+                y="85"
+                text-anchor="middle"
+                class="file-ext"
+                fill="#1D6B4F"
+              >
+                .html
+              </text>
+              <text x="125" y="110" text-anchor="middle" class="file-desc">
+                Structure
+              </text>
+              <text x="125" y="126" text-anchor="middle" class="file-desc">
+                "What's on the page"
+              </text>
+              <text x="125" y="152" text-anchor="middle" class="file-desc">
+                Headings, text, images,
+              </text>
+              <text x="125" y="166" text-anchor="middle" class="file-desc">
+                buttons, forms
+              </text>
+
+              <!-- CSS -->
+              <rect
+                x="245"
+                y="30"
+                width="190"
+                height="140"
+                fill="#EEEDFE"
+                stroke="#534AB7"
+                class="file-box"
+              />
+              <text
+                x="340"
+                y="65"
+                text-anchor="middle"
+                class="file-title"
+                fill="#534AB7"
+              >
+                CSS
+              </text>
+              <text
+                x="340"
+                y="85"
+                text-anchor="middle"
+                class="file-ext"
+                fill="#534AB7"
+              >
+                .css
+              </text>
+              <text x="340" y="110" text-anchor="middle" class="file-desc">
+                Appearance
+              </text>
+              <text x="340" y="126" text-anchor="middle" class="file-desc">
+                "How it looks"
+              </text>
+              <text x="340" y="152" text-anchor="middle" class="file-desc">
+                Colours, fonts, spacing,
+              </text>
+              <text x="340" y="166" text-anchor="middle" class="file-desc">
+                layout, animations
+              </text>
+
+              <!-- JS -->
+              <rect
+                x="460"
+                y="30"
+                width="190"
+                height="140"
+                fill="#FAEEDA"
+                stroke="#854F0B"
+                class="file-box"
+              />
+              <text
+                x="555"
+                y="65"
+                text-anchor="middle"
+                class="file-title"
+                fill="#854F0B"
+              >
+                JavaScript
+              </text>
+              <text
+                x="555"
+                y="85"
+                text-anchor="middle"
+                class="file-ext"
+                fill="#854F0B"
+              >
+                .js
+              </text>
+              <text x="555" y="110" text-anchor="middle" class="file-desc">
+                Behaviour
+              </text>
+              <text x="555" y="126" text-anchor="middle" class="file-desc">
+                "What it does"
+              </text>
+              <text x="555" y="152" text-anchor="middle" class="file-desc">
+                Click handling, data
+              </text>
+              <text x="555" y="166" text-anchor="middle" class="file-desc">
+                loading, calculations
+              </text>
+            </svg>
+          </div>
+
+          <h3>How they work together</h3>
+          <p>When AI gives you code, it usually comes in one of these forms:</p>
+          <ul style="margin: 1rem 0 1rem 1.5rem; line-height: 2">
+            <li>
+              A single <code>.html</code> file with CSS and JS embedded inside
+              it (simplest, most common)
+            </li>
+            <li>
+              Separate files: <code>index.html</code> + <code>style.css</code> +
+              <code>app.js</code> (cleaner for bigger projects)
+            </li>
+            <li>A React/Vue project (we'll cover this in Module 5)</li>
+          </ul>
+
+          <div class="key-concept">
+            <h3>What you actually need to know</h3>
+            <p>
+              When AI gives you an HTML file, just save it with the
+              <code>.html</code> extension and open it in your browser. It works
+              immediately. No installation needed. That's your first website
+              right there.
+            </p>
+          </div>
+
+          <h3>Folder structure matters</h3>
+          <p>
+            Every project has a folder structure. Think of it like a filing
+            cabinet: things need to be in the right drawer. Here's what a
+            typical project looks like:
+          </p>
+
+          <div class="code-block">
+            <span class="comment">my-project/</span>
+            <span class="comment"> &#9500;&#9472;&#9472;</span> index.html
+            <span class="comment"># Main page (the "front door")</span>
+            <span class="comment"> &#9500;&#9472;&#9472;</span> style.css
+            <span class="comment"># How it looks</span>
+            <span class="comment"> &#9500;&#9472;&#9472;</span> app.js
+            <span class="comment"># What it does</span>
+            <span class="comment"> &#9500;&#9472;&#9472;</span> images/
+            <span class="comment"># Folder for pictures</span>
+            <span class="comment"> &#9474; &#9500;&#9472;&#9472;</span> logo.png
+            <span class="comment"> &#9474; &#9492;&#9472;&#9472;</span> hero.jpg
+            <span class="comment"> &#9492;&#9472;&#9472;</span> README.md
+            <span class="comment"># Description of the project</span>
+          </div>
+
+          <div class="warning">
+            <strong>Important:</strong> The file named
+            <code>index.html</code> is special. Hosting services automatically
+            look for this file as the homepage. Always name your main page
+            <code>index.html</code>.
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 3: THE TERMINAL -->
+        <!-- ============================================ -->
+        <div class="module" id="l1-mod3" data-title="The terminal: texting your computer" data-time="15" data-accent="#fc351c" style="--module-accent:#fc351c">
+          <div class="module-header">
+            <div class="module-num">3</div>
+            <h2>The terminal: texting your computer</h2>
+            <span class="module-time">15 min</span>
+          </div>
+
+          <div class="analogy">
+            <strong>Think of it as WhatsApp, but for your computer.</strong
+            ><br />
+            Instead of clicking buttons and menus, you type short commands. The
+            computer reads your message and does what you asked. That's it. It
+            looks scary because of the black screen, but it's literally just
+            texting.
+          </div>
+
+          <h3>How to open it</h3>
+          <div class="steps">
+            <div class="step">
+              <p>
+                <strong>Mac:</strong> Press <code>Cmd + Space</code>, type
+                "Terminal", press Enter
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                <strong>Windows:</strong> Press <code>Win key</code>, type
+                "PowerShell" or "Command Prompt", press Enter
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                <strong>Alternative (both):</strong> Install
+                <a href="https://code.visualstudio.com" target="_blank"
+                  >VS Code</a
+                >
+                (free code editor) and press <code>Ctrl + `</code> to open the
+                built-in terminal
+              </p>
+            </div>
+          </div>
+
+          <h3>The only commands you need</h3>
+          <p>
+            You don't need to memorise hundreds of commands. Here are the 8 that
+            cover 95% of what you'll do:
+          </p>
+
+          <div class="cmd-grid">
+            <div class="cmd-card">
+              <div class="cmd-name">cd folder-name</div>
+              <div class="cmd-desc">
+                Go into a folder. Like opening a drawer.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">cd ..</div>
+              <div class="cmd-desc">Go back one folder. Close the drawer.</div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">ls</div>
+              <div class="cmd-desc">
+                List what's in the current folder. (Windows: <code>dir</code>)
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">mkdir name</div>
+              <div class="cmd-desc">Create a new folder.</div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">touch file.html</div>
+              <div class="cmd-desc">
+                Create a new empty file. (Windows:
+                <code>New-Item file.html</code>)
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">rm file.html</div>
+              <div class="cmd-desc">
+                Delete a file. Be careful, no trash bin!
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">clear</div>
+              <div class="cmd-desc">Clear the screen. Fresh start.</div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">code .</div>
+              <div class="cmd-desc">Open current folder in VS Code.</div>
+            </div>
+          </div>
+
+          <h3>Real example: setting up a project</h3>
+          <div class="code-block">
+            <span class="prompt">$ </span
+            ><span class="cmd">mkdir</span> my-website
+            <span class="comment"># Create a folder</span>
+            <span class="prompt">$ </span><span class="cmd">cd</span> my-website
+            <span class="comment"># Go inside it</span>
+            <span class="prompt">$ </span
+            ><span class="cmd">touch</span> index.html
+            <span class="comment"># Create main file</span>
+            <span class="prompt">$ </span
+            ><span class="cmd">touch</span> style.css
+            <span class="comment"># Create style file</span>
+            <span class="prompt">$ </span><span class="cmd">code</span> .
+            <span class="comment"># Open in VS Code</span>
+          </div>
+
+          <p>
+            That's it. Five commands and you have a project ready. Now paste the
+            AI-generated code into those files.
+          </p>
+
+          <div class="key-concept">
+            <h3>Pro tip</h3>
+            <p>
+              You don't need to type full folder names. Type the first few
+              letters and press <code>Tab</code>. The terminal will
+              auto-complete it for you. This is called "tab completion" and it
+              saves enormous amounts of time.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 4: GIT & GITHUB -->
+        <!-- ============================================ -->
+        <div class="module" id="l1-mod4" data-title="Git and GitHub: save points for your project" data-time="20" data-accent="#19ae5d" style="--module-accent:#19ae5d">
+          <div class="module-header">
+            <div class="module-num">4</div>
+            <h2>Git and GitHub: save points for your project</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <div class="analogy">
+            <strong>Think of a video game.</strong><br />
+            When you play a game, you save your progress. If you mess up, you
+            load the last save. <strong>Git</strong> does the same thing for
+            your project files. Every time you "commit," you create a save
+            point. You can always go back.<br /><br />
+            <strong>GitHub</strong> is the cloud. It's where your save files are
+            backed up online. It also lets other people (or deployment services)
+            access your code.
+          </div>
+
+          <h3>Git vs GitHub: they're different</h3>
+          <table class="compare">
+            <tr>
+              <th>Git</th>
+              <th>GitHub</th>
+            </tr>
+            <tr>
+              <td>Software on your computer</td>
+              <td>Website (github.com)</td>
+            </tr>
+            <tr>
+              <td>Tracks changes locally</td>
+              <td>Stores your code online</td>
+            </tr>
+            <tr>
+              <td>Free, built into most systems</td>
+              <td>Free for public projects</td>
+            </tr>
+            <tr>
+              <td>The engine</td>
+              <td>The garage where you park</td>
+            </tr>
+          </table>
+
+          <h3>The 4 Git commands you'll actually use</h3>
+
+          <div class="code-block">
+            <span class="comment"
+              ># FIRST TIME: connect your folder to Git</span
+            >
+            <span class="prompt">$ </span><span class="cmd">git init</span>
+            <span class="comment"># Start tracking this folder</span>
+
+            <span class="comment"># EVERY TIME you want to save progress:</span>
+            <span class="prompt">$ </span><span class="cmd">git add</span>
+            <span class="flag">.</span>
+            <span class="comment"
+              ># Stage all changes (put items in the box)</span
+            >
+            <span class="prompt">$ </span><span class="cmd">git commit</span>
+            <span class="flag">-m</span>
+            <span class="str">"added homepage"</span>
+            <span class="comment"># Save with a note (seal the box)</span>
+            <span class="prompt">$ </span><span class="cmd">git push</span>
+            <span class="comment"># Upload to GitHub (ship the box)</span>
+          </div>
+
+          <div class="analogy">
+            <strong>The postal service analogy:</strong><br />
+            <code>git add</code> = putting items in a box<br />
+            <code>git commit</code> = sealing the box and writing a label on
+            it<br />
+            <code>git push</code> = sending the box to the post office
+            (GitHub)<br /><br />
+            You can put items in the box many times, but nothing ships until you
+            push.
+          </div>
+
+          <h3>Setting up GitHub (one-time)</h3>
+          <div class="steps">
+            <div class="step">
+              <p>
+                Go to
+                <a href="https://github.com" target="_blank">github.com</a> and
+                create a free account
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                Click the green "New" button to create a repository (this is
+                your online project folder)
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                Follow the instructions GitHub gives you to connect your local
+                folder. It's usually two commands you copy and paste.
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                From now on, every <code>git push</code> uploads your latest
+                code to this repository.
+              </p>
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>What's a repository?</h3>
+            <p>
+              A repository (or "repo") is just a project folder that Git is
+              tracking. When people say "check out my repo," they mean "look at
+              my project on GitHub." Nothing fancy.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 5: DEPLOYING -->
+        <!-- ============================================ -->
+        <div class="module" id="l1-mod5" data-title="Publishing your site to the world" data-time="15" data-accent="#00aaff" style="--module-accent:#00aaff">
+          <div class="module-header">
+            <div class="module-num">5</div>
+            <h2>Publishing your site to the world</h2>
+            <span class="module-time">15 min</span>
+          </div>
+
+          <p>
+            You have your files. They work on your computer. Now you want the
+            world to see them. This process is called
+            <strong>deployment</strong> (or "deploying").
+          </p>
+
+          <div class="analogy">
+            <strong>Think of uploading a video to YouTube.</strong><br />
+            You have a video file on your computer. YouTube gives you a URL
+            where anyone can watch it. Deploying a website works the same way.
+            You upload files, get a URL, done.
+          </div>
+
+          <h3>Three free options (ranked by ease)</h3>
+
+          <table class="compare">
+            <tr>
+              <th>Platform</th>
+              <th>Difficulty</th>
+              <th>Best for</th>
+              <th>How it works</th>
+            </tr>
+            <tr>
+              <td><strong>Netlify</strong></td>
+              <td><span class="badge badge-easy">Easiest</span></td>
+              <td>Simple sites, portfolios</td>
+              <td>Drag and drop your folder</td>
+            </tr>
+            <tr>
+              <td><strong>Vercel</strong></td>
+              <td><span class="badge badge-easy">Easy</span></td>
+              <td>React/Next.js apps</td>
+              <td>Connect your GitHub repo</td>
+            </tr>
+            <tr>
+              <td><strong>GitHub Pages</strong></td>
+              <td><span class="badge badge-free">Free</span></td>
+              <td>Simple HTML sites</td>
+              <td>Push to a special branch</td>
+            </tr>
+          </table>
+
+          <h3>Deploying with Netlify (the easiest path)</h3>
+          <div class="steps">
+            <div class="step">
+              <p>
+                Go to
+                <a href="https://app.netlify.com/drop" target="_blank"
+                  >app.netlify.com/drop</a
+                >
+              </p>
+            </div>
+            <div class="step">
+              <p>Drag your entire project folder onto the page</p>
+            </div>
+            <div class="step">
+              <p>
+                Wait 10 seconds. Netlify gives you a URL like
+                <code>random-name-123.netlify.app</code>
+              </p>
+            </div>
+            <div class="step">
+              <p>Your site is now live. Share the URL with anyone.</p>
+            </div>
+          </div>
+
+          <div class="warning">
+            <strong>Important:</strong> Make sure your project has an
+            <code>index.html</code> file at the top level. Netlify (and every
+            hosting service) looks for this file first. If it's buried inside a
+            subfolder, the site won't load properly.
+          </div>
+
+          <h3>The deploy flow</h3>
+          <div class="flow-container">
+            <div class="flow-box">You have files on your computer</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">upload / push</div>
+            <div class="flow-box highlight">
+              Hosting service builds and serves them
+            </div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">assigns</div>
+            <div class="flow-box">You get a public URL</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">anyone visits</div>
+            <div class="flow-box">The world sees your site</div>
+          </div>
+
+          <h3>Auto-deploy from GitHub</h3>
+          <p>
+            Here's where it gets powerful. Both Netlify and Vercel can connect
+            to your GitHub repo. After that, every time you
+            <code>git push</code>, your site automatically updates. No manual
+            uploading. You push code, the site refreshes in about 30 seconds.
+          </p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 6: APIs -->
+        <!-- ============================================ -->
+        <div class="module" id="l1-mod6" data-title="APIs: how apps talk to each other" data-time="20" data-accent="#eb30a2" style="--module-accent:#eb30a2">
+          <div class="module-header">
+            <div class="module-num">6</div>
+            <h2>APIs: how apps talk to each other</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <p>
+            This is the big one. Almost every useful app connects to some
+            external service: weather data, maps, payments, AI. All of these
+            connections happen through APIs.
+          </p>
+
+          <div class="analogy">
+            <strong>Think of a waiter at a restaurant.</strong><br />
+            You (the app) sit at a table. The kitchen (the service) has the food
+            (data). You can't walk into the kitchen. Instead, you tell the
+            <strong>waiter (the API)</strong> what you want. The waiter goes to
+            the kitchen, gets your order, and brings it back to you in a
+            standard format.<br /><br />
+            <strong>The menu</strong> is the API documentation: it tells you
+            what you can order.<br />
+            <strong>Your order</strong> is the API request.<br />
+            <strong>The food</strong> is the API response.
+          </div>
+
+          <div class="diagram">
+            <svg viewBox="0 0 680 180" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker
+                  id="arr6"
+                  viewBox="0 0 10 10"
+                  refX="8"
+                  refY="5"
+                  markerWidth="6"
+                  markerHeight="6"
+                  orient="auto"
+                >
+                  <path
+                    d="M2 2L8 5L2 8"
+                    fill="none"
+                    stroke="#B4B2A9"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </marker>
+              </defs>
+              <!-- Your App -->
+              <rect
+                x="30"
+                y="40"
+                width="160"
+                height="100"
+                rx="10"
+                fill="#E6F1FB"
+                stroke="#185FA5"
+                stroke-width="1.2"
+              />
+              <text
+                x="110"
+                y="80"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="14"
+                font-weight="600"
+                fill="#185FA5"
+              >
+                Your app
+              </text>
+              <text
+                x="110"
+                y="100"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="11"
+                fill="#6B6A65"
+              >
+                (the customer)
+              </text>
+
+              <!-- API -->
+              <rect
+                x="260"
+                y="40"
+                width="160"
+                height="100"
+                rx="10"
+                fill="#FAEEDA"
+                stroke="#854F0B"
+                stroke-width="1.2"
+              />
+              <text
+                x="340"
+                y="80"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="14"
+                font-weight="600"
+                fill="#854F0B"
+              >
+                API
+              </text>
+              <text
+                x="340"
+                y="100"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="11"
+                fill="#6B6A65"
+              >
+                (the waiter)
+              </text>
+
+              <!-- Service -->
+              <rect
+                x="490"
+                y="40"
+                width="160"
+                height="100"
+                rx="10"
+                fill="#E8F5EE"
+                stroke="#1D6B4F"
+                stroke-width="1.2"
+              />
+              <text
+                x="570"
+                y="80"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="14"
+                font-weight="600"
+                fill="#1D6B4F"
+              >
+                Service
+              </text>
+              <text
+                x="570"
+                y="100"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="11"
+                fill="#6B6A65"
+              >
+                (the kitchen)
+              </text>
+
+              <!-- Arrows -->
+              <line
+                x1="190"
+                y1="75"
+                x2="258"
+                y2="75"
+                stroke="#185FA5"
+                stroke-width="1.2"
+                marker-end="url(#arr6)"
+              />
+              <text
+                x="224"
+                y="68"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="10"
+                fill="#6B6A65"
+              >
+                Request
+              </text>
+
+              <line
+                x1="258"
+                y1="110"
+                x2="192"
+                y2="110"
+                stroke="#1D6B4F"
+                stroke-width="1.2"
+                marker-end="url(#arr6)"
+              />
+              <text
+                x="224"
+                y="130"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="10"
+                fill="#6B6A65"
+              >
+                Response
+              </text>
+
+              <line
+                x1="420"
+                y1="75"
+                x2="488"
+                y2="75"
+                stroke="#854F0B"
+                stroke-width="1.2"
+                marker-end="url(#arr6)"
+              />
+              <line
+                x1="488"
+                y1="110"
+                x2="422"
+                y2="110"
+                stroke="#854F0B"
+                stroke-width="1.2"
+                marker-end="url(#arr6)"
+              />
+            </svg>
+          </div>
+
+          <h3>What does an API response look like?</h3>
+          <p>
+            APIs send data in a format called <strong>JSON</strong> (JavaScript
+            Object Notation). It looks like this:
+          </p>
+
+          <div class="code-block">
+            {
+            <span class="str">"city"</span>: <span class="str">"Perth"</span>,
+            <span class="str">"temperature"</span>:
+            <span class="flag">24</span>, <span class="str">"condition"</span>:
+            <span class="str">"Sunny"</span>,
+            <span class="str">"humidity"</span>: <span class="flag">45</span>
+            }
+          </div>
+
+          <p>
+            It's just labelled data. <code>"city"</code> is the label,
+            <code>"Perth"</code> is the value. Your app reads this and displays
+            it however it wants.
+          </p>
+
+          <h3>API keys: your membership card</h3>
+          <p>
+            Most APIs require an <strong>API key</strong>: a unique string of
+            characters that identifies you. It's like a membership card. Without
+            it, the kitchen won't serve you.
+          </p>
+
+          <div class="code-block">
+            <span class="comment"
+              ># Example API key (never share the real one!)</span
+            >
+            API_KEY=<span class="str">sk-abc123def456ghi789</span>
+          </div>
+
+          <div class="warning">
+            <strong>Never put your API key directly in your code.</strong> If
+            you push that code to GitHub, anyone can see and steal it. We'll
+            cover how to hide it properly in Module 8 (Environment Variables).
+          </div>
+
+          <h3>Common APIs you'll use</h3>
+          <table class="compare">
+            <tr>
+              <th>API</th>
+              <th>What it does</th>
+              <th>Free tier?</th>
+            </tr>
+            <tr>
+              <td>OpenAI / Anthropic</td>
+              <td>AI text generation</td>
+              <td>Pay per use</td>
+            </tr>
+            <tr>
+              <td>Google Maps</td>
+              <td>Maps, directions</td>
+              <td>Limited free</td>
+            </tr>
+            <tr>
+              <td>Stripe</td>
+              <td>Accept payments</td>
+              <td>Free (pay per transaction)</td>
+            </tr>
+            <tr>
+              <td>OpenWeather</td>
+              <td>Weather data</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Supabase</td>
+              <td>Database + auth</td>
+              <td>Yes (generous)</td>
+            </tr>
+            <tr>
+              <td>Firebase</td>
+              <td>Database + hosting</td>
+              <td>Yes</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 7: DOMAINS & DNS -->
+        <!-- ============================================ -->
+        <div class="module" id="l1-mod7" data-title="Domains and DNS: the phone book of the internet" data-time="10" data-accent="#1c5ddc" style="--module-accent:#1c5ddc">
+          <div class="module-header">
+            <div class="module-num">7</div>
+            <h2>Domains and DNS: the phone book of the internet</h2>
+            <span class="module-time">10 min</span>
+          </div>
+
+          <div class="analogy">
+            <strong>Think of a phone book.</strong><br />
+            Every website lives on a server that has a number-based address
+            (like a phone number): <code>172.67.182.12</code>. Nobody can
+            remember that. A <strong>domain name</strong> like
+            <code>google.com</code> is just a human-friendly label that maps to
+            that number.<br /><br />
+            <strong>DNS</strong> (Domain Name System) is the phone book. When
+            you type a URL, DNS looks up the number and connects you.
+          </div>
+
+          <h3>Getting your own domain</h3>
+          <div class="steps">
+            <div class="step">
+              <p>
+                Go to a domain registrar:
+                <a href="https://www.namecheap.com" target="_blank">Namecheap</a
+                >,
+                <a
+                  href="https://www.cloudflare.com/products/registrar/"
+                  target="_blank"
+                  >Cloudflare</a
+                >, or
+                <a href="https://domains.google" target="_blank"
+                  >Google Domains</a
+                >
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                Search for the name you want (e.g.,
+                <code>adhiproject.com</code>)
+              </p>
+            </div>
+            <div class="step">
+              <p>Buy it. Typical cost: $10-15/year for <code>.com</code></p>
+            </div>
+            <div class="step">
+              <p>
+                In your hosting service (Netlify/Vercel), go to domain settings
+                and add your custom domain. Follow their instructions to update
+                DNS records.
+              </p>
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>You don't need a custom domain to start</h3>
+            <p>
+              Every hosting platform gives you a free subdomain like
+              <code>your-project.netlify.app</code> or
+              <code>your-project.vercel.app</code>. This is perfectly fine for
+              learning, portfolios, and personal projects. Buy a custom domain
+              only when you're ready to look professional.
+            </p>
+          </div>
+
+          <h3>What are DNS records?</h3>
+          <p>
+            When you connect a custom domain, you'll see terms like "A record"
+            and "CNAME." Don't panic. Here's the simple version:
+          </p>
+          <table class="compare">
+            <tr>
+              <th>Record type</th>
+              <th>What it does</th>
+              <th>Plain English</th>
+            </tr>
+            <tr>
+              <td><code>A record</code></td>
+              <td>Points domain to an IP address</td>
+              <td>"This name lives at this number"</td>
+            </tr>
+            <tr>
+              <td><code>CNAME</code></td>
+              <td>Points domain to another domain</td>
+              <td>"This name is the same as that name"</td>
+            </tr>
+          </table>
+          <p style="margin-top: 1rem">
+            Your hosting service always tells you exactly which records to add.
+            You just copy and paste.
+          </p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 8: ENVIRONMENT VARIABLES -->
+        <!-- ============================================ -->
+        <div class="module" id="l1-mod8" data-title="Environment variables: your secret vault" data-time="10" data-accent="#feb52b" style="--module-accent:#feb52b">
+          <div class="module-header">
+            <div class="module-num">8</div>
+            <h2>Environment variables: your secret vault</h2>
+            <span class="module-time">10 min</span>
+          </div>
+
+          <div class="analogy">
+            <strong>Think of a locked safe in your house.</strong><br />
+            Your API keys, passwords, and secret values live in this safe. Your
+            code <em>knows how to open the safe</em> and grab what it needs, but
+            the safe itself is never shown to anyone. If someone looks at your
+            code on GitHub, they see the instruction "open the safe," not the
+            contents inside.
+          </div>
+
+          <h3>How it works: the <code>.env</code> file</h3>
+          <p>
+            You create a file called <code>.env</code> in your project folder.
+            It looks like this:
+          </p>
+
+          <div class="code-block">
+            <span class="comment"
+              ># .env file (NEVER upload this to GitHub)</span
+            >
+            <span class="flag">OPENAI_API_KEY</span>=<span class="str"
+              >sk-abc123def456ghi789</span
+            >
+            <span class="flag">DATABASE_URL</span>=<span class="str"
+              >postgres://user:pass@host/db</span
+            >
+            <span class="flag">SECRET_KEY</span>=<span class="str"
+              >my-super-secret-value</span
+            >
+          </div>
+
+          <p>
+            Your code reads from this file using something like
+            <code>process.env.OPENAI_API_KEY</code>. But the
+            <code>.env</code> file itself stays on your computer.
+          </p>
+
+          <h3>Keeping secrets safe: the <code>.gitignore</code> file</h3>
+          <p>
+            A <code>.gitignore</code> file tells Git which files to
+            <strong>never upload</strong>. You always put <code>.env</code> in
+            it:
+          </p>
+
+          <div class="code-block">
+            <span class="comment"># .gitignore</span>
+            .env node_modules/
+          </div>
+
+          <p>
+            Now when you <code>git push</code>, your secrets stay local and your
+            code goes to GitHub without them.
+          </p>
+
+          <h3>What about on the hosting platform?</h3>
+          <p>
+            When your code runs on Netlify or Vercel, it needs those secrets
+            too. But you don't upload the <code>.env</code> file. Instead, you
+            type them directly into the hosting dashboard:
+          </p>
+
+          <div class="steps">
+            <div class="step">
+              <p>Go to your project settings on Netlify/Vercel</p>
+            </div>
+            <div class="step"><p>Find "Environment Variables" section</p></div>
+            <div class="step">
+              <p>
+                Add each key and value manually (e.g., key:
+                <code>OPENAI_API_KEY</code>, value: <code>sk-abc123...</code>)
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                Save and redeploy. Your live site now has access to the secrets.
+              </p>
+            </div>
+          </div>
+
+          <div class="warning">
+            <strong>Golden rule:</strong> If a value starts with
+            <code>sk-</code>, <code>api_</code>, <code>secret_</code>, or looks
+            like a password, it belongs in a <code>.env</code> file,
+            <strong>never</strong> in your code directly.
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- FINAL CHECKLIST -->
+        <!-- ============================================ -->
+        <div class="module" id="l1-final" data-title="Your complete checklist" data-accent="#fc351c" style="--module-accent:#fc351c">
+          <div class="module-header">
+            <div class="module-num">&#10003;</div>
+            <h2>Your complete checklist</h2>
+          </div>
+
+          <p>
+            Here's everything you should be able to do after this guide. Tick
+            them off as you practice:
+          </p>
+
+          <div class="checklist">
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Open the terminal and navigate folders with <code>cd</code> and
+                <code>ls</code></span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Create a project folder with the right file structure</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Save AI-generated code into <code>.html</code>,
+                <code>.css</code>, and <code>.js</code> files</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Open an HTML file in your browser to test it</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Initialise a Git repo and make your first commit</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Push your code to a GitHub repository</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Deploy a site using Netlify's drag-and-drop</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Understand what an API is and what JSON looks like</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Create a <code>.env</code> file and add it to
+                <code>.gitignore</code></span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Add environment variables in a hosting platform</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Explain the difference between HTML, CSS, and JavaScript</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Know what a domain and DNS are</span
+              >
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>What to do next</h3>
+            <p>
+              Pick a small project. Ask AI to build you a simple personal
+              website or a weather app. Then follow this guide step by step:
+              save the files, push to GitHub, deploy to Netlify. The first time
+              will feel slow. The second time will feel natural. By the third
+              time, you'll be doing it from muscle memory.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer">
+          <p>
+            Built for Adhi. No coding background required.<br />Bookmark this
+            page and come back whenever you need a refresher.
+          </p>
+        </div>
+      </div>
+      <!-- /container -->
+      <div class="next-level" onclick="switchLevel(2)">
+        <h3>Ready for Level 2? &rarr;</h3>
+        <p>
+          Learn the tools: npm, Node.js, frameworks, databases, DevTools, and
+          how to read errors.
+        </p>
+      </div>
+    </section>
+
+    <!-- LEVEL 2 -->
+    <section class="level-section" id="level-2">
+      
+  <div class="level-hero">
+    <div class="level-badge">Level 2 · Going Deeper</div>
+    <h1>Tools Developers Use Daily</h1>
+    <p>Go from understanding the web to understanding how developers build on it every day.</p>
+    <div class="level-meta">
+      <span class="level-meta-item"><span class="level-meta-dot"></span>7 modules · 125 min</span>
+      <span class="level-meta-item"><span class="level-meta-dot" style="background:var(--c-accent)"></span>Course · How to Code for Non-Coders</span>
+    </div>
+  </div>
+<div class="container">
+        <!-- HERO -->
+        <div class="hero">
+          <div class="hero-badge">LEVEL 2: THE TOOLS</div>
+          <h1>
+            Now you know the map.<br />Time to learn the <em>vehicles</em>.
+          </h1>
+          <p>
+            Level 1 taught you what the pieces are. Level 2 teaches you the
+            tools developers actually use every day, and how to work with them
+            when AI builds your projects.
+          </p>
+          <div class="time-est">
+            <span>&#9201; ~2.5 hours</span>
+            <span>&#128218; 7 modules</span>
+            <span>&#127919; Still 0 coding</span>
+          </div>
+          <div class="prereq">
+            <strong>Prerequisite:</strong> You should have completed Level 1
+            (The Big Picture) and be comfortable with the terminal, Git basics,
+            and the concept of APIs.
+          </div>
+          <p class="version">code-ecosystem-guide-L2-v1</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 1: PACKAGE MANAGERS -->
+        <!-- ============================================ -->
+        <div class="module" id="l2-mod1" data-title="Package managers: the app store for code" data-time="20" data-accent="#1c5ddc" style="--module-accent:#1c5ddc">
+          <div class="module-header">
+            <div class="module-num">1</div>
+            <h2>Package managers: the app store for code</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <p>
+            In Level 1, you learned that AI writes code for you. But here's the
+            thing: AI doesn't write <em>everything</em> from scratch. It uses
+            pre-built pieces made by other developers. These pieces are called
+            <strong>packages</strong> (or libraries, or dependencies).
+          </p>
+
+          <div class="analogy">
+            <strong>Think of IKEA furniture.</strong><br />
+            You don't chop down a tree to make a desk. You go to IKEA, grab a
+            flatpack, and assemble it. Packages work the same way. Someone
+            already built "a tool for handling dates" or "a tool for making
+            charts." Your project just grabs those tools and uses them.<br /><br />
+            A <strong>package manager</strong> is the IKEA store itself. You
+            tell it what you need, it downloads it for you.
+          </div>
+
+          <h3>The two package managers you'll encounter</h3>
+          <table class="compare">
+            <tr>
+              <th>npm</th>
+              <th>pip</th>
+            </tr>
+            <tr>
+              <td>For JavaScript / web projects</td>
+              <td>For Python projects</td>
+            </tr>
+            <tr>
+              <td>Comes with Node.js</td>
+              <td>Comes with Python</td>
+            </tr>
+            <tr>
+              <td><code>npm install package-name</code></td>
+              <td><code>pip install package-name</code></td>
+            </tr>
+            <tr>
+              <td>Stores info in <code>package.json</code></td>
+              <td>Stores info in <code>requirements.txt</code></td>
+            </tr>
+          </table>
+
+          <h3>How it works in practice</h3>
+          <p>
+            When AI gives you a project, it often says "run
+            <code>npm install</code>" or "run
+            <code>pip install -r requirements.txt</code>." Here's what actually
+            happens:
+          </p>
+
+          <div class="flow-container">
+            <div class="flow-box">
+              AI gives you code + a list of packages it needs
+            </div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">you run</div>
+            <div class="flow-box highlight">npm install (or pip install)</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">package manager</div>
+            <div class="flow-box">Downloads all packages from the internet</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">stores them in</div>
+            <div class="flow-box">
+              node_modules/ folder (npm) or site-packages/ (pip)
+            </div>
+          </div>
+
+          <h3>The key files you'll see</h3>
+
+          <div class="key-concept">
+            <h3>package.json</h3>
+            <p>
+              This is the recipe card for a JavaScript project. It lists the
+              project's name, version, and most importantly, all the packages it
+              depends on. When you run <code>npm install</code>, npm reads this
+              file and downloads everything listed.
+            </p>
+          </div>
+
+          <div class="code-block">
+            <span class="comment">// package.json (simplified)</span>
+            {
+            <span class="str">"name"</span>:
+            <span class="str">"my-weather-app"</span>,
+            <span class="str">"version"</span>:
+            <span class="str">"1.0.0"</span>,
+            <span class="str">"dependencies"</span>: {
+            <span class="str">"express"</span>:
+            <span class="str">"^4.18.0"</span>,
+            <span class="comment">// web server package</span>
+            <span class="str">"axios"</span>: <span class="str">"^1.6.0"</span>,
+            <span class="comment">// makes API calls</span>
+            <span class="str">"dotenv"</span>:
+            <span class="str">"^16.3.0"</span>
+            <span class="comment">// reads .env files</span>
+            } }
+          </div>
+
+          <div class="warning">
+            <strong
+              >Never upload the <code>node_modules</code> folder to
+              GitHub.</strong
+            >
+            It can contain thousands of files and be hundreds of megabytes. It's
+            already in your <code>.gitignore</code> from Level 1. When someone
+            else clones your project, they just run <code>npm install</code> and
+            it rebuilds from <code>package.json</code>.
+          </div>
+
+          <h3>Commands you'll actually use</h3>
+          <div class="cmd-grid">
+            <div class="cmd-card">
+              <div class="cmd-name">npm install</div>
+              <div class="cmd-desc">
+                Download all packages listed in package.json
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">npm install axios</div>
+              <div class="cmd-desc">
+                Add a specific new package to your project
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">npm run dev</div>
+              <div class="cmd-desc">Start your project in development mode</div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">npm run build</div>
+              <div class="cmd-desc">Package your project for deployment</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 2: NODE.JS -->
+        <!-- ============================================ -->
+        <div class="module" id="l2-mod2" data-title="Node.js: JavaScript outside the browser" data-time="15" data-accent="#feb52b" style="--module-accent:#feb52b">
+          <div class="module-header">
+            <div class="module-num">2</div>
+            <h2>Node.js: JavaScript outside the browser</h2>
+            <span class="module-time">15 min</span>
+          </div>
+
+          <p>
+            In Level 1 you learned JavaScript makes websites interactive. But
+            JavaScript used to be trapped inside the browser. Then
+            <strong>Node.js</strong> was created, and it changed everything.
+          </p>
+
+          <div class="analogy green">
+            <strong>Think of a fish that learned to breathe on land.</strong
+            ><br />
+            JavaScript was a fish that only lived in the browser (water).
+            Node.js gave it lungs. Now JavaScript can run on servers, on your
+            computer, build apps, talk to databases, and do basically
+            everything, not just make buttons clickable on a webpage.
+          </div>
+
+          <h3>Why should you care?</h3>
+          <p>
+            When AI builds you a project that's more than a simple HTML page, it
+            almost always uses Node.js. Every time you see these commands,
+            Node.js is running behind the scenes:
+          </p>
+
+          <div class="code-block">
+            <span class="prompt">$ </span><span class="cmd">npm</span> install
+            <span class="comment"># npm is part of Node.js</span>
+            <span class="prompt">$ </span><span class="cmd">npm</span> run dev
+            <span class="comment"># starts a local dev server via Node.js</span>
+            <span class="prompt">$ </span
+            ><span class="cmd">npx</span> create-next-app
+            <span class="comment"># scaffolds a project using Node.js</span>
+          </div>
+
+          <h3>Installing Node.js</h3>
+          <div class="steps">
+            <div class="step">
+              <p>
+                Go to
+                <a href="https://nodejs.org" target="_blank">nodejs.org</a>
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                Download the <strong>LTS</strong> version (Long Term Support =
+                the stable one)
+              </p>
+            </div>
+            <div class="step"><p>Install it like any normal app</p></div>
+            <div class="step">
+              <p>
+                Open your terminal and type <code>node --version</code>. If you
+                see a number (like <code>v20.11.0</code>), it worked.
+              </p>
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>What gets installed with Node.js</h3>
+            <p>
+              When you install Node.js, you actually get three things:
+              <code>node</code> (the JavaScript engine), <code>npm</code> (the
+              package manager from Module 1), and <code>npx</code> (a tool to
+              run packages without installing them). That's why npm "just works"
+              after installing Node.js.
+            </p>
+          </div>
+
+          <h3>Frontend vs Backend</h3>
+          <p>
+            This is a good time to understand a distinction you'll hear
+            constantly:
+          </p>
+
+          <div class="diagram">
+            <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker
+                  id="arr2"
+                  viewBox="0 0 10 10"
+                  refX="8"
+                  refY="5"
+                  markerWidth="6"
+                  markerHeight="6"
+                  orient="auto"
+                >
+                  <path
+                    d="M2 2L8 5L2 8"
+                    fill="none"
+                    stroke="#B4B2A9"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </marker>
+              </defs>
+
+              <!-- Frontend -->
+              <rect
+                x="30"
+                y="30"
+                width="280"
+                height="190"
+                rx="14"
+                fill="#E6F1FB"
+                stroke="#185FA5"
+                stroke-width="1"
+              />
+              <text
+                x="170"
+                y="60"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="15"
+                font-weight="600"
+                fill="#185FA5"
+              >
+                Frontend
+              </text>
+              <text
+                x="170"
+                y="82"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="11"
+                fill="#6B6A65"
+              >
+                What the user sees and clicks
+              </text>
+              <text
+                x="170"
+                y="110"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="12"
+                fill="#6B6A65"
+              >
+                Runs in the browser
+              </text>
+
+              <rect
+                x="55"
+                y="130"
+                width="100"
+                height="34"
+                rx="6"
+                fill="#FFFFFF"
+                stroke="#185FA5"
+                stroke-width="0.8"
+              />
+              <text
+                x="105"
+                y="152"
+                text-anchor="middle"
+                font-family="JetBrains Mono"
+                font-size="11"
+                fill="#185FA5"
+              >
+                HTML/CSS
+              </text>
+
+              <rect
+                x="175"
+                y="130"
+                width="110"
+                height="34"
+                rx="6"
+                fill="#FFFFFF"
+                stroke="#185FA5"
+                stroke-width="0.8"
+              />
+              <text
+                x="230"
+                y="152"
+                text-anchor="middle"
+                font-family="JetBrains Mono"
+                font-size="11"
+                fill="#185FA5"
+              >
+                JavaScript
+              </text>
+
+              <rect
+                x="55"
+                y="175"
+                width="230"
+                height="30"
+                rx="6"
+                fill="#FFFFFF"
+                stroke="#185FA5"
+                stroke-width="0.8"
+              />
+              <text
+                x="170"
+                y="195"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="11"
+                fill="#185FA5"
+              >
+                React, Vue, Next.js
+              </text>
+
+              <!-- Backend -->
+              <rect
+                x="370"
+                y="30"
+                width="280"
+                height="190"
+                rx="14"
+                fill="#E8F5EE"
+                stroke="#1D6B4F"
+                stroke-width="1"
+              />
+              <text
+                x="510"
+                y="60"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="15"
+                font-weight="600"
+                fill="#1D6B4F"
+              >
+                Backend
+              </text>
+              <text
+                x="510"
+                y="82"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="11"
+                fill="#6B6A65"
+              >
+                The hidden engine room
+              </text>
+              <text
+                x="510"
+                y="110"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="12"
+                fill="#6B6A65"
+              >
+                Runs on a server (Node.js, Python)
+              </text>
+
+              <rect
+                x="395"
+                y="130"
+                width="100"
+                height="34"
+                rx="6"
+                fill="#FFFFFF"
+                stroke="#1D6B4F"
+                stroke-width="0.8"
+              />
+              <text
+                x="445"
+                y="152"
+                text-anchor="middle"
+                font-family="JetBrains Mono"
+                font-size="11"
+                fill="#1D6B4F"
+              >
+                APIs
+              </text>
+
+              <rect
+                x="515"
+                y="130"
+                width="110"
+                height="34"
+                rx="6"
+                fill="#FFFFFF"
+                stroke="#1D6B4F"
+                stroke-width="0.8"
+              />
+              <text
+                x="570"
+                y="152"
+                text-anchor="middle"
+                font-family="JetBrains Mono"
+                font-size="11"
+                fill="#1D6B4F"
+              >
+                Database
+              </text>
+
+              <rect
+                x="395"
+                y="175"
+                width="230"
+                height="30"
+                rx="6"
+                fill="#FFFFFF"
+                stroke="#1D6B4F"
+                stroke-width="0.8"
+              />
+              <text
+                x="510"
+                y="195"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="11"
+                fill="#1D6B4F"
+              >
+                Express, Django, FastAPI
+              </text>
+
+              <!-- Arrow -->
+              <line
+                x1="310"
+                y1="125"
+                x2="368"
+                y2="125"
+                stroke="#B4B2A9"
+                stroke-width="1.2"
+                marker-end="url(#arr2)"
+              />
+              <text
+                x="339"
+                y="118"
+                text-anchor="middle"
+                font-family="DM Sans"
+                font-size="10"
+                fill="#6B6A65"
+              >
+                API calls
+              </text>
+            </svg>
+          </div>
+
+          <p>
+            <strong>Frontend</strong> is everything the user sees: the webpage,
+            the buttons, the layout. It runs in the browser.
+          </p>
+          <p>
+            <strong>Backend</strong> is the hidden engine: it processes data,
+            talks to databases, handles login systems, and connects to APIs. It
+            runs on a server using Node.js or Python.
+          </p>
+          <p>
+            When AI builds you a "full-stack" project, it's building both sides.
+          </p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 3: FRAMEWORKS -->
+        <!-- ============================================ -->
+        <div class="module" id="l2-mod3" data-title="Frameworks: pre-built kitchens" data-time="20" data-accent="#fc351c" style="--module-accent:#fc351c">
+          <div class="module-header">
+            <div class="module-num">3</div>
+            <h2>Frameworks: pre-built kitchens</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <div class="analogy purple">
+            <strong>Think of building a house.</strong><br />
+            You <em>could</em> lay every brick by hand (plain HTML/CSS/JS). Or
+            you could buy a prefab house that already has walls, plumbing, and
+            wiring, and then just customise the interior. A
+            <strong>framework</strong> is that prefab house. It gives you
+            structure so you can focus on the unique parts.
+          </div>
+
+          <p>
+            When AI builds anything more complex than a single-page site, it
+            uses a framework. You need to recognise the big ones.
+          </p>
+
+          <h3>Frontend frameworks (what the user sees)</h3>
+          <table class="compare">
+            <tr>
+              <th>Framework</th>
+              <th>Made by</th>
+              <th>When AI uses it</th>
+              <th>You'll recognise it by</th>
+            </tr>
+            <tr>
+              <td><strong>React</strong></td>
+              <td>Meta</td>
+              <td>Most interactive apps, dashboards</td>
+              <td>
+                <code>.jsx</code> files, <code>useState</code>,
+                <code>import React</code>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Next.js</strong></td>
+              <td>Vercel</td>
+              <td>Full websites with pages and routing</td>
+              <td>
+                <code>pages/</code> or <code>app/</code> folder,
+                <code>next.config.js</code>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Vue</strong></td>
+              <td>Community</td>
+              <td>Simpler interactive apps</td>
+              <td>
+                <code>.vue</code> files, <code>&lt;template&gt;</code> blocks
+              </td>
+            </tr>
+          </table>
+
+          <h3>Backend frameworks (the engine room)</h3>
+          <table class="compare">
+            <tr>
+              <th>Framework</th>
+              <th>Language</th>
+              <th>When AI uses it</th>
+              <th>You'll recognise it by</th>
+            </tr>
+            <tr>
+              <td><strong>Express</strong></td>
+              <td>JavaScript</td>
+              <td>Simple APIs, web servers</td>
+              <td>
+                <code>app.get()</code>, <code>app.post()</code>,
+                <code>app.listen()</code>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>FastAPI</strong></td>
+              <td>Python</td>
+              <td>Data-heavy APIs, ML projects</td>
+              <td>
+                <code>@app.get</code>, <code>uvicorn</code>,
+                <code>.py</code> files
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Django</strong></td>
+              <td>Python</td>
+              <td>Full web apps with admin panels</td>
+              <td>
+                <code>manage.py</code>, <code>models.py</code>,
+                <code>views.py</code>
+              </td>
+            </tr>
+          </table>
+
+          <h3>How to start a framework project</h3>
+          <p>
+            AI usually tells you to run a "create" command. These scaffold
+            (build the skeleton of) a full project for you:
+          </p>
+
+          <div class="code-block">
+            <span class="comment"># Create a React app</span>
+            <span class="prompt">$ </span
+            ><span class="cmd">npx</span> create-react-app my-app
+
+            <span class="comment"># Create a Next.js app</span>
+            <span class="prompt">$ </span
+            ><span class="cmd">npx</span> create-next-app my-app
+
+            <span class="comment"># Create a Vue app</span>
+            <span class="prompt">$ </span><span class="cmd">npm</span> create
+            vue@latest my-app
+          </div>
+
+          <p>
+            After running one of these, you get a full project folder with
+            everything pre-configured. Then you <code>cd my-app</code>, run
+            <code>npm install</code>, and <code>npm run dev</code> to see it in
+            your browser.
+          </p>
+
+          <div class="key-concept">
+            <h3>Which framework should you ask AI to use?</h3>
+            <p>
+              If you're not sure, ask AI to use <strong>Next.js</strong>. It
+              handles both frontend and backend, deploys easily on Vercel, and
+              is the most common choice in 2025/2026. For simple one-page tools,
+              plain HTML is still fine.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 4: DATABASES -->
+        <!-- ============================================ -->
+        <div class="module" id="l2-mod4" data-title="Databases: where your data lives" data-time="20" data-accent="#19ae5d" style="--module-accent:#19ae5d">
+          <div class="module-header">
+            <div class="module-num">4</div>
+            <h2>Databases: where your data lives</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <p>
+            Every app that saves anything (user accounts, posts, orders, scores)
+            needs a database. You won't build one yourself, but you need to
+            understand what they are so you can tell AI what you need.
+          </p>
+
+          <div class="analogy coral">
+            <strong>Think of a spreadsheet vs a filing cabinet.</strong><br />
+            A <strong>SQL database</strong> (like PostgreSQL) is a spreadsheet:
+            rows, columns, everything neatly organised. You know exactly where
+            each piece of data lives.<br /><br />
+            A <strong>NoSQL database</strong> (like MongoDB or Firebase) is a
+            filing cabinet with folders. Each folder can contain different
+            things. More flexible, less structured.
+          </div>
+
+          <h3>SQL vs NoSQL at a glance</h3>
+          <table class="compare">
+            <tr>
+              <th></th>
+              <th>SQL</th>
+              <th>NoSQL</th>
+            </tr>
+            <tr>
+              <td><strong>Structure</strong></td>
+              <td>Tables with rows and columns</td>
+              <td>Collections of documents (like JSON)</td>
+            </tr>
+            <tr>
+              <td><strong>Best for</strong></td>
+              <td>Structured data (users, orders, products)</td>
+              <td>Flexible data (chat messages, logs)</td>
+            </tr>
+            <tr>
+              <td><strong>Popular ones</strong></td>
+              <td>PostgreSQL, MySQL, SQLite</td>
+              <td>MongoDB, Firebase, DynamoDB</td>
+            </tr>
+            <tr>
+              <td><strong>Query language</strong></td>
+              <td>SQL (its own language)</td>
+              <td>Varies by platform</td>
+            </tr>
+          </table>
+
+          <h3>The easy route: Database-as-a-Service</h3>
+          <p>
+            You don't need to install or manage a database yourself. These
+            platforms give you a database with a dashboard, and AI can connect
+            to them with just a URL:
+          </p>
+
+          <table class="compare">
+            <tr>
+              <th>Platform</th>
+              <th>Type</th>
+              <th>Best for</th>
+              <th>Free tier</th>
+            </tr>
+            <tr>
+              <td><strong>Supabase</strong></td>
+              <td>SQL (PostgreSQL)</td>
+              <td>Apps with user accounts, structured data</td>
+              <td>Generous</td>
+            </tr>
+            <tr>
+              <td><strong>Firebase</strong></td>
+              <td>NoSQL</td>
+              <td>Real-time apps, chat, mobile</td>
+              <td>Generous</td>
+            </tr>
+            <tr>
+              <td><strong>PlanetScale</strong></td>
+              <td>SQL (MySQL)</td>
+              <td>Large-scale web apps</td>
+              <td>Limited</td>
+            </tr>
+            <tr>
+              <td><strong>MongoDB Atlas</strong></td>
+              <td>NoSQL</td>
+              <td>Flexible document storage</td>
+              <td>Yes (512MB)</td>
+            </tr>
+          </table>
+
+          <h3>How the connection works</h3>
+          <div class="flow-container">
+            <div class="flow-box">
+              You create a database on Supabase/Firebase
+            </div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">platform gives you</div>
+            <div class="flow-box highlight">
+              A connection URL (looks like a long string)
+            </div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">you put it in</div>
+            <div class="flow-box green">Your .env file as DATABASE_URL=...</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">your code</div>
+            <div class="flow-box">
+              Reads the URL and connects to the database
+            </div>
+          </div>
+
+          <div class="code-block">
+            <span class="comment"># In your .env file</span>
+            <span class="flag">DATABASE_URL</span>=<span class="str"
+              >postgresql://user:<a
+                href="/cdn-cgi/l/email-protection"
+                class="__cf_email__"
+                data-cfemail="5d2d3c2e2e2a322f391d393f732e282d3c3f3c2e38733e32"
+                >[email&#160;protected]</a
+              >:5432/postgres</span
+            >
+          </div>
+
+          <div class="key-concept">
+            <h3>What to tell AI</h3>
+            <p>
+              When you need a database, tell AI: "I need to store [what kind of
+              data]. Use Supabase (or Firebase). Here's my connection URL: [from
+              your .env]." That's enough for AI to set up the entire database
+              connection for you.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 5: BROWSER DEVTOOLS -->
+        <!-- ============================================ -->
+        <div class="module" id="l2-mod5" data-title="Browser DevTools: your X-ray glasses" data-time="15" data-accent="#00aaff" style="--module-accent:#00aaff">
+          <div class="module-header">
+            <div class="module-num">5</div>
+            <h2>Browser DevTools: your X-ray glasses</h2>
+            <span class="module-time">15 min</span>
+          </div>
+
+          <div class="analogy">
+            <strong>Think of X-ray glasses for websites.</strong><br />
+            Every browser has a hidden panel that lets you see the skeleton
+            (HTML), the clothing (CSS), and the nervous system (JS) of any
+            website. You can even change things live and see what happens. It's
+            the single most useful debugging tool you have.
+          </div>
+
+          <h3>How to open DevTools</h3>
+          <div class="steps">
+            <div class="step">
+              <p>
+                <strong>Any browser:</strong> Right-click anywhere on a page and
+                click <strong>"Inspect"</strong>
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                <strong>Keyboard shortcut:</strong> Press <code>F12</code> or
+                <code>Cmd+Option+I</code> (Mac) /
+                <code>Ctrl+Shift+I</code> (Windows)
+              </p>
+            </div>
+          </div>
+
+          <h3>The 4 tabs you need to know</h3>
+
+          <div class="cmd-grid">
+            <div class="cmd-card">
+              <div class="cmd-name">Elements</div>
+              <div class="cmd-desc">
+                See and edit the HTML and CSS live. Hover over elements to
+                highlight them on the page. Great for "why is this button in the
+                wrong place?"
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">Console</div>
+              <div class="cmd-desc">
+                Shows error messages and log outputs. If something is broken,
+                the error is almost always here. This is the tab you'll use
+                most.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">Network</div>
+              <div class="cmd-desc">
+                Shows every request your page makes (API calls, images loading,
+                etc). If an API call fails, you'll see it here in red.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">Application</div>
+              <div class="cmd-desc">
+                Shows stored data: cookies, local storage, session data. Useful
+                for debugging login issues.
+              </div>
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>The Console is your best friend</h3>
+            <p>
+              When something breaks, open the Console tab first. It shows red
+              error messages telling you what went wrong and on which line. You
+              can copy that error message and paste it directly to AI with "fix
+              this error" and AI will know what to do.
+            </p>
+          </div>
+
+          <h3>Real example: debugging a broken API call</h3>
+          <div class="code-block">
+            <span class="comment">// You open Console and see this:</span>
+            <span class="err"
+              >GET https://api.weather.com/data?key=undefined 401
+              (Unauthorized)</span
+            >
+
+            <span class="comment">// This tells you:</span>
+            <span class="comment"
+              >// 1. It's trying to call the weather API</span
+            >
+            <span class="comment"
+              >// 2. key=undefined means the API key is missing</span
+            >
+            <span class="comment">// 3. 401 means "you're not authorized"</span>
+            <span class="comment"
+              >// 4. Fix: check your .env file, the API key isn't loading</span
+            >
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 6: READING ERRORS -->
+        <!-- ============================================ -->
+        <div class="module" id="l2-mod6" data-title="Reading error messages: they're trying to help you" data-time="20" data-accent="#eb30a2" style="--module-accent:#eb30a2">
+          <div class="module-header">
+            <div class="module-num">6</div>
+            <h2>Reading error messages: they're trying to help you</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <p>
+            Error messages look terrifying. A wall of red text feels like the
+            computer is yelling at you. But here's the secret: error messages
+            are the most helpful thing in programming. They tell you
+            <em>exactly</em> what went wrong.
+          </p>
+
+          <div class="analogy coral">
+            <strong>Think of a doctor's diagnosis.</strong><br />
+            "You have a broken bone in your left wrist" is scary to hear, but it
+            tells you exactly what's wrong and where. An error message does the
+            same thing. You just need to know how to read it.
+          </div>
+
+          <h3>Anatomy of an error message</h3>
+          <div class="code-block">
+            <span class="err"
+              >TypeError: Cannot read properties of undefined (reading
+              'map')</span
+            >
+            <span class="info"
+              >at ProductList (src/components/ProductList.jsx:14:22)</span
+            >
+            <span class="info"
+              >at renderWithHooks (react-dom.development.js:15486:18)</span
+            >
+          </div>
+
+          <p>Let's break that down into three parts:</p>
+
+          <div class="steps">
+            <div class="step">
+              <p>
+                <strong>Error type:</strong> <code>TypeError</code>. This tells
+                you the category. TypeError means you tried to use something
+                that doesn't exist or has the wrong type.
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                <strong>Message:</strong>
+                <code>Cannot read properties of undefined (reading 'map')</code
+                >. This is the actual problem. It tried to use
+                <code>.map()</code> on something that was
+                <code>undefined</code> (empty/missing).
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                <strong>Location:</strong>
+                <code>src/components/ProductList.jsx:14:22</code>. The file,
+                line number, and character position. Line 14 is where the
+                problem is.
+              </p>
+            </div>
+          </div>
+
+          <h3>Common errors and what they actually mean</h3>
+          <table class="compare">
+            <tr>
+              <th>Error</th>
+              <th>Plain English</th>
+              <th>Likely fix</th>
+            </tr>
+            <tr>
+              <td><code>404 Not Found</code></td>
+              <td>The page or API URL doesn't exist</td>
+              <td>Check the URL for typos</td>
+            </tr>
+            <tr>
+              <td><code>401 Unauthorized</code></td>
+              <td>Your API key is missing or wrong</td>
+              <td>Check your .env file</td>
+            </tr>
+            <tr>
+              <td><code>500 Internal Server Error</code></td>
+              <td>The server crashed</td>
+              <td>Check your backend code/logs</td>
+            </tr>
+            <tr>
+              <td><code>CORS error</code></td>
+              <td>The server blocks your browser from calling it</td>
+              <td>Tell AI "I'm getting a CORS error"</td>
+            </tr>
+            <tr>
+              <td><code>Module not found</code></td>
+              <td>A package is missing</td>
+              <td>Run <code>npm install</code></td>
+            </tr>
+            <tr>
+              <td><code>SyntaxError</code></td>
+              <td>Typo in the code (missing bracket, comma)</td>
+              <td>Check the line number</td>
+            </tr>
+            <tr>
+              <td><code>EADDRINUSE</code></td>
+              <td>The port is already taken by another app</td>
+              <td>Close the other app or change the port</td>
+            </tr>
+          </table>
+
+          <div class="key-concept">
+            <h3>The debugging workflow</h3>
+            <p>
+              When something breaks:<br />
+              1. Read the error message (at least the first two lines)<br />
+              2. Copy the error<br />
+              3. Paste it to AI and say "I got this error, here's my code:
+              [paste code]"<br />
+              4. AI fixes it 90% of the time<br /><br />
+              The skill isn't fixing the error. The skill is
+              <em>finding and reading</em> the error correctly so AI can fix it.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 7: READING DOCUMENTATION -->
+        <!-- ============================================ -->
+        <div class="module" id="l2-mod7" data-title="Reading documentation: the instruction manual" data-time="15" data-accent="#1c5ddc" style="--module-accent:#1c5ddc">
+          <div class="module-header">
+            <div class="module-num">7</div>
+            <h2>Reading documentation: the instruction manual</h2>
+            <span class="module-time">15 min</span>
+          </div>
+
+          <p>
+            Every API, framework, and service has
+            <strong>documentation</strong> (often called "docs"). This is the
+            instruction manual. You won't read all of it, but knowing how to
+            navigate it is a real superpower.
+          </p>
+
+          <div class="analogy purple">
+            <strong>Think of a car manual.</strong><br />
+            You don't read it cover to cover. But when your dashboard shows a
+            warning light, you flip to that section. Documentation works the
+            same way. You search for the specific thing you need.
+          </div>
+
+          <h3>What to look for in docs</h3>
+          <div class="cmd-grid">
+            <div class="cmd-card">
+              <div class="cmd-name">Quick Start</div>
+              <div class="cmd-desc">
+                The minimum steps to get something working. Always start here.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">API Reference</div>
+              <div class="cmd-desc">
+                Lists every function/endpoint available and what data to send.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">Examples</div>
+              <div class="cmd-desc">
+                Working code samples you can copy and modify.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">Authentication</div>
+              <div class="cmd-desc">
+                How to set up your API key and get access.
+              </div>
+            </div>
+          </div>
+
+          <h3>How to use docs + AI together</h3>
+          <p>The most effective workflow is:</p>
+          <div class="steps">
+            <div class="step">
+              <p>
+                Find the docs page for the service you want to use (Google
+                "[service name] docs")
+              </p>
+            </div>
+            <div class="step">
+              <p>Skim the Quick Start to understand the basics</p>
+            </div>
+            <div class="step">
+              <p>Copy the URL of the relevant docs page</p>
+            </div>
+            <div class="step">
+              <p>
+                Paste it to AI: "Use this API according to these docs: [URL].
+                Build me [what you want]."
+              </p>
+            </div>
+          </div>
+
+          <p>
+            This gives AI the exact specifications it needs to build things
+            correctly. Without docs, AI sometimes guesses wrong about how an API
+            works.
+          </p>
+
+          <h3>Example: popular documentation sites</h3>
+          <table class="compare">
+            <tr>
+              <th>Service</th>
+              <th>Docs URL</th>
+            </tr>
+            <tr>
+              <td>Supabase</td>
+              <td><code>supabase.com/docs</code></td>
+            </tr>
+            <tr>
+              <td>Next.js</td>
+              <td><code>nextjs.org/docs</code></td>
+            </tr>
+            <tr>
+              <td>Vercel</td>
+              <td><code>vercel.com/docs</code></td>
+            </tr>
+            <tr>
+              <td>Anthropic (Claude API)</td>
+              <td><code>docs.anthropic.com</code></td>
+            </tr>
+            <tr>
+              <td>Stripe (payments)</td>
+              <td><code>stripe.com/docs</code></td>
+            </tr>
+            <tr>
+              <td>OpenAI</td>
+              <td><code>platform.openai.com/docs</code></td>
+            </tr>
+          </table>
+
+          <div class="key-concept">
+            <h3>You don't need to understand everything</h3>
+            <p>
+              Most docs pages have code examples in multiple languages. You
+              don't need to understand the code. You just need to find the right
+              section and hand it to AI. Think of yourself as the project
+              manager: you find the requirements, AI does the implementation.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- FINAL CHECKLIST -->
+        <!-- ============================================ -->
+        <div class="module" id="l2-final" data-title="Level 2 checklist" data-accent="#feb52b" style="--module-accent:#feb52b">
+          <div class="module-header">
+            <div class="module-num">&#10003;</div>
+            <h2>Level 2 checklist</h2>
+          </div>
+
+          <p>Tick these off as you practice:</p>
+
+          <div class="checklist">
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Run <code>npm install</code> on a project and understand what
+                it does</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Explain what <code>package.json</code> is to someone else</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Install Node.js and verify with
+                <code>node --version</code></span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Explain the difference between frontend and backend</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Recognise which framework a project uses by its file
+                structure</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Create a free database on Supabase or Firebase</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Open Browser DevTools and find the Console tab</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Read an error message and identify the type, message, and
+                location</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Copy an error and get AI to fix it</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Find the Quick Start page in a service's documentation</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Give AI a docs URL and ask it to build something from it</span
+              >
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>Ready for Level 3?</h3>
+            <p>
+              Level 3 covers the <em>architecture</em>: Docker, CI/CD pipelines,
+              authentication, serverless functions, webhooks, and how to plan
+              and scope projects so AI builds exactly what you need. It's for
+              when you want to build production-quality apps, not just demos.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer">
+          <p>
+            Code Ecosystem Guide - Level 2: The Tools<br />Built for Adhi. No
+            coding background required.
+          </p>
+          <p class="version" style="margin-top: 0.5rem">
+            code-ecosystem-guide-L2-v1
+          </p>
+        </div>
+      </div>
+
+      <script
+        data-cfasync="false"
+        src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+      ></script>
+      <div class="next-level" onclick="switchLevel(3)">
+        <h3>Ready for Level 3? &rarr;</h3>
+        <p>
+          Learn the architecture: Docker, CI/CD, auth, serverless, webhooks, and
+          project planning.
+        </p>
+      </div>
+    </section>
+
+    <!-- LEVEL 3 -->
+    <section class="level-section" id="level-3">
+      
+  <div class="level-hero">
+    <div class="level-badge">Level 3 · Professional Stack</div>
+    <h1>Production-Grade Engineering</h1>
+    <p>The patterns, tools, and concepts behind real production systems.</p>
+    <div class="level-meta">
+      <span class="level-meta-item"><span class="level-meta-dot"></span>7 modules · 130 min</span>
+      <span class="level-meta-item"><span class="level-meta-dot" style="background:var(--c-accent)"></span>Course · How to Code for Non-Coders</span>
+    </div>
+  </div>
+<div class="container">
+        <!-- HERO -->
+        <div class="hero">
+          <div class="hero-badge">LEVEL 3: THE ARCHITECTURE</div>
+          <h1>
+            You've got the tools.<br />Now build things that <em>last</em>.
+          </h1>
+          <p>
+            Level 3 covers how professional apps are built, deployed, and
+            maintained. These are the concepts that separate a weekend
+            experiment from a real product.
+          </p>
+          <div class="time-est">
+            <span>&#9201; ~2.5 hours</span>
+            <span>&#128218; 7 modules</span>
+            <span>&#127919; Architect-level thinking</span>
+          </div>
+          <div class="prereq">
+            <strong>Prerequisite:</strong> Complete Level 1 (The Big Picture)
+            and Level 2 (The Tools). You should be comfortable with npm,
+            frameworks, DevTools, and reading error messages.
+          </div>
+          <p class="version">code-ecosystem-guide-L3-v1</p>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 1: DOCKER -->
+        <!-- ============================================ -->
+        <div class="module" id="l3-mod1" data-title="Docker: shipping your entire kitchen" data-time="20" data-accent="#1c5ddc" style="--module-accent:#1c5ddc">
+          <div class="module-header">
+            <div class="module-num">1</div>
+            <h2>Docker: shipping your entire kitchen</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <p>
+            Here's a problem you'll hit eventually: your app works perfectly on
+            your computer, but when you deploy it or someone else tries to run
+            it, everything breaks. Different versions, missing tools, wrong
+            settings.
+          </p>
+
+          <div class="analogy blue">
+            <strong>Think of a shipping container.</strong><br />
+            Before shipping containers, moving goods was chaos: different
+            trucks, different loading systems, things breaking in transit. Then
+            someone invented a standard metal box. Put anything inside, and it
+            ships identically to any port in the world.<br /><br />
+            <strong>Docker</strong> is that shipping container for software. You
+            pack your app, all its dependencies, the correct Node.js version,
+            everything, into one container. That container runs identically on
+            your laptop, your colleague's laptop, and the production server.
+          </div>
+
+          <h3>The key Docker concepts</h3>
+          <table class="compare">
+            <tr>
+              <th>Term</th>
+              <th>What it is</th>
+              <th>Analogy</th>
+            </tr>
+            <tr>
+              <td><strong>Image</strong></td>
+              <td>A blueprint/snapshot of your app and its environment</td>
+              <td>The IKEA instruction manual + all parts in a sealed box</td>
+            </tr>
+            <tr>
+              <td><strong>Container</strong></td>
+              <td>A running instance of an image</td>
+              <td>The assembled furniture in your room</td>
+            </tr>
+            <tr>
+              <td><strong>Dockerfile</strong></td>
+              <td>A text file with instructions to build an image</td>
+              <td>The step-by-step assembly guide</td>
+            </tr>
+            <tr>
+              <td><strong>Docker Hub</strong></td>
+              <td>An online library of pre-built images</td>
+              <td>The IKEA catalogue</td>
+            </tr>
+          </table>
+
+          <h3>What a Dockerfile looks like</h3>
+          <div class="code-block">
+            <span class="comment"
+              ># Dockerfile (this tells Docker how to build your
+              container)</span
+            >
+
+            <span class="cmd">FROM</span> <span class="str">node:20</span>
+            <span class="comment"># Start with Node.js version 20</span>
+            <span class="cmd">WORKDIR</span> <span class="str">/app</span>
+            <span class="comment"># Set working directory</span>
+            <span class="cmd">COPY</span> package.json .
+            <span class="comment"># Copy package list</span>
+            <span class="cmd">RUN</span> npm install
+            <span class="comment"># Install dependencies</span>
+            <span class="cmd">COPY</span> . .
+            <span class="comment"># Copy all project files</span>
+            <span class="cmd">CMD</span> [<span class="str">"npm"</span>,
+            <span class="str">"start"</span>]
+            <span class="comment"># Start the app</span>
+          </div>
+
+          <h3>Docker commands you need</h3>
+          <div class="cmd-grid">
+            <div class="cmd-card">
+              <div class="cmd-name">docker build -t my-app .</div>
+              <div class="cmd-desc">
+                Build an image from the Dockerfile in current folder
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">docker run my-app</div>
+              <div class="cmd-desc">Start a container from the image</div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">docker ps</div>
+              <div class="cmd-desc">List all running containers</div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">docker stop [id]</div>
+              <div class="cmd-desc">Stop a running container</div>
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>When do you need Docker?</h3>
+            <p>
+              For simple HTML sites and Netlify/Vercel deployments, you don't.
+              Docker becomes important when: you're deploying to platforms like
+              AWS or Google Cloud, your app uses multiple services (database +
+              backend + frontend), or you need your app to run identically
+              everywhere. If AI generates a Dockerfile for your project, now you
+              know what it does.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 2: CI/CD -->
+        <!-- ============================================ -->
+        <div class="module" id="l3-mod2" data-title="CI/CD: the automatic assembly line" data-time="20" data-accent="#feb52b" style="--module-accent:#feb52b">
+          <div class="module-header">
+            <div class="module-num">2</div>
+            <h2>CI/CD: the automatic assembly line</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <div class="analogy green">
+            <strong>Think of a car factory assembly line.</strong><br />
+            Raw materials go in one end. The assembly line automatically welds,
+            paints, tests, and packages. A finished car rolls out the other end.
+            No human intervention needed once it's set up.<br /><br />
+            <strong>CI/CD</strong> is that assembly line for your code. You push
+            code to GitHub, and the pipeline automatically tests it, builds it,
+            and deploys it to your live site.
+          </div>
+
+          <h3>What CI and CD stand for</h3>
+          <table class="compare">
+            <tr>
+              <th>Term</th>
+              <th>Full name</th>
+              <th>What it does</th>
+            </tr>
+            <tr>
+              <td><strong>CI</strong></td>
+              <td>Continuous Integration</td>
+              <td>Automatically tests your code every time you push</td>
+            </tr>
+            <tr>
+              <td><strong>CD</strong></td>
+              <td>Continuous Deployment</td>
+              <td>Automatically deploys your code if all tests pass</td>
+            </tr>
+          </table>
+
+          <h3>The CI/CD pipeline flow</h3>
+          <div class="flow-container">
+            <div class="flow-box">You push code to GitHub</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">triggers</div>
+            <div class="flow-box blue">CI: Run automated tests</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">if tests pass</div>
+            <div class="flow-box blue">CI: Build the project</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">automatically</div>
+            <div class="flow-box green">CD: Deploy to production</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-box">Your live site is updated</div>
+          </div>
+
+          <h3>Where CI/CD runs</h3>
+          <table class="compare">
+            <tr>
+              <th>Platform</th>
+              <th>Built into</th>
+              <th>Best for</th>
+            </tr>
+            <tr>
+              <td><strong>GitHub Actions</strong></td>
+              <td>GitHub</td>
+              <td>Most projects (free for public repos)</td>
+            </tr>
+            <tr>
+              <td><strong>Vercel</strong></td>
+              <td>Vercel hosting</td>
+              <td>Next.js apps (CI/CD is automatic)</td>
+            </tr>
+            <tr>
+              <td><strong>Netlify</strong></td>
+              <td>Netlify hosting</td>
+              <td>Simple sites (CI/CD is automatic)</td>
+            </tr>
+          </table>
+
+          <div class="key-concept">
+            <h3>You're already using CD</h3>
+            <p>
+              Remember in Level 1 when you connected GitHub to Netlify and it
+              auto-deployed on every push? That was CD. You were using it
+              without knowing the name. CI adds the testing step before
+              deployment, which prevents broken code from reaching your live
+              site.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 3: AUTHENTICATION -->
+        <!-- ============================================ -->
+        <div class="module" id="l3-mod3" data-title="Authentication: who's at the door?" data-time="20" data-accent="#fc351c" style="--module-accent:#fc351c">
+          <div class="module-header">
+            <div class="module-num">3</div>
+            <h2>Authentication: who's at the door?</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <p>
+            If your app has user accounts (login, signup, profiles), you need
+            <strong>authentication</strong> (who you are) and
+            <strong>authorisation</strong> (what you're allowed to do).
+          </p>
+
+          <div class="analogy coral">
+            <strong>Think of a hotel.</strong><br />
+            <strong>Authentication</strong> = checking your ID at the front
+            desk. "Are you who you say you are?"<br />
+            <strong>Authorisation</strong> = your room key only opens
+            <em>your</em> room, not the presidential suite. "What are you
+            allowed to access?"
+          </div>
+
+          <h3>The approaches, ranked by complexity</h3>
+          <table class="compare">
+            <tr>
+              <th>Method</th>
+              <th>How it works</th>
+              <th>When to use</th>
+            </tr>
+            <tr>
+              <td><strong>Third-party auth</strong> (easiest)</td>
+              <td>
+                Use Supabase Auth, Firebase Auth, or Clerk. They handle
+                everything.
+              </td>
+              <td>Almost always. Start here.</td>
+            </tr>
+            <tr>
+              <td><strong>OAuth / "Sign in with Google"</strong></td>
+              <td>
+                User logs in with their Google/GitHub/Apple account. You never
+                see their password.
+              </td>
+              <td>When you want social login</td>
+            </tr>
+            <tr>
+              <td><strong>JWT tokens</strong></td>
+              <td>
+                User logs in, gets a token (like a digital wristband). Token
+                proves identity on every request.
+              </td>
+              <td>Custom APIs, advanced use</td>
+            </tr>
+            <tr>
+              <td><strong>Roll your own</strong></td>
+              <td>
+                Build login/signup from scratch, hash passwords, manage
+                sessions.
+              </td>
+              <td>Almost never. Serious security risk.</td>
+            </tr>
+          </table>
+
+          <div class="warning">
+            <strong>Never build authentication from scratch.</strong> Password
+            hashing, session management, and security vulnerabilities are
+            extremely easy to get wrong. Always use a third-party service. This
+            is one area where even experienced developers use pre-built tools.
+          </div>
+
+          <h3>How third-party auth works</h3>
+          <div class="flow-container">
+            <div class="flow-box">User clicks "Sign up" on your app</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">your app calls</div>
+            <div class="flow-box highlight">Supabase / Firebase / Clerk</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">service handles</div>
+            <div class="flow-box">
+              Email verification, password hashing, session tokens
+            </div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">returns</div>
+            <div class="flow-box green">
+              User object + session token to your app
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>What to tell AI</h3>
+            <p>
+              "Add user authentication using Supabase Auth (or Firebase Auth). I
+              need sign up, login, logout, and a way to check if the user is
+              logged in." That's enough. AI knows how to set it up.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 4: SERVERLESS FUNCTIONS -->
+        <!-- ============================================ -->
+        <div class="module" id="l3-mod4" data-title="Serverless functions: backend without a server" data-time="20" data-accent="#19ae5d" style="--module-accent:#19ae5d">
+          <div class="module-header">
+            <div class="module-num">4</div>
+            <h2>Serverless functions: backend without a server</h2>
+            <span class="module-time">20 min</span>
+          </div>
+
+          <div class="analogy">
+            <strong>Think of a vending machine vs a restaurant.</strong><br />
+            A restaurant (traditional server) is always open, always staffed,
+            always costing money, even when nobody is eating. A vending machine
+            (serverless) sits idle until someone puts in a coin. It only runs
+            (and costs money) when someone actually uses it.<br /><br />
+            <strong>Serverless functions</strong> are tiny pieces of backend
+            code that only run when triggered. No server to manage, no monthly
+            cost when idle.
+          </div>
+
+          <h3>Why serverless matters for you</h3>
+          <p>
+            Remember in Level 1, we said you shouldn't put API keys in frontend
+            code? Serverless functions solve this. Your frontend calls your own
+            serverless function, and the function (running safely on the server)
+            calls the external API with the secret key.
+          </p>
+
+          <div class="flow-container">
+            <div class="flow-box">User clicks "Get weather"</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">frontend calls</div>
+            <div class="flow-box highlight">
+              Your serverless function (/api/weather)
+            </div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">function uses secret API key to call</div>
+            <div class="flow-box coral">External weather API</div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">returns data</div>
+            <div class="flow-box">User sees the weather</div>
+          </div>
+
+          <p>
+            The API key never touches the browser. It lives safely in the
+            serverless function's environment variables.
+          </p>
+
+          <h3>Where to run serverless functions</h3>
+          <table class="compare">
+            <tr>
+              <th>Platform</th>
+              <th>How to create</th>
+              <th>Free tier</th>
+            </tr>
+            <tr>
+              <td><strong>Vercel</strong></td>
+              <td>Create files in <code>/api/</code> folder</td>
+              <td>100,000 calls/month</td>
+            </tr>
+            <tr>
+              <td><strong>Netlify Functions</strong></td>
+              <td>Create files in <code>/netlify/functions/</code></td>
+              <td>125,000 calls/month</td>
+            </tr>
+            <tr>
+              <td><strong>Supabase Edge Functions</strong></td>
+              <td>Deploy via Supabase CLI</td>
+              <td>500,000 calls/month</td>
+            </tr>
+          </table>
+
+          <h3>Example: a Vercel serverless function</h3>
+          <div class="code-block">
+            <span class="comment">// File: /api/weather.js</span>
+            <span class="comment"
+              >// This file IS the serverless function.</span
+            >
+            <span class="comment"
+              >// Vercel automatically turns it into an API endpoint.</span
+            >
+
+            <span class="cmd">export default</span> async function handler(req,
+            res) {
+            <span class="comment"
+              >// This code runs on the server, not in the browser</span
+            >
+            const apiKey = process.env.<span class="flag">WEATHER_API_KEY</span
+            >; <span class="comment">// safe!</span> const data = await
+            fetch(<span class="str"
+              >`https://api.weather.com?key=${apiKey}`</span
+            >); const json = await data.json(); res.json(json);
+            <span class="comment">// send data back to frontend</span>
+            }
+          </div>
+
+          <div class="key-concept">
+            <h3>When to use serverless</h3>
+            <p>
+              Use serverless functions when: you need to hide API keys from the
+              frontend, you need to process data before sending it to the user,
+              you want to send emails or notifications, or you need a
+              lightweight backend without managing a full server. For most
+              projects that AI builds for you, serverless is the right choice.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 5: WEBHOOKS -->
+        <!-- ============================================ -->
+        <div class="module" id="l3-mod5" data-title="Webhooks: call me when it happens" data-time="15" data-accent="#00aaff" style="--module-accent:#00aaff">
+          <div class="module-header">
+            <div class="module-num">5</div>
+            <h2>Webhooks: "call me when it happens"</h2>
+            <span class="module-time">15 min</span>
+          </div>
+
+          <div class="analogy pink">
+            <strong>Think of a doorbell.</strong><br />
+            You don't stand at your door all day checking if someone's there
+            (that would be exhausting). Instead, you install a doorbell. When
+            someone arrives, the doorbell notifies you.<br /><br />
+            A <strong>webhook</strong> is a doorbell for your app. Instead of
+            constantly checking "did a payment come in? did a form get
+            submitted?", you give the external service a URL. When the event
+            happens, the service calls your URL automatically.
+          </div>
+
+          <h3>How webhooks work</h3>
+          <div class="flow-container">
+            <div class="flow-box">
+              You tell Stripe: "when a payment succeeds, call this URL"
+            </div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">days later, a customer pays</div>
+            <div class="flow-box highlight">
+              Stripe sends data to your URL automatically
+            </div>
+            <div class="flow-arrow">&darr;</div>
+            <div class="flow-label">your serverless function</div>
+            <div class="flow-box green">Receives the data and acts on it</div>
+          </div>
+
+          <h3>Common webhook uses</h3>
+          <table class="compare">
+            <tr>
+              <th>Service</th>
+              <th>Event</th>
+              <th>Your app does</th>
+            </tr>
+            <tr>
+              <td>Stripe</td>
+              <td>Payment succeeds</td>
+              <td>Activate subscription, send receipt</td>
+            </tr>
+            <tr>
+              <td>GitHub</td>
+              <td>Code pushed</td>
+              <td>Trigger deployment (this is how CI/CD works!)</td>
+            </tr>
+            <tr>
+              <td>Typeform</td>
+              <td>Form submitted</td>
+              <td>Save response to database, send email</td>
+            </tr>
+            <tr>
+              <td>Shopify</td>
+              <td>Order placed</td>
+              <td>Update inventory, notify warehouse</td>
+            </tr>
+          </table>
+
+          <div class="key-concept">
+            <h3>Webhooks + Serverless = perfect pair</h3>
+            <p>
+              A webhook needs a URL to call. A serverless function gives you a
+              URL that runs code. Together, they let you react to events from
+              any service without running a permanent server. Tell AI: "Create a
+              serverless function that receives a webhook from [service] when
+              [event happens] and then [what you want to do]."
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 6: SECURITY BASICS -->
+        <!-- ============================================ -->
+        <div class="module" id="l3-mod6" data-title="Security basics: locking the doors" data-time="15" data-accent="#eb30a2" style="--module-accent:#eb30a2">
+          <div class="module-header">
+            <div class="module-num">6</div>
+            <h2>Security basics: locking the doors</h2>
+            <span class="module-time">15 min</span>
+          </div>
+
+          <p>
+            You don't need to be a security expert, but you need to know the
+            basics so you don't accidentally leave the front door wide open.
+          </p>
+
+          <h3>The security checklist</h3>
+
+          <div class="cmd-grid">
+            <div class="cmd-card">
+              <div class="cmd-name">HTTPS everywhere</div>
+              <div class="cmd-desc">
+                Always use <code>https://</code> not <code>http://</code>.
+                Netlify and Vercel do this automatically. HTTPS encrypts data in
+                transit.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">Never expose secrets</div>
+              <div class="cmd-desc">
+                API keys in .env files, never in code. Check your GitHub repo:
+                can you see any keys? If yes, rotate them immediately.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">Use third-party auth</div>
+              <div class="cmd-desc">
+                Never store plain-text passwords. Use Supabase Auth, Firebase
+                Auth, or Clerk. They handle hashing and security.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">Validate user input</div>
+              <div class="cmd-desc">
+                Never trust data from users. If you expect a number, check it's
+                a number. Tell AI "validate all user inputs."
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">Keep packages updated</div>
+              <div class="cmd-desc">
+                Run <code>npm audit</code> to check for known vulnerabilities.
+                Run <code>npm audit fix</code> to patch them.
+              </div>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-name">CORS settings</div>
+              <div class="cmd-desc">
+                Control which websites can call your API. Tell AI "set up CORS
+                to only allow requests from my domain."
+              </div>
+            </div>
+          </div>
+
+          <div class="warning">
+            <strong>If you accidentally push an API key to GitHub:</strong>
+            assume it's compromised. Go to the service's dashboard,
+            revoke/regenerate the key immediately, and replace it in your .env
+            file. GitHub bots scan for leaked keys within minutes.
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- MODULE 7: PLANNING PROJECTS FOR AI -->
+        <!-- ============================================ -->
+        <div class="module" id="l3-mod7" data-title="Planning projects: the architect's blueprint" data-time="20" data-accent="#1c5ddc" style="--module-accent:#1c5ddc">
+          <div class="module-header">
+            <div class="module-num">7</div>
+            <h2>Planning projects: the architect's blueprint</h2>
+            <span class="module-time">25 min</span>
+          </div>
+
+          <p>
+            This is the most important module. Everything you've learned across
+            all three levels comes together here. Your job isn't to code. Your
+            job is to be the <strong>architect</strong>: design the plan, then
+            hand it to AI to build.
+          </p>
+
+          <div class="analogy amber">
+            <strong>Think of building a house.</strong><br />
+            The architect doesn't lay bricks. They draw blueprints, choose
+            materials, plan the plumbing, and decide where the doors go. Then
+            the builder (AI) follows the blueprint. A good blueprint = a good
+            house. A vague "just build me something" = a mess.
+          </div>
+
+          <h3>The project brief template</h3>
+          <p>
+            Before asking AI to build anything, write a brief. Here's the
+            template:
+          </p>
+
+          <div class="code-block">
+            <span class="comment">## PROJECT BRIEF</span>
+
+            <span class="cmd">What it does:</span>
+            <span class="str"
+              >[One sentence. "A weather dashboard that shows forecasts for
+              Australian cities."]</span
+            >
+
+            <span class="cmd">Who uses it:</span>
+            <span class="str"
+              >[Target user. "Me, personally" or "Students in my course" or
+              "Customers buying fish"]</span
+            >
+
+            <span class="cmd">Core features (ranked by priority):</span>
+            <span class="str"
+              >1. [Must have] Search for a city and see the 5-day forecast 2.
+              [Must have] Save favourite cities 3. [Nice to have] Dark mode 4.
+              [Nice to have] Weather alerts</span
+            >
+
+            <span class="cmd">Tech choices:</span>
+            <span class="str"
+              >- Frontend: Next.js (deploy on Vercel) - Database: Supabase (for
+              saved cities) - API: OpenWeather API - Auth: Supabase Auth (if
+              user accounts needed)</span
+            >
+
+            <span class="cmd">What I already have:</span>
+            <span class="str"
+              >- OpenWeather API key - Supabase project URL - Vercel
+              account</span
+            >
+          </div>
+
+          <h3>The build sequence</h3>
+          <p>Don't ask AI to build everything at once. Break it into phases:</p>
+
+          <div class="steps">
+            <div class="step">
+              <p>
+                <strong>Phase 1: Skeleton.</strong> "Set up a Next.js project
+                with a homepage that has a search bar. No API calls yet, just
+                the layout." Deploy this first to make sure hosting works.
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                <strong>Phase 2: Core feature.</strong> "Connect the search bar
+                to the OpenWeather API. Show temperature and condition for the
+                searched city." Test this thoroughly.
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                <strong>Phase 3: Data persistence.</strong> "Connect to
+                Supabase. Let users save favourite cities. Store them in a
+                'favourites' table." Test saving and loading.
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                <strong>Phase 4: Auth (if needed).</strong> "Add Supabase Auth
+                so each user has their own saved cities." Test sign up, login,
+                logout.
+              </p>
+            </div>
+            <div class="step">
+              <p>
+                <strong>Phase 5: Polish.</strong> "Add dark mode, improve the
+                design, add loading states and error handling."
+              </p>
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>Why phases matter</h3>
+            <p>
+              If you ask AI to build everything at once and something breaks,
+              you won't know what caused it. Building in phases means each step
+              works before you add the next. It's like building a house:
+              foundation first, then walls, then roof, then paint. Never paint
+              before the roof is on.
+            </p>
+          </div>
+
+          <h3>How to communicate with AI effectively</h3>
+          <table class="compare">
+            <tr>
+              <th>Bad prompt</th>
+              <th>Good prompt</th>
+            </tr>
+            <tr>
+              <td>"Build me a weather app"</td>
+              <td>
+                "Build a Next.js weather app using OpenWeather API. Show 5-day
+                forecast. Use Tailwind CSS for styling. Deploy on Vercel."
+              </td>
+            </tr>
+            <tr>
+              <td>"It's broken, fix it"</td>
+              <td>
+                "I'm getting this error [paste error]. Here's the file it
+                mentions [paste code]. I think it's related to the API call."
+              </td>
+            </tr>
+            <tr>
+              <td>"Add a database"</td>
+              <td>
+                "Add Supabase. Create a 'cities' table with columns: id,
+                user_id, city_name, created_at. Here's my Supabase URL from
+                .env."
+              </td>
+            </tr>
+            <tr>
+              <td>"Make it look better"</td>
+              <td>
+                "Use a clean design with rounded cards, a blue colour scheme,
+                and responsive layout for mobile. Reference this site for style:
+                [URL]."
+              </td>
+            </tr>
+          </table>
+
+          <div class="key-concept">
+            <h3>The golden rule of working with AI</h3>
+            <p>
+              Be specific about <strong>what</strong> you want and
+              <strong>which tools</strong> to use. Let AI decide
+              <strong>how</strong> to implement it. You are the architect. AI is
+              the builder. The more detailed your blueprint, the better the
+              result.
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- FINAL CHECKLIST -->
+        <!-- ============================================ -->
+        <div class="module" id="l3-final" data-title="Level 3 checklist" data-accent="#feb52b" style="--module-accent:#feb52b">
+          <div class="module-header">
+            <div class="module-num">&#10003;</div>
+            <h2>Level 3 checklist</h2>
+          </div>
+
+          <div class="checklist">
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Explain what Docker does and when you'd need it</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Understand that Vercel/Netlify auto-deploy is already
+                CI/CD</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Know why you should never build auth from scratch</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Explain serverless functions and why they're useful for hiding
+                API keys</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Understand what webhooks are and when they're used</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Run <code>npm audit</code> on a project</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Write a project brief using the template</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Break a project into phases before asking AI to build it</span
+              >
+            </div>
+            <div class="check-item">
+              <input type="checkbox" /><span
+                >Give AI a specific, detailed prompt instead of a vague
+                one</span
+              >
+            </div>
+          </div>
+
+          <div class="key-concept">
+            <h3>You've completed the whole series</h3>
+            <p>
+              <strong>Level 1</strong> gave you the map: files, terminal, Git,
+              deploy, APIs, domains, env vars.<br />
+              <strong>Level 2</strong> gave you the tools: npm, Node.js,
+              frameworks, databases, DevTools, errors, docs.<br />
+              <strong>Level 3</strong> gave you the architecture: Docker, CI/CD,
+              auth, serverless, webhooks, security, and project planning.<br /><br />
+              You now have everything you need to be the architect. Tell AI what
+              to build, use the tools to deploy it, and debug issues when they
+              arise. Go build something.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer">
+          <p>
+            Code Ecosystem Guide - Level 3: The Architecture<br />Built for
+            Adhi. You are the architect now.
+          </p>
+          <p class="version" style="margin-top: 0.5rem">
+            code-ecosystem-guide-L3-v1
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// ─── Course data ─────────────────────────────────────────────────────────
+const COURSE = {
+  levels: [
+    {
+      id: 1, label: "Level 1", subtitle: "The Foundation",
+      desc: "Build your mental map of how websites and apps are made. No code required.",
+      modules_count: 8,
+      modules: [
+        { id:"l1-m1", num:1, title:"The big picture", time:10 },
+        { id:"l1-m2", num:2, title:"The three files behind every website", time:15 },
+        { id:"l1-m3", num:3, title:"The terminal: texting your computer", time:15 },
+        { id:"l1-m4", num:4, title:"Git and GitHub: save points for your project", time:20 },
+        { id:"l1-m5", num:5, title:"Publishing your site to the world", time:15 },
+        { id:"l1-m6", num:6, title:"APIs: how apps talk to each other", time:20 },
+        { id:"l1-m7", num:7, title:"Domains and DNS: the phone book of the internet", time:10 },
+        { id:"l1-m8", num:8, title:"Environment variables: your secret vault", time:10 },
+        { id:"l1-final", num:"✓", title:"Your complete checklist", time:0 },
+      ]
+    },
+    {
+      id: 2, label: "Level 2", subtitle: "Going Deeper",
+      desc: "Understand the tools and concepts developers use daily to build real projects.",
+      modules_count: 7,
+      modules: [
+        { id:"l2-m1", num:1, title:"Package managers: the app store for code", time:20 },
+        { id:"l2-m2", num:2, title:"Node.js: JavaScript outside the browser", time:15 },
+        { id:"l2-m3", num:3, title:"Frameworks: pre-built kitchens", time:20 },
+        { id:"l2-m4", num:4, title:"Databases: where your data lives", time:20 },
+        { id:"l2-m5", num:5, title:"Browser DevTools: your X-ray glasses", time:15 },
+        { id:"l2-m6", num:6, title:"Reading error messages: they're trying to help you", time:20 },
+        { id:"l2-m7", num:7, title:"Reading documentation: the instruction manual", time:15 },
+        { id:"l2-final", num:"✓", title:"Level 2 checklist", time:0 },
+      ]
+    },
+    {
+      id: 3, label: "Level 3", subtitle: "Professional Stack",
+      desc: "The tools and patterns that power real production applications.",
+      modules_count: 7,
+      modules: [
+        { id:"l3-m1", num:1, title:"Docker: shipping your entire kitchen", time:20 },
+        { id:"l3-m2", num:2, title:"CI/CD: the automatic assembly line", time:20 },
+        { id:"l3-m3", num:3, title:"Authentication: who's at the door?", time:20 },
+        { id:"l3-m4", num:4, title:"Serverless functions: backend without a server", time:20 },
+        { id:"l3-m5", num:5, title:"Webhooks: call me when it happens", time:15 },
+        { id:"l3-m6", num:6, title:"Security basics: locking the doors", time:15 },
+        { id:"l3-m7", num:7, title:"Planning projects: the architect's blueprint", time:20 },
+        { id:"l3-final", num:"✓", title:"Level 3 checklist", time:0 },
+      ]
+    }
+  ]
+};
+
+// ─── Theme ───────────────────────────────────────────────────────────────
+const root = document.documentElement;
+const saved = localStorage.getItem('theme');
+const sys = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+root.setAttribute('data-theme', saved || sys);
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+});
+
+// ─── Scroll progress bar ─────────────────────────────────────────────────
+const fill = document.getElementById('progress-fill');
+function updateProgress() {
+  const el = document.documentElement;
+  const pct = el.scrollTop / (el.scrollHeight - el.clientHeight);
+  fill.style.width = Math.min(pct * 100, 100) + '%';
+}
+document.addEventListener('scroll', updateProgress, { passive: true });
+
+// ─── Sidebar: render module list ─────────────────────────────────────────
+let activeLevel = 1;
+
+function renderModuleList(levelId) {
+  const lvl = COURSE.levels.find(l => l.id === levelId);
+  const list = document.getElementById('module-list');
+  list.innerHTML = lvl.modules.map(m => `
+    <a class="mod-item" data-target="${m.id}" href="#${m.id}">
+      <span class="mod-item-num">${m.num}</span>
+      <span class="mod-item-text">${m.title}</span>
+      ${m.time > 0 ? `<span class="mod-item-time">${m.time}m</span>` : ''}
+    </a>
+  `).join('');
+
+  // Click → smooth scroll + close mobile sidebar
+  list.querySelectorAll('.mod-item').forEach(item => {
+    item.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.getElementById(item.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      closeSidebar();
+    });
+  });
+}
+
+// ─── Level switching ─────────────────────────────────────────────────────
+document.querySelectorAll('.level-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const lvl = parseInt(tab.dataset.level);
+    activeLevel = lvl;
+    // Update tab styles
+    document.querySelectorAll('.level-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    // Show/hide level sections
+    document.querySelectorAll('.level-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('level-' + lvl).classList.add('active');
+    // Rebuild module list
+    renderModuleList(lvl);
+    // Scroll to top of content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Save preference
+    localStorage.setItem('lastLevel', lvl);
+  });
+});
+
+// ─── IntersectionObserver: highlight active module in sidebar ────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.mod-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.target === entry.target.id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+function observeModules(levelId) {
+  const lvl = COURSE.levels.find(l => l.id === levelId);
+  lvl.modules.forEach(m => {
+    const el = document.getElementById(m.id);
+    if (el) observer.observe(el);
+  });
+}
+
+// ─── Mobile sidebar ───────────────────────────────────────────────────────
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebar-overlay');
+
+function openSidebar() {
+  sidebar.classList.add('open');
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('burger').addEventListener('click', openSidebar);
+overlay.addEventListener('click', closeSidebar);
+
+// ─── Init ─────────────────────────────────────────────────────────────────
+const savedLevel = parseInt(localStorage.getItem('lastLevel')) || 1;
+if (savedLevel !== 1) {
+  activeLevel = savedLevel;
+  document.querySelectorAll('.level-tab').forEach(t => {
+    t.classList.toggle('active', parseInt(t.dataset.level) === savedLevel);
+  });
+  document.querySelectorAll('.level-section').forEach(s => s.classList.remove('active'));
+  const saved_section = document.getElementById('level-' + savedLevel);
+  if (saved_section) saved_section.classList.add('active');
+}
+
+renderModuleList(activeLevel);
+observeModules(activeLevel);
+</script>
+</body>
+</html>
