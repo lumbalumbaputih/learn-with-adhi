@@ -418,7 +418,9 @@ a:hover { text-decoration: underline; }
 /* ═══ MODULE CARD ════════════════════════════════════════════════════════ */
 .module {
   --module-accent: var(--c-primary);
-  margin: 32px 40px;
+  max-width: 820px;
+  margin: 32px auto;
+  width: calc(100% - 64px);
   background: var(--surface);
   border: 1px solid var(--border);
   border-left: 4px solid var(--module-accent);
@@ -474,10 +476,13 @@ a:hover { text-decoration: underline; }
   flex-shrink: 0;
 }
 
-.module > p {
+.module > p,
+.module > h3,
+.module > ul,
+.module > ol {
   color: var(--text);
   margin-bottom: 20px;
-  max-width: 72ch;
+  max-width: 68ch;
   line-height: 1.75;
 }
 
@@ -770,7 +775,9 @@ code, .cmd {
   border: 1px solid color-mix(in srgb, var(--c-primary) 20%, transparent);
   border-radius: var(--radius-lg);
   padding: 32px 36px;
-  margin: 32px 40px;
+  max-width: 820px;
+  margin: 32px auto;
+  width: calc(100% - 64px);
   text-align: center;
 }
 .next-level h3 {
@@ -872,6 +879,51 @@ code, .cmd {
   }
   .sidebar-overlay.show { display: block; }
 }
+
+/* ── Orphaned pre-module content (intro sections from original file) ── */
+.level-section > .container,
+.level-section > .hero,
+.level-section > .hero.container {
+  max-width: 820px;
+  width: calc(100% - 64px);
+  margin: 0 auto;
+  padding: 28px 40px 0;
+}
+.level-section > .hero h1,
+.level-section > .hero.container h1 {
+  font-family: "DM Serif Display", serif;
+  font-size: var(--fs-display);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.level-section > .hero p,
+.level-section > .hero.container p {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  max-width: 56ch;
+  margin-bottom: 16px;
+}
+/* Hide raw orphaned links between level hero and first module */
+.level-section > a {
+  display: none;
+}
+
+
+/* ── SVG diagram dark-mode overrides ────────────────────────────────── */
+[data-theme="dark"] svg .rest-text,
+[data-theme="dark"] svg .rest-sub,
+[data-theme="dark"] svg .rest-label,
+[data-theme="dark"] svg .rest-emoji { fill: var(--text-dim) !important; }
+
+[data-theme="dark"] svg .rest-arrow { stroke: var(--text-muted) !important; }
+
+/* Generic SVG text in dark mode — catches other diagram labels */
+[data-theme="dark"] svg text:not([fill^="#0"]):not([fill^="#1"]):not([fill^="#2"]):not([fill^="#3"]):not([fill^="#f"]):not([fill^="#e"]):not([fill="white"]):not([fill="#fff"]) {
+  fill: var(--text-dim);
+}
+[data-theme="dark"] svg .flow-label { fill: var(--text-muted) !important; }
+
 </style>
 </head>
 <body>
@@ -4706,7 +4758,7 @@ const observer = new IntersectionObserver(entries => {
       });
     }
   });
-}, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+}, { rootMargin: '-8% 0px -45% 0px', threshold: 0 });
 
 function observeModules(levelId) {
   const lvl = COURSE.levels.find(l => l.id === levelId);
