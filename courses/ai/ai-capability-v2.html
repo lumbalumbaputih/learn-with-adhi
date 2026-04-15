@@ -562,6 +562,62 @@ table.compare th {
 }
 table.compare tr:last-child td { border-bottom: none; }
 
+/* Checkpoint component */
+.checkpoint {
+  background: color-mix(in srgb, var(--c-primary) 6%, var(--surface2));
+  border: 1px solid color-mix(in srgb, var(--c-primary) 22%, transparent);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin: 28px 0 0;
+}
+.checkpoint-title {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--c-primary-dim);
+  margin-bottom: 14px;
+  font-family: "DM Sans", sans-serif;
+}
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+  transition: opacity .15s;
+}
+.check-row:last-child { border-bottom: none; }
+.check-row:hover { opacity: .85; }
+.check-box {
+  width: 18px; height: 18px;
+  border: 2px solid color-mix(in srgb, var(--c-primary) 50%, transparent);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem;
+  color: transparent;
+  transition: all .18s;
+  margin-top: 1px;
+}
+.check-row.checked .check-box {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  color: #fff;
+}
+.check-label {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+  line-height: 1.5;
+  transition: color .18s;
+}
+.check-row.checked .check-label {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
 @media (max-width: 768px) {
   .content { margin-left: 0; padding-top: 52px; }
   .level-hero { padding: 32px 20px 28px; }
@@ -646,6 +702,22 @@ table.compare tr:last-child td { border-bottom: none; }
           <h3>Why coding/math improved faster than writing</h3>
           <p>To train a model to be better, you need a way to score its outputs. For code: did it pass the tests? Yes or no. For math: is the answer correct? Yes or no. This clear signal lets you run <strong>reinforcement learning</strong> — the model tries thousands of approaches and learns from what worked.</p>
           <p>For writing, advice, or creative tasks? There's no unit test. "Good writing" is subjective. So training is slower, messier, and relies on human ratings (expensive, inconsistent). This is why the coding/reasoning capabilities have <em>sprinted ahead</em> while chat quality has improved more gradually.</p>
+
+          <div class="checkpoint">
+            <div class="checkpoint-title">Checkpoint 1</div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I can explain the 3-tier model to someone</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I understand why code/math AI improved faster than writing AI</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I know where I currently sit (Tier 2, moving to 3)</span>
+            </div>
+          </div>
         </div>
 
         <!-- MODULE 2 -->
@@ -677,6 +749,22 @@ table.compare tr:last-child td { border-bottom: none; }
 
           <h3>The "vibe coding" phenomenon</h3>
           <p>A new term for 2025: non-programmers describing what they want in plain English and having AI write working software. It's real, but with caveats — the AI can build the thing, but you still need to understand what you're asking for, evaluate what it built, and debug when things go sideways.</p>
+
+          <div class="checkpoint">
+            <div class="checkpoint-title">Checkpoint 2</div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I can explain RL in one sentence to a non-technical friend</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I understand chat vs. agent and can give an example</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I know what context windows and tool use mean practically</span>
+            </div>
+          </div>
         </div>
 
         <!-- MODULE 3 -->
@@ -692,11 +780,28 @@ table.compare tr:last-child td { border-bottom: none; }
           <p><strong>OpenAI (GPT / Codex)</strong> — GPT-4o for consumer, o-series (o1, o3, o4-mini) for reasoning, Codex for agentic coding. Codex is their answer to Claude Code — it runs in a sandbox and tackles full repos. Largest user base by far.</p>
           <p><strong>Google DeepMind (Gemini)</strong> — Gemini 2.5 Pro/Flash. Huge context windows (up to 1M tokens). Strong multimodal (text + image + video + code). Integrated with Google ecosystem.</p>
           <p><strong>Meta (Llama)</strong> — Open-weight models. Llama 4 series. Free to download and run locally. Important for the ecosystem but not the frontier of agentic capability.</p>
+          <p><strong>Others:</strong> Mistral (EU-based), xAI (Grok), various Chinese labs (DeepSeek, Qwen). DeepSeek's R1 model was a notable 2025 moment — competitive reasoning at low cost.</p>
 
           <h3>The tools that matter for you</h3>
           <p><strong>Already using well:</strong> Claude Pro (Tier 2 chat) for writing, research, document work. Keep doing this.</p>
           <p><strong>Next step:</strong> Claude Code — a command-line tool where Claude operates your computer to build/edit projects. This is what you need for Toko Curah and future web projects.</p>
           <p><strong>Be aware of:</strong> Cursor (AI-native code editor), GitHub Copilot (inline code suggestions), Windsurf. These are useful for daily coding but Claude Code is the most powerful agentic option right now for your use case.</p>
+
+          <div class="checkpoint">
+            <div class="checkpoint-title">Checkpoint 3</div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I can name the 4 major labs and their main models</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I know the difference between chat models and agentic tools</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I've identified which tool is my logical next step (Claude Code)</span>
+            </div>
+          </div>
         </div>
 
         <!-- MODULE 4 -->
@@ -734,6 +839,22 @@ table.compare tr:last-child td { border-bottom: none; }
           <div class="key-concept">
             <h3>Reality check</h3>
             <p>Even frontier models hallucinate citations. The difference: frontier models do it less and can use tools (web search) to self-verify. But you should <em>always</em> verify academic citations regardless of which model generated them.</p>
+          </div>
+
+          <div class="checkpoint">
+            <div class="checkpoint-title">Checkpoint 4</div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I've compared output quality across at least 2 tiers</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I've tried at least one advanced prompting technique</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I've verified AI-generated citations and found at least one hallucination</span>
+            </div>
           </div>
         </div>
 
@@ -785,6 +906,22 @@ table.compare tr:last-child td { border-bottom: none; }
           <p><strong>Approval prompts:</strong> Claude Code asks before running commands or editing files. Read what it's proposing. This is how you learn what's happening.</p>
           <p><strong>Over-engineering:</strong> Sometimes it'll build something more complex than needed. Don't be afraid to say "simpler, just do X."</p>
           <p><strong>Context:</strong> The more of your project it can see, the better. Working in the project root directory helps.</p>
+
+          <div class="checkpoint">
+            <div class="checkpoint-title">Checkpoint 5</div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">Claude Code is installed and runs in my terminal</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I've completed at least one task with Claude Code on a real project</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I understand the approval flow and feel comfortable reviewing changes</span>
+            </div>
+          </div>
         </div>
 
         <!-- MODULE 6 -->
@@ -819,6 +956,26 @@ table.compare tr:last-child td { border-bottom: none; }
           <p><strong>AGI timelines.</strong> People claiming AGI in 2–3 years are speculating. Progress is real but unpredictable. Plan for steady capability gains, not a sudden singularity.</p>
           <p><strong>"AI will replace X."</strong> It's replacing tasks, not jobs (for now). The people getting replaced are those who refuse to learn the tools, not those in specific professions.</p>
           <p><strong>Benchmarks.</strong> When a lab says "our model scores 95% on [benchmark]" — benchmarks are gamed, saturated, and often don't reflect real-world usefulness. Judge by trying the tool yourself.</p>
+
+          <div class="checkpoint">
+            <div class="checkpoint-title">Checkpoint 6</div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I've bookmarked at least one AI blog for weekly reading</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I can explain the AI capability gap to a friend in 2 minutes</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I've used at least one Tier 3 agentic tool on a real project</span>
+            </div>
+            <div class="check-row" onclick="toggleCheck(this)">
+              <div class="check-box">✓</div>
+              <span class="check-label">I have a plan to stay current without drowning in information</span>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -847,6 +1004,10 @@ const COURSE = {
 };
 
 let currentLevel = 1;
+
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
 
 function renderModuleList() {
   const list = document.getElementById('module-list');
