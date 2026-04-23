@@ -18,11 +18,14 @@ learn-with-adhi/
     ├── coding/
     │   ├── code-ecosystem-guide-complete-v1.html — How to Code for Non-Coders (live)
     │   └── code-for-non-coders-v2.html           — v2 in progress
-    └── ielts/
-        ├── ielts-bahasa-hacking.html      — Bahasa Hacking IELTS (live)
-        ├── ielts-bahasa-hacking-v2.html   — v2 in progress
-        ├── ielts-band7-precision.html     — Band 7 Precision Lab (live)
-        └── ielts-band7-precision-v2.html  — v2 in progress
+    ├── ielts/
+    │   ├── ielts-bahasa-hacking.html      — Bahasa Hacking IELTS (live)
+    │   ├── ielts-bahasa-hacking-v2.html   — v2 in progress
+    │   ├── ielts-band7-precision.html     — Band 7 Precision Lab (live)
+    │   └── ielts-band7-precision-v2.html  — v2 in progress
+    └── tools/
+        ├── 2026-04-23-feifelusiac-safe-area-calculator-v4.html — Safe Area Calculator (live)
+        └── 2026-04-23-feifelusiac-safe-area-calculator-v3.html — previous version
 ```
 
 ## How to run locally
@@ -42,3 +45,7 @@ Then open `http://localhost:8000` in your browser.
 - Theme preference on the home page is saved in browser `localStorage`.
 - No build step is required.
 - v2 course files are works in progress and not yet linked from the home page.
+
+## About me
+
+I’m **Adhi Katili**, and this project is my open learning hub for practical, beginner-friendly courses and tools.
