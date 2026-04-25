@@ -7,6 +7,8 @@ A simple static learning hub built with HTML, CSS, and vanilla JavaScript.
 ```
 learn-with-adhi/
 ├── index.html                        — Home page (course listing, dark/light theme)
+├── design-system/
+│   └── tca-design-system.html        — Uploaded visual identity/design reference
 ├── README.md
 └── courses/
     ├── ai/
@@ -42,3 +44,4 @@ Then open `http://localhost:8000` in your browser.
 - Theme preference on the home page is saved in browser `localStorage`.
 - No build step is required.
 - v2 course files are works in progress and not yet linked from the home page.
+- Use the uploaded design system as the default reference when building new pages/components, except the logo (do not reuse the logo).
