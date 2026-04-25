@@ -7,6 +7,7 @@ A simple static learning hub built with HTML, CSS, and vanilla JavaScript.
 ```
 learn-with-adhi/
 ├── index.html                        — Home page (course listing, dark/light theme)
+├── index-v2.html                     — Home page v2 using design-system styling
 ├── design-system/
 │   └── tca-design-system.html        — Uploaded visual identity/design reference
 ├── README.md
