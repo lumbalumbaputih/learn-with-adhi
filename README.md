@@ -2,13 +2,32 @@
 
 A simple static learning hub built with HTML, CSS, and vanilla JavaScript.
 
+## Design System
+
+The **Adhi Design System** is the primary visual identity reference for this project.
+
+| Token | Value | Usage |
+|---|---|---|
+| `--orange` | `#FF5C39` | Primary accent, CTAs |
+| `--yellow` | `#FFC234` | Hero highlights, badges |
+| `--green` | `#1F9D55` | Success, nature topics |
+| `--magenta` | `#E84BA0` | Creative accents |
+| `--ink` | `#1A1614` | Text, borders, shadows |
+| `--cream` | `#FBF4E6` | Page background (light) |
+| `--font-display` | DM Serif Display | Headings |
+| `--font-body` | Nunito | Body text |
+| `--font-mono` | JetBrains Mono | Labels, chips, code |
+
+The full interactive reference is at [`design-system/adhi-design-system.html`](design-system/adhi-design-system.html).
+
 ## Structure
 
 ```
 learn-with-adhi/
 ├── index.html                        — Home page (course listing, dark/light theme)
 ├── design-system/
-│   └── tca-design-system.html        — Uploaded visual identity/design reference
+│   ├── adhi-design-system.html       — Adhi Design System reference (primary)
+│   └── tca-design-system.html        — Previous design reference (archived)
 ├── README.md
 └── courses/
     ├── ai/
@@ -47,4 +66,4 @@ Then open `http://localhost:8000` in your browser.
 - Theme preference on the home page is saved in browser `localStorage`.
 - No build step is required.
 - v2 course files are works in progress and not yet linked from the home page.
-- Use the uploaded design system as the default reference when building new pages/components, except the logo (do not reuse the logo).
+- Use [`design-system/adhi-design-system.html`](design-system/adhi-design-system.html) as the default reference when building new pages/components, except the logo (do not reuse the logo).
