@@ -10,6 +10,10 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1&display=swap"
+    />
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
@@ -131,6 +135,23 @@
         background: var(--bg);
         color: var(--text);
         line-height: 1.6;
+      }
+
+      .ds-icon {
+        font-family: "Material Symbols Rounded";
+        font-weight: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        direction: ltr;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 500,
+          "GRAD" 0,
+          "opsz" 24;
       }
 
       /* =============================================
@@ -425,7 +446,7 @@
         background: var(--card-accent-tint, var(--yellow-tint));
         display: grid;
         place-items: center;
-        font-size: 1.6rem;
+        font-size: 1.85rem;
         flex-shrink: 0;
       }
 
@@ -608,7 +629,7 @@
           </div>
         </div>
         <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
-          <span id="themeIcon">☀️</span>
+          <span id="themeIcon" class="ds-icon" aria-hidden="true">light_mode</span>
           <span>Theme</span>
         </button>
       </header>
@@ -653,7 +674,7 @@
         {
           title: "How to Code for Non-Coders",
           desc: "Learn coding fundamentals in a practical, beginner-first way.",
-          icon: "💻",
+          icon: "code",
           level: "Beginner",
           tags: ["Coding", "V1"],
           link: "courses/coding/code-ecosystem-guide-complete-v1.html",
@@ -663,7 +684,7 @@
         {
           title: "Carbon Accounting",
           desc: "Understand emissions measurement and reporting with practical examples.",
-          icon: "🌍",
+          icon: "public",
           level: "Beginner",
           tags: ["Climate", "V1"],
           link: "courses/carbon-accounting/carbon-accounting-course.html",
@@ -673,7 +694,7 @@
         {
           title: "Bridging the AI Gap",
           desc: "Build AI literacy and useful workflows for real-world work.",
-          icon: "🤖",
+          icon: "smart_toy",
           level: "Beginner",
           tags: ["AI", "V1"],
           link: "courses/ai/ai-capability-course.html",
@@ -683,7 +704,7 @@
         {
           title: "Bahasa Hacking — IELTS",
           desc: "IELTS strategy for Indonesian speakers with practical language habits.",
-          icon: "🇮🇩",
+          icon: "translate",
           level: "Beginner",
           tags: ["IELTS", "V1"],
           link: "courses/ielts/ielts-bahasa-hacking.html",
@@ -693,7 +714,7 @@
         {
           title: "Band 7 Precision Lab",
           desc: "Target Band 7 with structured drills and scoring clarity.",
-          icon: "🎯",
+          icon: "track_changes",
           level: "Intermediate",
           tags: ["IELTS", "V1"],
           link: "courses/ielts/ielts-band7-precision.html",
@@ -703,7 +724,7 @@
         {
           title: "Feifelusiac Safe Area Calculator",
           desc: "Quickly calculate safe area values with practical controls.",
-          icon: "🧮",
+          icon: "calculate",
           level: "Tool",
           tags: ["Tools", "Live"],
           link: "courses/tools/feifelusiac-safe-area-calculator-v4.html",
@@ -713,7 +734,7 @@
         {
           title: "Rayyan & Raya's Train Adventure",
           desc: "A fun interactive train game for kids — tap, dodge, and keep the adventure going!",
-          icon: "🚂",
+          icon: "directions_railway",
           level: "Game",
           tags: ["Kids", "Live"],
           link: "courses/tools/train_adventure.html",
@@ -723,7 +744,7 @@
         {
           title: "Rayyan & Raya's Train Adventure v2",
           desc: "The upgraded train adventure — new features, more fun, same great ride for kids!",
-          icon: "🚃",
+          icon: "tram",
           level: "Game",
           tags: ["Kids", "V2", "Live"],
           link: "courses/tools/train_adventure_v2.html",
@@ -741,7 +762,7 @@
         card.style.setProperty("--card-accent-tint", item.accentTint);
         card.innerHTML = `
           <div class="card-top">
-            <div class="card-icon">${item.icon}</div>
+            <div class="card-icon"><span class="ds-icon" aria-hidden="true">${item.icon}</span></div>
             <span class="level-badge">${item.level}</span>
           </div>
           <h4>${item.title}</h4>
@@ -761,7 +782,7 @@
       const icon = document.getElementById("themeIcon");
 
       function updateIcon() {
-        icon.textContent = root.getAttribute("data-theme") === "dark" ? "☀️" : "🌙";
+        icon.textContent = root.getAttribute("data-theme") === "dark" ? "light_mode" : "dark_mode";
       }
 
       updateIcon();
