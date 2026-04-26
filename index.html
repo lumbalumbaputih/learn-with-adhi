@@ -27,13 +27,13 @@
     </script>
     <style>
       :root {
-        --sky: #18b4d9;
-        --red: #d94331;
-        --green: #1e9b4d;
-        --yellow: #f3c23a;
-        --magenta: #d6398a;
-        --navy: #1a3a7a;
-        --cream: #fbf4e4;
+        /* Adhi Design System palette */
+        --orange: #ff5c39;
+        --yellow: #ffc234;
+        --green: #1f9d55;
+        --magenta: #e84ba0;
+        --ink: #1a1614;
+        --cream: #fbf4e6;
 
         --font-display: "DM Serif Display", Georgia, serif;
         --font-body: "Nunito", system-ui, sans-serif;
@@ -48,26 +48,26 @@
       [data-theme="light"] {
         --bg: var(--cream);
         --surface: #fff;
-        --surface-soft: #f9f1df;
-        --text: #1f2430;
-        --text-dim: #5e6475;
-        --border: rgba(26, 58, 122, 0.18);
-        --shadow: 0 8px 28px rgba(26, 58, 122, 0.14);
+        --surface-soft: #f5ede0;
+        --text: var(--ink);
+        --text-dim: #6b5c55;
+        --border: rgba(26, 22, 20, 0.18);
+        --shadow: 0 8px 28px rgba(26, 22, 20, 0.14);
         --hero: var(--yellow);
-        --hero-text: var(--navy);
-        --chip-bg: rgba(26, 58, 122, 0.08);
+        --hero-text: var(--ink);
+        --chip-bg: rgba(26, 22, 20, 0.08);
       }
 
       [data-theme="dark"] {
-        --bg: #0b0f1a;
-        --surface: #141a2b;
-        --surface-soft: #1b2238;
-        --text: #f5f7ff;
-        --text-dim: #b8bfd6;
+        --bg: #110e0d;
+        --surface: #1c1715;
+        --surface-soft: #241f1d;
+        --text: #f5f0ed;
+        --text-dim: #b8a9a4;
         --border: rgba(255, 255, 255, 0.18);
         --shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-        --hero: #1f3f82;
-        --hero-text: #f3c23a;
+        --hero: #2a1a0d;
+        --hero-text: var(--yellow);
         --chip-bg: rgba(255, 255, 255, 0.09);
       }
 
@@ -108,7 +108,7 @@
         width: 42px;
         height: 42px;
         border-radius: 12px;
-        background: var(--navy);
+        background: var(--ink);
         color: var(--yellow);
         display: grid;
         place-items: center;
@@ -146,9 +146,9 @@
       .hero {
         background: var(--hero);
         color: var(--hero-text);
-        border: 2px solid var(--navy);
+        border: 2px solid var(--ink);
         border-radius: var(--r-lg);
-        box-shadow: 8px 8px 0 var(--navy);
+        box-shadow: 8px 8px 0 var(--ink);
         padding: clamp(24px, 5vw, 52px);
         margin-bottom: 28px;
       }
@@ -162,7 +162,7 @@
         text-transform: uppercase;
         letter-spacing: 0.09em;
         background: rgba(255, 255, 255, 0.24);
-        border: 1px solid rgba(26, 58, 122, 0.4);
+        border: 1px solid rgba(26, 22, 20, 0.4);
         border-radius: var(--r-pill);
         padding: 5px 10px;
         margin-bottom: 14px;
@@ -201,7 +201,7 @@
         font-family: var(--font-mono);
         font-size: 0.72rem;
         text-decoration: none;
-        color: var(--navy);
+        color: var(--ink);
       }
 
       [data-theme="dark"] .section-title a {
@@ -230,7 +230,7 @@
 
       .card:hover {
         transform: translateY(-3px);
-        border-color: var(--card-accent, var(--navy));
+        border-color: var(--card-accent, var(--ink));
       }
 
       .card-top {
@@ -305,7 +305,7 @@
 
       .cta {
         font-weight: 700;
-        color: var(--card-accent, var(--navy));
+        color: var(--card-accent, var(--ink));
       }
 
       .footer {
@@ -322,7 +322,7 @@
         }
 
         .hero {
-          box-shadow: 6px 6px 0 var(--navy);
+          box-shadow: 6px 6px 0 var(--ink);
           margin-bottom: 22px;
         }
       }
@@ -352,7 +352,7 @@
       <section>
         <div class="section-title">
           <h3>Courses & Tools</h3>
-          <a href="design-system/tca-design-system.html">View design system →</a>
+          <a href="design-system/adhi-design-system.html">View design system →</a>
         </div>
         <main id="courseGrid" class="grid" aria-live="polite"></main>
       </section>
@@ -369,7 +369,7 @@
           level: "Beginner",
           tags: ["Coding", "V1"],
           link: "courses/coding/code-ecosystem-guide-complete-v1.html",
-          accent: "#1a3a7a"
+          accent: "#1a1614"
         },
         {
           title: "Carbon Accounting",
@@ -378,7 +378,7 @@
           level: "Beginner",
           tags: ["Climate", "V1"],
           link: "courses/carbon-accounting/carbon-accounting-course.html",
-          accent: "#1e9b4d"
+          accent: "#1f9d55"
         },
         {
           title: "Bridging the AI Gap",
@@ -387,7 +387,7 @@
           level: "Beginner",
           tags: ["AI", "V1"],
           link: "courses/ai/ai-capability-course.html",
-          accent: "#18b4d9"
+          accent: "#ff5c39"
         },
         {
           title: "Bahasa Hacking — IELTS",
@@ -396,7 +396,7 @@
           level: "Beginner",
           tags: ["IELTS", "V1"],
           link: "courses/ielts/ielts-bahasa-hacking.html",
-          accent: "#f3c23a"
+          accent: "#ffc234"
         },
         {
           title: "Band 7 Precision Lab",
@@ -405,7 +405,7 @@
           level: "Intermediate",
           tags: ["IELTS", "V1"],
           link: "courses/ielts/ielts-band7-precision.html",
-          accent: "#d6398a"
+          accent: "#e84ba0"
         },
         {
           title: "Feifelusiac Safe Area Calculator",
@@ -414,7 +414,7 @@
           level: "Tool",
           tags: ["Tools", "Live"],
           link: "courses/tools/feifelusiac-safe-area-calculator-v4.html",
-          accent: "#d94331"
+          accent: "#ff5c39"
         },
         {
           title: "Rayyan & Raya's Train Adventure",
@@ -423,7 +423,7 @@
           level: "Game",
           tags: ["Kids", "Live"],
           link: "courses/tools/train_adventure.html",
-          accent: "#c0392b"
+          accent: "#1f9d55"
         },
         {
           title: "Rayyan & Raya's Train Adventure v2",
@@ -432,7 +432,7 @@
           level: "Game",
           tags: ["Kids", "V2", "Live"],
           link: "courses/tools/train_adventure_v2.html",
-          accent: "#c0392b"
+          accent: "#e84ba0"
         }
       ];
 
