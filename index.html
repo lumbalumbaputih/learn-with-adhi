@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Learn with Adhi</title>
+    <link rel="icon" type="image/svg+xml" href="design-system/assets/logo-tca.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -177,45 +178,12 @@
       .brand {
         display: flex;
         align-items: center;
-        gap: var(--s-3);
       }
 
-      /* Brand mark — pill-navy style from DS */
-      .brand-mark {
-        width: 48px;
+      .brand-logo {
         height: 48px;
-        border-radius: var(--r-md);
-        background: var(--ink);
-        color: var(--yellow);
-        display: grid;
-        place-items: center;
-        font-family: var(--font-mono);
-        font-weight: 700;
-        font-size: 0.78rem;
-        letter-spacing: 0.04em;
-        flex-shrink: 0;
-        border: 2px solid var(--ink);
-      }
-
-      [data-theme="dark"] .brand-mark {
-        border-color: var(--border);
-      }
-
-      .brand-text h1 {
-        font-family: var(--font-display);
-        font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-        letter-spacing: -0.02em;
-        line-height: 1.1;
-        color: var(--text);
-      }
-
-      .brand-text p {
-        font-family: var(--font-mono);
-        font-size: var(--fs-micro);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--text-dim);
-        margin-top: 2px;
+        width: auto;
+        display: block;
       }
 
       /* Theme toggle — btn-ghost style from DS */
@@ -612,7 +580,7 @@
       }
 
       @media (max-width: 420px) {
-        .brand-text p { display: none; }
+        .brand-logo { height: 40px; }
       }
     </style>
   </head>
@@ -622,11 +590,7 @@
       <!-- NAV -->
       <header class="nav">
         <div class="brand">
-          <div class="brand-mark" aria-hidden="true">LW</div>
-          <div class="brand-text">
-            <h1>Learn with Adhi</h1>
-            <p>Course Hub · v2</p>
-          </div>
+          <img class="brand-logo" src="design-system/assets/logo-tca.svg" alt="TCA logo" />
         </div>
         <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
           <span id="themeIcon" class="ds-icon" aria-hidden="true">light_mode</span>
