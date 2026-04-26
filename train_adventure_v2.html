@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>🚂 Rayyan & Raya's Train Adventure v2!</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #0d0d1e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+
+#title {
+  color: #FFD700;
+  font-size: clamp(14px, 2.8vw, 26px);
+  text-shadow: 3px 3px 0 #b71c1c;
+  margin-bottom: 6px;
+}
+
+#game-wrapper { position: relative; width: min(900px, 98vw); }
+
+canvas {
+  display: block;
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 0 40px rgba(255,215,0,0.3);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* ── SPLIT CONTROLLER ── */
+#ctrl {
+  display: flex;
+  width: min(900px, 98vw);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.panel {
+  flex: 1;
+  border-radius: 16px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#raya-panel {
+  background: linear-gradient(135deg, #880E4F 0%, #C2185B 100%);
+  border: 3px solid #F48FB1;
+}
+
+#rayyan-panel {
+  background: linear-gradient(135deg, #0D47A1 0%, #1565C0 100%);
+  border: 3px solid #64B5F6;
+  justify-content: flex-end;
+}
+
+.panel-name {
+  font-size: clamp(13px, 1.8vw, 18px);
+  font-weight: bold;
+  color: #fff;
+  white-space: nowrap;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Honk */
+#honk-btn {
+  width: clamp(72px, 9vw, 100px);
+  height: clamp(72px, 9vw, 100px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FFE566, #FFB300);
+  border: 4px solid #E65100;
+  font-size: clamp(11px, 1.4vw, 14px);
+  font-weight: bold;
+  color: #1a1a2e;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #BF360C, 0 0 16px rgba(255,179,0,0.5);
+  transition: transform .08s, box-shadow .08s;
+  font-family: 'Comic Sans MS', cursive;
+  outline: none;
+  touch-action: manipulation;
+  flex-shrink: 0;
+}
+#honk-btn:active { transform: translateY(4px) scale(.94); box-shadow: 0 1px 0 #BF360C; }
+
+/* Toot meter + mega */
+#toot-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  flex-shrink: 0;
+}
+#toot-bar-bg {
+  width: clamp(80px, 10vw, 120px);
+  height: 16px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.3);
+  overflow: hidden;
+}
+#toot-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #FFD700, #FF6B35);
+  border-radius: 8px;
+  transition: width .15s;
+}
+#toot-label {
+  font-size: 11px;
+  color: #FFD0E8;
+  white-space: nowrap;
+}
+#mega-btn {
+  padding: 7px 12px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #FF6B35, #E53935);
+  border: 3px solid #B71C1C;
+  color: white;
+  font-size: clamp(11px, 1.3vw, 14px);
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #7f0000;
+  transition: transform .08s, box-shadow .08s, opacity .2s;
+  font-family: 'Comic Sans MS', cursive;
+  outline: none;
+  touch-action: manipulation;
+  opacity: .45;
+  pointer-events: none;
+}
+#mega-btn.ready {
+  opacity: 1;
+  pointer-events: all;
+  animation: pulse 0.9s infinite alternate;
+}
+#mega-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #7f0000; }
+@keyframes pulse { from { box-shadow: 0 4px 0 #7f0000; } to { box-shadow: 0 4px 16px #FFD700; } }
+
+/* Switch track */
+#switch-btn {
+  width: clamp(78px, 10vw, 110px);
+  height: clamp(72px, 9vw, 100px);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #26C6DA, #00838F);
+  border: 3px solid #00BCD4;
+  color: white;
+  font-size: clamp(11px, 1.4vw, 14px);
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #004D40;
+  transition: transform .08s, box-shadow .08s;
+  font-family: 'Comic Sans MS', cursive;
+  outline: none;
+  touch-action: manipulation;
+  flex-shrink: 0;
+}
+#switch-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #004D40; }
+
+/* Speed row */
+#speed-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.spd-btn {
+  width: clamp(60px, 7.5vw, 85px);
+  height: clamp(34px, 4.5vw, 46px);
+  border-radius: 10px;
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  transition: transform .08s, box-shadow .08s;
+  font-family: 'Comic Sans MS', cursive;
+  touch-action: manipulation;
+}
+#slow-btn {
+  background: linear-gradient(180deg, #78909C, #546E7A);
+  border: 3px solid #37474F;
+  box-shadow: 0 4px 0 #263238;
+}
+#slow-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #263238; }
+#fast-btn {
+  background: linear-gradient(180deg, #EF5350, #C62828);
+  border: 3px solid #B71C1C;
+  box-shadow: 0 4px 0 #7f0000;
+}
+#fast-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #7f0000; }
+
+/* keyboard hint */
+#kb-hint {
+  font-size: 10px;
+  color: #90CAF9;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+kbd {
+  background: rgba(0,0,0,0.4);
+  color: #90CAF9;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 9px;
+  border: 1px solid #5C8DBE;
+}
+</style>
+</head>
+<body>
+
+<div id="title">🚂 Rayyan &amp; Raya's Train Adventure! v2 🚂</div>
+
+<div id="game-wrapper">
+  <canvas id="c" width="900" height="490"></canvas>
+</div>
+
+<!-- ── SPLIT CONTROLLER ── -->
+<div id="ctrl">
+
+  <!-- RAYA LEFT -->
+  <div id="raya-panel" class="panel">
+    <div class="panel-name">Raya ❤️</div>
+    <button id="honk-btn">📯<br>HONK!</button>
+    <div id="toot-col">
+      <span id="toot-label">Toot Power!</span>
+      <div id="toot-bar-bg"><div id="toot-bar-fill"></div></div>
+      <button id="mega-btn">🌟 MEGA TOOT!</button>
+    </div>
+  </div>
+
+  <!-- RAYYAN RIGHT -->
+  <div id="rayyan-panel" class="panel">
+    <div id="kb-hint">
+      <kbd>↑</kbd> switch track<br>
+      <kbd>← →</kbd> speed<br>
+      <kbd>Space</kbd> honk
+    </div>
+    <div id="speed-col">
+      <button class="spd-btn" id="fast-btn">🚀</button>
+      <button class="spd-btn" id="slow-btn">🐢</button>
+    </div>
+    <button id="switch-btn">↕ Switch<br>Track!</button>
+    <div class="panel-name">Rayyan 🚂</div>
+  </div>
+
+</div>
+
+<script>
+'use strict';
+// ═══════════════════════════════════════════════════════════
+//  AUDIO
+// ═══════════════════════════════════════════════════════════
+let _ac = null;
+const AC = () => { if (!_ac) _ac = new (window.AudioContext||window.webkitAudioContext)(); return _ac; };
+
+function tone(freq, type, vol, attack, decay, start=0) {
+  const ac=AC(), o=ac.createOscillator(), g=ac.createGain();
+  o.connect(g); g.connect(ac.destination);
+  o.type=type; o.frequency.value=freq;
+  const t=ac.currentTime+start;
+  g.gain.setValueAtTime(0,t);
+  g.gain.linearRampToValueAtTime(vol,t+attack);
+  g.gain.exponentialRampToValueAtTime(0.001,t+attack+decay);
+  o.start(t); o.stop(t+attack+decay+0.01);
+}
+
+function playHorn()  { [180,270,360].forEach((f,i)=>tone(f,'sawtooth',.12,.05,.5,i*.02)); }
+function playChug()  { tone(75,'square',.06,.005,.09); }
+function playHit()   { [200,150,100].forEach((f,i)=>tone(f,'sawtooth',.18,.01,.12,i*.04)); }
+function playMega()  { [440,550,660,880].forEach((f,i)=>tone(f,'sine',.2,.02,.6,i*.05)); }
+function playUp()    { [440,550,660].forEach((f,i)=>tone(f,'sine',.15,.02,.2,i*.05)); }
+
+function playCollect(pts) {
+  const b = pts>=3 ? 660 : pts>=2 ? 550 : 440;
+  tone(b,'sine',.18,.015,.18);
+  if(pts>=2) tone(b*1.25,'sine',.12,.02,.18,.07);
+  if(pts>=3) tone(b*1.5,'sine',.1,.03,.18,.12);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CONSTANTS
+// ═══════════════════════════════════════════════════════════
+const cv = document.getElementById('c');
+const cx = cv.getContext('2d');
+const W = cv.width, H = cv.height;
+
+const GROUND_Y = H - 38;          // grass line
+const LANE_A   = H - 148;         // upper track wheel-center Y
+const LANE_B   = H - 78;          // lower track wheel-center Y
+const ITEM_OFF = -40;             // item center above track Y
+
+const ZONES = [
+  { name:'🌲 Forest',    skyA:'#87CEEB', skyB:'#C8EBFB', hillA:'#388E3C', hillB:'#2E7D32', gA:'#5D8A00', gB:'#8B6914',
+    items:[{e:'🐄',p:1},{e:'🐑',p:1},{e:'🦊',p:2},{e:'🐇',p:1},{e:'🌻',p:1},{e:'🍄',p:2}], sc:'trees' },
+  { name:'🏔️ Mountains', skyA:'#90A4AE', skyB:'#ECEFF1', hillA:'#78909C', hillB:'#546E7A', gA:'#90A4AE', gB:'#607D8B',
+    items:[{e:'🦅',p:2},{e:'🐧',p:1},{e:'⛄',p:2},{e:'🦙',p:2},{e:'🐻',p:3},{e:'❄️',p:1}], sc:'mountains' },
+  { name:'🏙️ City',      skyA:'#5C6BC0', skyB:'#9FA8DA', hillA:'#455A64', hillB:'#37474F', gA:'#546E7A', gB:'#263238',
+    items:[{e:'🚕',p:1},{e:'🚌',p:1},{e:'🤖',p:3},{e:'🎈',p:2},{e:'🏀',p:1},{e:'🎁',p:2}], sc:'city' },
+  { name:'🏜️ Desert',    skyA:'#FFA726', skyB:'#FFF9C4', hillA:'#F4A460', hillB:'#D2691E', gA:'#F4A460', gB:'#8B4513',
+    items:[{e:'🐪',p:2},{e:'🦎',p:1},{e:'🌵',p:1},{e:'🦂',p:3},{e:'⭐',p:1},{e:'💎',p:3}], sc:'desert' },
+  { name:'🌙 Night Sky',  skyA:'#1A237E', skyB:'#283593', hillA:'#37474F', hillB:'#263238', gA:'#455A64', gB:'#1C313A',
+    items:[{e:'🌟',p:2},{e:'🦉',p:2},{e:'🦇',p:1},{e:'🌙',p:3},{e:'✨',p:1},{e:'🪐',p:3}], sc:'night' },
+];
+
+const POWERUPS = [
+  { e:'🧲', type:'magnet',  p:0 },
+  { e:'🛡️', type:'shield',  p:0 },
+  { e:'⚡',  type:'speed',  p:0 },
+];
+
+const OBSTACLE_EMOJIS = ['🪨','⚠️','🌊'];
+
+// ═══════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════
+let HS = 0;
+try { HS = parseInt(localStorage.getItem('trainHS_v2')||'0'); } catch(e){}
+
+const TR = { lane:'B', y: LANE_B, iframes:0 };   // train
+const G = {
+  f:0, offset:0, speed:2.5,
+  score:0, highScore:HS, lives:3,
+  over:false, started:false, paused:false,
+
+  combo:0, comboT:0, mult:1,
+  toot:0, megaReady:false,
+  magnet:0, shield:false, speedBoost:0,
+
+  zoneIdx:0, nextZone:18, zoneFlash:0,
+  honkFlash:0, shakeX:0, shakeY:0,
+
+  collectibles:[], obstacles:[], particles:[], floaties:[], clouds:[], steam:[],
+  wheelAngle:0, trainBob:0, chugT:0, spawnT:0, obstT:0,
+};
+
+// seed clouds
+for(let i=0;i<6;i++) G.clouds.push({x:Math.random()*W, y:20+Math.random()*80, r:28+Math.random()*32, s:.25+Math.random()*.4});
+
+// ═══════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════
+function rr(x,y,w,h,r) {
+  cx.beginPath();
+  cx.moveTo(x+r,y); cx.lineTo(x+w-r,y); cx.quadraticCurveTo(x+w,y,x+w,y+r);
+  cx.lineTo(x+w,y+h-r); cx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  cx.lineTo(x+r,y+h); cx.quadraticCurveTo(x,y+h,x,y+h-r);
+  cx.lineTo(x,y+r); cx.quadraticCurveTo(x,y,x+r,y); cx.closePath();
+}
+
+const lerp = (a,b,t) => a+(b-a)*t;
+const clamp = (v,lo,hi) => Math.max(lo,Math.min(hi,v));
+
+// ═══════════════════════════════════════════════════════════
+//  DRAW: BACKGROUND
+// ═══════════════════════════════════════════════════════════
+function drawBG(z) {
+  const sky = cx.createLinearGradient(0,0,0,GROUND_Y);
+  sky.addColorStop(0,z.skyA); sky.addColorStop(1,z.skyB);
+  cx.fillStyle=sky; cx.fillRect(0,0,W,GROUND_Y);
+
+  if(z.sc==='night') {
+    for(let s=0;s<55;s++) {
+      const sx=((s*137+G.offset*.04)%W+W)%W, sy=8+(s*71)%(GROUND_Y-25);
+      const bl=.45+.55*Math.sin(G.f*.05+s);
+      cx.fillStyle=`rgba(255,255,200,${bl*.9})`;
+      cx.beginPath(); cx.arc(sx,sy,1.3,0,Math.PI*2); cx.fill();
+    }
+  }
+  hill(z.hillB,.22,GROUND_Y-55,90,310,1.3);
+  hill(z.hillA,.5, GROUND_Y-30,55,210,.8);
+}
+
+function hill(color,par,baseY,amp,wave,ph) {
+  cx.fillStyle=color; cx.beginPath(); cx.moveTo(0,baseY);
+  for(let x=0;x<=W+wave;x+=5) {
+    cx.lineTo(x, baseY - amp*Math.sin((x+G.offset*par+ph*100)/wave*Math.PI*2));
+  }
+  cx.lineTo(W,H); cx.lineTo(0,H); cx.closePath(); cx.fill();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DRAW: SCENERY
+// ═══════════════════════════════════════════════════════════
+function drawScenery(z) {
+  const sp=150, n=Math.ceil(W/sp)+3, off=(G.offset*.65)%sp;
+  for(let i=0;i<n;i++) {
+    const sx=i*sp-off, sd=(i*7)|0;
+    if(z.sc==='trees')     drawTree(sx,sd);
+    else if(z.sc==='mountains') drawMtnPeak(sx,sd);
+    else if(z.sc==='city')  drawBuilding(sx,sd);
+    else if(z.sc==='desert') drawCactus(sx,sd);
+    else                    drawNightTree(sx,sd);
+  }
+}
+
+function drawTree(x,s) {
+  const h=52+(s%3)*14;
+  cx.fillStyle='#795548'; cx.fillRect(x-4,GROUND_Y-12,8,12);
+  cx.fillStyle=['#2E7D32','#388E3C','#43A047'][s%3];
+  cx.beginPath(); cx.moveTo(x,GROUND_Y-h); cx.lineTo(x-h*.38,GROUND_Y-10); cx.lineTo(x+h*.38,GROUND_Y-10); cx.closePath(); cx.fill();
+  cx.fillStyle=['#1B5E20','#2E7D32','#388E3C'][s%3];
+  cx.beginPath(); cx.moveTo(x,GROUND_Y-h-12); cx.lineTo(x-h*.26,GROUND_Y-h+10); cx.lineTo(x+h*.26,GROUND_Y-h+10); cx.closePath(); cx.fill();
+}
+function drawMtnPeak(x,s) {
+  const h=65+(s%4)*18;
+  cx.fillStyle='#607D8B'; cx.beginPath(); cx.moveTo(x,GROUND_Y-h); cx.lineTo(x-h*.5,GROUND_Y); cx.lineTo(x+h*.5,GROUND_Y); cx.closePath(); cx.fill();
+  cx.fillStyle='rgba(255,255,255,.85)'; cx.beginPath(); cx.moveTo(x,GROUND_Y-h); cx.lineTo(x-h*.16,GROUND_Y-h+h*.28); cx.lineTo(x+h*.16,GROUND_Y-h+h*.28); cx.closePath(); cx.fill();
+}
+function drawBuilding(x,s) {
+  const w=36+(s%4)*12, h=55+(s%5)*22;
+  cx.fillStyle=`hsl(${(s*37)%360},22%,32%)`; cx.fillRect(x-w/2,GROUND_Y-h,w,h);
+  cx.fillStyle='rgba(255,255,150,.65)';
+  for(let wy=GROUND_Y-h+8;wy<GROUND_Y-10;wy+=16) for(let wx=x-w/2+5;wx<x+w/2-8;wx+=14) if(Math.sin(wx*5+wy*4)>-.2) cx.fillRect(wx,wy,7,8);
+}
+function drawCactus(x,s) {
+  const h=48+(s%3)*12;
+  cx.fillStyle='#66BB6A'; cx.fillRect(x-5,GROUND_Y-h,10,h);
+  cx.fillRect(x-22,GROUND_Y-h*.62,18,7); cx.fillRect(x-22,GROUND_Y-h*.62-14,7,16);
+  if(s%2===0) { cx.fillRect(x+5,GROUND_Y-h*.44,17,7); cx.fillRect(x+15,GROUND_Y-h*.44-11,7,13); }
+}
+function drawNightTree(x,s) {
+  cx.fillStyle='#1A237E'; cx.beginPath(); cx.moveTo(x,GROUND_Y-58-(s%3)*12); cx.lineTo(x-22,GROUND_Y); cx.lineTo(x+22,GROUND_Y); cx.closePath(); cx.fill();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DRAW: GROUND + TRACKS
+// ═══════════════════════════════════════════════════════════
+function drawGround(z) {
+  cx.fillStyle=z.gB; cx.fillRect(0,GROUND_Y,W,H-GROUND_Y);
+  cx.fillStyle=z.gA; cx.fillRect(0,GROUND_Y,W,12);
+}
+
+function drawTracks() {
+  ['A','B'].forEach(id => {
+    const ty = id==='A' ? LANE_A : LANE_B;
+    const isActive = TR.lane===id;
+
+    // Embankment for upper track
+    if(id==='A') {
+      cx.fillStyle='rgba(0,0,0,.25)';
+      cx.fillRect(0, ty-2, W, 14);
+    }
+
+    // Ties
+    const sp=34, n=Math.ceil(W/sp)+2, off=G.offset%sp;
+    cx.fillStyle = isActive ? '#6D4C41' : '#4E342E';
+    for(let i=0;i<n;i++) cx.fillRect(i*sp-off-13, ty-3, 26, 7);
+
+    // Rails
+    cx.strokeStyle = isActive ? '#BDBDBD' : '#757575';
+    cx.lineWidth = isActive ? 4.5 : 3;
+    [ty, ty+13].forEach(ry => { cx.beginPath(); cx.moveTo(0,ry); cx.lineTo(W,ry); cx.stroke(); });
+
+    // Active indicator label
+    if(isActive) {
+      cx.fillStyle='rgba(100,200,255,0.18)';
+      cx.fillRect(0, ty-6, W, 28);
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DRAW: CLOUDS + STEAM
+// ═══════════════════════════════════════════════════════════
+function drawClouds() {
+  G.clouds.forEach(cl => {
+    cx.fillStyle='rgba(255,255,255,.82)';
+    [[0,0,cl.r],[-cl.r*.55,cl.r*.2,cl.r*.7],[cl.r*.55,cl.r*.15,cl.r*.65]].forEach(([dx,dy,r])=>{
+      cx.beginPath(); cx.arc(cl.x+dx,cl.y+dy,r,0,Math.PI*2); cx.fill();
+    });
+  });
+}
+
+function drawSteam() {
+  G.steam.forEach(p=>{
+    cx.globalAlpha=p.a; cx.fillStyle='#fff';
+    cx.beginPath(); cx.arc(p.x,p.y,p.r,0,Math.PI*2); cx.fill();
+  });
+  cx.globalAlpha=1;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DRAW: TRAIN
+// ═══════════════════════════════════════════════════════════
+function drawTrain() {
+  const tx=162, ty=TR.y-38+G.trainBob, wa=G.wheelAngle;
+
+  // Cars
+  const carCols=['#E53935','#7B1FA2','#E65100'];
+  const carLbls=['RAYA ❤️','Car 2','Car 3'];
+  for(let c=0;c<3;c++) {
+    const cx_=tx-95-c*88, cy_=ty+10;
+    cx.fillStyle=carCols[c]; rr(cx_-35,cy_-27,70,34,7); cx.fill();
+    cx.fillStyle='rgba(255,255,255,.18)'; rr(cx_-35,cy_-27,70,9,7); cx.fill();
+    cx.fillStyle='rgba(190,235,255,.85)'; cx.fillRect(cx_-23,cy_-20,16,11); cx.fillRect(cx_+7,cy_-20,16,11);
+    cx.fillStyle='rgba(255,255,255,.65)'; cx.font='bold 7px sans-serif'; cx.textAlign='center';
+    cx.fillText(carLbls[c],cx_,cy_+5); cx.textAlign='left';
+    cx.strokeStyle='#555'; cx.lineWidth=3;
+    cx.beginPath(); cx.moveTo(cx_+35,cy_-5); cx.lineTo(cx_+52,cy_-5); cx.stroke();
+    wheel(cx_-18,cy_+9,11,wa); wheel(cx_+18,cy_+9,11,wa);
+  }
+
+  // Loco body
+  cx.fillStyle=G.speedBoost>0?'#FF6F00':'#1565C0';
+  rr(tx-27,ty-28,52,38,9); cx.fill();
+  // Sheen
+  cx.fillStyle='rgba(255,255,255,.1)'; rr(tx-27,ty-28,52,10,9); cx.fill();
+  // Front nose
+  cx.fillStyle=G.speedBoost>0?'#FFA000':'#1976D2';
+  rr(tx+22,ty-18,52,28,10); cx.fill();
+  // Cab window
+  cx.fillStyle='rgba(190,235,255,.9)'; rr(tx-19,ty-22,29,17,5); cx.fill();
+  cx.strokeStyle='#0D47A1'; cx.lineWidth=1.5; rr(tx-19,ty-22,29,17,5); cx.stroke();
+  // Chimney
+  cx.fillStyle='#212121'; cx.fillRect(tx+43,ty-33,12,16);
+  cx.fillStyle='#37474F'; cx.beginPath(); cx.ellipse(tx+49,ty-34,9,5,0,0,Math.PI*2); cx.fill();
+  // Headlight
+  cx.fillStyle='#FFD700'; cx.beginPath(); cx.arc(tx+72,ty-5,8,0,Math.PI*2); cx.fill();
+  cx.fillStyle='rgba(255,215,0,.22)'; cx.beginPath(); cx.arc(tx+72,ty-5,18,0,Math.PI*2); cx.fill();
+  // Shield aura
+  if(G.shield) {
+    cx.strokeStyle=`rgba(100,255,200,${.5+.5*Math.sin(G.f*.18)})`; cx.lineWidth=4;
+    cx.beginPath(); cx.ellipse(tx+22,ty-8,85,36,0,0,Math.PI*2); cx.stroke();
+  }
+  // Magnet aura
+  if(G.magnet>0) {
+    cx.strokeStyle=`rgba(255,150,255,${.4+.4*Math.sin(G.f*.2)})`; cx.lineWidth=3;
+    cx.beginPath(); cx.ellipse(tx+22,ty-8,130,50,0,0,Math.PI*2); cx.stroke();
+  }
+  // Name
+  cx.fillStyle='#FFD700'; cx.font='bold 9px sans-serif'; cx.textAlign='center';
+  cx.fillText('RAYYAN 🚂',tx-2,ty-7); cx.textAlign='left';
+  // Wheels
+  wheel(tx-12,ty+12,14,wa); wheel(tx+22,ty+12,14,wa); wheel(tx+52,ty+12,12,wa);
+  // Connecting rod
+  cx.strokeStyle='#FF6F00'; cx.lineWidth=4;
+  cx.beginPath();
+  cx.moveTo(tx-12+14*Math.cos(wa),    ty+12+14*Math.sin(wa));
+  cx.lineTo(tx+22+14*Math.cos(wa+2.0),ty+12+14*Math.sin(wa+2.0));
+  cx.stroke();
+  // Invincibility flash
+  if(TR.iframes>0 && Math.floor(G.f/4)%2===0) {
+    cx.fillStyle='rgba(255,50,50,.35)';
+    rr(tx-290,ty-40,380,55,14); cx.fill();
+  }
+}
+
+function wheel(x,y,r,a) {
+  cx.fillStyle='#1A1A1A'; cx.beginPath(); cx.arc(x,y,r,0,Math.PI*2); cx.fill();
+  cx.strokeStyle='#757575'; cx.lineWidth=1.5;
+  for(let i=0;i<6;i++) {
+    const ang=a+i*Math.PI/3;
+    cx.beginPath(); cx.moveTo(x,y); cx.lineTo(x+r*Math.cos(ang),y+r*Math.sin(ang)); cx.stroke();
+  }
+  cx.fillStyle='#FF5722'; cx.beginPath(); cx.arc(x,y,r*.28,0,Math.PI*2); cx.fill();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DRAW: COLLECTIBLES + OBSTACLES
+// ═══════════════════════════════════════════════════════════
+function drawItems() {
+  G.collectibles.forEach(it => {
+    const trackY = it.lane==='A' ? LANE_A : LANE_B;
+    const bob  = Math.sin(G.f*.09+it.phase)*9;
+    const iy   = trackY + ITEM_OFF + bob;
+    const sc   = it.dying ? 1+it.die*.6 : .9+.1*Math.sin(G.f*.11+it.phase);
+    const al   = it.dying ? Math.max(0,1-it.die) : 1;
+
+    cx.save(); cx.globalAlpha=al; cx.translate(it.x,iy); cx.scale(sc,sc);
+    // shadow
+    cx.fillStyle='rgba(0,0,0,.18)'; cx.beginPath(); cx.ellipse(0,34,18,5,0,0,Math.PI*2); cx.fill();
+    // glow for high-value
+    if(it.p>=3) {
+      const g2=cx.createRadialGradient(0,0,0,0,0,it.sz*.9);
+      g2.addColorStop(0,'rgba(255,215,0,.38)'); g2.addColorStop(1,'rgba(255,215,0,0)');
+      cx.fillStyle=g2; cx.beginPath(); cx.arc(0,0,it.sz*.9,0,Math.PI*2); cx.fill();
+    }
+    // powerup ring
+    if(it.pu) {
+      cx.strokeStyle=`hsl(${G.f*3%360},100%,60%)`; cx.lineWidth=3;
+      cx.beginPath(); cx.arc(0,0,it.sz*.75,0,Math.PI*2); cx.stroke();
+    }
+    cx.font=`${it.sz}px serif`; cx.textAlign='center'; cx.textBaseline='middle';
+    cx.fillText(it.e,0,0);
+    // points badge
+    if(!it.pu) {
+      cx.font='bold 12px sans-serif'; cx.textBaseline='alphabetic';
+      cx.strokeStyle='#000'; cx.lineWidth=3;
+      cx.strokeText(`+${it.p}`,-8,-it.sz*.72);
+      cx.fillStyle=it.p>=3?'#FFD700':it.p>=2?'#80FF80':'#fff';
+      cx.fillText(`+${it.p}`,-8,-it.sz*.72);
+    }
+    cx.restore(); cx.globalAlpha=1; cx.textAlign='left'; cx.textBaseline='alphabetic';
+  });
+}
+
+function drawObstacles() {
+  G.obstacles.forEach(ob => {
+    const trackY = ob.lane==='A' ? LANE_A : LANE_B;
+    const iy = trackY + ITEM_OFF + 8;
+    const al = ob.hit ? Math.max(0,1-ob.die) : 1;
+    cx.save(); cx.globalAlpha=al; cx.translate(ob.x,iy);
+    const sc = ob.hit ? 1+ob.die*.8 : 1;
+    cx.scale(sc,sc);
+    // warning glow
+    if(!ob.hit) {
+      const d = clamp((ob.x-200)/200,0,1);
+      cx.fillStyle=`rgba(255,80,80,${(1-d)*.4})`;
+      cx.beginPath(); cx.arc(0,0,32,0,Math.PI*2); cx.fill();
+    }
+    cx.font='38px serif'; cx.textAlign='center'; cx.textBaseline='middle';
+    cx.fillText(ob.e,0,0);
+    cx.restore(); cx.globalAlpha=1; cx.textAlign='left'; cx.textBaseline='alphabetic';
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DRAW: PARTICLES + FLOATIES
+// ═══════════════════════════════════════════════════════════
+function drawParticles() {
+  G.particles.forEach(p=>{ cx.globalAlpha=p.a; cx.fillStyle=p.c; cx.beginPath(); cx.arc(p.x,p.y,p.r,0,Math.PI*2); cx.fill(); });
+  cx.globalAlpha=1;
+}
+
+function drawFloaties() {
+  G.floaties.forEach(f=>{
+    cx.globalAlpha=f.a; cx.font=`bold ${f.sz}px Comic Sans MS,cursive`;
+    cx.strokeStyle='#000'; cx.lineWidth=3; cx.strokeText(f.t,f.x,f.y);
+    cx.fillStyle=f.c; cx.fillText(f.t,f.x,f.y);
+  });
+  cx.globalAlpha=1;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DRAW: HUD
+// ═══════════════════════════════════════════════════════════
+function drawHUD() {
+  const z = ZONES[G.zoneIdx];
+
+  // Score
+  cx.fillStyle='rgba(0,0,0,.55)'; rr(W-165,10,155,44,12); cx.fill();
+  cx.fillStyle='#FFD700'; cx.font='bold 22px Comic Sans MS,cursive'; cx.textAlign='right';
+  cx.fillText(`⭐ ${G.score}`,W-16,40);
+
+  // Zone
+  cx.fillStyle='rgba(0,0,0,.55)'; rr(10,10,195,38,12); cx.fill();
+  cx.fillStyle='#B2FFCE'; cx.font='15px Comic Sans MS,cursive'; cx.textAlign='left';
+  cx.fillText(z.name,20,35);
+
+  // Lives
+  cx.font='22px serif'; cx.textAlign='center';
+  for(let i=0;i<3;i++) cx.fillText(i<G.lives?'❤️':'🖤',W/2-22+i*24,38);
+
+  // Combo
+  if(G.mult>1) {
+    cx.fillStyle='rgba(0,0,0,.55)'; rr(W/2-45,H-32,90,26,10); cx.fill();
+    cx.fillStyle=`hsl(${G.f*4%360},100%,65%)`;
+    cx.font='bold 15px Comic Sans MS,cursive'; cx.textAlign='center';
+    cx.fillText(`${G.mult}x COMBO!`,W/2,H-13);
+  }
+
+  // Track indicator
+  const tix=W/2-16, tiy=50;
+  cx.fillStyle='rgba(0,0,0,.5)'; rr(tix-4,tiy-4,46,38,8); cx.fill();
+  ['A','B'].forEach((id,i)=>{
+    cx.fillStyle = TR.lane===id ? '#64FFDA' : '#444';
+    cx.beginPath(); cx.arc(tix+20,tiy+i*18+5,6,0,Math.PI*2); cx.fill();
+    if(TR.lane===id) { cx.fillStyle='#64FFDA'; cx.font='10px sans-serif'; cx.textAlign='left'; cx.fillText('◀',tix+28,tiy+i*18+9); }
+  });
+  cx.fillStyle='#aaa'; cx.font='9px sans-serif'; cx.textAlign='center'; cx.fillText('Track',tix+20,tiy-2);
+
+  // Active powerup timers
+  let px=10, py=H-12;
+  if(G.magnet>0)     { cx.fillStyle='rgba(0,0,0,.5)'; rr(px,py-18,90,22,8); cx.fill(); cx.fillStyle='#FF80FF'; cx.font='13px sans-serif'; cx.textAlign='left'; cx.fillText(`🧲 ${Math.ceil(G.magnet/60)}s`,px+5,py); px+=96; }
+  if(G.shield)       { cx.fillStyle='rgba(0,0,0,.5)'; rr(px,py-18,80,22,8); cx.fill(); cx.fillStyle='#80FFCF'; cx.font='13px sans-serif'; cx.textAlign='left'; cx.fillText(`🛡️ active`,px+5,py); px+=86; }
+  if(G.speedBoost>0) { cx.fillStyle='rgba(0,0,0,.5)'; rr(px,py-18,80,22,8); cx.fill(); cx.fillStyle='#FFD080'; cx.font='13px sans-serif'; cx.textAlign='left'; cx.fillText(`⚡ ${Math.ceil(G.speedBoost/60)}s`,px+5,py); }
+
+  // Speed dots
+  const sdx=W/2;
+  cx.fillStyle='rgba(0,0,0,.4)'; rr(sdx-58,10,116,28,10); cx.fill();
+  for(let d=1;d<=8;d++) {
+    cx.fillStyle = d<=Math.round(G.speed) ? `hsl(${lerp(120,0,(G.speed-1)/7)},90%,55%)` : 'rgba(255,255,255,.15)';
+    cx.beginPath(); cx.arc(sdx-50+(d-1)*14,24,5,0,Math.PI*2); cx.fill();
+  }
+
+  // HONK flash
+  if(G.honkFlash>0) {
+    cx.globalAlpha=clamp(G.honkFlash/20,0,1);
+    cx.fillStyle='#FFD700'; cx.font=`bold ${52+(1-G.honkFlash/30)*18}px Comic Sans MS,cursive`;
+    cx.textAlign='center'; cx.fillText('📯 TOOT TOOT!',W/2,H/2-50);
+    cx.globalAlpha=1;
+  }
+
+  // Zone flash
+  if(G.zoneFlash>0) {
+    const al=clamp(G.zoneFlash/30,0,1);
+    cx.fillStyle=`rgba(0,0,0,${al*.6})`; cx.fillRect(0,0,W,H);
+    cx.globalAlpha=al;
+    cx.fillStyle='#FFD700'; cx.font='bold 38px Comic Sans MS,cursive'; cx.textAlign='center';
+    cx.fillText(`🎉 ${ZONES[G.zoneIdx].name}!`,W/2,H/2);
+    cx.fillStyle='#fff'; cx.font='20px Comic Sans MS,cursive';
+    cx.fillText('New zone unlocked! 🚂',W/2,H/2+44);
+    cx.globalAlpha=1;
+  }
+
+  cx.textAlign='left';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DRAW: GAME OVER
+// ═══════════════════════════════════════════════════════════
+function drawGameOver() {
+  cx.fillStyle='rgba(0,0,0,.78)'; cx.fillRect(0,0,W,H);
+  cx.textAlign='center';
+  cx.fillStyle='#FF6B6B'; cx.font='bold 52px Comic Sans MS,cursive'; cx.fillText('Game Over! 😢',W/2,H/2-80);
+  cx.fillStyle='#FFD700'; cx.font='bold 32px Comic Sans MS,cursive'; cx.fillText(`Score: ${G.score}`,W/2,H/2-28);
+  if(G.score>=G.highScore && G.score>0) {
+    cx.fillStyle='#FFD700'; cx.font='bold 22px Comic Sans MS,cursive'; cx.fillText('🏆 New High Score!',W/2,H/2+14);
+  } else {
+    cx.fillStyle='#aaa'; cx.font='20px Comic Sans MS,cursive'; cx.fillText(`Best: ${G.highScore}`,W/2,H/2+14);
+  }
+  cx.fillStyle='#80FF80'; cx.font='bold 28px Comic Sans MS,cursive'; cx.fillText('Tap / click anywhere to play again!',W/2,H/2+65);
+  cx.textAlign='left';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SPAWN
+// ═══════════════════════════════════════════════════════════
+function spawnItem() {
+  const z = ZONES[G.zoneIdx];
+  const isPU = Math.random()<.12;
+  const tmpl = isPU ? POWERUPS[Math.floor(Math.random()*POWERUPS.length)] : z.items[Math.floor(Math.random()*z.items.length)];
+  G.collectibles.push({
+    x: W+60, lane: Math.random()<.5?'A':'B',
+    e: tmpl.e, p: tmpl.p||0, sz: isPU?44:tmpl.p>=3?44:36,
+    phase: Math.random()*Math.PI*2,
+    dying:false, die:0, pu:isPU, type:tmpl.type||null,
+  });
+}
+
+function spawnObstacle() {
+  if(G.zoneIdx===0 && G.score<8) return; // grace period at start
+  const ob = {
+    x: W+60,
+    lane: Math.random()<.5?'A':'B',
+    e: OBSTACLE_EMOJIS[Math.floor(Math.random()*OBSTACLE_EMOJIS.length)],
+    hit: false, die: 0,
+  };
+  G.obstacles.push(ob);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  PARTICLES + FLOATIES
+// ═══════════════════════════════════════════════════════════
+function burst(x,y,n,pts) {
+  const cols=['#FFD700','#FF6B6B','#4ECDC4','#A29BFE','#FD79A8','#55EFC4'];
+  for(let i=0;i<n;i++) {
+    const a=i/n*Math.PI*2+Math.random()*.5, sp=2+Math.random()*4+pts;
+    G.particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-2,r:3+Math.random()*3,a:1,c:cols[(i*7)%cols.length]});
+  }
+}
+
+function floatie(x,y,txt,col,sz=22) {
+  G.floaties.push({x:x-10,y,t:txt,vy:-2.2,a:1,c:col,sz});
+}
+
+// ═══════════════════════════════════════════════════════════
+//  COLLECT / HIT
+// ═══════════════════════════════════════════════════════════
+function collectItem(it) {
+  if(it.dying) return;
+  it.dying=true;
+
+  if(it.pu) {
+    // power-up activation
+    if(it.type==='magnet')  { G.magnet=480; floatie(it.x,LANE_A+ITEM_OFF,'🧲 MAGNET!','#FF80FF',20); }
+    if(it.type==='shield')  { G.shield=true; floatie(it.x,LANE_A+ITEM_OFF,'🛡️ SHIELD!','#80FFCF',20); }
+    if(it.type==='speed')   { G.speedBoost=300; G.speed=clamp(G.speed+2,1,8); floatie(it.x,LANE_A+ITEM_OFF,'⚡ SPEED!','#FFD080',20); }
+    burst(it.x, (it.lane==='A'?LANE_A:LANE_B)+ITEM_OFF, 14, 2);
+    playUp();
+    return;
+  }
+
+  // combo
+  G.combo++;
+  G.comboT=90;
+  G.mult = G.combo>=6?3 : G.combo>=3?2 : 1;
+
+  const pts = it.p * G.mult;
+  G.score += pts;
+  burst(it.x,(it.lane==='A'?LANE_A:LANE_B)+ITEM_OFF, 8+pts*3, it.p);
+  floatie(it.x,(it.lane==='A'?LANE_A:LANE_B)+ITEM_OFF-20, `+${pts}`, it.p>=3?'#FFD700':it.p>=2?'#80FF80':'#fff', it.p>=3?28:22);
+  playCollect(it.p);
+
+  // toot meter fill
+  G.toot = Math.min(100, G.toot+8);
+  updateTootUI();
+
+  // zone progression
+  if(G.score>=G.nextZone && G.zoneIdx<ZONES.length-1) {
+    G.zoneIdx++;
+    G.nextZone += 18+G.zoneIdx*10;
+    G.zoneFlash=90;
+  }
+  // difficulty
+  G.speed = clamp(2.5 + G.score*.04, 2.5, 7.5);
+}
+
+function hitObstacle(ob) {
+  if(ob.hit || TR.iframes>0) return;
+  if(G.shield) { G.shield=false; ob.hit=true; burst(ob.x,(ob.lane==='A'?LANE_A:LANE_B)+ITEM_OFF,12,2); floatie(ob.x,LANE_A+ITEM_OFF,'🛡️ BLOCKED!','#80FFCF',20); return; }
+  ob.hit=true;
+  G.lives--;
+  TR.iframes=120;
+  G.shakeX=12; G.shakeY=8;
+  burst(ob.x,(ob.lane==='A'?LANE_A:LANE_B)+ITEM_OFF,20,3);
+  playHit();
+  G.combo=0; G.comboT=0; G.mult=1;
+  floatie(ob.x,(ob.lane==='A'?LANE_A:LANE_B)+ITEM_OFF-20,'💥 OUCH!','#FF6B6B',24);
+  if(G.lives<=0) endGame();
+}
+
+function activateMega() {
+  if(!G.megaReady || G.over) return;
+  G.toot=0; G.megaReady=false;
+  updateTootUI();
+  G.collectibles.forEach(it=>{ if(!it.dying) collectItem(it); });
+  playMega();
+  G.shakeX=8; G.shakeY=8;
+  floatie(W/2-60,H/2,'🌟 MEGA TOOT! 🌟','#FFD700',28);
+  burst(W/2,H/2,40,3);
+}
+
+function endGame() {
+  G.over=true;
+  try { if(G.score>G.highScore) { G.highScore=G.score; localStorage.setItem('trainHS_v2',G.score); } } catch(e){}
+}
+
+function resetGame() {
+  G.f=0; G.offset=0; G.speed=2.5;
+  G.score=0; G.lives=3; G.over=false;
+  G.combo=0; G.comboT=0; G.mult=1;
+  G.toot=0; G.megaReady=false;
+  G.magnet=0; G.shield=false; G.speedBoost=0;
+  G.zoneIdx=0; G.nextZone=18; G.zoneFlash=0; G.honkFlash=0;
+  G.collectibles=[]; G.obstacles=[]; G.particles=[]; G.floaties=[]; G.steam=[];
+  G.wheelAngle=0; G.chugT=0; G.spawnT=0; G.obstT=0;
+  G.shakeX=0; G.shakeY=0;
+  TR.lane='B'; TR.y=LANE_B; TR.iframes=0;
+  updateTootUI();
+}
+
+function updateTootUI() {
+  document.getElementById('toot-bar-fill').style.width=G.toot+'%';
+  const btn=document.getElementById('mega-btn');
+  if(G.toot>=100 && !G.megaReady) { G.megaReady=true; btn.classList.add('ready'); }
+  else if(G.toot<100) { G.megaReady=false; btn.classList.remove('ready'); }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  HIT TEST (tap/click)
+// ═══════════════════════════════════════════════════════════
+function hitTest(mx,my) {
+  G.collectibles.forEach(it => {
+    if(it.dying) return;
+    const ty=(it.lane==='A'?LANE_A:LANE_B)+ITEM_OFF;
+    const bob=Math.sin(G.f*.09+it.phase)*9;
+    const dx=mx-it.x, dy=my-(ty+bob);
+    if(Math.sqrt(dx*dx+dy*dy)<it.sz*.95) collectItem(it);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  UPDATE
+// ═══════════════════════════════════════════════════════════
+function update() {
+  if(G.over) return;
+  G.f++;
+  G.offset += G.speed;
+
+  // Train smooth tween
+  const targetY = TR.lane==='A' ? LANE_A : LANE_B;
+  TR.y += (targetY - TR.y) * .14;
+  TR.y = lerp(TR.y, targetY, .14);
+
+  // Bob & wheels
+  G.wheelAngle += G.speed*.055;
+  G.trainBob = Math.sin(G.f*.14)*1.5;
+
+  // Invincibility frames
+  if(TR.iframes>0) TR.iframes--;
+
+  // Combo timer
+  if(G.comboT>0) { G.comboT--; } else { G.combo=0; G.mult=1; }
+
+  // Power-up timers
+  if(G.magnet>0) { G.magnet--; }
+  if(G.speedBoost>0) { G.speedBoost--; if(G.speedBoost===0) G.speed=clamp(G.speed-2,2.5,8); }
+
+  // Screen shake decay
+  G.shakeX*=.8; G.shakeY*=.8;
+
+  // Steam
+  if(G.f%10===0) G.steam.push({x:211+G.speed*2, y:TR.y-76+G.trainBob, r:7, a:.65, vx:.7+G.speed*.2, vy:-.7});
+  G.steam.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.45;p.a-=.018;});
+  G.steam=G.steam.filter(p=>p.a>0);
+
+  // Clouds
+  G.clouds.forEach(cl=>{cl.x-=cl.s+G.speed*.04; if(cl.x<-cl.r*3){cl.x=W+cl.r*2;cl.y=20+Math.random()*80;}});
+
+  // Chug
+  G.chugT++;
+  const ci=Math.max(7,Math.round(23-G.speed*1.8));
+  if(G.chugT>=ci){G.chugT=0;playChug();}
+
+  // Spawn items
+  G.spawnT++;
+  const si=Math.max(45,105-G.speed*7);
+  if(G.spawnT>=si){G.spawnT=0;spawnItem();}
+
+  // Spawn obstacles
+  G.obstT++;
+  const oi=Math.max(120,280-G.score*3);
+  if(G.obstT>=oi){G.obstT=0;spawnObstacle();}
+
+  // Move items
+  G.collectibles.forEach(it=>{
+    it.x-=G.speed*.85;
+    if(it.dying){ it.die=Math.min(1,it.die+.065); return; }
+    // Magnet: auto-collect both lanes
+    if(G.magnet>0 && !it.pu && it.x>240 && it.x<W) collectItem(it);
+    // Normal auto-collect when train reaches
+    else if(!it.pu && it.x<235 && it.x>95 && it.lane===TR.lane) collectItem(it);
+  });
+  G.collectibles=G.collectibles.filter(it=>it.x>-80&&!(it.dying&&it.die>=1));
+
+  // Move + check obstacles
+  G.obstacles.forEach(ob=>{
+    ob.x-=G.speed*.85;
+    if(ob.hit){ ob.die=Math.min(1,(ob.die||0)+.065); return; }
+    if(ob.x<230 && ob.x>80 && ob.lane===TR.lane) hitObstacle(ob);
+  });
+  G.obstacles=G.obstacles.filter(ob=>ob.x>-80&&!(ob.hit&&(ob.die||0)>=1));
+
+  // Particles
+  G.particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.22;p.a-=.035;p.r*=.97;});
+  G.particles=G.particles.filter(p=>p.a>.02);
+
+  // Floaties
+  G.floaties.forEach(f=>{f.y+=f.vy;f.a-=.022;});
+  G.floaties=G.floaties.filter(f=>f.a>0);
+
+  // Overlay countdowns
+  if(G.honkFlash>0) G.honkFlash--;
+  if(G.zoneFlash>0) G.zoneFlash--;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════════
+function render() {
+  const z=ZONES[G.zoneIdx];
+  cx.save();
+  // Screen shake
+  cx.translate(Math.round(G.shakeX*(Math.random()*2-1)), Math.round(G.shakeY*(Math.random()*2-1)));
+
+  cx.clearRect(-20,-20,W+40,H+40);
+  drawBG(z);
+  drawScenery(z);
+  drawClouds();
+  drawGround(z);
+  drawTracks();
+  drawSteam();
+  drawObstacles();
+  drawItems();
+  drawTrain();
+  drawParticles();
+  drawFloaties();
+  drawHUD();
+  if(G.over) drawGameOver();
+
+  cx.restore();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  LOOP
+// ═══════════════════════════════════════════════════════════
+function loop() { update(); render(); requestAnimationFrame(loop); }
+
+// ═══════════════════════════════════════════════════════════
+//  INPUT
+// ═══════════════════════════════════════════════════════════
+function init() { if(!G.started){G.started=true;try{AC();}catch(e){}} }
+
+function canvasXY(e) {
+  const r=cv.getBoundingClientRect();
+  return [(e.clientX-r.left)*(W/r.width),(e.clientY-r.top)*(H/r.height)];
+}
+
+cv.addEventListener('click',e=>{
+  init();
+  if(G.over){resetGame();return;}
+  const[mx,my]=canvasXY(e); hitTest(mx,my);
+});
+
+cv.addEventListener('touchstart',e=>{
+  e.preventDefault(); init();
+  if(G.over){resetGame();return;}
+  const r=cv.getBoundingClientRect();
+  Array.from(e.changedTouches).forEach(t=>{
+    hitTest((t.clientX-r.left)*(W/r.width),(t.clientY-r.top)*(H/r.height));
+  });
+},{passive:false});
+
+document.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
+document.addEventListener('gesturestart',e=>e.preventDefault());
+
+document.addEventListener('keydown',e=>{
+  init();
+  if(G.over){resetGame();return;}
+  if(e.key==='ArrowRight'||e.key==='d') { G.speed=clamp(G.speed+.8,2.5,7.5); e.preventDefault(); }
+  if(e.key==='ArrowLeft' ||e.key==='a') { G.speed=clamp(G.speed-.8,2.5,7.5); e.preventDefault(); }
+  if(e.key==='ArrowUp'   ||e.key==='w') { doSwitch(); e.preventDefault(); }
+  if(e.key===' ') { doHonk(); e.preventDefault(); }
+});
+
+function doHonk() {
+  init();
+  if(G.over) return;
+  playHorn(); G.honkFlash=45;
+  G.toot=Math.min(100,G.toot+14);
+  updateTootUI();
+}
+
+function doSwitch() {
+  init();
+  if(G.over) return;
+  TR.lane = TR.lane==='B' ? 'A' : 'B';
+}
+
+document.getElementById('honk-btn').addEventListener('click',doHonk);
+document.getElementById('switch-btn').addEventListener('click',doSwitch);
+document.getElementById('mega-btn').addEventListener('click',()=>{ init(); activateMega(); });
+document.getElementById('fast-btn').addEventListener('click',()=>{ init(); G.speed=clamp(G.speed+.8,2.5,7.5); });
+document.getElementById('slow-btn').addEventListener('click',()=>{ init(); G.speed=clamp(G.speed-.8,2.5,7.5); });
+
+// Touch for buttons (prevent double-fire)
+['honk-btn','switch-btn','mega-btn','fast-btn','slow-btn'].forEach(id=>{
+  document.getElementById(id).addEventListener('touchstart',e=>{ e.stopPropagation(); },{passive:true});
+});
+
+// ═══════════════════════════════════════════════════════════
+//  START
+// ═══════════════════════════════════════════════════════════
+for(let i=0;i<3;i++) setTimeout(spawnItem,i*1000);
+loop();
+</script>
+</body>
+</html>
