@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>🚂 Rayyan & Raya's Train Adventure!</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', cursive;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #title {
+    color: #FFD700;
+    font-size: clamp(16px, 3vw, 28px);
+    text-shadow: 3px 3px 0 #c0392b;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  #game-wrapper {
+    position: relative;
+    width: min(900px, 98vw);
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.35);
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  /* ── Controls bar ── */
+  #controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    padding: 0 10px;
+  }
+
+  .ctrl-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ctrl-label {
+    font-size: 13px;
+    color: #ccc;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  /* Honk button */
+  #honk-btn {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #FFE566, #FFB300);
+    border: 4px solid #E65100;
+    font-size: 15px;
+    font-weight: bold;
+    color: #1a1a2e;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #BF360C, 0 0 20px rgba(255,179,0,0.4);
+    transition: transform 0.08s, box-shadow 0.08s;
+    font-family: 'Comic Sans MS', cursive;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  #honk-btn:active {
+    transform: translateY(4px) scale(0.95);
+    box-shadow: 0 2px 0 #BF360C;
+  }
+
+  /* Speed buttons */
+  .spd-btn {
+    width: 88px;
+    height: 76px;
+    border-radius: 16px;
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.08s, box-shadow 0.08s;
+    font-family: 'Comic Sans MS', cursive;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  #slow-btn {
+    background: linear-gradient(180deg, #26C6DA, #00ACC1);
+    border: 3px solid #00838F;
+    box-shadow: 0 5px 0 #005F6B;
+  }
+  #slow-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #005F6B; }
+  #fast-btn {
+    background: linear-gradient(180deg, #EF5350, #E53935);
+    border: 3px solid #B71C1C;
+    box-shadow: 0 5px 0 #7f0000;
+  }
+  #fast-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #7f0000; }
+
+  /* Keyboard hint */
+  #hint {
+    color: #666;
+    font-size: 11px;
+    margin-top: 6px;
+    text-align: center;
+  }
+  kbd {
+    background: #333;
+    color: #ccc;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 10px;
+    border: 1px solid #555;
+  }
+</style>
+</head>
+<body>
+
+<div id="title">🚂 Rayyan &amp; Raya's Train Adventure! 🚂</div>
+
+<div id="game-wrapper">
+  <canvas id="c" width="900" height="430"></canvas>
+</div>
+
+<div id="controls">
+  <div class="ctrl-group">
+    <button class="spd-btn" id="slow-btn">🐢</button>
+    <span class="ctrl-label">Slow down</span>
+  </div>
+
+  <div class="ctrl-group">
+    <button id="honk-btn">📯<br>HONK!</button>
+    <span class="ctrl-label">Raya's button!</span>
+  </div>
+
+  <div class="ctrl-group">
+    <button class="spd-btn" id="fast-btn">🚀</button>
+    <span class="ctrl-label">Speed up!</span>
+  </div>
+</div>
+
+<div id="hint">
+  Rayyan: <kbd>←</kbd><kbd>→</kbd> speed &nbsp;|&nbsp; <kbd>Space</kbd> honk &nbsp;·&nbsp;
+  Raya: click the animals &amp; hit HONK! 🐄🐑🌟
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  AUDIO
+// ═══════════════════════════════════════════════
+let _ctx = null;
+function AC() { if (!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)(); return _ctx; }
+
+function playHorn() {
+  const ac = AC();
+  // Layered horn: low + high
+  [180, 270, 360].forEach((freq, i) => {
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.type = 'sawtooth';
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0, ac.currentTime + i * 0.02);
+    g.gain.linearRampToValueAtTime(0.12, ac.currentTime + i * 0.02 + 0.05);
+    g.gain.linearRampToValueAtTime(0, ac.currentTime + 0.55);
+    o.start(ac.currentTime + i * 0.02);
+    o.stop(ac.currentTime + 0.6);
+  });
+}
+
+function playCollect(points) {
+  const ac = AC();
+  const base = points >= 2 ? 660 : 440;
+  [base, base * 1.25, base * 1.5].forEach((freq, i) => {
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.type = 'sine';
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0, ac.currentTime + i * 0.06);
+    g.gain.linearRampToValueAtTime(0.18, ac.currentTime + i * 0.06 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + i * 0.06 + 0.22);
+    o.start(ac.currentTime + i * 0.06);
+    o.stop(ac.currentTime + 0.35);
+  });
+}
+
+function playChug() {
+  const ac = AC();
+  const o = ac.createOscillator();
+  const g = ac.createGain();
+  o.connect(g); g.connect(ac.destination);
+  o.type = 'square';
+  o.frequency.value = 75;
+  g.gain.setValueAtTime(0.06, ac.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.09);
+  o.start(ac.currentTime);
+  o.stop(ac.currentTime + 0.1);
+}
+
+// ═══════════════════════════════════════════════
+//  CANVAS SETUP
+// ═══════════════════════════════════════════════
+const cv = document.getElementById('c');
+const cx = cv.getContext('2d');
+const W = cv.width, H = cv.height;
+const GROUND_Y = H - 80;
+const TRACK_Y  = GROUND_Y + 8;
+
+// ═══════════════════════════════════════════════
+//  ZONES
+// ═══════════════════════════════════════════════
+const ZONES = [
+  {
+    name: '🌲 Forest',
+    skyA: '#87CEEB', skyB: '#C8EBFB',
+    hillA: '#388E3C', hillB: '#2E7D32',
+    groundA: '#5D8A00', groundB: '#8B6914',
+    items: [
+      { e: '🐄', pts: 1 }, { e: '🐑', pts: 1 }, { e: '🦊', pts: 2 },
+      { e: '🐇', pts: 1 }, { e: '🌻', pts: 1 }, { e: '🍄', pts: 2 },
+    ],
+    scenery: 'trees',
+  },
+  {
+    name: '🏔️ Mountains',
+    skyA: '#90A4AE', skyB: '#ECEFF1',
+    hillA: '#78909C', hillB: '#546E7A',
+    groundA: '#90A4AE', groundB: '#607D8B',
+    items: [
+      { e: '🦅', pts: 2 }, { e: '🐧', pts: 1 }, { e: '⛄', pts: 2 },
+      { e: '🦙', pts: 2 }, { e: '🐻', pts: 3 }, { e: '❄️', pts: 1 },
+    ],
+    scenery: 'mountains',
+  },
+  {
+    name: '🏙️ City',
+    skyA: '#5C6BC0', skyB: '#9FA8DA',
+    hillA: '#455A64', hillB: '#37474F',
+    groundA: '#546E7A', groundB: '#263238',
+    items: [
+      { e: '🚕', pts: 1 }, { e: '🚌', pts: 1 }, { e: '🤖', pts: 3 },
+      { e: '🎈', pts: 2 }, { e: '🏀', pts: 1 }, { e: '🎁', pts: 2 },
+    ],
+    scenery: 'city',
+  },
+  {
+    name: '🏜️ Desert',
+    skyA: '#FFA726', skyB: '#FFF9C4',
+    hillA: '#F4A460', hillB: '#D2691E',
+    groundA: '#F4A460', groundB: '#8B4513',
+    items: [
+      { e: '🐪', pts: 2 }, { e: '🦎', pts: 1 }, { e: '🌵', pts: 1 },
+      { e: '🦂', pts: 3 }, { e: '⭐', pts: 1 }, { e: '💎', pts: 3 },
+    ],
+    scenery: 'desert',
+  },
+  {
+    name: '🌙 Night Sky',
+    skyA: '#1A237E', skyB: '#283593',
+    hillA: '#37474F', hillB: '#263238',
+    groundA: '#455A64', groundB: '#1C313A',
+    items: [
+      { e: '🌟', pts: 2 }, { e: '🦉', pts: 2 }, { e: '🦇', pts: 1 },
+      { e: '🌙', pts: 3 }, { e: '✨', pts: 1 }, { e: '🪐', pts: 3 },
+    ],
+    scenery: 'night',
+  },
+];
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+const G = {
+  frame: 0,
+  speed: 3,
+  offset: 0,
+  score: 0,
+  zoneIdx: 0,
+  nextZone: 15,          // score threshold for next zone
+  collectibles: [],
+  particles: [],
+  clouds: [],
+  steam: [],
+  floaties: [],          // score floaties
+  wheelAngle: 0,
+  trainBob: 0,
+  chugTimer: 0,
+  spawnTimer: 0,
+  honkFlash: 0,          // countdown for honk display
+  zoneFlash: 0,          // countdown for zone transition display
+  started: false,        // audio started
+};
+
+// Seed clouds
+for (let i = 0; i < 6; i++) {
+  G.clouds.push({
+    x: Math.random() * W,
+    y: 20 + Math.random() * 100,
+    r: 28 + Math.random() * 32,
+    spd: 0.25 + Math.random() * 0.4,
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════
+function rr(x, y, w, h, r) {
+  // roundRect polyfill
+  cx.beginPath();
+  cx.moveTo(x + r, y);
+  cx.lineTo(x + w - r, y);
+  cx.quadraticCurveTo(x + w, y, x + w, y + r);
+  cx.lineTo(x + w, y + h - r);
+  cx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  cx.lineTo(x + r, y + h);
+  cx.quadraticCurveTo(x, y + h, x, y + h - r);
+  cx.lineTo(x, y + r);
+  cx.quadraticCurveTo(x, y, x + r, y);
+  cx.closePath();
+}
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+// ═══════════════════════════════════════════════
+//  DRAW: BACKGROUND
+// ═══════════════════════════════════════════════
+function drawBG(z) {
+  const sky = cx.createLinearGradient(0, 0, 0, GROUND_Y);
+  sky.addColorStop(0, z.skyA);
+  sky.addColorStop(1, z.skyB);
+  cx.fillStyle = sky;
+  cx.fillRect(0, 0, W, GROUND_Y);
+
+  // Night stars
+  if (z.scenery === 'night') {
+    for (let s = 0; s < 60; s++) {
+      const sx = ((s * 137 + G.offset * 0.05) % W + W) % W;
+      const sy = 10 + (s * 71) % (GROUND_Y - 30);
+      const blink = 0.5 + 0.5 * Math.sin(G.frame * 0.05 + s);
+      cx.fillStyle = `rgba(255,255,200,${blink * 0.9})`;
+      cx.beginPath();
+      cx.arc(sx, sy, 1.2, 0, Math.PI * 2);
+      cx.fill();
+    }
+  }
+}
+
+function drawHills(z) {
+  // Far hills
+  hill(z.hillB, 0.25, GROUND_Y - 50, 100, 300, 1.2);
+  // Near hills
+  hill(z.hillA, 0.55, GROUND_Y - 30, 60, 220, 0.8);
+}
+
+function hill(color, parallax, baseY, amp, wave, phase) {
+  cx.fillStyle = color;
+  cx.beginPath();
+  cx.moveTo(0, baseY);
+  for (let x = 0; x <= W + wave; x += 5) {
+    const y = baseY - amp * Math.sin((x + G.offset * parallax + phase * 100) / wave * Math.PI * 2);
+    cx.lineTo(x, y);
+  }
+  cx.lineTo(W, H); cx.lineTo(0, H); cx.closePath();
+  cx.fill();
+}
+
+// ═══════════════════════════════════════════════
+//  DRAW: SCENERY
+// ═══════════════════════════════════════════════
+function drawScenery(z) {
+  const spacing = 140;
+  const count = Math.ceil(W / spacing) + 3;
+  const off = (G.offset * 0.7) % spacing;
+
+  for (let i = 0; i < count; i++) {
+    const sx = i * spacing - off;
+    const seed = ((i * 7) | 0);
+    switch (z.scenery) {
+      case 'trees':    drawTree(sx, seed); break;
+      case 'mountains': drawMountainPeak(sx, seed); break;
+      case 'city':     drawBuilding(sx, seed); break;
+      case 'desert':   drawCactus(sx, seed); break;
+      case 'night':    drawNightTree(sx, seed); break;
+    }
+  }
+}
+
+function drawTree(x, seed) {
+  const h = 55 + (seed % 3) * 15;
+  cx.fillStyle = '#795548';
+  cx.fillRect(x - 4, GROUND_Y - 12, 8, 12);
+  cx.fillStyle = ['#2E7D32','#388E3C','#43A047'][seed % 3];
+  cx.beginPath();
+  cx.moveTo(x, GROUND_Y - h);
+  cx.lineTo(x - h * 0.38, GROUND_Y - 10);
+  cx.lineTo(x + h * 0.38, GROUND_Y - 10);
+  cx.closePath(); cx.fill();
+  cx.fillStyle = ['#1B5E20','#2E7D32','#388E3C'][seed % 3];
+  cx.beginPath();
+  cx.moveTo(x, GROUND_Y - h - 14);
+  cx.lineTo(x - h * 0.28, GROUND_Y - h + 10);
+  cx.lineTo(x + h * 0.28, GROUND_Y - h + 10);
+  cx.closePath(); cx.fill();
+}
+
+function drawMountainPeak(x, seed) {
+  const h = 70 + (seed % 4) * 20;
+  cx.fillStyle = '#607D8B';
+  cx.beginPath();
+  cx.moveTo(x, GROUND_Y - h);
+  cx.lineTo(x - h * 0.55, GROUND_Y);
+  cx.lineTo(x + h * 0.55, GROUND_Y);
+  cx.closePath(); cx.fill();
+  // Snow cap
+  cx.fillStyle = 'white';
+  cx.globalAlpha = 0.85;
+  cx.beginPath();
+  cx.moveTo(x, GROUND_Y - h);
+  cx.lineTo(x - h * 0.18, GROUND_Y - h + h * 0.3);
+  cx.lineTo(x + h * 0.18, GROUND_Y - h + h * 0.3);
+  cx.closePath(); cx.fill();
+  cx.globalAlpha = 1;
+}
+
+function drawBuilding(x, seed) {
+  const w = 38 + (seed % 4) * 12;
+  const h = 60 + (seed % 5) * 25;
+  const hue = (seed * 37) % 360;
+  cx.fillStyle = `hsl(${hue}, 25%, 32%)`;
+  cx.fillRect(x - w / 2, GROUND_Y - h, w, h);
+  // Windows
+  cx.fillStyle = `rgba(255,255,160,0.7)`;
+  for (let wy = GROUND_Y - h + 8; wy < GROUND_Y - 10; wy += 16) {
+    for (let wx = x - w / 2 + 6; wx < x + w / 2 - 8; wx += 14) {
+      if (Math.sin(wx * 5.1 + wy * 3.7) > -0.2)
+        cx.fillRect(wx, wy, 7, 8);
+    }
+  }
+}
+
+function drawCactus(x, seed) {
+  const h = 50 + (seed % 3) * 12;
+  cx.fillStyle = '#66BB6A';
+  cx.fillRect(x - 5, GROUND_Y - h, 10, h);
+  // Arms
+  cx.fillRect(x - 22, GROUND_Y - h * 0.65, 18, 7);
+  cx.fillRect(x - 22, GROUND_Y - h * 0.65 - 15, 7, 17);
+  if (seed % 2 === 0) {
+    cx.fillRect(x + 5, GROUND_Y - h * 0.45, 17, 7);
+    cx.fillRect(x + 15, GROUND_Y - h * 0.45 - 12, 7, 14);
+  }
+}
+
+function drawNightTree(x, seed) {
+  const h = 55 + (seed % 3) * 12;
+  cx.fillStyle = '#1A237E';
+  cx.beginPath();
+  cx.moveTo(x, GROUND_Y - h);
+  cx.lineTo(x - 22, GROUND_Y);
+  cx.lineTo(x + 22, GROUND_Y);
+  cx.closePath(); cx.fill();
+}
+
+// ═══════════════════════════════════════════════
+//  DRAW: GROUND + TRACK
+// ═══════════════════════════════════════════════
+function drawGround(z) {
+  cx.fillStyle = z.groundB;
+  cx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+  cx.fillStyle = z.groundA;
+  cx.fillRect(0, GROUND_Y, W, 14);
+}
+
+function drawTrack() {
+  const tieW = 26, tieH = 8, tieSpacing = 34;
+  const count = Math.ceil(W / tieSpacing) + 2;
+  const off = G.offset % tieSpacing;
+
+  // Ties
+  cx.fillStyle = '#4E342E';
+  for (let i = 0; i < count; i++) {
+    cx.fillRect(i * tieSpacing - off - tieW / 2, TRACK_Y - 4, tieW, tieH);
+  }
+  // Rails
+  cx.strokeStyle = '#9E9E9E';
+  cx.lineWidth = 4;
+  [TRACK_Y, TRACK_Y + 14].forEach(ry => {
+    cx.beginPath(); cx.moveTo(0, ry); cx.lineTo(W, ry); cx.stroke();
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  DRAW: CLOUDS
+// ═══════════════════════════════════════════════
+function drawClouds() {
+  G.clouds.forEach(cl => {
+    cx.fillStyle = 'rgba(255,255,255,0.82)';
+    const puffs = [
+      [0, 0, cl.r],
+      [-cl.r * 0.55, cl.r * 0.2, cl.r * 0.7],
+      [cl.r * 0.55, cl.r * 0.15, cl.r * 0.65],
+    ];
+    puffs.forEach(([dx, dy, r]) => {
+      cx.beginPath();
+      cx.arc(cl.x + dx, cl.y + dy, r, 0, Math.PI * 2);
+      cx.fill();
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  DRAW: STEAM
+// ═══════════════════════════════════════════════
+function drawSteam() {
+  G.steam.forEach(p => {
+    cx.globalAlpha = p.a;
+    cx.fillStyle = '#fff';
+    cx.beginPath();
+    cx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    cx.fill();
+  });
+  cx.globalAlpha = 1;
+}
+
+// ═══════════════════════════════════════════════
+//  DRAW: TRAIN
+// ═══════════════════════════════════════════════
+function drawTrain() {
+  const tx = 170;
+  const ty = TRACK_Y - 42 + G.trainBob;
+  const wa = G.wheelAngle;
+
+  // ── Cars (behind loco) ──
+  const carCols = ['#E53935','#FB8C00','#7B1FA2'];
+  const carNames = ['RAYA ❤️', 'CAR 2', 'CAR 3'];
+  for (let c = 0; c < 3; c++) {
+    const cx_ = tx - 95 - c * 90;
+    const cy_ = ty + 8;
+
+    // Body
+    cx.fillStyle = carCols[c];
+    rr(cx_ - 36, cy_ - 28, 72, 35, 7);
+    cx.fill();
+    // Roof stripe
+    cx.fillStyle = 'rgba(255,255,255,0.2)';
+    rr(cx_ - 36, cy_ - 28, 72, 9, 7);
+    cx.fill();
+    // Windows
+    cx.fillStyle = 'rgba(190,235,255,0.85)';
+    cx.fillRect(cx_ - 24, cy_ - 20, 16, 12);
+    cx.fillRect(cx_ + 8,  cy_ - 20, 16, 12);
+    // Car label
+    cx.fillStyle = 'rgba(255,255,255,0.7)';
+    cx.font = 'bold 8px sans-serif';
+    cx.textAlign = 'center';
+    cx.fillText(carNames[c], cx_, cy_ + 4);
+    cx.textAlign = 'left';
+    // Coupling bar
+    cx.strokeStyle = '#555'; cx.lineWidth = 3;
+    cx.beginPath(); cx.moveTo(cx_ + 36, cy_ - 6); cx.lineTo(cx_ + 54, cy_ - 6); cx.stroke();
+    // Wheels
+    wheel(cx_ - 18, cy_ + 9, 11, wa);
+    wheel(cx_ + 18, cy_ + 9, 11, wa);
+  }
+
+  // ── Locomotive ──
+  // Boiler
+  cx.fillStyle = '#1565C0';
+  rr(tx - 28, ty - 28, 52, 38, 9);
+  cx.fill();
+  // Front nose
+  cx.fillStyle = '#1976D2';
+  rr(tx + 22, ty - 18, 52, 28, 10);
+  cx.fill();
+  // Boiler band
+  cx.fillStyle = 'rgba(255,255,255,0.15)';
+  cx.fillRect(tx + 22, ty - 18, 52, 8);
+  // Cab window
+  cx.fillStyle = 'rgba(190,235,255,0.9)';
+  rr(tx - 20, ty - 22, 30, 17, 5);
+  cx.fill();
+  cx.strokeStyle = '#0D47A1'; cx.lineWidth = 1.5;
+  rr(tx - 20, ty - 22, 30, 17, 5); cx.stroke();
+  // Chimney
+  cx.fillStyle = '#212121';
+  cx.fillRect(tx + 42, ty - 32, 12, 15);
+  cx.fillStyle = '#37474F';
+  cx.beginPath();
+  cx.ellipse(tx + 48, ty - 33, 9, 5, 0, 0, Math.PI * 2);
+  cx.fill();
+  // Headlight
+  cx.fillStyle = '#FFD700';
+  cx.beginPath(); cx.arc(tx + 72, ty - 5, 8, 0, Math.PI * 2); cx.fill();
+  cx.fillStyle = 'rgba(255,215,0,0.25)';
+  cx.beginPath(); cx.arc(tx + 72, ty - 5, 18, 0, Math.PI * 2); cx.fill();
+  // Name badge
+  cx.fillStyle = '#FFD700';
+  cx.font = 'bold 10px sans-serif';
+  cx.textAlign = 'center';
+  cx.fillText('RAYYAN 🚂', tx - 5, ty - 5);
+  cx.textAlign = 'left';
+  // Wheels + connecting rod
+  wheel(tx - 12, ty + 12, 14, wa);
+  wheel(tx + 22, ty + 12, 14, wa);
+  wheel(tx + 52, ty + 12, 12, wa);
+  // Rod
+  cx.strokeStyle = '#FF6F00'; cx.lineWidth = 4;
+  cx.beginPath();
+  cx.moveTo(tx - 12 + 14 * Math.cos(wa),      ty + 12 + 14 * Math.sin(wa));
+  cx.lineTo(tx + 22 + 14 * Math.cos(wa + 2.0), ty + 12 + 14 * Math.sin(wa + 2.0));
+  cx.stroke();
+}
+
+function wheel(x, y, r, angle) {
+  cx.fillStyle = '#1A1A1A';
+  cx.beginPath(); cx.arc(x, y, r, 0, Math.PI * 2); cx.fill();
+  cx.strokeStyle = '#757575'; cx.lineWidth = 1.5;
+  for (let i = 0; i < 6; i++) {
+    const a = angle + i * Math.PI / 3;
+    cx.beginPath();
+    cx.moveTo(x, y);
+    cx.lineTo(x + r * Math.cos(a), y + r * Math.sin(a));
+    cx.stroke();
+  }
+  cx.fillStyle = '#FF5722';
+  cx.beginPath(); cx.arc(x, y, r * 0.28, 0, Math.PI * 2); cx.fill();
+}
+
+// ═══════════════════════════════════════════════
+//  DRAW: COLLECTIBLES
+// ═══════════════════════════════════════════════
+function drawCollectibles() {
+  G.collectibles.forEach(item => {
+    const bob  = Math.sin(G.frame * 0.09 + item.phase) * 9;
+    const iy   = TRACK_Y - 38 + bob;
+    const sc   = item.dying ? (1 + item.die * 0.6) : (0.9 + 0.1 * Math.sin(G.frame * 0.12 + item.phase));
+    const alpha = item.dying ? Math.max(0, 1 - item.die) : 1;
+
+    cx.save();
+    cx.globalAlpha = alpha;
+    cx.translate(item.x, iy);
+    cx.scale(sc, sc);
+
+    // Shadow
+    cx.fillStyle = 'rgba(0,0,0,0.18)';
+    cx.beginPath();
+    cx.ellipse(0, 32, 18, 5, 0, 0, Math.PI * 2);
+    cx.fill();
+
+    // Glow for special (3pt)
+    if (item.pts >= 3) {
+      const grd = cx.createRadialGradient(0, 0, 0, 0, 0, item.size * 0.9);
+      grd.addColorStop(0, 'rgba(255,215,0,0.35)');
+      grd.addColorStop(1, 'rgba(255,215,0,0)');
+      cx.fillStyle = grd;
+      cx.beginPath(); cx.arc(0, 0, item.size * 0.9, 0, Math.PI * 2); cx.fill();
+    }
+
+    // Emoji
+    cx.font = `${item.size}px serif`;
+    cx.textAlign = 'center';
+    cx.textBaseline = 'middle';
+    cx.fillText(item.emoji, 0, 0);
+
+    // Points badge
+    cx.font = 'bold 13px sans-serif';
+    cx.textBaseline = 'alphabetic';
+    const badge = `+${item.pts}`;
+    cx.strokeStyle = '#000'; cx.lineWidth = 3;
+    cx.strokeText(badge, -8, -item.size * 0.7);
+    cx.fillStyle = item.pts >= 3 ? '#FFD700' : item.pts >= 2 ? '#80FF80' : '#fff';
+    cx.fillText(badge, -8, -item.size * 0.7);
+
+    cx.restore();
+    cx.globalAlpha = 1;
+    cx.textAlign = 'left';
+    cx.textBaseline = 'alphabetic';
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  DRAW: PARTICLES
+// ═══════════════════════════════════════════════
+function drawParticles() {
+  G.particles.forEach(p => {
+    cx.globalAlpha = p.a;
+    cx.fillStyle = p.c;
+    cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, Math.PI * 2); cx.fill();
+  });
+  cx.globalAlpha = 1;
+}
+
+// ═══════════════════════════════════════════════
+//  DRAW: FLOATIE SCORES
+// ═══════════════════════════════════════════════
+function drawFloaties() {
+  G.floaties.forEach(f => {
+    cx.globalAlpha = f.a;
+    cx.fillStyle = f.c;
+    cx.font = `bold ${f.sz}px Comic Sans MS, cursive`;
+    cx.strokeStyle = '#000'; cx.lineWidth = 3;
+    cx.strokeText(f.txt, f.x, f.y);
+    cx.fillText(f.txt, f.x, f.y);
+  });
+  cx.globalAlpha = 1;
+}
+
+// ═══════════════════════════════════════════════
+//  DRAW: HUD
+// ═══════════════════════════════════════════════
+function drawHUD() {
+  const z = ZONES[G.zoneIdx];
+
+  // Score box
+  cx.fillStyle = 'rgba(0,0,0,0.55)';
+  rr(W - 160, 10, 148, 42, 12); cx.fill();
+  cx.fillStyle = '#FFD700';
+  cx.font = 'bold 22px Comic Sans MS, cursive';
+  cx.textAlign = 'right';
+  cx.fillText(`⭐ ${G.score}`, W - 18, 40);
+
+  // Zone box
+  cx.fillStyle = 'rgba(0,0,0,0.55)';
+  rr(10, 10, 200, 38, 12); cx.fill();
+  cx.fillStyle = '#B2FFCE';
+  cx.font = '16px Comic Sans MS, cursive';
+  cx.textAlign = 'left';
+  cx.fillText(z.name, 20, 35);
+
+  // Speed indicator dots
+  const sx = W / 2;
+  cx.fillStyle = 'rgba(0,0,0,0.4)';
+  rr(sx - 60, 10, 120, 30, 10); cx.fill();
+  for (let d = 1; d <= 8; d++) {
+    cx.fillStyle = d <= G.speed
+      ? `hsl(${lerp(120, 0, (G.speed - 1) / 7)}, 90%, 55%)`
+      : 'rgba(255,255,255,0.15)';
+    cx.beginPath();
+    cx.arc(sx - 50 + (d - 1) * 14, 25, 5, 0, Math.PI * 2);
+    cx.fill();
+  }
+
+  // Honk flash
+  if (G.honkFlash > 0) {
+    cx.globalAlpha = Math.min(1, G.honkFlash / 20);
+    cx.fillStyle = '#FFD700';
+    cx.font = `bold ${50 + (1 - G.honkFlash / 30) * 20}px Comic Sans MS, cursive`;
+    cx.textAlign = 'center';
+    cx.fillText('📯 TOOT TOOT!', W / 2, H / 2 - 50);
+    cx.globalAlpha = 1;
+  }
+
+  // Zone transition flash
+  if (G.zoneFlash > 0) {
+    const alpha = Math.min(1, G.zoneFlash / 30) * 0.9;
+    cx.fillStyle = `rgba(0,0,0,${alpha * 0.5})`;
+    cx.fillRect(0, 0, W, H);
+    cx.globalAlpha = alpha;
+    cx.fillStyle = '#FFD700';
+    cx.font = 'bold 36px Comic Sans MS, cursive';
+    cx.textAlign = 'center';
+    cx.fillText(`🎉 New Zone: ${ZONES[G.zoneIdx].name}!`, W / 2, H / 2);
+    cx.font = '20px Comic Sans MS, cursive';
+    cx.fillStyle = '#fff';
+    cx.fillText('Keep collecting! 🚂', W / 2, H / 2 + 40);
+    cx.globalAlpha = 1;
+  }
+
+  cx.textAlign = 'left';
+}
+
+// ═══════════════════════════════════════════════
+//  SPAWN
+// ═══════════════════════════════════════════════
+function spawnItem() {
+  const z = ZONES[G.zoneIdx];
+  const tmpl = z.items[Math.floor(Math.random() * z.items.length)];
+  G.collectibles.push({
+    x:     W + 60,
+    emoji: tmpl.e,
+    pts:   tmpl.pts,
+    size:  tmpl.pts >= 3 ? 44 : 36,
+    phase: Math.random() * Math.PI * 2,
+    dying: false,
+    die:   0,
+  });
+}
+
+function burst(x, y, pts) {
+  const n = 8 + pts * 4;
+  const colors = ['#FFD700','#FF6B6B','#4ECDC4','#A29BFE','#FD79A8','#55EFC4'];
+  for (let i = 0; i < n; i++) {
+    const angle = (i / n) * Math.PI * 2 + Math.random() * 0.5;
+    const spd   = 2 + Math.random() * 4 + pts;
+    G.particles.push({
+      x, y,
+      vx: Math.cos(angle) * spd,
+      vy: Math.sin(angle) * spd - 2,
+      r:  3 + Math.random() * 3,
+      a:  1,
+      c:  colors[Math.floor(Math.random() * colors.length)],
+    });
+  }
+}
+
+function collect(item) {
+  if (item.dying) return;
+  item.dying = true;
+  G.score += item.pts;
+  burst(item.x, TRACK_Y - 38, item.pts);
+  playCollect(item.pts);
+  // Floatie
+  G.floaties.push({
+    x:   item.x - 10,
+    y:   TRACK_Y - 60,
+    txt: `+${item.pts}`,
+    vy:  -2.2,
+    a:   1,
+    c:   item.pts >= 3 ? '#FFD700' : item.pts >= 2 ? '#80FF80' : '#fff',
+    sz:  item.pts >= 3 ? 28 : 22,
+  });
+  // Zone progression
+  if (G.score >= G.nextZone && G.zoneIdx < ZONES.length - 1) {
+    G.zoneIdx++;
+    G.nextZone += 15 + G.zoneIdx * 8;
+    G.zoneFlash = 90;
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  HIT TEST
+// ═══════════════════════════════════════════════
+function hitTest(mx, my) {
+  G.collectibles.forEach(item => {
+    if (item.dying) return;
+    const bob = Math.sin(G.frame * 0.09 + item.phase) * 9;
+    const iy  = TRACK_Y - 38 + bob;
+    const dx  = mx - item.x, dy = my - iy;
+    if (Math.sqrt(dx * dx + dy * dy) < item.size * 0.9) collect(item);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  UPDATE
+// ═══════════════════════════════════════════════
+function update() {
+  G.frame++;
+  G.offset += G.speed;
+
+  // Train animation
+  G.wheelAngle += G.speed * 0.055;
+  G.trainBob = Math.sin(G.frame * 0.14) * 1.5;
+
+  // Steam puffs
+  if (G.frame % 10 === 0) {
+    G.steam.push({ x: 218 + G.speed * 2, y: TRACK_Y - 77 + G.trainBob, r: 7, a: 0.65, vx: 0.8 + G.speed * 0.25, vy: -0.7 });
+  }
+  G.steam.forEach(p => { p.x += p.vx; p.y += p.vy; p.r += 0.45; p.a -= 0.018; });
+  G.steam = G.steam.filter(p => p.a > 0);
+
+  // Clouds
+  G.clouds.forEach(cl => {
+    cl.x -= cl.spd + G.speed * 0.04;
+    if (cl.x < -cl.r * 3) { cl.x = W + cl.r * 2; cl.y = 20 + Math.random() * 100; }
+  });
+
+  // Chug sound
+  G.chugTimer++;
+  const interval = Math.max(7, Math.round(22 - G.speed * 1.8));
+  if (G.chugTimer >= interval) { G.chugTimer = 0; playChug(); }
+
+  // Spawn
+  G.spawnTimer++;
+  const spawn = Math.max(55, 110 - G.speed * 7);
+  if (G.spawnTimer >= spawn) { G.spawnTimer = 0; spawnItem(); }
+
+  // Move items; auto-collect when train nose reaches
+  G.collectibles.forEach(item => {
+    item.x -= G.speed * 0.85;
+    if (item.dying) {
+      item.die = Math.min(1, item.die + 0.065);
+    } else if (item.x < 240 && item.x > 100) {
+      collect(item); // train grabs it automatically (1pt or normal pts)
+    }
+  });
+  G.collectibles = G.collectibles.filter(it => it.x > -80 && !(it.dying && it.die >= 1));
+
+  // Particles
+  G.particles.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.22; p.a -= 0.035; p.r *= 0.97; });
+  G.particles = G.particles.filter(p => p.a > 0.02);
+
+  // Floaties
+  G.floaties.forEach(f => { f.y += f.vy; f.a -= 0.025; });
+  G.floaties = G.floaties.filter(f => f.a > 0);
+
+  // Countdown overlays
+  if (G.honkFlash > 0) G.honkFlash--;
+  if (G.zoneFlash > 0) G.zoneFlash--;
+}
+
+// ═══════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════
+function render() {
+  const z = ZONES[G.zoneIdx];
+  cx.clearRect(0, 0, W, H);
+  drawBG(z);
+  drawHills(z);
+  drawScenery(z);
+  drawClouds();
+  drawGround(z);
+  drawTrack();
+  drawSteam();
+  drawTrain();
+  drawCollectibles();
+  drawParticles();
+  drawFloaties();
+  drawHUD();
+}
+
+// ═══════════════════════════════════════════════
+//  LOOP
+// ═══════════════════════════════════════════════
+function loop() { update(); render(); requestAnimationFrame(loop); }
+
+// ═══════════════════════════════════════════════
+//  INPUT
+// ═══════════════════════════════════════════════
+function ensureAudio() { if (!G.started) { G.started = true; try { AC(); } catch(e){} } }
+
+function toCanvasCoords(e) {
+  const r = cv.getBoundingClientRect();
+  return [(e.clientX - r.left) * (W / r.width), (e.clientY - r.top) * (H / r.height)];
+}
+
+cv.addEventListener('click', e => {
+  ensureAudio();
+  const [mx, my] = toCanvasCoords(e);
+  hitTest(mx, my);
+});
+
+cv.addEventListener('touchstart', e => {
+  e.preventDefault(); ensureAudio();
+  const r = cv.getBoundingClientRect();
+  const scaleX = W / r.width, scaleY = H / r.height;
+  Array.from(e.changedTouches).forEach(t => {
+    hitTest((t.clientX - r.left) * scaleX, (t.clientY - r.top) * scaleY);
+  });
+}, { passive: false });
+
+// Prevent page scroll/pinch while playing
+document.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+document.addEventListener('gesturestart', e => e.preventDefault());
+
+document.addEventListener('keydown', e => {
+  ensureAudio();
+  if (e.key === 'ArrowRight' || e.key === 'd') G.speed = Math.min(8, G.speed + 1);
+  if (e.key === 'ArrowLeft'  || e.key === 'a') G.speed = Math.max(1, G.speed - 1);
+  if (e.key === ' ') { e.preventDefault(); doHonk(); }
+});
+
+function doHonk() { ensureAudio(); playHorn(); G.honkFlash = 45; }
+function doFast()  { ensureAudio(); G.speed = Math.min(8, G.speed + 1); }
+function doSlow()  { ensureAudio(); G.speed = Math.max(1, G.speed - 1); }
+
+document.getElementById('honk-btn').addEventListener('click', doHonk);
+document.getElementById('fast-btn').addEventListener('click', doFast);
+document.getElementById('slow-btn').addEventListener('click', doSlow);
+
+// ═══════════════════════════════════════════════
+//  START
+// ═══════════════════════════════════════════════
+// Seed a few items so screen isn't empty at start
+for (let i = 0; i < 3; i++) {
+  setTimeout(spawnItem, i * 1200);
+}
+loop();
+</script>
+</body>
+</html>
