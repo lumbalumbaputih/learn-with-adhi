@@ -25,6 +25,7 @@ The full interactive reference is at [`design-system/adhi-design-system.html`](d
 ```
 learn-with-adhi/
 ├── index.html                        — Home page (course listing, dark/light theme)
+├── assets/                           — Shared static assets
 ├── design-system/
 │   ├── adhi-design-system.html       — Adhi Design System reference (primary)
 │   └── tca-design-system.html        — Previous design reference (archived)
