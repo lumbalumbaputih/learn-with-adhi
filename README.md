@@ -36,6 +36,7 @@ learn-with-adhi/
     │   └── ai-capability-v2.html     — v2 in progress
     ├── carbon-accounting/
     │   ├── carbon-accounting-course.html — Carbon Accounting (live)
+    │   ├── life-cycle-assessment-course-v1.html — Life Cycle Assessment (live)
     │   └── carbon-accounting-v2.html     — v2 in progress
     ├── coding/
     │   ├── code-ecosystem-guide-complete-v1.html — How to Code for Non-Coders (live)
