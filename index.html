@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Learn with Adhi</title>
+    <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -185,14 +186,8 @@
         width: 48px;
         height: 48px;
         border-radius: var(--r-md);
-        background: var(--ink);
-        color: var(--yellow);
-        display: grid;
-        place-items: center;
-        font-family: var(--font-mono);
-        font-weight: 700;
-        font-size: 0.78rem;
-        letter-spacing: 0.04em;
+        display: block;
+        object-fit: contain;
         flex-shrink: 0;
         border: 2px solid var(--ink);
       }
@@ -622,7 +617,7 @@
       <!-- NAV -->
       <header class="nav">
         <div class="brand">
-          <div class="brand-mark" aria-hidden="true">LW</div>
+          <img class="brand-mark" src="/assets/on-indigo-mark-512.png" alt="Learn with Adhi logo" />
           <div class="brand-text">
             <h1>Learn with Adhi</h1>
             <p>Course Hub · v2</p>
