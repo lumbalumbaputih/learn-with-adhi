@@ -49,7 +49,10 @@ learn-with-adhi/
     │   └── ielts-band7-precision-v2.html  — v2 in progress
     └── tools/
         ├── feifelusiac-safe-area-calculator-v3.html — Safe-area calculator v3
-        └── feifelusiac-safe-area-calculator-v4.html — Safe-area calculator v4 (live)
+        ├── feifelusiac-safe-area-calculator-v4.html — Safe-area calculator v4 (live)
+        ├── train_adventure.html — Rayyan & Raya's Train Adventure (live)
+        ├── train_adventure_v2.html — Rayyan & Raya's Train Adventure v2 (live)
+        └── train_adventure_v3.html — Rayyan & Raya's Train Adventure v3 (live)
 ```
 
 ## How to run locally
