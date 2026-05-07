@@ -39,6 +39,8 @@ learn-with-adhi/
     │   └── carbon-accounting-v2.html     — v2 in progress
     ├── lca/
     │   └── life-cycle-assessment-course-v1.html — Life Cycle Assessment (live)
+    ├── disaster-management/
+    │   └── 2026-05-08-disaster-management-course-v1.html — Disaster Management Fundamentals (live)
     ├── coding/
     │   ├── code-ecosystem-guide-complete-v1.html — How to Code for Non-Coders (live)
     │   └── code-for-non-coders-v2.html           — v2 in progress
