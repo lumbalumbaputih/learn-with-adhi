@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Disaster Management — Fundamentals Course</title>
+<link rel="icon" href="/assets/favicon-32.png" type="image/png" />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ===== ADHI DESIGN TOKENS ===== */
@@ -159,6 +160,30 @@ body {
   padding: 48px 60px 80px;
   max-width: 900px;
 }
+
+.course-nav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--paper);
+  padding: 12px 0 16px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.course-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.course-nav-link:hover { color: var(--hidup-tomato); }
 
 /* ===== MODULE HEADER ===== */
 .eyebrow {
@@ -467,6 +492,13 @@ body {
 /* =========================================================
    DATA
    ========================================================= */
+const COURSE_HUB_LINK = "../../index.html";
+const COURSE_NAV = `
+  <nav class="course-nav" aria-label="Course navigation">
+    <a class="course-nav-link" href="${COURSE_HUB_LINK}">← Back to Course Hub</a>
+  </nav>
+`;
+
 const MODS = [
   {
     id: 0,
@@ -907,6 +939,7 @@ function renderModule(id) {
   const fin  = (id === MODS.length - 1 && isDone) ? `<button class="nav-btn primary" onclick="showDone()">View Completion →</button>` : '';
 
   document.getElementById('main').innerHTML = `
+    ${COURSE_NAV}
     <div class="eyebrow">Module ${id+1} of ${MODS.length}</div>
     <h1 class="mod-title">${m.title}</h1>
     <p class="mod-intro">${m.intro}</p>
@@ -930,6 +963,7 @@ function showDone() {
   });
   const pct = Math.round(correct / total * 100);
   document.getElementById('main').innerHTML = `
+    ${COURSE_NAV}
     <div class="done-screen">
       <div class="done-badge">🎓</div>
       <h1>Course Complete</h1>
