@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster Management — Fundamentals Course</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== ADHI DESIGN TOKENS ===== */
+:root {
+  --hidup-tomato: #FF5C39;
+  --hidup-mango:  #FFC234;
+  --hidup-forest: #1F9D55;
+  --hidup-sea:    #1FA9C7;
+  --hidup-mawar:  #E84BA0;
+  --hidup-indigo: #2E3192;
+  --ink:          #1A1614;
+  --paper:        #FBF4E6;
+  --paper-2:      #F4ECD8;
+  --muted:        #6B6259;
+  --line:         rgba(26,22,20,0.12);
+  --line-strong:  rgba(26,22,20,0.14);
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --radius-8:     8px;
+  --radius-14:    14px;
+  --radius-20:    20px;
+  --radius-pill:  999px;
+  --shadow-block: 8px 8px 0 var(--ink);
+  --ease-expo:    cubic-bezier(0.16, 1, 0.3, 1);
+  --dur:          200ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 272px;
+  min-width: 272px;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid rgba(251,244,230,0.08);
+  margin-bottom: 8px;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.sidebar-brand svg { width: 30px; height: 30px; flex-shrink: 0; }
+
+.brand-text {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--paper);
+  line-height: 1.2;
+}
+.brand-text small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+  color: rgba(251,244,230,0.45);
+  letter-spacing: 0.1em;
+  margin-top: 3px;
+}
+
+.prog-wrap {
+  height: 3px;
+  background: rgba(251,244,230,0.1);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-top: 12px;
+}
+.prog-fill {
+  height: 100%;
+  background: var(--hidup-tomato);
+  border-radius: var(--radius-pill);
+  transition: width 500ms var(--ease-expo);
+}
+.prog-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(251,244,230,0.4);
+  letter-spacing: 0.08em;
+}
+
+.module-nav { flex: 1; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  width: 100%;
+  background: none;
+  border: none;
+  border-right: 3px solid transparent;
+  cursor: pointer;
+  color: rgba(251,244,230,0.55);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: left;
+  line-height: 1.35;
+  transition: background var(--dur), color var(--dur);
+}
+.nav-item:hover { background: rgba(251,244,230,0.06); color: var(--paper); }
+.nav-item.active {
+  background: rgba(255,92,57,0.12);
+  border-right-color: var(--hidup-tomato);
+  color: var(--paper);
+}
+.nav-item.done { color: rgba(251,244,230,0.75); }
+
+.nav-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(251,244,230,0.18);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(251,244,230,0.35);
+}
+.nav-item.active .nav-dot { border-color: var(--hidup-tomato); color: var(--hidup-tomato); background: rgba(255,92,57,0.18); }
+.nav-item.done  .nav-dot { border-color: var(--hidup-forest); background: var(--hidup-forest); color: #fff; }
+
+/* ===== MAIN ===== */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 48px 60px 80px;
+  max-width: 900px;
+}
+
+/* ===== MODULE HEADER ===== */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hidup-tomato);
+  margin-bottom: 10px;
+}
+.mod-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.mod-intro {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin-bottom: 32px;
+  max-width: 660px;
+}
+
+/* OBJECTIVES */
+.objectives {
+  background: var(--paper-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-14);
+  padding: 20px 24px;
+  margin-bottom: 44px;
+}
+.objectives h3 {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.objectives ol { list-style: none; counter-reset: obj; display: flex; flex-direction: column; gap: 9px; }
+.objectives li {
+  counter-increment: obj;
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13.5px; line-height: 1.5;
+}
+.objectives li::before {
+  content: counter(obj);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  background: var(--hidup-tomato);
+  color: #fff;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* CONTENT SECTIONS */
+.section { margin-bottom: 44px; }
+.section h2 {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid var(--line);
+}
+.section p { font-size: 14px; line-height: 1.7; color: var(--ink); margin-bottom: 13px; }
+.section p:last-child { margin-bottom: 0; }
+
+/* inline key-term highlight */
+.kt { background: var(--hidup-mango); padding: 1px 5px; border-radius: 4px; font-weight: 600; }
+
+/* callout boxes */
+.info-box, .warn-box {
+  border-radius: 0 var(--radius-8) var(--radius-8) 0;
+  padding: 13px 16px;
+  margin: 16px 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.info-box { background: rgba(31,169,199,0.08); border-left: 3px solid var(--hidup-sea); }
+.warn-box { background: rgba(255,92,57,0.07); border-left: 3px solid var(--hidup-tomato); }
+.info-box b, .warn-box b {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.info-box b { color: var(--hidup-sea); }
+.warn-box b { color: var(--hidup-tomato); }
+
+/* formula box */
+.formula-box {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius-14);
+  padding: 22px 28px;
+  margin: 20px 0;
+  text-align: center;
+}
+.formula {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--hidup-mango);
+  margin-bottom: 7px;
+}
+.formula-note { font-family: var(--font-mono); font-size: 10px; color: rgba(251,244,230,0.5); letter-spacing: 0.06em; }
+
+/* terms grid */
+.terms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+  margin: 16px 0;
+}
+.term-card {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-8);
+  padding: 12px 14px;
+}
+.term-card dt { font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+.term-card dd { font-size: 12.5px; line-height: 1.5; color: var(--muted); }
+
+/* case study */
+.case-study { border: 1.5px solid var(--line-strong); border-radius: var(--radius-14); overflow: hidden; margin: 20px 0; }
+.cs-header {
+  background: var(--hidup-indigo);
+  color: var(--paper);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cs-header span { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,244,230,0.55); }
+.cs-header strong { font-family: var(--font-display); font-size: 14px; font-weight: 700; }
+.cs-body { padding: 15px 18px; font-size: 13.5px; line-height: 1.65; background: #fff; color: var(--ink); }
+
+/* ===== QUIZ ===== */
+.quiz-section {
+  margin-top: 52px;
+  padding-top: 40px;
+  border-top: 1.5px solid var(--line);
+}
+.quiz-head { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+.quiz-head h2 { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.025em; }
+.quiz-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--hidup-tomato);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.quiz-q {
+  background: var(--paper-2);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-14);
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+.quiz-q p { font-size: 13.5px; font-weight: 600; line-height: 1.5; margin-bottom: 14px; }
+.qn { font-family: var(--font-mono); font-size: 10px; color: var(--muted); margin-right: 6px; }
+
+.options { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 13px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-8);
+  cursor: pointer;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: left;
+  width: 100%;
+  transition: border-color var(--dur), background var(--dur);
+}
+.opt:hover:not(:disabled) { border-color: var(--hidup-tomato); background: rgba(255,92,57,0.04); }
+.opt.correct  { border-color: var(--hidup-forest); background: rgba(31,157,85,0.07); }
+.opt.wrong    { border-color: var(--hidup-tomato);  background: rgba(255,92,57,0.07);  }
+
+.opt-letter {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  margin-top: 1px;
+}
+.opt.correct .opt-letter { background: var(--hidup-forest); color: #fff; border-color: var(--hidup-forest); }
+.opt.wrong   .opt-letter { background: var(--hidup-tomato); color: #fff; border-color: var(--hidup-tomato); }
+
+.feedback {
+  margin-top: 10px;
+  padding: 10px 13px;
+  border-radius: var(--radius-8);
+  font-size: 13px;
+  line-height: 1.55;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.ok  { background: rgba(31,157,85,0.1);  color: #124a28; }
+.feedback.bad { background: rgba(255,92,57,0.1); color: #7a1e07; }
+
+/* CTA buttons */
+.complete-btn {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 13px 30px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: transform var(--dur) var(--ease-expo), box-shadow var(--dur) var(--ease-expo);
+}
+.complete-btn:hover:not(:disabled) { transform: translate(-3px,-3px); box-shadow: var(--shadow-block); }
+.complete-btn:disabled { opacity: 0.38; cursor: not-allowed; }
+
+.nav-btns { display: flex; gap: 10px; margin-top: 18px; }
+.nav-btn {
+  padding: 9px 22px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid var(--line-strong);
+  background: var(--paper);
+  color: var(--ink);
+  transition: border-color var(--dur);
+}
+.nav-btn:hover { border-color: var(--ink); }
+.nav-btn.primary { background: var(--hidup-tomato); color: #fff; border-color: var(--hidup-tomato); }
+.nav-btn.primary:hover { background: #df4c2d; border-color: #df4c2d; }
+
+/* ===== COMPLETION ===== */
+.done-screen { text-align: center; padding: 80px 20px; }
+.done-badge {
+  width: 80px; height: 80px;
+  background: var(--hidup-mango);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px;
+  font-size: 36px;
+}
+.done-screen h1 { font-family: var(--font-display); font-size: 40px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 14px; }
+.done-screen p { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto 32px; line-height: 1.6; }
+.score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 560px; margin: 0 auto 36px; }
+.score-card { background: var(--paper-2); border: 1.5px solid var(--line-strong); border-radius: var(--radius-14); padding: 18px 12px; }
+.score-num { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--hidup-tomato); }
+.score-lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="38" cy="50" r="22" fill="none" stroke="#FBF4E6" stroke-width="14"/>
+        <rect x="54" y="28" width="14" height="44" fill="#FBF4E6"/>
+        <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+      </svg>
+      <div class="brand-text">Disaster Management<small>Fundamentals · 9 Modules</small></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="prog-meta"><span>Progress</span><span id="prog-text">0 / 8</span></div>
+  </div>
+  <nav class="module-nav" id="module-nav"></nav>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<main class="main" id="main"></main>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const MODS = [
+  {
+    id: 0,
+    title: "Foundations of Disaster Management",
+    intro: "Before we can manage disasters, we need to understand what they are. This module introduces the core concepts, definitions, and classification systems that underpin the entire discipline.",
+    objectives: [
+      "Define disaster, hazard, vulnerability, exposure, and risk using internationally accepted terminology",
+      "Distinguish between rapid-onset and slow-onset disasters, and natural versus anthropogenic hazards",
+      "Explain the risk equation and its practical implications for disaster reduction",
+      "Describe global trends in disaster occurrence, impact, and cost"
+    ],
+    sections: [
+      {
+        h: "What Is a Disaster?",
+        body: `<p>In everyday language, 'disaster' is used loosely. In the discipline of disaster management, the term has a precise meaning. The <span class="kt">United Nations Office for Disaster Risk Reduction (UNDRR)</span> defines a disaster as a serious disruption of the functioning of a community or a society due to hazardous events interacting with conditions of exposure, vulnerability, and capacity — leading to human, material, economic, and environmental losses.</p>
+        <p>Two things stand out in this definition. First, a disaster requires both a hazardous event and conditions that amplify its impact. An earthquake of the same magnitude can kill tens of thousands in a densely built informal settlement and cause almost no casualties in a well-prepared, sparsely populated area. The earthquake is identical; the disaster is not. Second, the definition is scale-neutral — a localised event that overwhelms a small community qualifies, even if it receives no international attention.</p>
+        <div class="info-box"><b>Key Insight</b>Hazards become disasters only when they intersect with vulnerable people and places. This is the foundational logic of all disaster risk reduction.</div>`
+      },
+      {
+        h: "The Risk Framework",
+        body: `<p>Disaster risk science uses four interlocking concepts: <span class="kt">hazard</span>, <span class="kt">exposure</span>, <span class="kt">vulnerability</span>, and <span class="kt">capacity</span>. Understanding each is essential before any risk assessment can begin.</p>
+        <div class="formula-box"><div class="formula">Risk = f ( Hazard × Exposure × Vulnerability ) / Capacity</div><div class="formula-note">Simplified conceptual model — UNDRR Sendai Framework (2015)</div></div>
+        <div class="terms-grid">
+          <dl class="term-card"><dt>Hazard</dt><dd>A process, phenomenon, or activity that may cause loss of life, injury, property damage, or environmental disruption — geological, hydro-meteorological, biological, technological, or human-induced.</dd></dl>
+          <dl class="term-card"><dt>Exposure</dt><dd>The situation of people, infrastructure, housing, production capacities, and other tangible assets located in hazard-prone areas and so subject to potential losses.</dd></dl>
+          <dl class="term-card"><dt>Vulnerability</dt><dd>The conditions determined by physical, social, economic, and environmental factors or processes that increase a community's susceptibility to hazard impacts.</dd></dl>
+          <dl class="term-card"><dt>Capacity</dt><dd>The combination of all strengths, attributes, and resources available within a community or organisation to manage and reduce disaster risks — the denominator that reduces overall risk.</dd></dl>
+        </div>`
+      },
+      {
+        h: "Classifying Disasters",
+        body: `<p>Disasters are classified along several axes. The most fundamental distinction is <span class="kt">rapid-onset</span> versus <span class="kt">slow-onset</span>. Earthquakes, cyclones, and flash floods strike suddenly, compressing response timelines to hours or days. Droughts, desertification, and sea-level rise unfold across months or years, eroding livelihoods gradually until a threshold is crossed.</p>
+        <p>A second axis distinguishes natural hazards from anthropogenic (human-caused) ones, though this boundary is increasingly blurred. Climate change — itself a product of human activity — is intensifying many natural hazards, making the term 'natural disaster' something of a misnomer. The EM-DAT International Disaster Database, maintained by the Centre for Research on the Epidemiology of Disasters (CRED), classifies disasters into Natural and Technological categories.</p>
+        <div class="warn-box"><b>Common Misconception</b>"Natural disaster" implies nature alone is responsible. In reality, outcomes are always shaped by human decisions — where we build, how we build, who has access to early warning, and who bears the greatest burden of loss.</div>
+        <p>Global trends from EM-DAT show the number of recorded disasters has risen significantly since 1960, driven partly by better reporting but also by rising exposure and the intensification of climate hazards. Economic losses from disasters now average over USD 200 billion annually, with insured losses covering only a fraction of total damage.</p>`
+      }
+    ],
+    quiz: [
+      { q: "According to UNDRR, which description most accurately defines a disaster?", opts: ["Any natural event causing significant media attention", "A serious disruption of community functioning caused by hazardous events interacting with vulnerability and exposure", "A geophysical event exceeding 1% of a country's GDP in damage", "Any event declared a national emergency by government"], ans: 1, fb: "Correct. The UNDRR definition centres on community disruption and critically requires both a hazardous event and conditions of vulnerability and exposure. Media coverage and government declarations are not part of the technical definition." },
+      { q: "In the disaster risk equation, which factor acts as the denominator — reducing overall risk when it increases?", opts: ["Exposure", "Hazard intensity", "Vulnerability", "Capacity"], ans: 3, fb: "Correct. Capacity — the collective resources, strengths, and abilities of a community — is the factor that reduces risk. Investing in early warning, preparedness, and institutional strength all raise capacity and thereby reduce disaster risk." },
+      { q: "A severe drought unfolding over 18 months and gradually depleting food reserves is best classified as:", opts: ["A rapid-onset geophysical disaster", "A slow-onset climatological disaster", "A technological accident", "A biological hazard"], ans: 1, fb: "Correct. Droughts are classic slow-onset, climatological events. Their gradual development makes early mobilisation of emergency response politically difficult, even though early indicators may provide substantial lead time if monitored." }
+    ]
+  },
+  {
+    id: 1,
+    title: "Global Frameworks and Policy",
+    intro: "Disaster risk reduction is governed by internationally agreed frameworks and policies. This module traces the evolution of global DRR governance from the 1990s to the present, and situates disaster management within broader sustainable development and climate agendas.",
+    objectives: [
+      "Summarise the key priorities and legacy of the Hyogo Framework for Action (2005–2015)",
+      "Explain the four priorities and seven global targets of the Sendai Framework for Disaster Risk Reduction (2015–2030)",
+      "Identify linkages between disaster risk reduction, the Sustainable Development Goals, and the Paris Agreement",
+      "Critically evaluate the limitations of global frameworks in translating into local action"
+    ],
+    sections: [
+      {
+        h: "The Road to Sendai",
+        body: `<p>International attention to disaster risk reduction began to coalesce in the early 1990s. The UN designated the 1990s the International Decade for Natural Disaster Reduction (IDNDR), producing the Yokohama Strategy (1994) — the first globally agreed set of guidelines for disaster prevention, preparedness, and mitigation.</p>
+        <p>The <span class="kt">Hyogo Framework for Action (HFA, 2005–2015)</span> was a landmark successor agreement adopted by 168 governments following the catastrophic 2004 Indian Ocean tsunami. Its five priorities included making disaster risk reduction a national priority, improving risk knowledge, building a culture of safety, reducing underlying risk factors, and strengthening preparedness. The HFA was the first systematic effort to measure DRR progress nationally. However, a 2015 mid-term review found progress uneven, with persistent gaps in addressing underlying risk drivers — particularly poverty, unplanned urbanisation, and ecosystem degradation.</p>`
+      },
+      {
+        h: "The Sendai Framework (2015–2030)",
+        body: `<p>Adopted at the Third UN World Conference on Disaster Risk Reduction in Sendai, Japan, the <span class="kt">Sendai Framework for Disaster Risk Reduction 2015–2030</span> is the current global blueprint. It represents a significant conceptual shift: the ambition moved from managing disaster response to preventing risk creation and reducing existing risk.</p>
+        <p>The Sendai Framework has four priorities for action:</p>
+        <div class="terms-grid">
+          <dl class="term-card"><dt>Priority 1</dt><dd>Understanding disaster risk — investing in risk data, assessments, and knowledge management at all levels.</dd></dl>
+          <dl class="term-card"><dt>Priority 2</dt><dd>Strengthening disaster risk governance — clear national and local DRR strategies, institutions, and accountability mechanisms.</dd></dl>
+          <dl class="term-card"><dt>Priority 3</dt><dd>Investing in DRR for resilience — across infrastructure, livelihoods, health systems, and ecosystems.</dd></dl>
+          <dl class="term-card"><dt>Priority 4</dt><dd>Enhancing preparedness for effective response — and committing to Build Back Better in recovery, rehabilitation, and reconstruction.</dd></dl>
+        </div>
+        <p>Seven global targets guide implementation, aiming by 2030 to substantially reduce mortality, the number of affected people, economic losses, and infrastructure damage, while expanding early warning coverage, national DRR strategies, and development assistance to low-income countries.</p>
+        <div class="info-box"><b>Sendai Monitor</b>Progress against the seven global targets is tracked through the Sendai Framework Monitor — an online national reporting platform managed by UNDRR. It provides a globally comparable dataset on disaster losses and DRR investment for the first time.</div>`
+      },
+      {
+        h: "The 2030 Agenda, SDGs, and Paris Agreement",
+        body: `<p>The Sendai Framework does not exist in isolation. Also adopted in 2015, the <span class="kt">2030 Agenda for Sustainable Development</span> and its 17 Sustainable Development Goals (SDGs) are deeply intertwined with disaster risk. SDG 1 (No Poverty), SDG 11 (Sustainable Cities), and SDG 13 (Climate Action) are the most directly relevant, but all 17 SDGs both contribute to and depend on reduced disaster risk.</p>
+        <p>The <span class="kt">Paris Agreement (2015)</span> under the UNFCCC commits signatory nations to limiting global warming and enhancing adaptive capacity. As climate change intensifies many natural hazards, climate adaptation and disaster risk reduction increasingly overlap. Integrated approaches that address climate and disaster risk together are now recognised as more efficient than treating them as separate policy silos.</p>
+        <div class="warn-box"><b>Critical Point</b>Global frameworks set targets and principles, but implementation depends entirely on national and local governments, communities, and civil society. The gap between international commitments and local action remains one of the discipline's central challenges.</div>`
+      }
+    ],
+    quiz: [
+      { q: "How many priorities does the Sendai Framework for Disaster Risk Reduction (2015–2030) have?", opts: ["Three", "Four", "Five", "Seven"], ans: 1, fb: "Correct. The Sendai Framework has four priorities: understanding risk, strengthening governance, investing in resilience, and enhancing preparedness. Seven refers to the global targets, not the priorities." },
+      { q: "The Hyogo Framework for Action (2005–2015) was adopted largely in response to which major event?", opts: ["Hurricane Katrina (2005)", "The 2004 Indian Ocean tsunami", "The 2010 Haiti earthquake", "The 2003 European heatwave"], ans: 1, fb: "Correct. The 2004 Indian Ocean tsunami, which killed over 220,000 people across 14 countries, galvanised political will for the HFA. It was adopted in January 2005 — just weeks after the disaster." },
+      { q: "Which SDG explicitly includes a target to reduce deaths and economic losses from disasters?", opts: ["SDG 3 (Good Health)", "SDG 7 (Clean Energy)", "SDG 11 (Sustainable Cities)", "SDG 14 (Life Below Water)"], ans: 2, fb: "Correct. SDG 11 includes target 11.5 — significantly reducing deaths, missing persons, and economic losses from disasters — and target 11.b, focused on integrated DRR policies in cities." }
+    ]
+  },
+  {
+    id: 2,
+    title: "Natural Disasters",
+    intro: "Natural hazards have shaped human civilisations throughout history. This module covers the physical science of major hazard types — geophysical, hydro-meteorological, and climatological — and uses real-world case studies to show how hazards become disasters.",
+    objectives: [
+      "Describe the physical mechanisms generating earthquakes, tsunamis, tropical cyclones, and floods",
+      "Explain how the Moment Magnitude and Saffir-Simpson scales communicate hazard intensity",
+      "Analyse case studies to identify the role of vulnerability and capacity in disaster outcomes",
+      "Distinguish between primary, secondary, and tertiary disaster impacts"
+    ],
+    sections: [
+      {
+        h: "Geophysical Hazards: Earthquakes, Tsunamis, Volcanoes",
+        body: `<p><span class="kt">Earthquakes</span> are caused by the sudden release of energy stored along tectonic plate boundaries, faults, or through volcanic activity. The Moment Magnitude Scale (Mw) has replaced the older Richter scale for scientific use — each full unit increase represents roughly 32 times more energy released. Shallow, high-magnitude earthquakes in densely built areas with poor construction quality produce the most devastating outcomes, regardless of their raw magnitude.</p>
+        <p><span class="kt">Tsunamis</span> are generated when an earthquake, volcanic eruption, or submarine landslide displaces a large volume of ocean water. In deep ocean, tsunami waves travel at up to 800 km/h but reach heights of only 1–2 metres. As they approach shallow coastal water, they slow dramatically while wave height increases — a process called wave shoaling. The lead time between seismic detection and coastal inundation can range from minutes to several hours for trans-oceanic events, making early warning systems critical.</p>
+        <div class="case-study">
+          <div class="cs-header"><span>Case Study</span><strong>2004 Indian Ocean Tsunami</strong></div>
+          <div class="cs-body">A magnitude Mw 9.1–9.3 megathrust earthquake off northern Sumatra generated a transoceanic tsunami that reached 14 countries. Over 220,000 people were killed. The absence of an Indian Ocean tsunami warning system was a critical capacity gap — the Pacific Tsunami Warning Center had issued alerts, but there was no mechanism to relay them to Indian Ocean coastal communities. The disaster directly motivated establishment of the Indian Ocean Tsunami Warning and Mitigation System (IOTWMS).</div>
+        </div>`
+      },
+      {
+        h: "Hydro-Meteorological Hazards: Cyclones and Floods",
+        body: `<p><span class="kt">Tropical cyclones</span> (hurricanes in the Atlantic/Eastern Pacific; typhoons in the Western Pacific) are intense rotating storm systems forming over warm ocean surfaces above approximately 26°C. The Saffir-Simpson Hurricane Wind Scale classifies cyclones from Category 1 (sustained winds 119–153 km/h) to Category 5 (above 252 km/h). Storm surge — the abnormal rise of water driven ashore by cyclone winds — often causes more fatalities than wind damage itself.</p>
+        <p><span class="kt">Floods</span> are the most common and widely distributed natural hazard globally. Three primary types are recognised: fluvial floods (river overflow), pluvial floods (rainfall exceeding surface drainage capacity), and coastal floods (storm surge and wave action). Flood exposure is increasing globally as urbanisation expands into floodplains, natural buffers such as wetlands are removed, and climate change intensifies rainfall events.</p>
+        <div class="info-box"><b>Australian Context</b>Tropical cyclones in Australia typically develop in the Coral Sea and Arafura/Timor seas during the wet season (November–April). Category 5 Cyclone Tracy devastated Darwin on Christmas Day 1974, killing 71 people and destroying 70% of buildings — directly causing a complete overhaul of Australian building codes.</div>`
+      },
+      {
+        h: "Climatological Hazards: Bushfires and Drought",
+        body: `<p><span class="kt">Bushfires</span> are a natural component of many ecosystems, particularly in Australia's fire-adapted landscapes dominated by eucalyptus species. However, climate change is extending fire seasons, increasing fire weather severity (as measured by the McArthur Forest Fire Danger Index), and pushing fires into ecosystems not previously adapted to burning.</p>
+        <div class="case-study">
+          <div class="cs-header"><span>Case Study</span><strong>2019–20 Australian Black Summer</strong></div>
+          <div class="cs-body">The 2019–20 Australian bushfire season was unprecedented in scale. Over 18.6 million hectares burned — larger than Greece. At least 33 people died directly, with an estimated 445 additional deaths attributed to smoke inhalation. Around 3 billion vertebrate animals were killed or displaced. The season followed the most severe drought in decades, compounded by record-breaking temperatures. A subsequent Royal Commission found Australia's emergency management systems needed fundamental reform to address climate-driven escalation of disaster risk.</div>
+        </div>
+        <p><span class="kt">Droughts</span> are prolonged periods of abnormally low precipitation with significant hydrological, agricultural, and socioeconomic impacts. Unlike other hazards, droughts have no clear onset — they are determined retrospectively using indices such as the Standardised Precipitation Index (SPI). This makes early warning and emergency declaration particularly challenging for decision-makers.</p>`
+      }
+    ],
+    quiz: [
+      { q: "What scale does the scientific community currently use to measure earthquake magnitude?", opts: ["The Saffir-Simpson Scale", "The Modified Mercalli Intensity Scale", "The Moment Magnitude Scale (Mw)", "The Fujita Scale"], ans: 2, fb: "Correct. The Moment Magnitude Scale (Mw) has replaced the older Richter scale for scientific use because it provides more consistent measurements across a wider range of earthquake sizes and distances from the epicentre." },
+      { q: "The 2004 Indian Ocean tsunami highlighted which critical capacity gap?", opts: ["No coastal buildings were engineered to withstand inundation", "There was no tsunami warning system covering the Indian Ocean", "No government had a disaster management ministry at the time", "Seismographs were not sensitive enough to detect the earthquake"], ans: 1, fb: "Correct. While the Pacific Tsunami Warning Center detected the earthquake and issued alerts, there was no Indian Ocean system to relay that information to coastal communities. This catastrophic communications gap directly caused mass preventable deaths." },
+      { q: "Storm surge in the context of tropical cyclones refers to:", opts: ["Sudden wind speed increase as the eye wall passes", "Torrential rainfall accumulation over 24 hours", "An abnormal rise in coastal sea level driven onshore by cyclone winds", "Lightning activity in the storm's outer rain bands"], ans: 2, fb: "Correct. Storm surge is the abnormal coastal water-level rise driven by cyclone winds and low atmospheric pressure. It is often responsible for more deaths than wind damage and can inundate areas kilometres inland from the coast." }
+    ]
+  },
+  {
+    id: 3,
+    title: "Climate-Related Disasters",
+    intro: "Climate change is not a distant future threat — it is actively reshaping the disaster risk landscape today. This module examines how climate change intensifies hazards, the science of attribution, compound events, and what the IPCC's latest findings mean for disaster risk management.",
+    objectives: [
+      "Explain the mechanisms by which climate change intensifies specific natural hazards",
+      "Summarise key findings from IPCC AR6 relevant to disaster risk",
+      "Define compound events and explain why they present new management challenges",
+      "Distinguish between disaster risk reduction and climate change adaptation, and identify where they converge"
+    ],
+    sections: [
+      {
+        h: "Climate Change as a Disaster Risk Driver",
+        body: `<p>The relationship between climate change and disaster risk is well-established. The IPCC Sixth Assessment Report (AR6, 2021–2022) found with high confidence that human-induced climate change has already increased the frequency and intensity of many weather extremes — hot extremes, heavy precipitation, agricultural droughts, and intense tropical cyclones.</p>
+        <p>The mechanisms are reasonably clear. Higher atmospheric temperatures allow the atmosphere to hold more moisture — approximately 7% more water vapour per degree Celsius of warming, following the Clausius-Clapeyron relationship. This intensifies precipitation when it rains. Warmer ocean surfaces provide more energy to tropical cyclones. Prolonged heat increases evapotranspiration, exacerbating drought. Melting ice sheets and thermal expansion of seawater drive sea-level rise, increasing coastal inundation risk.</p>
+        <div class="info-box"><b>IPCC AR6 Finding</b>With every 0.5°C of additional warming, there are clearly discernible increases in the intensity and frequency of hot extremes, heavy precipitation, and drought in some regions. The proportion of the global population exposed to at least one climate extreme per year increases substantially between 1.5°C and 2°C of global warming.</div>`
+      },
+      {
+        h: "Attribution Science and Compound Events",
+        body: `<p><span class="kt">Attribution science</span> is a rapidly developing field that asks: how much more likely was a specific extreme event as a result of human-induced climate change? Studies using probabilistic attribution have found, for example, that the extreme heat during the 2019–20 Australian bushfire season was made at least 30% more likely by climate change, and that heavy rainfall events have increased in probability and intensity in many regions.</p>
+        <p><span class="kt">Compound events</span> occur when multiple hazards or drivers combine to produce impacts more severe than any single event would in isolation. A coastal city hit by a cyclone during already-elevated tidal conditions experiences compounded coastal flooding. A region experiencing drought followed by intense rainfall faces combined agricultural loss and flash flooding on hardened, desiccated soils. Compound events are particularly problematic for emergency management systems designed around single-hazard scenarios.</p>
+        <div class="warn-box"><b>Management Challenge</b>Most national disaster management frameworks and response protocols are designed around single-hazard events. Compound and cascading scenarios require a fundamental rethinking of risk assessment methodology, preparedness planning, and inter-agency coordination.</div>`
+      },
+      {
+        h: "Sea Level Rise, Loss and Damage",
+        body: `<p><span class="kt">Sea level rise</span> is one of the most consequential long-term consequences of climate change for disaster risk. The IPCC AR6 projects a likely global mean sea-level rise of 0.28–0.55 m by 2100 under a low-emission scenario and 0.63–1.01 m under a high-emission scenario, with low-likelihood but high-impact outcomes of over 2 m possible. Even modest sea-level rise substantially increases the frequency of coastal flooding — a once-per-century event could occur annually by 2050 in some low-lying locations.</p>
+        <p>For Pacific island nations, atoll communities, and deltaic regions such as the Ganges-Brahmaputra, Mekong, and Nile deltas, sea-level rise represents an existential threat. The concept of <span class="kt">Loss and Damage</span> — harm from climate change that cannot be adapted to — has emerged as a politically contentious but scientifically grounded recognition that not all climate impacts can be managed through adaptation. The establishment of a Loss and Damage Fund at COP27 (2022) marked a historic acknowledgment of this under the UNFCCC.</p>
+        <div class="case-study">
+          <div class="cs-header"><span>Case Study</span><strong>2022 Pakistan Floods</strong></div>
+          <div class="cs-body">In mid-2022, Pakistan experienced catastrophic monsoon flooding affecting 33 million people — roughly 15% of the population — inundating one-third of the country at peak. Attribution studies found the extreme rainfall was made approximately 50% more intense by climate change. Pakistan contributes less than 1% of global greenhouse gas emissions, illustrating the profound inequity in climate-disaster risk distribution: those least responsible for climate change often face its greatest consequences. Estimated flood damage exceeded USD 30 billion.</div>
+        </div>`
+      }
+    ],
+    quiz: [
+      { q: "What does the Clausius-Clapeyron relationship tell us about climate change and precipitation?", opts: ["Warmer temperatures cause more precipitation to fall as snow rather than rain", "For every degree Celsius of warming, the atmosphere can hold approximately 7% more water vapour", "Rising CO₂ directly causes more cloud formation over the tropics", "Ocean warming decreases evaporation rates over time"], ans: 1, fb: "Correct. The Clausius-Clapeyron relationship describes the exponential increase in the atmosphere's water-holding capacity with temperature — approximately 7% per °C. More atmospheric moisture means heavier precipitation events when rainfall does occur." },
+      { q: "Which of the following is the best example of a compound event?", opts: ["A Category 5 cyclone making landfall on a clear day", "A severe drought immediately followed by intense rainfall on hardened soil, causing flash flooding", "Two earthquakes occurring in the same year in different countries", "A heatwave that recurs predictably every summer in the same region"], ans: 1, fb: "Correct. A compound event involves multiple hazards or drivers interacting to produce greater impact than either alone. Drought hardens soil and reduces infiltration; intense rainfall on that parched surface then produces flash flooding far more severe than it would on healthy, absorbent soil." },
+      { q: "The concept of 'Loss and Damage' in climate policy refers to:", opts: ["Financial losses covered by the insurance market following a declared disaster", "Property damage assessable under national disaster legislation", "Harm from climate change that cannot be prevented through mitigation or adaptation", "Economic costs attributed to poor construction standards in hazard zones"], ans: 2, fb: "Correct. Loss and Damage refers to residual harm from climate change that goes beyond what mitigation (emissions reduction) or adaptation can address. It is particularly relevant for communities facing existential threats like sea-level rise, and is now formally recognised under the UNFCCC." }
+    ]
+  },
+  {
+    id: 4,
+    title: "Disaster Risk Reduction",
+    intro: "Disaster risk reduction (DRR) is the systematic effort to analyse and reduce the causal factors of disasters. This module covers risk assessment methodologies, early warning systems, prevention and mitigation strategies, and community-based approaches proven to save lives.",
+    objectives: [
+      "Describe the key components of disaster risk assessment, including hazard mapping and vulnerability analysis",
+      "Explain the four elements of an effective early warning system",
+      "Distinguish between prevention, mitigation, and preparedness in the DRR cycle",
+      "Evaluate the strengths and limitations of community-based and ecosystem-based approaches to DRR"
+    ],
+    sections: [
+      {
+        h: "Risk Assessment: Knowing the Hazard Landscape",
+        body: `<p>Effective DRR begins with understanding risk. <span class="kt">Risk assessment</span> is the process of identifying, analysing, and evaluating the nature, intensity, probability, and spatial extent of disaster risks in a given area. It draws on hazard mapping, exposure analysis, and vulnerability assessment to show where risk concentrates and who bears it.</p>
+        <p><span class="kt">Hazard maps</span> spatially represent the likelihood and intensity of specific hazards — flood inundation extents, seismic hazard zones, cyclone wind risk contours. Geographic Information Systems (GIS) are the standard tool for producing, combining, and communicating these datasets. The INFORM Risk Index, developed by the European Commission and UN, synthesises hazard, exposure, and vulnerability data for over 190 countries into a composite risk score that supports prioritisation of international assistance.</p>
+        <div class="info-box"><b>Vulnerability Is Multi-Dimensional</b>Vulnerability assessment must go beyond physical exposure. Social vulnerability — poverty, age, gender, disability, marginalisation, insecure land tenure — determines who is hardest hit when a hazard strikes. Vulnerable households often live in the most hazard-exposed locations precisely because safer land is unaffordable to them.</div>
+        <p>Risk assessments are most useful when participatory — developed with communities rather than only about them. Local knowledge of where floods pool, which hillsides are unstable, and which routes remain passable during cyclones is invaluable data that remote-sensing surveys alone cannot capture.</p>`
+      },
+      {
+        h: "Early Warning Systems",
+        body: `<p><span class="kt">Early warning systems (EWS)</span> are among the most cost-effective DRR investments available. UNDRR identifies four interconnected elements that a functional EWS must contain:</p>
+        <div class="terms-grid">
+          <dl class="term-card"><dt>1. Risk Knowledge</dt><dd>Understanding of hazards and vulnerabilities in the area. A warning is meaningless without knowing who faces what risks where.</dd></dl>
+          <dl class="term-card"><dt>2. Monitoring & Detection</dt><dd>Technical systems — seismographs, weather stations, stream gauges, satellite imagery — that detect hazard development in real time.</dd></dl>
+          <dl class="term-card"><dt>3. Dissemination & Communication</dt><dd>Reliable channels that deliver timely, clear warnings to all at-risk people — including those without smartphones or internet access.</dd></dl>
+          <dl class="term-card"><dt>4. Response Capability</dt><dd>Communities and authorities with the capacity to act on warnings — pre-planned evacuation routes, designated shelters, trained local responders.</dd></dl>
+        </div>
+        <p>A system that excels in monitoring but fails in dissemination will not save lives. Similarly, a warning broadcast to communities untrained in evacuation may cause panic rather than orderly response. All four elements must function as an integrated system. The UN Secretary-General's Early Warnings for All (EW4All) initiative (2022) aims to ensure every person on Earth is covered by an early warning system by 2027.</p>`
+      },
+      {
+        h: "Community-Based and Ecosystem-Based DRR",
+        body: `<p><span class="kt">Community-Based DRR (CBDRR)</span> places communities at the centre of risk reduction planning and implementation. It recognises that communities possess intimate knowledge of their own risk landscape, have the most to gain from effective DRR, and are the first responders in any disaster. CBDRR programmes typically involve community risk mapping, local disaster committees, basic supply stockpiling, and regular evacuation drills.</p>
+        <p>IFRC experience across Asia, Africa, and the Pacific shows that CBDRR investment significantly reduces mortality and asset losses. However, CBDRR is not a substitute for state investment in risk infrastructure — it must sit alongside functioning national disaster management systems, not replace them.</p>
+        <p><span class="kt">Ecosystem-based DRR (Eco-DRR)</span> harnesses protective functions of healthy ecosystems to buffer communities from hazards. Mangrove forests attenuate wave energy and storm surge; floodplain wetlands absorb floodwaters; vegetated slopes resist erosion and shallow landslides; coastal dunes protect against inundation. These natural services are often cost-competitive with engineered infrastructure and provide co-benefits for biodiversity and livelihoods.</p>
+        <div class="warn-box"><b>Important Limitation</b>Ecosystem-based solutions have biophysical limits. Healthy mangroves reduce — but cannot eliminate — storm surge from a major cyclone. Eco-DRR should be integrated with engineered solutions and community preparedness, not marketed as a standalone alternative.</div>`
+      }
+    ],
+    quiz: [
+      { q: "Which correctly identifies the four elements of an effective early warning system?", opts: ["Detection, Analysis, Broadcast, Insurance", "Risk Knowledge, Monitoring, Dissemination, Response Capability", "Mapping, Modelling, Media, Military deployment", "Preparedness, Prevention, Mitigation, Recovery"], ans: 1, fb: "Correct. UNDRR's four elements are: (1) Risk Knowledge, (2) Monitoring and Detection, (3) Dissemination and Communication, and (4) Response Capability. All four must function as an integrated system for warnings to translate into life safety." },
+      { q: "Community-Based DRR is primarily effective because:", opts: ["It replaces the need for national disaster management agencies", "It is always cheaper than engineering solutions", "Communities have detailed local knowledge of risk and are the first responders in any disaster", "International NGOs can standardise its implementation globally"], ans: 2, fb: "Correct. CBDRR's core strength is that communities possess on-the-ground knowledge of local risk conditions that technical surveys cannot fully replicate, and they are invariably the first to respond. This local knowledge and presence is irreplaceable." },
+      { q: "Which is a well-documented example of Ecosystem-based DRR?", opts: ["Using concrete revetments to replace coastal wetlands", "Mangrove forests reducing wave energy and storm surge impacts on coastal communities", "Reservoir construction to manage river flow in urban catchments", "Prescribed burning to increase soil carbon and permeability"], ans: 1, fb: "Correct. Mangroves are one of the most studied examples of Eco-DRR. They attenuate storm surge and wave energy, provide habitat, support fisheries, and sequester carbon — demonstrating multiple co-benefits compared to purely engineered approaches." }
+    ]
+  },
+  {
+    id: 5,
+    title: "Emergency Preparedness and Response",
+    intro: "When a disaster strikes, the effectiveness of response depends almost entirely on decisions made before it happened. This module covers the disaster management cycle, emergency response systems, humanitarian coordination, and the principles governing effective response operations.",
+    objectives: [
+      "Explain the four phases of the disaster management cycle and critique its limitations as a linear model",
+      "Describe the structure and principles of the Incident Command System (ICS)",
+      "Understand the UN cluster system and how humanitarian coordination functions in large-scale emergencies",
+      "Identify the key standards and tools governing humanitarian response quality"
+    ],
+    sections: [
+      {
+        h: "The Disaster Management Cycle",
+        body: `<p>The <span class="kt">disaster management cycle</span> is the conceptual framework most widely used to organise disaster management activities across time. It describes four phases:</p>
+        <div class="terms-grid">
+          <dl class="term-card"><dt>Prevention & Mitigation</dt><dd>Actions taken to avoid a hazard occurring or to limit its impacts — land-use zoning, building codes, levee construction, community education.</dd></dl>
+          <dl class="term-card"><dt>Preparedness</dt><dd>Actions taken before a disaster to enable effective response — stockpiling supplies, training first responders, developing emergency plans, conducting drills.</dd></dl>
+          <dl class="term-card"><dt>Response</dt><dd>Immediate actions during and after a disaster to save lives and limit damage — search and rescue, emergency medical care, evacuation, shelter provision.</dd></dl>
+          <dl class="term-card"><dt>Recovery</dt><dd>Efforts to restore and improve community wellbeing, livelihoods, and infrastructure after the immediate crisis — housing reconstruction, livelihood support, psychosocial services.</dd></dl>
+        </div>
+        <div class="warn-box"><b>Critique of the Cycle Model</b>The disaster management cycle is a useful teaching device but a poor description of reality. Disasters do not follow neat phases — communities are often in long-term recovery when the next disaster strikes. The cycle is better understood as a set of concurrent, ongoing activities rather than discrete, sequential stages.</div>`
+      },
+      {
+        h: "Incident Command System (ICS)",
+        body: `<p>The <span class="kt">Incident Command System (ICS)</span> is a standardised, on-scene, all-hazards incident management approach developed in the United States in the 1970s following coordination failures during California wildfire responses. It has since been widely adopted internationally. ICS provides a common organisational structure, terminology, and procedures that allow responders from different agencies — fire, police, health, military, NGOs — to work together with minimal confusion.</p>
+        <p>Core ICS principles include unity of command (each person reports to one supervisor), span of control (each supervisor manages 3–7 people), unified command (when multiple agencies have jurisdiction), common terminology, and modular organisation (the structure expands or contracts to match incident complexity). An ICS structure includes the Incident Commander and four functional sections: Operations, Planning, Logistics, and Finance/Administration.</p>
+        <div class="info-box"><b>Australian System</b>Australia uses the Australasian Inter-Service Incident Management System (AIIMS), based on ICS principles and adapted for Australian jurisdictional structures. AIIMS is used across bushfire, flood, marine pollution, and multi-agency emergency responses nationally.</div>`
+      },
+      {
+        h: "Humanitarian Coordination: Clusters and Standards",
+        body: `<p>In large-scale international emergencies, coordinating dozens of agencies — UN, Red Cross/Crescent, international and local NGOs, and government — is essential and challenging. Following a 2005 humanitarian reform process, the UN adopted the <span class="kt">Cluster System</span>, which organises humanitarian response into eleven sectors, each with a designated lead agency responsible for coordination.</p>
+        <p>Core clusters include: Food Security (FAO/WFP), Health (WHO), Shelter (UNHCR/IFRC), WASH — Water, Sanitation and Hygiene (UNICEF), Nutrition (UNICEF), Protection (UNHCR), Education (UNICEF/Save the Children), Logistics (WFP), Emergency Telecommunications (WFP), Early Recovery (UNDP), and Camp Coordination and Management (IOM/UNHCR). UN OCHA coordinates across all clusters and manages the Humanitarian Response Plan (HRP) and Financial Tracking Service (FTS).</p>
+        <p>The <span class="kt">Sphere Standards</span>, first published in 1998, establish minimum standards for humanitarian response across WASH, food, shelter, and health. They are widely adopted as the benchmark for humanitarian quality and accountability, providing both technical specifications and protection principles grounded in the right to dignity.</p>`
+      }
+    ],
+    quiz: [
+      { q: "The Incident Command System (ICS) was originally developed in response to coordination failures during:", opts: ["The 1971 Sylmar Earthquake in California", "Wildfire responses in California in the 1970s", "Hurricane Camille's landfall in 1969", "The 1984 Bhopal industrial disaster"], ans: 1, fb: "Correct. ICS was developed in the early 1970s following California wildfire responses where inadequate communication, unclear command structures, and lack of common terminology led to operational failures that cost lives." },
+      { q: "In the UN Cluster System, which agency leads the Logistics Cluster?", opts: ["UNHCR", "OCHA", "WFP", "UNICEF"], ans: 2, fb: "Correct. The World Food Programme (WFP) leads the Logistics Cluster, coordinating humanitarian supply chains, transport, and storage. WFP also leads the Emergency Telecommunications Cluster and co-leads the Food Security Cluster." },
+      { q: "The Sphere Standards provide:", opts: ["Legal obligations that all UN member states must follow during disaster response", "Minimum standards for humanitarian response quality across WASH, food, shelter, and health", "Technical specifications for seismic-resistant building construction", "International benchmarks for national disaster management legislation"], ans: 1, fb: "Correct. The Sphere Standards provide minimum standards — not legal obligations — for humanitarian response quality across core sectors. They are widely adopted as the benchmark for principled, accountable humanitarian action." }
+    ]
+  },
+  {
+    id: 6,
+    title: "Recovery and Resilience",
+    intro: "Disaster recovery is not simply the restoration of what existed before. Done well, it is an opportunity to reduce the conditions that made the community vulnerable in the first place. This module examines recovery frameworks, Build Back Better, psychosocial dimensions, and community resilience.",
+    objectives: [
+      "Describe the phases of disaster recovery and distinguish between early, medium-term, and long-term recovery",
+      "Explain the 'Build Back Better' principle and its practical applications in reconstruction",
+      "Identify the psychosocial impacts of disasters and the principles governing effective psychosocial support",
+      "Define community resilience and evaluate frameworks used to measure and build it"
+    ],
+    sections: [
+      {
+        h: "Phases and Frameworks of Recovery",
+        body: `<p>Disaster recovery is typically described in three overlapping phases. <span class="kt">Early recovery</span> begins while emergency response is still ongoing — restoring basic services, clearing debris, and providing transitional shelter. <span class="kt">Medium-term recovery</span> focuses on housing reconstruction, livelihoods, and restoration of public services such as schools and health facilities. <span class="kt">Long-term recovery</span> addresses systemic change — infrastructure upgrades, policy reform, and risk reduction to prevent recurrence.</p>
+        <p>A <span class="kt">Post-Disaster Needs Assessment (PDNA)</span> is a government-led process — supported by the World Bank, EU, and UN — that estimates total disaster effects (asset destruction), impacts (changes in economic flows), and recovery needs. PDNAs inform recovery frameworks and financial assistance requests. A credible PDNA is often a prerequisite for accessing international reconstruction funding.</p>
+        <div class="info-box"><b>Common Recovery Failure</b>Recovery funding commonly front-loads physical reconstruction — buildings, roads, bridges — while underfunding livelihoods, social cohesion, and mental health. Communities where the physical infrastructure is rebuilt but social fabric remains damaged face the next disaster nearly as vulnerably as before.</div>`
+      },
+      {
+        h: "Build Back Better",
+        body: `<p><span class="kt">Build Back Better (BBB)</span> is the principle that post-disaster reconstruction should not restore vulnerable conditions but should use the opportunity to improve safety, reduce risk, and enhance resilience. It is embedded in Priority 4 of the Sendai Framework. In practice, BBB means: rebuilding housing to higher structural standards than pre-disaster codes required; relocating communities away from highly hazard-prone land; integrating flood drainage into rebuilt roads; or incorporating early warning equipment into rebuilt community halls.</p>
+        <p>BBB is straightforward in principle but operationally demanding. Recovery timelines are driven by political urgency and community suffering — both push toward speed rather than deliberation. Reconstruction agencies face pressure to produce visible results quickly, often at the expense of the risk-reduction quality BBB requires. Local government capacity to plan and oversee quality reconstruction is frequently a binding constraint.</p>
+        <div class="case-study">
+          <div class="cs-header"><span>Case Study</span><strong>Post-2004 Tsunami Housing Reconstruction in Aceh</strong></div>
+          <div class="cs-body">Reconstruction of Aceh, Indonesia, following the 2004 tsunami was one of the largest post-disaster reconstruction operations ever attempted — over USD 7 billion mobilised. While speed and scale were impressive, audits found significant quality variation. Some agencies built to high standards with community participation; others produced housing that was structurally inadequate, culturally inappropriate, or lacked land-tenure security. The Aceh experience produced important lessons about coordination quality, community agency in design, and the need for robust building inspections during mass reconstruction.</div>
+        </div>`
+      },
+      {
+        h: "Psychosocial Support and Community Resilience",
+        body: `<p>Disasters inflict profound psychological harm alongside physical damage. Acute stress reactions, grief, anxiety, depression, and post-traumatic stress disorder (PTSD) are well-documented consequences. The IASC Guidelines on Mental Health and Psychosocial Support in Emergency Settings provide the globally recognised framework, using a four-tier pyramid: broad social supports and community activities at the base, then community-based support, focused individual care, and specialised clinical services at the apex.</p>
+        <p><span class="kt">Community resilience</span> is the capacity to anticipate, reduce, accommodate, recover from, and adapt to disaster impacts. It is inherently multi-dimensional — encompassing economic resources, social capital, institutional capacity, infrastructure quality, and environmental conditions. Norris et al. (2008) identified four primary adaptive capacities: economic development, social capital, information and communication, and community competence. Resilience is not fixed — it changes as communities develop, learn from disaster experience, and invest in or deplete their adaptive capacity over time.</p>`
+      }
+    ],
+    quiz: [
+      { q: "A Post-Disaster Needs Assessment (PDNA) is primarily used to:", opts: ["Determine criminal liability for infrastructure failures during a disaster", "Estimate disaster effects, impacts, and recovery needs to inform funding and planning", "Classify disaster severity for insurance underwriting purposes", "Train emergency managers in field damage assessment techniques"], ans: 1, fb: "Correct. A PDNA estimates total disaster effects (asset destruction), impacts (changes in economic flows), and recovery needs. It is the key government-led instrument that informs the recovery framework and underpins requests for international reconstruction assistance." },
+      { q: "The 'Build Back Better' principle is embedded in which Priority of the Sendai Framework?", opts: ["Priority 1 — Understanding risk", "Priority 2 — Strengthening governance", "Priority 3 — Investing in resilience", "Priority 4 — Enhancing preparedness and response"], ans: 3, fb: "Correct. BBB is embedded in Sendai Framework Priority 4: 'Enhancing disaster preparedness for effective response and to Build Back Better in recovery, rehabilitation and reconstruction.' It reflects the recognition that recovery is a risk reduction opportunity." },
+      { q: "According to Norris et al. (2008), which of the following is NOT one of the four primary adaptive capacities of community resilience?", opts: ["Economic development", "Social capital", "Military capacity", "Community competence"], ans: 2, fb: "Correct. Norris et al. (2008) identify four adaptive capacities: economic development, social capital, information and communication, and community competence. Military capacity is not among them — resilience is primarily a civil, social, and economic phenomenon." }
+    ]
+  },
+  {
+    id: 7,
+    title: "Future Directions",
+    intro: "Disaster management is not a static discipline. Technological innovation, climate escalation, shifting demographics, and evolving ethical frameworks are redefining what effective DRR looks like. This module examines where the field is heading — and what it means for future practitioners.",
+    objectives: [
+      "Identify key technological innovations transforming disaster risk assessment, early warning, and response",
+      "Explain how inclusive DRR frameworks address gender, disability, and indigenous knowledge",
+      "Define anticipatory action and explain why it represents a departure from traditional response models",
+      "Critically evaluate the opportunities and risks of AI and digital technology in disaster management"
+    ],
+    sections: [
+      {
+        h: "Digital Technology and Remote Sensing",
+        body: `<p>The technological transformation of disaster management is accelerating. <span class="kt">Remote sensing</span> — acquiring information without direct contact, using satellite, aerial, and drone platforms — is now fundamental to hazard mapping, damage assessment, and operational response. Synthetic aperture radar (SAR) detects surface changes through cloud cover, enabling flood mapping even when optical imagery is unavailable. The Copernicus Emergency Management Service (CEMS), operated by the EU, provides satellite-derived crisis maps to emergency managers free of charge within hours of a disaster event.</p>
+        <p><span class="kt">Artificial intelligence (AI)</span> is beginning to transform several aspects of disaster management. Machine learning algorithms improve flood and cyclone forecast accuracy, automatically extract damage information from post-disaster imagery, and detect anomalies in disaster risk indicators. Social media analytics track population movement, identify emerging needs, and geolocate distress signals during response operations in real time.</p>
+        <div class="warn-box"><b>Digital Equity Problem</b>Many communities most exposed to disaster risk are least connected to digital technologies. AI- and app-dependent early warning and response systems risk deepening existing inequalities if not deliberately designed for low-bandwidth, low-literacy, and low-technology contexts.</div>`
+      },
+      {
+        h: "Inclusive DRR: Gender, Disability, and Indigenous Knowledge",
+        body: `<p>Disaster impacts are not gender-neutral. Research consistently shows that women and girls face heightened risks during and after disasters — higher mortality rates in many event types, increased exposure to gender-based violence in displacement settings, and slower livelihood recovery due to pre-existing economic inequality. The Sendai Framework explicitly includes gender markers and calls for women's meaningful participation in DRR decision-making at all levels.</p>
+        <p>People with disabilities are disproportionately represented among disaster casualties. Barriers to evacuation, inaccessible emergency shelters, and warning systems that rely solely on visual or auditory signals exclude significant portions of the population. Disability-inclusive DRR requires deliberate design from the outset — not as an afterthought.</p>
+        <p><span class="kt">Indigenous and Local Knowledge (ILK)</span> offers millennia of accumulated environmental observation. Biocultural indicators — the behaviour of specific animal species, plant flowering patterns, changes in water taste and colour — have served as early warning signals in indigenous communities for generations. Integrating ILK with scientific monitoring produces more robust risk knowledge systems than either approach alone. The Sendai Framework's Priority 1 explicitly recognises the value of traditional, indigenous, and local knowledge.</p>`
+      },
+      {
+        h: "Anticipatory Action",
+        body: `<p><span class="kt">Anticipatory action</span> is a paradigm shift in humanitarian practice: rather than waiting for a disaster to cause harm and then responding, anticipatory systems release pre-agreed funding and trigger pre-agreed actions when forecast indicators cross defined thresholds — before the disaster peaks. Pioneered by WFP, IFRC, and the Start Network, anticipatory action programmes have demonstrated significant cost savings and better outcomes compared to post-disaster response, particularly for slow-onset events like drought and seasonal flooding.</p>
+        <p>The mechanism relies on three components: a reliable forecast (meteorological, hydrological, or epidemiological), a pre-defined trigger threshold linked to predicted impact, and pre-agreed financing — either from a country's contingency fund or a pooled mechanism like the UN's Central Emergency Response Fund (CERF). The IFRC's Disaster Response Emergency Fund (DREF) now includes an anticipatory action window.</p>
+        <div class="info-box"><b>Looking Ahead</b>The future of disaster management lies at the intersection of better science, fairer governance, more inclusive practice, and smarter technology — all grounded in the recognition that disaster risk is fundamentally a product of social and political choices, not just natural forces. Practitioners who understand this are equipped to make a genuine difference.</div>`
+      }
+    ],
+    quiz: [
+      { q: "What is anticipatory action in humanitarian practice?", opts: ["Predicting future disasters using historical loss data for insurance pricing", "Releasing pre-agreed funding and triggering actions based on forecasts before a disaster peaks", "Training communities in post-disaster recovery before any disaster occurs", "A military doctrine for pre-emptive deployment to hazard-prone zones"], ans: 1, fb: "Correct. Anticipatory action releases pre-agreed funding and triggers pre-defined actions when forecast indicators cross defined thresholds — before the disaster causes peak harm. It represents a fundamental departure from the traditional reactive humanitarian response model." },
+      { q: "Why is Indigenous and Local Knowledge (ILK) valuable in DRR?", opts: ["It is legally mandated as the primary risk assessment method under Sendai Priority 1", "It provides millennia of accumulated environmental observation that technical systems cannot replicate", "It replaces the need for scientific monitoring in indigenous territories", "It is cheaper to collect than remote sensing data"], ans: 1, fb: "Correct. ILK offers deep, place-based knowledge of environmental patterns and hazard indicators accumulated over generations. It complements — rather than replaces — scientific monitoring, and combining both produces more robust and locally grounded risk knowledge systems." },
+      { q: "Which best describes a key risk of AI use in disaster risk assessment?", opts: ["AI systems are too slow to process hazard data in real time", "Training data biases can produce risk maps that systematically underestimate hazards in under-mapped regions", "AI requires a formal disaster declaration before it can begin processing imagery", "All AI disaster applications require UN Security Council approval"], ans: 1, fb: "Correct. AI models learn from training data, and if that data is geographically biased — as it is when historical hazard records are sparser in low-income countries — the resulting risk assessments can systematically underestimate risk in those regions, compounding existing inequities in disaster preparedness." }
+    ]
+  },
+  {
+    id: 8,
+    title: "Indonesia — Regional Disaster Context",
+    intro: "Indonesia is one of the most disaster-prone nations on Earth. Located at the confluence of four tectonic plates, straddling the equator across 17,000 islands, it faces the full spectrum of natural hazards simultaneously. This module examines Indonesia's risk profile, its institutional framework, landmark disaster events, and the persistent challenges that define DRR in an archipelagic middle-income country.",
+    objectives: [
+      "Explain why Indonesia's geographic and tectonic setting makes it among the highest-risk countries globally",
+      "Describe Indonesia's national disaster management institutional framework — BNPB, BPBD, and Law No. 24/2007",
+      "Analyse the 2018 Palu triple disaster as a case study in compound hazard failure",
+      "Identify the key climate vulnerabilities specific to Indonesia and how ENSO shapes disaster risk"
+    ],
+    sections: [
+      {
+        h: "Indonesia's Disaster Risk Profile",
+        body: `<p>Indonesia sits at the confluence of four major tectonic plates: the Eurasian, Indo-Australian, Philippine, and Pacific plates. This position on the <span class="kt">Pacific Ring of Fire</span> makes Indonesia one of the most seismically and volcanically active countries on Earth. It has 127 active volcanoes — more than any other country — and its territory accounts for roughly 13% of the world's active volcanoes. Major fault systems cross Java, Sumatra, and Sulawesi, generating frequent high-magnitude earthquakes.</p>
+        <p>The archipelagic geography amplifies risk in several ways. With over 17,000 islands and a coastline exceeding 54,000 km, a large proportion of Indonesia's 280 million people live in coastal zones exposed to tsunami, storm surge, and sea-level rise. Java — one of the most densely populated islands on Earth — concentrates hazard exposure among tens of millions of people living on volcanic slopes, floodplains, and steep hillsides prone to landslides.</p>
+        <div class="info-box"><b>Scale of Risk</b>EM-DAT data consistently places Indonesia among the top five countries globally for disaster frequency. Between 2000 and 2020, Indonesia recorded over 500 significant disaster events, affecting millions of people and causing cumulative economic losses in the hundreds of billions of USD. The 2004 Indian Ocean tsunami alone killed over 165,000 Indonesians in Aceh province.</div>
+        <p>Beyond geological hazards, Indonesia's disaster risk is compounded by rapid urbanisation, high levels of informal settlement on hazard-prone land, widespread deforestation — particularly in Sumatra and Kalimantan — that removes natural slope stabilisation and increases landslide risk, and persistent poverty in many outer island communities that limits adaptive capacity.</p>`
+      },
+      {
+        h: "Institutional Framework: BNPB, BPBD, and Law 24/2007",
+        body: `<p>Indonesia's modern disaster management system is built on <span class="kt">Law No. 24 of 2007 on Disaster Management</span> — a landmark piece of legislation enacted partly in response to the lessons of the 2004 tsunami. The law shifted Indonesia's approach from purely reactive emergency response toward a comprehensive risk management model that encompasses prevention, mitigation, preparedness, response, and recovery.</p>
+        <p>The law established <span class="kt">BNPB (Badan Nasional Penanggulangan Bencana)</span> — the National Disaster Management Agency — in 2008. BNPB coordinates national disaster response, maintains the national disaster fund (Dana On-Call), manages the national disaster information system (DIBI), and sets policy and standards for disaster management across Indonesia. It reports directly to the President.</p>
+        <p>At subnational level, <span class="kt">BPBD (Badan Penanggulangan Bencana Daerah)</span> agencies operate at the provincial and district/city level, responsible for local planning, preparedness, and first response. Indonesia's system of otonomi daerah (regional autonomy), implemented after 1999, means local governments have substantial autonomy — but also that BPBD capacity varies enormously across the country's 514 districts. Well-resourced districts in Java may have functional disaster operations centres, trained personnel, and pre-positioned equipment; remote outer-island districts may have almost none.</p>
+        <div class="warn-box"><b>Decentralisation Gap</b>Indonesia's decentralised governance structure is both a strength and a vulnerability in disaster management. Local governments are closest to communities and best placed to act quickly — but uneven fiscal capacity, staffing, and technical expertise across 514 districts means national DRR policy translates into wildly inconsistent local practice.</div>
+        <p>BNPB's <span class="kt">Kelurahan/Desa Tangguh Bencana</span> (Disaster-Resilient Village) programme works to build community-level DRR capacity through village disaster teams, local risk mapping, and evacuation drills. By 2022, over 5,000 villages had been certified under the programme. Indonesia's strong tradition of <span class="kt">gotong royong</span> — communal mutual assistance — provides a cultural foundation for community-based DRR that national programmes seek to formalise and strengthen.</p>`
+      },
+      {
+        h: "The 2018 Palu Triple Disaster: A Case Study in Compound Hazard",
+        body: `<p>On 28 September 2018, a magnitude Mw 7.5 earthquake struck Central Sulawesi, with an epicentre approximately 77 km north of Palu city. What followed was one of the most complex and devastating disaster sequences in Indonesia's modern history.</p>
+        <div class="case-study">
+          <div class="cs-header"><span>Case Study</span><strong>Palu, Sulawesi — Earthquake + Tsunami + Liquefaction (2018)</strong></div>
+          <div class="cs-body">Within minutes of the earthquake, a locally generated tsunami struck Palu Bay. The bay's narrow, funnel-shaped geometry amplified wave heights to up to 7 metres in some locations. Because the tsunami was generated so close to shore — and the source mechanism involved horizontal fault movement rather than the typical vertical displacement — Indonesia's national tsunami warning system (InaTEWS) did not issue a warning in time for evacuation. The warning was cancelled before the waves struck. Approximately 4,340 people were killed — many by the tsunami, but a substantial number by a third simultaneous hazard: soil liquefaction. Entire neighbourhoods of Palu — including Balaroa and Petobo — were built on water-saturated alluvial sediments. The earthquake caused these soils to behave as a liquid, and structures sank or were carried hundreds of metres. Thousands of people and homes disappeared into the flowing ground. The Palu disaster exposed critical gaps in compound hazard preparedness, local tsunami warning communication, and building regulation enforcement in high-liquefaction-risk zones.</div>
+        </div>
+        <p>The 2018 Lombok earthquake sequence — a series of events culminating in a Mw 7.0 earthquake on 5 August 2018 — killed approximately 550 people and severely damaged or destroyed over 80,000 buildings, mostly traditional non-engineered masonry homes. The Lombok sequence demonstrated the continuing challenge of enforcing building codes in regions dominated by informal construction, and the compounding effect of multiple sequential earthquakes on already-damaged structures and traumatised communities.</p>
+        <p>The 2022 Cianjur earthquake (Mw 5.6, West Java, ~330 killed) reinforced a persistent pattern: Indonesia's largest death tolls from earthquakes often come not from the highest-magnitude events, but from moderate earthquakes directly beneath densely populated areas with high concentrations of unreinforced masonry housing on steep terrain. Magnitude alone is a poor predictor of Indonesian earthquake mortality.</p>`
+      },
+      {
+        h: "Climate Vulnerabilities: ENSO, Flooding, and Sea-Level Rise",
+        body: `<p>Indonesia's climate is strongly influenced by the <span class="kt">El Niño-Southern Oscillation (ENSO)</span>. During El Niño events, the Western Pacific and Maritime Continent experience below-normal rainfall and drought conditions, dramatically increasing fire risk across Sumatra and Kalimantan. The 1997–98 El Niño produced catastrophic wildfires across these islands, burning over 9 million hectares and producing transboundary smoke haze that affected Malaysia, Singapore, and parts of Thailand. The 2015 El Niño similarly generated severe fires, with smoke exposure causing an estimated 100,000 premature deaths across the region. During La Niña years, Indonesia experiences above-normal rainfall, increasing flood and landslide risk.</p>
+        <p>Flooding is Indonesia's most frequently occurring disaster. <span class="kt">Jakarta</span> floods virtually every wet season — a consequence of its location on a low-lying coastal delta, combined with severe land subsidence (parts of North Jakarta are sinking at up to 25 cm per year due to excessive groundwater extraction) and inadequate urban drainage. The combination of subsidence and sea-level rise means that significant portions of North Jakarta could be permanently inundated by mid-century under current trajectories. The Indonesian government's decision to relocate the national capital to <span class="kt">Nusantara</span> in East Kalimantan is partly motivated by Jakarta's worsening flood and subsidence outlook, alongside broader development equity goals.</p>
+        <div class="info-box"><b>ENSO and Indonesian Disaster Risk</b>ENSO is arguably the single most important climatic driver of inter-annual disaster risk variation in Indonesia. Integrating ENSO forecast information into national DRR planning — particularly for fire season preparedness and drought early warning — is now a priority for BNPB and the Indonesian Meteorology, Climatology, and Geophysics Agency (BMKG).</div>
+        <p>Sea-level rise poses an existential threat to Indonesia's small outer islands and low-lying coastal communities. Indonesia has over 1,900 small islands classified as vulnerable to sea-level rise. For communities whose livelihoods, culture, and identity are tied to specific island territories — including many in Maluku and Papua — the prospect of inundation raises profound questions about managed retreat, cultural loss, and climate justice that sit at the intersection of disaster risk, human rights, and development policy.</p>`
+      }
+    ],
+    quiz: [
+      { q: "Which legislation established Indonesia's current national disaster management framework, including BNPB?", opts: ["Presidential Decree No. 3/2001 on National Disaster Coordination", "Law No. 24/2007 on Disaster Management", "Government Regulation No. 21/2008 on Disaster Management Operations", "Law No. 32/2004 on Regional Governance"], ans: 1, fb: "Correct. Law No. 24/2007 on Disaster Management is Indonesia's foundational DRR legislation. It established BNPB, mandated the creation of BPBDs at subnational level, and shifted Indonesia's approach from reactive emergency response toward comprehensive risk management." },
+      { q: "The 2018 Palu disaster involved three simultaneous hazard events. Which combination is correct?", opts: ["Volcanic eruption, tsunami, and ashfall", "Earthquake, tsunami, and soil liquefaction", "Earthquake, landslide, and flooding", "Cyclone, storm surge, and coastal erosion"], ans: 1, fb: "Correct. The Palu disaster involved a Mw 7.5 earthquake, a locally generated tsunami that struck within minutes, and widespread soil liquefaction that caused entire neighbourhoods to liquefy and flow. The compound nature of the event — and the failure of the early warning system to communicate the tsunami threat in time — made it one of Indonesia's most complex modern disasters." },
+      { q: "Which climatic phenomenon most strongly drives drought and wildfire risk in Indonesia during its warm phase?", opts: ["The Indian Ocean Dipole (IOD) in its negative phase", "The El Niño-Southern Oscillation (ENSO) during El Niño events", "The Madden-Julian Oscillation (MJO) during active phases", "The Southern Annular Mode (SAM) in its positive phase"], ans: 1, fb: "Correct. El Niño events — the warm phase of ENSO — suppress rainfall across the Western Pacific and Maritime Continent, dramatically increasing drought severity and fire weather risk in Sumatra and Kalimantan. The 1997–98 and 2015 El Niño events produced catastrophic fire seasons with severe transboundary haze impacts across Southeast Asia." }
+    ]
+  }
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const SK = 'dm_v1';
+function loadState() {
+  try { const r = localStorage.getItem(SK); if (r) return JSON.parse(r); } catch(e) {}
+  return { cur: 0, done: [], answers: {}, view: 'module' };
+}
+function save(s) { try { localStorage.setItem(SK, JSON.stringify(s)); } catch(e) {} }
+
+let S = loadState();
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+function renderSidebar() {
+  const nav = document.getElementById('module-nav');
+  nav.innerHTML = MODS.map(m => {
+    const isActive = S.cur === m.id && S.view === 'module';
+    const isDone   = S.done.includes(m.id);
+    let cls = 'nav-item';
+    if (isActive) cls += ' active';
+    if (isDone)   cls += ' done';
+    const dot = isDone ? '✓' : (m.id + 1);
+    return `<button class="${cls}" onclick="goTo(${m.id})"><span class="nav-dot">${dot}</span><span>${m.title}</span></button>`;
+  }).join('');
+  const pct = Math.round(S.done.length / MODS.length * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = S.done.length + ' / ' + MODS.length;
+}
+
+function renderModule(id) {
+  const m = MODS[id];
+  const ans = S.answers[id] || {};
+  const allDone = m.quiz.every((_, i) => ans[i] !== undefined);
+  const isDone  = S.done.includes(id);
+
+  const sects = m.sections.map(s => `
+    <div class="section"><h2>${s.h}</h2>${s.body}</div>`).join('');
+
+  const qs = m.quiz.map((q, qi) => {
+    const picked = ans[qi];
+    const answered = picked !== undefined;
+    const opts = q.opts.map((o, oi) => {
+      let cls = 'opt';
+      if (answered) { if (oi === q.ans) cls += ' correct'; else if (oi === picked) cls += ' wrong'; }
+      const ltr = String.fromCharCode(65 + oi);
+      return `<button class="${cls}" onclick="answer(${id},${qi},${oi})" ${answered ? 'disabled' : ''}>
+        <span class="opt-letter">${ltr}</span>${o}</button>`;
+    }).join('');
+    const fbCls = answered ? ('feedback show ' + (picked === q.ans ? 'ok' : 'bad')) : 'feedback';
+    return `<div class="quiz-q">
+      <p><span class="qn">Q${qi+1}.</span>${q.q}</p>
+      <div class="options">${opts}</div>
+      <div class="${fbCls}">${answered ? q.fb : ''}</div>
+    </div>`;
+  }).join('');
+
+  const btnLabel = isDone ? '✓ Module Completed' : (allDone ? 'Mark as Complete →' : 'Answer all questions to continue');
+  const prev = id > 0 ? `<button class="nav-btn" onclick="goTo(${id-1})">← Previous</button>` : '';
+  const next = id < MODS.length - 1 ? `<button class="nav-btn primary" onclick="goTo(${id+1})">Next Module →</button>` : '';
+  const fin  = (id === MODS.length - 1 && isDone) ? `<button class="nav-btn primary" onclick="showDone()">View Completion →</button>` : '';
+
+  document.getElementById('main').innerHTML = `
+    <div class="eyebrow">Module ${id+1} of ${MODS.length}</div>
+    <h1 class="mod-title">${m.title}</h1>
+    <p class="mod-intro">${m.intro}</p>
+    <div class="objectives"><h3>Learning Objectives</h3><ol>${m.objectives.map(o=>`<li>${o}</li>`).join('')}</ol></div>
+    ${sects}
+    <div class="quiz-section">
+      <div class="quiz-head"><h2>Knowledge Check</h2><span class="quiz-badge">${m.quiz.length} Questions</span></div>
+      ${qs}
+      <button class="complete-btn" onclick="complete(${id})" ${isDone||!allDone?'disabled':''}>${btnLabel}</button>
+      <div class="nav-btns">${prev}${next}${fin}</div>
+    </div>`;
+  document.getElementById('main').scrollTop = 0;
+}
+
+function showDone() {
+  S.view = 'done'; save(S);
+  let correct = 0, total = 0;
+  MODS.forEach(m => {
+    const ans = S.answers[m.id] || {};
+    m.quiz.forEach((q, i) => { total++; if (ans[i] === q.ans) correct++; });
+  });
+  const pct = Math.round(correct / total * 100);
+  document.getElementById('main').innerHTML = `
+    <div class="done-screen">
+      <div class="done-badge">🎓</div>
+      <h1>Course Complete</h1>
+      <p>You have completed Disaster Management Fundamentals. Here is a summary of your performance across all nine modules.</p>
+      <div class="score-grid">
+        <div class="score-card"><div class="score-num">${S.done.length}</div><div class="score-lbl">Modules</div></div>
+        <div class="score-card"><div class="score-num">${correct}</div><div class="score-lbl">Correct</div></div>
+        <div class="score-card"><div class="score-num">${total}</div><div class="score-lbl">Questions</div></div>
+        <div class="score-card"><div class="score-num">${pct}%</div><div class="score-lbl">Score</div></div>
+      </div>
+      <button class="complete-btn" onclick="reset()">Start Over</button>
+    </div>`;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+function goTo(id) {
+  S.cur = id; S.view = 'module'; save(S);
+  renderSidebar(); renderModule(id);
+}
+
+function answer(modId, qi, oi) {
+  if (!S.answers[modId]) S.answers[modId] = {};
+  S.answers[modId][qi] = oi;
+  save(S); renderModule(modId);
+}
+
+function complete(id) {
+  if (!S.done.includes(id)) S.done.push(id);
+  save(S); renderSidebar(); renderModule(id);
+}
+
+function reset() {
+  S = { cur: 0, done: [], answers: {}, view: 'module' };
+  save(S); renderSidebar(); renderModule(0);
+}
+
+/* INIT */
+renderSidebar();
+if (S.view === 'done') showDone();
+else renderModule(S.cur);
+</script>
+</body>
+</html>
