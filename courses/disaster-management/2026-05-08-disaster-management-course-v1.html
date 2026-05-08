@@ -522,10 +522,10 @@ body {
         <rect x="54" y="28" width="14" height="44" fill="#FBF4E6"/>
         <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
       </svg>
-      <div class="brand-text">Disaster Management<small id="module-count" aria-live="polite" aria-busy="true">Fundamentals · Loading...</small></div>
+      <div class="brand-text">Disaster Management<small id="module-count">Fundamentals · 10 Modules</small></div>
     </div>
     <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-    <div class="prog-meta"><span>Progress</span><span id="prog-text" aria-live="polite" aria-busy="true">Loading...</span></div>
+    <div class="prog-meta"><span>Progress</span><span id="prog-text">0 / 10</span></div>
   </div>
   <nav class="module-nav" id="module-nav"></nav>
   <div class="sidebar-footer">
@@ -1065,12 +1065,10 @@ const contentModuleCount = MODS.filter(m => m.quiz && m.quiz.length).length;
 const moduleCountLabel = document.getElementById('module-count');
 if (moduleCountLabel) {
   moduleCountLabel.textContent = 'Fundamentals · ' + MODS.length + ' Modules';
-  moduleCountLabel.setAttribute('aria-busy', 'false');
 }
 const progText = document.getElementById('prog-text');
 if (progText) {
   progText.textContent = '0 / ' + MODS.length;
-  progText.setAttribute('aria-busy', 'false');
 }
 
 /* =========================================================
@@ -1161,7 +1159,7 @@ function showDone() {
     <div class="done-screen">
       <div class="done-badge">🎓</div>
       <h1>Course Complete</h1>
-      <p>You have completed Disaster Management Fundamentals. Here is a summary of your performance across all ${contentModuleCount} content modules.</p>
+      <p>You have completed Disaster Management Fundamentals. Here is a summary of your performance across all ${contentModuleCount} learning modules with quizzes.</p>
       <div class="score-grid">
         <div class="score-card"><div class="score-num">${S.done.length}</div><div class="score-lbl">Modules</div></div>
         <div class="score-card"><div class="score-num">${correct}</div><div class="score-lbl">Correct</div></div>
