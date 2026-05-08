@@ -522,10 +522,10 @@ body {
         <rect x="54" y="28" width="14" height="44" fill="#FBF4E6"/>
         <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
       </svg>
-      <div class="brand-text">Disaster Management<small>Fundamentals · 10 Modules</small></div>
+      <div class="brand-text">Disaster Management<small id="module-count">Fundamentals · 10 Modules</small></div>
     </div>
     <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-    <div class="prog-meta"><span>Progress</span><span id="prog-text">0 / 10</span></div>
+    <div class="prog-meta"><span>Progress</span><span id="prog-text">0 / —</span></div>
   </div>
   <nav class="module-nav" id="module-nav"></nav>
   <div class="sidebar-footer">
@@ -918,7 +918,7 @@ const MODS = [
     id: 9,
     type: 'ref',
     title: "References & Further Reading",
-    intro: "All sources cited across the nine modules are listed below, annotated with their contributions and limitations. Sources are colour-coded by topic group and include direct links to DOIs or official publication pages.",
+    intro: "All sources cited across the modules are listed below, annotated with their contributions and limitations. Sources are colour-coded by topic group and include direct links to DOIs or official publication pages.",
     objectives: [],
     sections: [
       {
@@ -1061,6 +1061,14 @@ function loadState() {
 function save(s) { try { localStorage.setItem(SK, JSON.stringify(s)); } catch(e) {} }
 
 let S = loadState();
+const moduleCountLabel = document.getElementById('module-count');
+if (moduleCountLabel) {
+  moduleCountLabel.textContent = 'Fundamentals · ' + MODS.length + ' Modules';
+}
+const progText = document.getElementById('prog-text');
+if (progText) {
+  progText.textContent = '0 / ' + MODS.length;
+}
 
 /* =========================================================
    RENDER
