@@ -44,6 +44,8 @@ learn-with-adhi/
     ├── coding/
     │   ├── code-ecosystem-guide-complete-v1.html — How to Code for Non-Coders (live)
     │   └── code-for-non-coders-v2.html           — v2 in progress
+    ├── clothing-textiles/
+    │   └── 2026-05-08-clothing-textiles-course-v2.html — Clothing, Textiles & Our World (live)
     ├── ielts/
     │   ├── ielts-bahasa-hacking.html      — Bahasa Hacking IELTS (live)
     │   ├── ielts-bahasa-hacking-v2.html   — v2 in progress
@@ -74,5 +76,5 @@ Then open `http://localhost:8000` in your browser.
 
 - Theme preference on the home page is saved in browser `localStorage`.
 - No build step is required.
-- v2 course files are works in progress and not yet linked from the home page.
+- Most v2 course files are works in progress and not yet linked from the home page.
 - Use [`design-system/adhi-design-system.html`](design-system/adhi-design-system.html) as the default reference when building new pages/components, except the logo (do not reuse the logo).
