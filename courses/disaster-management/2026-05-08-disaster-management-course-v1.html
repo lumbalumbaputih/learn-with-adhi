@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Disaster Management — Fundamentals Course</title>
-<link rel="icon" href="../../assets/favicon-32.png" type="image/png" />
+<link rel="icon" href="/assets/favicon-32.png" type="image/png" />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ===== ADHI DESIGN TOKENS ===== */
@@ -115,24 +115,21 @@ body {
 .module-nav { flex: 1; }
 
 .sidebar-footer {
-  margin-top: auto;
-  padding: 16px 20px 0;
+  padding: 16px 20px 4px;
   border-top: 1px solid rgba(251,244,230,0.08);
 }
 
-.sidebar-hub-link {
+.hub-link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(251,244,230,0.8);
-  text-decoration: none;
+  color: rgba(251,244,230,0.7);
 }
-
-.sidebar-hub-link:hover { color: var(--hidup-tomato); }
+.hub-link:hover { color: var(--paper); }
 
 .nav-item {
   display: flex;
@@ -460,6 +457,58 @@ body {
 .score-card { background: var(--paper-2); border: 1.5px solid var(--line-strong); border-radius: var(--radius-14); padding: 18px 12px; }
 .score-num { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--hidup-tomato); }
 .score-lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+/* ===== REFERENCES ===== */
+.ref-group-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 32px 0 12px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--line);
+}
+.ref-group-label:first-child { margin-top: 0; }
+.ref-item {
+  border: 1px solid var(--line-strong);
+  border-left-width: 3px;
+  border-radius: 0 var(--radius-8) var(--radius-8) 0;
+  padding: 13px 16px;
+  margin-bottom: 10px;
+  background: var(--paper);
+}
+.ref-citation {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink);
+  margin-bottom: 7px;
+}
+.ref-annotation {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.ref-link {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--hidup-sea);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+.ref-link:hover { text-decoration: underline; }
+.ref-caveat {
+  background: rgba(255,92,57,0.07);
+  border-left: 3px solid var(--hidup-tomato);
+  border-radius: 0 var(--radius-8) var(--radius-8) 0;
+  padding: 13px 16px;
+  margin-top: 32px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.ref-caveat b { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--hidup-tomato); margin-bottom: 5px; }
 </style>
 </head>
 <body>
@@ -473,14 +522,14 @@ body {
         <rect x="54" y="28" width="14" height="44" fill="#FBF4E6"/>
         <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
       </svg>
-      <div class="brand-text">Disaster Management<small>Fundamentals · 9 Modules</small></div>
+      <div class="brand-text">Disaster Management<small>Fundamentals · 10 Modules</small></div>
     </div>
     <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
     <div class="prog-meta"><span>Progress</span><span id="prog-text">0 / 8</span></div>
   </div>
   <nav class="module-nav" id="module-nav"></nav>
   <div class="sidebar-footer">
-    <a class="sidebar-hub-link" href="../../index.html">← Back to Course Hub</a>
+    <a class="hub-link" href="../../index.html">← Learning Hub</a>
   </div>
 </aside>
 
@@ -864,6 +913,140 @@ const MODS = [
       { q: "The 2018 Palu disaster involved three simultaneous hazard events. Which combination is correct?", opts: ["Volcanic eruption, tsunami, and ashfall", "Earthquake, tsunami, and soil liquefaction", "Earthquake, landslide, and flooding", "Cyclone, storm surge, and coastal erosion"], ans: 1, fb: "Correct. The Palu disaster involved a Mw 7.5 earthquake, a locally generated tsunami that struck within minutes, and widespread soil liquefaction that caused entire neighbourhoods to liquefy and flow. The compound nature of the event — and the failure of the early warning system to communicate the tsunami threat in time — made it one of Indonesia's most complex modern disasters." },
       { q: "Which climatic phenomenon most strongly drives drought and wildfire risk in Indonesia during its warm phase?", opts: ["The Indian Ocean Dipole (IOD) in its negative phase", "The El Niño-Southern Oscillation (ENSO) during El Niño events", "The Madden-Julian Oscillation (MJO) during active phases", "The Southern Annular Mode (SAM) in its positive phase"], ans: 1, fb: "Correct. El Niño events — the warm phase of ENSO — suppress rainfall across the Western Pacific and Maritime Continent, dramatically increasing drought severity and fire weather risk in Sumatra and Kalimantan. The 1997–98 and 2015 El Niño events produced catastrophic fire seasons with severe transboundary haze impacts across Southeast Asia." }
     ]
+  },
+  {
+    id: 9,
+    type: 'ref',
+    title: "References & Further Reading",
+    intro: "All sources cited across the nine modules are listed below, annotated with their contributions and limitations. Sources are colour-coded by topic group and include direct links to DOIs or official publication pages.",
+    objectives: [],
+    sections: [
+      {
+        h: "Frameworks & Policy",
+        body: `<p class="ref-group-label" style="margin-top:0">Frameworks & Policy</p>
+        <div class="ref-item" style="border-left-color:var(--hidup-indigo)">
+          <div class="ref-citation">UNDRR. 2015. <em>Sendai Framework for Disaster Risk Reduction 2015–2030</em>. Geneva: United Nations Office for Disaster Risk Reduction.</div>
+          <div class="ref-annotation">The current global blueprint for DRR, adopted by 187 UN member states. Sets four priorities and seven global targets for 2015–2030. Essential primary source for understanding international DRR governance. Note that implementation progress is uneven across member states, and the framework's voluntary nature limits enforcement.</div>
+          <a class="ref-link" href="https://www.undrr.org/publication/sendai-framework-disaster-risk-reduction-2015-2030" target="_blank">→ Source (UNDRR)</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-indigo)">
+          <div class="ref-citation">UNDRR. 2017. <em>Terminology on Disaster Risk Reduction</em>. Geneva: United Nations Office for Disaster Risk Reduction.</div>
+          <div class="ref-annotation">The authoritative glossary of DRR terms used in this course, including the official definitions of hazard, exposure, vulnerability, capacity, and disaster risk. Terminology is updated periodically; practitioners should verify against the latest version for policy documents.</div>
+          <a class="ref-link" href="https://www.undrr.org/terminology" target="_blank">→ Source (UNDRR)</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-indigo)">
+          <div class="ref-citation">UNISDR. 2005. <em>Hyogo Framework for Action 2005–2015: Building the Resilience of Nations and Communities to Disasters</em>. Geneva: United Nations International Strategy for Disaster Reduction.</div>
+          <div class="ref-annotation">The predecessor to the Sendai Framework, adopted in the wake of the 2004 Indian Ocean tsunami. Provides essential context for understanding how global DRR governance evolved. Its five priorities and reliance on self-reported national progress data were identified as key limitations in the 2015 mid-term review.</div>
+          <a class="ref-link" href="https://www.undrr.org/publication/hyogo-framework-action-2005-2015-building-resilience-nations-and-communities-disasters" target="_blank">→ Source (UNDRR)</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-indigo)">
+          <div class="ref-citation">UN General Assembly. 2015. <em>Transforming Our World: The 2030 Agenda for Sustainable Development</em>. Resolution A/RES/70/1. New York: United Nations.</div>
+          <div class="ref-annotation">Establishes the 17 Sustainable Development Goals, several of which directly address disaster risk (SDG 1, 11, 13). Demonstrates the integration of DRR into the broader sustainable development agenda. Progress is tracked via Voluntary National Reviews; data quality and comparability vary significantly across countries.</div>
+          <a class="ref-link" href="https://sdgs.un.org/2030agenda" target="_blank">→ Source (UN SDGs)</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-indigo)">
+          <div class="ref-citation">UNFCCC. 2015. <em>Paris Agreement</em>. Bonn: UNFCCC Secretariat.</div>
+          <div class="ref-annotation">The landmark international climate treaty committing signatories to limiting warming and enhancing adaptive capacity. Directly relevant to climate-related disaster risk. NDC (Nationally Determined Contribution) ambition and implementation tracking remain significant concerns given current emission trajectories.</div>
+          <a class="ref-link" href="https://unfccc.int/process-and-meetings/the-paris-agreement" target="_blank">→ Source (UNFCCC)</a>
+        </div>`
+      },
+      {
+        h: "Risk Science & Assessment",
+        body: `<p class="ref-group-label">Risk Science & Assessment</p>
+        <div class="ref-item" style="border-left-color:var(--hidup-sea)">
+          <div class="ref-citation">Wisner, Ben, Piers Blaikie, Terry Cannon, and Ian Davis. 2004. <em>At Risk: Natural Hazards, People's Vulnerability and Disasters</em>. 2nd ed. London: Routledge.</div>
+          <div class="ref-annotation">The foundational text for the social vulnerability approach to disaster risk. Introduces the Pressure and Release (PAR) model and the concept of unsafe conditions, access to resources, and dynamic pressures as root causes of disaster. Remains essential reading despite being two decades old; its core arguments have only gained empirical support.</div>
+          <a class="ref-link" href="https://scholar.google.com/scholar?q=At+Risk+Wisner+Blaikie+Cannon+Davis+2004+Routledge" target="_blank">→ Google Scholar</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-sea)">
+          <div class="ref-citation">Cutter, Susan L., Bryan J. Boruff, and W. Lynn Shirley. 2003. "Social Vulnerability to Environmental Hazards." <em>Social Science Quarterly</em> 84 (2): 242–261.</div>
+          <div class="ref-annotation">Introduces the Social Vulnerability Index (SoVI) methodology, identifying 11 independent factors of social vulnerability in the US context. Highly influential in vulnerability mapping methodology globally. Note that the index was developed for the US and its direct transfer to other national contexts requires careful recalibration.</div>
+          <a class="ref-link" href="https://doi.org/10.1111/1540-6237.8402002" target="_blank">→ DOI: 10.1111/1540-6237.8402002</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-sea)">
+          <div class="ref-citation">UNDRR. 2022. <em>Global Assessment Report on Disaster Risk Reduction 2022: Our World at Risk — Transforming Governance for a Resilient Future</em>. Geneva: UNDRR.</div>
+          <div class="ref-annotation">The most recent comprehensive global review of disaster risk trends, governance gaps, and policy recommendations. Introduces the concept of "extensive risk" (small-scale, frequent events) alongside "intensive risk" (catastrophic events). Data is reliant on national reporting and EM-DAT, both of which have coverage gaps in low-income countries.</div>
+          <a class="ref-link" href="https://www.undrr.org/gar2022" target="_blank">→ Source (UNDRR GAR 2022)</a>
+        </div>`
+      },
+      {
+        h: "Climate Change & Attribution",
+        body: `<p class="ref-group-label">Climate Change & Attribution</p>
+        <div class="ref-item" style="border-left-color:var(--hidup-tomato)">
+          <div class="ref-citation">IPCC. 2021. <em>Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change</em>. Edited by V. Masson-Delmotte et al. Cambridge: Cambridge University Press.</div>
+          <div class="ref-annotation">The definitive scientific synthesis of observed and projected changes in the climate system. Module 4 of this course draws heavily on AR6 WGI findings regarding extreme event intensification, sea-level rise scenarios, and the Clausius-Clapeyron relationship. The SPM (Summary for Policymakers) is freely available and sufficient for most DRR applications.</div>
+          <a class="ref-link" href="https://doi.org/10.1017/9781009157896" target="_blank">→ DOI: 10.1017/9781009157896</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-tomato)">
+          <div class="ref-citation">IPCC. 2022. <em>Climate Change 2022: Impacts, Adaptation and Vulnerability. Contribution of Working Group II to the Sixth Assessment Report</em>. Edited by H.-O. Pörtner et al. Cambridge: Cambridge University Press.</div>
+          <div class="ref-annotation">Assesses observed and projected impacts of climate change on natural and human systems, and evaluates adaptation options and their limits. Directly relevant to compound event management, Loss and Damage, and the integration of climate adaptation with DRR. Most relevant chapters for this course: Chapter 2 (terrestrial ecosystems), Chapter 4 (water), and Chapter 16 (loss and damage).</div>
+          <a class="ref-link" href="https://doi.org/10.1017/9781009325844" target="_blank">→ DOI: 10.1017/9781009325844</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-tomato)">
+          <div class="ref-citation">van Oldenborgh, Geert Jan, Folmer Krikken, Sophie Lewis, et al. 2021. "Attribution of the Australian Bushfire Risk to Anthropogenic Climate Change." <em>Natural Hazards and Earth System Sciences</em> 21 (3): 941–960.</div>
+          <div class="ref-annotation">A peer-reviewed attribution study quantifying the contribution of anthropogenic climate change to the extreme fire weather conditions of the 2019–20 Australian Black Summer. Uses multiple climate models and observational data to estimate that the probability of extreme fire weather was increased by at least 30% due to human-caused climate change. Open access.</div>
+          <a class="ref-link" href="https://doi.org/10.5194/nhess-21-941-2021" target="_blank">→ DOI: 10.5194/nhess-21-941-2021</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-tomato)">
+          <div class="ref-citation">World Weather Attribution. 2022. "Climate Change Likely Increased Extreme Monsoon Rainfall, Flooding Highly Vulnerable Communities in Pakistan." Amsterdam: World Weather Attribution Team.</div>
+          <div class="ref-annotation">A rapid attribution analysis of the 2022 Pakistan floods, finding that climate change made the extreme rainfall approximately 50% more intense. While rapid attribution studies use an expedited methodology compared to full peer-reviewed attribution research, WWA's methods are internationally recognised and their studies are typically later corroborated in peer-reviewed literature.</div>
+          <a class="ref-link" href="https://www.worldweatherattribution.org/climate-change-likely-increased-extreme-monsoon-rainfall-flooding-highly-vulnerable-communities-in-pakistan/" target="_blank">→ Source (WWA)</a>
+        </div>`
+      },
+      {
+        h: "Emergency Response & Recovery",
+        body: `<p class="ref-group-label">Emergency Response & Recovery</p>
+        <div class="ref-item" style="border-left-color:var(--hidup-mango)">
+          <div class="ref-citation">Sphere Association. 2018. <em>The Sphere Handbook: Humanitarian Charter and Minimum Standards in Humanitarian Response</em>. 4th ed. Geneva: Sphere Association.</div>
+          <div class="ref-annotation">The globally recognised standard for humanitarian response quality, covering WASH, food security, shelter, and health. The fourth edition strengthened the protection principles and expanded guidance on accountability to affected populations. Limitations: the standards were developed primarily in the context of large-scale international response and may require adaptation for localised or protracted crises.</div>
+          <a class="ref-link" href="https://spherestandards.org/handbook/" target="_blank">→ Source (Sphere)</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-mango)">
+          <div class="ref-citation">IASC. 2007. <em>IASC Guidelines on Mental Health and Psychosocial Support in Emergency Settings</em>. Geneva: Inter-Agency Standing Committee.</div>
+          <div class="ref-annotation">Establishes the four-tier pyramid model for psychosocial support in humanitarian emergencies. Provides practical guidance for designing MHPSS programmes across the response spectrum. Note that the guidelines are now over 15 years old; the field has evolved significantly, particularly regarding trauma-informed care and the integration of cultural considerations.</div>
+          <a class="ref-link" href="https://interagencystandingcommittee.org/mental-health-and-psychosocial-support-emergency-settings" target="_blank">→ Source (IASC)</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-mango)">
+          <div class="ref-citation">Norris, Fran H., Susan P. Stevens, Betty Pfefferbaum, Karen F. Wyche, and Rose L. Pfefferbaum. 2008. "Community Resilience as a Metaphor, Theory, Set of Capacities, and Strategy for Disaster Readiness." <em>American Journal of Community Psychology</em> 41 (1–2): 127–150.</div>
+          <div class="ref-annotation">The most widely cited empirical framework for community resilience, identifying four adaptive capacities: economic development, social capital, information and communication, and community competence. The study draws on a systematic review of post-disaster community outcomes. A key limitation is that the framework was developed primarily from studies of high-income country contexts.</div>
+          <a class="ref-link" href="https://doi.org/10.1007/s10464-007-9156-6" target="_blank">→ DOI: 10.1007/s10464-007-9156-6</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-mango)">
+          <div class="ref-citation">World Bank, European Union, and United Nations. 2010. <em>Post-Disaster Needs Assessment: Volume A — Guidelines</em>. Washington, DC: World Bank.</div>
+          <div class="ref-annotation">The methodological guide for conducting Post-Disaster Needs Assessments (PDNA), covering the assessment of effects (asset damage and destruction) and impacts (changes in economic flows). Widely used as the standard approach for government-led recovery planning. The guidelines have been updated periodically; practitioners should verify they are using the current edition.</div>
+          <a class="ref-link" href="https://www.gfdrr.org/en/publication/pdna-guidelines-vol-b" target="_blank">→ Source (GFDRR/World Bank)</a>
+        </div>`
+      },
+      {
+        h: "Indonesia — Regional Sources",
+        body: `<p class="ref-group-label">Indonesia — Regional Sources</p>
+        <div class="ref-item" style="border-left-color:var(--hidup-mawar)">
+          <div class="ref-citation">Republik Indonesia. 2007. <em>Undang-Undang Nomor 24 Tahun 2007 tentang Penanggulangan Bencana</em> [Law No. 24 of 2007 on Disaster Management]. Jakarta: Sekretariat Negara.</div>
+          <div class="ref-annotation">The foundational legislation establishing Indonesia's modern disaster management system, including BNPB and the mandate for BPBD at provincial and district level. Reading the original law alongside subsequent government regulations (PP No. 21/2008 on Operations and PP No. 22/2008 on Funding) provides a complete picture of the legal framework.</div>
+          <a class="ref-link" href="https://bnpb.go.id/ppid/file/UU_24_2007.pdf" target="_blank">→ Source (BNPB)</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-mawar)">
+          <div class="ref-citation">BNPB (Badan Nasional Penanggulangan Bencana). 2022. <em>Data Informasi Bencana Indonesia (DIBI)</em>. Jakarta: BNPB.</div>
+          <div class="ref-annotation">Indonesia's national disaster loss database, maintained by BNPB. Covers disaster events, affected populations, damage, and losses from 1815 to the present. An essential quantitative resource for Indonesian disaster risk analysis. Coverage and data quality improve significantly after 2007 (post-BNPB establishment); historical records should be used with caution.</div>
+          <a class="ref-link" href="https://dibi.bnpb.go.id" target="_blank">→ Source (BNPB DIBI)</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-mawar)">
+          <div class="ref-citation">Omira, R., R. S. Dogan, R. Hidayat, et al. 2019. "The September 28th, 2018, Tsunami in Palu-Sulawesi, Indonesia: A Post-Event Field Survey." <em>Pure and Applied Geophysics</em> 176 (4): 1379–1395.</div>
+          <div class="ref-annotation">A field-survey-based scientific reconstruction of the 2018 Palu tsunami, including run-up heights, inundation extents, and analysis of the bay's geometrical amplification effect. The paper also examines why the standard InaTEWS warning protocols failed to communicate the threat in time. Essential primary reference for the Palu compound disaster case study.</div>
+          <a class="ref-link" href="https://doi.org/10.1007/s00024-019-02145-z" target="_blank">→ DOI: 10.1007/s00024-019-02145-z</a>
+        </div>
+        <div class="ref-item" style="border-left-color:var(--hidup-mawar)">
+          <div class="ref-citation">Australian Bureau of Meteorology and CSIRO. 2022. <em>State of the Climate 2022</em>. Melbourne: Bureau of Meteorology.</div>
+          <div class="ref-annotation">A biennial joint report assessing Australian and regional climate trends, including ENSO variability, rainfall trends, and sea surface temperature patterns across the Indo-Pacific. Provides essential regional climate context for understanding ENSO-driven disaster risk in Indonesia and the broader Southeast Asia–Pacific region. Freely available and regularly updated.</div>
+          <a class="ref-link" href="https://www.bom.gov.au/state-of-the-climate/" target="_blank">→ Source (BoM)</a>
+        </div>
+        <div class="ref-caveat">
+          <b>Data Quality Caveats for This Course</b>
+          Global disaster loss databases (EM-DAT, DIBI, Desinventar) are compiled from a range of primary sources including government reports, media accounts, and scientific assessments. Coverage is substantially better for high-income countries and for high-intensity events that attract international attention. Small-scale, frequent disasters — which often cause the greatest cumulative harm to vulnerable communities — are systematically under-represented. Mortality figures should be treated as minimum estimates. Economic loss figures from low- and middle-income countries are particularly uncertain, as asset values are harder to establish and informal economic losses (livelihoods, subsistence production) are rarely captured. Attribution science is rapidly evolving; findings from rapid attribution studies should be confirmed against subsequent peer-reviewed publications where possible.
+        </div>`
+      }
+    ],
+    quiz: []
   }
 ];
 
@@ -930,18 +1113,28 @@ function renderModule(id) {
   const next = id < MODS.length - 1 ? `<button class="nav-btn primary" onclick="goTo(${id+1})">Next Module →</button>` : '';
   const fin  = (id === MODS.length - 1 && isDone) ? `<button class="nav-btn primary" onclick="showDone()">View Completion →</button>` : '';
 
+  const objectivesBlock = m.type === 'ref' ? '' :
+    `<div class="objectives"><h3>Learning Objectives</h3><ol>${m.objectives.map(o=>`<li>${o}</li>`).join('')}</ol></div>`;
+
+  const bottomBlock = m.type === 'ref'
+    ? `<div style="margin-top:40px;padding-top:24px;border-top:1.5px solid var(--line)">
+        <button class="complete-btn" onclick="complete(${id})" ${isDone?'disabled':''}>${isDone ? '✓ Completed' : 'Mark as Complete →'}</button>
+        <div class="nav-btns" style="margin-top:16px">${prev}${fin}</div>
+      </div>`
+    : `<div class="quiz-section">
+        <div class="quiz-head"><h2>Knowledge Check</h2><span class="quiz-badge">${m.quiz.length} Questions</span></div>
+        ${qs}
+        <button class="complete-btn" onclick="complete(${id})" ${isDone||!allDone?'disabled':''}>${btnLabel}</button>
+        <div class="nav-btns">${prev}${next}${fin}</div>
+      </div>`;
+
   document.getElementById('main').innerHTML = `
     <div class="eyebrow">Module ${id+1} of ${MODS.length}</div>
     <h1 class="mod-title">${m.title}</h1>
     <p class="mod-intro">${m.intro}</p>
-    <div class="objectives"><h3>Learning Objectives</h3><ol>${m.objectives.map(o=>`<li>${o}</li>`).join('')}</ol></div>
+    ${objectivesBlock}
     ${sects}
-    <div class="quiz-section">
-      <div class="quiz-head"><h2>Knowledge Check</h2><span class="quiz-badge">${m.quiz.length} Questions</span></div>
-      ${qs}
-      <button class="complete-btn" onclick="complete(${id})" ${isDone||!allDone?'disabled':''}>${btnLabel}</button>
-      <div class="nav-btns">${prev}${next}${fin}</div>
-    </div>`;
+    ${bottomBlock}`;
   document.getElementById('main').scrollTop = 0;
 }
 
@@ -957,7 +1150,7 @@ function showDone() {
     <div class="done-screen">
       <div class="done-badge">🎓</div>
       <h1>Course Complete</h1>
-      <p>You have completed Disaster Management Fundamentals. Here is a summary of your performance across all nine modules.</p>
+      <p>You have completed Disaster Management Fundamentals. Here is a summary of your performance across all nine content modules.</p>
       <div class="score-grid">
         <div class="score-card"><div class="score-num">${S.done.length}</div><div class="score-lbl">Modules</div></div>
         <div class="score-card"><div class="score-num">${correct}</div><div class="score-lbl">Correct</div></div>
