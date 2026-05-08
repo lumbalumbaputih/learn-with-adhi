@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FBF4E6"/><circle cx="38" cy="50" r="22" fill="none" stroke="%231A1614" stroke-width="14"/><rect x="54" y="28" width="14" height="44" fill="%231A1614"/><circle cx="78" cy="22" r="8" fill="%23FF5C39"/></svg>' />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1&display=swap" />
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <script>
+    (function () {
+      const saved = localStorage.getItem("theme");
+      const system = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", saved || system);
+    })();
+  </script>
+  <style>
+    /* === ADHI DESIGN SYSTEM — Tokens v1.0 === */
+    :root {
+      --hidup-tomato: #FF5C39;
+      --hidup-mango:  #FFC234;
+      --hidup-forest: #1F9D55;
+      --hidup-sea:    #1FA9C7;
+      --hidup-mawar:  #E84BA0;
+      --hidup-indigo: #2E3192;
+
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --paper-2: #F4ECD8;
+      --muted:   #6B6259;
+
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+      --fm: 'JetBrains Mono', ui-monospace, monospace;
+
+      --fs-xs:   10px;
+      --fs-sm:   12px;
+      --fs-base: 14px;
+      --fs-lg:   15px;
+      --fs-xl:   17px;
+      --fs-2xl:  20px;
+      --fs-3xl:  24px;
+      --fs-4xl:  28px;
+
+      --sp-2:  8px;
+      --sp-3:  12px;
+      --sp-4:  16px;
+      --sp-5:  20px;
+      --sp-6:  24px;
+      --sp-7:  32px;
+      --sp-8:  48px;
+      --sp-9:  64px;
+      --sp-10: 80px;
+      --sp-11: 96px;
+
+      --r-8:    8px;
+      --r-20:   20px;
+      --r-24:   24px;
+      --r-pill: 999px;
+
+      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur: 200ms;
+    }
+
+    [data-theme="light"] {
+      --bg:           var(--paper);
+      --surface:      #fff;
+      --surface-2:    var(--paper-2);
+      --fg:           var(--ink);
+      --fg-muted:     var(--muted);
+      --border-color: var(--ink);
+      --border-soft:  rgba(26,22,20,0.13);
+    }
+
+    [data-theme="dark"] {
+      --bg:           #0f0c0b;
+      --surface:      #1c1917;
+      --surface-2:    #27211e;
+      --fg:           #F0EAE2;
+      --fg-muted:     #9a8a82;
+      --border-color: rgba(240,234,226,0.16);
+      --border-soft:  rgba(240,234,226,0.09);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--fb);
+      font-size: var(--fs-base);
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--fg);
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .ds-icon {
+      font-family: 'Material Symbols Rounded';
+      font-weight: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      direction: ltr;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* === SHELL === */
+    .shell {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: var(--sp-8) var(--sp-7) var(--sp-11);
+    }
+
+    /* === NAV === */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-8);
+    }
+
+    .brand { display: flex; align-items: center; gap: var(--sp-3); }
+
+    .brand-name {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: var(--fs-4xl);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--fg);
+    }
+
+    .brand-sub {
+      display: block;
+      font-family: var(--fm);
+      font-size: var(--fs-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-top: 3px;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      padding: 8px 16px;
+      border: 1.5px solid var(--border-soft);
+      background: transparent;
+      color: var(--fg-muted);
+      border-radius: var(--r-pill);
+      font-family: var(--fm);
+      font-size: var(--fs-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color var(--dur), color var(--dur);
+    }
+    .theme-toggle:hover { border-color: var(--border-color); color: var(--fg); }
+    .theme-toggle .ds-icon { font-size: 15px; }
+
+    /* === HERO — mango panel === */
+    .hero {
+      background: var(--hidup-mango);
+      border: 2px solid var(--ink);
+      border-radius: var(--r-20);
+      padding: 28px 40px;
+      margin-bottom: var(--sp-9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-8);
+    }
+
+    .hero-left { flex: 1; min-width: 0; }
+
+    .hero-right {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.9;
+    }
+
+    /* Eyebrow */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-3);
+      font-family: var(--fm);
+      font-size: var(--fs-xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(26,22,20,0.5);
+      margin-bottom: var(--sp-3);
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--hidup-tomato);
+      flex-shrink: 0;
+    }
+
+    /* Title */
+    .hero-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(28px, 3.5vw, 42px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: var(--sp-3);
+    }
+    .hero-title em {
+      font-style: italic;
+      background: var(--ink);
+      color: var(--hidup-mango);
+      padding: 0 0.07em;
+    }
+
+    /* Lead */
+    .hero-lead {
+      font-size: var(--fs-base);
+      line-height: 1.5;
+      color: rgba(26,22,20,0.58);
+      max-width: 48ch;
+    }
+
+    /* === COURSES DIVIDER === */
+    .courses-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-7);
+    }
+    .courses-divider-label {
+      font-family: var(--fm);
+      font-size: var(--fs-xs);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      white-space: nowrap;
+    }
+    .courses-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-soft);
+    }
+
+    /* === GRID === */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+      gap: var(--sp-6);
+      padding-right: 10px;
+      padding-bottom: 10px;
+    }
+
+    /* === CARD === */
+    .card {
+      text-decoration: none;
+      color: inherit;
+      background: var(--surface);
+      border: 2px solid var(--border-color);
+      border-radius: var(--r-20);
+      padding: var(--sp-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+      transition: transform var(--dur) var(--ease-expo), box-shadow var(--dur);
+    }
+    .card:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 8px 8px 0 var(--card-accent, var(--ink));
+    }
+    [data-theme="dark"] .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--sp-3);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--r-8);
+      background: var(--card-accent-tint, var(--paper-2));
+      border: 1.5px solid var(--border-soft);
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      color: var(--card-accent, var(--ink));
+      flex-shrink: 0;
+    }
+    [data-theme="dark"] .card-icon { background: var(--surface-2); }
+
+    .level-badge {
+      font-family: var(--fm);
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: var(--r-pill);
+      background: var(--ink);
+      color: var(--hidup-mango);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    [data-theme="dark"] .level-badge {
+      background: var(--surface-2);
+      color: var(--fg-muted);
+    }
+
+    .card h4 {
+      font-family: var(--fd);
+      font-size: var(--fs-3xl);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+
+    .card-desc {
+      font-size: var(--fs-lg);
+      line-height: 1.55;
+      color: var(--fg-muted);
+      flex-grow: 1;
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+    .tag {
+      font-family: var(--fm);
+      font-size: var(--fs-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: var(--r-pill);
+      background: var(--paper-2);
+      color: var(--fg-muted);
+      border: 1px solid var(--border-soft);
+    }
+    [data-theme="dark"] .tag { background: var(--surface-2); }
+
+    .card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      border-top: 1px solid var(--border-soft);
+      padding-top: var(--sp-3);
+      margin-top: 2px;
+    }
+
+    .card-cta {
+      font-family: var(--fm);
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--card-accent, var(--hidup-tomato));
+    }
+
+    /* === FOOTER === */
+    .footer {
+      margin-top: var(--sp-10);
+      padding-top: var(--sp-5);
+      border-top: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+    }
+
+    .footer-copy {
+      font-family: var(--fm);
+      font-size: var(--fs-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+    }
+
+    .footer-link {
+      font-family: var(--fm);
+      font-size: var(--fs-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--hidup-tomato);
+      transition: opacity var(--dur);
+    }
+    .footer-link:hover { opacity: 0.7; }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 720px) {
+      .shell { padding: var(--sp-6) var(--sp-5) var(--sp-9); }
+      .nav { margin-bottom: var(--sp-7); }
+      .hero { padding: 24px 28px; gap: var(--sp-5); }
+      .hero-right { display: none; }
+      .grid { gap: var(--sp-5); padding-right: 6px; padding-bottom: 6px; }
+    }
+
+    @media (max-width: 480px) {
+      .brand-sub { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+
+    <!-- NAV -->
+    <header class="nav">
+      <div class="brand">
+        <svg width="40" height="40" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <circle cx="38" cy="50" r="22" fill="none" stroke="var(--fg)" stroke-width="14"/>
+          <rect x="54" y="28" width="14" height="44" fill="var(--fg)"/>
+          <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+        </svg>
+        <div>
+          <span class="brand-name">Learn with Adhi</span>
+          <span class="brand-sub">Course Hub</span>
+        </div>
+      </div>
+      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+        <span id="themeIcon" class="ds-icon" aria-hidden="true">light_mode</span>
+        <span>Theme</span>
+      </button>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Introduction">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Practical Learning Hub</div>
+        <h2 class="hero-title">Learn something <em>worth knowing.</em></h2>
+        <p class="hero-lead">Clear, bold, and beginner-friendly. Pick a topic and go.</p>
+      </div>
+      <div class="hero-right" aria-hidden="true">
+        <svg width="108" height="108" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="38" cy="50" r="22" fill="none" stroke="#1A1614" stroke-width="14"/>
+          <rect x="54" y="28" width="14" height="44" fill="#1A1614"/>
+          <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- COURSES -->
+    <section aria-label="Courses and Tools">
+      <div class="courses-divider">
+        <span class="courses-divider-label">Courses &amp; Tools</span>
+        <div class="courses-divider-line"></div>
+      </div>
+      <main id="courseGrid" class="grid" aria-live="polite"></main>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span class="footer-copy">© 2026 Learn with Adhi</span>
+      <a href="design-system/adhi-design-system.html" class="footer-link">Adhi Design System ↗</a>
+    </footer>
+
+  </div>
+
+  <script>
+    const items = [
+      {
+        title: "How to Code for Non-Coders",
+        desc: "Learn coding fundamentals in a practical, beginner-first way.",
+        icon: "code",
+        level: "Beginner",
+        tags: ["Coding", "V1"],
+        link: "courses/coding/code-ecosystem-guide-complete-v1.html",
+        accent: "#1a1614",
+        accentTint: "#e8e0d8"
+      },
+      {
+        title: "Carbon Accounting",
+        desc: "Understand emissions measurement and reporting with practical examples.",
+        icon: "public",
+        level: "Beginner",
+        tags: ["Climate", "V1"],
+        link: "courses/carbon-accounting/carbon-accounting-course.html",
+        accent: "#1f9d55",
+        accentTint: "#a8d8b8"
+      },
+      {
+        title: "Life Cycle Assessment",
+        desc: "Go from LCA basics to ISO-aligned practice with real-world examples.",
+        icon: "science",
+        level: "Beginner",
+        tags: ["Climate", "V1"],
+        link: "courses/lca/life-cycle-assessment-course-v1.html",
+        accent: "#1f9d55",
+        accentTint: "#a8d8b8"
+      },
+      {
+        title: "Disaster Management Fundamentals",
+        desc: "Learn the disaster management cycle, risk basics, and preparedness essentials.",
+        icon: "warning",
+        level: "Beginner",
+        tags: ["Disaster", "V1"],
+        link: "courses/disaster-management/2026-05-08-disaster-management-course-v1.html",
+        accent: "#1fa9c7",
+        accentTint: "#cfeff6"
+      },
+      {
+        title: "Bridging the AI Gap",
+        desc: "Build AI literacy and useful workflows for real-world work.",
+        icon: "smart_toy",
+        level: "Beginner",
+        tags: ["AI", "V1"],
+        link: "courses/ai/ai-capability-course.html",
+        accent: "#ff5c39",
+        accentTint: "#ffd3c8"
+      },
+      {
+        title: "Bahasa Hacking — IELTS",
+        desc: "IELTS strategy for Indonesian speakers with practical language habits.",
+        icon: "translate",
+        level: "Beginner",
+        tags: ["IELTS", "V1"],
+        link: "courses/ielts/ielts-bahasa-hacking.html",
+        accent: "#ffc234",
+        accentTint: "#ffedb5"
+      },
+      {
+        title: "Band 7 Precision Lab",
+        desc: "Target Band 7 with structured drills and scoring clarity.",
+        icon: "track_changes",
+        level: "Intermediate",
+        tags: ["IELTS", "V1"],
+        link: "courses/ielts/ielts-band7-precision.html",
+        accent: "#e84ba0",
+        accentTint: "#f5b8da"
+      },
+      {
+        title: "Feifelusiac Safe Area Calculator",
+        desc: "Quickly calculate safe area values with practical controls.",
+        icon: "calculate",
+        level: "Tool",
+        tags: ["Tools", "Live"],
+        link: "courses/tools/feifelusiac-safe-area-calculator-v4.html",
+        accent: "#ff5c39",
+        accentTint: "#ffd3c8"
+      },
+      {
+        title: "Rayyan & Raya's Train Adventure",
+        desc: "Choose your adventure — play v1, v2, or v3 from one hub.",
+        icon: "directions_railway",
+        level: "Game",
+        tags: ["Kids", "V1/V2/V3", "Live"],
+        link: "courses/tools/train_adventure_hub.html",
+        accent: "#1f9d55",
+        accentTint: "#a8d8b8"
+      }
+    ];
+
+    const grid = document.getElementById("courseGrid");
+    items.forEach((item) => {
+      const card = document.createElement("a");
+      card.className = "card";
+      card.href = item.link;
+      card.style.setProperty("--card-accent", item.accent);
+      card.style.setProperty("--card-accent-tint", item.accentTint);
+      card.innerHTML = `
+        <div class="card-top">
+          <div class="card-icon"><span class="ds-icon" aria-hidden="true">${item.icon}</span></div>
+          <span class="level-badge">${item.level}</span>
+        </div>
+        <h4>${item.title}</h4>
+        <p class="card-desc">${item.desc}</p>
+        <div class="tags">${item.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        <div class="card-foot">
+          <span class="card-cta">Open →</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    const root = document.documentElement;
+    const toggle = document.getElementById("themeToggle");
+    const icon = document.getElementById("themeIcon");
+
+    function updateIcon() {
+      icon.textContent = root.getAttribute("data-theme") === "dark" ? "light_mode" : "dark_mode";
+    }
+
+    updateIcon();
+
+    toggle.addEventListener("click", () => {
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+      updateIcon();
+    });
+  </script>
+</body>
+</html>
