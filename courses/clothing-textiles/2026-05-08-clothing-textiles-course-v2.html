@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clothing, Textiles & Our World</title>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -45,6 +46,8 @@ nav{flex:1;overflow-y:auto;padding:8px 0}
 .nav-check{margin-left:auto;color:var(--hidup-forest);font-size:14px;opacity:0}
 .nav-module.done .nav-check{opacity:1}
 .sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.1);font-family:var(--fm);font-size:10px;color:rgba(251,244,230,0.3);letter-spacing:0.06em}
+.sidebar-footer .back-link{color:rgba(251,244,230,0.6);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.sidebar-footer .back-link:hover{color:var(--paper)}
 
 /* MAIN */
 #main{margin-left:260px;flex:1;min-height:100vh}
@@ -186,7 +189,9 @@ tr:nth-child(even) td{background:var(--paper-2)}
     </div>
 
   </nav>
-  <div class="sidebar-footer">Adhi Design System v2.0 · 2026</div>
+  <div class="sidebar-footer">
+    <a class="back-link" href="../../index.html">← Back to hub</a>
+  </div>
 </div>
 
 <!-- MAIN CONTENT -->
