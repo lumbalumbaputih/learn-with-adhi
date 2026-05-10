@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Expectancy Risk Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       ADHI DESIGN SYSTEM — TOKENS
+    ═══════════════════════════════════════════════ */
+    :root {
+      --hidup-tomato:  #FF5C39;
+      --hidup-mango:   #FFC234;
+      --hidup-forest:  #1F9D55;
+      --hidup-sea:     #1FA9C7;
+      --hidup-mawar:   #E84BA0;
+      --hidup-indigo:  #2E3192;
+      --ink:           #1A1614;
+      --paper:         #FBF4E6;
+      --paper-2:       #F4ECD8;
+      --muted:         #6B6259;
+      --line:          rgba(26,22,20,0.12);
+      --line-strong:   rgba(26,22,20,0.14);
+      --font-display:  'Bricolage Grotesque', sans-serif;
+      --font-body:     'Inter', sans-serif;
+      --font-mono:     'JetBrains Mono', monospace;
+      --radius-8:  8px;
+      --radius-14: 14px;
+      --radius-20: 20px;
+      --radius-pill: 999px;
+      --shadow-block-sm: 7px 7px 0 var(--ink);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══════════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════════ */
+    .hero {
+      background: var(--hidup-indigo);
+      padding: 64px 32px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-orb-a {
+      position: absolute; top: -100px; right: -80px;
+      width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,194,52,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-orb-b {
+      position: absolute; bottom: -80px; left: -60px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,75,160,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--hidup-mango);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+      color: #FBF4E6;
+      position: relative; z-index: 1;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      background: var(--hidup-mango);
+      color: var(--ink);
+      padding: 2px 12px 4px;
+      border-radius: 6px;
+      font-style: normal;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(251,244,230,0.72);
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative; z-index: 1;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════════════ */
+    .shell {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       RESULT PANEL (sticky dark card)
+    ═══════════════════════════════════════════════ */
+    .result-outer {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 24px;
+      max-width: 1160px;
+      margin: -40px auto 0;
+    }
+    .result-panel {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: var(--radius-20);
+      padding: 32px 40px 28px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+    }
+    .baseline-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 160px;
+    }
+    .input-group label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(251,244,230,0.45);
+    }
+    .input-group input,
+    .input-group select {
+      background: rgba(251,244,230,0.08);
+      border: 1px solid rgba(251,244,230,0.18);
+      border-radius: var(--radius-8);
+      color: var(--paper);
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 9px 13px;
+      outline: none;
+      transition: border-color 200ms;
+      width: 100%;
+    }
+    .input-group input:focus { border-color: var(--hidup-mango); }
+    .input-group select option { background: #1A1614; }
+    .hint {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(251,244,230,0.3);
+      letter-spacing: 0.07em;
+      margin-top: 2px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 700px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+    .stat-block {
+      border-left: 3px solid var(--hidup-tomato);
+      padding-left: 14px;
+    }
+    .stat-block.green  { border-left-color: var(--hidup-forest); }
+    .stat-block.yellow { border-left-color: var(--hidup-mango); }
+    .stat-block.blue   { border-left-color: var(--hidup-sea); }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(251,244,230,0.42);
+      margin-bottom: 4px;
+    }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      transition: all 400ms var(--ease-out-expo);
+    }
+    .stat-unit {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(251,244,230,0.5);
+      margin-left: 3px;
+    }
+
+    /* Life timeline bar */
+    .timeline-wrap {
+      position: relative;
+      height: 14px;
+      background: rgba(251,244,230,0.08);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+    .bar-lived {
+      position: absolute; top:0; left:0;
+      height: 100%;
+      background: rgba(251,244,230,0.2);
+      border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+      transition: width 500ms var(--ease-out-expo);
+    }
+    .bar-remaining {
+      position: absolute; top:0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--hidup-forest) 0%, var(--hidup-sea) 100%);
+      transition: left 500ms var(--ease-out-expo), width 500ms var(--ease-out-expo);
+    }
+    .bar-risk {
+      position: absolute; top:0; right:0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--hidup-mango), var(--hidup-tomato));
+      transition: width 500ms var(--ease-out-expo);
+    }
+    .bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(251,244,230,0.38);
+      letter-spacing: 0.07em;
+      margin-top: 7px;
+    }
+    .bar-legend {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(251,244,230,0.42);
+      letter-spacing: 0.07em;
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 3px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       RISK FACTORS SECTION
+    ═══════════════════════════════════════════════ */
+    .factors-section {
+      padding: 48px 0 0;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    .category-block {
+      margin-bottom: 44px;
+    }
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .cat-pip {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .cat-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .cat-chip {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      background: var(--paper-2);
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line);
+      text-transform: uppercase;
+    }
+
+    .factors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 14px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       FACTOR CARD
+    ═══════════════════════════════════════════════ */
+    .factor-card {
+      background: #fff;
+      border: 1.5px solid var(--line-strong);
+      border-radius: var(--radius-14);
+      padding: 18px 18px 16px;
+      cursor: pointer;
+      transition: transform 180ms var(--ease-out-expo),
+                  box-shadow 180ms var(--ease-out-expo),
+                  border-color 180ms,
+                  background 180ms;
+      position: relative;
+      user-select: none;
+    }
+    .factor-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--ink);
+      border-color: var(--ink);
+    }
+    .factor-card.selected {
+      border-color: var(--cat-color);
+      background: color-mix(in srgb, var(--cat-color) 8%, white);
+      transform: translate(-4px, -4px);
+      box-shadow: var(--shadow-block-sm);
+    }
+    .factor-card.selected .factor-years-num {
+      color: var(--cat-color);
+    }
+    .factor-card.selected .sev-fill { opacity: 1; }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .factor-name {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      flex: 1;
+    }
+    .factor-years-block {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .factor-years-num {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--muted);
+      transition: color 200ms;
+    }
+    .factor-years-unit {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 1px;
+    }
+
+    .factor-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+    .factor-source-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      opacity: 0.75;
+    }
+
+    /* severity bar */
+    .sev-bar {
+      height: 3px;
+      background: var(--line);
+      border-radius: 99px;
+      margin-top: 11px;
+      overflow: hidden;
+    }
+    .sev-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--cat-color);
+      opacity: 0.4;
+      transition: opacity 200ms;
+    }
+
+    /* checkbox bubble — inline in flex row, not absolute */
+    .card-check {
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 4px;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--line-strong);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 200ms var(--ease-out-expo);
+      background: #fff;
+    }
+    .factor-card.selected .card-check {
+      background: var(--cat-color);
+      border-color: var(--cat-color);
+    }
+    .card-check svg {
+      opacity: 0;
+      transform: scale(0.4);
+      transition: all 200ms var(--ease-out-expo);
+    }
+    .factor-card.selected .card-check svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ═══════════════════════════════════════════════
+       SELECTED BREAKDOWN
+    ═══════════════════════════════════════════════ */
+    .breakdown-panel {
+      background: var(--paper-2);
+      border: 1.5px solid var(--line-strong);
+      border-radius: var(--radius-20);
+      padding: 28px 32px;
+      margin: 40px 0;
+    }
+    .breakdown-panel h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .breakdown-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .b-tag {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      display: flex; align-items: center; gap: 8px;
+      animation: tag-pop 220ms var(--ease-out-expo);
+    }
+    .b-tag-yrs {
+      background: var(--hidup-tomato);
+      color: white;
+      padding: 2px 7px;
+      border-radius: var(--radius-pill);
+      font-size: 9px;
+    }
+    @keyframes tag-pop {
+      from { opacity:0; transform: scale(0.75) translateY(6px); }
+      to   { opacity:1; transform: scale(1) translateY(0); }
+    }
+    .empty-msg {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      padding: 8px 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       DISCLAIMER + SOURCES
+    ═══════════════════════════════════════════════ */
+    .disclaimer {
+      background: color-mix(in srgb, var(--hidup-mango) 14%, var(--paper));
+      border: 1px solid color-mix(in srgb, var(--hidup-mango) 35%, transparent);
+      border-radius: var(--radius-14);
+      padding: 16px 20px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 32px 0 48px;
+    }
+    .disclaimer strong { color: var(--ink); }
+
+    .sources-section {
+      padding: 0 0 64px;
+    }
+    .sources-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    @media (max-width: 680px) {
+      .sources-grid { grid-template-columns: 1fr; }
+    }
+    .source-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-8);
+      padding: 10px 13px;
+    }
+    .source-key {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      color: var(--hidup-indigo);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .source-full {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    footer {
+      background: var(--ink);
+      color: rgba(251,244,230,0.35);
+      text-align: center;
+      padding: 28px 32px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════ */
+    @media (max-width: 860px) {
+      .result-outer { position: static; margin-top: 0; }
+      .result-panel { border-radius: 0; }
+    }
+    @media (max-width: 640px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .result-panel { padding: 24px 20px 20px; }
+      .hero { padding: 48px 20px 64px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<header class="hero">
+  <div class="hero-orb-a"></div>
+  <div class="hero-orb-b"></div>
+  <div class="hero-eyebrow">Evidence-based · 25 risk factors · Peer-reviewed sources</div>
+  <h1>Life Expectancy<br><em>Risk Calculator</em></h1>
+  <p class="hero-sub">Select the risk factors that apply to you. Each factor shows the estimated years of life lost at a population level, drawn from landmark peer-reviewed studies.</p>
+</header>
+
+<!-- ══════════════════ RESULT PANEL ══════════════════ -->
+<div class="result-outer">
+  <div class="result-panel">
+    <!-- Baseline inputs -->
+    <div class="baseline-row">
+      <div class="input-group">
+        <label>Your current age</label>
+        <input type="number" id="inputAge" value="30" min="1" max="99" oninput="calculate()">
+      </div>
+      <div class="input-group">
+        <label>Baseline life expectancy</label>
+        <input type="number" id="inputBaseline" value="73" min="50" max="95" oninput="calculate()">
+        <span class="hint">Global avg ≈ 73 · Australia ≈ 83 · USA ≈ 77 · Indonesia ≈ 72</span>
+      </div>
+      <div class="input-group" style="flex:1;min-width:180px;">
+        <label>Calculation method</label>
+        <select id="inputMethod" onchange="calculate()">
+          <option value="diminishing">Diminishing returns (recommended)</option>
+          <option value="additive">Simple additive (upper bound)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-block">
+        <div class="stat-label">Years at risk</div>
+        <div class="stat-value" id="statYearsLost">0<span class="stat-unit">yrs</span></div>
+      </div>
+      <div class="stat-block yellow">
+        <div class="stat-label">Projected age at death</div>
+        <div class="stat-value" id="statProjected">73<span class="stat-unit">yrs</span></div>
+      </div>
+      <div class="stat-block green">
+        <div class="stat-label">Remaining est. years</div>
+        <div class="stat-value" id="statRemaining">43<span class="stat-unit">yrs</span></div>
+      </div>
+      <div class="stat-block blue">
+        <div class="stat-label">Factors selected</div>
+        <div class="stat-value" id="statCount">0<span class="stat-unit">/ 25</span></div>
+      </div>
+    </div>
+
+    <!-- Timeline bar -->
+    <div class="timeline-wrap">
+      <div class="bar-lived"     id="barLived"    ></div>
+      <div class="bar-remaining" id="barRemaining"></div>
+      <div class="bar-risk"      id="barRisk"     ></div>
+    </div>
+    <div class="bar-labels">
+      <span id="barLabelLeft">Birth → Age 30</span>
+      <span id="barLabelRight">Projected age: 73</span>
+    </div>
+    <div class="bar-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(251,244,230,0.2)"></div>Years lived</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--hidup-forest)"></div>Remaining (healthy)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--hidup-tomato)"></div>Years at risk</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ FACTORS ══════════════════ -->
+<div class="shell">
+  <div class="factors-section">
+    <div class="section-label">Select all that apply to you</div>
+    <div class="section-title">Risk Factors</div>
+    <p class="section-desc">Click any card to add it to your profile. Multiple factors interact — combined impact uses diminishing returns to reflect biological overlap. Mutually exclusive factors (e.g. different BMI ranges) should only be selected one at a time.</p>
+
+    <!-- LIFESTYLE -->
+    <div class="category-block">
+      <div class="cat-header">
+        <div class="cat-pip" style="background:var(--hidup-tomato)"></div>
+        <span class="cat-title">Lifestyle</span>
+        <span class="cat-chip">9 factors</span>
+      </div>
+      <div class="factors-grid" id="grid-lifestyle"></div>
+    </div>
+
+    <!-- BODY / MEDICAL -->
+    <div class="category-block">
+      <div class="cat-header">
+        <div class="cat-pip" style="background:var(--hidup-sea)"></div>
+        <span class="cat-title">Body &amp; Medical</span>
+        <span class="cat-chip">8 factors</span>
+      </div>
+      <div class="factors-grid" id="grid-medical"></div>
+    </div>
+
+    <!-- MENTAL HEALTH -->
+    <div class="category-block">
+      <div class="cat-header">
+        <div class="cat-pip" style="background:var(--hidup-mawar)"></div>
+        <span class="cat-title">Mental Health</span>
+        <span class="cat-chip">3 factors</span>
+      </div>
+      <div class="factors-grid" id="grid-mental"></div>
+    </div>
+
+    <!-- SOCIAL / ENVIRONMENT -->
+    <div class="category-block">
+      <div class="cat-header">
+        <div class="cat-pip" style="background:var(--hidup-forest)"></div>
+        <span class="cat-title">Social &amp; Environment</span>
+        <span class="cat-chip">5 factors</span>
+      </div>
+      <div class="factors-grid" id="grid-social"></div>
+    </div>
+
+    <!-- Breakdown -->
+    <div class="breakdown-panel">
+      <h3>Selected factors breakdown</h3>
+      <div class="breakdown-tags" id="breakdownTags">
+        <div class="empty-msg">No factors selected yet — click any card above to begin.</div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <strong>For educational purposes only.</strong> Years-lost figures are population-level estimates from epidemiological research; your individual risk depends on genetics, healthcare access, and management quality. Risk factors are <strong>not simply additive</strong> — they share overlapping mechanisms. The "diminishing returns" method better reflects this. This tool is <strong>not a medical device</strong> and does not replace professional health advice.
+    </div>
+  </div>
+
+  <!-- ══════════════════ SOURCES ══════════════════ -->
+  <div class="sources-section">
+    <div class="section-label">Evidence base</div>
+    <div class="section-title">Sources</div>
+    <p style="color:var(--muted);font-size:14px;line-height:1.6;">All figures are drawn from peer-reviewed publications and major global health bodies (WHO, GBD, CDC).</p>
+    <div class="sources-grid" id="sourcesGrid"></div>
+  </div>
+</div>
+
+<footer>
+  Adhi Design System · Evidence-based · Not a medical device · For educational use only
+</footer>
+
+<!-- ══════════════════ SCRIPT ══════════════════ -->
+<script>
+/* ──────────────────────────────────────────────
+   DATA
+────────────────────────────────────────────── */
+const FACTORS = [
+  // ── LIFESTYLE ──────────────────────────────
+  {
+    id: 'heavy-smoking', cat: 'lifestyle',
+    name: 'Heavy smoking',
+    desc: '≥ 20 cigarettes per day',
+    years: 10,
+    source: 'Jha et al. 2013, NEJM',
+    note: 'mutually-exclusive:smoking'
+  },
+  {
+    id: 'light-smoking', cat: 'lifestyle',
+    name: 'Light / moderate smoking',
+    desc: '1–19 cigarettes per day',
+    years: 5,
+    source: 'Jha et al. 2013, NEJM',
+    note: 'mutually-exclusive:smoking'
+  },
+  {
+    id: 'drug-use', cat: 'lifestyle',
+    name: 'Drug / opioid use disorder',
+    desc: 'Regular illicit drug use or opioid dependency',
+    years: 12,
+    source: 'GBD 2019, Lancet'
+  },
+  {
+    id: 'heavy-alcohol', cat: 'lifestyle',
+    name: 'Heavy alcohol use',
+    desc: '> 21 standard drinks per week',
+    years: 7,
+    source: 'Wood et al. 2018, Lancet',
+    note: 'mutually-exclusive:alcohol'
+  },
+  {
+    id: 'moderate-alcohol', cat: 'lifestyle',
+    name: 'Moderate alcohol use',
+    desc: '7–21 standard drinks per week',
+    years: 3,
+    source: 'Wood et al. 2018, Lancet',
+    note: 'mutually-exclusive:alcohol'
+  },
+  {
+    id: 'physical-inactivity', cat: 'lifestyle',
+    name: 'Physical inactivity',
+    desc: 'No regular moderate-intensity exercise',
+    years: 4.5,
+    source: 'Lee et al. 2012, Lancet'
+  },
+  {
+    id: 'sedentary', cat: 'lifestyle',
+    name: 'Prolonged sitting',
+    desc: '> 8 hours sedentary per day (independent of exercise)',
+    years: 2.5,
+    source: 'Biswas et al. 2015, Ann Intern Med'
+  },
+  {
+    id: 'sleep-dep', cat: 'lifestyle',
+    name: 'Chronic sleep deprivation',
+    desc: 'Regularly sleeping < 6 hours per night',
+    years: 4.5,
+    source: 'Cappuccio et al. 2010, Sleep'
+  },
+  {
+    id: 'poor-diet', cat: 'lifestyle',
+    name: 'Ultra-processed / poor diet',
+    desc: 'Low fruit & veg, high ultra-processed food intake',
+    years: 3.5,
+    source: 'GBD 2019, Lancet'
+  },
+
+  // ── BODY / MEDICAL ──────────────────────────
+  {
+    id: 'severe-obesity', cat: 'medical',
+    name: 'Severe obesity',
+    desc: 'BMI ≥ 40',
+    years: 9,
+    source: 'Bhaskaran et al. 2018, Lancet Diabetes Endocrinol',
+    note: 'mutually-exclusive:bmi'
+  },
+  {
+    id: 'obesity', cat: 'medical',
+    name: 'Moderate obesity',
+    desc: 'BMI 30–39',
+    years: 4,
+    source: 'Bhaskaran et al. 2018, Lancet Diabetes Endocrinol',
+    note: 'mutually-exclusive:bmi'
+  },
+  {
+    id: 'overweight', cat: 'medical',
+    name: 'Overweight',
+    desc: 'BMI 25–29.9',
+    years: 2,
+    source: 'Bhaskaran et al. 2018, Lancet Diabetes Endocrinol',
+    note: 'mutually-exclusive:bmi'
+  },
+  {
+    id: 'diabetes', cat: 'medical',
+    name: 'Type 2 Diabetes (uncontrolled)',
+    desc: 'Poorly managed blood glucose levels',
+    years: 6,
+    source: 'Seshasai et al. 2011, NEJM'
+  },
+  {
+    id: 'hypertension', cat: 'medical',
+    name: 'Uncontrolled hypertension',
+    desc: 'High blood pressure without effective treatment',
+    years: 5,
+    source: 'Ettehad et al. 2016, Lancet'
+  },
+  {
+    id: 'high-ldl', cat: 'medical',
+    name: 'High LDL cholesterol (untreated)',
+    desc: 'Elevated LDL without lipid-lowering therapy',
+    years: 3,
+    source: 'Ference et al. 2019, Eur Heart J'
+  },
+  {
+    id: 'hiv', cat: 'medical',
+    name: 'HIV / AIDS (untreated)',
+    desc: 'Untreated HIV infection without ART',
+    years: 11,
+    source: 'GBD 2019, Lancet'
+  },
+  {
+    id: 'ckd', cat: 'medical',
+    name: 'Chronic kidney disease',
+    desc: 'Moderate to severe CKD (stage 3+)',
+    years: 6,
+    source: 'GBD 2019, Lancet'
+  },
+  {
+    id: 'processed-meat', cat: 'medical',
+    name: 'High processed meat intake',
+    desc: 'Daily red or processed meat consumption',
+    years: 2,
+    source: 'Micha et al. 2017, JAMA'
+  },
+
+  // ── MENTAL HEALTH ───────────────────────────
+  {
+    id: 'depression', cat: 'mental',
+    name: 'Major depressive disorder',
+    desc: 'Clinically diagnosed depression',
+    years: 9,
+    source: 'Walker et al. 2015, JAMA Psychiatry'
+  },
+  {
+    id: 'anxiety', cat: 'mental',
+    name: 'Anxiety / chronic stress disorder',
+    desc: 'Diagnosed anxiety disorder or chronic severe stress',
+    years: 4,
+    source: 'Scott et al. 2016, JAMA Psychiatry'
+  },
+  {
+    id: 'loneliness', cat: 'mental',
+    name: 'Social isolation / loneliness',
+    desc: 'Persistent loneliness or social disconnection',
+    years: 6,
+    source: 'Holt-Lunstad et al. 2015, Perspect Psychol Sci'
+  },
+
+  // ── SOCIAL / ENVIRONMENT ────────────────────
+  {
+    id: 'poverty', cat: 'social',
+    name: 'Low income / poverty',
+    desc: 'Household income in the bottom quintile',
+    years: 7,
+    source: 'Chetty et al. 2016, JAMA'
+  },
+  {
+    id: 'low-education', cat: 'social',
+    name: 'Low education level',
+    desc: 'No secondary school completion',
+    years: 3,
+    source: 'Stringhini et al. 2017, Lancet'
+  },
+  {
+    id: 'air-pollution', cat: 'social',
+    name: 'Chronic air pollution exposure',
+    desc: 'Long-term residence in high PM2.5 area',
+    years: 2.5,
+    source: 'GBD 2019, Lancet; Burnett et al. 2018, PNAS'
+  },
+  {
+    id: 'occupational', cat: 'social',
+    name: 'Occupational hazards',
+    desc: 'High-risk industries: mining, construction, chemical',
+    years: 2,
+    source: 'GBD 2019, Lancet'
+  },
+  {
+    id: 'no-social-support', cat: 'social',
+    name: 'No close social relationships',
+    desc: 'Absence of close friends or strong family support',
+    years: 3,
+    source: 'Holt-Lunstad et al. 2010, PLOS Med'
+  }
+];
+
+const SOURCES = [
+  { key: 'Jha 2013',          full: 'Jha P et al. 21st-century hazards of smoking and benefits of cessation in the United States. N Engl J Med. 2013;368(4):341–350.' },
+  { key: 'Bhaskaran 2018',    full: 'Bhaskaran K et al. Association of BMI with overall and cause-specific mortality: a population-based cohort study of 3.6 million adults in the UK. Lancet Diabetes Endocrinol. 2018;6(12):944–953.' },
+  { key: 'Wood 2018',         full: 'Wood AM et al. Risk thresholds for alcohol consumption: combined analysis of individual-participant data for 599 912 current drinkers in 83 prospective studies. Lancet. 2018;391(10129):1513–1523.' },
+  { key: 'Lee 2012',          full: 'Lee IM et al. Effect of physical inactivity on major non-communicable diseases worldwide. Lancet. 2012;380(9838):219–229.' },
+  { key: 'Biswas 2015',       full: 'Biswas A et al. Sedentary time and its association with risk for disease incidence, mortality, and hospitalization in adults. Ann Intern Med. 2015;162(2):123–132.' },
+  { key: 'Cappuccio 2010',    full: 'Cappuccio FP et al. Sleep duration and all-cause mortality: a systematic review and meta-analysis of prospective studies. Sleep. 2010;33(5):585–592.' },
+  { key: 'GBD 2019',          full: 'GBD 2019 Risk Factors Collaborators. Global burden of 87 risk factors in 204 countries and territories, 1990–2019. Lancet. 2020;396(10258):1223–1249.' },
+  { key: 'Micha 2017',        full: 'Micha R et al. Association between dietary factors and mortality from heart disease, stroke, and type 2 diabetes in the United States. JAMA. 2017;317(9):912–924.' },
+  { key: 'Seshasai 2011',     full: 'Seshasai SR et al. Diabetes mellitus, fasting glucose, and risk of cause-specific death. N Engl J Med. 2011;364(9):829–841.' },
+  { key: 'Ettehad 2016',      full: 'Ettehad D et al. Blood pressure lowering for prevention of cardiovascular disease and death: a systematic review and meta-analysis. Lancet. 2016;387(10022):957–967.' },
+  { key: 'Ference 2019',      full: 'Ference BA et al. Low-density lipoproteins cause atherosclerotic cardiovascular disease: pathophysiological, genetic, and therapeutic insights. Eur Heart J. 2019.' },
+  { key: 'Walker 2015',       full: 'Walker ER et al. Mortality in mental disorders and global disease burden implications. JAMA Psychiatry. 2015;72(4):334–341.' },
+  { key: 'Scott 2016',        full: 'Scott KM et al. Association of mental disorders with subsequent chronic physical conditions. JAMA Psychiatry. 2016;73(2):150–158.' },
+  { key: 'Holt-Lunstad 2015', full: 'Holt-Lunstad J et al. Loneliness and social isolation as risk factors for mortality: a meta-analytic review. Perspect Psychol Sci. 2015;10(2):227–237.' },
+  { key: 'Holt-Lunstad 2010', full: 'Holt-Lunstad J et al. Social relationships and mortality risk: a meta-analytic review. PLOS Med. 2010;7(7):e1000316.' },
+  { key: 'Chetty 2016',       full: 'Chetty R et al. The association between income and life expectancy in the United States, 2001–2014. JAMA. 2016;315(16):1750–1766.' },
+  { key: 'Stringhini 2017',   full: 'Stringhini S et al. Socioeconomic status and the 25×25 risk factors as determinants of premature mortality. Lancet. 2017;389(10075):1229–1237.' },
+  { key: 'Burnett 2018',      full: 'Burnett R et al. Global estimates of mortality associated with long-term exposure to outdoor fine particulate matter. PNAS. 2018;115(38):9592–9597.' }
+];
+
+const CAT_COLOR = {
+  lifestyle: '#FF5C39',
+  medical:   '#1FA9C7',
+  mental:    '#E84BA0',
+  social:    '#1F9D55'
+};
+
+const CAT_GRID = {
+  lifestyle: 'grid-lifestyle',
+  medical:   'grid-medical',
+  mental:    'grid-mental',
+  social:    'grid-social'
+};
+
+// Diminishing returns multipliers (index = rank order of severity)
+const MULT = [1.00, 0.80, 0.65, 0.53, 0.44, 0.37, 0.31, 0.26, 0.22, 0.18,
+              0.15, 0.13, 0.11, 0.09, 0.07, 0.06, 0.05, 0.04, 0.03, 0.025,
+              0.02, 0.015, 0.01, 0.008, 0.006];
+
+/* ──────────────────────────────────────────────
+   STATE
+────────────────────────────────────────────── */
+const selected = new Set();
+
+/* ──────────────────────────────────────────────
+   RENDER FACTOR CARDS
+────────────────────────────────────────────── */
+function renderFactors() {
+  FACTORS.forEach(f => {
+    const grid = document.getElementById(CAT_GRID[f.cat]);
+    const color = CAT_COLOR[f.cat];
+    const sevPct = Math.min((f.years / 12) * 100, 100).toFixed(1);
+
+    const card = document.createElement('div');
+    card.className = 'factor-card';
+    card.id = 'card-' + f.id;
+    card.style.setProperty('--cat-color', color);
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="factor-name">${f.name}</div>
+        <div class="factor-years-block">
+          <div class="factor-years-num">−${f.years}</div>
+          <div class="factor-years-unit">YRS</div>
+        </div>
+        <div class="card-check">
+          <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+            <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="factor-desc">${f.desc}</div>
+      <div class="factor-source-tag">Source: ${f.source}</div>
+      <div class="sev-bar">
+        <div class="sev-fill" style="width:${sevPct}%"></div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => toggleFactor(f.id));
+    grid.appendChild(card);
+  });
+}
+
+/* ──────────────────────────────────────────────
+   TOGGLE
+────────────────────────────────────────────── */
+function toggleFactor(id) {
+  const card = document.getElementById('card-' + id);
+  if (selected.has(id)) {
+    selected.delete(id);
+    card.classList.remove('selected');
+  } else {
+    selected.add(id);
+    card.classList.add('selected');
+  }
+  calculate();
+  renderBreakdown();
+}
+
+/* ──────────────────────────────────────────────
+   CALCULATE
+────────────────────────────────────────────── */
+function calculate() {
+  const age      = Math.max(1, Math.min(99, parseInt(document.getElementById('inputAge').value) || 30));
+  const baseline = Math.max(50, Math.min(95, parseInt(document.getElementById('inputBaseline').value) || 73));
+  const method   = document.getElementById('inputMethod').value;
+
+  // Sort selected factors by years lost (descending)
+  const selFactors = FACTORS
+    .filter(f => selected.has(f.id))
+    .sort((a, b) => b.years - a.years);
+
+  let yearsLost = 0;
+  selFactors.forEach((f, i) => {
+    if (method === 'additive') {
+      yearsLost += f.years;
+    } else {
+      yearsLost += f.years * (MULT[i] || 0.005);
+    }
+  });
+
+  // Cap
+  yearsLost = Math.min(yearsLost, method === 'additive' ? 45 : 28);
+  yearsLost = Math.round(yearsLost * 10) / 10;
+
+  const projected  = Math.max(age + 1, Math.round((baseline - yearsLost) * 10) / 10);
+  const remaining  = Math.max(0, projected - age);
+
+  // Update stats
+  document.getElementById('statYearsLost').innerHTML   = `${yearsLost}<span class="stat-unit">yrs</span>`;
+  document.getElementById('statProjected').innerHTML   = `${projected}<span class="stat-unit">yrs</span>`;
+  document.getElementById('statRemaining').innerHTML   = `${remaining}<span class="stat-unit">yrs</span>`;
+  document.getElementById('statCount').innerHTML       = `${selected.size}<span class="stat-unit">/ 25</span>`;
+
+  // Timeline bar (percentages of baseline lifespan)
+  const livedPct     = Math.min(age / baseline, 1) * 100;
+  const riskPct      = Math.min(yearsLost / baseline, (100 - livedPct) / 100) * 100;
+  const remainingPct = Math.max(0, 100 - livedPct - riskPct);
+
+  document.getElementById('barLived').style.width          = `${livedPct.toFixed(1)}%`;
+  document.getElementById('barRemaining').style.left       = `${livedPct.toFixed(1)}%`;
+  document.getElementById('barRemaining').style.width      = `${remainingPct.toFixed(1)}%`;
+  document.getElementById('barRisk').style.width           = `${riskPct.toFixed(1)}%`;
+
+  document.getElementById('barLabelLeft').textContent  = `Birth → Age ${age}`;
+  document.getElementById('barLabelRight').textContent = `Projected age: ${projected}`;
+}
+
+/* ──────────────────────────────────────────────
+   BREAKDOWN TAGS
+────────────────────────────────────────────── */
+function renderBreakdown() {
+  const container = document.getElementById('breakdownTags');
+  container.innerHTML = '';
+
+  if (selected.size === 0) {
+    container.innerHTML = '<div class="empty-msg">No factors selected yet — click any card above to begin.</div>';
+    return;
+  }
+
+  const sorted = FACTORS
+    .filter(f => selected.has(f.id))
+    .sort((a, b) => b.years - a.years);
+
+  sorted.forEach(f => {
+    const tag = document.createElement('div');
+    tag.className = 'b-tag';
+    tag.innerHTML = `${f.name} <span class="b-tag-yrs">−${f.years}y</span>`;
+    container.appendChild(tag);
+  });
+}
+
+/* ──────────────────────────────────────────────
+   RENDER SOURCES
+────────────────────────────────────────────── */
+function renderSources() {
+  const grid = document.getElementById('sourcesGrid');
+  SOURCES.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'source-card';
+    card.innerHTML = `<div class="source-key">${s.key}</div><div class="source-full">${s.full}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+/* ──────────────────────────────────────────────
+   INIT
+────────────────────────────────────────────── */
+renderFactors();
+renderSources();
+calculate();
+</script>
+</body>
+</html>
