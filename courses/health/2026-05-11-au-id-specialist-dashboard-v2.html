@@ -852,6 +852,71 @@ const matched = [
   {name:"Neurosurgery",               auCount:400, idCount:480},
 ];
 
+const specialtyDefinitions = {
+  "Addiction Medicine": "Assessment and treatment of substance use disorders.",
+  "Anaesthesia": "Care for pain control and patient monitoring during surgery.",
+  "Anaesthesia/Anaesthesiology": "Care for pain control and patient monitoring during surgery.",
+  "Anaesthesiology": "Care for pain control and patient monitoring during surgery.",
+  "Cardiology": "Heart and cardiovascular disease care.",
+  "Cardiothoracic Surgery": "Surgery of the heart, lungs, and chest.",
+  "Clinical Pathology (Lab)": "Laboratory testing of blood and body fluids.",
+  "Dermatology": "Skin, hair, and nail conditions.",
+  "Dermatology & Venereology": "Skin conditions and sexually transmitted infections care.",
+  "Digestive Surgery": "Surgical care of gastrointestinal organs.",
+  "Emergency Medicine": "Acute illness and injury care in emergency settings.",
+  "Endocrinology": "Hormone and metabolic disorder care.",
+  "ENT (Head & Neck)": "Ear, nose, throat, and head and neck disorder care.",
+  "Forensic Medicine": "Medical evaluation for legal and criminal cases.",
+  "Gastroenterology & Hepatology": "Digestive system and liver disease care.",
+  "Gastroentero-Hepatology": "Digestive system and liver disease care.",
+  "General Practice": "Primary care for common, preventive, and chronic needs.",
+  "General Surgery": "Broad surgical care for abdominal and soft tissue conditions.",
+  "Geriatric Medicine": "Healthcare for older adults and complex needs.",
+  "Geriatrics": "Healthcare for older adults and frailty.",
+  "Haematology": "Blood disorders and blood cancer care.",
+  "Haematology & Medical Oncology": "Blood disorders and medical cancer treatment.",
+  "Infectious Diseases": "Diagnosis and treatment of infections.",
+  "Intensive Care Medicine": "Critical care for life-threatening conditions.",
+  "Interventional Radiology": "Minimally invasive image-guided procedures.",
+  "Internal Medicine": "Adult medical care for complex and chronic disease.",
+  "Medical Administration": "Clinical leadership and healthcare system management.",
+  "Medical Oncology": "Cancer treatment using medicines such as chemotherapy.",
+  "Neonatology": "Care for newborns, especially premature or ill.",
+  "Nephrology": "Kidney disease and hypertension care.",
+  "Neurology": "Disorders of the brain, nerves, and spine.",
+  "Neurosurgery": "Surgical treatment of brain and spine disorders.",
+  "Nuclear Medicine": "Imaging and therapy using radioactive tracers.",
+  "Obstetrics & Gynaecology": "Pregnancy, childbirth, and reproductive health care.",
+  "Occupational Medicine": "Workplace health, safety, and fitness for work.",
+  "Oncology Surgery": "Surgical treatment of cancer.",
+  "Ophthalmology": "Eye and vision care.",
+  "Orthopaedic Surgery": "Musculoskeletal and joint surgical care.",
+  "Paediatric Surgery": "Surgical care for infants and children.",
+  "Paediatrics": "Medical care for infants, children, and adolescents.",
+  "Pain Medicine": "Diagnosis and management of chronic and acute pain.",
+  "Pathology": "Laboratory diagnosis of disease from tissues and samples.",
+  "Pathology – Anatomy": "Tissue-based diagnosis of disease.",
+  "Palliative Medicine": "Symptom relief and quality of life in serious illness.",
+  "Physician (Internal)": "Adult internal medicine and complex medical care.",
+  "Plastic Surgery": "Reconstructive and cosmetic surgical procedures.",
+  "Psychiatry": "Mental health assessment and treatment.",
+  "Public Health Medicine": "Population health, prevention, and policy.",
+  "Pulmonology": "Lung and respiratory disease care.",
+  "Radiation Oncology": "Cancer treatment using targeted radiation.",
+  "Radiology": "Medical imaging for diagnosis and image-guided care.",
+  "Rehabilitation Medicine": "Recovery of function after illness or injury.",
+  "Respiratory Medicine": "Lung and breathing disorder care.",
+  "Rheumatology": "Autoimmune and joint disease care.",
+  "Sexual Health Medicine": "Sexual health, STIs, and reproductive counseling.",
+  "Sport & Exercise Medicine": "Injury care and performance for active people.",
+  "Surgery (General)": "General surgical care for common abdominal conditions.",
+  "Surgery (all)": "Surgical diagnosis and operative treatment across specialties.",
+  "Urology": "Urinary tract and male reproductive system care.",
+  "Vascular Surgery": "Surgery of blood vessels and circulation.",
+};
+
+const getSpecialtyDefinition = name => specialtyDefinitions[name] || "";
+
 const idProvs = [
   {name:"DKI Jakarta",island:"Java",specialists:10849,pop:10600000},
   {name:"East Java",island:"Java",specialists:5694,pop:41500000},
@@ -1231,10 +1296,12 @@ new Chart(document.getElementById("ageCompChart"),{
     const ratio = Math.round(ID_POP/s.count).toLocaleString();
     const pct   = s.count/maxC*100;
     const bc    = s.count>3000?"#1F9D55":s.count>1000?"#FFC234":"#FF5C39";
+    const def   = getSpecialtyDefinition(s.name);
+    const defAttr = def ? ` title="${def}" aria-label="${def}"` : "";
     const tr    = document.createElement("tr");
     tr.innerHTML = `
       <td><span class="dim">${i+1}</span></td>
-      <td class="bold">${s.name}</td>
+      <td class="bold"${defAttr}>${s.name}</td>
       <td><code style="background:rgba(31,169,199,0.1);color:#1080a0;padding:2px 7px;border-radius:4px;font-family:${monoFont};font-size:11px">${s.code}</code></td>
       <td class="num">${s.count.toLocaleString()}</td>
       <td><div class="bbar"><div class="bbg"><div class="bfg" style="width:${pct}%;background:${bc}"></div></div><span class="dim" style="font-family:${monoFont};font-size:10px;min-width:28px;text-align:right">${Math.round(pct)}%</span></div></td>
@@ -1252,10 +1319,12 @@ new Chart(document.getElementById("ageCompChart"),{
   sorted.forEach((s,i)=>{
     const per100k = (s.count/AU_POP*100000).toFixed(1);
     const pct     = s.count/maxC*100;
+    const def     = getSpecialtyDefinition(s.name);
+    const defAttr = def ? ` title="${def}" aria-label="${def}"` : "";
     const tr      = document.createElement("tr");
     tr.innerHTML = `
       <td><span class="dim">${i+1}</span></td>
-      <td class="bold">${s.name}</td>
+      <td class="bold"${defAttr}>${s.name}</td>
       <td class="num">${s.count.toLocaleString()}</td>
       <td class="dim" style="font-family:${monoFont}">${per100k}</td>
       <td><div class="bbar"><div class="bbg"><div class="bfg" style="width:${Math.min(pct,100)}%;background:#1F9D55"></div></div><span class="dim" style="font-family:${monoFont};font-size:10px;min-width:28px;text-align:right">${Math.round(pct)}%</span></div></td>`;
@@ -1279,10 +1348,12 @@ function renderCompTable(data){
     const auPct    = Math.min(m.auPer/Math.max(m.auPer,m.idPer)*100,100);
     const idPct    = Math.min(m.idPer/Math.max(m.auPer,m.idPer)*100,100);
     const gapColor = m.gap>5?"#FF5C39":m.gap>2?"#FFC234":"#1F9D55";
+    const def      = getSpecialtyDefinition(m.name);
+    const defAttr  = def ? ` title="${def}" aria-label="${def}"` : "";
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td><span class="dim">${i+1}</span></td>
-      <td class="bold">${m.name}</td>
+      <td class="bold"${defAttr}>${m.name}</td>
       <td class="num">${m.auCount.toLocaleString()}</td>
       <td><div class="bbar"><div class="bbg"><div class="bfg" style="width:${auPct}%;background:#1F9D55"></div></div><span class="dim" style="font-family:${monoFont};font-size:10px;min-width:28px">${m.auPer}</span></div></td>
       <td class="num">${m.idCount.toLocaleString()}</td>
