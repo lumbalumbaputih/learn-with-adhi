@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AU vs ID — Specialist Doctor Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ── DESIGN TOKENS (Adhi Hidup system) ────────────────────── */
+:root {
+  --tomato:   #FF5C39;
+  --mango:    #FFC234;
+  --forest:   #1F9D55;
+  --sea:      #1FA9C7;
+  --mawar:    #E84BA0;
+  --indigo:   #2E3192;
+  --ink:      #1A1614;
+  --paper:    #FBF4E6;
+  --paper-2:  #F4ECD8;
+  --muted:    #6B6259;
+  --line:     rgba(26,22,20,0.12);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'Inter', system-ui, sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+  --r-card:   14px;
+  --r-sm:     8px;
+  --r-pill:   999px;
+}
+
+/* ── RESET ─────────────────────────────────────────────────── */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--fb);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.hero {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 40px 44px 32px;
+  border-bottom: 3px solid var(--tomato);
+}
+.hero-eyebrow {
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mango);
+  margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: var(--fd);
+  font-size: clamp(26px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.hero h1 .au { color: var(--forest); }
+.hero h1 .id { color: var(--sea); }
+.hero-desc {
+  color: rgba(251,244,230,0.60);
+  font-size: 13px;
+  margin-top: 10px;
+  max-width: 640px;
+  line-height: 1.65;
+}
+.pills {
+  display: flex;
+  gap: 12px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+.pill {
+  background: rgba(251,244,230,0.07);
+  border: 1px solid rgba(251,244,230,0.13);
+  border-radius: var(--r-card);
+  padding: 13px 18px;
+  min-width: 125px;
+}
+.pill-val {
+  font-family: var(--fm);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1;
+}
+.pill-lbl {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(251,244,230,0.46);
+  margin-top: 5px;
+}
+.pill.au   .pill-val { color: var(--forest); }
+.pill.id   .pill-val { color: var(--sea); }
+.pill.warn .pill-val { color: var(--mango); }
+
+/* ── WRAP ─────────────────────────────────────────────────── */
+.wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* ── GRID ─────────────────────────────────────────────────── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+.full { grid-column: 1/-1; }
+@media(max-width:900px){ .g2,.g3 { grid-template-columns:1fr; } }
+
+/* ── CARD ─────────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 20px;
+}
+.card-title {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+/* ── SECTION HEADER ───────────────────────────────────────── */
+.section-hdr {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 38px 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--line);
+}
+.section-hdr h2 {
+  font-family: var(--fd);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.section-badge {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--paper-2);
+  color: var(--muted);
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+}
+
+/* ── ALERT ────────────────────────────────────────────────── */
+.alert {
+  background: #fffbf0;
+  border: 1px solid rgba(255,194,52,0.35);
+  border-left: 3px solid var(--mango);
+  border-radius: var(--r-sm);
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #4a3e18;
+}
+.alert strong { color: #7a5a00; font-weight: 600; }
+
+/* ── TABS ─────────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  width: fit-content;
+  margin-bottom: 14px;
+}
+.tb {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  padding: 6px 14px;
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 150ms;
+}
+.tb.active { background: var(--ink); color: var(--paper); font-weight: 500; }
+.tb:hover:not(.active) { background: var(--paper-2); color: var(--ink); }
+
+/* ── TABLE ────────────────────────────────────────────────── */
+.tw { overflow-x:auto; border-radius: var(--r-sm); border: 1px solid var(--line); }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+thead tr { background: var(--paper-2); }
+thead th {
+  padding: 9px 12px;
+  text-align: left;
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+tbody tr { border-bottom:1px solid var(--line); transition:background 120ms; }
+tbody tr:hover { background: var(--paper); }
+tbody tr:last-child { border-bottom:none; }
+td { padding:9px 12px; vertical-align:middle; }
+.bold { font-weight:600; }
+.num  { text-align:right; font-family:var(--fm); font-weight:500; }
+.dim  { color:var(--muted); font-size:12px; }
+
+/* ── BADGE ────────────────────────────────────────────────── */
+.badge {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:5px;
+  font-family:var(--fm);
+  font-size:9px;
+  letter-spacing:0.08em;
+}
+.b-au  { background:rgba(31,157,85,0.1); color:#1a7a44; border:1px solid rgba(31,157,85,0.25); }
+.b-est { background:rgba(255,194,52,0.1); color:#7a5a00; border:1px solid rgba(255,194,52,0.3); }
+
+/* ── MINI BAR ─────────────────────────────────────────────── */
+.bbar { display:flex; align-items:center; gap:8px; }
+.bbg  { background:var(--paper-2); border-radius:4px; height:7px; flex:1; min-width:50px; }
+.bfg  { height:7px; border-radius:4px; }
+.pbg  { background:var(--paper-2); border-radius:4px; height:9px; flex:1; min-width:60px; }
+.pbr  { height:9px; border-radius:4px; }
+
+/* ── FILTER ROW ───────────────────────────────────────────── */
+.frow { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; align-items:center; }
+.frow input,.frow select {
+  background:#fff;
+  border:1px solid var(--line);
+  color:var(--ink);
+  border-radius:var(--r-sm);
+  padding:7px 12px;
+  font-family:var(--fb);
+  font-size:13px;
+  outline:none;
+}
+.frow input { flex:1; min-width:200px; }
+.frow input:focus,.frow select:focus { border-color:var(--forest); }
+
+/* ── VERDICT PILL ─────────────────────────────────────────── */
+.vp { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:var(--r-sm); font-family:var(--fm); font-size:10px; letter-spacing:0.06em; }
+.vp-au  { background:rgba(31,157,85,0.1);  color:#1a7a44; }
+.vp-id  { background:rgba(31,169,199,0.1); color:#1080a0; }
+
+/* ── LEGEND ───────────────────────────────────────────────── */
+.leg { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:12px; }
+.li  { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted); }
+.ld  { width:12px; height:12px; border-radius:3px; }
+
+/* ── CLICK HINT ───────────────────────────────────────────── */
+.click-hint {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family:var(--fm);
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  background:var(--paper-2);
+  border:1px solid var(--line);
+  padding:5px 10px;
+  border-radius:var(--r-pill);
+  margin-bottom:12px;
+}
+.click-hint::before { content:"↓"; color:var(--forest); font-size:11px; }
+
+/* ── STATE DRILL-DOWN PANEL ───────────────────────────────── */
+.drill-panel {
+  display:none;
+  margin-top:16px;
+  background:var(--paper);
+  border:1px solid rgba(31,157,85,0.25);
+  border-left:3px solid var(--forest);
+  border-radius:var(--r-sm);
+  padding:20px;
+  animation: dropIn 220ms cubic-bezier(0.16,1,0.3,1);
+}
+.drill-panel.open { display:block; }
+@keyframes dropIn {
+  from { opacity:0; transform:translateY(-6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.drill-header {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+}
+.drill-state-name {
+  font-family:var(--fd);
+  font-size:19px;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+}
+.drill-tag {
+  font-family:var(--fm);
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  background:rgba(31,157,85,0.1);
+  color:#1a7a44;
+  border:1px solid rgba(31,157,85,0.25);
+  padding:3px 10px;
+  border-radius:var(--r-pill);
+}
+.drill-note {
+  font-family:var(--fm);
+  font-size:9px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+  background:rgba(107,98,89,0.08);
+  padding:3px 8px;
+  border-radius:var(--r-pill);
+  margin-left:auto;
+}
+.drill-grid {
+  display:grid;
+  grid-template-columns:140px 1fr 1fr;
+  gap:22px;
+  align-items:start;
+}
+@media(max-width:640px){ .drill-grid { grid-template-columns:1fr; } }
+.drill-big-num {
+  font-family:var(--fm);
+  font-size:38px;
+  font-weight:500;
+  color:var(--forest);
+  line-height:1;
+}
+.drill-big-lbl {
+  font-family:var(--fm);
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:5px;
+}
+.drill-sub {
+  margin-top:14px;
+}
+.drill-sub-val {
+  font-family:var(--fm);
+  font-size:18px;
+  font-weight:500;
+  color:var(--ink);
+}
+.drill-sub-lbl {
+  font-family:var(--fm);
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:2px;
+}
+.gender-heading {
+  font-family:var(--fm);
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+.gender-bar {
+  display:flex;
+  height:30px;
+  border-radius:6px;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+.gb-male {
+  background:var(--indigo);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--fm);
+  font-size:11px;
+  color:#fff;
+  font-weight:500;
+  transition:width 380ms cubic-bezier(0.16,1,0.3,1);
+  min-width:36px;
+}
+.gb-female {
+  background:var(--mawar);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--fm);
+  font-size:11px;
+  color:#fff;
+  font-weight:500;
+  transition:width 380ms cubic-bezier(0.16,1,0.3,1);
+  min-width:36px;
+}
+.gender-legend {
+  display:flex;
+  gap:14px;
+  font-size:12px;
+  color:var(--muted);
+}
+.gender-legend span { display:flex; align-items:center; gap:5px; }
+.gdot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+.count-block {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.count-row {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.count-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.count-val {
+  font-family:var(--fm);
+  font-size:18px;
+  font-weight:500;
+}
+.count-lbl { font-size:11px; color:var(--muted); margin-top:1px; }
+.drill-disclaimer {
+  margin-top:14px;
+  padding:8px 11px;
+  background:rgba(31,157,85,0.05);
+  border-radius:6px;
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.55;
+}
+.drill-disclaimer strong { color:var(--ink); font-weight:600; }
+
+/* ── ISLAND CHIPS ─────────────────────────────────────────── */
+.island-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(138px,1fr));
+  gap:8px;
+  margin-top:14px;
+}
+.island-chip {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 10px;
+  background:var(--paper-2);
+  border-radius:var(--r-sm);
+}
+.island-dot { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+.island-name { font-weight:600; font-size:11px; }
+.island-count { font-family:var(--fm); font-size:11px; color:var(--muted); }
+
+/* ── FOOTER ───────────────────────────────────────────────── */
+.footer {
+  border-top:1px solid var(--line);
+  padding:20px 44px;
+  font-family:var(--fm);
+  font-size:10px;
+  letter-spacing:0.04em;
+  color:var(--muted);
+  background:var(--paper-2);
+  line-height:1.85;
+}
+
+/* ── CHART WRAPPER ────────────────────────────────────────── */
+.cw { position:relative; width:100%; }
+
+</style>
+<style>
+.back-nav {
+  background: var(--ink);
+  padding: 10px 44px;
+  display: flex;
+  align-items: center;
+}
+.back-nav a {
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(251,244,230,0.55);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 150ms;
+}
+.back-nav a:hover { color: var(--mango); }
+.back-nav a::before { content: "←"; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="back-nav">
+  <a href="../../index.html">Learn with Adhi</a>
+</div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<div class="hero">
+  <div class="hero-eyebrow">Health Workforce Intelligence &middot; May 2026</div>
+  <h1>🏥 <span class="au">Australia</span> vs <span class="id">Indonesia</span><br>Specialist Doctor Dashboard</h1>
+  <p class="hero-desc">Side-by-side comparison of specialist availability, population ratios, and geographic spread. Click any state bar to explore specialist counts and gender breakdown.</p>
+  <div class="pills">
+    <div class="pill au"><div class="pill-val">46,399</div><div class="pill-lbl">🇦🇺 AU Specialists (2024)</div></div>
+    <div class="pill id"><div class="pill-val">59,422</div><div class="pill-lbl">🇮🇩 ID Specialists (2024)</div></div>
+    <div class="pill au"><div class="pill-val">26.8M</div><div class="pill-lbl">🇦🇺 Population</div></div>
+    <div class="pill id"><div class="pill-val">285.7M</div><div class="pill-lbl">🇮🇩 Population</div></div>
+    <div class="pill au"><div class="pill-val">1:578</div><div class="pill-lbl">🇦🇺 Specialist ratio</div></div>
+    <div class="pill id"><div class="pill-val">1:4,806</div><div class="pill-lbl">🇮🇩 Specialist ratio</div></div>
+    <div class="pill warn"><div class="pill-val">8.3×</div><div class="pill-lbl">Coverage gap (AU adv.)</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- KEY INSIGHT -->
+<div class="alert">
+  <strong>Key insight:</strong> Australia has roughly <strong>8.3× better</strong> specialist coverage per capita than Indonesia. The ratio gap is most extreme in <strong>Psychiatry</strong> (AU 1:5,400 vs ID 1:259,700), <strong>Emergency Medicine</strong>, and <strong>Geriatric Medicine</strong>. Indonesia's worst shortages are Nuclear Medicine (1:1.9M) and Geriatrics (1:1.6M) — under 200 doctors serving 285 million people.
+</div>
+
+<!-- ══════════════════ SECTION 1: OVERVIEW ══════════════════ -->
+<div class="section-hdr">
+  <h2>National Overview</h2>
+  <span class="section-badge">Headline numbers</span>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="card-title">Total Specialist Count — Australia vs Indonesia</div>
+    <div class="cw" style="height:220px"><canvas id="overviewBar"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Ratio Gap by Specialty — Specialists per 100,000 Population</div>
+    <div class="tabs">
+      <button class="tb active" onclick="switchRatio('log')">Log Scale</button>
+      <button class="tb" onclick="switchRatio('linear')">Linear</button>
+    </div>
+    <div class="cw" style="height:185px"><canvas id="ratioCompare"></canvas></div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:24px">
+  <div class="card-title">Doctors per 100,000 Population — Matched Specialties</div>
+  <div class="leg">
+    <div class="li"><div class="ld" style="background:var(--forest)"></div>Australia</div>
+    <div class="li"><div class="ld" style="background:var(--sea)"></div>Indonesia</div>
+  </div>
+  <div class="cw" style="height:460px"><canvas id="matchedBar"></canvas></div>
+</div>
+
+<!-- ══════════════════ SECTION 2: AUSTRALIA BY STATE ══════════════════ -->
+<div class="section-hdr">
+  <h2>Australia — Doctors by State</h2>
+  <span class="section-badge">Click a bar to explore</span>
+</div>
+
+<div class="g2">
+  <!-- INTERACTIVE STATE CHART -->
+  <div class="card">
+    <div class="card-title">Specialists &amp; All Practitioners by State/Territory (AHPRA 2023/24)</div>
+    <div class="click-hint">Click any state bar to see specialist count and gender breakdown</div>
+    <div class="cw" style="height:250px"><canvas id="auStateChart"></canvas></div>
+    <!-- DRILL-DOWN PANEL -->
+    <div id="drillPanel" class="drill-panel">
+      <div id="drillContent"></div>
+    </div>
+  </div>
+
+  <!-- AU STATE TABLE -->
+  <div class="card">
+    <div class="card-title">All Doctors &amp; Specialists by State (2024)</div>
+    <div class="tw">
+      <table>
+        <thead><tr>
+          <th>#</th><th>State / Territory</th>
+          <th>All Doctors</th><th>Specialists</th>
+          <th>Sp. per 100k</th><th>Distribution</th>
+        </tr></thead>
+        <tbody id="auStateBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION 3: INDONESIA BY REGION ══════════════════ -->
+<div class="section-hdr">
+  <h2>Indonesia — Specialists by Region</h2>
+  <span class="section-badge">KKI 2024</span>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="card-title">Distribution by Island Group</div>
+    <div class="cw" style="height:250px"><canvas id="idIslandChart"></canvas></div>
+    <div class="island-grid" id="islandGrid"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Specialists by Province</div>
+    <div class="tw" style="max-height:400px;overflow-y:auto">
+      <table>
+        <thead><tr>
+          <th>#</th><th>Province</th><th>Island</th>
+          <th>Specialists</th><th>Per 100k</th><th>Status</th>
+        </tr></thead>
+        <tbody id="idProvBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION 4: COMPARISON TABLE ══════════════════ -->
+<div class="section-hdr">
+  <h2>Specialty-by-Specialty Comparison</h2>
+  <span class="section-badge">Matched pairs</span>
+</div>
+
+<div class="frow">
+  <input type="text" id="srch" placeholder="Search specialty…" oninput="filterComp()"/>
+  <select id="srchSort" onchange="sortComp()">
+    <option value="gap-desc">Biggest ratio gap first</option>
+    <option value="gap-asc">Smallest ratio gap first</option>
+    <option value="au-desc">AU most doctors</option>
+    <option value="id-desc">ID most doctors</option>
+    <option value="alpha">A–Z</option>
+  </select>
+</div>
+<div class="tw" style="margin-bottom:24px">
+  <table>
+    <thead><tr>
+      <th>#</th><th>Specialty</th>
+      <th>🇦🇺 Doctors</th><th>🇦🇺 Per 100k</th>
+      <th>🇮🇩 Doctors</th><th>🇮🇩 Per 100k</th>
+      <th>AU/ID Gap</th><th>Better Coverage</th>
+    </tr></thead>
+    <tbody id="compBody"></tbody>
+  </table>
+</div>
+
+<!-- ══════════════════ SECTION 5: DEMOGRAPHICS ══════════════════ -->
+<div class="section-hdr">
+  <h2>Workforce Demographics</h2>
+  <span class="section-badge">Gender &amp; age</span>
+</div>
+
+<div class="g3">
+  <div class="card">
+    <div class="card-title">🇦🇺 Australia — Gender Split (AHPRA 2023/24)</div>
+    <div class="cw" style="height:180px"><canvas id="auGenderChart"></canvas></div>
+    <table style="margin-top:12px;width:100%">
+      <thead><tr><th>Gender</th><th style="text-align:right">Share</th><th style="text-align:right">Est. Count</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--mawar);font-weight:600">● Female</td><td class="num" style="color:var(--mawar)">43%</td><td class="num dim">~19,952</td></tr>
+        <tr><td style="color:var(--indigo);font-weight:600">● Male</td><td class="num" style="color:var(--indigo)">57%</td><td class="num dim">~26,447</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">🇮🇩 Indonesia — Gender Split (KKI 2024 est.)</div>
+    <div class="cw" style="height:180px"><canvas id="idGenderChart"></canvas></div>
+    <table style="margin-top:12px;width:100%">
+      <thead><tr><th>Gender</th><th style="text-align:right">Share</th><th style="text-align:right">Est. Count</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--mawar);font-weight:600">● Female</td><td class="num" style="color:var(--mawar)">42%</td><td class="num dim">~24,957</td></tr>
+        <tr><td style="color:var(--indigo);font-weight:600">● Male</td><td class="num" style="color:var(--indigo)">58%</td><td class="num dim">~34,465</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">Age Band Comparison — Both Countries</div>
+    <div class="cw" style="height:180px"><canvas id="ageCompChart"></canvas></div>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6">AU specialists skew older (45–64 dominant). ID workforce is younger — 35–44 is the peak band, reflecting rapid specialist training growth post-2010.</p>
+  </div>
+</div>
+
+<div class="g2" style="margin-bottom:24px">
+  <div class="card">
+    <div class="card-title">🇦🇺 Australia — Age Distribution (AHPRA 2023/24)</div>
+    <table style="width:100%">
+      <thead><tr><th>Age Band</th><th style="text-align:right">Share</th><th style="text-align:right">Est. Count</th><th>Bar</th></tr></thead>
+      <tbody>
+        <tr><td>Under 35</td><td class="num" style="color:var(--forest)">8%</td><td class="num dim">~3,712</td><td><div class="pbg"><div class="pbr" style="width:8%;background:var(--forest)"></div></div></td></tr>
+        <tr><td>35–44</td><td class="num" style="color:var(--forest)">22%</td><td class="num dim">~10,208</td><td><div class="pbg"><div class="pbr" style="width:22%;background:var(--forest)"></div></div></td></tr>
+        <tr><td>45–54</td><td class="num" style="color:var(--mango)">30%</td><td class="num dim">~13,920</td><td><div class="pbg"><div class="pbr" style="width:30%;background:var(--mango)"></div></div></td></tr>
+        <tr><td>55–64</td><td class="num" style="color:var(--mango)">25%</td><td class="num dim">~11,600</td><td><div class="pbg"><div class="pbr" style="width:25%;background:var(--mango)"></div></div></td></tr>
+        <tr><td>65+</td><td class="num" style="color:var(--tomato)">15%</td><td class="num dim">~6,960</td><td><div class="pbg"><div class="pbr" style="width:15%;background:var(--tomato)"></div></div></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6">⚠️ ~40% of AU specialists are aged 55+, signalling an impending retirement wave.</p>
+  </div>
+  <div class="card">
+    <div class="card-title">🇮🇩 Indonesia — Age Distribution (KKI 2024 est.)</div>
+    <table style="width:100%">
+      <thead><tr><th>Age Band</th><th style="text-align:right">Share</th><th style="text-align:right">Est. Count</th><th>Bar</th></tr></thead>
+      <tbody>
+        <tr><td>Under 35</td><td class="num" style="color:var(--sea)">15%</td><td class="num dim">~8,913</td><td><div class="pbg"><div class="pbr" style="width:15%;background:var(--sea)"></div></div></td></tr>
+        <tr><td>35–44</td><td class="num" style="color:var(--sea)">30%</td><td class="num dim">~17,827</td><td><div class="pbg"><div class="pbr" style="width:30%;background:var(--sea)"></div></div></td></tr>
+        <tr><td>45–54</td><td class="num" style="color:var(--mango)">28%</td><td class="num dim">~16,638</td><td><div class="pbg"><div class="pbr" style="width:28%;background:var(--mango)"></div></div></td></tr>
+        <tr><td>55–64</td><td class="num" style="color:var(--mango)">18%</td><td class="num dim">~10,696</td><td><div class="pbg"><div class="pbr" style="width:18%;background:var(--mango)"></div></div></td></tr>
+        <tr><td>65+</td><td class="num" style="color:var(--tomato)">9%</td><td class="num dim">~5,348</td><td><div class="pbg"><div class="pbr" style="width:9%;background:var(--tomato)"></div></div></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6">ID has a younger specialist base — 45% are under 44, driven by rapid specialist school expansion post-2010.</p>
+  </div>
+</div>
+
+<!-- ══════════════════ SECTION 6: FULL SPECIALTY LISTS ══════════════════ -->
+<div class="section-hdr">
+  <h2>Indonesia — All Specialist Branches</h2>
+  <span class="section-badge">KKI 2024 · 37 specialties</span>
+</div>
+<div class="tw" style="margin-bottom:24px">
+  <table>
+    <thead><tr><th>#</th><th>Specialty</th><th>Code</th><th>Doctors</th><th>Volume</th><th>Ratio (1 per X pop.)</th><th>Source</th></tr></thead>
+    <tbody id="idBody"></tbody>
+  </table>
+</div>
+
+<div class="section-hdr">
+  <h2>Australia — All Specialist Branches</h2>
+  <span class="section-badge">AHPRA 2023/24 · 40 groups</span>
+</div>
+<div class="tw" style="margin-bottom:24px">
+  <table>
+    <thead><tr><th>#</th><th>Specialty</th><th>Doctors</th><th>Per 100k pop.</th><th>Volume</th></tr></thead>
+    <tbody id="auBody"></tbody>
+  </table>
+</div>
+
+</div><!-- /wrap -->
+
+<div class="footer">
+  Sources: AHPRA / Medical Board of Australia Annual Report 2023–24 &middot; Australian Health Workforce Data (NHWDS) 2024 &middot; KKI (Konsil Kedokteran Indonesia) April 2024 &middot; Kemenkes (Ministry of Health) Indonesia 2024 &middot; IDI 2024 &middot; Databoks Katadata &middot; BPS Statistics Indonesia 2024<br>
+  ⚠️ Indonesia figures marked "Estimated" use IDI/MoH reports where KKI sub-group data is not publicly disaggregated. Australia figures are AHPRA registered specialist headcounts (not all practising). Gender splits: AHPRA Annual Report 2023–24 (AU); KKI/IDI 2024 estimates (ID). Per-state gender breakdowns are proportional estimates based on AHPRA regional data with realistic variation applied. Dashboard rebuilt May 2026 — Adhi design system v1.0.
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════════════════════
+const AU_POP = 26800000;
+const ID_POP = 285700000;
+
+// AU states — male/female % are AHPRA-proportional estimates with regional variation
+const auStates = [
+  {name:"New South Wales",    abbr:"NSW", pop:8200000,  count:36640, specialists:16472, male:55, female:45},
+  {name:"Victoria",           abbr:"VIC", pop:6700000,  count:31508, specialists:13224, male:54, female:46},
+  {name:"Queensland",         abbr:"QLD", pop:5700000,  count:25515, specialists:9048,  male:58, female:42},
+  {name:"Western Australia",  abbr:"WA",  pop:2900000,  count:13055, specialists:3944,  male:59, female:41},
+  {name:"South Australia",    abbr:"SA",  pop:1800000,  count:8550,  specialists:2413,  male:57, female:43},
+  {name:"Tasmania",           abbr:"TAS", pop:560000,   count:2906,  specialists:557,   male:60, female:40},
+  {name:"ACT",                abbr:"ACT", pop:460000,   count:2389,  specialists:557,   male:53, female:47},
+  {name:"Northern Territory", abbr:"NT",  pop:250000,   count:1312,  specialists:186,   male:62, female:38},
+];
+
+const auSpecialties = [
+  {name:"Anaesthesia",count:6228},{name:"Surgery (all)",count:6625},
+  {name:"Psychiatry",count:4969},{name:"Paediatrics",count:4239},
+  {name:"Physician (Internal)",count:3800},{name:"Radiology",count:3253},
+  {name:"Emergency Medicine",count:3891},{name:"Obstetrics & Gynaecology",count:2409},
+  {name:"Pathology",count:2483},{name:"Cardiology",count:1950},
+  {name:"Neurology",count:1200},{name:"Gastroenterology & Hepatology",count:1100},
+  {name:"Intensive Care Medicine",count:1236},{name:"Palliative Medicine",count:532},
+  {name:"Pain Medicine",count:434},{name:"Radiation Oncology",count:501},
+  {name:"Rehabilitation Medicine",count:647},{name:"Ophthalmology",count:1115},
+  {name:"General Practice",count:36456},{name:"Dermatology",count:690},
+  {name:"Orthopaedic Surgery",count:1600},{name:"Urology",count:750},
+  {name:"Neurosurgery",count:400},{name:"Plastic Surgery",count:580},
+  {name:"Endocrinology",count:700},{name:"Nephrology",count:620},
+  {name:"Rheumatology",count:600},{name:"Medical Oncology",count:720},
+  {name:"Respiratory Medicine",count:950},{name:"Geriatric Medicine",count:800},
+  {name:"Infectious Diseases",count:480},{name:"Haematology",count:650},
+  {name:"Nuclear Medicine",count:300},{name:"Vascular Surgery",count:420},
+  {name:"Occupational Medicine",count:288},{name:"Public Health Medicine",count:446},
+  {name:"Sexual Health Medicine",count:135},{name:"Addiction Medicine",count:198},
+  {name:"Sport & Exercise Medicine",count:179},{name:"Medical Administration",count:346},
+];
+
+const idSpecialties = [
+  {name:"Internal Medicine",code:"Sp.PD",count:6206,verified:true},
+  {name:"Obstetrics & Gynaecology",code:"Sp.OG",count:5957,verified:true},
+  {name:"Paediatrics",code:"Sp.A",count:5695,verified:true},
+  {name:"General Surgery",code:"Sp.B",count:4082,verified:true},
+  {name:"Anaesthesiology",code:"Sp.An",count:3488,verified:true},
+  {name:"Ophthalmology",code:"Sp.M",count:2831,verified:true},
+  {name:"Neurology",code:"Sp.N",count:2732,verified:true},
+  {name:"Dermatology & Venereology",code:"Sp.DV",count:2441,verified:true},
+  {name:"ENT (Head & Neck)",code:"Sp.THT-KL",count:2257,verified:true},
+  {name:"Radiology",code:"Sp.Rad",count:2212,verified:true},
+  {name:"Cardiology",code:"Sp.JP",count:1400,verified:false},
+  {name:"Orthopaedic Surgery",code:"Sp.OT",count:1350,verified:false},
+  {name:"Pulmonology",code:"Sp.P",count:1200,verified:false},
+  {name:"Psychiatry",code:"Sp.KJ",count:1100,verified:false},
+  {name:"Urology",code:"Sp.U",count:950,verified:false},
+  {name:"Pathology – Anatomy",code:"Sp.PA",count:900,verified:false},
+  {name:"Clinical Pathology (Lab)",code:"Sp.PK",count:880,verified:false},
+  {name:"Rehabilitation Medicine",code:"Sp.KFR",count:750,verified:false},
+  {name:"Emergency Medicine",code:"Sp.EM",count:600,verified:false},
+  {name:"Plastic Surgery",code:"Sp.BP",count:500,verified:false},
+  {name:"Neurosurgery",code:"Sp.BS",count:480,verified:false},
+  {name:"Digestive Surgery",code:"Sp.BD",count:420,verified:false},
+  {name:"Haematology & Medical Oncology",code:"Sp.PD-KHOM",count:400,verified:false},
+  {name:"Endocrinology",code:"Sp.PD-KEMD",count:380,verified:false},
+  {name:"Cardiothoracic Surgery",code:"Sp.BTKV",count:350,verified:false},
+  {name:"Occupational Medicine",code:"Sp.Ok",count:300,verified:false},
+  {name:"Oncology Surgery",code:"Sp.B(K)Onk",count:300,verified:false},
+  {name:"Neonatology",code:"Sp.A-Neo",count:300,verified:false},
+  {name:"Nephrology",code:"Sp.PD-KGH",count:320,verified:false},
+  {name:"Rheumatology",code:"Sp.PD-KR",count:280,verified:false},
+  {name:"Paediatric Surgery",code:"Sp.BA",count:280,verified:false},
+  {name:"Gastroentero-Hepatology",code:"Sp.PD-KGEH",count:290,verified:false},
+  {name:"Forensic Medicine",code:"Sp.F",count:250,verified:false},
+  {name:"Vascular Surgery",code:"Sp.BV",count:200,verified:false},
+  {name:"Geriatrics",code:"Sp.PD-KGer",count:180,verified:false},
+  {name:"Nuclear Medicine",code:"Sp.KN",count:150,verified:false},
+  {name:"Interventional Radiology",code:"Sp.Rad-Int",count:150,verified:false},
+];
+
+const matched = [
+  {name:"Anaesthesia/Anaesthesiology",auCount:6228,idCount:3488},
+  {name:"Obstetrics & Gynaecology",   auCount:2409,idCount:5957},
+  {name:"Paediatrics",                auCount:4239,idCount:5695},
+  {name:"Surgery (General)",          auCount:2500,idCount:4082},
+  {name:"Cardiology",                 auCount:1950,idCount:1400},
+  {name:"Neurology",                  auCount:1200,idCount:2732},
+  {name:"Radiology",                  auCount:3253,idCount:2212},
+  {name:"Psychiatry",                 auCount:4969,idCount:1100},
+  {name:"Dermatology",                auCount:690, idCount:2441},
+  {name:"Emergency Medicine",         auCount:3891,idCount:600},
+  {name:"Ophthalmology",              auCount:1115,idCount:2831},
+  {name:"Orthopaedic Surgery",        auCount:1600,idCount:1350},
+  {name:"Urology",                    auCount:750, idCount:950},
+  {name:"Rehabilitation Medicine",    auCount:647, idCount:750},
+  {name:"Endocrinology",              auCount:700, idCount:380},
+  {name:"Nephrology",                 auCount:620, idCount:320},
+  {name:"Rheumatology",               auCount:600, idCount:280},
+  {name:"Nuclear Medicine",           auCount:300, idCount:150},
+  {name:"Vascular Surgery",           auCount:420, idCount:200},
+  {name:"Geriatrics",                 auCount:800, idCount:180},
+  {name:"Plastic Surgery",            auCount:580, idCount:500},
+  {name:"Neurosurgery",               auCount:400, idCount:480},
+];
+
+const idProvs = [
+  {name:"DKI Jakarta",island:"Java",specialists:10849,pop:10600000},
+  {name:"East Java",island:"Java",specialists:5694,pop:41500000},
+  {name:"West Java",island:"Java",specialists:5731,pop:49900000},
+  {name:"Central Java",island:"Java",specialists:4200,pop:37300000},
+  {name:"North Sumatra",island:"Sumatra",specialists:3100,pop:15600000},
+  {name:"South Sulawesi",island:"Sulawesi",specialists:1850,pop:9300000},
+  {name:"Banten",island:"Java",specialists:1700,pop:12200000},
+  {name:"Yogyakarta",island:"Java",specialists:1650,pop:3800000},
+  {name:"Riau",island:"Sumatra",specialists:1400,pop:7000000},
+  {name:"South Sumatra",island:"Sumatra",specialists:1350,pop:8800000},
+  {name:"West Sumatra",island:"Sumatra",specialists:1100,pop:5600000},
+  {name:"Bali",island:"Bali",specialists:1050,pop:4400000},
+  {name:"Aceh",island:"Sumatra",specialists:850,pop:5400000},
+  {name:"Lampung",island:"Sumatra",specialists:750,pop:9200000},
+  {name:"East Kalimantan",island:"Kalimantan",specialists:700,pop:3900000},
+  {name:"South Kalimantan",island:"Kalimantan",specialists:620,pop:4300000},
+  {name:"NTB",island:"Nusa Tenggara",specialists:430,pop:5300000},
+  {name:"West Kalimantan",island:"Kalimantan",specialists:420,pop:5500000},
+  {name:"Jambi",island:"Sumatra",specialists:380,pop:3700000},
+  {name:"North Sulawesi",island:"Sulawesi",specialists:380,pop:2700000},
+  {name:"Central Sulawesi",island:"Sulawesi",specialists:320,pop:3100000},
+  {name:"Riau Islands",island:"Sumatra",specialists:350,pop:2200000},
+  {name:"Southeast Sulawesi",island:"Sulawesi",specialists:280,pop:2800000},
+  {name:"NTT",island:"Nusa Tenggara",specialists:310,pop:5600000},
+  {name:"Central Kalimantan",island:"Kalimantan",specialists:290,pop:2800000},
+  {name:"Bengkulu",island:"Sumatra",specialists:200,pop:2100000},
+  {name:"Maluku",island:"Maluku-Papua",specialists:190,pop:1900000},
+  {name:"Bangka Belitung",island:"Sumatra",specialists:180,pop:1500000},
+  {name:"Gorontalo",island:"Sulawesi",specialists:160,pop:1200000},
+  {name:"Papua",island:"Maluku-Papua",specialists:170,pop:1000000},
+  {name:"North Maluku",island:"Maluku-Papua",specialists:130,pop:1300000},
+  {name:"West Sulawesi",island:"Sulawesi",specialists:100,pop:1400000},
+  {name:"South Papua",island:"Maluku-Papua",specialists:80,pop:500000},
+  {name:"West Papua",island:"Maluku-Papua",specialists:62,pop:1100000},
+  {name:"Southwest Papua",island:"Maluku-Papua",specialists:76,pop:300000},
+  {name:"Central Papua",island:"Maluku-Papua",specialists:60,pop:600000},
+  {name:"Highland Papua",island:"Maluku-Papua",specialists:40,pop:500000},
+  {name:"North Kalimantan",island:"Kalimantan",specialists:110,pop:750000},
+];
+idProvs.sort((a,b)=>b.specialists-a.specialists);
+
+// Island colors using Hidup palette
+const islandColor = {
+  "Java":          "#FF5C39",
+  "Sumatra":       "#FFC234",
+  "Kalimantan":    "#1F9D55",
+  "Sulawesi":      "#2E3192",
+  "Bali":          "#1FA9C7",
+  "Nusa Tenggara": "#E84BA0",
+  "Maluku-Papua":  "#6B6259",
+};
+
+// State colors cycling through Hidup accents
+const stateColors = ["#1F9D55","#1FA9C7","#FFC234","#E84BA0","#FF5C39","#2E3192","#7ecfa0","#8dd4e8"];
+
+const auGender = [{label:"Female",value:43,color:"#E84BA0"},{label:"Male",value:57,color:"#2E3192"}];
+const idGender = [{label:"Female",value:42,color:"#E84BA0"},{label:"Male",value:58,color:"#2E3192"}];
+const auAge = [{band:"Under 35",pct:8},{band:"35–44",pct:22},{band:"45–54",pct:30},{band:"55–64",pct:25},{band:"65+",pct:15}];
+const idAge = [{band:"Under 35",pct:15},{band:"35–44",pct:30},{band:"45–54",pct:28},{band:"55–64",pct:18},{band:"65+",pct:9}];
+
+// ════════════════════════════════════════════════════════════
+// CHART DEFAULTS (warm paper theme)
+// ════════════════════════════════════════════════════════════
+Chart.defaults.color        = "#6B6259";
+Chart.defaults.borderColor  = "rgba(26,22,20,0.09)";
+const monoFont = "'JetBrains Mono', monospace";
+const bodyFont = "'Inter', sans-serif";
+
+// ── Overview bar ─────────────────────────────────────────────
+new Chart(document.getElementById("overviewBar"),{
+  type:"bar",
+  data:{
+    labels:["Total Registered Specialists"],
+    datasets:[
+      {label:"🇦🇺 Australia",data:[46399],backgroundColor:"#1F9D55",borderRadius:6},
+      {label:"🇮🇩 Indonesia",data:[59422],backgroundColor:"#1FA9C7",borderRadius:6},
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{labels:{font:{family:bodyFont,size:12},color:"#6B6259"}},
+      tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString()} specialists`}}
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{font:{family:monoFont},color:"#6B6259"}},
+      y:{grid:{color:"rgba(26,22,20,0.07)"},ticks:{font:{family:monoFont},color:"#6B6259",callback:v=>v.toLocaleString()}}
+    }
+  }
+});
+
+// ── Ratio compare ─────────────────────────────────────────────
+let rcChart;
+function buildRatioCompare(scaleType){
+  if(rcChart) rcChart.destroy();
+  rcChart = new Chart(document.getElementById("ratioCompare"),{
+    type:"bar",
+    data:{
+      labels:matched.map(m=>m.name),
+      datasets:[
+        {label:"🇦🇺 AU per 100k",data:matched.map(m=>+(m.auCount/AU_POP*100000).toFixed(2)),backgroundColor:"#1F9D55",borderRadius:4},
+        {label:"🇮🇩 ID per 100k",data:matched.map(m=>+(m.idCount/ID_POP*100000).toFixed(2)),backgroundColor:"#1FA9C7",borderRadius:4},
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{labels:{font:{family:bodyFont,size:11},color:"#6B6259"}},
+        tooltip:{callbacks:{label:ctx=>` ${ctx.raw} per 100k`}}
+      },
+      scales:{
+        x:{display:false},
+        y:{type:scaleType,grid:{color:"rgba(26,22,20,0.07)"},ticks:{font:{family:monoFont},color:"#6B6259"}}
+      }
+    }
+  });
+}
+buildRatioCompare("logarithmic");
+function switchRatio(t){
+  document.querySelectorAll(".tabs .tb").forEach(b=>{
+    b.classList.toggle("active", b.getAttribute("onclick").includes(t));
+  });
+  buildRatioCompare(t==="log"?"logarithmic":"linear");
+}
+
+// ── Matched specialty bar ─────────────────────────────────────
+new Chart(document.getElementById("matchedBar"),{
+  type:"bar",
+  data:{
+    labels:matched.map(m=>m.name),
+    datasets:[
+      {label:"🇦🇺 Australia",data:matched.map(m=>+(m.auCount/AU_POP*100000).toFixed(2)),backgroundColor:"#1F9D55",borderRadius:4},
+      {label:"🇮🇩 Indonesia",data:matched.map(m=>+(m.idCount/ID_POP*100000).toFixed(2)),backgroundColor:"#1FA9C7",borderRadius:4},
+    ]
+  },
+  options:{
+    indexAxis:"y", responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{labels:{font:{family:bodyFont,size:12},color:"#6B6259"}},
+      tooltip:{callbacks:{label:ctx=>` ${ctx.raw} per 100,000 people`}}
+    },
+    scales:{
+      x:{grid:{color:"rgba(26,22,20,0.07)"},ticks:{font:{family:monoFont},color:"#6B6259"},title:{display:true,text:"Specialists per 100,000 population",color:"#6B6259"}},
+      y:{grid:{display:false},ticks:{font:{size:11},color:"#1A1614"}}
+    }
+  }
+});
+
+// ── AU State chart — INTERACTIVE ──────────────────────────────
+let selectedIdx = null;
+const auStateChart = new Chart(document.getElementById("auStateChart"),{
+  type:"bar",
+  data:{
+    labels: auStates.map(s=>s.abbr),
+    datasets:[
+      {
+        label:"Specialists",
+        data:auStates.map(s=>s.specialists),
+        backgroundColor:stateColors,
+        borderRadius:6,
+        stack:"s"
+      },
+      {
+        label:"Other Practitioners",
+        data:auStates.map(s=>s.count-s.specialists),
+        backgroundColor:stateColors.map(c=>c+"30"),
+        borderRadius:6,
+        stack:"s"
+      },
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    onClick:(evt,els)=>{
+      if(els.length) openDrilldown(els[0].index);
+    },
+    plugins:{
+      legend:{labels:{font:{family:bodyFont,size:11},color:"#6B6259"}},
+      tooltip:{callbacks:{
+        title:ctx=>auStates[ctx[0].dataIndex].name,
+        label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString()}`
+      }}
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{font:{family:monoFont},color:"#6B6259"},stacked:true},
+      y:{grid:{color:"rgba(26,22,20,0.07)"},ticks:{font:{family:monoFont},color:"#6B6259",callback:v=>v>=1000?Math.round(v/1000)+"k":v},stacked:true}
+    }
+  }
+});
+
+function openDrilldown(idx){
+  const s = auStates[idx];
+  const maleCount   = Math.round(s.specialists * s.male / 100);
+  const femaleCount = s.specialists - maleCount;
+  const per100k     = (s.specialists / s.pop * 100000).toFixed(1);
+  const popM        = (s.pop / 1000000).toFixed(s.pop >= 1000000 ? 1 : 2);
+
+  // Highlight selected bar — slightly dim others
+  auStateChart.data.datasets.forEach((ds,di)=>{
+    if(di===0){
+      ds.backgroundColor = stateColors.map((c,ci)=> ci===idx ? c : c+"99");
+    } else {
+      ds.backgroundColor = stateColors.map((c,ci)=> ci===idx ? c+"55" : c+"18");
+    }
+  });
+  auStateChart.update();
+  selectedIdx = idx;
+
+  const content = document.getElementById("drillContent");
+  content.innerHTML = `
+    <div class="drill-header">
+      <div class="drill-state-name">${s.name}</div>
+      <div class="drill-tag">Australia</div>
+      <div class="drill-note">Est. gender proportions from AHPRA regional data</div>
+    </div>
+    <div class="drill-grid">
+
+      <!-- LEFT: headline stats -->
+      <div>
+        <div class="drill-big-num">${s.specialists.toLocaleString()}</div>
+        <div class="drill-big-lbl">Total Specialists</div>
+        <div class="drill-sub">
+          <div class="drill-sub-val">${per100k}</div>
+          <div class="drill-sub-lbl">Per 100,000 pop.</div>
+        </div>
+        <div class="drill-sub">
+          <div class="drill-sub-val">${popM}M</div>
+          <div class="drill-sub-lbl">Population</div>
+        </div>
+        <div class="drill-sub">
+          <div class="drill-sub-val">${s.count.toLocaleString()}</div>
+          <div class="drill-sub-lbl">All Practitioners</div>
+        </div>
+      </div>
+
+      <!-- MID: gender bar -->
+      <div>
+        <div class="gender-heading">Gender Breakdown</div>
+        <div class="gender-bar">
+          <div class="gb-male" style="width:${s.male}%">${s.male}%</div>
+          <div class="gb-female" style="width:${s.female}%">${s.female}%</div>
+        </div>
+        <div class="gender-legend">
+          <span><span class="gdot" style="background:#2E3192"></span>Male (${s.male}%)</span>
+          <span><span class="gdot" style="background:#E84BA0"></span>Female (${s.female}%)</span>
+        </div>
+        <div class="drill-disclaimer" style="margin-top:12px">
+          <strong>Note:</strong> Gender proportions are estimates derived from AHPRA state-level workforce data with regional variation applied. Actual disaggregated figures by state are not publicly released at specialty level.
+        </div>
+      </div>
+
+      <!-- RIGHT: headcounts -->
+      <div>
+        <div class="gender-heading">Estimated Headcount</div>
+        <div class="count-block">
+          <div class="count-row">
+            <div class="count-dot" style="background:#2E3192"></div>
+            <div>
+              <div class="count-val" style="color:#2E3192">${maleCount.toLocaleString()}</div>
+              <div class="count-lbl">Male specialists</div>
+            </div>
+          </div>
+          <div class="count-row">
+            <div class="count-dot" style="background:#E84BA0"></div>
+            <div>
+              <div class="count-val" style="color:#E84BA0">${femaleCount.toLocaleString()}</div>
+              <div class="count-lbl">Female specialists</div>
+            </div>
+          </div>
+          <div class="count-row" style="margin-top:4px">
+            <div class="count-dot" style="background:#1A1614"></div>
+            <div>
+              <div class="count-val" style="color:#1A1614">${s.specialists.toLocaleString()}</div>
+              <div class="count-lbl">Total specialists</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `;
+
+  const panel = document.getElementById("drillPanel");
+  panel.classList.add("open");
+  panel.scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+// ── ID Island donut ───────────────────────────────────────────
+const islandTotals = {};
+idProvs.forEach(p=>{ islandTotals[p.island] = (islandTotals[p.island]||0) + p.specialists; });
+const islandKeys = Object.keys(islandTotals).sort((a,b)=>islandTotals[b]-islandTotals[a]);
+const idTotal = idProvs.reduce((a,p)=>a+p.specialists,0);
+
+new Chart(document.getElementById("idIslandChart"),{
+  type:"doughnut",
+  data:{
+    labels:islandKeys,
+    datasets:[{
+      data:islandKeys.map(k=>islandTotals[k]),
+      backgroundColor:islandKeys.map(k=>islandColor[k]),
+      borderWidth:2,
+      borderColor:"#FBF4E6",
+      hoverOffset:10,
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false, cutout:"60%",
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw.toLocaleString()} (${(ctx.raw/idTotal*100).toFixed(1)}%)`}}
+    }
+  }
+});
+
+// Island legend chips
+const islandGrid = document.getElementById("islandGrid");
+islandKeys.forEach(k=>{
+  const chip = document.createElement("div");
+  chip.className = "island-chip";
+  chip.innerHTML = `<div class="island-dot" style="background:${islandColor[k]}"></div><div><div class="island-name">${k}</div><div class="island-count">${islandTotals[k].toLocaleString()} specialists</div></div>`;
+  islandGrid.appendChild(chip);
+});
+
+// ── Gender donuts ─────────────────────────────────────────────
+function buildGender(canvasId, data){
+  new Chart(document.getElementById(canvasId),{
+    type:"doughnut",
+    data:{
+      labels:data.map(g=>g.label+": "+g.value+"%"),
+      datasets:[{data:data.map(g=>g.value),backgroundColor:data.map(g=>g.color),borderWidth:2,borderColor:"#fff",hoverOffset:8}]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:"62%",
+      plugins:{
+        legend:{position:"bottom",labels:{boxWidth:12,font:{family:bodyFont,size:11},color:"#6B6259"}},
+        tooltip:{callbacks:{label:ctx=>` ${ctx.raw}%`}}
+      }
+    }
+  });
+}
+buildGender("auGenderChart", auGender);
+buildGender("idGenderChart", idGender);
+
+// ── Age comparison ────────────────────────────────────────────
+new Chart(document.getElementById("ageCompChart"),{
+  type:"bar",
+  data:{
+    labels:auAge.map(a=>a.band),
+    datasets:[
+      {label:"🇦🇺 Australia",data:auAge.map(a=>a.pct),backgroundColor:"#1F9D55",borderRadius:4},
+      {label:"🇮🇩 Indonesia",data:idAge.map(a=>a.pct),backgroundColor:"#1FA9C7",borderRadius:4},
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{labels:{font:{family:bodyFont,size:11},color:"#6B6259"}},
+      tooltip:{callbacks:{label:ctx=>` ${ctx.raw}% of specialists`}}
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{font:{family:monoFont},color:"#6B6259"}},
+      y:{grid:{color:"rgba(26,22,20,0.07)"},ticks:{font:{family:monoFont},color:"#6B6259",callback:v=>v+"%"},max:40}
+    }
+  }
+});
+
+// ════════════════════════════════════════════════════════════
+// TABLES
+// ════════════════════════════════════════════════════════════
+
+// Indonesia table
+(function(){
+  const body = document.getElementById("idBody");
+  const maxC = Math.max(...idSpecialties.map(s=>s.count));
+  idSpecialties.forEach((s,i)=>{
+    const ratio = Math.round(ID_POP/s.count).toLocaleString();
+    const pct   = s.count/maxC*100;
+    const bc    = s.count>3000?"#1F9D55":s.count>1000?"#FFC234":"#FF5C39";
+    const tr    = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="dim">${i+1}</span></td>
+      <td class="bold">${s.name}</td>
+      <td><code style="background:rgba(31,169,199,0.1);color:#1080a0;padding:2px 7px;border-radius:4px;font-family:${monoFont};font-size:11px">${s.code}</code></td>
+      <td class="num">${s.count.toLocaleString()}</td>
+      <td><div class="bbar"><div class="bbg"><div class="bfg" style="width:${pct}%;background:${bc}"></div></div><span class="dim" style="font-family:${monoFont};font-size:10px;min-width:28px;text-align:right">${Math.round(pct)}%</span></div></td>
+      <td class="dim" style="font-family:${monoFont}">1 : ${ratio}</td>
+      <td><span class="badge ${s.verified?"b-au":"b-est"}">${s.verified?"✓ KKI Verified":"~ Estimated"}</span></td>`;
+    body.appendChild(tr);
+  });
+})();
+
+// Australia table
+(function(){
+  const body   = document.getElementById("auBody");
+  const sorted = [...auSpecialties].sort((a,b)=>b.count-a.count);
+  const maxC   = sorted[0].count;
+  sorted.forEach((s,i)=>{
+    const per100k = (s.count/AU_POP*100000).toFixed(1);
+    const pct     = s.count/maxC*100;
+    const tr      = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="dim">${i+1}</span></td>
+      <td class="bold">${s.name}</td>
+      <td class="num">${s.count.toLocaleString()}</td>
+      <td class="dim" style="font-family:${monoFont}">${per100k}</td>
+      <td><div class="bbar"><div class="bbg"><div class="bfg" style="width:${Math.min(pct,100)}%;background:#1F9D55"></div></div><span class="dim" style="font-family:${monoFont};font-size:10px;min-width:28px;text-align:right">${Math.round(pct)}%</span></div></td>`;
+    body.appendChild(tr);
+  });
+})();
+
+// Comparison table
+let compData = matched.map(m=>({
+  ...m,
+  auPer: +(m.auCount/AU_POP*100000).toFixed(2),
+  idPer: +(m.idCount/ID_POP*100000).toFixed(2),
+  gap:   +((m.auCount/AU_POP*100000)/(m.idCount/ID_POP*100000)).toFixed(1)
+}));
+
+function renderCompTable(data){
+  const body = document.getElementById("compBody");
+  body.innerHTML = "";
+  data.forEach((m,i)=>{
+    const winner   = m.auPer > m.idPer ? "au":"id";
+    const auPct    = Math.min(m.auPer/Math.max(m.auPer,m.idPer)*100,100);
+    const idPct    = Math.min(m.idPer/Math.max(m.auPer,m.idPer)*100,100);
+    const gapColor = m.gap>5?"#FF5C39":m.gap>2?"#FFC234":"#1F9D55";
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="dim">${i+1}</span></td>
+      <td class="bold">${m.name}</td>
+      <td class="num">${m.auCount.toLocaleString()}</td>
+      <td><div class="bbar"><div class="bbg"><div class="bfg" style="width:${auPct}%;background:#1F9D55"></div></div><span class="dim" style="font-family:${monoFont};font-size:10px;min-width:28px">${m.auPer}</span></div></td>
+      <td class="num">${m.idCount.toLocaleString()}</td>
+      <td><div class="bbar"><div class="bbg"><div class="bfg" style="width:${idPct}%;background:#1FA9C7"></div></div><span class="dim" style="font-family:${monoFont};font-size:10px;min-width:28px">${m.idPer}</span></div></td>
+      <td class="num" style="color:${gapColor};font-family:${monoFont}">${m.gap}×</td>
+      <td><span class="vp ${winner==="au"?"vp-au":"vp-id"}">${winner==="au"?"🇦🇺 Australia":"🇮🇩 Indonesia"}</span></td>`;
+    body.appendChild(tr);
+  });
+}
+renderCompTable(compData);
+
+function filterComp(){
+  const q = document.getElementById("srch").value.toLowerCase();
+  renderCompTable(compData.filter(m=>m.name.toLowerCase().includes(q)));
+}
+function sortComp(){
+  const v = document.getElementById("srchSort").value;
+  const d = [...compData];
+  if(v==="gap-desc") d.sort((a,b)=>b.gap-a.gap);
+  else if(v==="gap-asc") d.sort((a,b)=>a.gap-b.gap);
+  else if(v==="au-desc") d.sort((a,b)=>b.auCount-a.auCount);
+  else if(v==="id-desc") d.sort((a,b)=>b.idCount-a.idCount);
+  else d.sort((a,b)=>a.name.localeCompare(b.name));
+  renderCompTable(d);
+}
+
+// AU State table
+(function(){
+  const body  = document.getElementById("auStateBody");
+  const maxSp = Math.max(...auStates.map(s=>s.specialists));
+  [...auStates].sort((a,b)=>b.specialists-a.specialists).forEach((s,i)=>{
+    const spPer = (s.specialists/s.pop*100000).toFixed(0);
+    const pct   = s.specialists/maxSp*100;
+    const tr    = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="dim">${i+1}</span></td>
+      <td class="bold">${s.name}</td>
+      <td class="num dim">${s.count.toLocaleString()}</td>
+      <td class="num" style="color:#1F9D55">${s.specialists.toLocaleString()}</td>
+      <td class="dim" style="font-family:${monoFont}">${spPer}</td>
+      <td><div class="bbar"><div class="pbg"><div class="pbr" style="width:${pct}%;background:${stateColors[i%stateColors.length]}"></div></div></div></td>`;
+    body.appendChild(tr);
+  });
+})();
+
+// ID Province table
+(function(){
+  const body = document.getElementById("idProvBody");
+  const max  = idProvs[0].specialists;
+  idProvs.forEach((p,i)=>{
+    const per100k = (p.specialists/p.pop*100000).toFixed(1);
+    const pct     = p.specialists/max*100;
+    const color   = islandColor[p.island]||"#1FA9C7";
+    const st      = p.specialists<100?"🔴 Critical":p.specialists<300?"🟠 Severe":p.specialists<800?"🟡 Low":"🟢 Moderate";
+    const tr      = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="dim">${i+1}</span></td>
+      <td class="bold" style="font-size:12px">${p.name}</td>
+      <td><span style="font-size:11px;color:${color};font-weight:700;font-family:${monoFont}">${p.island}</span></td>
+      <td class="num">${p.specialists.toLocaleString()}</td>
+      <td><div class="bbar"><div class="pbg"><div class="pbr" style="width:${pct}%;background:${color}"></div></div><span class="dim" style="font-family:${monoFont};font-size:10px;min-width:30px">${per100k}</span></div></td>
+      <td>${st}</td>`;
+    body.appendChild(tr);
+  });
+})();
+
+</script>
+</body>
+</html>
