@@ -916,6 +916,9 @@ const specialtyDefinitions = {
 };
 
 const getSpecialtyDefinition = name => specialtyDefinitions[name] || "";
+const escapeAttr = value => String(value).replace(/[&<>"']/g, ch => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
+}[ch]));
 
 const idProvs = [
   {name:"DKI Jakarta",island:"Java",specialists:10849,pop:10600000},
@@ -1296,7 +1299,7 @@ new Chart(document.getElementById("ageCompChart"),{
     const ratio = Math.round(ID_POP/s.count).toLocaleString();
     const pct   = s.count/maxC*100;
     const bc    = s.count>3000?"#1F9D55":s.count>1000?"#FFC234":"#FF5C39";
-    const def   = getSpecialtyDefinition(s.name);
+    const def   = escapeAttr(getSpecialtyDefinition(s.name));
     const defAttr = def ? ` title="${def}" aria-label="${def}"` : "";
     const tr    = document.createElement("tr");
     tr.innerHTML = `
@@ -1319,7 +1322,7 @@ new Chart(document.getElementById("ageCompChart"),{
   sorted.forEach((s,i)=>{
     const per100k = (s.count/AU_POP*100000).toFixed(1);
     const pct     = s.count/maxC*100;
-    const def     = getSpecialtyDefinition(s.name);
+    const def     = escapeAttr(getSpecialtyDefinition(s.name));
     const defAttr = def ? ` title="${def}" aria-label="${def}"` : "";
     const tr      = document.createElement("tr");
     tr.innerHTML = `
@@ -1348,7 +1351,7 @@ function renderCompTable(data){
     const auPct    = Math.min(m.auPer/Math.max(m.auPer,m.idPer)*100,100);
     const idPct    = Math.min(m.idPer/Math.max(m.auPer,m.idPer)*100,100);
     const gapColor = m.gap>5?"#FF5C39":m.gap>2?"#FFC234":"#1F9D55";
-    const def      = getSpecialtyDefinition(m.name);
+    const def      = escapeAttr(getSpecialtyDefinition(m.name));
     const defAttr  = def ? ` title="${def}" aria-label="${def}"` : "";
     const tr = document.createElement("tr");
     tr.innerHTML = `
