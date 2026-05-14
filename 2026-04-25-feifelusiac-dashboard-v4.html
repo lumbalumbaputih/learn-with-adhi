@@ -1427,8 +1427,10 @@ wire();
 wirePresets();
 wireWorkingToggles();
 const hash = location.hash.replace(/^#/,'');
-if(hash && decodeState(hash)){ /* loaded */ }
-else { document.getElementById('statTerrain').textContent = (state.gridSize*state.gridSize) + ' km²'; }
+const hasHash = hash && decodeState(hash);
+if(!hasHash){
+  applyPreset('plan');
+}
 renderZoneList();
 renderGrid();
 document.getElementById('zoneDensity').value = state.zoneDensity[state.active] || 0;
