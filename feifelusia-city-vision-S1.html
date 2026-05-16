@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
 <style>
 :root{
   --tomato:#FF5C39;--mango:#FFC234;--forest:#1F9D55;
@@ -279,6 +283,10 @@ body{background:var(--paper);color:var(--ink);font-family:var(--fb);line-height:
   .cta-inner{flex-direction:column;align-items:flex-start;gap:24px}
 }
 
+
+/* ── KATEX ── */
+.katex{font-size:1em}
+.katex-display{overflow-x:auto;overflow-y:hidden}
 
 /* ── SANKEY ── */
 .sankey-wrap{
@@ -614,7 +622,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--fb);line-height:
   <h2 class="sh" data-anim="heading">Solar-Powered, Net Zero</h2></div>
   <div class="col-3-2">
     <div class="body" data-anim="up" data-delay="1"><p>According to the World Bank Group (2025), Egypt's electricity consumption per capita in 2023 was 1.493 kWh. The total final energy-to-electricity ratio is 3, and the PV system capacity factor is 0.2. Also, the solar PV land-use intensity is 1.90 ha/MW (IEA, n.d.; IRENA, 2023).</p>
-<p>Therefore, the total annual electricity demand in our future city is 940.6 GWh (1,493 × 630,000 [population]), the total final energy demand is 2821.8 GWh (940.6 × 3), and the non-electric final energy is 1881.2 GWh (2821.8 - 940.6). Furthermore, for the electricity solar PV model, the required installed solar PV is 537 MW (940.6/(8760 [hours] ×0.2)), the land area for utility-scale solar PV is 10.2 km² (940.6 × 1.90/100 ha per km²), and the land share of our terrain is 4.5% (10.2 / 225 [terrain area]).</p>
+<p>Therefore, the total annual electricity demand in our future city is 940.6 GWh \({\small(1{,}493 \times 630{,}000)}\), the total final energy demand is 2821.8 GWh \({\small(940.6 \times 3)}\), and the non-electric final energy is 1881.2 GWh \({\small(2821.8 - 940.6)}\). Furthermore, for the electricity solar PV model, the required installed solar PV is 537 MW \(\left(\dfrac{940.6}{8{,}760 \times 0.2}\right)\), the land area for utility-scale solar PV is 10.2 km² \(\left(\dfrac{940.6 \times 1.90}{100}\ \text{ha/km}^2\right)\), and the land share of our terrain is 4.5% \(\left(\dfrac{10.2}{225}\right)\).</p>
 <p>As the main energy source, there are 2 solar farms on both sides of the terrain, and anaerobic digesters on both sides as backup energy sources. All energy could be provided from 100% renewable resources.</p>
 <p>Thanks to the high levels of sunshine, solar PV is the most likely energy source. Not only for solar farms, but solar panels are also installed at various locations, such as rooftops and along building sides, using perovskite solar cells, which are sheet-type solar panels. The solar farms primarily supply energy to the commercial, industrial, and agricultural sectors. However, they can also draw energy from their own buildings’ solar panels when demand is high, under a smart grid system with batteries.</p>
 <p>For the residential area, a hybrid system will be adopted. They generate energy from their rooftop solar panels, store it in batteries, and connect to the power grid when demand exceeds supply.</p>
