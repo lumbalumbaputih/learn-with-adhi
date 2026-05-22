@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rumah Harmonis — Tropical · Feng Shui · Islamic Design</title>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --hidup-tomato:#FF5C39; --hidup-mango:#FFC234; --hidup-forest:#1F9D55;
+  --hidup-sea:#1FA9C7; --hidup-mawar:#E84BA0; --hidup-indigo:#2E3192;
+  --accent:#1F9D55; --accent-2:#FFC234; --accent-3:#2E6B3A;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8; --muted:#6B6259;
+  --line:rgba(26,22,20,0.12); --line-strong:rgba(26,22,20,0.14);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --radius-8:8px; --radius-12:12px; --radius-14:14px; --radius-20:20px; --radius-pill:999px;
+  --shadow-md:0 12px 32px rgba(0,0,0,0.18); --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:14px;line-height:1.5;display:flex;min-height:100vh}
+
+/* SIDEBAR */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100;padding:0}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sidebar-logo .mark{display:flex;align-items:center;gap:10px}
+.sidebar-logo svg{width:28px;height:28px;flex-shrink:0}
+.sidebar-logo .wordmark{font-family:var(--fd);font-size:14px;font-weight:700;letter-spacing:-0.02em;color:var(--paper);line-height:1.2}
+.sidebar-logo .wordmark span{display:block;font-size:10px;font-family:var(--fm);letter-spacing:0.1em;font-weight:400;color:rgba(251,244,230,0.45);margin-top:2px}
+.progress-area{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.progress-label{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:rgba(251,244,230,0.45);margin-bottom:8px}
+.progress-bar-wrap{background:rgba(255,255,255,0.1);border-radius:var(--radius-pill);height:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--hidup-mango);border-radius:var(--radius-pill);transition:width 0.5s var(--ease);width:0%}
+.progress-pct{font-family:var(--fm);font-size:11px;color:var(--hidup-mango);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-module{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;transition:background 200ms;border-left:3px solid transparent;user-select:none}
+.nav-module:hover{background:rgba(255,255,255,0.06)}
+.nav-module.active{background:rgba(255,255,255,0.1);border-left-color:var(--hidup-mango)}
+.nav-module.done{border-left-color:var(--hidup-forest)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:rgba(251,244,230,0.4);min-width:20px}
+.nav-module.active .nav-num{color:var(--hidup-mango)}
+.nav-module.done .nav-num{color:var(--hidup-forest)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,0.8);line-height:1.3}
+.nav-module.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;color:var(--hidup-forest);font-size:14px;opacity:0}
+.nav-module.done .nav-check{opacity:1}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.1);font-family:var(--fm);font-size:10px;color:rgba(251,244,230,0.3);letter-spacing:0.06em}
+.sidebar-footer .back-link{color:rgba(251,244,230,0.6);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.sidebar-footer .back-link:hover{color:var(--paper)}
+
+/* MAIN */
+#main{margin-left:268px;flex:1;min-height:100vh}
+.module-section{display:none;padding:48px 56px;max-width:920px}
+.module-section.active{display:block}
+
+/* HERO BAND */
+.module-hero{margin-bottom:40px}
+.module-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:0.14em;color:var(--muted);margin-bottom:12px;text-transform:uppercase}
+.module-title{font-family:var(--fd);font-size:36px;font-weight:800;letter-spacing:-0.03em;line-height:1.05;margin-bottom:12px}
+.module-title .accent{color:var(--accent)}
+.module-title .accent-gold{color:var(--hidup-mango)}
+.module-lede{font-size:15px;color:var(--muted);line-height:1.6;max-width:640px;margin-bottom:20px}
+.module-objectives{background:var(--paper-2);border-radius:var(--radius-14);padding:20px 24px;border:1px solid var(--line-strong)}
+.module-objectives .obj-label{font-family:var(--fm);font-size:10px;letter-spacing:0.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0;padding-left:16px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:12px}
+
+/* CONTENT */
+h2.section-heading{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-0.02em;margin:36px 0 12px;padding-top:36px;border-top:1px solid var(--line)}
+h2.section-heading:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub-heading{font-family:var(--fd);font-size:16px;font-weight:600;margin:24px 0 8px}
+p{margin-bottom:14px;line-height:1.6;font-size:14px}
+ul.body-list{margin:0 0 16px 0;padding-left:0;list-style:none}
+ul.body-list li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.55}
+ul.body-list li::before{content:'•';position:absolute;left:0;color:var(--accent)}
+
+.callout{background:var(--paper-2);border-left:3px solid var(--accent);border-radius:0 var(--radius-8) var(--radius-8) 0;padding:14px 18px;margin:20px 0;font-size:13px;line-height:1.6}
+.callout.gold{border-left-color:var(--hidup-mango)}
+.callout.blue{border-left-color:var(--hidup-sea)}
+.callout.red{border-left-color:var(--hidup-tomato)}
+.callout.indigo{border-left-color:var(--hidup-indigo)}
+.callout strong{font-weight:600}
+
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.stat-row-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:24px 0}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:var(--radius-14);padding:20px;text-align:center}
+.stat-card .stat-val{font-family:var(--fd);font-size:28px;font-weight:800;letter-spacing:-0.03em;color:var(--hidup-mango);display:block;margin-bottom:4px}
+.stat-card .stat-val.green{color:var(--hidup-forest)}
+.stat-card .stat-val.sea{color:var(--hidup-sea)}
+.stat-card .stat-desc{font-size:11px;color:rgba(251,244,230,0.6);line-height:1.4}
+
+.key-term{display:inline;background:rgba(31,157,85,0.15);border-radius:4px;padding:1px 6px;font-weight:500;color:var(--accent-3)}
+.key-term-gold{display:inline;background:rgba(255,194,52,0.2);border-radius:4px;padding:1px 6px;font-weight:500}
+.key-term-indigo{display:inline;background:rgba(46,49,146,0.12);border-radius:4px;padding:1px 6px;font-weight:500;color:var(--hidup-indigo)}
+
+/* SVG DIAGRAMS */
+.diagram-wrap{margin:28px 0;background:var(--paper-2);border-radius:var(--radius-14);padding:24px;border:1px solid var(--line)}
+.diagram-label{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.diagram-wrap svg{width:100%;display:block}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px}
+th{background:var(--ink);color:var(--paper);padding:10px 14px;text-align:left;font-weight:600;font-family:var(--fd)}
+td{padding:9px 14px;border-bottom:1px solid var(--line)}
+tr:nth-child(even) td{background:var(--paper-2)}
+
+/* PRINCIPLE CARDS */
+.principle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.principle-card{border:1.5px solid var(--line-strong);border-radius:var(--radius-14);padding:18px;background:#fff}
+.principle-card .p-icon{font-size:22px;margin-bottom:10px}
+.principle-card .p-title{font-family:var(--fd);font-size:14px;font-weight:700;margin-bottom:6px}
+.principle-card .p-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* PILLAR BAND */
+.pillar-band{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink);border-radius:var(--radius-20);overflow:hidden;margin:28px 0}
+.pillar{padding:22px;text-align:center}
+.pillar:not(:last-child){border-right:2px solid var(--ink)}
+.pillar .pil-icon{font-size:28px;margin-bottom:8px}
+.pillar .pil-name{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:4px}
+.pillar .pil-sub{font-size:11px;color:var(--muted);line-height:1.4}
+.pillar.p-green{background:rgba(31,157,85,0.08)}
+.pillar.p-gold{background:rgba(255,194,52,0.12)}
+.pillar.p-indigo{background:rgba(46,49,146,0.08)}
+
+/* CONFLICT RESOLVE TABLE */
+.resolve-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px}
+.resolve-table th{padding:10px 14px;text-align:left;font-weight:700;font-family:var(--fd);font-size:12px;border-bottom:2px solid var(--ink)}
+.resolve-table td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+.resolve-table tr:nth-child(even) td{background:var(--paper-2)}
+.badge{display:inline-block;font-family:var(--fm);font-size:9px;letter-spacing:0.08em;padding:2px 7px;border-radius:var(--radius-pill);font-weight:600}
+.badge-green{background:rgba(31,157,85,0.15);color:var(--accent-3)}
+.badge-gold{background:rgba(255,194,52,0.25);color:#7a5c00}
+.badge-indigo{background:rgba(46,49,146,0.12);color:var(--hidup-indigo)}
+
+/* QUIZ */
+.quiz-section{margin:40px 0 0;padding:28px;background:var(--ink);border-radius:var(--radius-20);color:var(--paper)}
+.quiz-header{font-family:var(--fd);font-size:18px;font-weight:700;margin-bottom:4px}
+.quiz-sub{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:rgba(251,244,230,0.4);margin-bottom:24px}
+.quiz-q{margin-bottom:22px}
+.quiz-q-text{font-size:13px;font-weight:500;margin-bottom:10px;color:var(--paper);line-height:1.5}
+.quiz-options{display:flex;flex-direction:column;gap:7px}
+.quiz-opt{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-8);padding:9px 14px;cursor:pointer;font-size:13px;color:rgba(251,244,230,0.85);transition:all 200ms;text-align:left;display:flex;align-items:center;gap:10px}
+.quiz-opt:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2)}
+.quiz-opt.correct{background:rgba(31,157,85,0.25);border-color:var(--hidup-forest);color:var(--paper)}
+.quiz-opt.wrong{background:rgba(255,92,57,0.2);border-color:var(--hidup-tomato);color:var(--paper)}
+.quiz-opt.disabled{cursor:default;pointer-events:none}
+.opt-letter{font-family:var(--fm);font-size:10px;letter-spacing:0.08em;min-width:18px;color:rgba(251,244,230,0.4)}
+.quiz-feedback{font-size:12px;margin-top:8px;padding:8px 12px;border-radius:var(--radius-8);display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:rgba(31,157,85,0.2);color:#7CDE9B}
+.quiz-feedback.no{background:rgba(255,92,57,0.15);color:#FF8C78}
+.quiz-result{text-align:center;padding:20px;display:none}
+.quiz-result.show{display:block}
+.quiz-result .score{font-family:var(--fd);font-size:42px;font-weight:800;color:var(--hidup-mango)}
+.quiz-result .score-label{font-size:12px;color:rgba(251,244,230,0.5);margin-top:4px}
+.quiz-submit{margin-top:20px;background:var(--accent);color:var(--paper);border:none;border-radius:var(--radius-pill);padding:11px 28px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;transition:opacity 200ms}
+.quiz-submit:hover{opacity:0.85}
+
+/* NAV BUTTONS */
+.module-nav-btns{display:flex;gap:12px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line)}
+.btn-next{background:var(--ink);color:var(--paper);border:none;border-radius:var(--radius-pill);padding:11px 28px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;transition:all 200ms var(--ease)}
+.btn-next:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.btn-prev{background:transparent;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:var(--radius-pill);padding:11px 24px;font-family:var(--fb);font-size:13px;font-weight:500;cursor:pointer;transition:all 200ms}
+.btn-prev:hover{background:var(--paper-2)}
+.btn-next:disabled,.btn-prev:disabled{opacity:0.3;cursor:default;pointer-events:none}
+
+/* ROOM CARDS */
+.room-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:24px 0}
+.room-card{border:1.5px solid var(--line-strong);border-radius:var(--radius-14);padding:18px 20px;background:#fff}
+.room-card .room-name{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:4px}
+.room-card .room-sub{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:var(--muted);margin-bottom:12px;text-transform:uppercase}
+.room-tip{font-size:12px;padding:4px 0 4px 14px;position:relative;color:var(--ink);line-height:1.5}
+.room-tip::before{content:'✦';position:absolute;left:0;color:var(--accent);font-size:9px;top:5px}
+
+/* CHECKLIST */
+.checklist{list-style:none;margin:16px 0}
+.checklist li{font-size:13px;padding:6px 0 6px 24px;position:relative;border-bottom:1px solid var(--line);line-height:1.5}
+.checklist li:last-child{border-bottom:none}
+.checklist li::before{content:'☐';position:absolute;left:0;font-size:14px;color:var(--accent)}
+
+@media(max-width:900px){
+  #sidebar{width:220px}
+  #main{margin-left:220px}
+  .module-section{padding:32px 28px}
+  .principle-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  #sidebar{display:none}
+  #main{margin-left:0}
+  .module-section{padding:24px 18px}
+  .pillar-band{grid-template-columns:1fr}
+  .pillar:not(:last-child){border-right:none;border-bottom:2px solid var(--ink)}
+  .room-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sidebar-logo">
+    <div class="mark">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="38" cy="50" r="22" fill="none" stroke="#FBF4E6" stroke-width="14"/>
+        <rect x="54" y="28" width="14" height="44" fill="#FBF4E6"/>
+        <circle cx="78" cy="22" r="8" fill="#FFC234"/>
+      </svg>
+      <div class="wordmark">Rumah Harmonis<span>ARCHITECTURE COURSE</span></div>
+    </div>
+  </div>
+  <div class="progress-area">
+    <div class="progress-label">OVERALL PROGRESS</div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-pct" id="progressPct">0 of 8 modules</div>
+  </div>
+  <nav id="moduleNav">
+    <div class="nav-module active" data-mod="1" onclick="goModule(1)">
+      <span class="nav-num">01</span><span class="nav-title">The Philosophy</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="2" onclick="goModule(2)">
+      <span class="nav-num">02</span><span class="nav-title">Tropical Design</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="3" onclick="goModule(3)">
+      <span class="nav-num">03</span><span class="nav-title">Feng Shui Basics</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="4" onclick="goModule(4)">
+      <span class="nav-num">04</span><span class="nav-title">Islamic Home Values</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="5" onclick="goModule(5)">
+      <span class="nav-num">05</span><span class="nav-title">Synthesizing the Three</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="6" onclick="goModule(6)">
+      <span class="nav-num">06</span><span class="nav-title">Room by Room</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="7" onclick="goModule(7)">
+      <span class="nav-num">07</span><span class="nav-title">Materials &amp; Color</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="8" onclick="goModule(8)">
+      <span class="nav-num">08</span><span class="nav-title">Blueprint to Build</span><span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../../index.html" class="back-link">← Back to all courses</a>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+<!-- ═══════════════════════════════════════════════ MODULE 1 ══ -->
+<section class="module-section active" id="mod-1">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 01 · Introduction</div>
+    <h1 class="module-title">The <span class="accent">Rumah Harmonis</span> Philosophy</h1>
+    <p class="module-lede">Why combining Tropical, Feng Shui, and Islamic design principles creates a richer, more livable home for the Indonesian family.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>Why no single framework is complete on its own</li>
+        <li>How the three pillars complement each other</li>
+        <li>The unique context of the Indonesian Muslim family home</li>
+        <li>How to think about conflicts and resolutions between frameworks</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Why Three Frameworks?</h2>
+  <p>Most Indonesian families already live inside all three of these philosophies simultaneously — they just haven't had a language to unite them. The <span class="key-term">Rumah Harmonis</span> approach says: you don't have to choose. A well-designed Indonesian home can be climatically intelligent, energetically balanced, and spiritually aligned at the same time.</p>
+  <p>Each framework brings something the others lack. <span class="key-term">Tropical design</span> gives you science: sun angles, rain patterns, material properties, ventilation physics. <span class="key-term-gold">Feng Shui</span> gives you a spatial grammar: how energy flows between rooms, which directions carry which qualities, how furniture placement shapes mood and relationship. <span class="key-term-indigo">Islamic values</span> give you purpose: why the home exists, who it shelters, what it expresses about the family's faith and hospitality.</p>
+
+  <div class="pillar-band">
+    <div class="pillar p-green">
+      <div class="pil-icon">🌿</div>
+      <div class="pil-name">Tropical Design</div>
+      <div class="pil-sub">Climate · Ventilation<br>Materials · Sun path</div>
+    </div>
+    <div class="pillar p-gold">
+      <div class="pil-icon">☯</div>
+      <div class="pil-name">Feng Shui</div>
+      <div class="pil-sub">Qi flow · Bagua<br>Five elements · Balance</div>
+    </div>
+    <div class="pillar p-indigo">
+      <div class="pil-icon">🕌</div>
+      <div class="pil-name">Islamic Values</div>
+      <div class="pil-sub">Sitr · Mahram zones<br>Qibla · Hospitality</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">The Indonesian Family Context</h2>
+  <p>Indonesia sits between 6°N and 11°S latitude — entirely within the tropics. The climate is warm and humid year-round, with a wet and dry season. The country is 87% Muslim, meaning most families have specific spatial needs: a <span class="key-term">musholla</span> (prayer room), wudu areas, gender-separated guest spaces, and a home that expresses modesty to the outside while being generous on the inside.</p>
+  <p>At the same time, Chinese-Indonesian cultural influence has made Feng Shui deeply embedded in Indonesian building practice — often blended with local Javanese and Balinese cosmological thinking that shares many of the same principles.</p>
+
+  <div class="stat-row">
+    <div class="stat-card"><span class="stat-val">87%</span><span class="stat-desc">of Indonesians identify as Muslim — shaping home ritual needs</span></div>
+    <div class="stat-card"><span class="stat-val green">+35°C</span><span class="stat-desc">average urban high in Java — climate design is non-optional</span></div>
+    <div class="stat-card"><span class="stat-val sea">3,000+</span><span class="stat-desc">years of Feng Shui practice embedded in Southeast Asian building culture</span></div>
+  </div>
+
+  <h2 class="section-heading">How Conflicts Get Resolved</h2>
+  <p>The three systems sometimes point in different directions. When they do, this course applies a clear priority order:</p>
+  <ol style="padding-left:20px;margin-bottom:16px">
+    <li style="padding:4px 0;font-size:14px;line-height:1.6"><strong>Islamic obligation first</strong> — qibla orientation, mahram privacy, and wudu access are non-negotiable.</li>
+    <li style="padding:4px 0;font-size:14px;line-height:1.6"><strong>Tropical physics second</strong> — a hot, badly ventilated house causes real health and comfort harm.</li>
+    <li style="padding:4px 0;font-size:14px;line-height:1.6"><strong>Feng Shui as refinement</strong> — within the space left by the first two, Feng Shui guidance improves flow and harmony.</li>
+  </ol>
+  <div class="callout gold"><strong>Key insight:</strong> Most of the time, the three frameworks agree. A south-facing main bedroom (tropical: avoid direct afternoon sun) also happens to be a Feng Shui command position, and faces Mecca from most of Java. The conflicts are rarer than the convergences.</div>
+
+  <div class="quiz-section" id="quiz-1">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q1-1">
+      <div class="quiz-q-text">1. In the Rumah Harmonis priority order, what comes first when the three frameworks conflict?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q1-1',false,'A')"><span class="opt-letter">A</span>Feng Shui Bagua alignment</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-1',true,'B')"><span class="opt-letter">B</span>Islamic obligation (qibla, privacy, wudu)</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-1',false,'C')"><span class="opt-letter">C</span>Tropical ventilation requirements</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-1',false,'D')"><span class="opt-letter">D</span>Local building code</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q1-1"></div>
+    </div>
+    <div class="quiz-q" id="q1-2">
+      <div class="quiz-q-text">2. Which statement best describes the relationship between the three frameworks?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q1-2',false,'A')"><span class="opt-letter">A</span>They are mostly in conflict and rarely agree</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-2',false,'B')"><span class="opt-letter">B</span>Feng Shui and Islamic values are incompatible</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-2',true,'C')"><span class="opt-letter">C</span>They mostly converge; conflicts are the exception</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-2',false,'D')"><span class="opt-letter">D</span>Tropical design overrides both others</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q1-2"></div>
+    </div>
+    <div class="quiz-result" id="result-1"></div>
+    <button class="quiz-submit" onclick="submitQuiz(1,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" disabled onclick="goModule(0)">← Previous</button>
+    <button class="btn-next" onclick="goModule(2)">Next: Tropical Design →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 2 ══ -->
+<section class="module-section" id="mod-2">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 02 · Tropical Design</div>
+    <h1 class="module-title">Building <span class="accent">With the Climate,</span> Not Against It</h1>
+    <p class="module-lede">Indonesia's tropics are demanding. Master the sun, wind, rain, and heat — and your home becomes naturally comfortable without heavy air conditioning.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>Sun path principles for Indonesian latitudes</li>
+        <li>Cross-ventilation and stack effect strategies</li>
+        <li>Rain, humidity, and flood elevation design</li>
+        <li>The best tropical building materials and why</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">The Sun Problem</h2>
+  <p>At Indonesian latitudes (roughly 0–8° South), the sun passes almost directly overhead at noon. The dangerous solar exposure comes from the <span class="key-term">west and east facades</span> in the morning and afternoon — not the south as in temperate climates. A west-facing wall absorbs heat all afternoon, making the rooms behind it unbearably hot by 3–4pm.</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">Sun Path — Java (6°S) · Key Orientations</div>
+    <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg">
+      <!-- compass rose base -->
+      <circle cx="300" cy="130" r="110" fill="#fff" stroke="#ddd" stroke-width="1.5"/>
+      <circle cx="300" cy="130" r="6" fill="#1A1614"/>
+      <!-- cardinal lines -->
+      <line x1="300" y1="20" x2="300" y2="240" stroke="#ddd" stroke-width="1"/>
+      <line x1="190" y1="130" x2="410" y2="130" stroke="#ddd" stroke-width="1"/>
+      <!-- N label -->
+      <text x="300" y="14" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#6B6259">N</text>
+      <text x="300" y="252" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#6B6259">S</text>
+      <text x="183" y="134" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#6B6259">W</text>
+      <text x="417" y="134" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#6B6259">E</text>
+      <!-- Mecca direction from Java (roughly NW ~315°) -->
+      <line x1="300" y1="130" x2="222" y2="52" stroke="#2E3192" stroke-width="2.5" stroke-dasharray="6,3"/>
+      <text x="210" y="46" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#2E3192" font-weight="600">Qibla (NW)</text>
+      <!-- Sun arc morning -->
+      <path d="M 190,130 Q 250,40 300,130" fill="none" stroke="#FFC234" stroke-width="2.5"/>
+      <circle cx="190" cy="130" r="5" fill="#FFC234"/>
+      <text x="168" y="125" font-family="'Inter',sans-serif" font-size="10" fill="#d69400">Sunrise E</text>
+      <!-- Sun arc afternoon -->
+      <path d="M 300,130 Q 350,40 410,130" fill="none" stroke="#FF5C39" stroke-width="2.5"/>
+      <circle cx="410" cy="130" r="5" fill="#FF5C39"/>
+      <text x="412" y="122" font-family="'Inter',sans-serif" font-size="10" fill="#cc3a1a">Sunset W</text>
+      <!-- Overhead zenith dot -->
+      <circle cx="300" cy="55" r="14" fill="#FFC234" opacity="0.25"/>
+      <circle cx="300" cy="55" r="7" fill="#FFC234"/>
+      <text x="300" y="43" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#7a5c00">Noon zenith</text>
+      <!-- Best face arrow -->
+      <path d="M 300,130 L 300,230" stroke="#1F9D55" stroke-width="3"/>
+      <polygon points="300,242 294,226 306,226" fill="#1F9D55"/>
+      <text x="300" y="258" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#1F9D55" font-weight="600">Best face: South</text>
+      <!-- Danger labels -->
+      <text x="168" y="145" font-family="'Inter',sans-serif" font-size="9" fill="#FF5C39">⚠ Heat gain AM</text>
+      <text x="395" y="145" font-family="'Inter',sans-serif" font-size="9" fill="#FF5C39">⚠ Heat gain PM</text>
+    </svg>
+  </div>
+
+  <p>The practical rule: <strong>orient your main living spaces and bedrooms to face north or south.</strong> North and south facades receive the least direct solar radiation in equatorial Indonesia, staying cooler through the day. Reserve east and west facades for service areas, wet areas, or add <span class="key-term">deep overhangs and louvers</span> to shade them.</p>
+
+  <h2 class="section-heading">Cross-Ventilation & The Stack Effect</h2>
+  <p>Before air conditioning, tropical architecture solved heat with two natural systems:</p>
+  <div class="principle-grid">
+    <div class="principle-card">
+      <div class="p-icon">💨</div>
+      <div class="p-title">Cross-Ventilation</div>
+      <div class="p-desc">Place inlet openings on the windward side, outlet openings on the leeward side. Prevailing winds in Java blow from the south-east (May–October) and from the west (November–April). Design for both seasons.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">🔥</div>
+      <div class="p-title">Stack Effect</div>
+      <div class="p-desc">Hot air rises. High vents or a raised roof ridge allow hot air to escape upward, drawing cooler air in from low openings near the floor. The taller the space, the stronger the stack effect.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">🌳</div>
+      <div class="p-title">Vegetation Buffer</div>
+      <div class="p-desc">Trees on west and east sides block solar radiation before it hits the wall. A tree canopy can reduce wall surface temperature by 8–12°C. Choose tall species with high canopies that don't block ground-level breezes.</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Rain, Humidity & Elevation</h2>
+  <p>Indonesia receives 2,000–4,000mm of rain per year in most urban areas. This creates two design imperatives that Feng Shui and Islamic aesthetics will later reinforce: <span class="key-term">deep overhangs</span> (protecting walls from rain-driven moisture) and <span class="key-term">elevated floors</span> (keeping the home above flood and splash-back zones).</p>
+  <div class="callout"><strong>Traditional wisdom meets physics:</strong> The Javanese <em>joglo</em> roof, the Batak <em>rumah adat</em>, and the Minangkabau <em>rumah gadang</em> all feature extreme roof overhangs — 60–120cm beyond the wall line. This is not decoration; it is a moisture management system validated over centuries.</div>
+
+  <h2 class="section-heading">Best Tropical Materials</h2>
+  <table>
+    <tr><th>Material</th><th>Why It Works</th><th>Islamic/FS Alignment</th></tr>
+    <tr><td><strong>Exposed brick / terracotta</strong></td><td>High thermal mass; absorbs daytime heat, releases at night. Breathes.</td><td>Earth element (FS); natural modesty (Islamic)</td></tr>
+    <tr><td><strong>Bamboo &amp; timber</strong></td><td>Lightweight, low thermal mass, fast to work with. Bamboo sequesters carbon.</td><td>Wood element (FS); sustainable = responsible stewardship (Islamic)</td></tr>
+    <tr><td><strong>Lime plaster</strong></td><td>Breathable, humidity-regulating, anti-fungal. Used in traditional mosque walls.</td><td>Connects to Islamic heritage; cool tactile quality</td></tr>
+    <tr><td><strong>Terracotta roof tiles</strong></td><td>Ventilated ridge allows stack effect; durable in tropical UV</td><td>Earth tones align with FS earth/metal cycle</td></tr>
+    <tr><td><strong>Polished concrete</strong></td><td>Thermal mass floor that stays cool; easy to keep clean for prayer</td><td>Clean floor for shalat; Water element neutral in FS</td></tr>
+  </table>
+
+  <div class="quiz-section" id="quiz-2">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q2-1">
+      <div class="quiz-q-text">1. Which wall orientation receives the most problematic solar heat gain in Java?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q2-1',false,'A')"><span class="opt-letter">A</span>North-facing</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-1',false,'B')"><span class="opt-letter">B</span>South-facing</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-1',true,'C')"><span class="opt-letter">C</span>East and West-facing</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-1',false,'D')"><span class="opt-letter">D</span>North-east facing</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q2-1"></div>
+    </div>
+    <div class="quiz-q" id="q2-2">
+      <div class="quiz-q-text">2. What is the "stack effect" in tropical architecture?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q2-2',false,'A')"><span class="opt-letter">A</span>Stacking rooms vertically to reduce footprint</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-2',true,'B')"><span class="opt-letter">B</span>Hot air rising and escaping through high vents, drawing in cooler air below</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-2',false,'C')"><span class="opt-letter">C</span>Layering insulation materials on the roof</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-2',false,'D')"><span class="opt-letter">D</span>Using raised floors to reduce humidity</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q2-2"></div>
+    </div>
+    <div class="quiz-result" id="result-2"></div>
+    <button class="quiz-submit" onclick="submitQuiz(2,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(1)">← Philosophy</button>
+    <button class="btn-next" onclick="goModule(3)">Next: Feng Shui →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 3 ══ -->
+<section class="module-section" id="mod-3">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 03 · Feng Shui</div>
+    <h1 class="module-title">Feng Shui: <span class="accent-gold">Flow, Balance,</span> and the Family Map</h1>
+    <p class="module-lede">Feng Shui is a spatial grammar that describes how energy (Qi) moves through a home and how that movement affects the wellbeing of everyone inside.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>What Qi is and why it matters for room layout</li>
+        <li>The Bagua map and how to overlay it on your floor plan</li>
+        <li>The Five Elements and their material/color correlations</li>
+        <li>Command positions for beds, desks, and cookers</li>
+        <li>Common Feng Shui mistakes in Indonesian homes</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">What Is Qi?</h2>
+  <p><span class="key-term-gold">Qi</span> (pronounced "chee") is the Chinese concept of life-force energy that flows through everything — people, land, buildings. Good Feng Shui arranges a home so that Qi flows gently and continuously, like a slow river: not stagnant (which leads to lethargy and poor health) and not rushing (which causes stress and financial drain).</p>
+  <p>For practical purposes, think of Qi as a stand-in for <em>airflow, light, sound, and human attention</em> — the tangible things that make a room feel alive or dead. When a Feng Shui master says "Qi is blocked here," you can often translate that directly to "this corner has no natural light, poor airflow, and nobody's attention reaches it." The fix is often the same either way.</p>
+
+  <div class="callout gold"><strong>Islamic note:</strong> Feng Shui does not require belief in supernatural forces to be useful. Many Indonesian Muslim families apply it purely as an ergonomic and spatial design system. The Prophet Muhammad ﷺ said: <em>"There is no disease that Allah has created, except that He also has created its treatment."</em> Practical wisdom from any tradition can be used if it doesn't contradict aqeedah.</div>
+
+  <h2 class="section-heading">The Bagua Map</h2>
+  <p>The <span class="key-term-gold">Bagua</span> divides any space into 9 zones, each governing an aspect of life. In the BTB (Black Sect) school most popular in Indonesia, you align it to the front door — the main entrance is always at the bottom of the map.</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">Bagua Map — aligned to front door at bottom</div>
+    <svg viewBox="0 0 540 380" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <style>.bagua-cell{stroke:#1A1614;stroke-width:1.5;} .blabel{font-family:'Inter',sans-serif;font-size:12px;font-weight:700;fill:#1A1614;} .bsub{font-family:'JetBrains Mono',monospace;font-size:9px;fill:#6B6259;}</style>
+      </defs>
+      <!-- 3x3 grid, each cell 160x120, with 10px margin each side -->
+      <!-- Row 1 (top): Wealth | Fame | Love -->
+      <rect x="20" y="20" width="160" height="100" rx="8" fill="rgba(31,157,85,0.12)" class="bagua-cell"/>
+      <text x="100" y="60" text-anchor="middle" class="blabel">💰 Wealth</text>
+      <text x="100" y="78" text-anchor="middle" class="bsub">Wood · Purple</text>
+      <text x="100" y="92" text-anchor="middle" class="bsub">SE</text>
+
+      <rect x="190" y="20" width="160" height="100" rx="8" fill="rgba(255,92,57,0.1)" class="bagua-cell"/>
+      <text x="270" y="60" text-anchor="middle" class="blabel">🔥 Fame</text>
+      <text x="270" y="78" text-anchor="middle" class="bsub">Fire · Red</text>
+      <text x="270" y="92" text-anchor="middle" class="bsub">S</text>
+
+      <rect x="360" y="20" width="160" height="100" rx="8" fill="rgba(232,75,160,0.1)" class="bagua-cell"/>
+      <text x="440" y="60" text-anchor="middle" class="blabel">❤️ Love</text>
+      <text x="440" y="78" text-anchor="middle" class="bsub">Earth · Pink/Red</text>
+      <text x="440" y="92" text-anchor="middle" class="bsub">SW</text>
+
+      <!-- Row 2: Family | Centre | Creativity -->
+      <rect x="20" y="130" width="160" height="100" rx="8" fill="rgba(31,157,85,0.08)" class="bagua-cell"/>
+      <text x="100" y="170" text-anchor="middle" class="blabel">🌱 Family</text>
+      <text x="100" y="188" text-anchor="middle" class="bsub">Wood · Green</text>
+      <text x="100" y="202" text-anchor="middle" class="bsub">E</text>
+
+      <rect x="190" y="130" width="160" height="100" rx="8" fill="rgba(255,194,52,0.15)" class="bagua-cell"/>
+      <text x="270" y="170" text-anchor="middle" class="blabel">☯ Centre</text>
+      <text x="270" y="188" text-anchor="middle" class="bsub">Earth · Yellow</text>
+      <text x="270" y="202" text-anchor="middle" class="bsub">Core</text>
+
+      <rect x="360" y="130" width="160" height="100" rx="8" fill="rgba(255,255,255,0.9)" class="bagua-cell"/>
+      <text x="440" y="170" text-anchor="middle" class="blabel">✨ Creativity</text>
+      <text x="440" y="188" text-anchor="middle" class="bsub">Metal · White</text>
+      <text x="440" y="202" text-anchor="middle" class="bsub">W</text>
+
+      <!-- Row 3 (bottom): Knowledge | Career | Helpful People -->
+      <rect x="20" y="240" width="160" height="100" rx="8" fill="rgba(46,49,146,0.1)" class="bagua-cell"/>
+      <text x="100" y="280" text-anchor="middle" class="blabel">📚 Knowledge</text>
+      <text x="100" y="298" text-anchor="middle" class="bsub">Earth · Blue/Teal</text>
+      <text x="100" y="312" text-anchor="middle" class="bsub">NE</text>
+
+      <rect x="190" y="240" width="160" height="100" rx="8" fill="rgba(31,169,199,0.12)" class="bagua-cell"/>
+      <text x="270" y="280" text-anchor="middle" class="blabel">🌊 Career</text>
+      <text x="270" y="298" text-anchor="middle" class="bsub">Water · Black/Blue</text>
+      <text x="270" y="312" text-anchor="middle" class="bsub">N</text>
+
+      <rect x="360" y="240" width="160" height="100" rx="8" fill="rgba(26,22,20,0.06)" class="bagua-cell"/>
+      <text x="440" y="280" text-anchor="middle" class="blabel">🤝 Helpful People</text>
+      <text x="440" y="298" text-anchor="middle" class="bsub">Metal · Grey/Silver</text>
+      <text x="440" y="312" text-anchor="middle" class="bsub">NW</text>
+
+      <!-- Front door arrow -->
+      <polygon points="270,380 258,362 282,362" fill="#1A1614"/>
+      <line x1="270" y1="350" x2="270" y2="363" stroke="#1A1614" stroke-width="2"/>
+      <text x="270" y="346" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#1A1614">FRONT DOOR</text>
+    </svg>
+  </div>
+
+  <h2 class="section-heading">The Five Elements</h2>
+  <p>Feng Shui uses five elements — <strong>Wood, Fire, Earth, Metal, Water</strong> — to describe the qualities of materials, colors, and directions. Each room benefits from having all five present, but with the element of its Bagua zone dominant.</p>
+  <table>
+    <tr><th>Element</th><th>Colors</th><th>Materials</th><th>Shapes</th><th>Bagua Zone</th></tr>
+    <tr><td><strong>Wood 🌱</strong></td><td>Green, Teal</td><td>Timber, bamboo, plants</td><td>Tall, columnar</td><td>Family, Wealth</td></tr>
+    <tr><td><strong>Fire 🔥</strong></td><td>Red, Orange, Pink</td><td>Candles, lights, triangles</td><td>Pointed, triangular</td><td>Fame</td></tr>
+    <tr><td><strong>Earth 🪨</strong></td><td>Yellow, Brown, Tan</td><td>Terracotta, brick, ceramics</td><td>Square, flat</td><td>Love, Centre, Knowledge</td></tr>
+    <tr><td><strong>Metal ⚙️</strong></td><td>White, Grey, Gold</td><td>Steel, stone, marble</td><td>Round, arched</td><td>Creativity, Helpful People</td></tr>
+    <tr><td><strong>Water 🌊</strong></td><td>Black, Deep Blue</td><td>Glass, mirrors, water features</td><td>Wavy, asymmetric</td><td>Career</td></tr>
+  </table>
+
+  <h2 class="section-heading">Command Position</h2>
+  <p>The <span class="key-term-gold">command position</span> is the most important practical rule in Feng Shui: wherever you spend focused time (sleeping, working, cooking), position yourself so you can see the door without being directly in front of it. Your back should be to a solid wall.</p>
+  <div class="callout blue"><strong>Why it works physically:</strong> The command position reduces subconscious vigilance — your nervous system relaxes when it doesn't need to monitor for threats behind you. This directly improves sleep quality and concentration. It also aligns with the hadith preference for sleeping with your head toward the foot of the room, not the door.</div>
+
+  <div class="quiz-section" id="quiz-3">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q3-1">
+      <div class="quiz-q-text">1. In the BTB Feng Shui school, how is the Bagua map aligned to a floor plan?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q3-1',false,'A')"><span class="opt-letter">A</span>Always aligned to compass north</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-1',true,'B')"><span class="opt-letter">B</span>Aligned to the front door at the bottom</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-1',false,'C')"><span class="opt-letter">C</span>Aligned to the kitchen as the centre</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-1',false,'D')"><span class="opt-letter">D</span>Aligned to the master bedroom</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q3-1"></div>
+    </div>
+    <div class="quiz-q" id="q3-2">
+      <div class="quiz-q-text">2. What is the command position?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q3-2',false,'A')"><span class="opt-letter">A</span>Placing the main entrance at the front of the house</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-2',false,'B')"><span class="opt-letter">B</span>Sitting or sleeping directly in front of the door</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-2',true,'C')"><span class="opt-letter">C</span>Positioning yourself to see the door with your back to a solid wall</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-2',false,'D')"><span class="opt-letter">D</span>Placing a water feature at the main entrance</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q3-2"></div>
+    </div>
+    <div class="quiz-result" id="result-3"></div>
+    <button class="quiz-submit" onclick="submitQuiz(3,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(2)">← Tropical Design</button>
+    <button class="btn-next" onclick="goModule(4)">Next: Islamic Values →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 4 ══ -->
+<section class="module-section" id="mod-4">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 04 · Islamic Home Values</div>
+    <h1 class="module-title">The Home as <span class="accent-indigo" style="color:var(--hidup-indigo)">Sacred Space</span></h1>
+    <p class="module-lede">In Islam, the home (bayt) is not merely shelter — it is a place of worship, family formation, and the expression of moral values. Its design must serve these purposes.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>Sitr — the principle of modesty and visual privacy</li>
+        <li>Mahram zones and non-mahram reception areas</li>
+        <li>Qibla orientation for the musholla and bedrooms</li>
+        <li>Wudu space design integrated into the home</li>
+        <li>Hospitality (diyafa) as a spatial design requirement</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Sitr — Privacy as Architecture</h2>
+  <p><span class="key-term-indigo">Sitr</span> means covering or concealing — in Islamic ethics, protecting people's dignity by shielding them from unwanted exposure. In architectural terms, sitr requires that a home not expose its interior or its women to the gaze of non-mahram visitors, passers-by, or neighbours.</p>
+  <p>This is not seclusion — Islam also commands generous hospitality. The solution is <em>layered space</em>: a public reception zone near the entrance, then semi-private family areas, then private sleeping quarters. Each zone requires a visual break — a wall, a screen, a change of level — before the next.</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">Islamic Privacy Zones — Layered Floor Plan Logic</div>
+    <svg viewBox="0 0 580 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Zone 1 PUBLIC -->
+      <rect x="10" y="30" width="160" height="140" rx="10" fill="rgba(46,49,146,0.08)" stroke="#2E3192" stroke-width="1.5"/>
+      <text x="90" y="70" text-anchor="middle" font-family="'Bricolage Grotesque',sans-serif" font-size="13" font-weight="700" fill="#2E3192">PUBLIC</text>
+      <text x="90" y="90" text-anchor="middle" font-family="'Inter',sans-serif" font-size="11" fill="#2E3192">Teras · Ruang Tamu</text>
+      <text x="90" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Open to non-mahram</text>
+      <text x="90" y="120" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">guests with easy exit</text>
+      <text x="90" y="152" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#2E3192">ZONE 1</text>
+
+      <!-- Barrier 1 -->
+      <rect x="174" y="30" width="12" height="140" rx="3" fill="#1A1614"/>
+      <text x="180" y="18" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">Screen / Wall</text>
+
+      <!-- Zone 2 SEMI-PRIVATE -->
+      <rect x="190" y="30" width="190" height="140" rx="10" fill="rgba(255,194,52,0.1)" stroke="#FFC234" stroke-width="1.5"/>
+      <text x="285" y="70" text-anchor="middle" font-family="'Bricolage Grotesque',sans-serif" font-size="13" font-weight="700" fill="#7a5c00">SEMI-PRIVATE</text>
+      <text x="285" y="90" text-anchor="middle" font-family="'Inter',sans-serif" font-size="11" fill="#7a5c00">Ruang Keluarga · Dapur</text>
+      <text x="285" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Family only · Mahram</text>
+      <text x="285" y="120" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">guests may enter</text>
+      <text x="285" y="152" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7a5c00">ZONE 2</text>
+
+      <!-- Barrier 2 -->
+      <rect x="384" y="30" width="12" height="140" rx="3" fill="#1A1614"/>
+      <text x="390" y="18" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">Door / Level change</text>
+
+      <!-- Zone 3 PRIVATE -->
+      <rect x="400" y="30" width="170" height="140" rx="10" fill="rgba(31,157,85,0.1)" stroke="#1F9D55" stroke-width="1.5"/>
+      <text x="485" y="70" text-anchor="middle" font-family="'Bricolage Grotesque',sans-serif" font-size="13" font-weight="700" fill="#1F9D55">PRIVATE</text>
+      <text x="485" y="90" text-anchor="middle" font-family="'Inter',sans-serif" font-size="11" fill="#1F9D55">Kamar Tidur · Musholla</text>
+      <text x="485" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Immediate family only</text>
+      <text x="485" y="120" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Wudu accessible here</text>
+      <text x="485" y="152" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#1F9D55">ZONE 3</text>
+    </svg>
+  </div>
+
+  <h2 class="section-heading">The Musholla — Heart of the Home</h2>
+  <p>Every Muslim home benefits from a dedicated <span class="key-term-indigo">musholla</span> (prayer space). This doesn't need to be a separate room — a dedicated corner with a sajadah, a qibla marker, and a wudu-accessible bathroom nearby is sufficient. But where budget and space allow, a proper musholla should be considered the most important room in the house.</p>
+  <div class="principle-grid">
+    <div class="principle-card">
+      <div class="p-icon">🧭</div>
+      <div class="p-title">Qibla Orientation</div>
+      <div class="p-desc">From Java, the qibla (direction of Mecca) is approximately 295°–300° (west-northwest). The prayer wall should face this direction. Mark it permanently with an embedded tile pattern or niche (mihrab).</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">🚿</div>
+      <div class="p-title">Wudu Access</div>
+      <div class="p-desc">The musholla must be within easy reach of a wudu station — a low basin with foot-washing capability. Placing it adjacent to the kamar mandi (bathroom) is common. Keep the path from wudu to prayer mat clean and dry.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">🤫</div>
+      <div class="p-title">Sound Separation</div>
+      <div class="p-desc">The musholla should be acoustically separated from the TV room and kitchen — areas of household noise. Place it against a bedroom wall or at the end of a corridor rather than adjacent to the main living area.</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Hospitality (Diyafa) as Spatial Logic</h2>
+  <p>The Prophet ﷺ commanded generosity to guests. Architecturally, this means the public zone of the house — the teras (porch) and ruang tamu (reception room) — must be spacious, comfortable, and easy to reach without entering the private family areas. Guests should never need to pass through bedrooms or the musholla to reach seating.</p>
+  <div class="callout indigo"><strong>Practical implication:</strong> The toilet for guests should open off the public zone, not require a walk through the family kitchen. A dedicated WC near the front of the house serves both diyafa (hospitality) and sitr (privacy) simultaneously.</div>
+
+  <h2 class="section-heading">Sleeping Direction (Qibla & Sunnah)</h2>
+  <p>A common misunderstanding: in Islam, the head should not point toward the toilet (to avoid impurity), and the body should ideally be oriented on the right side facing qibla when possible. This does not mean the bed head must always face qibla — it means the bed placement should avoid the worst positions (head toward WC, feet toward qibla direction).</p>
+
+  <div class="quiz-section" id="quiz-4">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q4-1">
+      <div class="quiz-q-text">1. What does "sitr" mean in the context of Islamic home design?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q4-1',false,'A')"><span class="opt-letter">A</span>The direction of Mecca</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-1',true,'B')"><span class="opt-letter">B</span>Protecting privacy and modesty through spatial design</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-1',false,'C')"><span class="opt-letter">C</span>The prayer room in the home</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-1',false,'D')"><span class="opt-letter">D</span>The ritual washing area</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q4-1"></div>
+    </div>
+    <div class="quiz-q" id="q4-2">
+      <div class="quiz-q-text">2. From Java, the approximate qibla direction is:</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q4-2',false,'A')"><span class="opt-letter">A</span>Due north (0°)</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-2',false,'B')"><span class="opt-letter">B</span>Due west (270°)</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-2',true,'C')"><span class="opt-letter">C</span>West-northwest (295°–300°)</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-2',false,'D')"><span class="opt-letter">D</span>South-southwest (210°)</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q4-2"></div>
+    </div>
+    <div class="quiz-result" id="result-4"></div>
+    <button class="quiz-submit" onclick="submitQuiz(4,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(3)">← Feng Shui</button>
+    <button class="btn-next" onclick="goModule(5)">Next: Synthesis →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 5 ══ -->
+<section class="module-section" id="mod-5">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 05 · Synthesis</div>
+    <h1 class="module-title">Where the <span class="accent">Three Pillars</span> Meet</h1>
+    <p class="module-lede">Now we bring it together. Most decisions in the Indonesian home are actually reinforced by all three frameworks — here's how to read the convergences and resolve the rare conflicts.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>Key convergences: where all three agree</li>
+        <li>How to resolve the top 5 real conflicts</li>
+        <li>A unified design checklist for each major space</li>
+        <li>The "three-question test" for any design decision</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">The Big Convergences</h2>
+  <p>These are the design decisions where Tropical, Feng Shui, and Islamic guidance all point to the same answer. Build your home around these first — they represent the easiest, highest-value moves.</p>
+
+  <table class="resolve-table">
+    <tr>
+      <th>Design Decision</th>
+      <th><span class="badge badge-green">Tropical</span></th>
+      <th><span class="badge badge-gold">Feng Shui</span></th>
+      <th><span class="badge badge-indigo">Islamic</span></th>
+    </tr>
+    <tr>
+      <td><strong>South-facing main bedroom</strong></td>
+      <td>✅ Minimal solar heat gain</td>
+      <td>✅ Command position; stable, supportive energy</td>
+      <td>✅ Near qibla direction; away from service areas</td>
+    </tr>
+    <tr>
+      <td><strong>Deep roof overhangs</strong></td>
+      <td>✅ Rain & sun protection</td>
+      <td>✅ Provides shelter; contained Qi, not exposed</td>
+      <td>✅ Provides teras for guests (diyafa)</td>
+    </tr>
+    <tr>
+      <td><strong>Central courtyard / void</strong></td>
+      <td>✅ Natural ventilation stack</td>
+      <td>✅ Earth centre Bagua; family cohesion</td>
+      <td>✅ Internal gathering space preserves sitr</td>
+    </tr>
+    <tr>
+      <td><strong>Elevated floor level</strong></td>
+      <td>✅ Flood protection, splash-back</td>
+      <td>✅ "Dragon throne" — elevated position gathers Qi</td>
+      <td>✅ Cleanliness; separation from ground impurity</td>
+    </tr>
+    <tr>
+      <td><strong>Kitchen at rear of house</strong></td>
+      <td>✅ Isolates cooking heat from living spaces</td>
+      <td>✅ Fire element belongs in back; wealth zone</td>
+      <td>✅ Non-mahram guests don't see private food prep</td>
+    </tr>
+    <tr>
+      <td><strong>Timber &amp; natural materials</strong></td>
+      <td>✅ Thermally responsive, breathable</td>
+      <td>✅ Wood element nourishes family &amp; growth zones</td>
+      <td>✅ Natural materials align with fitrah; sustainable</td>
+    </tr>
+  </table>
+
+  <h2 class="section-heading">The Top 5 Conflicts & How to Resolve Them</h2>
+
+  <h3 class="sub-heading">1. Front Door Facing West (Feng Shui favorable) but West = Max Heat Gain (Tropical bad)</h3>
+  <p><strong>Resolution:</strong> Prioritize tropical. Add a deep <span class="key-term">teras</span> with minimum 1.5m overhang, perforated screen walls, and vegetation to block afternoon sun. Then place a water feature (FS: career water element) just inside the entrance to "cool" the westward Qi symbolically and literally.</p>
+
+  <h3 class="sub-heading">2. Feng Shui places the "Wealth" zone (SE) where Islamic modesty requires a private area</h3>
+  <p><strong>Resolution:</strong> Islamic modesty takes priority. Activate the Wealth zone with plants, good lighting, and a beautiful piece of art or Quranic calligraphy — rather than with an open, exposed space. Qi activation doesn't require visibility from outside.</p>
+
+  <h3 class="sub-heading">3. Water feature at entrance (FS good) conflicts with wudu cleanliness requirement</h3>
+  <p><strong>Resolution:</strong> A small internal fountain in the courtyard, or a decorative water vessel inside the teras, satisfies Feng Shui's Water/Career activation without creating a wet splash zone that makes wudu approach messy. Outdoor ponds facing the entrance are fine if elevated and clean.</p>
+
+  <h3 class="sub-heading">4. Qibla direction conflicts with "best" tropical window orientation</h3>
+  <p><strong>Resolution:</strong> Qibla is fixed. Orient the musholla wall correctly. For the bedroom, the bed position takes guidance from both — if qibla is WNW (as in Java), and the best bedroom face is south, the bed head against the south wall means the sleeper faces north. This is acceptable in Islamic jurisprudence.</p>
+
+  <h3 class="sub-heading">5. Feng Shui's open-plan preference vs. Islamic need for zone separation</h3>
+  <p><strong>Resolution:</strong> These are more compatible than they seem. Feng Shui screens, shoji-style panels, and partial walls allow Qi to flow without full visibility. Islamic sitr requires visual separation — a translucent or perforated screen can provide visual separation while preserving Qi flow.</p>
+
+  <div class="callout"><strong>The three-question test:</strong> For any design decision, ask: (1) Does it hurt the climate performance? (2) Does it violate Islamic obligation? (3) Does it block Qi unnecessarily? If all three answers are no, do it. If one is yes, adjust. If two are yes, reconsider the whole approach.</div>
+
+  <div class="quiz-section" id="quiz-5">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q5-1">
+      <div class="quiz-q-text">1. Which design feature is simultaneously endorsed by all three frameworks?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q5-1',false,'A')"><span class="opt-letter">A</span>Open-plan kitchen visible from the front door</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-1',true,'B')"><span class="opt-letter">B</span>Central courtyard / internal void</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-1',false,'C')"><span class="opt-letter">C</span>Large west-facing windows</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-1',false,'D')"><span class="opt-letter">D</span>Mirror wall in the bedroom</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q5-1"></div>
+    </div>
+    <div class="quiz-q" id="q5-2">
+      <div class="quiz-q-text">2. When Feng Shui and Islamic design conflict, what is the correct priority order?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q5-2',false,'A')"><span class="opt-letter">A</span>Feng Shui first, Islamic second, Tropical third</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-2',false,'B')"><span class="opt-letter">B</span>Tropical first, Islamic second, Feng Shui third</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-2',true,'C')"><span class="opt-letter">C</span>Islamic first, Tropical second, Feng Shui as refinement</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-2',false,'D')"><span class="opt-letter">D</span>All three are equal priority</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q5-2"></div>
+    </div>
+    <div class="quiz-result" id="result-5"></div>
+    <button class="quiz-submit" onclick="submitQuiz(5,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(4)">← Islamic Values</button>
+    <button class="btn-next" onclick="goModule(6)">Next: Room by Room →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 6 ══ -->
+<section class="module-section" id="mod-6">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 06 · Room by Room</div>
+    <h1 class="module-title"><span class="accent">Every Room,</span> Every Detail</h1>
+    <p class="module-lede">Specific, actionable guidance for each room in the Indonesian family home — combining all three frameworks into practical decisions you can bring to your architect.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>Teras &amp; Ruang Tamu — the public welcome</li>
+        <li>Ruang Keluarga — family cohesion space</li>
+        <li>Dapur &amp; Ruang Makan — nourishment and fire</li>
+        <li>Kamar Tidur Utama — the restorative core</li>
+        <li>Musholla — sacred space design</li>
+        <li>Kamar Mandi &amp; Wudu — cleanliness by design</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Room Guide</h2>
+
+  <div class="room-grid">
+    <div class="room-card">
+      <div class="room-name">🏠 Teras (Porch)</div>
+      <div class="room-sub">Public Zone 1</div>
+      <div class="room-tip"><strong>Tropical:</strong> Minimum 1.5m deep overhang; face north or south ideally; cross-breeze inlet position.</div>
+      <div class="room-tip"><strong>Feng Shui:</strong> Keep clear of clutter; Career/Helpful People zone activation; no dead plants or broken fixtures.</div>
+      <div class="room-tip"><strong>Islamic:</strong> Wide and welcoming; visible from the street signals hospitality; shoe storage that keeps entry clean.</div>
+    </div>
+    <div class="room-card">
+      <div class="room-name">🛋 Ruang Tamu (Reception)</div>
+      <div class="room-sub">Public Zone 1</div>
+      <div class="room-tip"><strong>Tropical:</strong> High ceiling (3m+) for stack effect; operable louvres; east or south-facing for morning light without afternoon heat.</div>
+      <div class="room-tip"><strong>Feng Shui:</strong> Host seat in command position (back to solid wall, facing door); no beam above seating; bright, yang energy.</div>
+      <div class="room-tip"><strong>Islamic:</strong> Visual screen before family area; WC nearby for guests; modest decor — calligraphy, geometric patterns over figurative art.</div>
+    </div>
+    <div class="room-card">
+      <div class="room-name">👨‍👩‍👧 Ruang Keluarga (Family Room)</div>
+      <div class="room-sub">Semi-Private Zone 2</div>
+      <div class="room-tip"><strong>Tropical:</strong> Central to house plan; courtyard-adjacent if possible; natural cross-ventilation prioritised over air-con.</div>
+      <div class="room-tip"><strong>Feng Shui:</strong> Earth centre zone; square or near-square room shape ideal; plants activate Wood (family); avoid TV directly opposite sofa across a long axis.</div>
+      <div class="room-tip"><strong>Islamic:</strong> Physically separated from ruang tamu by at least one visual break; TV position doesn't face qibla direction.</div>
+    </div>
+    <div class="room-card">
+      <div class="room-name">🍳 Dapur (Kitchen)</div>
+      <div class="room-sub">Semi-Private Zone 2</div>
+      <div class="room-tip"><strong>Tropical:</strong> At rear of house; cross-ventilated with exhaust above cooker; avoid west wall placement to prevent oven + sun double-heating.</div>
+      <div class="room-tip"><strong>Feng Shui:</strong> Fire element zone; cooker in command position; sink and cooker should not be directly adjacent (Water vs Fire conflict) — separate with a wooden chopping block.</div>
+      <div class="room-tip"><strong>Islamic:</strong> Not visible from ruang tamu; clean and organised — cleanliness is half of faith (hadith); halal and non-halal storage clearly separated if needed.</div>
+    </div>
+    <div class="room-card">
+      <div class="room-name">🛏 Kamar Tidur Utama (Master Bedroom)</div>
+      <div class="room-sub">Private Zone 3</div>
+      <div class="room-tip"><strong>Tropical:</strong> South-facing preferred; cross-ventilated; avoid west-facing for afternoon heat; high-mass walls on east and west for temperature buffering.</div>
+      <div class="room-tip"><strong>Feng Shui:</strong> Bed in command position; solid headboard wall; no mirror facing bed; no ceiling beam directly over body; Love/Relationship zone ideally in SW.</div>
+      <div class="room-tip"><strong>Islamic:</strong> Head doesn't point toward WC; bed faces don't directly face qibla (facing qibla to sleep is acceptable and encouraged); door opens to reveal bed gradually, not immediately.</div>
+    </div>
+    <div class="room-card">
+      <div class="room-name">🕌 Musholla (Prayer Space)</div>
+      <div class="room-sub">Private Zone 3</div>
+      <div class="room-tip"><strong>Tropical:</strong> Quiet, thermally comfortable; east-facing if possible (morning light); high ceiling for spiritual expansiveness and thermal comfort.</div>
+      <div class="room-tip"><strong>Feng Shui:</strong> Knowledge zone (NE) of Bagua is ideal — governs wisdom and inner development; clean, uncluttered, yin-balanced energy.</div>
+      <div class="room-tip"><strong>Islamic:</strong> Qibla wall marked clearly; sajadah aligned; Quran accessible; wudu station within 10 steps; no images/photos on walls; azan audible (window or near external wall).</div>
+    </div>
+    <div class="room-card">
+      <div class="room-name">🚿 Kamar Mandi + Wudu</div>
+      <div class="room-sub">Service — All Zones</div>
+      <div class="room-tip"><strong>Tropical:</strong> Ventilated naturally (louvre or high window); tiled floor with proper drainage gradient; humidity managed with airflow not just air-con.</div>
+      <div class="room-tip"><strong>Feng Shui:</strong> Keep door closed at all times; don't place bathroom in the centre (Earth zone) — it drains wealth Qi; don't place above the kitchen.</div>
+      <div class="room-tip"><strong>Islamic:</strong> Wudu basin separate from toilet area if possible; enter with left foot, exit with right; toilet seat not facing or back-to qibla (rotate 90°); istinja area designed for easy right-hand-free use.</div>
+    </div>
+    <div class="room-card">
+      <div class="room-name">🌿 Halaman (Garden/Yard)</div>
+      <div class="room-sub">Transition Zone</div>
+      <div class="room-tip"><strong>Tropical:</strong> West and east trees for shade; avoid dense ground cover on west that retains heat; rain garden or biopori holes for absorption.</div>
+      <div class="room-tip"><strong>Feng Shui:</strong> Keep front garden open and welcoming; place healthy plants — no thorny plants near entrance; Water feature on north or east activates Career/Family.</div>
+      <div class="room-tip"><strong>Islamic:</strong> Garden is sadaqah — a gift to nature and community; fruit trees are sunnah; ensure visual privacy from street for family area; avoid statues or figurative sculpture.</div>
+    </div>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(5)">← Synthesis</button>
+    <button class="btn-next" onclick="goModule(7)">Next: Materials & Color →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 7 ══ -->
+<section class="module-section" id="mod-7">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 07 · Materials & Color</div>
+    <h1 class="module-title">The <span class="accent">Material</span> Language of Harmonis</h1>
+    <p class="module-lede">Colors and materials are where Feng Shui speaks most loudly — and where Islamic aesthetics and tropical climate performance offer the most elegant constraints.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>The Harmonis color palette — where FS colors meet Islamic modesty</li>
+        <li>Best flooring for tropical heat and Islamic cleanliness</li>
+        <li>Wall finishes that breathe and last</li>
+        <li>Lighting strategy for Islamic home atmosphere</li>
+        <li>What to avoid in each framework</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">The Harmonis Color Palette</h2>
+  <p>Pure Feng Shui color prescriptions can conflict with Islamic aesthetics — bold red fame walls and golden wealth corners can feel gaudy in a modest Muslim home. The resolution is to use <span class="key-term">tinted naturals</span>: warm earthy hues as base, with Feng Shui color expressed as accents in furnishings, ceramics, textiles, and art rather than wall paint.</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">Harmonis Color System — Base + Accent Strategy</div>
+    <svg viewBox="0 0 580 180" xmlns="http://www.w3.org/2000/svg">
+      <!-- Base colors -->
+      <rect x="20" y="30" width="80" height="60" rx="8" fill="#F4ECD8"/>
+      <text x="60" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Cream</text>
+      <text x="60" y="118" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#aaa">Base wall</text>
+
+      <rect x="110" y="30" width="80" height="60" rx="8" fill="#D4B896"/>
+      <text x="150" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Sand</text>
+      <text x="150" y="118" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#aaa">Plaster / render</text>
+
+      <rect x="200" y="30" width="80" height="60" rx="8" fill="#8B7355"/>
+      <text x="240" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Warm Timber</text>
+      <text x="240" y="118" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#aaa">Wood surfaces</text>
+
+      <!-- Accent colors -->
+      <rect x="310" y="30" width="60" height="60" rx="8" fill="#1F9D55"/>
+      <text x="340" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Forest Green</text>
+      <text x="340" y="118" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#aaa">Islamic + Wood FS</text>
+
+      <rect x="380" y="30" width="60" height="60" rx="8" fill="#2E3192"/>
+      <text x="410" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Indigo</text>
+      <text x="410" y="118" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#aaa">Knowledge + depth</text>
+
+      <rect x="450" y="30" width="60" height="60" rx="8" fill="#FFC234"/>
+      <text x="480" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Mango Gold</text>
+      <text x="480" y="118" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#aaa">Wealth accents</text>
+
+      <rect x="520" y="30" width="45" height="60" rx="8" fill="#C0392B"/>
+      <text x="542" y="106" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">Deep Red</text>
+      <text x="542" y="118" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#aaa">Fame · use sparingly</text>
+
+      <!-- Labels -->
+      <text x="155" y="20" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#1A1614" font-weight="700">BASE TONES (60%)</text>
+      <text x="435" y="20" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#1A1614" font-weight="700">ACCENTS (40%)</text>
+      <line x1="290" y1="10" x2="290" y2="170" stroke="#ddd" stroke-width="1" stroke-dasharray="4,4"/>
+    </svg>
+  </div>
+
+  <h2 class="section-heading">Flooring Strategy</h2>
+  <table>
+    <tr><th>Space</th><th>Recommended Finish</th><th>Why</th></tr>
+    <tr><td>Musholla</td><td>Polished cement / smooth ceramic</td><td>Easy to clean for prayer; cool underfoot; no grout lines to trap dirt</td></tr>
+    <tr><td>Kamar Tidur</td><td>Solid timber or engineered wood</td><td>Warm Wood element (FS family/health); comfortable barefoot; low thermal mass keeps room from overheating at night</td></tr>
+    <tr><td>Ruang Tamu</td><td>Terracotta tiles or large format stone</td><td>High thermal mass cools the public zone; Earth element (FS); easy to sweep after guests</td></tr>
+    <tr><td>Dapur</td><td>Unglazed anti-slip ceramic</td><td>Safe when wet; easy to mop; heat-resistant under cooking area</td></tr>
+    <tr><td>Kamar Mandi</td><td>Small mosaic or anti-slip porcelain</td><td>Grip for wudu/bath; easy drainage; can embed geometric Islamic pattern</td></tr>
+    <tr><td>Teras</td><td>Rough-textured stone or exposed aggregate</td><td>Rain grip; Earth element; naturally ages with tropical patina</td></tr>
+  </table>
+
+  <h2 class="section-heading">Lighting the Harmonis Home</h2>
+  <p>Islamic atmosphere in the home leans toward <span class="key-term">warm, diffuse light</span> — not harsh overhead fluorescents. Feng Shui agrees: bright, yang spaces for active areas; soft, yin light for rest and prayer. Tropical design adds a third voice: maximize <span class="key-term">natural light</span> from skylights and high windows before any artificial layer.</p>
+  <div class="principle-grid">
+    <div class="principle-card">
+      <div class="p-icon">🌅</div>
+      <div class="p-title">Musholla Lighting</div>
+      <div class="p-desc">East-facing clerestory window for morning prayer (Fajr) light. Warm-white LED 2700K for evening prayers. No harsh downlights — they create hard shadows that disturb concentration.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">💡</div>
+      <div class="p-title">Living Area</div>
+      <div class="p-desc">Layered: ambient ceiling (3000K), task lamp for reading, accent for art or calligraphy. Dimmer on all circuits. Feng Shui: bright = yang activation for career and social zones.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">🌙</div>
+      <div class="p-title">Bedroom</div>
+      <div class="p-desc">Warm 2700K maximum. Avoid overhead centre light — use bedside lamps instead. FS: a bedside lamp on both sides activates the Love zone symmetrically for couples.</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">What to Avoid</h2>
+  <div class="stat-row-2">
+    <div class="stat-card">
+      <span class="stat-val" style="font-size:16px;line-height:1.4">Avoid: Mirrors Facing Bed</span>
+      <span class="stat-desc">Feng Shui strongly warns against mirrors facing the sleeping person. Islamic practice also avoids reflective surfaces in bedrooms that expose the private body. Both agree: bedroom mirrors should face a wall or be covered at night.</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val" style="font-size:16px;line-height:1.4">Avoid: Exposed Drains Near Musholla</span>
+      <span class="stat-desc">Water draining symbolically "takes away" Qi in Feng Shui. Practically, exposed drain sounds during prayer distract. Islam requires cleanliness near worship space. Enclose all pipes near the musholla.</span>
+    </div>
+  </div>
+
+  <div class="quiz-section" id="quiz-7">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q7-1">
+      <div class="quiz-q-text">1. In the Harmonis color approach, how should Feng Shui colors (like Fame red or Wealth purple) be applied in an Islamic home?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q7-1',false,'A')"><span class="opt-letter">A</span>Paint entire walls in the recommended Feng Shui zone color</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-1',true,'B')"><span class="opt-letter">B</span>Use them as accents in furnishings, ceramics, and textiles on neutral base walls</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-1',false,'C')"><span class="opt-letter">C</span>Avoid all Feng Shui colors in Islamic homes</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-1',false,'D')"><span class="opt-letter">D</span>Only use black and white</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q7-1"></div>
+    </div>
+    <div class="quiz-q" id="q7-2">
+      <div class="quiz-q-text">2. What color temperature (Kelvin) is recommended for the musholla?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q7-2',false,'A')"><span class="opt-letter">A</span>5000K–6500K (cool white / daylight)</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-2',true,'B')"><span class="opt-letter">B</span>2700K (warm white)</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-2',false,'C')"><span class="opt-letter">C</span>4000K (neutral white)</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-2',false,'D')"><span class="opt-letter">D</span>Color temperature doesn't matter in prayer spaces</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q7-2"></div>
+    </div>
+    <div class="quiz-result" id="result-7"></div>
+    <button class="quiz-submit" onclick="submitQuiz(7,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(6)">← Room by Room</button>
+    <button class="btn-next" onclick="goModule(8)">Next: Blueprint to Build →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 8 ══ -->
+<section class="module-section" id="mod-8">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 08 · Implementation</div>
+    <h1 class="module-title">From <span class="accent">Blueprint</span> to Build</h1>
+    <p class="module-lede">Practical tools for turning this philosophy into a real house — how to brief your architect, prioritise on a budget, and avoid the most common mistakes.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>How to brief an architect with all three frameworks</li>
+        <li>Priority tiers: what to spend on first</li>
+        <li>The 12-point pre-build checklist</li>
+        <li>Common mistakes Indonesian families make when building</li>
+        <li>How to phase construction if budget is limited</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Briefing Your Architect</h2>
+  <p>Most Indonesian architects are comfortable with tropical design — it's fundamental to their training. Far fewer have integrated Feng Shui and Islamic spatial thinking. Your brief should do three things: establish the three-framework approach, give non-negotiables, and give refinements.</p>
+  <div class="callout"><strong>Non-negotiables to state upfront:</strong> (1) Musholla on qibla axis with wudu access. (2) Three-zone privacy separation: public / semi-private / private. (3) Guest toilet accessible from ruang tamu without entering family zone. (4) No west-facing bedroom windows without shading. (5) Cross-ventilation path designed before walls are fixed.</div>
+
+  <h2 class="section-heading">Budget Tiers — What to Prioritise</h2>
+  <table>
+    <tr><th>Tier</th><th>Budget Allocation</th><th>What to Lock In</th></tr>
+    <tr><td><strong>Tier 1 — Non-negotiable</strong></td><td>First 60% of budget</td><td>Structure, orientation, roof form, musholla, privacy zones, ventilation paths, drainage elevation. These cannot be fixed cheaply after the fact.</td></tr>
+    <tr><td><strong>Tier 2 — High Return</strong></td><td>Next 25% of budget</td><td>Deep overhangs, quality windows (operable louvres), hardwood flooring in bedrooms, wudu station, quality front door and teras finish.</td></tr>
+    <tr><td><strong>Tier 3 — Refinement</strong></td><td>Last 15%</td><td>Feng Shui Bagua zone accents, color palette, lighting dimmer system, water feature, landscaping for shade, calligraphy art.</td></tr>
+  </table>
+
+  <h2 class="section-heading">12-Point Pre-Build Checklist</h2>
+  <ul class="checklist">
+    <li>Qibla direction confirmed with digital compass and marked on site plan</li>
+    <li>Musholla location decided with wudu station adjacency confirmed</li>
+    <li>Three privacy zones drawn on floor plan with visual breaks at each transition</li>
+    <li>Guest toilet position accessible from Zone 1 only</li>
+    <li>Bedroom(s) facing south or north — not west-facing without 1.5m+ overhang</li>
+    <li>Cross-ventilation path drawn: inlet on SE/S, outlet on NW/N or upward</li>
+    <li>Roof overhang minimum 90cm on all sides; 150cm on east and west</li>
+    <li>Floor level minimum 45cm above surrounding ground (flood + cleanliness)</li>
+    <li>Kitchen at rear of house, not adjacent to ruang tamu</li>
+    <li>No bathroom directly above kitchen or musholla</li>
+    <li>Bed positions sketched for all bedrooms — command position confirmed</li>
+    <li>Materials list checked: thermal mass for east/west walls, breathable plaster</li>
+  </ul>
+
+  <h2 class="section-heading">Common Mistakes to Avoid</h2>
+  <div class="principle-grid">
+    <div class="principle-card">
+      <div class="p-icon">❌</div>
+      <div class="p-title">Musholla as Afterthought</div>
+      <div class="p-desc">Many families add a musholla after the house is built — it ends up tucked in a leftover corner with no qibla alignment and no wudu access. Design it first.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">❌</div>
+      <div class="p-title">Open-Plan That Violates Sitr</div>
+      <div class="p-desc">Copying Western open-plan layouts means the kitchen and living area are immediately visible from the front door. This works in a secular context; it conflicts with Islamic home hospitality ethics.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">❌</div>
+      <div class="p-title">Maximum Glass on West Wall</div>
+      <div class="p-desc">Following minimalist architectural trends with full-height west glazing creates an oven by 3pm. Shading is non-optional in the tropics.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">❌</div>
+      <div class="p-title">Feng Shui Symbols Without Understanding</div>
+      <div class="p-desc">Placing a Bagua mirror or dragon figurine "for luck" without understanding the system is neither effective Feng Shui nor aligned with Islamic aqeedah. Use Feng Shui as a spatial grammar, not superstition.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">❌</div>
+      <div class="p-title">Sealed, Air-Conditioned Box</div>
+      <div class="p-desc">Designing a hermetically sealed house then relying on AC is expensive to run, unhealthy over time (poor air quality), and loses all Qi and spiritual atmosphere. Design for natural air first.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">❌</div>
+      <div class="p-title">Single Bathroom for Entire House</div>
+      <div class="p-desc">For a family of 4–6 with prayer obligations, one bathroom creates wudu bottlenecks at Fajr and Maghrib. Budget for a second WC/wudu station adjacent to the musholla.</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Phasing Construction on a Budget</h2>
+  <p>If building in phases, this is the recommended sequence:</p>
+  <ol style="padding-left:20px;margin-bottom:16px">
+    <li style="padding:5px 0;font-size:14px;line-height:1.6"><strong>Phase 1:</strong> Structure, roof, all openings, drainage, musholla, master bedroom, one bathroom with wudu. Everything that determines orientation, ventilation, and Islamic practice.</li>
+    <li style="padding:5px 0;font-size:14px;line-height:1.6"><strong>Phase 2:</strong> Finish ruang tamu, ruang keluarga, dapur, guest toilet. The social and family zones.</li>
+    <li style="padding:5px 0;font-size:14px;line-height:1.6"><strong>Phase 3:</strong> Additional bedrooms, landscaping, water features, refined Feng Shui zone activation. The refinement layer.</li>
+  </ol>
+  <div class="callout gold"><strong>Final reminder:</strong> The Rumah Harmonis is not a formula — it is a way of thinking about your home. Every site is different, every family is different. Use this framework to ask better questions, not to follow rigid rules. The best home is the one that serves your family's ibadah, comfort, and love for each other — and these three frameworks are just tools to help you get there.</div>
+
+  <div class="stat-row">
+    <div class="stat-card"><span class="stat-val green">3</span><span class="stat-desc">Frameworks united in one coherent approach to home design</span></div>
+    <div class="stat-card"><span class="stat-val">12</span><span class="stat-desc">Non-negotiable checklist items before breaking ground</span></div>
+    <div class="stat-card"><span class="stat-val sea">8</span><span class="stat-desc">Modules completed — you are now equipped to brief your architect</span></div>
+  </div>
+
+  <div class="quiz-section" id="quiz-8">
+    <div class="quiz-header">Final Module Check</div>
+    <div class="quiz-sub">COURSE COMPLETION — 3 QUESTIONS</div>
+    <div class="quiz-q" id="q8-1">
+      <div class="quiz-q-text">1. In the budget tier system, what should consume the first 60% of your build budget?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q8-1',false,'A')"><span class="opt-letter">A</span>Interior design, furniture, and landscaping</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-1',false,'B')"><span class="opt-letter">B</span>The kitchen and bathroom fitout</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-1',true,'C')"><span class="opt-letter">C</span>Structure, orientation, roof, musholla, privacy zones, and ventilation</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-1',false,'D')"><span class="opt-letter">D</span>The facade and front garden</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q8-1"></div>
+    </div>
+    <div class="quiz-q" id="q8-2">
+      <div class="quiz-q-text">2. Why is the musholla often poorly designed in Indonesian homes?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q8-2',false,'A')"><span class="opt-letter">A</span>Architects don't know what a musholla is</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-2',true,'B')"><span class="opt-letter">B</span>It is treated as an afterthought and placed in leftover space after the main plan is fixed</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-2',false,'C')"><span class="opt-letter">C</span>It requires special imported materials</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-2',false,'D')"><span class="opt-letter">D</span>The qibla direction is too difficult to calculate</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q8-2"></div>
+    </div>
+    <div class="quiz-q" id="q8-3">
+      <div class="quiz-q-text">3. What is the correct way to use Feng Shui in a Muslim Indonesian home?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q8-3',false,'A')"><span class="opt-letter">A</span>Place Bagua mirrors and dragon statues at the entrance for protection</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-3',false,'B')"><span class="opt-letter">B</span>Avoid Feng Shui entirely as it conflicts with Islamic belief</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-3',true,'C')"><span class="opt-letter">C</span>Use it as a spatial design grammar — practical room flow, command positions, material balance — not as superstition</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-3',false,'D')"><span class="opt-letter">D</span>Follow every Feng Shui rule exactly, overriding Islamic requirements where needed</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q8-3"></div>
+    </div>
+    <div class="quiz-result" id="result-8"></div>
+    <button class="quiz-submit" onclick="submitQuiz(8,3)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(7)">← Materials & Color</button>
+    <button class="btn-next" disabled>Course Complete ✓</button>
+  </div>
+</section>
+
+</div><!-- /main -->
+
+<script>
+const TOTAL = 8;
+const done = new Set();
+let current = 1;
+
+function goModule(n) {
+  if (n < 1 || n > TOTAL) return;
+  document.getElementById('mod-' + current).classList.remove('active');
+  document.querySelectorAll('.nav-module').forEach(el => el.classList.remove('active'));
+  current = n;
+  document.getElementById('mod-' + n).classList.add('active');
+  document.querySelector('[data-mod="' + n + '"]').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function markDone(mod) {
+  done.add(mod);
+  const el = document.querySelector('[data-mod="' + mod + '"]');
+  if (el) el.classList.add('done');
+  const fill = document.getElementById('progressFill');
+  const pct = document.getElementById('progressPct');
+  const p = Math.round((done.size / TOTAL) * 100);
+  fill.style.width = p + '%';
+  pct.textContent = done.size + ' of ' + TOTAL + ' modules';
+}
+
+const answers = {};
+function answer(btn, qid, correct, letter) {
+  if (answers[qid]) return;
+  answers[qid] = { correct, btn };
+  const opts = btn.closest('.quiz-options').querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.classList.add('disabled'));
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  const fb = document.getElementById('fb-' + qid);
+  fb.className = 'quiz-feedback show ' + (correct ? 'ok' : 'no');
+  fb.textContent = correct ? '✓ Correct!' : '✗ Not quite — review the section above.';
+}
+
+function submitQuiz(mod, total) {
+  const prefix = 'q' + mod + '-';
+  let score = 0;
+  for (let i = 1; i <= total; i++) {
+    const qid = prefix + i;
+    if (answers[qid] && answers[qid].correct) score++;
+  }
+  const result = document.getElementById('result-' + mod);
+  result.className = 'quiz-result show';
+  result.innerHTML = '<div class="score">' + score + '/' + total + '</div><div class="score-label">' +
+    (score === total ? 'Perfect! Module complete.' : 'Good effort — review any missed sections.') + '</div>';
+  if (score === total) markDone(mod);
+}
+</script>
+</body>
+</html>
