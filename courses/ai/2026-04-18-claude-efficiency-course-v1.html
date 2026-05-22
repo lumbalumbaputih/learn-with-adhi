@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Without Burning Tokens — A Deep Dive Course</title>
+<title>Claude Without Burning Tokens - A Deep Dive Course</title>
 <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
 <style>
   :root {
@@ -220,7 +220,7 @@
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    A token is roughly 3–4 characters of English, or about ¾ of a word. Claude reads and writes in tokens, and you pay (in dollars or in rate-limit quota) for every token that enters or leaves the model. This means long rambling prompts, huge pasted files, and 40-turn conversations all cost real money — even when you're not asking anything new.
+    A token is roughly 3–4 characters of English, or about ¾ of a word. Claude reads and writes in tokens, and you pay (in dollars or in rate-limit quota) for every token that enters or leaves the model. This means long rambling prompts, huge pasted files, and 40-turn conversations all cost real money - even when you're not asking anything new.
   </div>
 
   <h3>Tokens, not words</h3>
@@ -248,7 +248,7 @@
   </div>
 
   <h3>Input vs output tokens</h3>
-  <p>Every Claude call has two sides: what you send in (input) and what Claude writes back (output). Both cost, but they're priced differently — output is usually several times more expensive than input, because generation is the expensive compute step. Practical consequence: a short prompt that causes Claude to write a 4,000-word essay can cost more than a long prompt that asks for a one-line answer.</p>
+  <p>Every Claude call has two sides: what you send in (input) and what Claude writes back (output). Both cost, but they're priced differently - output is usually several times more expensive than input, because generation is the expensive compute step. Practical consequence: a short prompt that causes Claude to write a 4,000-word essay can cost more than a long prompt that asks for a one-line answer.</p>
 
   <div class="callout info">
     <div class="callout-label">Mental model</div>
@@ -276,11 +276,11 @@
 <!-- ========================= MODULE 2 ========================= -->
 <section class="module" id="m2" data-mod="2">
   <h2><span class="module-num">Module 02</span>The context window: your real budget</h2>
-  <p class="lead">Tokens cost money, yes. But the harder limit is the context window — the finite memory Claude has for any one conversation.</p>
+  <p class="lead">Tokens cost money, yes. But the harder limit is the context window - the finite memory Claude has for any one conversation.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    Every Claude session has a maximum context (currently 200K tokens for most Claude models, and larger for some). Once you fill it, old turns fall out, performance degrades, and every new message pushes you closer to a wall. The real cost of a bloated session isn't just money — it's that Claude gets worse the fuller it gets.
+    Every Claude session has a maximum context (currently 200K tokens for most Claude models, and larger for some). Once you fill it, old turns fall out, performance degrades, and every new message pushes you closer to a wall. The real cost of a bloated session isn't just money - it's that Claude gets worse the fuller it gets.
   </div>
 
   <h3>What lives in the window?</h3>
@@ -320,7 +320,7 @@
 
   <h3>The "fullness" tax</h3>
   <p>Two things degrade as the window fills up:</p>
-  <p><strong>Cost per message rises linearly.</strong> On turn 1, you might send 2K tokens. On turn 30 of the same conversation, you might be sending 80K tokens every time you hit enter — because the whole history is re-sent. This is why people get rate-limit-throttled deep into a long session.</p>
+  <p><strong>Cost per message rises linearly.</strong> On turn 1, you might send 2K tokens. On turn 30 of the same conversation, you might be sending 80K tokens every time you hit enter - because the whole history is re-sent. This is why people get rate-limit-throttled deep into a long session.</p>
   <p><strong>Attention gets diluted.</strong> Claude is better at using the beginning and the end of its context than the middle. A 180K-token conversation with your critical instruction buried 60K in will often see Claude "forget" it, even though technically it's still there.</p>
 
   <div class="callout warn">
@@ -329,7 +329,7 @@
   </div>
 
   <h3>Seeing your usage</h3>
-  <p>In Claude.ai you don't see a token counter natively, but long-conversation warnings will appear. In Cowork and Claude Code, the CLI/UI often shows context usage. In the API, every response includes exact <code>input_tokens</code> and <code>output_tokens</code>. Get in the habit of noticing when a session feels sluggish or repetitive — that's usually context pressure, not a "bad day" for the model.</p>
+  <p>In Claude.ai you don't see a token counter natively, but long-conversation warnings will appear. In Cowork and Claude Code, the CLI/UI often shows context usage. In the API, every response includes exact <code>input_tokens</code> and <code>output_tokens</code>. Get in the habit of noticing when a session feels sluggish or repetitive - that's usually context pressure, not a "bad day" for the model.</p>
 
   <h3>Applied to your projects</h3>
   <table>
@@ -347,14 +347,14 @@
 <!-- ========================= MODULE 3 ========================= -->
 <section class="module" id="m3" data-mod="3">
   <h2><span class="module-num">Module 03</span>Prompting habits that save tokens</h2>
-  <p class="lead">Most token waste isn't from big files — it's from prompts that invite long answers when you wanted short ones, or answers you immediately have to redo.</p>
+  <p class="lead">Most token waste isn't from big files - it's from prompts that invite long answers when you wanted short ones, or answers you immediately have to redo.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
     Be specific about scope, format, and length up front. Ask one thing at a time. Constrain the output. Say what you <em>don't</em> want. A 40-word prompt that prevents a 4,000-word wrong answer is worth more than a 10-word prompt that triggers it.
   </div>
 
-  <h3>Habit 1 — State the output shape first</h3>
+  <h3>Habit 1 - State the output shape first</h3>
   <div class="compare">
     <div class="bad-col">
       <h5>Burns tokens</h5>
@@ -368,13 +368,13 @@
     </div>
   </div>
 
-  <h3>Habit 2 — Constrain length explicitly</h3>
+  <h3>Habit 2 - Constrain length explicitly</h3>
   <p>"Keep it under 150 words." "One paragraph." "Max 5 items." Claude respects these. Without them it defaults to "thorough", which is expensive.</p>
 
-  <h3>Habit 3 — Say what you don't want</h3>
+  <h3>Habit 3 - Say what you don't want</h3>
   <p>Based on your writing prefs: <em>"No bullet points. No em dashes. Cohesive prose. Chicago 17th author-date in-text. Don't include a conclusion section."</em> Putting these negatives in the prompt stops Claude from writing the wrong thing, and you from paying for the rewrite.</p>
 
-  <h3>Habit 4 — Batch related questions, but only related ones</h3>
+  <h3>Habit 4 - Batch related questions, but only related ones</h3>
   <div class="compare">
     <div class="bad-col">
       <h5>Three separate calls</h5>
@@ -393,10 +393,10 @@ Q3: "What are the limitations?"</code></pre>
     </div>
   </div>
 
-  <h3>Habit 5 — Don't be polite at the model's expense</h3>
+  <h3>Habit 5 - Don't be polite at the model's expense</h3>
   <p>"Can you please, if it's not too much trouble, maybe consider helping me with..." adds tokens on every turn. Claude doesn't need softeners to do its job. Be direct. (It's also just faster.)</p>
 
-  <h3>Habit 6 — Examples beat adjectives</h3>
+  <h3>Habit 6 - Examples beat adjectives</h3>
   <p>"Write in a professional academic tone" is vague and invites Claude to use many words to guess your taste. A one-line example of the style you want does 10× more work in 1/10 the tokens.</p>
 
   <pre><code>Bad: "Write in a good academic style for my master's paper"
@@ -404,7 +404,7 @@ Good: "Match this voice: 'Material recovery from building
 deconstruction remains poorly quantified in Australia
 (Minunno et al. 2021). This gap limits...' "</code></pre>
 
-  <h3>Habit 7 — Use structure markers</h3>
+  <h3>Habit 7 - Use structure markers</h3>
   <p>Wrapping blocks in <code>&lt;instructions&gt;</code>, <code>&lt;source&gt;</code>, <code>&lt;example&gt;</code> XML-ish tags is a Claude-native habit. It costs a handful of tokens and dramatically reduces ambiguity, which is the real source of re-work.</p>
 
   <pre><code>&lt;task&gt;Rewrite the paragraph below in IELTS 7.0 register.&lt;/task&gt;
@@ -419,7 +419,7 @@ deconstruction remains poorly quantified in Australia
 ...the text...
 &lt;/paragraph&gt;</code></pre>
 
-  <h3>Habit 8 — Prompt for the verdict, not the reasoning (when you just want the verdict)</h3>
+  <h3>Habit 8 - Prompt for the verdict, not the reasoning (when you just want the verdict)</h3>
   <p>"Is X better than Y for Z? Just the answer plus one-line reason." will save you 800 tokens of weighing-the-options prose you were going to skim anyway.</p>
 
   <div class="callout good">
@@ -509,7 +509,7 @@ Max 400 words. No preamble.</code></pre>
   <div class="compare">
     <div class="bad-col">
       <h5>Paste-in-chat mindset</h5>
-      <p>Every turn, everything you want Claude to know is re-sent. The 40-page PDF, the 500-row CSV, the 12 reference quotes — all of it, every message. You pay for the paper 20 times over a conversation.</p>
+      <p>Every turn, everything you want Claude to know is re-sent. The 40-page PDF, the 500-row CSV, the 12 reference quotes - all of it, every message. You pay for the paper 20 times over a conversation.</p>
     </div>
     <div class="good-col">
       <h5>File-based mindset</h5>
@@ -517,7 +517,7 @@ Max 400 words. No preamble.</code></pre>
     </div>
   </div>
 
-  <h3>Cowork — the workflow you already have</h3>
+  <h3>Cowork - the workflow you already have</h3>
   <p>This is exactly why your <code>claude output/</code> convention exists. Apply it deliberately:</p>
   <ol>
     <li>Put source materials (PDFs, CSVs, notes) in the project folder.</li>
@@ -528,7 +528,7 @@ Max 400 words. No preamble.</code></pre>
 
   <p>For Edit-based revisions specifically: Edit only sends the diff, not the whole file. A 10,000-word essay with one paragraph rewrite costs a few hundred tokens, not 15K.</p>
 
-  <h3>Claude Code — even stricter</h3>
+  <h3>Claude Code - even stricter</h3>
   <p>Claude Code is file-native. Best practices:</p>
   <ul>
     <li><strong>Don't paste code into prompts.</strong> Point to the file. It'll read what it needs.</li>
@@ -537,11 +537,11 @@ Max 400 words. No preamble.</code></pre>
     <li><strong>Commit progress.</strong> Claude can diff against git to see what changed instead of re-reading the world.</li>
   </ul>
 
-  <h3>Claude.ai — use Projects</h3>
+  <h3>Claude.ai - use Projects</h3>
   <p>Projects give you a shared "reference bundle" across chats. Put into Project files:</p>
   <ul>
     <li>Your CV (already in your memory system)</li>
-    <li>Your writing samples — one per register (formal academic, IELTS 6.5, email, casual)</li>
+    <li>Your writing samples - one per register (formal academic, IELTS 6.5, email, casual)</li>
     <li>Your research paper outline and literature notes</li>
     <li>Style rules (Chicago 17th, no em dashes, etc.)</li>
   </ul>
@@ -553,7 +553,7 @@ Max 400 words. No preamble.</code></pre>
   <h3>Your projects, concrete fix list</h3>
   <table>
     <tr><th>Project</th><th>Today (bad)</th><th>After (good)</th></tr>
-    <tr><td>Master's research</td><td>Paste abstracts in chat</td><td><code>claude output/Master's Research Paper/lit-notes.md</code> — one entry per source</td></tr>
+    <tr><td>Master's research</td><td>Paste abstracts in chat</td><td><code>claude output/Master's Research Paper/lit-notes.md</code> - one entry per source</td></tr>
     <tr><td>Clownfish study</td><td>Paste the 59-row table</td><td><code>claude output/Clownfish Aquaculture/colour-ratings.csv</code> + Claude reads on request</td></tr>
     <tr><td>MEMP Victoria</td><td>Draft in chat</td><td>Chapter files; Edit for revisions</td></tr>
     <tr><td>Toko Curah</td><td>Re-paste HTML for tweaks</td><td>HTML in folder; use Edit for targeted changes</td></tr>
@@ -572,7 +572,7 @@ Max 400 words. No preamble.</code></pre>
 <!-- ========================= MODULE 6 ========================= -->
 <section class="module" id="m6" data-mod="6">
   <h2><span class="module-num">Module 06</span>Tools, MCPs, and agents</h2>
-  <p class="lead">Tools make Claude powerful, but each connected tool adds tokens to every single turn — even when you don't use it. Managing that is an efficiency skill.</p>
+  <p class="lead">Tools make Claude powerful, but each connected tool adds tokens to every single turn - even when you don't use it. Managing that is an efficiency skill.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
@@ -580,7 +580,7 @@ Max 400 words. No preamble.</code></pre>
   </div>
 
   <h3>Tool schemas live in your context</h3>
-  <p>When an MCP like Gmail or Google Calendar is connected, Claude doesn't magically know how to use it. The tool's full schema — parameters, descriptions, examples — is loaded into the context of every message. Five connected MCPs can easily mean 15–25K tokens of overhead per turn before you've said anything.</p>
+  <p>When an MCP like Gmail or Google Calendar is connected, Claude doesn't magically know how to use it. The tool's full schema - parameters, descriptions, examples - is loaded into the context of every message. Five connected MCPs can easily mean 15–25K tokens of overhead per turn before you've said anything.</p>
 
   <div class="diagram">
     <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
@@ -619,7 +619,7 @@ Max 400 words. No preamble.</code></pre>
   <p>A subagent is Claude spawning a secondary Claude to do a bounded piece of work and report back only the result. This matters for tokens because:</p>
   <ul>
     <li>The subagent's messy middle (50 tool calls, file reads, dead ends) stays in <em>its</em> context, not yours.</li>
-    <li>You only pay — in your main session — for the final summary it returns.</li>
+    <li>You only pay - in your main session - for the final summary it returns.</li>
   </ul>
 
   <div class="compare">
@@ -642,7 +642,7 @@ Max 400 words. No preamble.</code></pre>
   </ul>
 
   <h3>Applied to your setup</h3>
-  <p>Looking at your available plugins (brand-voice, sales, legal, data, marketing, operations, finance, engineering, customer-support, productivity, pdf-viewer, cowork-plugin-management): that's a lot. You probably don't need all of them loaded for the same session. A 2-minute pre-session audit — "what am I doing today, what do I actually need?" — is worth 30K tokens of breathing room.</p>
+  <p>Looking at your available plugins (brand-voice, sales, legal, data, marketing, operations, finance, engineering, customer-support, productivity, pdf-viewer, cowork-plugin-management): that's a lot. You probably don't need all of them loaded for the same session. A 2-minute pre-session audit - "what am I doing today, what do I actually need?" - is worth 30K tokens of breathing room.</p>
 
   <button class="done-btn" onclick="markDone(6, this)"><span class="dot"></span><span>Mark module complete</span></button>
   <div class="foot-nav"><button onclick="goTo(5)">← Previous</button><button onclick="goTo(7)">Next: Skills, memory, caching →</button></div>
@@ -651,7 +651,7 @@ Max 400 words. No preamble.</code></pre>
 <!-- ========================= MODULE 7 ========================= -->
 <section class="module" id="m7" data-mod="7">
   <h2><span class="module-num">Module 07</span>Skills, memory, and caching</h2>
-  <p class="lead">Three mechanisms that make Claude remember and act consistently across sessions — without you re-explaining, and without you paying full freight each time.</p>
+  <p class="lead">Three mechanisms that make Claude remember and act consistently across sessions - without you re-explaining, and without you paying full freight each time.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
@@ -663,12 +663,12 @@ Max 400 words. No preamble.</code></pre>
   <ul>
     <li>Replaces a 400-word prompt with a single skill name.</li>
     <li>Versioned: your team can improve the skill without every user re-learning the prompt.</li>
-    <li>Skill files only load when invoked — they don't permanently bloat context.</li>
+    <li>Skill files only load when invoked - they don't permanently bloat context.</li>
   </ul>
   <p>For you: skills like <code>anthropic-skills:docx</code>, <code>:pdf</code>, <code>:xlsx</code>, <code>:pptx</code> save you from re-explaining "use these fonts, these margins, don't break tables" every time you make a document. Use them instead of typing the rules out.</p>
 
-  <h3>Memory — your existing system</h3>
-  <p>You already have a sophisticated memory setup: CLAUDE.md at the workspace root + a <code>memory/</code> directory. This is genuinely excellent and I'll be honest — most users don't do this. Advantages it gives you:</p>
+  <h3>Memory - your existing system</h3>
+  <p>You already have a sophisticated memory setup: CLAUDE.md at the workspace root + a <code>memory/</code> directory. This is genuinely excellent and I'll be honest - most users don't do this. Advantages it gives you:</p>
   <ul>
     <li>Every session starts with your role, preferences, people, terms, projects already loaded.</li>
     <li>No "hi I'm Ris, I'm doing a master's..." wasted tokens.</li>
@@ -684,7 +684,7 @@ Max 400 words. No preamble.</code></pre>
   <p>This is the one most people don't know about. When you send the same big prefix repeatedly (system prompt, long document, tool schemas), the API can cache that prefix. Subsequent calls that start with the same prefix are charged at a much lower rate and run faster.</p>
   <p>How it affects you:</p>
   <ul>
-    <li>In Cowork and Claude.ai, caching happens automatically — you don't control it directly, but your habits still help. <strong>Stable prefixes cache well.</strong> If you put a large reference into a Project file and then ask 10 questions across 10 chats in that Project, later chats benefit from cache.</li>
+    <li>In Cowork and Claude.ai, caching happens automatically - you don't control it directly, but your habits still help. <strong>Stable prefixes cache well.</strong> If you put a large reference into a Project file and then ask 10 questions across 10 chats in that Project, later chats benefit from cache.</li>
     <li>If you're using the API: explicitly mark cache breakpoints for big stable chunks (system prompt, uploaded doc). Repeated calls within a short TTL get massive discounts.</li>
     <li>Chaotic prompts that keep mutating the prefix <em>never</em> hit cache. Stable structure = real savings.</li>
   </ul>
@@ -710,7 +710,7 @@ Max 400 words. No preamble.</code></pre>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    Opus is for hard reasoning and high-stakes writing. Sonnet is the workhorse for most tasks. Haiku is for fast/cheap work (triage, reformatting, classification). Extended thinking (more tokens spent on internal reasoning) costs more — use it for hard problems, not for "rewrite this email".
+    Opus is for hard reasoning and high-stakes writing. Sonnet is the workhorse for most tasks. Haiku is for fast/cheap work (triage, reformatting, classification). Extended thinking (more tokens spent on internal reasoning) costs more - use it for hard problems, not for "rewrite this email".
   </div>
 
   <h3>The current lineup</h3>
@@ -724,7 +724,7 @@ Max 400 words. No preamble.</code></pre>
   </table>
 
   <h3>Extended thinking</h3>
-  <p>Newer Claude models can "think" before answering — they produce internal reasoning tokens before the final answer. This genuinely helps on hard problems (complex math, multi-step debugging, legal analysis) but it adds tokens. On easy tasks, it's pure waste.</p>
+  <p>Newer Claude models can "think" before answering - they produce internal reasoning tokens before the final answer. This genuinely helps on hard problems (complex math, multi-step debugging, legal analysis) but it adds tokens. On easy tasks, it's pure waste.</p>
   <p>Rule of thumb: if the question has a clear right answer a human expert could give in under 30 seconds, you don't need extended thinking. If it needs whiteboarding, you do.</p>
 
   <h3>Practical routing for your work</h3>
@@ -740,7 +740,7 @@ Max 400 words. No preamble.</code></pre>
   </table>
 
   <h3>In Claude Code specifically</h3>
-  <p>You can override the default model per task. For a long refactor, invoking Opus might cost more per token but finish in fewer iterations — that's often cheaper overall. For a batch of dozens of boilerplate edits, Haiku is faster and cheaper. Don't default; decide.</p>
+  <p>You can override the default model per task. For a long refactor, invoking Opus might cost more per token but finish in fewer iterations - that's often cheaper overall. For a batch of dozens of boilerplate edits, Haiku is faster and cheaper. Don't default; decide.</p>
 
   <div class="callout warn">
     <div class="callout-label">Pricing caveat</div>
@@ -790,7 +790,7 @@ Max 400 words. No preamble.</code></pre>
   <p>Not wrong in itself, but every "ok perfect, thank you so much, now can you..." turn adds up. If cost matters, trim ceremony.</p>
 
   <h3>12. Ignoring the handover</h3>
-  <p>Starting a fresh chat with "continue where we left off" — but Claude doesn't remember, because chats are stateless. You end up paying for a long explanatory preamble that a 3-line handover file would have handled for free.</p>
+  <p>Starting a fresh chat with "continue where we left off" - but Claude doesn't remember, because chats are stateless. You end up paying for a long explanatory preamble that a 3-line handover file would have handled for free.</p>
 
   <div class="callout bad">
     <div class="callout-label">The meta anti-pattern</div>
@@ -808,18 +808,18 @@ Max 400 words. No preamble.</code></pre>
 
   <h3>Daily discipline (5 minutes)</h3>
   <ol>
-    <li>Start a fresh chat per topic. Not per day — per topic.</li>
+    <li>Start a fresh chat per topic. Not per day - per topic.</li>
     <li>Before a complex session, audit which MCPs/plugins you actually need. Disconnect the rest.</li>
     <li>Know up front: what format, what length, what you don't want. Put it in the prompt.</li>
     <li>If the chat passes 30 turns, ask for a handover summary and start fresh.</li>
-    <li>End each work session by saving anything important to <code>claude output/</code>. You already have this habit — trust it.</li>
+    <li>End each work session by saving anything important to <code>claude output/</code>. You already have this habit - trust it.</li>
   </ol>
 
   <h3>Weekly maintenance (15 minutes, Fridays)</h3>
   <ol>
     <li>Run the <code>consolidate-memory</code> skill on CLAUDE.md. Prune stale items.</li>
     <li>Review your <code>claude output/</code>. Archive finished work. Keep active projects lean.</li>
-    <li>For job hunting / research, make sure <code>memory/cv.md</code> and <code>lit-notes.md</code> are current — they're your cache-friendly references.</li>
+    <li>For job hunting / research, make sure <code>memory/cv.md</code> and <code>lit-notes.md</code> are current - they're your cache-friendly references.</li>
   </ol>
 
   <h3>Per-project templates</h3>
@@ -868,7 +868,7 @@ Keep everything else as-is. Show me the diff.</code></pre>
   <h3>Signs you're doing it right</h3>
   <ul>
     <li>Most of your chats are short (under 20 turns).</li>
-    <li>Your <code>claude output/</code> tree is growing — chat history isn't.</li>
+    <li>Your <code>claude output/</code> tree is growing - chat history isn't.</li>
     <li>You rarely re-paste the same content twice.</li>
     <li>You can resume any project by opening one file and a fresh chat.</li>
     <li>You feel the difference when you accidentally leave a heavy MCP loaded.</li>
@@ -988,7 +988,7 @@ Keep everything else as-is. Show me the diff.</code></pre>
           if (q.dataset.quiz === 'q3') fb.textContent = 'Correct. Specific scope, specific format, explicit source bar, minimal output.';
           fb.classList.add('correct', 'show');
         } else {
-          fb.textContent = 'Not quite — try again.';
+          fb.textContent = 'Not quite - try again.';
           fb.classList.add('wrong', 'show');
         }
       });

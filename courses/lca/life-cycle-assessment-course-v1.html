@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Life Cycle Assessment — From Zero to Doing It Properly</title>
+<title>Life Cycle Assessment - From Zero to Doing It Properly</title>
 <link rel="icon" href="../../assets/favicon-32.png" type="image/png" />
 <style>
   :root {
@@ -178,13 +178,13 @@
       <li><a href="#" data-mod="1"><span class="num">01</span><span>What is LCA?</span><span class="check">✓</span></a></li>
       <li><a href="#" data-mod="2"><span class="num">02</span><span>Why LCA matters</span><span class="check">✓</span></a></li>
       <li><a href="#" data-mod="3"><span class="num">03</span><span>The 4-phase framework (ISO 14040)</span><span class="check">✓</span></a></li>
-      <li><a href="#" data-mod="4"><span class="num">04</span><span>Phase 1 — Goal &amp; Scope</span><span class="check">✓</span></a></li>
-      <li><a href="#" data-mod="5"><span class="num">05</span><span>Phase 2 — Inventory (LCI)</span><span class="check">✓</span></a></li>
-      <li><a href="#" data-mod="6"><span class="num">06</span><span>Phase 3 — Impact Assessment (LCIA)</span><span class="check">✓</span></a></li>
-      <li><a href="#" data-mod="7"><span class="num">07</span><span>Phase 4 — Interpretation</span><span class="check">✓</span></a></li>
+      <li><a href="#" data-mod="4"><span class="num">04</span><span>Phase 1 - Goal &amp; Scope</span><span class="check">✓</span></a></li>
+      <li><a href="#" data-mod="5"><span class="num">05</span><span>Phase 2 - Inventory (LCI)</span><span class="check">✓</span></a></li>
+      <li><a href="#" data-mod="6"><span class="num">06</span><span>Phase 3 - Impact Assessment (LCIA)</span><span class="check">✓</span></a></li>
+      <li><a href="#" data-mod="7"><span class="num">07</span><span>Phase 4 - Interpretation</span><span class="check">✓</span></a></li>
       <li><a href="#" data-mod="8"><span class="num">08</span><span>LCA tools &amp; software</span><span class="check">✓</span></a></li>
       <li><a href="#" data-mod="9"><span class="num">09</span><span>Common mistakes &amp; pitfalls</span><span class="check">✓</span></a></li>
-      <li><a href="#" data-mod="10"><span class="num">10</span><span>Your first LCA — walkthrough</span><span class="check">✓</span></a></li>
+      <li><a href="#" data-mod="10"><span class="num">10</span><span>Your first LCA - walkthrough</span><span class="check">✓</span></a></li>
     </ol>
   </nav>
   <button class="reset-btn" onclick="resetProgress()">Reset progress</button>
@@ -198,15 +198,15 @@
 <!-- ===== MODULE 1 ===== -->
 <section class="module active" id="m1" data-mod="1">
   <h2><span class="module-num">Module 01</span>What is LCA?</h2>
-  <p class="lead">Before any tool, any formula, any ISO standard — you need one clear mental picture of what LCA actually does. This module builds that picture.</p>
+  <p class="lead">Before any tool, any formula, any ISO standard - you need one clear mental picture of what LCA actually does. This module builds that picture.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    LCA stands for Life Cycle Assessment. It is a method for measuring the environmental impact of a product, material, or service across its entire life — from extracting raw materials, through manufacturing, use, and finally disposal or recycling. The goal is to stop blaming only one part of the chain and see the whole thing.
+    LCA stands for Life Cycle Assessment. It is a method for measuring the environmental impact of a product, material, or service across its entire life - from extracting raw materials, through manufacturing, use, and finally disposal or recycling. The goal is to stop blaming only one part of the chain and see the whole thing.
   </div>
 
   <h3>The "from cradle to grave" idea</h3>
-  <p>Imagine a plastic bottle of shampoo. Most people only think about the moment they throw it in the bin. But the real environmental story started months earlier — mining bauxite for the cap, drilling petroleum for the plastic, running energy-hungry factories, trucking it across countries, heating water every time you use it, and finally landfilling or recycling the empty container.</p>
+  <p>Imagine a plastic bottle of shampoo. Most people only think about the moment they throw it in the bin. But the real environmental story started months earlier - mining bauxite for the cap, drilling petroleum for the plastic, running energy-hungry factories, trucking it across countries, heating water every time you use it, and finally landfilling or recycling the empty container.</p>
   <p>LCA forces you to account for all of those stages, not just the one that is convenient to look at. That is the core idea. Everything else in this course is just methodology for doing that accounting rigorously.</p>
 
   <div class="diagram">
@@ -251,7 +251,7 @@
       <text x="572" y="102" fill="#a6adbb" font-size="9" text-anchor="middle" font-family="sans-serif">disposal / recycle</text>
 
       <!-- Cradle to grave label -->
-      <text x="350" y="148" fill="#a6adbb" font-size="11" text-anchor="middle" font-family="sans-serif">← cradle ——————————————————— grave →</text>
+      <text x="350" y="148" fill="#a6adbb" font-size="11" text-anchor="middle" font-family="sans-serif">← cradle ------------------- grave →</text>
     </svg>
     <div class="diagram-caption">The five life cycle stages LCA tracks. Every arrow is a flow of energy, material, or waste.</div>
   </div>
@@ -261,8 +261,8 @@
     <div class="bad-col">
       <h5>Not this</h5>
       <p style="font-size:13.5px;margin:0 0 8px 0">A simple carbon footprint calculator that only counts one gas (CO₂) at one stage.</p>
-      <p style="font-size:13.5px;margin:0 0 8px 0">A policy recommendation — LCA produces data, not decisions.</p>
-      <p style="font-size:13.5px;margin:0">A marketing label ("eco-certified") — those often lack LCA rigour.</p>
+      <p style="font-size:13.5px;margin:0 0 8px 0">A policy recommendation - LCA produces data, not decisions.</p>
+      <p style="font-size:13.5px;margin:0">A marketing label ("eco-certified") - those often lack LCA rigour.</p>
     </div>
     <div class="good-col">
       <h5>Actually this</h5>
@@ -273,10 +273,10 @@
   </div>
 
   <h3>A quick analogy</h3>
-  <p>Think of LCA like a full financial audit of a company — not just the profit at the end of the year, but every transaction, every supplier cost, every hidden liability. You can't know if the company is actually healthy by looking only at the final balance. Same with a product's environmental impact.</p>
+  <p>Think of LCA like a full financial audit of a company - not just the profit at the end of the year, but every transaction, every supplier cost, every hidden liability. You can't know if the company is actually healthy by looking only at the final balance. Same with a product's environmental impact.</p>
 
   <div class="quiz">
-    <div class="quiz-q">Quick check — which of the following is the best description of what LCA measures?</div>
+    <div class="quiz-q">Quick check - which of the following is the best description of what LCA measures?</div>
     <div class="quiz-options" id="q1">
       <label><input type="radio" name="q1" value="a"> The CO₂ emissions produced by a factory during manufacturing</label>
       <label><input type="radio" name="q1" value="b"> The environmental impacts of a product across all stages of its life</label>
@@ -297,15 +297,15 @@
 <!-- ===== MODULE 2 ===== -->
 <section class="module" id="m2" data-mod="2">
   <h2><span class="module-num">Module 02</span>Why LCA matters</h2>
-  <p class="lead">Knowing what LCA is isn't enough — you need to know where it fits in the real world and why practitioners actually use it.</p>
+  <p class="lead">Knowing what LCA is isn't enough - you need to know where it fits in the real world and why practitioners actually use it.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    LCA prevents "burden shifting" — fixing one environmental problem while quietly creating another. It is used by companies, governments, researchers, and NGOs to compare products, design better materials, shape policy, and back up environmental claims with evidence.
+    LCA prevents "burden shifting" - fixing one environmental problem while quietly creating another. It is used by companies, governments, researchers, and NGOs to compare products, design better materials, shape policy, and back up environmental claims with evidence.
   </div>
 
   <h3>The burden-shifting problem</h3>
-  <p>In the 1990s, several countries switched from plastic bags to paper bags for supermarkets, believing paper was obviously greener. But LCA studies showed that paper bags require significantly more energy and water to produce, and more transport weight per bag. Unless a paper bag is reused many times, its climate impact is actually higher than a plastic bag over its full life. Neither is ideal — but without LCA, you'd never know which trade-offs you were making.</p>
+  <p>In the 1990s, several countries switched from plastic bags to paper bags for supermarkets, believing paper was obviously greener. But LCA studies showed that paper bags require significantly more energy and water to produce, and more transport weight per bag. Unless a paper bag is reused many times, its climate impact is actually higher than a plastic bag over its full life. Neither is ideal - but without LCA, you'd never know which trade-offs you were making.</p>
   <p>This is the core reason LCA exists: to stop optimising one part of a system while ignoring what you're doing to the rest.</p>
 
   <h3>Who uses LCA and how</h3>
@@ -321,7 +321,7 @@
   </table>
 
   <h3>LCA in circular economy work</h3>
-  <p>Since you're doing your Master's in environment and climate emergency under Roberto Minunno's supervision (circular economy, design for disassembly), this is directly relevant to you. LCA is how circular economy claims get validated. Saying "this building is designed for disassembly so it's better" is not evidence — an LCA comparing the end-of-life scenario of a conventional building vs. a disassemblable one is evidence.</p>
+  <p>Since you're doing your Master's in environment and climate emergency under Roberto Minunno's supervision (circular economy, design for disassembly), this is directly relevant to you. LCA is how circular economy claims get validated. Saying "this building is designed for disassembly so it's better" is not evidence - an LCA comparing the end-of-life scenario of a conventional building vs. a disassemblable one is evidence.</p>
 
   <div class="callout info">
     <div class="callout-label">Relevance to your research</div>
@@ -351,14 +351,14 @@
   </div>
 
   <div class="quiz">
-    <div class="quiz-q">A furniture company wants to compare two chair designs — one solid wood, one recycled plastic — and they want to include what happens when customers throw the chair away in 10 years. Which LCA scope is most appropriate?</div>
+    <div class="quiz-q">A furniture company wants to compare two chair designs - one solid wood, one recycled plastic - and they want to include what happens when customers throw the chair away in 10 years. Which LCA scope is most appropriate?</div>
     <div class="quiz-options" id="q2">
       <label><input type="radio" name="q2" value="a"> Gate-to-gate</label>
       <label><input type="radio" name="q2" value="b"> Cradle-to-gate</label>
       <label><input type="radio" name="q2" value="c"> Cradle-to-grave</label>
       <label><input type="radio" name="q2" value="d"> Cradle-to-cradle</label>
     </div>
-    <button class="quiz-btn" onclick="checkQuiz('q2','c','Correct. Including end-of-life disposal means the study goes from raw material extraction (cradle) all the way to disposal (grave).','Not quite. Since they want to include disposal, the scope needs to extend to the end of life — that is cradle-to-grave.')">Check answer</button>
+    <button class="quiz-btn" onclick="checkQuiz('q2','c','Correct. Including end-of-life disposal means the study goes from raw material extraction (cradle) all the way to disposal (grave).','Not quite. Since they want to include disposal, the scope needs to extend to the end of life - that is cradle-to-grave.')">Check answer</button>
     <div class="quiz-feedback" id="q2-fb"></div>
   </div>
 
@@ -372,11 +372,11 @@
 <!-- ===== MODULE 3 ===== -->
 <section class="module" id="m3" data-mod="3">
   <h2><span class="module-num">Module 03</span>The 4-phase framework (ISO 14040/14044)</h2>
-  <p class="lead">LCA has an internationally agreed structure. Two ISO standards — 14040 (principles) and 14044 (requirements) — define four phases that every credible LCA must follow.</p>
+  <p class="lead">LCA has an internationally agreed structure. Two ISO standards - 14040 (principles) and 14044 (requirements) - define four phases that every credible LCA must follow.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    ISO 14040/14044 divides an LCA into four phases: (1) Goal and Scope, (2) Life Cycle Inventory, (3) Life Cycle Impact Assessment, and (4) Interpretation. They're not strictly linear — the standard explicitly says iteration between phases is expected and necessary.
+    ISO 14040/14044 divides an LCA into four phases: (1) Goal and Scope, (2) Life Cycle Inventory, (3) Life Cycle Impact Assessment, and (4) Interpretation. They're not strictly linear - the standard explicitly says iteration between phases is expected and necessary.
   </div>
 
   <h3>Why ISO standards matter</h3>
@@ -429,7 +429,7 @@
           <path d="M0,0 L0,6 L6,3 z" fill="#a6adbb" opacity="0.7"/>
         </marker>
       </defs>
-      <text x="320" y="310" fill="#a6adbb" font-size="10" text-anchor="middle" font-family="sans-serif">Phases are iterative — findings in Phase 3 can send you back to Phase 2</text>
+      <text x="320" y="310" fill="#a6adbb" font-size="10" text-anchor="middle" font-family="sans-serif">Phases are iterative - findings in Phase 3 can send you back to Phase 2</text>
     </svg>
     <div class="diagram-caption">The four ISO 14040 phases and their iterative relationship</div>
   </div>
@@ -438,7 +438,7 @@
   <div class="phase-card">
     <span class="phase-tag tag-1">Phase 1</span>
     <h4>Goal and Scope Definition</h4>
-    <p>You decide why you're doing the LCA, what product or system it covers, where the system boundaries are drawn, and what the functional unit is (the unit of comparison). This is the most important phase — getting it wrong makes the rest of the study meaningless.</p>
+    <p>You decide why you're doing the LCA, what product or system it covers, where the system boundaries are drawn, and what the functional unit is (the unit of comparison). This is the most important phase - getting it wrong makes the rest of the study meaningless.</p>
   </div>
   <div class="phase-card">
     <span class="phase-tag tag-2">Phase 2</span>
@@ -465,7 +465,7 @@
     <div class="quiz-q">You've finished collecting all your inventory data (Phase 2) and start calculating impacts (Phase 3). Halfway through, you realise your system boundary was drawn incorrectly and you're missing data from a key transport step. What should you do according to ISO 14040?</div>
     <div class="quiz-options" id="q3">
       <label><input type="radio" name="q3" value="a"> Ignore it and complete Phase 3 with the data you have, noting the gap in the report</label>
-      <label><input type="radio" name="q3" value="b"> Abandon the study entirely — the data is compromised</label>
+      <label><input type="radio" name="q3" value="b"> Abandon the study entirely - the data is compromised</label>
       <label><input type="radio" name="q3" value="c"> Go back to Phase 1 or 2, correct the boundary, and collect the missing data</label>
       <label><input type="radio" name="q3" value="d"> Estimate the missing transport step using your own judgement without documenting it</label>
     </div>
@@ -476,13 +476,13 @@
   <button class="done-btn" id="done-3" onclick="markDone(3)"><span class="dot"></span> Mark module complete</button>
   <div class="foot-nav">
     <button onclick="goTo(2)">← Previous</button>
-    <button onclick="goTo(4)">Next: Phase 1 — Goal &amp; Scope →</button>
+    <button onclick="goTo(4)">Next: Phase 1 - Goal &amp; Scope →</button>
   </div>
 </section>
 
 <!-- ===== MODULE 4 ===== -->
 <section class="module" id="m4" data-mod="4">
-  <h2><span class="module-num">Module 04</span>Phase 1 — Goal &amp; Scope Definition</h2>
+  <h2><span class="module-num">Module 04</span>Phase 1 - Goal &amp; Scope Definition</h2>
   <p class="lead">This is the most consequential phase. Every choice you make here determines what your LCA can and cannot tell you. Spend more time here than you think you need to.</p>
 
   <div class="tldr">
@@ -499,12 +499,12 @@
     <li><strong>Comparative assertion:</strong> If you're comparing two products and will make the results public, ISO 14044 imposes additional requirements including critical review by an external panel.</li>
   </ul>
 
-  <h3>2. The functional unit — the most critical concept in LCA</h3>
+  <h3>2. The functional unit - the most critical concept in LCA</h3>
   <p>The functional unit is the reference unit to which all inputs and outputs in your study are normalised. It defines <em>what the system is supposed to do</em>, not just what it is.</p>
 
   <div class="example-box">
-    <div class="example-label">Example — paint</div>
-    <p style="margin:0;font-size:13.5px">If you're comparing water-based vs. solvent-based paint, a bad functional unit is "1 litre of paint" — because the two paints may have different coverage rates and different lifespans before repainting is needed. A good functional unit is "painting 1 m² of interior wall surface with adequate coverage for 10 years." Now you're comparing what both paints <em>actually do</em>.</p>
+    <div class="example-label">Example - paint</div>
+    <p style="margin:0;font-size:13.5px">If you're comparing water-based vs. solvent-based paint, a bad functional unit is "1 litre of paint" - because the two paints may have different coverage rates and different lifespans before repainting is needed. A good functional unit is "painting 1 m² of interior wall surface with adequate coverage for 10 years." Now you're comparing what both paints <em>actually do</em>.</p>
   </div>
 
   <div class="callout bad">
@@ -513,7 +513,7 @@
   </div>
 
   <h3>3. System boundary</h3>
-  <p>The system boundary defines what processes are inside your LCA and what are outside it. There is no universal correct boundary — it depends on your goal — but you must document it clearly and defend your decisions.</p>
+  <p>The system boundary defines what processes are inside your LCA and what are outside it. There is no universal correct boundary - it depends on your goal - but you must document it clearly and defend your decisions.</p>
 
   <table>
     <thead><tr><th>Boundary decision</th><th>What to consider</th></tr></thead>
@@ -530,35 +530,35 @@
   <p>Allocation is the tricky problem of dividing environmental burden between co-products from a shared process. ISO 14044 recommends avoiding allocation where possible (by expanding the system or subdividing processes), but when it's unavoidable, you can allocate by mass, energy content, or economic value.</p>
 
   <div class="example-box">
-    <div class="example-label">Example — milk and cheese</div>
+    <div class="example-label">Example - milk and cheese</div>
     <p style="margin:0;font-size:13.5px">A dairy farm produces milk and manure. If you're doing an LCA of cheese, you need to decide how much of the farm's emissions to assign to the milk vs. the manure (which is used as fertiliser). Allocating by mass gives a different answer to allocating by economic value. Document which you chose and why.</p>
   </div>
 
   <h3>5. Data quality requirements</h3>
-  <p>State upfront what quality of data you need — geographic representativeness, temporal representativeness (how recent), technological representativeness (does the data match the actual process you're studying), and completeness. This becomes a benchmark to evaluate your data against in Phase 2.</p>
+  <p>State upfront what quality of data you need - geographic representativeness, temporal representativeness (how recent), technological representativeness (does the data match the actual process you're studying), and completeness. This becomes a benchmark to evaluate your data against in Phase 2.</p>
 
   <div class="quiz">
     <div class="quiz-q">A researcher wants to compare reusable ceramic mugs vs. disposable paper cups for a café. She defines the functional unit as "1 ceramic mug" vs. "1 paper cup." What is wrong with this?</div>
     <div class="quiz-options" id="q4">
-      <label><input type="radio" name="q4" value="a"> Nothing — one of each is a fair comparison</label>
+      <label><input type="radio" name="q4" value="a"> Nothing - one of each is a fair comparison</label>
       <label><input type="radio" name="q4" value="b"> The ceramic mug is reused hundreds of times, so comparing it to a single cup doesn't reflect the service each delivers</label>
       <label><input type="radio" name="q4" value="c"> Paper cups are already known to be worse so the study isn't needed</label>
       <label><input type="radio" name="q4" value="d"> The functional unit must always be expressed in kilograms</label>
     </div>
-    <button class="quiz-btn" onclick="checkQuiz('q4','b','Correct. The functional unit should be defined as the service — e.g., \"serving one hot drink to one customer\" — and then you account for how many uses each option provides. A ceramic mug used 500 times has a very different per-use impact than if you only counted its production once.','Not quite. The core issue is that the functional unit must reflect the service delivered, not the physical object.')">Check answer</button>
+    <button class="quiz-btn" onclick="checkQuiz('q4','b','Correct. The functional unit should be defined as the service - e.g., \"serving one hot drink to one customer\" - and then you account for how many uses each option provides. A ceramic mug used 500 times has a very different per-use impact than if you only counted its production once.','Not quite. The core issue is that the functional unit must reflect the service delivered, not the physical object.')">Check answer</button>
     <div class="quiz-feedback" id="q4-fb"></div>
   </div>
 
   <button class="done-btn" id="done-4" onclick="markDone(4)"><span class="dot"></span> Mark module complete</button>
   <div class="foot-nav">
     <button onclick="goTo(3)">← Previous</button>
-    <button onclick="goTo(5)">Next: Phase 2 — Inventory (LCI) →</button>
+    <button onclick="goTo(5)">Next: Phase 2 - Inventory (LCI) →</button>
   </div>
 </section>
 
 <!-- ===== MODULE 5 ===== -->
 <section class="module" id="m5" data-mod="5">
-  <h2><span class="module-num">Module 05</span>Phase 2 — Life Cycle Inventory (LCI)</h2>
+  <h2><span class="module-num">Module 05</span>Phase 2 - Life Cycle Inventory (LCI)</h2>
   <p class="lead">The inventory is the data engine of an LCA. This is where you quantify every flow of material and energy into and out of your system. It is painstaking, but the quality of your results is only as good as the quality of your inventory.</p>
 
   <div class="tldr">
@@ -603,7 +603,7 @@
     <tbody>
       <tr><td><strong>Primary data</strong></td><td>Collected directly from the process: metering energy use, weighing materials, measuring emissions</td><td>Most accurate for your specific case. Expensive and time-consuming to collect.</td></tr>
       <tr><td><strong>LCA databases</strong></td><td>ecoinvent (most comprehensive, paid), GaBi databases, ELCD (free, EU), AusLCI (Australian specific)</td><td>Fast and standardised. May not perfectly match your actual process or location.</td></tr>
-      <tr><td><strong>EPDs</strong></td><td>Environmental Product Declarations from manufacturers — contain verified LCI data for specific products</td><td>Directly relevant to real products. Only covers the product, not your full system.</td></tr>
+      <tr><td><strong>EPDs</strong></td><td>Environmental Product Declarations from manufacturers - contain verified LCI data for specific products</td><td>Directly relevant to real products. Only covers the product, not your full system.</td></tr>
       <tr><td><strong>Literature</strong></td><td>Peer-reviewed studies with reported inventory data</td><td>Often freely available. Temporal and geographic representativeness can be a concern.</td></tr>
     </tbody>
   </table>
@@ -616,13 +616,13 @@
     <li><strong>Normalise to the functional unit.</strong> All data must be expressed per your functional unit. If your functional unit is "1 tonne of structural steel delivered to site," then every input and output gets divided or scaled to that reference.</li>
     <li><strong>Handle allocation.</strong> For any multi-output processes, apply the allocation approach you defined in Phase 1.</li>
     <li><strong>Validate and check mass balance.</strong> The total mass of inputs should roughly equal total mass of outputs (some is lost to emissions, but large discrepancies indicate missing data or errors).</li>
-    <li><strong>Document data sources and quality.</strong> For each data point, record where it came from, when it was produced, and how representative it is of your system. This is not optional — it's required by ISO 14044.</li>
+    <li><strong>Document data sources and quality.</strong> For each data point, record where it came from, when it was produced, and how representative it is of your system. This is not optional - it's required by ISO 14044.</li>
   </ul>
 
   <h3>Key LCA databases to know</h3>
   <div class="callout info">
     <div class="callout-label">For Australian practitioners</div>
-    <strong>AusLCI</strong> is the Australian Life Cycle Inventory Database — free, maintained by the Australian Life Cycle Assessment Society (ALCAS). It includes Australian-specific electricity grid data, construction materials, and transport. Always prefer AusLCI data over European databases when studying Australian systems.
+    <strong>AusLCI</strong> is the Australian Life Cycle Inventory Database - free, maintained by the Australian Life Cycle Assessment Society (ALCAS). It includes Australian-specific electricity grid data, construction materials, and transport. Always prefer AusLCI data over European databases when studying Australian systems.
   </div>
 
   <div class="callout info">
@@ -645,13 +645,13 @@
   <button class="done-btn" id="done-5" onclick="markDone(5)"><span class="dot"></span> Mark module complete</button>
   <div class="foot-nav">
     <button onclick="goTo(4)">← Previous</button>
-    <button onclick="goTo(6)">Next: Phase 3 — Impact Assessment →</button>
+    <button onclick="goTo(6)">Next: Phase 3 - Impact Assessment →</button>
   </div>
 </section>
 
 <!-- ===== MODULE 6 ===== -->
 <section class="module" id="m6" data-mod="6">
-  <h2><span class="module-num">Module 06</span>Phase 3 — Life Cycle Impact Assessment (LCIA)</h2>
+  <h2><span class="module-num">Module 06</span>Phase 3 - Life Cycle Impact Assessment (LCIA)</h2>
   <p class="lead">Your inventory is a long list of raw flows: kilograms of CO₂, litres of water, grams of methane, milligrams of cadmium. LCIA translates this into environmental impact scores that humans can actually interpret and compare.</p>
 
   <div class="tldr">
@@ -683,8 +683,8 @@
     </tbody>
   </table>
 
-  <h3>LCIA methods — which one to use?</h3>
-  <p>Characterisation factors come from published LCIA methods. You don't calculate them yourself — you select a method and your LCA software applies the factors. The most common methods are:</p>
+  <h3>LCIA methods - which one to use?</h3>
+  <p>Characterisation factors come from published LCIA methods. You don't calculate them yourself - you select a method and your LCA software applies the factors. The most common methods are:</p>
 
   <div class="phase-card">
     <span class="phase-tag tag-1">ReCiPe 2016</span>
@@ -694,7 +694,7 @@
   <div class="phase-card">
     <span class="phase-tag tag-2">CML-IA</span>
     <h4>Conservative, midpoint-only</h4>
-    <p>Developed by Leiden University. Older and more conservative — only calculates midpoint indicators, not endpoint. Often required by EPD programme operators and used in construction sector LCA.</p>
+    <p>Developed by Leiden University. Older and more conservative - only calculates midpoint indicators, not endpoint. Often required by EPD programme operators and used in construction sector LCA.</p>
   </div>
   <div class="phase-card">
     <span class="phase-tag tag-3">ILCD / EF 3.1</span>
@@ -702,16 +702,16 @@
     <p>The European Commission's recommended method under the Product Environmental Footprint (PEF) framework. 16 impact categories. Increasingly required for EU market access and green claims substantiation.</p>
   </div>
 
-  <h3>Midpoint vs. endpoint — what's the difference?</h3>
+  <h3>Midpoint vs. endpoint - what's the difference?</h3>
   <div class="compare">
     <div>
       <h5 style="color:var(--accent-2);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px 0">Midpoint</h5>
-      <p style="font-size:13.5px;margin:0 0 8px 0">Measures the problem in physical/chemical terms, closer to the emission. Example: kg CO₂ equivalent tells you about radiative forcing — the mechanism of warming.</p>
+      <p style="font-size:13.5px;margin:0 0 8px 0">Measures the problem in physical/chemical terms, closer to the emission. Example: kg CO₂ equivalent tells you about radiative forcing - the mechanism of warming.</p>
       <p style="font-size:13.5px;margin:0">More scientifically certain. Less intuitive for non-experts. Preferred in academic and EPD contexts.</p>
     </div>
     <div>
       <h5 style="color:var(--warn);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px 0">Endpoint</h5>
-      <p style="font-size:13.5px;margin:0 0 8px 0">Translates midpoint results into damage to "areas of protection" — human health (DALYs lost), ecosystem quality (species lost), resource scarcity ($).</p>
+      <p style="font-size:13.5px;margin:0 0 8px 0">Translates midpoint results into damage to "areas of protection" - human health (DALYs lost), ecosystem quality (species lost), resource scarcity ($).</p>
       <p style="font-size:13.5px;margin:0">More intuitive for decision-makers. Less scientifically certain because the damage modelling involves more assumptions.</p>
     </div>
   </div>
@@ -721,39 +721,39 @@
     <div class="quiz-options" id="q6">
       <label><input type="radio" name="q6" value="a"> Product B, because it has lower climate change impact which is the most important category</label>
       <label><input type="radio" name="q6" value="b"> Product A, because climate change is overrated compared to water issues</label>
-      <label><input type="radio" name="q6" value="c"> It depends on the context and the relative importance of each impact category — LCA results alone don't answer this without interpretation and value judgements</label>
-      <label><input type="radio" name="q6" value="d"> Neither — if they differ in any category they can't be compared</label>
+      <label><input type="radio" name="q6" value="c"> It depends on the context and the relative importance of each impact category - LCA results alone don't answer this without interpretation and value judgements</label>
+      <label><input type="radio" name="q6" value="d"> Neither - if they differ in any category they can't be compared</label>
     </div>
-    <button class="quiz-btn" onclick="checkQuiz('q6','c','Correct. This is a trade-off situation and LCA deliberately doesn\'t resolve it for you without weighting — which is a value judgement, not a scientific fact. The LCA practitioner\'s job is to clearly present the trade-off; the decision-maker\'s job is to weigh it based on context.','Not quite. LCIA produces a multi-dimensional profile. When categories point in different directions, the results cannot be reduced to a single winner without explicit value judgements about which impacts matter more.')">Check answer</button>
+    <button class="quiz-btn" onclick="checkQuiz('q6','c','Correct. This is a trade-off situation and LCA deliberately doesn\'t resolve it for you without weighting - which is a value judgement, not a scientific fact. The LCA practitioner\'s job is to clearly present the trade-off; the decision-maker\'s job is to weigh it based on context.','Not quite. LCIA produces a multi-dimensional profile. When categories point in different directions, the results cannot be reduced to a single winner without explicit value judgements about which impacts matter more.')">Check answer</button>
     <div class="quiz-feedback" id="q6-fb"></div>
   </div>
 
   <button class="done-btn" id="done-6" onclick="markDone(6)"><span class="dot"></span> Mark module complete</button>
   <div class="foot-nav">
     <button onclick="goTo(5)">← Previous</button>
-    <button onclick="goTo(7)">Next: Phase 4 — Interpretation →</button>
+    <button onclick="goTo(7)">Next: Phase 4 - Interpretation →</button>
   </div>
 </section>
 
 <!-- ===== MODULE 7 ===== -->
 <section class="module" id="m7" data-mod="7">
-  <h2><span class="module-num">Module 07</span>Phase 4 — Interpretation</h2>
-  <p class="lead">Interpretation is where your results become useful. It is not just writing a summary — it is a structured analytical process that ISO 14044 requires you to do before drawing any conclusions.</p>
+  <h2><span class="module-num">Module 07</span>Phase 4 - Interpretation</h2>
+  <p class="lead">Interpretation is where your results become useful. It is not just writing a summary - it is a structured analytical process that ISO 14044 requires you to do before drawing any conclusions.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
     Interpretation has three required elements: (1) identify significant issues (hotspots), (2) evaluate the results for completeness, sensitivity, and consistency, and (3) draw conclusions and limitations. This phase can and should send you back to earlier phases if problems are found.
   </div>
 
-  <h3>Step 1 — Identify significant issues (hotspot analysis)</h3>
+  <h3>Step 1 - Identify significant issues (hotspot analysis)</h3>
   <p>A hotspot is a life cycle stage, process, or flow that contributes disproportionately to one or more impact categories. Finding hotspots tells you where environmental improvement efforts will have the biggest effect.</p>
 
   <div class="example-box">
-    <div class="example-label">Example — building LCA</div>
+    <div class="example-label">Example - building LCA</div>
     <p style="margin:0;font-size:13.5px">A building LCA might find that the concrete slab and structural steel together account for 65% of embodied carbon (a hotspot in production stage) while the use-phase heating accounts for 70% of total lifecycle energy. The conclusion: for short-lived buildings, tackle embodied carbon first; for long-lived buildings, operational energy matters more. Without hotspot analysis you'd treat all stages equally and misallocate effort.</p>
   </div>
 
-  <h3>Step 2 — Evaluate results</h3>
+  <h3>Step 2 - Evaluate results</h3>
   <p>ISO 14044 requires three types of evaluation before you can claim your results are reliable:</p>
 
   <div class="phase-card">
@@ -764,7 +764,7 @@
   <div class="phase-card">
     <span class="phase-tag tag-2">Sensitivity analysis</span>
     <h4>How much do your results depend on uncertain choices?</h4>
-    <p>Change one assumption at a time — the allocation method, a data value with high uncertainty, the LCIA method — and see how much the results change. If swapping a key assumption flips your conclusion, your conclusion is not robust. Report this honestly.</p>
+    <p>Change one assumption at a time - the allocation method, a data value with high uncertainty, the LCIA method - and see how much the results change. If swapping a key assumption flips your conclusion, your conclusion is not robust. Report this honestly.</p>
   </div>
   <div class="phase-card">
     <span class="phase-tag tag-3">Consistency check</span>
@@ -772,14 +772,14 @@
     <p>If you're comparing two products, were data sources of the same quality for both? Were system boundaries defined the same way? Inconsistency between compared systems is a major source of bias in comparative LCA.</p>
   </div>
 
-  <h3>Step 3 — Conclusions, recommendations, limitations</h3>
-  <p>Your conclusions must be directly traceable to your results — don't overstate what the data supports. For every conclusion, identify the corresponding limitation. Standard reporting includes:</p>
+  <h3>Step 3 - Conclusions, recommendations, limitations</h3>
+  <p>Your conclusions must be directly traceable to your results - don't overstate what the data supports. For every conclusion, identify the corresponding limitation. Standard reporting includes:</p>
   <ul class="step-list">
     <li>State which product or scenario performs better on which impact categories</li>
-    <li>Identify trade-offs clearly — do not collapse them into a single "winner" without explicit justification</li>
-    <li>State the scope of validity — e.g., "These results apply to the Australian context using 2024 grid data; results would differ with a renewable energy grid"</li>
+    <li>Identify trade-offs clearly - do not collapse them into a single "winner" without explicit justification</li>
+    <li>State the scope of validity - e.g., "These results apply to the Australian context using 2024 grid data; results would differ with a renewable energy grid"</li>
     <li>Recommend where further data collection would most improve result reliability</li>
-    <li>State what the results cannot be used to conclude — this is as important as what they can</li>
+    <li>State what the results cannot be used to conclude - this is as important as what they can</li>
   </ul>
 
   <h3>Critical review (for public comparative studies)</h3>
@@ -787,18 +787,18 @@
 
   <div class="callout warn">
     <div class="callout-label">Note for academic work</div>
-    In a Master's thesis or research paper, the "critical review" function is partly fulfilled by your supervisors and peer reviewers. But you should still apply the completeness, sensitivity, and consistency checks yourself before submitting — reviewers will catch if you haven't.
+    In a Master's thesis or research paper, the "critical review" function is partly fulfilled by your supervisors and peer reviewers. But you should still apply the completeness, sensitivity, and consistency checks yourself before submitting - reviewers will catch if you haven't.
   </div>
 
   <div class="quiz">
-    <div class="quiz-q">You've run a sensitivity analysis and found that if you change the allocation method from mass-based to economic-value-based, the ranking between Product A and Product B reverses — Product B goes from worse to better on climate change. What does this mean for your conclusions?</div>
+    <div class="quiz-q">You've run a sensitivity analysis and found that if you change the allocation method from mass-based to economic-value-based, the ranking between Product A and Product B reverses - Product B goes from worse to better on climate change. What does this mean for your conclusions?</div>
     <div class="quiz-options" id="q7">
       <label><input type="radio" name="q7" value="a"> Choose whichever allocation gives the result you expected and use that</label>
       <label><input type="radio" name="q7" value="b"> Report only the original result and mention the sensitivity as a footnote</label>
-      <label><input type="radio" name="q7" value="c"> The conclusion about which product is better on climate change is not robust — you must report this uncertainty clearly and cannot make a definitive comparative claim</label>
+      <label><input type="radio" name="q7" value="c"> The conclusion about which product is better on climate change is not robust - you must report this uncertainty clearly and cannot make a definitive comparative claim</label>
       <label><input type="radio" name="q7" value="d"> Redo the entire study with economic allocation because it is more accurate</label>
     </div>
-    <button class="quiz-btn" onclick="checkQuiz('q7','c','Correct. A result that reverses with a different methodological choice is not a robust conclusion. ISO 14044 requires you to report such sensitivities transparently. The honest conclusion is that the comparison is inconclusive under this uncertainty, not that one product wins.','Not quite. When a key assumption reverses your conclusion, that\'s a red flag — your conclusion is not robust and you must be transparent about this.')">Check answer</button>
+    <button class="quiz-btn" onclick="checkQuiz('q7','c','Correct. A result that reverses with a different methodological choice is not a robust conclusion. ISO 14044 requires you to report such sensitivities transparently. The honest conclusion is that the comparison is inconclusive under this uncertainty, not that one product wins.','Not quite. When a key assumption reverses your conclusion, that\'s a red flag - your conclusion is not robust and you must be transparent about this.')">Check answer</button>
     <div class="quiz-feedback" id="q7-fb"></div>
   </div>
 
@@ -816,7 +816,7 @@
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    The main LCA platforms are SimaPro, openLCA, GaBi, and OneClick LCA. SimaPro and openLCA are most common in academia; OneClick LCA dominates the built environment sector in Australia. ecoinvent is the most important database. Start with openLCA — it's free and professional.
+    The main LCA platforms are SimaPro, openLCA, GaBi, and OneClick LCA. SimaPro and openLCA are most common in academia; OneClick LCA dominates the built environment sector in Australia. ecoinvent is the most important database. Start with openLCA - it's free and professional.
   </div>
 
   <table>
@@ -827,11 +827,11 @@
       <tr><td><strong>GaBi</strong></td><td>Paid</td><td>Industry/manufacturing LCA, EPD production</td><td>Strong in automotive and chemicals. Own database. Less common in building/construction sector.</td></tr>
       <tr><td><strong>OneClick LCA</strong></td><td>Paid (subscription)</td><td>Buildings, infrastructure, construction</td><td>Dominant in Australian construction LCA and Green Star compliance. Directly linked to EPD databases and building material libraries. If you go into built environment work, this is what you'll use.</td></tr>
       <tr><td><strong>Tally (Revit plugin)</strong></td><td>Paid</td><td>Whole-of-building LCA from BIM models</td><td>Integrates directly with Revit. Good for architects doing embodied carbon assessment at design stage.</td></tr>
-      <tr><td><strong>Spreadsheet (Excel)</strong></td><td>Free</td><td>Simple, transparent, teaching exercises</td><td>Fully transparent — you see every calculation. Limited to simple systems. Good for learning the mechanics before using a tool that hides the maths.</td></tr>
+      <tr><td><strong>Spreadsheet (Excel)</strong></td><td>Free</td><td>Simple, transparent, teaching exercises</td><td>Fully transparent - you see every calculation. Limited to simple systems. Good for learning the mechanics before using a tool that hides the maths.</td></tr>
     </tbody>
   </table>
 
-  <h3>Databases — what you connect to your software</h3>
+  <h3>Databases - what you connect to your software</h3>
   <table>
     <thead><tr><th>Database</th><th>Cost</th><th>Coverage</th></tr></thead>
     <tbody>
@@ -845,7 +845,7 @@
   <h3>Getting started at Curtin</h3>
   <div class="callout info">
     <div class="callout-label">Practical tip</div>
-    First, check if Curtin Library has a SimaPro or ecoinvent licence — many universities do. Email the library or check the software list on the Curtin student portal. If not, download openLCA for free from greendelta.com and request free ecoinvent student access via their website. AusLCI is downloadable free from the ALCAS website.
+    First, check if Curtin Library has a SimaPro or ecoinvent licence - many universities do. Email the library or check the software list on the Curtin student portal. If not, download openLCA for free from greendelta.com and request free ecoinvent student access via their website. AusLCI is downloadable free from the ALCAS website.
   </div>
 
   <h3>Which to use for your Master's research</h3>
@@ -861,32 +861,32 @@
 <!-- ===== MODULE 9 ===== -->
 <section class="module" id="m9" data-mod="9">
   <h2><span class="module-num">Module 09</span>Common Mistakes &amp; Pitfalls</h2>
-  <p class="lead">Most LCA errors are made in Phase 1 and only discovered in Phase 3 or 4. This module is a checklist of the problems that trip up beginners — and some experienced practitioners too.</p>
+  <p class="lead">Most LCA errors are made in Phase 1 and only discovered in Phase 3 or 4. This module is a checklist of the problems that trip up beginners - and some experienced practitioners too.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
     The most dangerous mistakes are: poorly defined functional units, system boundaries that conveniently exclude inconvenient stages, using geographically inappropriate data, ignoring uncertainty, and overstating conclusions beyond what the data supports. All of these are avoidable with discipline in Phase 1.
   </div>
 
-  <h3>Mistake 1 — Biased functional unit</h3>
-  <p>Defining the functional unit in a way that favours the product you want to win. Example: comparing an LED bulb to an incandescent using "1 bulb" instead of "providing 800 lumens of light for 1,000 hours." The LED lasts 25× longer and uses a fraction of the electricity — the functional unit must capture the service, not the object.</p>
+  <h3>Mistake 1 - Biased functional unit</h3>
+  <p>Defining the functional unit in a way that favours the product you want to win. Example: comparing an LED bulb to an incandescent using "1 bulb" instead of "providing 800 lumens of light for 1,000 hours." The LED lasts 25× longer and uses a fraction of the electricity - the functional unit must capture the service, not the object.</p>
 
-  <h3>Mistake 2 — Convenient system boundary cuts</h3>
+  <h3>Mistake 2 - Convenient system boundary cuts</h3>
   <p>Excluding life stages or processes that would increase your product's impact. Common examples: excluding end-of-life because it's "uncertain," excluding use-phase energy because you want to focus on production, or excluding transport because the distances are hard to find. Every exclusion must be documented, and its potential effect on results must be assessed.</p>
 
-  <h3>Mistake 3 — Wrong geography</h3>
+  <h3>Mistake 3 - Wrong geography</h3>
   <p>Using European or global average electricity data for an Australian study. Australian electricity is more carbon-intensive on average than European but varies significantly by state. WA's SWIS grid, the NEM in eastern states, and off-grid diesel systems have entirely different emission factors. Using the wrong grid can swing your climate change results by 50% or more.</p>
 
-  <h3>Mistake 4 — Using old data</h3>
-  <p>Electricity grids are changing fast — a study using 2015 Australian grid data will significantly overestimate climate impact compared to 2024 data because renewables have grown substantially. ISO 14044 requires temporal representativeness — your data should be recent enough to represent the current system, or you must clearly state the temporal scope.</p>
+  <h3>Mistake 4 - Using old data</h3>
+  <p>Electricity grids are changing fast - a study using 2015 Australian grid data will significantly overestimate climate impact compared to 2024 data because renewables have grown substantially. ISO 14044 requires temporal representativeness - your data should be recent enough to represent the current system, or you must clearly state the temporal scope.</p>
 
-  <h3>Mistake 5 — Not checking data quality</h3>
-  <p>Treating all numbers from databases as equally reliable. Some ecoinvent datasets are based on direct measurement; others are estimated from decades-old studies. Check the data quality indicators in your database entries and flag low-quality data sources — they may be candidates for sensitivity analysis.</p>
+  <h3>Mistake 5 - Not checking data quality</h3>
+  <p>Treating all numbers from databases as equally reliable. Some ecoinvent datasets are based on direct measurement; others are estimated from decades-old studies. Check the data quality indicators in your database entries and flag low-quality data sources - they may be candidates for sensitivity analysis.</p>
 
-  <h3>Mistake 6 — Single-issue thinking</h3>
+  <h3>Mistake 6 - Single-issue thinking</h3>
   <p>Optimising only for climate change and ignoring other categories. A product with lower CO₂ but higher water toxicity, land use, or heavy metal pollution is not unambiguously better. Report all relevant impact categories and discuss trade-offs explicitly.</p>
 
-  <h3>Mistake 7 — Confusing LCA types</h3>
+  <h3>Mistake 7 - Confusing LCA types</h3>
   <div class="compare">
     <div>
       <h5 style="color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px 0">Attributional LCA</h5>
@@ -899,12 +899,12 @@
   </div>
   <p style="margin-top:14px">Beginners often don't realise there are two fundamentally different LCA paradigms. The choice affects which datasets you use, how you handle allocation, and what conclusions are valid. Be explicit about which approach your study uses.</p>
 
-  <h3>Mistake 8 — Overclaiming conclusions</h3>
-  <p>Writing "Product A is environmentally superior to Product B" when the data shows Product A is better on three categories and worse on two, and the difference on the key category is within the uncertainty range. LCA supports nuanced, conditional conclusions — not marketing slogans. If your report's conclusion sounds like an ad, rewrite it.</p>
+  <h3>Mistake 8 - Overclaiming conclusions</h3>
+  <p>Writing "Product A is environmentally superior to Product B" when the data shows Product A is better on three categories and worse on two, and the difference on the key category is within the uncertainty range. LCA supports nuanced, conditional conclusions - not marketing slogans. If your report's conclusion sounds like an ad, rewrite it.</p>
 
   <div class="callout bad">
     <div class="callout-label">Red flag sentence in any LCA report</div>
-    "This product has been proven environmentally friendly using LCA." This is almost certainly an overstatement. LCA produces comparative results with specific scope and limitations — it does not certify absolute environmental friendliness.
+    "This product has been proven environmentally friendly using LCA." This is almost certainly an overstatement. LCA produces comparative results with specific scope and limitations - it does not certify absolute environmental friendliness.
   </div>
 
   <div class="quiz">
@@ -928,22 +928,22 @@
 
 <!-- ===== MODULE 10 ===== -->
 <section class="module" id="m10" data-mod="10">
-  <h2><span class="module-num">Module 10</span>Your First LCA — A Step-by-Step Walkthrough</h2>
+  <h2><span class="module-num">Module 10</span>Your First LCA - A Step-by-Step Walkthrough</h2>
   <p class="lead">Theory done. Now let's walk through a real, simple LCA from start to finish. We'll compare two options for carrying groceries: a single-use plastic bag vs. a reusable cotton tote bag. Classic example. Deliberately simple. Every concept from the course applies.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    Follow all four ISO phases in order. The cotton tote produces far more impact per bag, but reuse flips the comparison. The answer depends entirely on your functional unit — which is why Phase 1 is everything.
+    Follow all four ISO phases in order. The cotton tote produces far more impact per bag, but reuse flips the comparison. The answer depends entirely on your functional unit - which is why Phase 1 is everything.
   </div>
 
-  <h3>Phase 1 — Goal and Scope</h3>
+  <h3>Phase 1 - Goal and Scope</h3>
 
   <div class="example-box">
     <div class="example-label">Goal statement</div>
     <p style="margin:0 0 8px 0;font-size:13.5px"><strong>Intended application:</strong> Compare the environmental impact of two grocery bag options to inform a consumer awareness campaign.</p>
     <p style="margin:0 0 8px 0;font-size:13.5px"><strong>Intended audience:</strong> General public and sustainability officers at a supermarket chain in Australia.</p>
     <p style="margin:0 0 8px 0;font-size:13.5px"><strong>Reasons:</strong> A supermarket is deciding which bag type to promote as the "greener" option.</p>
-    <p style="margin:0;font-size:13.5px"><strong>Comparative assertion:</strong> Yes, results will be public — critical review is required.</p>
+    <p style="margin:0;font-size:13.5px"><strong>Comparative assertion:</strong> Yes, results will be public - critical review is required.</p>
   </div>
 
   <div class="example-box">
@@ -956,7 +956,7 @@
     <p style="margin:0;font-size:13.5px">Cradle-to-grave. Include: raw material production (cotton farming or petroleum refining), manufacturing (weaving or extrusion), distribution (transport to store), use phase (washing for cotton, single use for plastic), end-of-life (landfill for plastic, or continued reuse for cotton). Exclude: retail store energy (shared across both, negligible difference).</p>
   </div>
 
-  <h3>Phase 2 — Life Cycle Inventory (simplified)</h3>
+  <h3>Phase 2 - Life Cycle Inventory (simplified)</h3>
   <p>Here are approximate figures from published LCA literature for illustration. In a real study you'd need to verify these against your specific geographic and supply chain context.</p>
 
   <table>
@@ -965,7 +965,7 @@
       <tr><td>Weight</td><td>~8 g</td><td>~150 g</td></tr>
       <tr><td>Raw material</td><td>Polyethylene (from petroleum)</td><td>Cotton (agricultural crop)</td></tr>
       <tr><td>Energy to produce</td><td>~0.05 MJ</td><td>~10 MJ</td></tr>
-      <tr><td>Water use (production)</td><td>Low</td><td>Very high (cotton is water-intensive — ~10,000 L/kg of cotton)</td></tr>
+      <tr><td>Water use (production)</td><td>Low</td><td>Very high (cotton is water-intensive - ~10,000 L/kg of cotton)</td></tr>
       <tr><td>Climate change (production)</td><td>~1.6 kg CO₂e per bag</td><td>~22 kg CO₂e per bag</td></tr>
       <tr><td>Washing (use phase)</td><td>None</td><td>~0.5 kg CO₂e per wash (estimated)</td></tr>
       <tr><td>End-of-life</td><td>Landfill or incineration</td><td>Compostable if not reused</td></tr>
@@ -977,7 +977,7 @@
     Cotton farming uses pesticides and very large volumes of water. This means the cotton tote may perform worse than plastic on categories like freshwater depletion and ecotoxicity, even if it performs better on some other categories over many reuses. This is the trade-off the LCA must surface.
   </div>
 
-  <h3>Phase 3 — Impact Assessment (simplified, climate change only)</h3>
+  <h3>Phase 3 - Impact Assessment (simplified, climate change only)</h3>
   <p>For our 52-trip functional unit:</p>
 
   <table>
@@ -988,7 +988,7 @@
     </tbody>
   </table>
 
-  <p>On climate change, the cotton tote wins over one year of use — but only because we assumed 52 washes. If the tote is used only 10 times before being lost or discarded, its climate impact per trip is 2.2 + 0.5 = 2.7 kg CO₂e vs. 1.6 kg CO₂e for plastic. Reuse frequency is the critical variable.</p>
+  <p>On climate change, the cotton tote wins over one year of use - but only because we assumed 52 washes. If the tote is used only 10 times before being lost or discarded, its climate impact per trip is 2.2 + 0.5 = 2.7 kg CO₂e vs. 1.6 kg CO₂e for plastic. Reuse frequency is the critical variable.</p>
 
   <div class="diagram">
     <svg viewBox="0 0 580 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px;display:block;margin:0 auto;">
@@ -1027,14 +1027,14 @@
       <circle cx="155" cy="136" r="5" fill="none" stroke="#5ad18a" stroke-width="1.5"/>
       <text x="160" y="128" fill="#5ad18a" font-size="9" font-family="sans-serif">break-even ≈ 20 uses</text>
     </svg>
-    <div class="diagram-caption">The cotton tote's per-unit climate impact drops with every reuse. It only beats plastic after ~20 uses on climate change — but may remain worse on water use regardless.</div>
+    <div class="diagram-caption">The cotton tote's per-unit climate impact drops with every reuse. It only beats plastic after ~20 uses on climate change - but may remain worse on water use regardless.</div>
   </div>
 
-  <h3>Phase 4 — Interpretation</h3>
+  <h3>Phase 4 - Interpretation</h3>
 
   <div class="example-box">
     <div class="example-label">Hotspot analysis</div>
-    <p style="margin:0;font-size:13.5px">Cotton farming dominates the tote's impact across most categories — particularly water use, land use, and pesticide-related ecotoxicity. For the plastic bag, the end-of-life (landfill, marine litter potential) and oil extraction are the key hotspots.</p>
+    <p style="margin:0;font-size:13.5px">Cotton farming dominates the tote's impact across most categories - particularly water use, land use, and pesticide-related ecotoxicity. For the plastic bag, the end-of-life (landfill, marine litter potential) and oil extraction are the key hotspots.</p>
   </div>
 
   <div class="example-box">
@@ -1051,14 +1051,14 @@
   <ul class="step-list">
     <li><strong>Practice with a spreadsheet LCA first.</strong> Before touching any software, manually model a 3-process system (e.g., producing 1 kg of bread: wheat farming → milling → baking) in Excel with inputs, outputs, and one impact category. It will teach you more than three hours of clicking in SimaPro.</li>
     <li><strong>Download openLCA and connect AusLCI.</strong> Free, professional, and directly relevant to Australian work. The GreenDelta YouTube channel has beginner tutorials. Do one of them end-to-end.</li>
-    <li><strong>Read one published LCA in your field.</strong> Find a peer-reviewed LCA paper on building materials or circular economy in the last 5 years. Read the methodology section carefully — you now have the vocabulary to understand it.</li>
+    <li><strong>Read one published LCA in your field.</strong> Find a peer-reviewed LCA paper on building materials or circular economy in the last 5 years. Read the methodology section carefully - you now have the vocabulary to understand it.</li>
     <li><strong>Identify what LCA questions arise in your own Master's research.</strong> If you're comparing deconstruction vs. demolition scenarios, what would be your functional unit? What life cycle stages would you include? What data sources are available in Australia? Answering these is Phase 1 of your own potential LCA.</li>
-    <li><strong>Connect with ALCAS.</strong> The Australian Life Cycle Assessment Society runs free webinars, publishes the AusLCI database, and has an active network of practitioners and academics in Perth/WA. Introduce yourself as a Curtin postgrad — the community is helpful.</li>
+    <li><strong>Connect with ALCAS.</strong> The Australian Life Cycle Assessment Society runs free webinars, publishes the AusLCI database, and has an active network of practitioners and academics in Perth/WA. Introduce yourself as a Curtin postgrad - the community is helpful.</li>
   </ul>
 
   <div class="callout good">
     <div class="callout-label">You're done</div>
-    You've covered: what LCA is, why it matters, the full ISO 14040 framework, all four phases in depth, the software landscape, the most common mistakes, and a complete worked example. That is a solid beginner-to-competent foundation. The rest is practice — do real LCAs, read real studies, get feedback.
+    You've covered: what LCA is, why it matters, the full ISO 14040 framework, all four phases in depth, the software landscape, the most common mistakes, and a complete worked example. That is a solid beginner-to-competent foundation. The rest is practice - do real LCAs, read real studies, get feedback.
   </div>
 
   <button class="done-btn" id="done-10" onclick="markDone(10)"><span class="dot"></span> Mark module complete</button>
