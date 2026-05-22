@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,669 +7,683 @@
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FBF4E6"/><circle cx="38" cy="50" r="22" fill="none" stroke="%231A1614" stroke-width="14"/><rect x="54" y="28" width="14" height="44" fill="%231A1614"/><circle cx="78" cy="22" r="8" fill="%23FF5C39"/></svg>' />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
   <script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
-  <script>
-    (function () {
-      const saved = localStorage.getItem("theme");
-      const system = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      document.documentElement.setAttribute("data-theme", saved || system);
-    })();
-  </script>
   <style>
-    /* === ADHI DESIGN SYSTEM — Tokens v1.0 === */
+    /* ===== TOKENS ===== */
     :root {
-      --hidup-tomato: #FF5C39;
-      --hidup-mango:  #FFC234;
-      --hidup-forest: #1F9D55;
-      --hidup-sea:    #1FA9C7;
-      --hidup-mawar:  #E84BA0;
-      --hidup-indigo: #2E3192;
-
+      --tomato:  #FF5C39;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --mawar:   #E84BA0;
+      --indigo:  #2E3192;
       --ink:     #1A1614;
       --paper:   #FBF4E6;
       --paper-2: #F4ECD8;
+      --line:    rgba(26,22,20,0.14);
       --muted:   #6B6259;
 
       --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
       --fb: 'Inter', system-ui, sans-serif;
       --fm: 'JetBrains Mono', ui-monospace, monospace;
-
-      --fs-xs:   10px;
-      --fs-sm:   12px;
-      --fs-base: 14px;
-      --fs-lg:   15px;
-      --fs-xl:   17px;
-      --fs-2xl:  20px;
-      --fs-3xl:  24px;
-      --fs-4xl:  28px;
-
-      --sp-2:  8px;
-      --sp-3:  12px;
-      --sp-4:  16px;
-      --sp-5:  20px;
-      --sp-6:  24px;
-      --sp-7:  32px;
-      --sp-8:  48px;
-      --sp-9:  64px;
-      --sp-10: 80px;
-      --sp-11: 96px;
-
-      --r-8:    8px;
-      --r-20:   20px;
-      --r-24:   24px;
-      --r-pill: 999px;
-
-      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-      --dur: 200ms;
     }
 
-    [data-theme="light"] {
-      --bg:           var(--paper);
-      --surface:      #fff;
-      --surface-2:    var(--paper-2);
-      --fg:           var(--ink);
-      --fg-muted:     var(--muted);
-      --border-color: var(--ink);
-      --border-soft:  rgba(26,22,20,0.13);
-    }
-
-    [data-theme="dark"] {
-      --bg:           #0f0c0b;
-      --surface:      #1c1917;
-      --surface-2:    #27211e;
-      --fg:           #F0EAE2;
-      --fg-muted:     #9a8a82;
-      --border-color: rgba(240,234,226,0.16);
-      --border-soft:  rgba(240,234,226,0.09);
-    }
-
+    /* ===== RESET ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-font-smoothing: antialiased; }
-    body {
-      font-family: var(--fb);
-      font-size: var(--fs-base);
-      line-height: 1.6;
-      background: var(--bg);
-      color: var(--fg);
-    }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body { font-family: var(--fb); background: var(--paper); color: var(--ink); }
     a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-    .ds-icon {
-      font-family: 'Material Symbols Rounded';
-      font-weight: normal;
-      font-style: normal;
-      line-height: 1;
-      letter-spacing: normal;
-      text-transform: none;
-      display: inline-block;
-      white-space: nowrap;
-      direction: ltr;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-
-    /* === SHELL === */
+    /* ===== SHELL ===== */
     .shell {
       max-width: 1280px;
       margin: 0 auto;
-      padding: var(--sp-8) var(--sp-7) var(--sp-11);
+      padding: 0 56px;
     }
 
-    /* === NAV === */
+    /* ===== NAV ===== */
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--sp-4);
-      margin-bottom: var(--sp-8);
+      padding: 28px 0;
+      border-bottom: 1.5px solid var(--ink);
     }
 
-    .brand { display: flex; align-items: center; gap: var(--sp-3); }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-    .brand-name {
+    .brand-divider {
+      width: 1.5px;
+      height: 24px;
+      background: var(--line);
+    }
+
+    .brand-text { display: flex; flex-direction: column; }
+
+    .brand-wordmark {
       font-family: var(--fd);
       font-weight: 800;
-      font-size: var(--fs-4xl);
-      letter-spacing: -0.03em;
+      font-size: 28px;
+      letter-spacing: -0.04em;
       line-height: 1;
-      color: var(--fg);
+      color: var(--ink);
     }
 
     .brand-sub {
-      display: block;
       font-family: var(--fm);
-      font-size: var(--fs-xs);
-      letter-spacing: 0.1em;
+      font-size: 10px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--fg-muted);
+      color: var(--muted);
       margin-top: 3px;
     }
 
-    .theme-toggle {
-      display: inline-flex;
+    .nav-links {
+      display: flex;
       align-items: center;
-      gap: var(--sp-2);
-      padding: 8px 16px;
-      border: 1.5px solid var(--border-soft);
-      background: transparent;
-      color: var(--fg-muted);
-      border-radius: var(--r-pill);
-      font-family: var(--fm);
-      font-size: var(--fs-xs);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: border-color var(--dur), color var(--dur);
+      gap: 28px;
     }
-    .theme-toggle:hover { border-color: var(--border-color); color: var(--fg); }
-    .theme-toggle .ds-icon { font-size: 15px; }
 
-    /* === HERO — mango panel === */
+    .nav-link {
+      font-family: var(--fm);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      transition: color 200ms;
+      padding-bottom: 3px;
+    }
+
+    .nav-link:hover { color: var(--tomato); }
+
+    .nav-link.active {
+      color: var(--tomato);
+      border-bottom: 1.5px solid var(--tomato);
+    }
+
+    /* ===== HERO ===== */
     .hero {
-      background: var(--hidup-mango);
-      border: 2px solid var(--ink);
-      border-radius: var(--r-20);
-      padding: 28px 40px;
-      margin-bottom: var(--sp-9);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--sp-8);
+      padding: 88px 0 56px;
+      position: relative;
     }
 
-    .hero-left { flex: 1; min-width: 0; }
+    .hero-inner { max-width: 1100px; }
 
-    .hero-right {
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.9;
-    }
-
-    /* Eyebrow */
     .hero-eyebrow {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: var(--sp-3);
+      gap: 14px;
       font-family: var(--fm);
-      font-size: var(--fs-xs);
-      letter-spacing: 0.14em;
+      font-size: 13px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(26,22,20,0.5);
-      margin-bottom: var(--sp-3);
+      color: var(--muted);
+      margin-bottom: 28px;
     }
+
     .hero-eyebrow::before {
       content: '';
       display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--hidup-tomato);
+      width: 36px;
+      height: 3px;
+      background: var(--tomato);
       flex-shrink: 0;
     }
 
-    /* Title */
-    .hero-title {
+    .hero-h1 {
       font-family: var(--fd);
       font-weight: 800;
-      font-size: clamp(28px, 3.5vw, 42px);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
+      font-size: clamp(60px, 9.5vw, 128px);
+      line-height: 0.92;
+      letter-spacing: -0.045em;
       color: var(--ink);
-      margin-bottom: var(--sp-3);
-    }
-    .hero-title em {
-      font-style: italic;
-      background: var(--ink);
-      color: var(--hidup-mango);
-      padding: 0 0.07em;
+      margin-bottom: 32px;
     }
 
-    /* Lead */
+    .hero-h1 em {
+      font-style: normal;
+      background: var(--mango);
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      padding: 0 0.06em;
+    }
+
     .hero-lead {
-      font-size: var(--fs-base);
+      font-size: 22px;
       line-height: 1.5;
-      color: rgba(26,22,20,0.58);
-      max-width: 48ch;
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 36px;
     }
 
-    /* === COURSES DIVIDER === */
-    .courses-divider {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-4);
-      margin-bottom: var(--sp-7);
-    }
-    .courses-divider-label {
-      font-family: var(--fm);
-      font-size: var(--fs-xs);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--fg-muted);
-      white-space: nowrap;
-    }
-    .courses-divider-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border-soft);
-    }
-
-    /* === GRID === */
-    .grid {
+    .hero-ornament {
+      position: absolute;
+      top: 72px;
+      right: 0;
+      width: 220px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--sp-6);
-      padding-right: 10px;
-      padding-bottom: 10px;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
-    @media (max-width: 1100px) {
-      .grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    @media (max-width: 780px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 480px) {
-      .grid { grid-template-columns: 1fr; }
-    }
-
-    /* === CARD === */
-    .card {
-      text-decoration: none;
-      color: inherit;
-      background: var(--surface);
-      border: 2px solid var(--border-color);
-      border-radius: var(--r-20);
-      padding: var(--sp-6);
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-3);
-      transition: transform var(--dur) var(--ease-expo), box-shadow var(--dur);
-    }
-    .card:hover {
-      transform: translate(-4px, -4px);
-      box-shadow: 8px 8px 0 var(--card-accent, var(--ink));
-    }
-    [data-theme="dark"] .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
-    }
-
-    .card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--sp-3);
-    }
-
-    .card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--r-8);
-      background: var(--card-accent-tint, var(--paper-2));
-      border: 1.5px solid var(--border-soft);
+    .ornament-tile {
+      aspect-ratio: 1;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      padding: 14px;
       display: grid;
       place-items: center;
-      font-size: 1.4rem;
-      color: var(--card-accent, var(--ink));
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-family: var(--fm);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .hero-meta strong { color: var(--ink); font-weight: 600; }
+
+    /* ===== FEATURED STRIP ===== */
+    .featured {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 28px;
+      padding: 56px;
+      margin-top: 96px;
+    }
+
+    .featured-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--fm);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mango);
+      margin-bottom: 24px;
+    }
+
+    .featured-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2.5px;
+      background: var(--mango);
       flex-shrink: 0;
     }
-    [data-theme="dark"] .card-icon { background: var(--surface-2); }
 
-    .level-badge {
+    .featured-h2 {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(36px, 4.5vw, 64px);
+      letter-spacing: -0.035em;
+      line-height: 0.95;
+      color: var(--paper);
+      margin-bottom: 20px;
+    }
+
+    .featured-body {
+      font-size: 17px;
+      line-height: 1.55;
+      color: rgba(251,244,230,0.82);
+      max-width: 500px;
+      margin-bottom: 36px;
+    }
+
+    .featured-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--tomato);
+      color: var(--paper);
+      padding: 14px 22px;
+      border-radius: 999px;
       font-family: var(--fm);
-      font-size: var(--fs-xs);
-      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: opacity 200ms;
+    }
+
+    .featured-cta:hover { opacity: 0.85; }
+
+    .featured-panel {
+      background: var(--paper);
+      border-radius: 16px;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    /* ===== COURSES SECTION ===== */
+    .courses-section {
+      margin-top: 96px;
+    }
+
+    .courses-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1.5px solid var(--ink);
+      margin-bottom: 40px;
+    }
+
+    .courses-h3 {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(40px, 4.5vw, 56px);
+      letter-spacing: -0.035em;
+      line-height: 1;
+    }
+
+    .filter-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-bottom: 6px;
+    }
+
+    .chip {
+      font-family: var(--fm);
+      font-size: 11.5px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: var(--r-pill);
-      background: var(--ink);
-      color: var(--hidup-mango);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    [data-theme="dark"] .level-badge {
-      background: var(--surface-2);
-      color: var(--fg-muted);
-    }
-
-    .card h4 {
-      font-family: var(--fd);
-      font-size: var(--fs-3xl);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: var(--fg);
-    }
-
-    .card-desc {
-      font-size: var(--fs-lg);
-      line-height: 1.55;
-      color: var(--fg-muted);
-      flex-grow: 1;
-    }
-
-    .tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-
-    .tag {
-      font-family: var(--fm);
-      font-size: var(--fs-xs);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: var(--r-pill);
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 2px solid var(--ink);
       background: var(--paper-2);
-      color: var(--fg-muted);
-      border: 1px solid var(--border-soft);
+      color: var(--ink);
+      cursor: pointer;
+      transition: background 200ms, color 200ms;
+      white-space: nowrap;
     }
-    [data-theme="dark"] .tag { background: var(--surface-2); }
+
+    .chip:hover { background: var(--ink); color: var(--paper); }
+    .chip.active { background: var(--ink); color: var(--paper); }
+
+    /* ===== GRID ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      color: inherit;
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+
+    .card:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+
+    .card-thumb {
+      aspect-ratio: 16/10;
+      border-bottom: 2px solid var(--ink);
+      padding: 28px;
+      display: grid;
+      place-items: center;
+    }
+
+    .card-thumb svg {
+      width: 58%;
+      height: 58%;
+    }
+
+    .card-body {
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-tag {
+      font-family: var(--fm);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .card-tag strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .card-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      line-height: 1.06;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .card-blurb {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--muted);
+      flex: 1;
+      margin-bottom: 14px;
+    }
+
+    .card-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .card-pill {
+      font-family: var(--fm);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--paper-2);
+      color: var(--muted);
+    }
 
     .card-foot {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      border-top: 1px solid var(--border-soft);
-      padding-top: var(--sp-3);
-      margin-top: 2px;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
     }
 
-    .card-cta {
+    .card-duration {
       font-family: var(--fm);
-      font-size: var(--fs-xs);
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--card-accent, var(--hidup-tomato));
+      font-size: 11.5px;
+      color: var(--muted);
     }
 
-    /* === FOOTER === */
+    .card-open {
+      font-family: var(--fm);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ===== FOOTER ===== */
     .footer {
-      margin-top: var(--sp-10);
-      padding-top: var(--sp-5);
-      border-top: 1px solid var(--border-soft);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: var(--sp-3);
-    }
-
-    .footer-copy {
+      margin-top: 80px;
+      padding: 28px 0 56px;
+      border-top: 1.5px solid var(--ink);
       font-family: var(--fm);
-      font-size: var(--fs-xs);
+      font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--fg-muted);
+      color: var(--muted);
     }
 
-    .footer-link {
-      font-family: var(--fm);
-      font-size: var(--fs-xs);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--hidup-tomato);
-      transition: opacity var(--dur);
-    }
-    .footer-link:hover { opacity: 0.7; }
-
-    /* === RESPONSIVE === */
-    @media (max-width: 720px) {
-      .shell { padding: var(--sp-6) var(--sp-5) var(--sp-9); }
-      .nav { margin-bottom: var(--sp-7); }
-      .hero { padding: 24px 28px; gap: var(--sp-5); }
-      .hero-right { display: none; }
-      .grid { gap: var(--sp-5); padding-right: 6px; padding-bottom: 6px; }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
     }
 
-    @media (max-width: 480px) {
-      .brand-sub { display: none; }
+    .footer-link { transition: color 200ms; }
+    .footer-link:hover { color: var(--tomato); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1100px) {
+      .shell { padding: 0 40px; }
+      .hero-ornament { width: 180px; }
+    }
+
+    @media (max-width: 920px) {
+      .shell { padding: 0 28px; }
+      .hero-ornament { display: none; }
+      .featured { grid-template-columns: 1fr; }
+      .featured-panel { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .courses-header { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 640px) {
+      .shell { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding-top: 48px; }
+      .hero-lead { font-size: 18px; }
+      .featured { padding: 36px 28px; margin-top: 60px; }
+      .grid { grid-template-columns: 1fr; gap: 20px; }
+      .courses-section { margin-top: 60px; }
+      .footer { flex-direction: column; gap: 16px; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
 
-    <!-- NAV -->
-    <header class="nav">
-      <div class="brand">
-        <svg width="40" height="40" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-          <circle cx="38" cy="50" r="22" fill="none" stroke="var(--fg)" stroke-width="14"/>
-          <rect x="54" y="28" width="14" height="44" fill="var(--fg)"/>
+<div class="shell">
+
+  <!-- NAV -->
+  <header>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="/" class="brand" aria-label="Learn with Adhi home">
+        <svg width="36" height="36" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <circle cx="38" cy="50" r="22" fill="none" stroke="var(--ink)" stroke-width="14"/>
+          <rect x="54" y="28" width="14" height="44" fill="var(--ink)"/>
           <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
         </svg>
-        <div>
-          <span class="brand-name">Learn with Adhi</span>
-          <span class="brand-sub">Course Hub</span>
+        <div class="brand-divider" aria-hidden="true"></div>
+        <div class="brand-text">
+          <span class="brand-wordmark">adhi</span>
+          <span class="brand-sub">Learn</span>
         </div>
+      </a>
+      <div class="nav-links">
+        <a href="#courses" class="nav-link active">Courses</a>
+        <a href="#tools" class="nav-link">Tools</a>
+        <a href="#" class="nav-link">Notes</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="design-system/adhi-design-system.html" class="nav-link" target="_blank" rel="noopener noreferrer">System ↗</a>
       </div>
-      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
-        <span id="themeIcon" class="ds-icon" aria-hidden="true">light_mode</span>
-        <span>Theme</span>
-      </button>
-    </header>
+    </nav>
+  </header>
 
-    <!-- HERO -->
-    <section class="hero" aria-label="Introduction">
-      <div class="hero-left">
-        <div class="hero-eyebrow">Practical Learning Hub</div>
-        <h2 class="hero-title">Learn something <em>worth knowing.</em></h2>
-        <p class="hero-lead">Clear, bold, and beginner-friendly. Pick a topic and go.</p>
+  <!-- HERO -->
+  <section class="hero" aria-label="Welcome">
+    <div class="hero-ornament" aria-hidden="true">
+      <div class="ornament-tile" style="background:var(--tomato)">
+        <svg viewBox="0 0 100 100" width="56" height="56" fill="none"><path d="M10 50 Q50 10 90 50 Q50 90 10 50 Z" fill="#FBF4E6"/></svg>
       </div>
-      <div class="hero-right" aria-hidden="true">
-        <svg width="108" height="108" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="38" cy="50" r="22" fill="none" stroke="#1A1614" stroke-width="14"/>
-          <rect x="54" y="28" width="14" height="44" fill="#1A1614"/>
-          <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
-        </svg>
+      <div class="ornament-tile" style="background:var(--mango)">
+        <svg viewBox="0 0 100 100" width="56" height="56" fill="none"><path d="M10 62 Q28 30 46 52 Q64 74 84 38" stroke="#1A1614" stroke-width="10" stroke-linecap="round"/></svg>
       </div>
-    </section>
-
-    <!-- COURSES -->
-    <section aria-label="Courses and Tools">
-      <div class="courses-divider">
-        <span class="courses-divider-label">Courses &amp; Tools</span>
-        <div class="courses-divider-line"></div>
+      <div class="ornament-tile" style="background:var(--sea)">
+        <svg viewBox="0 0 100 100" width="56" height="56" fill="none"><rect x="38" y="18" width="24" height="64" rx="12" fill="#1A1614"/></svg>
       </div>
-      <main id="courseGrid" class="grid" aria-live="polite"></main>
-    </section>
+      <div class="ornament-tile" style="background:var(--paper-2)">
+        <svg viewBox="0 0 100 100" width="56" height="56" fill="none"><rect x="44" y="20" width="12" height="60" rx="6" fill="#1A1614"/><rect x="20" y="44" width="60" height="12" rx="6" fill="#1A1614"/></svg>
+      </div>
+    </div>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-      <span class="footer-copy">© 2026 Learn with Adhi</span>
-      <a href="design-system/adhi-design-system.html" class="footer-link">Adhi Design System ↗</a>
-    </footer>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Practical Learning Hub</div>
+      <h1 class="hero-h1">Learn something<br><em>worth knowing.</em></h1>
+      <p class="hero-lead">Clear, bold, and beginner-friendly. Pick a topic, go deep — free and no login required.</p>
+      <div class="hero-meta">
+        <span><strong>10 courses</strong> live</span>
+        <span>4 tools &amp; games</span>
+        <span>Last updated · May 2026</span>
+        <span>Free · No login</span>
+      </div>
+    </div>
+  </section>
 
-  </div>
+  <!-- FEATURED COURSE -->
+  <section class="featured" aria-label="Featured course">
+    <div>
+      <div class="featured-label">Featured · Start here</div>
+      <h2 class="featured-h2">Bridging the AI Gap</h2>
+      <p class="featured-body">Build real AI literacy and useful workflows for everyday work. No coding required — just clarity and five focused days.</p>
+      <a href="courses/ai/ai-capability-course.html" class="featured-cta">Start the course →</a>
+    </div>
+    <div class="featured-panel" aria-hidden="true">
+      <!-- FigureReader illustration -->
+      <svg viewBox="0 0 200 152" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px">
+        <circle cx="160" cy="32" r="26" fill="#FF5C39"/>
+        <path d="M0 130 Q100 52 200 130 L200 152 L0 152 Z" fill="#1F9D55"/>
+        <circle cx="78" cy="76" r="18" fill="#1A1614"/>
+        <rect x="60" y="93" width="36" height="34" rx="12" fill="#1A1614"/>
+        <rect x="42" y="108" width="54" height="30" rx="8" fill="#FBF4E6" stroke="#1A1614" stroke-width="2"/>
+        <line x1="69" y1="108" x2="69" y2="138" stroke="#1A1614" stroke-width="2"/>
+        <rect x="64" y="127" width="12" height="22" rx="6" fill="#1A1614"/>
+        <rect x="80" y="127" width="12" height="22" rx="6" fill="#1A1614"/>
+      </svg>
+    </div>
+  </section>
 
-  <script>
-    const items = [
-      {
-        title: "How to Code for Non-Coders",
-        desc: "Learn coding fundamentals in a practical, beginner-first way.",
-        icon: "code",
-        level: "Beginner",
-        tags: ["Coding", "V1"],
-        link: "courses/coding/code-ecosystem-guide-complete-v1.html",
-        accent: "#1a1614",
-        accentTint: "#e8e0d8"
-      },
-      {
-        title: "Carbon Accounting",
-        desc: "Understand emissions measurement and reporting with practical examples.",
-        icon: "public",
-        level: "Beginner",
-        tags: ["Climate", "V1"],
-        link: "courses/carbon-accounting/carbon-accounting-course.html",
-        accent: "#1f9d55",
-        accentTint: "#a8d8b8"
-      },
-      {
-        title: "Life Cycle Assessment",
-        desc: "Go from LCA basics to ISO-aligned practice with real-world examples.",
-        icon: "science",
-        level: "Beginner",
-        tags: ["Climate", "V1"],
-        link: "courses/lca/life-cycle-assessment-course-v1.html",
-        accent: "#1f9d55",
-        accentTint: "#a8d8b8"
-      },
-      {
-        title: "Clothing, Textiles & Our World",
-        desc: "Follow the clothing supply chain and learn about impact + circular solutions.",
-        icon: "checkroom",
-        level: "Beginner",
-        tags: ["Climate", "V2"],
-        link: "courses/clothing-textiles/2026-05-08-clothing-textiles-course-v2.html",
-        accent: "#2e3192",
-        accentTint: "#d9d9f4"
-      },
-      {
-        title: "Disaster Management Fundamentals",
-        desc: "Learn the disaster management cycle, risk basics, and preparedness essentials.",
-        icon: "warning",
-        level: "Beginner",
-        tags: ["Disaster", "V1"],
-        link: "courses/disaster-management/2026-05-08-disaster-management-course-v1.html",
-        accent: "#1fa9c7",
-        accentTint: "#cfeff6"
-      },
-      {
-        title: "Bridging the AI Gap",
-        desc: "Build AI literacy and useful workflows for real-world work.",
-        icon: "smart_toy",
-        level: "Beginner",
-        tags: ["AI", "V1"],
-        link: "courses/ai/ai-capability-course.html",
-        accent: "#ff5c39",
-        accentTint: "#ffd3c8"
-      },
-      {
-        title: "Claude Without Burning Tokens",
-        desc: "Save tokens with smarter context, prompts, and tool workflows.",
-        icon: "bolt",
-        level: "Intermediate",
-        tags: ["AI", "Claude", "V1"],
-        link: "courses/ai/2026-04-18-claude-efficiency-course-v1.html",
-        accent: "#ff7a59",
-        accentTint: "#ffe1d8"
-      },
-      {
-        title: "Bahasa Hacking — IELTS",
-        desc: "IELTS strategy for Indonesian speakers with practical language habits.",
-        icon: "translate",
-        level: "Beginner",
-        tags: ["IELTS", "V1"],
-        link: "courses/ielts/ielts-bahasa-hacking.html",
-        accent: "#ffc234",
-        accentTint: "#ffedb5"
-      },
-      {
-        title: "Band 7 Precision Lab",
-        desc: "Target Band 7 with structured drills and scoring clarity.",
-        icon: "track_changes",
-        level: "Intermediate",
-        tags: ["IELTS", "V1"],
-        link: "courses/ielts/ielts-band7-precision.html",
-        accent: "#e84ba0",
-        accentTint: "#f5b8da"
-      },
-      {
-        title: "Feifelusiac Safe Area Calculator",
-        desc: "Quickly calculate safe area values with practical controls.",
-        icon: "calculate",
-        level: "Tool",
-        tags: ["Tools", "Live"],
-        link: "courses/tools/feifelusiac-safe-area-calculator-v4.html",
-        accent: "#ff5c39",
-        accentTint: "#ffd3c8"
-      },
-      {
-        title: "Rayyan & Raya's Train Adventure",
-        desc: "Choose your adventure — play v1, v2, or v3 from one hub.",
-        icon: "directions_railway",
-        level: "Game",
-        tags: ["Kids", "V1/V2/V3", "Live"],
-        link: "courses/tools/train_adventure_hub.html",
-        accent: "#1f9d55",
-        accentTint: "#a8d8b8"
-      },
-      {
-        title: "Life Expectancy Risk Calculator",
-        desc: "Select your risk factors and see how they affect your estimated lifespan — drawn from 25 peer-reviewed studies.",
-        icon: "favorite",
-        level: "Tool",
-        tags: ["Health", "V1", "Live"],
-        link: "courses/tools/2026-05-10-life-expectancy-risk-calculator-v1.html",
-        accent: "#2e3192",
-        accentTint: "#d9d9f4"
-      },
-      {
-        title: "Rumah Harmonis — Architecture",
-        desc: "Design an Indonesian family home that unites tropical climate science, Feng Shui spatial wisdom, and Islamic values in one coherent approach.",
-        icon: "home",
-        level: "Beginner",
-        tags: ["Architecture", "Islamic", "V1"],
-        link: "courses/architecture/2026-05-21-tropical-islamic-home-v1.html",
-        accent: "#1F9D55",
-        accentTint: "#a8d8b8"
-      },
-      {
-        title: "AU vs ID Specialist Doctor Dashboard",
-        desc: "Side-by-side comparison of specialist availability, population ratios, and geographic spread across Australia and Indonesia.",
-        icon: "vaccines",
-        level: "Dashboard",
-        tags: ["Health", "Data", "V2"],
-        link: "courses/health/2026-05-11-au-id-specialist-dashboard-v2.html",
-        accent: "#1f9d55",
-        accentTint: "#a8d8b8"
-      }
-    ];
+  <!-- COURSE GRID -->
+  <section class="courses-section" id="courses" aria-label="All courses and tools">
+    <div class="courses-header">
+      <h3 class="courses-h3">All courses</h3>
+      <div class="filter-chips" role="group" aria-label="Filter by topic">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="Foundations">Foundations</button>
+        <button class="chip" data-filter="Language">Language</button>
+        <button class="chip" data-filter="Practice">Practice</button>
+        <button class="chip" data-filter="Life">Life</button>
+        <button class="chip" data-filter="Tools" id="tools">Tools</button>
+      </div>
+    </div>
+    <div class="grid" id="courseGrid" aria-live="polite"></div>
+  </section>
 
-    const grid = document.getElementById("courseGrid");
-    items.forEach((item) => {
-      const card = document.createElement("a");
-      card.className = "card";
-      card.href = item.link;
-      card.style.setProperty("--card-accent", item.accent);
-      card.style.setProperty("--card-accent-tint", item.accentTint);
-      card.innerHTML = `
-        <div class="card-top">
-          <div class="card-icon"><span class="ds-icon" aria-hidden="true">${item.icon}</span></div>
-          <span class="level-badge">${item.level}</span>
-        </div>
-        <h4>${item.title}</h4>
-        <p class="card-desc">${item.desc}</p>
-        <div class="tags">${item.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
-        <div class="card-foot">
-          <span class="card-cta">Open →</span>
-        </div>
-      `;
-      grid.appendChild(card);
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>© 2026 Learn with Adhi · Made slowly in Melbourne</span>
+    <div class="footer-links">
+      <a href="design-system/adhi-design-system.html" class="footer-link" target="_blank" rel="noopener noreferrer">Design system ↗</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const PRIMITIVES = {
+    dot:   `<circle cx="50" cy="50" r="28" fill="currentColor"/>`,
+    arc:   `<path d="M18 66 A35 35 0 1 1 82 66" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"/>`,
+    blade: `<rect x="38" y="18" width="24" height="64" rx="12" fill="currentColor"/>`,
+    plus:  `<rect x="44" y="20" width="12" height="60" rx="6" fill="currentColor"/><rect x="20" y="44" width="60" height="12" rx="6" fill="currentColor"/>`,
+    slab:  `<rect x="16" y="35" width="68" height="30" rx="10" fill="currentColor"/>`,
+    half:  `<path d="M18 56 A32 32 0 0 1 82 56 Z" fill="currentColor"/>`,
+    eye:   `<path d="M10 50 Q50 10 90 50 Q50 90 10 50 Z" fill="currentColor"/>`,
+    wave:  `<path d="M10 62 Q28 30 46 52 Q64 74 84 38" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"/>`,
+  };
+
+  const ACCENT_BG = {
+    tomato: '#FF5C39', mango: '#FFC234', forest: '#1F9D55',
+    sea: '#1FA9C7', mawar: '#E84BA0', indigo: '#2E3192',
+    ink: '#1A1614', 'paper-2': '#F4ECD8', paper: '#FBF4E6',
+  };
+
+  const ACCENT_FG = {
+    tomato: '#FBF4E6', mango: '#1A1614', forest: '#FBF4E6',
+    sea: '#1A1614', mawar: '#FBF4E6', indigo: '#FBF4E6',
+    ink: '#FBF4E6', 'paper-2': '#1A1614', paper: '#1A1614',
+  };
+
+  const COURSES = [
+    { n:'01', title:'How to Code for Non-Coders',            blurb:'Learn coding fundamentals in a practical, beginner-first way.',                                    tag:'Foundations', meta:['Beginner'], primitive:'blade', accent:'ink',     href:'courses/coding/code-ecosystem-guide-complete-v1.html',                         duration:'~2 weeks' },
+    { n:'02', title:'Carbon Accounting',                      blurb:'Understand emissions measurement and reporting with practical examples.',                           tag:'Life',        meta:['Beginner', 'Climate'],  primitive:'arc',   accent:'forest',  href:'courses/carbon-accounting/carbon-accounting-course.html',                       duration:'~1 week'  },
+    { n:'03', title:'Life Cycle Assessment',                  blurb:'Go from LCA basics to ISO-aligned practice with real-world examples.',                             tag:'Life',        meta:['Beginner', 'Climate'],  primitive:'eye',   accent:'forest',  href:'courses/lca/life-cycle-assessment-course-v1.html',                              duration:'~1 week'  },
+    { n:'04', title:'Clothing, Textiles & Our World',         blurb:'Follow the clothing supply chain and learn about impact and circular solutions.',                   tag:'Life',        meta:['Beginner', 'Climate'],  primitive:'wave',  accent:'sea',     href:'courses/clothing-textiles/2026-05-08-clothing-textiles-course-v2.html',         duration:'~1 week'  },
+    { n:'05', title:'Disaster Management Fundamentals',       blurb:'Learn the disaster management cycle, risk basics, and preparedness essentials.',                   tag:'Life',        meta:['Beginner', 'Safety'],   primitive:'plus',  accent:'sea',     href:'courses/disaster-management/2026-05-08-disaster-management-course-v1.html',    duration:'~4 days'  },
+    { n:'06', title:'Bridging the AI Gap',                    blurb:'Build AI literacy and useful workflows for real-world work.',                                       tag:'Foundations', meta:['Beginner', 'AI'],       primitive:'dot',   accent:'tomato',  href:'courses/ai/ai-capability-course.html',                                         duration:'~5 days'  },
+    { n:'07', title:'Claude Without Burning Tokens',          blurb:'Save tokens with smarter context, prompts, and tool workflows.',                                   tag:'Practice',    meta:['Intermediate', 'AI'],   primitive:'slab',  accent:'mango',   href:'courses/ai/2026-04-18-claude-efficiency-course-v1.html',                       duration:'~3 days'  },
+    { n:'08', title:'Bahasa Hacking — IELTS',                 blurb:'IELTS strategy for Indonesian speakers with practical language habits.',                           tag:'Language',    meta:['Beginner', 'IELTS'],    primitive:'half',  accent:'mango',   href:'courses/ielts/ielts-bahasa-hacking.html',                                       duration:'~1 week'  },
+    { n:'09', title:'Band 7 Precision Lab',                   blurb:'Target Band 7 with structured drills and scoring clarity.',                                        tag:'Practice',    meta:['Intermediate', 'IELTS'],primitive:'arc',   accent:'mawar',   href:'courses/ielts/ielts-band7-precision.html',                                      duration:'~1 week'  },
+    { n:'10', title:'Rumah Harmonis — Architecture',          blurb:'Design a tropical home that unites climate science, Feng Shui spatial wisdom, and Islamic values.',tag:'Life',        meta:['Beginner', 'Design'],   primitive:'slab',  accent:'forest',  href:'courses/architecture/2026-05-21-tropical-islamic-home-v1.html',                 duration:'~3 days'  },
+  ];
+
+  const TOOLS = [
+    { n:'T1', title:'Feifelusiac Safe Area Calculator',       blurb:'Quickly calculate safe area values with practical controls.',                                      tag:'Tools', meta:['Tool', 'Live'],       primitive:'plus', accent:'tomato', href:'courses/tools/feifelusiac-safe-area-calculator-v4.html',             duration:'Tool'      },
+    { n:'T2', title:"Rayyan & Raya's Train Adventure",        blurb:"Choose your adventure — play v1, v2, or v3 from one hub.",                                        tag:'Tools', meta:['Game', 'Kids'],       primitive:'wave', accent:'forest', href:'courses/tools/train_adventure_hub.html',                              duration:'Game'      },
+    { n:'T3', title:'Life Expectancy Risk Calculator',        blurb:'Select your risk factors and see how they affect your estimated lifespan.',                        tag:'Tools', meta:['Tool', 'Health'],     primitive:'eye',  accent:'indigo', href:'courses/tools/2026-05-10-life-expectancy-risk-calculator-v1.html',    duration:'Tool'      },
+    { n:'T4', title:'AU vs ID Specialist Doctor Dashboard',   blurb:'Side-by-side comparison of specialist availability across Australia and Indonesia.',               tag:'Tools', meta:['Dashboard', 'Health'],primitive:'dot',  accent:'forest', href:'courses/health/2026-05-11-au-id-specialist-dashboard-v2.html',       duration:'Dashboard' },
+  ];
+
+  const ALL = [...COURSES, ...TOOLS];
+
+  function renderCards(filter) {
+    const items = filter === 'all' ? ALL : ALL.filter(c => c.tag === filter);
+    const grid = document.getElementById('courseGrid');
+    grid.innerHTML = items.map(item => {
+      const bg = ACCENT_BG[item.accent] || '#1A1614';
+      const fg = ACCENT_FG[item.accent] || '#FBF4E6';
+      const icon = PRIMITIVES[item.primitive] || PRIMITIVES.dot;
+      const pills = item.meta.map(m => `<span class="card-pill">${m}</span>`).join('');
+      return `
+        <a href="${item.href}" class="card">
+          <div class="card-thumb" style="background:${bg}">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:${fg}">${icon}</svg>
+          </div>
+          <div class="card-body">
+            <div class="card-tag"><strong>${item.n}</strong> · ${item.tag}</div>
+            <h4 class="card-title">${item.title}</h4>
+            <p class="card-blurb">${item.blurb}</p>
+            <div class="card-pills">${pills}</div>
+            <div class="card-foot">
+              <span class="card-duration">${item.duration}</span>
+              <span class="card-open">Open →</span>
+            </div>
+          </div>
+        </a>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      renderCards(chip.dataset.filter);
     });
+  });
 
-    const root = document.documentElement;
-    const toggle = document.getElementById("themeToggle");
-    const icon = document.getElementById("themeIcon");
+  renderCards('all');
+</script>
 
-    function updateIcon() {
-      icon.textContent = root.getAttribute("data-theme") === "dark" ? "light_mode" : "dark_mode";
-    }
-
-    updateIcon();
-
-    toggle.addEventListener("click", () => {
-      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      root.setAttribute("data-theme", next);
-      localStorage.setItem("theme", next);
-      updateIcon();
-    });
-  </script>
 </body>
 </html>
