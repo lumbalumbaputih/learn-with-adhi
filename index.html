@@ -544,7 +544,7 @@
       <h1 class="hero-h1">Learn something<br><em>worth knowing.</em></h1>
       <p class="hero-lead">Clear, bold, and beginner-friendly. Pick a topic, go deep — free and no login required.</p>
       <div class="hero-meta">
-        <span><strong>10 courses</strong> live</span>
+        <span><strong>11 courses</strong> live</span>
         <span>4 tools &amp; games</span>
         <span>Last updated · May 2026</span>
         <span>Free · No login</span>
@@ -581,6 +581,7 @@
       <h3 class="courses-h3">All courses</h3>
       <div class="filter-chips" role="group" aria-label="Filter by topic">
         <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="Kids">Kids</button>
         <button class="chip" data-filter="Foundations">Foundations</button>
         <button class="chip" data-filter="Language">Language</button>
         <button class="chip" data-filter="Practice">Practice</button>
@@ -626,7 +627,8 @@
   };
 
   const COURSES = [
-    { n:'01', title:'How to Code for Non-Coders',            blurb:'Learn coding fundamentals in a practical, beginner-first way.',                                    tag:'Foundations', meta:['Beginner'], primitive:'blade', accent:'ink',     href:'courses/coding/code-ecosystem-guide-complete-v1.html',                         duration:'~2 weeks' },
+    { n:'01', title:'Matematika Rayyan — Kelas 2 SD',         blurb:'Kursus matematika interaktif untuk Rayyan: nilai tempat, penjumlahan, pengurangan, perkalian, bangun datar, dan pola.',tag:'Kids',        meta:['Kids', 'Interaktif'],  primitive:'plus',  accent:'mango',   href:'courses/math/rayyan-math-grade2-v1.html',                                       duration:'6 bab'    },
+    { n:'02', title:'How to Code for Non-Coders',            blurb:'Learn coding fundamentals in a practical, beginner-first way.',                                    tag:'Foundations', meta:['Beginner'], primitive:'blade', accent:'ink',     href:'courses/coding/code-ecosystem-guide-complete-v1.html',                         duration:'~2 weeks' },
     { n:'02', title:'Carbon Accounting',                      blurb:'Understand emissions measurement and reporting with practical examples.',                           tag:'Life',        meta:['Beginner', 'Climate'],  primitive:'arc',   accent:'forest',  href:'courses/carbon-accounting/carbon-accounting-course.html',                       duration:'~1 week'  },
     { n:'03', title:'Life Cycle Assessment',                  blurb:'Go from LCA basics to ISO-aligned practice with real-world examples.',                             tag:'Life',        meta:['Beginner', 'Climate'],  primitive:'eye',   accent:'forest',  href:'courses/lca/life-cycle-assessment-course-v1.html',                              duration:'~1 week'  },
     { n:'04', title:'Clothing, Textiles & Our World',         blurb:'Follow the clothing supply chain and learn about impact and circular solutions.',                   tag:'Life',        meta:['Beginner', 'Climate'],  primitive:'wave',  accent:'sea',     href:'courses/clothing-textiles/2026-05-08-clothing-textiles-course-v2.html',         duration:'~1 week'  },
