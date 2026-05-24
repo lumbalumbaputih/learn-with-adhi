@@ -1,0 +1,1781 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Matematika Rayyan — Kelas 2 SD · Learn with Adhi</title>
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== TOKENS ===== */
+    :root {
+      --tomato:  #FF5C39;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --mawar:   #E84BA0;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --paper-2: #F4ECD8;
+      --line:    rgba(26,22,20,0.14);
+      --muted:   #6B6259;
+
+      --tomato-bg: #FFE8E3;
+      --mango-bg:  #FFF5D6;
+      --forest-bg: #E3F5EB;
+      --sea-bg:    #E3F4F8;
+      --mawar-bg:  #FCE8F3;
+      --indigo-bg: #E8E9F8;
+
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+
+      --r:    16px;
+      --r-sm: 10px;
+      --r-lg: 24px;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--fb);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input  { font-family: inherit; }
+
+    /* ===== HEADER ===== */
+    .hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 2px solid var(--ink);
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .hdr-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .hdr-brand-word {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+    .hdr-stars {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--mango);
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    /* ===== SCREENS ===== */
+    .screen {
+      display: none;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+      animation: fadeUp 0.28s ease;
+    }
+    .screen.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== HOME ===== */
+    .home-hero {
+      text-align: center;
+      padding: 32px 0 24px;
+    }
+    .home-avatar {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 16px;
+      background: var(--mango);
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+    }
+    .home-greeting {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(28px, 7vw, 46px);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    .home-greeting em {
+      font-style: normal;
+      background: var(--tomato);
+      color: var(--paper);
+      padding: 1px 8px;
+      border-radius: 8px;
+    }
+    .home-sub {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .overall-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      padding: 18px;
+      margin-bottom: 36px;
+    }
+    .ov-ring {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+    }
+    .ov-info { flex: 1; text-align: left; }
+    .ov-label {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .ov-bar-wrap {
+      height: 10px;
+      background: var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .ov-bar {
+      height: 100%;
+      background: var(--forest);
+      border-radius: 999px;
+      transition: width 0.8s ease;
+    }
+    .ov-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .sec-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 500px) {
+      .chapters-grid { grid-template-columns: 1fr; }
+    }
+
+    .ch-card {
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--paper);
+      transition: transform .17s, box-shadow .17s;
+      text-align: left;
+    }
+    .ch-card:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .ch-thumb {
+      padding: 18px 18px 14px;
+      border-bottom: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ch-emoji { font-size: 38px; line-height: 1; }
+    .ch-stars-row { display: flex; gap: 2px; }
+    .ch-star { font-size: 18px; opacity: 0.25; }
+    .ch-star.on { opacity: 1; }
+    .ch-body { padding: 14px; }
+    .ch-num {
+      font-family: var(--fd);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+    .ch-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .ch-desc { font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+    .ch-status {
+      margin-top: 10px;
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ===== LESSON ===== */
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--muted);
+      padding: 0;
+      margin-bottom: 24px;
+      transition: color .15s;
+    }
+    .back-btn:hover { color: var(--ink); }
+
+    .lesson-hdr {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .lesson-icon {
+      font-size: 52px;
+      line-height: 1;
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      padding: 10px 14px;
+      flex-shrink: 0;
+    }
+    .lesson-eyebrow {
+      font-family: var(--fd);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .lesson-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(24px, 5vw, 36px);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .lesson-body {
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .ls { margin-bottom: 22px; }
+    .ls:last-child { margin-bottom: 0; }
+    .ls-h {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ls p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .ex-box {
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: var(--r-sm);
+      padding: 18px;
+      margin-top: 12px;
+      text-align: center;
+    }
+    .big-num {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 32px;
+      letter-spacing: -0.03em;
+    }
+    .pv-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .pv-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      border: 2px solid var(--ink);
+      border-radius: var(--r-sm);
+      padding: 10px 14px;
+      min-width: 64px;
+    }
+    .pv-num {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 28px;
+    }
+    .pv-lbl {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+    }
+    .op-sym {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 24px;
+    }
+    .times-grid {
+      display: inline-grid;
+      gap: 3px;
+      font-size: 26px;
+      line-height: 1;
+      margin: 8px 0;
+    }
+    .times-row { display: flex; gap: 3px; }
+    .shape-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      text-align: center;
+    }
+    .shape-item {
+      border: 2px solid var(--ink);
+      border-radius: var(--r-sm);
+      padding: 12px 8px;
+    }
+    .shape-item .s-ico { font-size: 28px; }
+    .shape-item strong { display: block; font-size: 13px; margin: 4px 0 2px; }
+    .shape-item span { font-size: 11px; color: var(--muted); }
+    .times-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .kai-box {
+      background: var(--indigo);
+      color: var(--paper);
+      border-radius: var(--r);
+      padding: 18px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .kai-ico { font-size: 28px; flex-shrink: 0; line-height: 1; }
+    .kai-name {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--mango);
+      margin-bottom: 3px;
+    }
+    .kai-msg { font-size: 14px; line-height: 1.55; }
+
+    .start-btn {
+      width: 100%;
+      background: var(--tomato);
+      color: var(--paper);
+      border: 3px solid var(--ink);
+      border-radius: var(--r);
+      padding: 18px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform .17s, box-shadow .17s;
+    }
+    .start-btn:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    /* ===== EXERCISE ===== */
+    .ex-hdr {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .ex-back-btn {
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r-sm);
+      padding: 8px 12px;
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .ex-meta { flex: 1; }
+    .ex-ch-name {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .ex-bar-wrap {
+      height: 7px;
+      background: var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .ex-bar {
+      height: 100%;
+      background: var(--tomato);
+      border-radius: 999px;
+      transition: width .4s ease;
+    }
+    .ex-qnum {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .q-card {
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r-lg);
+      padding: 28px 24px;
+      margin-bottom: 20px;
+    }
+    .q-label {
+      font-family: var(--fd);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .q-text {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(20px, 5vw, 28px);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .q-visual {
+      font-size: 28px;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .opts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .opt-btn {
+      background: var(--paper);
+      border: 2.5px solid var(--ink);
+      border-radius: var(--r);
+      padding: 16px 12px;
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(16px, 4vw, 22px);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .14s, box-shadow .14s;
+    }
+    .opt-btn:hover:not(:disabled) {
+      transform: translate(-2px,-2px);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .opt-btn.correct {
+      background: var(--forest);
+      color: #fff;
+      border-color: var(--forest);
+      animation: pulse .45s ease;
+    }
+    .opt-btn.wrong {
+      background: var(--tomato);
+      color: #fff;
+      border-color: var(--tomato);
+      animation: shake .38s ease;
+    }
+    .opt-btn:disabled { cursor: not-allowed; }
+
+    @keyframes pulse {
+      0%  { transform: scale(1); }
+      50% { transform: scale(1.07); }
+      100%{ transform: scale(1); }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    .inp-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .num-inp {
+      flex: 1;
+      border: 3px solid var(--ink);
+      border-radius: var(--r);
+      padding: 14px 16px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 26px;
+      text-align: center;
+      background: var(--paper);
+      color: var(--ink);
+      outline: none;
+      transition: border-color .15s;
+    }
+    .num-inp:focus { border-color: var(--sea); }
+    .num-inp.ok   { border-color: var(--forest); background: var(--forest-bg); }
+    .num-inp.bad  { border-color: var(--tomato); background: var(--tomato-bg); }
+    .chk-btn {
+      background: var(--sea);
+      color: var(--ink);
+      border: 2.5px solid var(--ink);
+      border-radius: var(--r);
+      padding: 14px 20px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: transform .14s, box-shadow .14s;
+    }
+    .chk-btn:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    .toast {
+      border-radius: var(--r);
+      padding: 14px 18px;
+      margin-top: 14px;
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 15px;
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      animation: toastIn .25s ease;
+    }
+    .toast.show { display: flex; }
+    .toast.ok  { background: var(--forest-bg); border: 2px solid var(--forest); color: #0e6032; }
+    .toast.bad { background: var(--tomato-bg); border: 2px solid var(--tomato); color: #c73013; }
+    .toast-expl { font-weight: 400; font-size: 13px; margin-top: 2px; }
+
+    @keyframes toastIn {
+      from { opacity:0; transform:translateY(-6px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .nxt-btn {
+      width: 100%;
+      margin-top: 14px;
+      background: var(--ink);
+      color: var(--paper);
+      border: 2.5px solid var(--ink);
+      border-radius: var(--r);
+      padding: 17px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 16px;
+      display: none;
+      transition: opacity .15s;
+    }
+    .nxt-btn.show { display: block; }
+    .nxt-btn:hover { opacity: .85; }
+
+    /* ===== COMPLETE ===== */
+    .done-hero {
+      text-align: center;
+      padding: 36px 0 24px;
+    }
+    .done-badge {
+      font-size: 76px;
+      line-height: 1;
+      margin-bottom: 16px;
+      animation: pop .5s cubic-bezier(.175,.885,.32,1.275);
+    }
+    @keyframes pop {
+      0%  { transform:scale(0); opacity:0; }
+      100%{ transform:scale(1); opacity:1; }
+    }
+    .done-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(26px, 6vw, 40px);
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .done-stars {
+      font-size: 44px;
+      margin: 14px 0;
+      animation: starsIn .5s ease .25s both;
+    }
+    @keyframes starsIn {
+      from { transform:scale(.5); opacity:0; }
+      to   { transform:scale(1);  opacity:1; }
+    }
+    .done-score-box {
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .done-score-num {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 52px;
+      letter-spacing: -0.04em;
+    }
+    .done-score-lbl { font-size: 14px; color: var(--muted); }
+    .done-msg {
+      font-size: 15px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 20px;
+      line-height: 1.55;
+    }
+    .done-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .act-btn {
+      border: 2.5px solid var(--ink);
+      border-radius: var(--r);
+      padding: 15px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .act-btn:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .act-btn.primary   { background: var(--tomato); color: var(--paper); }
+    .act-btn.secondary { background: var(--paper-2); color: var(--ink); }
+
+    /* ===== CONFETTI ===== */
+    #confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    }
+    .cp {
+      position: absolute;
+      top: -16px;
+      border-radius: 2px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      from { top: -20px; opacity: 1; }
+      to   { top: 110vh; opacity: 0; }
+    }
+
+    /* ===== REVIEW PANEL ===== */
+    .review-panel {
+      margin-top: 20px;
+    }
+    .review-title {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+    .review-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--r-sm);
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .review-ico { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .review-q   { font-weight: 600; margin-bottom: 2px; }
+    .review-a   { color: var(--muted); }
+
+    /* ===== BACK LINK ===== */
+    .site-back {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--fd);
+      font-size: 12px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .site-back:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+
+<!-- CONFETTI -->
+<div id="confetti"></div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <a href="/" class="hdr-brand">
+    <svg width="26" height="26" viewBox="0 0 100 100" fill="none">
+      <circle cx="38" cy="50" r="22" fill="none" stroke="var(--ink)" stroke-width="14"/>
+      <rect x="54" y="28" width="14" height="44" fill="var(--ink)"/>
+      <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+    </svg>
+    <span class="hdr-brand-word">adhi</span>
+  </a>
+  <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+</header>
+
+<!-- ═══ SCREEN: HOME ═══ -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="home-avatar">🧒</div>
+    <h1 class="home-greeting">Halo, <em>Rayyan!</em></h1>
+    <p class="home-sub">Belajar matematika bareng Kai! Pilih bab dan kerjakan soal-soalnya. 🎉</p>
+  </div>
+
+  <div class="overall-box">
+    <svg class="ov-ring" viewBox="0 0 68 68" fill="none">
+      <circle cx="34" cy="34" r="28" stroke="var(--line)" stroke-width="6"/>
+      <circle cx="34" cy="34" r="28" stroke="var(--forest)" stroke-width="6"
+              stroke-linecap="round"
+              stroke-dasharray="176" stroke-dashoffset="176"
+              id="ov-ring-path" transform="rotate(-90 34 34)"
+              style="transition:stroke-dashoffset 1s ease"/>
+    </svg>
+    <div class="ov-info">
+      <div class="ov-label">Progress Belajar Rayyan</div>
+      <div class="ov-bar-wrap">
+        <div class="ov-bar" id="ovBar" style="width:0%"></div>
+      </div>
+      <div class="ov-sub" id="ovSub">0 dari 6 bab selesai</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Pilih Bab 📚</div>
+  <div class="chapters-grid" id="chGrid"></div>
+
+  <div style="margin-top:28px;text-align:center">
+    <button onclick="resetProgress()" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline">
+      Reset progress (untuk orang tua)
+    </button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN: LESSON ═══ -->
+<div class="screen" id="sLesson">
+  <button class="back-btn" onclick="goHome()">← Kembali ke menu</button>
+  <div id="lessonHdr"></div>
+  <div class="lesson-body" id="lessonBody"></div>
+  <div class="kai-box">
+    <div class="kai-ico">🤖</div>
+    <div>
+      <div class="kai-name">Kai · Tutor-mu</div>
+      <div class="kai-msg" id="kaiMsg">Baca dulu ya, lalu kerjakan soal-soalnya!</div>
+    </div>
+  </div>
+  <button class="start-btn" onclick="startExercise()">✏️ Mulai Latihan!</button>
+</div>
+
+<!-- ═══ SCREEN: EXERCISE ═══ -->
+<div class="screen" id="sExercise">
+  <div class="ex-hdr">
+    <button class="ex-back-btn" onclick="goHome()">←</button>
+    <div class="ex-meta">
+      <div class="ex-ch-name" id="exChName"></div>
+      <div class="ex-bar-wrap">
+        <div class="ex-bar" id="exBar" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="ex-qnum" id="exQNum">1/6</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-label">Soal</div>
+    <div class="q-text"    id="qText"></div>
+    <div class="q-visual"  id="qVisual" style="display:none"></div>
+    <div id="answerArea"></div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span id="toastIco"></span>
+    <div>
+      <div id="toastTitle"></div>
+      <div class="toast-expl" id="toastExpl"></div>
+    </div>
+  </div>
+  <button class="nxt-btn" id="nxtBtn" onclick="nextQ()">Soal berikutnya →</button>
+</div>
+
+<!-- ═══ SCREEN: COMPLETE ═══ -->
+<div class="screen" id="sComplete">
+  <div class="done-hero">
+    <div class="done-badge" id="doneBadge">🎉</div>
+    <div class="done-title" id="doneTitle">Bab Selesai!</div>
+    <div class="done-stars" id="doneStars">⭐⭐⭐</div>
+  </div>
+  <div class="done-score-box">
+    <div class="done-score-num" id="doneScoreNum">6/6</div>
+    <div class="done-score-lbl">jawaban benar</div>
+  </div>
+  <div class="done-msg" id="doneMsg"></div>
+  <div class="done-actions">
+    <button class="act-btn primary"   onclick="retryChapter()">🔁 Coba Lagi</button>
+    <button class="act-btn secondary" onclick="goHome()">🏠 Pilih Bab Lain</button>
+  </div>
+  <div class="review-panel">
+    <div class="review-title">📋 Ringkasan Soal</div>
+    <div id="reviewList"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   LESSON HTML BUILDERS
+═══════════════════════════════════════════ */
+function lessonPlaceValue() {
+  return `
+<div class="ls">
+  <div class="ls-h">📦 Ratusan, Puluhan, Satuan</div>
+  <p>Setiap angka punya <strong>tempat</strong> yang berbeda. Tempatnya menentukan nilainya!</p>
+  <div class="ex-box">
+    <div class="pv-row">
+      <div class="pv-box" style="background:#E3F4F8;border-color:#1FA9C7">
+        <div class="pv-num" style="color:#1FA9C7">3</div>
+        <div class="pv-lbl">Ratusan</div>
+      </div>
+      <div class="op-sym">+</div>
+      <div class="pv-box" style="background:#FFF5D6;border-color:#e6a800">
+        <div class="pv-num" style="color:#b38000">4</div>
+        <div class="pv-lbl">Puluhan</div>
+      </div>
+      <div class="op-sym">+</div>
+      <div class="pv-box" style="background:#E3F5EB;border-color:#1F9D55">
+        <div class="pv-num" style="color:#1F9D55">7</div>
+        <div class="pv-lbl">Satuan</div>
+      </div>
+      <div class="op-sym">=</div>
+      <div class="pv-box" style="background:var(--ink);border-color:var(--ink)">
+        <div class="pv-num" style="color:#fff">347</div>
+        <div class="pv-lbl" style="color:rgba(255,255,255,.6)">Angka</div>
+      </div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted)">3 ratusan = 300 &nbsp;·&nbsp; 4 puluhan = 40 &nbsp;·&nbsp; 7 satuan = 7</p>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🔍 Cara Membaca Nilai Tempat</div>
+  <p>Baca dari <strong>kanan ke kiri</strong>: Satuan → Puluhan → Ratusan</p>
+  <div class="ex-box">
+    <div class="big-num" style="letter-spacing:.18em">5 &nbsp; 2 &nbsp; 9</div>
+    <div style="display:flex;justify-content:center;gap:40px;margin-top:10px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.05em">
+      <span style="text-align:center">↑<br>Ratusan<br>= 500</span>
+      <span style="text-align:center">↑<br>Puluhan<br>= 20</span>
+      <span style="text-align:center">↑<br>Satuan<br>= 9</span>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">📊 Membandingkan Bilangan</div>
+  <p>Bandingkan mulai dari <strong>ratusan</strong> dulu. Kalau sama, baru lihat puluhan, lalu satuan.</p>
+  <div class="ex-box">
+    <p style="font-size:18px"><span style="color:#1F9D55;font-weight:800">456</span> vs <span style="color:#FF5C39;font-weight:800">423</span></p>
+    <p style="font-size:13px;color:var(--muted);margin-top:6px">Ratusan sama (4=4) → lihat puluhan: <strong>5 > 2</strong> → 456 lebih besar! ✅</p>
+  </div>
+</div>`;
+}
+
+function lessonAddition() {
+  return `
+<div class="ls">
+  <div class="ls-h">➕ Cara Menjumlahkan</div>
+  <p>Mulai dari <strong>satuan</strong> dulu, lalu puluhan, lalu ratusan.<br>Kalau hasilnya ≥ 10, <strong>simpan 1</strong> ke kolom sebelah kiri!</p>
+  <div class="ex-box">
+    <div class="big-num">247 + 135</div>
+    <div style="margin-top:12px;font-size:14px;line-height:2;text-align:left">
+      Satuan &nbsp;: 7 + 5 = <strong>12</strong> → tulis 2, simpan 1<br>
+      Puluhan: 4 + 3 + 1 = <strong>8</strong> → tulis 8<br>
+      Ratusan: 2 + 1 = <strong>3</strong> → tulis 3<br>
+      <span style="color:#1F9D55;font-weight:700">Jawaban = 382 ✅</span>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🍎 Bayangkan dengan Benda</div>
+  <p>Kalau bingung, bayangkan menumpuk benda!</p>
+  <div class="ex-box">
+    <div style="font-size:28px">🍎🍎🍎 + 🍊🍊 = 🍎🍎🍎🍊🍊</div>
+    <p style="font-size:13px;color:var(--muted);margin-top:6px">3 apel + 2 jeruk = 5 buah</p>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">💡 Tips Cepat</div>
+  <p>Dekatkan ke angka bulat! <strong>38 + 42</strong> → anggap <strong>40 + 40 = 80</strong>. Cepat, kan?</p>
+</div>`;
+}
+
+function lessonSubtraction() {
+  return `
+<div class="ls">
+  <div class="ls-h">➖ Cara Mengurangkan</div>
+  <p>Mulai dari <strong>satuan</strong>. Kalau angka atas lebih kecil, <strong>pinjam 1</strong> dari kolom sebelah kiri!</p>
+  <div class="ex-box">
+    <div class="big-num">534 - 218</div>
+    <div style="margin-top:12px;font-size:14px;line-height:2;text-align:left">
+      Satuan &nbsp;: 4 - 8? Pinjam! → <strong>14 - 8 = 6</strong><br>
+      Puluhan: 3 - 1 - 1 = <strong>1</strong> (sudah pinjam 1)<br>
+      Ratusan: 5 - 2 = <strong>3</strong><br>
+      <span style="color:#1F9D55;font-weight:700">Jawaban = 316 ✅</span>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🎈 Pengurangan = Mengambil</div>
+  <p>Bayangkan kamu punya balon, lalu beberapa diambil!</p>
+  <div class="ex-box">
+    <div style="font-size:26px">🎈🎈🎈🎈🎈🎈🎈🎈🎈🎈</div>
+    <p style="font-size:13px;color:var(--muted);margin-top:6px">10 balon − 3 balon = 7 balon</p>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">✅ Cara Mengecek Jawaban</div>
+  <p>Tambahkan hasilnya! Kalau <strong>56 − 34 = 22</strong>, cek: <strong>22 + 34 = 56</strong> ✓</p>
+</div>`;
+}
+
+function lessonMultiplication() {
+  return `
+<div class="ls">
+  <div class="ls-h">✖️ Perkalian = Penjumlahan Berulang</div>
+  <p><strong>3 × 4</strong> artinya menjumlahkan 4 sebanyak 3 kali!</p>
+  <div class="ex-box">
+    <div class="times-grid" style="grid-template-rows:repeat(3,1fr)">
+      <div class="times-row">🍎🍎🍎🍎</div>
+      <div class="times-row">🍎🍎🍎🍎</div>
+      <div class="times-row">🍎🍎🍎🍎</div>
+    </div>
+    <p style="font-size:16px;font-weight:700;margin-top:10px">3 × 4 = 4 + 4 + 4 = <span style="color:#1F9D55">12</span></p>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">📋 Tabel Perkalian (hafal ya!)</div>
+  <div class="ex-box">
+    <div class="times-table">
+      <span>2 × 1 = 2</span><span>5 × 1 = 5</span>
+      <span>2 × 2 = 4</span><span>5 × 2 = 10</span>
+      <span>2 × 3 = 6</span><span>5 × 3 = 15</span>
+      <span>2 × 4 = 8</span><span>5 × 4 = 20</span>
+      <span>2 × 5 = 10</span><span>5 × 5 = 25</span>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">💡 Trik Perkalian 5</div>
+  <p>Kalikan 5 itu mudah: kalikan 10 lalu bagi 2!<br>
+  <strong>6 × 5</strong> = (6 × 10) ÷ 2 = 60 ÷ 2 = <strong>30</strong></p>
+</div>`;
+}
+
+function lessonShapes() {
+  return `
+<div class="ls">
+  <div class="ls-h">🔷 Jenis-Jenis Bangun Datar</div>
+  <p>Bangun datar adalah bentuk 2 dimensi (pipih / tidak ada tingginya).</p>
+  <div class="ex-box">
+    <div class="shape-grid">
+      <div class="shape-item">
+        <div class="s-ico">⬜</div>
+        <strong>Persegi</strong>
+        <span>4 sisi sama panjang, 4 sudut siku-siku</span>
+      </div>
+      <div class="shape-item">
+        <div class="s-ico">▬</div>
+        <strong>Persegi Panjang</strong>
+        <span>4 sisi, 2 pasang sama panjang</span>
+      </div>
+      <div class="shape-item">
+        <div class="s-ico">🔺</div>
+        <strong>Segitiga</strong>
+        <span>3 sisi, 3 sudut</span>
+      </div>
+      <div class="shape-item">
+        <div class="s-ico">⭕</div>
+        <strong>Lingkaran</strong>
+        <span>Tidak ada sisi lurus, tidak ada sudut</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">📐 Sisi dan Sudut</div>
+  <p>Jumlah sisi = jumlah sudut!<br>
+  Segitiga = 3 sisi = 3 sudut &nbsp;·&nbsp; Segi empat = 4 sisi = 4 sudut</p>
+</div>
+<div class="ls">
+  <div class="ls-h">🏠 Di Sekitar Kita</div>
+  <p>
+    Ubin = <strong>persegi</strong> &nbsp;·&nbsp;
+    Pintu = <strong>persegi panjang</strong> &nbsp;·&nbsp;
+    Pizza = <strong>lingkaran</strong> &nbsp;·&nbsp;
+    Genteng = <strong>segitiga</strong>
+  </p>
+</div>`;
+}
+
+function lessonPatterns() {
+  return `
+<div class="ls">
+  <div class="ls-h">🔄 Apa Itu Pola?</div>
+  <p>Pola adalah urutan yang mengikuti <strong>aturan tertentu</strong>. Temukan aturannya, lanjutkan!</p>
+  <div class="ex-box">
+    <div class="big-num">2, 4, 6, 8, <span style="color:#1F9D55">10</span></div>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px">Aturan: +2 setiap langkah (bilangan genap!)</p>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🔍 Cara Menemukan Pola</div>
+  <p>1. Hitung selisih dua angka pertama<br>
+     2. Periksa apakah selisihnya sama di setiap langkah<br>
+     3. Terapkan ke angka berikutnya!</p>
+  <div class="ex-box" style="text-align:left">
+    <p style="font-weight:700">Contoh: 10, 20, 30, 40, __</p>
+    <p style="font-size:13px;color:var(--muted)">20−10 = <strong>10</strong>, 30−20 = <strong>10</strong>, 40−30 = <strong>10</strong></p>
+    <p style="font-size:14px;margin-top:4px">Selisih +10, jadi: 40 + 10 = <strong style="color:#1F9D55">50</strong>!</p>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">⬇️ Pola Bisa Menurun</div>
+  <p>Pola bisa berkurang! Contoh: <strong>50, 40, 30, 20, 10</strong><br>
+  Aturannya: −10 setiap langkah.</p>
+</div>`;
+}
+
+/* ═══════════════════════════════════════════
+   CHAPTER DATA
+═══════════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    id: 'place-value',
+    title: 'Nilai Tempat',
+    emoji: '🔢',
+    color: '#1FA9C7',
+    colorBg: '#E3F4F8',
+    desc: 'Ratusan, puluhan, dan satuan',
+    kaiTip: 'Bayangkan angka seperti kotak-kotak: kotak besar = ratusan, kotak sedang = puluhan, kotak kecil = satuan!',
+    lessonHTML: lessonPlaceValue(),
+    questions: [
+      {
+        type: 'mc',
+        q: 'Berapa nilai angka 5 dalam bilangan 523?',
+        visual: '5️⃣2️⃣3️⃣',
+        opts: ['5', '50', '500', '5.000'],
+        ans: 2,
+        expl: 'Angka 5 ada di posisi ratusan, jadi nilainya 500!'
+      },
+      {
+        type: 'mc',
+        q: 'Bilangan mana yang memiliki 3 ratusan?',
+        opts: ['30', '3', '300', '3.000'],
+        ans: 2,
+        expl: '300 = 3 ratusan + 0 puluhan + 0 satuan!'
+      },
+      {
+        type: 'input',
+        q: '4 ratusan + 6 puluhan + 8 satuan = ?',
+        visual: '📦📦📦📦 + 📫📫📫📫📫📫 + 🟦🟦🟦🟦🟦🟦🟦🟦',
+        ans: '468',
+        expl: '400 + 60 + 8 = 468!'
+      },
+      {
+        type: 'mc',
+        q: 'Dalam bilangan 729, ada berapa puluhan?',
+        visual: '7️⃣2️⃣9️⃣',
+        opts: ['7', '2', '9', '72'],
+        ans: 1,
+        expl: 'Angka di posisi tengah (puluhan) adalah 2. Jadi ada 2 puluhan!'
+      },
+      {
+        type: 'mc',
+        q: 'Bilangan mana yang PALING BESAR?',
+        opts: ['456', '465', '546', '645'],
+        ans: 3,
+        expl: '645 paling besar! Lihat ratusan dulu: 6 > 5 > 4. Jadi 645 > 546 > 465 > 456.'
+      },
+      {
+        type: 'input',
+        q: 'Tulis dalam angka: "dua ratus lima puluh tujuh"',
+        ans: '257',
+        expl: '200 + 50 + 7 = 257!'
+      }
+    ]
+  },
+  {
+    id: 'addition',
+    title: 'Penjumlahan',
+    emoji: '➕',
+    color: '#1F9D55',
+    colorBg: '#E3F5EB',
+    desc: 'Menjumlahkan bilangan sampai 1000',
+    kaiTip: 'Mulai dari satuan dulu, lalu puluhan, lalu ratusan. Jangan lupa simpan kalau hasilnya lebih dari 9!',
+    lessonHTML: lessonAddition(),
+    questions: [
+      {
+        type: 'input',
+        q: '45 + 32 = ?',
+        visual: '🍎🍎🍎🍎🍎 + 🍎🍎🍎',
+        ans: '77',
+        expl: 'Satuan: 5+2=7. Puluhan: 4+3=7. Jadi 77!'
+      },
+      {
+        type: 'input',
+        q: '123 + 456 = ?',
+        ans: '579',
+        expl: 'Satuan: 3+6=9. Puluhan: 2+5=7. Ratusan: 1+4=5. Jadi 579!'
+      },
+      {
+        type: 'mc',
+        q: 'Rayyan punya 234 stiker. Raya memberi 145 lagi. Total stiker Rayyan sekarang?',
+        visual: '😊 + 🎁',
+        opts: ['369', '379', '389', '479'],
+        ans: 1,
+        expl: '234 + 145 = 379. Satuan: 4+5=9. Puluhan: 3+4=7. Ratusan: 2+1=3!'
+      },
+      {
+        type: 'input',
+        q: '67 + 88 = ?',
+        ans: '155',
+        expl: 'Satuan: 7+8=15 (tulis 5, simpan 1). Puluhan: 6+8+1=15 (tulis 5, simpan 1). Ratusan: 1. Jadi 155!'
+      },
+      {
+        type: 'mc',
+        q: '300 + 250 = ?',
+        opts: ['500', '550', '650', '350'],
+        ans: 1,
+        expl: '300 + 250 = 550. Ratusan 3+2=5, puluhan 0+5=5. Jadi 550!'
+      },
+      {
+        type: 'mc',
+        q: 'Mana yang nilainya sama dengan 100 + 100 + 100?',
+        opts: ['100', '30', '300', '1000'],
+        ans: 2,
+        expl: '100 + 100 + 100 = 300. Ini artinya 3 ratusan!'
+      }
+    ]
+  },
+  {
+    id: 'subtraction',
+    title: 'Pengurangan',
+    emoji: '➖',
+    color: '#FF5C39',
+    colorBg: '#FFE8E3',
+    desc: 'Mengurangkan bilangan sampai 1000',
+    kaiTip: 'Pengurangan itu kebalikan penjumlahan! Kalau 3+4=7, maka 7−4=3. Cek jawabanmu dengan menjumlahkan lagi!',
+    lessonHTML: lessonSubtraction(),
+    questions: [
+      {
+        type: 'input',
+        q: '89 - 34 = ?',
+        visual: '🎈🎈🎈🎈🎈🎈🎈🎈🎈',
+        ans: '55',
+        expl: 'Satuan: 9−4=5. Puluhan: 8−3=5. Jadi 55!'
+      },
+      {
+        type: 'input',
+        q: '500 - 250 = ?',
+        ans: '250',
+        expl: '500 − 250 = 250. Bayangkan 500 dibagi 2 = 250!'
+      },
+      {
+        type: 'mc',
+        q: 'Rayyan punya 367 permen. Ia memberi 123 permen ke teman. Sisa berapa?',
+        visual: '🍬🍬🍬 − 🎁',
+        opts: ['234', '244', '255', '490'],
+        ans: 1,
+        expl: '367 − 123 = 244. Satuan: 7−3=4. Puluhan: 6−2=4. Ratusan: 3−1=2!'
+      },
+      {
+        type: 'input',
+        q: '100 - 45 = ?',
+        ans: '55',
+        expl: '100 − 45 = 55. Cara mudah: 100−40=60, lalu 60−5=55!'
+      },
+      {
+        type: 'mc',
+        q: '728 - 319 = ?',
+        opts: ['399', '400', '409', '419'],
+        ans: 2,
+        expl: '728 − 319 = 409. Satuan: 8−9? pinjam! 18−9=9. Puluhan: 1−1=0. Ratusan: 7−3=4. Jadi 409!'
+      },
+      {
+        type: 'mc',
+        q: '456 - 456 = ?',
+        opts: ['1', '0', '456', '912'],
+        ans: 1,
+        expl: 'Bilangan dikurangi dirinya sendiri SELALU = 0!'
+      }
+    ]
+  },
+  {
+    id: 'multiplication',
+    title: 'Perkalian',
+    emoji: '✖️',
+    color: '#E84BA0',
+    colorBg: '#FCE8F3',
+    desc: 'Perkalian 1–10 dengan cara seru',
+    kaiTip: 'Perkalian itu penjumlahan yang diulang! 3 × 4 artinya 4 ditambah 3 kali: 4+4+4 = 12!',
+    lessonHTML: lessonMultiplication(),
+    questions: [
+      {
+        type: 'mc',
+        q: '3 × 4 = ?',
+        visual: '🍎🍎🍎🍎 &nbsp; 🍎🍎🍎🍎 &nbsp; 🍎🍎🍎🍎',
+        opts: ['7', '10', '12', '34'],
+        ans: 2,
+        expl: '3 × 4 = 4+4+4 = 12. Ada 3 baris, masing-masing 4 apel!'
+      },
+      {
+        type: 'mc',
+        q: '5 × 5 = ?',
+        visual: '⭐⭐⭐⭐⭐ (5 baris)',
+        opts: ['10', '20', '25', '55'],
+        ans: 2,
+        expl: '5 × 5 = 25. Ada 5 baris × 5 bintang = 25 bintang!'
+      },
+      {
+        type: 'input',
+        q: '2 × 7 = ?',
+        visual: '🚗🚗🚗🚗🚗🚗🚗 + 🚗🚗🚗🚗🚗🚗🚗',
+        ans: '14',
+        expl: '2 × 7 = 7+7 = 14. Ada 2 baris × 7 mobil!'
+      },
+      {
+        type: 'mc',
+        q: '6 × 3 = ?',
+        opts: ['9', '18', '21', '63'],
+        ans: 1,
+        expl: '6 × 3 = 3+3+3+3+3+3 = 18. Atau 6+6+6 = 18!'
+      },
+      {
+        type: 'input',
+        q: '4 × 8 = ?',
+        ans: '32',
+        expl: '4 × 8 = 8+8+8+8 = 32!'
+      },
+      {
+        type: 'mc',
+        q: '9 × 2 = ?',
+        opts: ['11', '18', '27', '92'],
+        ans: 1,
+        expl: '9 × 2 = 9+9 = 18. Atau 2+2+2+2+2+2+2+2+2 = 18!'
+      }
+    ]
+  },
+  {
+    id: 'shapes',
+    title: 'Bangun Datar',
+    emoji: '🔷',
+    color: '#b38000',
+    colorBg: '#FFF5D6',
+    desc: 'Bentuk-bentuk di sekitar kita',
+    kaiTip: 'Bangun datar ada di mana-mana! Ubin = persegi, layar HP = persegi panjang, pizza = lingkaran!',
+    lessonHTML: lessonShapes(),
+    questions: [
+      {
+        type: 'mc',
+        q: 'Bangun datar mana yang punya 4 sisi SAMA PANJANG?',
+        visual: '⬜',
+        opts: ['Segitiga', 'Persegi Panjang', 'Persegi', 'Lingkaran'],
+        ans: 2,
+        expl: 'Persegi punya 4 sisi yang sama panjang dan 4 sudut siku-siku!'
+      },
+      {
+        type: 'mc',
+        q: 'Berapa banyak sisi pada segitiga?',
+        visual: '🔺',
+        opts: ['2', '3', '4', '5'],
+        ans: 1,
+        expl: 'Segitiga = tri (3) + gon (sisi) = 3 sisi. Ingat: "tri" = tiga!'
+      },
+      {
+        type: 'mc',
+        q: 'Bangun datar mana yang TIDAK punya sudut?',
+        opts: ['Persegi', 'Segitiga', 'Persegi Panjang', 'Lingkaran'],
+        ans: 3,
+        expl: 'Lingkaran tidak punya sudut dan tidak punya sisi yang lurus sama sekali!'
+      },
+      {
+        type: 'mc',
+        q: 'Pintu rumah berbentuk seperti apa?',
+        visual: '🚪',
+        opts: ['Persegi', 'Persegi Panjang', 'Segitiga', 'Lingkaran'],
+        ans: 1,
+        expl: 'Pintu berbentuk persegi panjang — 4 sisi, tapi 2 sisi lebih panjang!'
+      },
+      {
+        type: 'mc',
+        q: 'Segi lima memiliki berapa sudut?',
+        visual: '⬠',
+        opts: ['3', '4', '5', '6'],
+        ans: 2,
+        expl: 'Segi lima = 5 sisi = 5 sudut. Jumlah sudut = jumlah sisi!'
+      },
+      {
+        type: 'mc',
+        q: 'Roda sepeda berbentuk seperti apa?',
+        visual: '🚲',
+        opts: ['Persegi', 'Segitiga', 'Lingkaran', 'Persegi Panjang'],
+        ans: 2,
+        expl: 'Roda berbentuk lingkaran — bulat sempurna supaya bisa berputar!'
+      }
+    ]
+  },
+  {
+    id: 'patterns',
+    title: 'Pola & Urutan',
+    emoji: '🔄',
+    color: '#2E3192',
+    colorBg: '#E8E9F8',
+    desc: 'Temukan pola dan lanjutkan urutannya',
+    kaiTip: 'Cari selisih antara angka-angkanya! Kalau 2,4,6 → selisihnya +2. Kalau 10,20,30 → selisihnya +10!',
+    lessonHTML: lessonPatterns(),
+    questions: [
+      {
+        type: 'mc',
+        q: 'Lanjutkan pola: 2, 4, 6, 8, __',
+        visual: '2️⃣ → 4️⃣ → 6️⃣ → 8️⃣ → ❓',
+        opts: ['9', '10', '11', '12'],
+        ans: 1,
+        expl: 'Polanya +2 setiap langkah! 8 + 2 = 10!'
+      },
+      {
+        type: 'mc',
+        q: 'Lanjutkan pola: 5, 10, 15, 20, __',
+        opts: ['22', '23', '24', '25'],
+        ans: 3,
+        expl: 'Polanya +5 setiap langkah! 20 + 5 = 25!'
+      },
+      {
+        type: 'mc',
+        q: 'Lanjutkan pola: 100, 90, 80, 70, __',
+        opts: ['50', '55', '60', '65'],
+        ans: 2,
+        expl: 'Polanya −10 setiap langkah (mundur). 70 − 10 = 60!'
+      },
+      {
+        type: 'input',
+        q: 'Temukan yang hilang: 3, 6, 9, 12, __',
+        visual: '3️⃣ → 6️⃣ → 9️⃣ → 1️⃣2️⃣ → ❓',
+        ans: '15',
+        expl: 'Polanya +3 setiap langkah (tabel perkalian 3)! 12 + 3 = 15!'
+      },
+      {
+        type: 'mc',
+        q: 'Lanjutkan: 1, 3, 5, 7, __',
+        opts: ['8', '9', '10', '11'],
+        ans: 1,
+        expl: 'Ini pola bilangan ganjil! Polanya +2. 7 + 2 = 9!'
+      },
+      {
+        type: 'input',
+        q: 'Temukan yang hilang: 10, __, 30, 40, 50',
+        visual: '🔟 → ❓ → 3️⃣0️⃣ → 4️⃣0️⃣ → 5️⃣0️⃣',
+        ans: '20',
+        expl: 'Polanya +10. 10 + 10 = 20!'
+      }
+    ]
+  }
+];
+
+/* ═══════════════════════════════════════════
+   STATE & STORAGE
+═══════════════════════════════════════════ */
+const state = {
+  chapter: null,   // index
+  qIdx: 0,
+  score: 0,
+  answered: false,
+  totalStars: 0,
+  progress: {},    // { chapterId: { stars, bestScore } }
+  history: [],     // [{q, correct, correct_ans, user_ans}] for review
+};
+
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem('rayyanMath') || '{}');
+    state.progress   = d.progress   || {};
+    state.totalStars = d.totalStars || 0;
+    document.getElementById('starCount').textContent = state.totalStars;
+  } catch(e) {}
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('rayyanMath', JSON.stringify({
+      progress:   state.progress,
+      totalStars: state.totalStars,
+    }));
+  } catch(e) {}
+}
+
+function resetProgress() {
+  if (!confirm('Reset semua progress Rayyan? Ini tidak bisa di-undo.')) return;
+  state.progress   = {};
+  state.totalStars = 0;
+  document.getElementById('starCount').textContent = 0;
+  saveState();
+  renderHome();
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  show('sHome');
+  renderHome();
+}
+
+function openChapter(idx) {
+  state.chapter = idx;
+  const ch = CHAPTERS[idx];
+
+  document.getElementById('lessonHdr').innerHTML = `
+    <div class="lesson-hdr">
+      <div class="lesson-icon">${ch.emoji}</div>
+      <div>
+        <div class="lesson-eyebrow">Bab ${idx+1} dari ${CHAPTERS.length}</div>
+        <div class="lesson-title">${ch.title}</div>
+      </div>
+    </div>`;
+  document.getElementById('lessonBody').innerHTML = ch.lessonHTML;
+  document.getElementById('kaiMsg').textContent = ch.kaiTip;
+  show('sLesson');
+}
+
+function startExercise() {
+  state.qIdx     = 0;
+  state.score    = 0;
+  state.answered = false;
+  state.history  = [];
+  renderQ();
+  show('sExercise');
+}
+
+function retryChapter() {
+  startExercise();
+}
+
+/* ═══════════════════════════════════════════
+   QUESTION RENDERING
+═══════════════════════════════════════════ */
+function renderQ() {
+  const ch    = CHAPTERS[state.chapter];
+  const q     = ch.questions[state.qIdx];
+  const total = ch.questions.length;
+
+  // Header
+  document.getElementById('exChName').textContent = `${ch.emoji} ${ch.title}`;
+  document.getElementById('exQNum').textContent   = `${state.qIdx+1}/${total}`;
+  document.getElementById('exBar').style.width    = `${(state.qIdx / total) * 100}%`;
+
+  // Question text
+  document.getElementById('qText').textContent = q.q;
+
+  // Visual
+  const vis = document.getElementById('qVisual');
+  if (q.visual) {
+    vis.innerHTML     = q.visual;
+    vis.style.display = '';
+  } else {
+    vis.style.display = 'none';
+  }
+
+  // Answer area
+  const area = document.getElementById('answerArea');
+  if (q.type === 'mc') {
+    area.innerHTML = `<div class="opts-grid">${
+      q.opts.map((o,i) => `<button class="opt-btn" onclick="pickOpt(${i})">${o}</button>`).join('')
+    }</div>`;
+  } else {
+    area.innerHTML = `
+      <div class="inp-row">
+        <input type="number" class="num-inp" id="numInp" placeholder="Tulis jawaban…"
+               inputmode="numeric" onkeydown="if(event.key==='Enter')checkInp()">
+        <button class="chk-btn" onclick="checkInp()">Cek ✓</button>
+      </div>`;
+    setTimeout(() => { const el = document.getElementById('numInp'); if(el) el.focus(); }, 80);
+  }
+
+  // Reset feedback
+  const toast = document.getElementById('toast');
+  toast.className = 'toast';
+  const nxt = document.getElementById('nxtBtn');
+  nxt.className = 'nxt-btn';
+  state.answered = false;
+}
+
+/* ═══════════════════════════════════════════
+   ANSWER CHECKING
+═══════════════════════════════════════════ */
+function pickOpt(idx) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const q       = CHAPTERS[state.chapter].questions[state.qIdx];
+  const correct = idx === q.ans;
+
+  document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+  document.querySelectorAll('.opt-btn')[idx].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) document.querySelectorAll('.opt-btn')[q.ans].classList.add('correct');
+
+  if (correct) state.score++;
+  state.history.push({ q: q.q, correct, correctAns: q.opts[q.ans], userAns: q.opts[idx] });
+
+  showToast(correct, q.opts[q.ans], q.expl);
+}
+
+function checkInp() {
+  if (state.answered) return;
+  const inp = document.getElementById('numInp');
+  const val = (inp.value || '').trim();
+  if (!val) return;
+
+  state.answered = true;
+  inp.disabled = true;
+
+  const q       = CHAPTERS[state.chapter].questions[state.qIdx];
+  const correct = val === q.ans;
+
+  inp.classList.add(correct ? 'ok' : 'bad');
+  if (correct) state.score++;
+  state.history.push({ q: q.q, correct, correctAns: q.ans, userAns: val });
+
+  showToast(correct, q.ans, q.expl);
+}
+
+function showToast(correct, correctAns, expl) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastIco').textContent   = correct ? '🎉' : '❌';
+  document.getElementById('toastTitle').textContent  = correct
+    ? 'Benar! Keren sekali!'
+    : `Belum tepat. Jawaban yang benar: ${correctAns}`;
+  document.getElementById('toastExpl').textContent  = expl || '';
+  toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
+  document.getElementById('nxtBtn').className = 'nxt-btn show';
+}
+
+function nextQ() {
+  const ch = CHAPTERS[state.chapter];
+  state.qIdx++;
+  if (state.qIdx >= ch.questions.length) {
+    showComplete();
+  } else {
+    renderQ();
+  }
+}
+
+/* ═══════════════════════════════════════════
+   COMPLETE SCREEN
+═══════════════════════════════════════════ */
+function showComplete() {
+  const ch    = CHAPTERS[state.chapter];
+  const total = ch.questions.length;
+  const pct   = state.score / total;
+
+  let stars = 1;
+  if (pct >= 0.6)  stars = 2;
+  if (pct >= 0.85) stars = 3;
+
+  // Save progress
+  const prev      = state.progress[ch.id] || { stars: 0, bestScore: 0 };
+  const newStars  = Math.max(prev.stars,     stars);
+  const newBest   = Math.max(prev.bestScore, state.score);
+  const earned    = newStars - prev.stars;
+  state.progress[ch.id]  = { stars: newStars, bestScore: newBest };
+  state.totalStars       += earned;
+  document.getElementById('starCount').textContent = state.totalStars;
+  saveState();
+
+  // Render
+  const badges  = ['😊', '🌟', '🏆'];
+  const titles  = ['Bagus! Yuk coba lagi ya!', 'Hebat! Hampir sempurna!', 'SEMPURNA! Rayyan luar biasa!'];
+  const msgs    = [
+    `Kamu menjawab ${state.score} dari ${total} soal dengan benar. Pelajari lagi ya Rayyan, kamu pasti bisa! 💪`,
+    `Kamu menjawab ${state.score} dari ${total} soal dengan benar. Hampir sempurna! Coba sekali lagi? 👏`,
+    `Kamu menjawab SEMUA ${total} soal dengan benar! Rayyan jenius! 🎊`,
+  ];
+
+  document.getElementById('doneBadge').textContent   = badges[stars-1];
+  document.getElementById('doneTitle').textContent   = titles[stars-1];
+  document.getElementById('doneStars').textContent   = '⭐'.repeat(stars) + '☆'.repeat(3-stars);
+  document.getElementById('doneScoreNum').textContent = `${state.score}/${total}`;
+  document.getElementById('doneMsg').textContent      = msgs[stars-1];
+
+  // Review list
+  document.getElementById('reviewList').innerHTML = state.history.map(h => `
+    <div class="review-item">
+      <div class="review-ico">${h.correct ? '✅' : '❌'}</div>
+      <div>
+        <div class="review-q">${h.q}</div>
+        <div class="review-a">
+          ${h.correct
+            ? `Benar: <strong>${h.correctAns}</strong>`
+            : `Kamu jawab: ${h.userAns} &nbsp;·&nbsp; Jawaban: <strong>${h.correctAns}</strong>`}
+        </div>
+      </div>
+    </div>`).join('');
+
+  show('sComplete');
+  if (stars >= 2) setTimeout(launchConfetti, 350);
+  updateOverall();
+}
+
+/* ═══════════════════════════════════════════
+   HOME RENDERING
+═══════════════════════════════════════════ */
+function renderHome() {
+  // Chapter cards
+  document.getElementById('chGrid').innerHTML = CHAPTERS.map((ch, i) => {
+    const p     = state.progress[ch.id] || { stars: 0, bestScore: 0 };
+    const done  = p.stars > 0;
+    const stars = [1,2,3].map(n => `<span class="ch-star${n<=p.stars?' on':''}" aria-hidden="true">⭐</span>`).join('');
+    const status = done
+      ? `✅ Terbaik: ${p.bestScore}/${ch.questions.length} soal`
+      : '▶️ Belum dimulai';
+    return `
+      <div class="ch-card" onclick="openChapter(${i})" role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter'||event.key===' ')openChapter(${i})">
+        <div class="ch-thumb" style="background:${ch.colorBg}">
+          <div class="ch-emoji">${ch.emoji}</div>
+          <div class="ch-stars-row">${stars}</div>
+        </div>
+        <div class="ch-body">
+          <div class="ch-num">Bab ${i+1}</div>
+          <div class="ch-title">${ch.title}</div>
+          <div class="ch-desc">${ch.desc}</div>
+          <div class="ch-status">${status}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  updateOverall();
+}
+
+function updateOverall() {
+  const total = CHAPTERS.length;
+  const done  = Object.values(state.progress).filter(p => p.stars > 0).length;
+  const pct   = (done / total) * 100;
+
+  document.getElementById('ovBar').style.width   = `${pct}%`;
+  document.getElementById('ovSub').textContent   = `${done} dari ${total} bab selesai`;
+
+  const circ  = document.getElementById('ov-ring-path');
+  const circum = 176;
+  circ.style.strokeDashoffset = circum - (pct / 100) * circum;
+}
+
+/* ═══════════════════════════════════════════
+   CONFETTI
+═══════════════════════════════════════════ */
+function launchConfetti() {
+  const c = document.getElementById('confetti');
+  const colors = ['#FF5C39','#FFC234','#1F9D55','#1FA9C7','#E84BA0','#2E3192'];
+  for (let i = 0; i < 70; i++) {
+    const p = document.createElement('div');
+    p.className = 'cp';
+    const size = 6 + Math.random() * 9;
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      width:${size}px;
+      height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${Math.random()>.5?'50%':'3px'};
+      animation-duration:${1.4+Math.random()*2}s;
+      animation-delay:${Math.random()*.7}s;
+    `;
+    c.appendChild(p);
+    p.addEventListener('animationend', () => p.remove());
+  }
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+loadState();
+renderHome();
+</script>
+</body>
+</html>
