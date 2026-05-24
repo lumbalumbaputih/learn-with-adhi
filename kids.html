@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rayyan & Raya's Learning World · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FFC234"/><text y=".9em" font-size="80" x="10">🌟</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <style>
+    /* ===== TOKENS ===== */
+    :root {
+      --tomato:  #FF5C39;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --mawar:   #E84BA0;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --paper-2: #F4ECD8;
+      --line:    rgba(26,22,20,0.12);
+      --muted:   #6B6259;
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body { font-family: var(--fb); background: var(--paper); color: var(--ink); }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ===== SHELL ===== */
+    .shell { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+    @media (max-width: 860px)  { .shell { padding: 0 28px; } }
+    @media (max-width: 560px)  { .shell { padding: 0 18px; } }
+
+    /* ===== NAV ===== */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+      border-bottom: 2px solid var(--ink);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-wordmark {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+    .brand-divider { width: 1.5px; height: 22px; background: var(--line); }
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--ink); }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 72px 0 56px;
+      position: relative;
+    }
+    .hero-avatars {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 3px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+    }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 3px;
+      background: var(--mango);
+      flex-shrink: 0;
+    }
+    .hero-h1 {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(48px, 8vw, 100px);
+      line-height: .92;
+      letter-spacing: -0.04em;
+      margin-bottom: 28px;
+    }
+    .hero-h1 .hi-ray  { color: var(--tomato); }
+    .hero-h1 .hi-raya { color: var(--mawar); }
+    .hero-h1 .hi-and  {
+      display: inline-block;
+      background: var(--mango);
+      color: var(--ink);
+      padding: 0 .08em;
+      border-radius: 8px;
+    }
+    .hero-lead {
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      color: var(--muted);
+    }
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--paper-2);
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ===== SECTION ===== */
+    .section { margin-top: 80px; }
+    .section-hdr {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 32px;
+    }
+    .section-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(32px, 4.5vw, 48px);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .section-count {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-bottom: 6px;
+    }
+
+    /* ===== GRID ===== */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 860px) {
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .grid-3, .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      border: 2px solid var(--ink);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--paper);
+      display: flex;
+      flex-direction: column;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+    .card-thumb {
+      aspect-ratio: 16/9;
+      border-bottom: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .card-badge.game   { background: var(--forest); }
+    .card-badge.course { background: var(--indigo); }
+    .card-badge.coming { background: var(--muted); }
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-for {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .card-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .card-blurb {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--muted);
+      flex: 1;
+      margin-bottom: 14px;
+    }
+    .card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .card-prog {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .prog-stars { font-size: 13px; }
+    .card-cta {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--ink);
+    }
+
+    /* COMING SOON card */
+    .card.coming {
+      opacity: .55;
+      pointer-events: none;
+    }
+    .card.coming .card-thumb {
+      background: var(--paper-2) !important;
+    }
+
+    /* ===== WHO STRIP ===== */
+    .who-strip {
+      margin-top: 80px;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 24px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    @media (max-width: 640px) {
+      .who-strip { grid-template-columns: 1fr; padding: 32px 24px; gap: 28px; }
+    }
+    .who-card { }
+    .who-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2.5px solid rgba(255,255,255,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin-bottom: 14px;
+    }
+    .who-name {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+    .who-desc {
+      font-size: 14px;
+      line-height: 1.55;
+      color: rgba(251,244,230,.7);
+    }
+    .who-tag {
+      display: inline-block;
+      margin-top: 12px;
+      background: rgba(255,255,255,.1);
+      border: 1.5px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(251,244,230,.8);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 80px;
+      padding: 24px 0 52px;
+      border-top: 2px solid var(--ink);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer a { transition: color .2s; }
+    .footer a:hover { color: var(--tomato); }
+
+    /* ===== RESPONSIVE NAV ===== */
+    @media (max-width: 500px) {
+      .hero { padding-top: 44px; }
+      .who-strip { margin-top: 56px; }
+      .section { margin-top: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- NAV -->
+  <header>
+    <nav class="nav">
+      <a href="/" class="brand">
+        <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+          <circle cx="38" cy="50" r="22" fill="none" stroke="var(--ink)" stroke-width="14"/>
+          <rect x="54" y="28" width="14" height="44" fill="var(--ink)"/>
+          <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+        </svg>
+        <div class="brand-divider"></div>
+        <div>
+          <div class="brand-wordmark">adhi</div>
+          <div class="brand-sub">Learn</div>
+        </div>
+      </a>
+      <a href="/" class="nav-back">← Semua kursus</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Zona Belajar Khusus</div>
+    <h1 class="hero-h1">
+      <span class="hi-ray">Rayyan</span><br>
+      <span class="hi-and">&amp;</span>
+      <span class="hi-raya"> Raya</span>
+    </h1>
+    <p class="hero-lead">Tempat belajar dan main yang dibuat khusus buat kalian. Pilih pelajaran atau game, dan mulai petualanganmu! 🚀</p>
+    <div class="hero-stats">
+      <div class="stat-pill" id="statCourses">📚 1 kursus</div>
+      <div class="stat-pill" id="statGames">🎮 1 game</div>
+      <div class="stat-pill" id="statStars">⭐ <span id="totalStarsHero">0</span> bintang</div>
+    </div>
+  </section>
+
+  <!-- SECTION: BELAJAR YUK -->
+  <section class="section" id="courses">
+    <div class="section-hdr">
+      <h2 class="section-title">📚 Belajar Yuk!</h2>
+      <div class="section-count" id="courseCount">1 kursus tersedia</div>
+    </div>
+    <div class="grid-3" id="courseGrid"></div>
+  </section>
+
+  <!-- SECTION: AYO MAIN -->
+  <section class="section" id="games">
+    <div class="section-hdr">
+      <h2 class="section-title">🎮 Ayo Main!</h2>
+      <div class="section-count" id="gameCount">1 game tersedia</div>
+    </div>
+    <div class="grid-2" id="gameGrid"></div>
+  </section>
+
+  <!-- WHO ARE THEY -->
+  <div class="who-strip">
+    <div class="who-card">
+      <div class="who-avatar" style="background:rgba(255,92,57,.25)">🧒</div>
+      <div class="who-name" style="color:#FFC234">Rayyan</div>
+      <div class="who-desc">Kelas 2 SD di Indonesia. Suka petualangan, kereta, dan belajar angka-angka baru.</div>
+      <div class="who-tag">Kelas 2 SD</div>
+    </div>
+    <div class="who-card">
+      <div class="who-avatar" style="background:rgba(232,75,160,.25)">👧</div>
+      <div class="who-name" style="color:#E84BA0">Raya</div>
+      <div class="who-desc">Suka cerita, petualangan, dan tantangan seru. Selalu siap main bareng Rayyan!</div>
+      <div class="who-tag">Petualang Sejati</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>© 2026 Learn with Adhi · Dibuat dengan ❤️ untuk Rayyan &amp; Raya</span>
+    <a href="/">← Kembali ke semua kursus</a>
+  </footer>
+
+</div>
+
+<script>
+  /* ─── DATA ─────────────────────────────────────────────── */
+
+  // To add a new course in the future, just add an entry here.
+  const COURSES = [
+    {
+      title: 'Matematika Kelas 2 SD',
+      subject: 'Matematika',
+      emoji: '🔢',
+      thumbBg: '#FFF5D6',
+      blurb: '6 bab interaktif: nilai tempat, penjumlahan, pengurangan, perkalian, bangun datar, dan pola bilangan.',
+      href: 'courses/math/rayyan-math-grade2-v1.html',
+      for: 'Rayyan · Kelas 2',
+      forColor: '#FF5C39',
+      progressKey: 'rayyanMath',    // localStorage key
+      totalChapters: 6,
+      type: 'course',
+    },
+    // ── add future courses below ──
+    // {
+    //   title: 'Bahasa Indonesia Kelas 2',
+    //   emoji: '📖',
+    //   thumbBg: '#E3F4F8',
+    //   blurb: 'Membaca, menulis, dan mengenal huruf dengan seru.',
+    //   href: 'courses/bahasa/rayyan-bahasa-grade2-v1.html',
+    //   for: 'Rayyan & Raya',
+    //   type: 'course',
+    //   coming: true,
+    // },
+  ];
+
+  // To add a new game, add an entry here.
+  const GAMES = [
+    {
+      title: "Petualangan Kereta",
+      emoji: '🚂',
+      thumbBg: '#E3F5EB',
+      blurb: 'Pilih petualanganmu sendiri — 3 versi cerita kereta yang seru buat Rayyan & Raya!',
+      href: 'courses/tools/train_adventure_hub.html',
+      for: 'Rayyan & Raya',
+      forColor: '#1F9D55',
+      type: 'game',
+    },
+    // ── add future games below ──
+    // {
+    //   title: 'Kuis Matematika',
+    //   emoji: '🧮',
+    //   ...
+    //   coming: true,
+    // },
+  ];
+
+  /* ─── PROGRESS ──────────────────────────────────────────── */
+
+  function getTotalStars() {
+    try {
+      const d = JSON.parse(localStorage.getItem('rayyanMath') || '{}');
+      return d.totalStars || 0;
+    } catch(e) { return 0; }
+  }
+
+  function getChaptersDone(progressKey) {
+    try {
+      const d = JSON.parse(localStorage.getItem(progressKey) || '{}');
+      const prog = d.progress || {};
+      return Object.values(prog).filter(p => p.stars > 0).length;
+    } catch(e) { return 0; }
+  }
+
+  function getStarsString(progressKey, total) {
+    const done = getChaptersDone(progressKey);
+    if (done === 0) return 'Belum dimulai';
+    if (done === total) return `✅ Selesai semua (${total} bab)`;
+    return `📖 ${done}/${total} bab selesai`;
+  }
+
+  /* ─── RENDER ─────────────────────────────────────────────── */
+
+  function renderCard(item) {
+    const badge    = item.coming ? 'coming' : item.type;
+    const badgeLbl = item.coming ? 'Segera' : (item.type === 'game' ? 'Game' : 'Kursus');
+    const progText = item.progressKey
+      ? getStarsString(item.progressKey, item.totalChapters)
+      : '';
+
+    return `
+      <a href="${item.coming ? '#' : item.href}" class="card${item.coming ? ' coming' : ''}">
+        <div class="card-thumb" style="background:${item.thumbBg}">
+          <span style="font-size:52px">${item.emoji}</span>
+          <span class="card-badge ${badge}">${badgeLbl}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-for" style="color:${item.forColor || 'var(--muted)'}">
+            ${item.for || ''}
+          </div>
+          <div class="card-title">${item.title}</div>
+          <div class="card-blurb">${item.blurb}</div>
+          <div class="card-foot">
+            <div class="card-prog">
+              ${progText ? `<span>${progText}</span>` : ''}
+            </div>
+            <div class="card-cta">${item.coming ? 'Segera →' : 'Buka →'}</div>
+          </div>
+        </div>
+      </a>`;
+  }
+
+  function render() {
+    // Courses
+    const live    = COURSES.filter(c => !c.coming);
+    const coming  = COURSES.filter(c => c.coming);
+    document.getElementById('courseGrid').innerHTML =
+      [...live, ...coming].map(renderCard).join('');
+    document.getElementById('courseCount').textContent =
+      `${live.length} kursus tersedia${coming.length ? ` · ${coming.length} segera hadir` : ''}`;
+
+    // Games
+    const liveG   = GAMES.filter(g => !g.coming);
+    const comingG = GAMES.filter(g => g.coming);
+    document.getElementById('gameGrid').innerHTML =
+      [...liveG, ...comingG].map(renderCard).join('');
+    document.getElementById('gameCount').textContent =
+      `${liveG.length} game tersedia${comingG.length ? ` · ${comingG.length} segera hadir` : ''}`;
+
+    // Stats
+    const stars = getTotalStars();
+    document.getElementById('totalStarsHero').textContent = stars;
+    document.getElementById('statCourses').textContent =
+      `📚 ${COURSES.filter(c=>!c.coming).length} kursus`;
+    document.getElementById('statGames').textContent =
+      `🎮 ${GAMES.filter(g=>!g.coming).length} game`;
+  }
+
+  render();
+</script>
+
+</body>
+</html>
