@@ -783,13 +783,13 @@
 
 <!-- HEADER -->
 <header class="hdr">
-  <a href="/" class="hdr-brand">
+  <a href="/kids.html" class="hdr-brand">
     <svg width="26" height="26" viewBox="0 0 100 100" fill="none">
       <circle cx="38" cy="50" r="22" fill="none" stroke="var(--ink)" stroke-width="14"/>
       <rect x="54" y="28" width="14" height="44" fill="var(--ink)"/>
       <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
     </svg>
-    <span class="hdr-brand-word">adhi</span>
+    <span class="hdr-brand-word">← Kids Hub</span>
   </a>
   <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
 </header>
@@ -885,6 +885,10 @@
   <div class="done-score-box">
     <div class="done-score-num" id="doneScoreNum">6/6</div>
     <div class="done-score-lbl">jawaban benar</div>
+  </div>
+  <div class="done-score-box" style="margin-top:10px;background:var(--sea-bg,#E3F4F8)">
+    <div class="done-score-num" id="doneTime" style="font-size:36px">--</div>
+    <div class="done-score-lbl">⏱️ waktu belajar</div>
   </div>
   <div class="done-msg" id="doneMsg"></div>
   <div class="done-actions">
@@ -1486,7 +1490,9 @@ function saveState() {
 }
 
 function resetProgress() {
-  if (!confirm('Reset semua progress Rayyan? Ini tidak bisa di-undo.')) return;
+  const pw = prompt('Masukkan kata sandi untuk reset progress:');
+  if (pw === null) return;
+  if (pw !== 'bogor123') { alert('Kata sandi salah! ❌'); return; }
   state.progress   = {};
   state.totalStars = 0;
   document.getElementById('starCount').textContent = 0;
@@ -1525,7 +1531,16 @@ function openChapter(idx) {
   show('sLesson');
 }
 
+let _timerStart = null;
+
+function fmtTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const m = Math.floor(s / 60);
+  return m > 0 ? `${m} mnt ${s % 60} dtk` : `${s} dtk`;
+}
+
 function startExercise() {
+  _timerStart    = Date.now();
   state.qIdx     = 0;
   state.score    = 0;
   state.answered = false;
@@ -1697,6 +1712,10 @@ function showComplete() {
         </div>
       </div>
     </div>`).join('');
+
+  const elapsed = _timerStart ? Date.now() - _timerStart : 0;
+  _timerStart = null;
+  document.getElementById('doneTime').textContent = fmtTime(elapsed);
 
   show('sComplete');
   if (stars >= 2) setTimeout(launchConfetti, 350);

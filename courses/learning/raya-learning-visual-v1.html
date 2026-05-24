@@ -335,7 +335,7 @@
       <rect x="54" y="28" width="14" height="44" fill="var(--ink)"/>
       <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
     </svg>
-    <span class="hdr-word">adhi</span>
+    <span class="hdr-word">← Kids Hub</span>
   </a>
   <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
 </header>
@@ -442,6 +442,10 @@
   <div class="done-score-box">
     <div class="done-score-num" id="doneNum">5/5</div>
     <div class="done-score-lbl">jawaban benar</div>
+  </div>
+  <div class="done-score-box" style="margin-top:10px;background:#E3F4F8">
+    <div class="done-score-num" id="doneTime" style="font-size:36px">--</div>
+    <div class="done-score-lbl">⏱️ waktu belajar</div>
   </div>
   <div class="done-msg" id="doneMsg"></div>
   <div class="done-actions">
@@ -758,7 +762,9 @@ function saveState() {
 }
 
 function resetProgress() {
-  if (!confirm('Reset semua progress Raya? Ini tidak bisa di-undo.')) return;
+  const pw = prompt('Masukkan kata sandi untuk reset progress:');
+  if (pw === null) return;
+  if (pw !== 'bogor123') { alert('Kata sandi salah! ❌'); return; }
   state.progress = {}; state.totalStars = 0;
   document.getElementById('starCount').textContent = 0;
   saveState(); renderHome();
@@ -790,7 +796,16 @@ function openChapter(idx) {
   show('sLesson');
 }
 
+let _timerStart = null;
+
+function fmtTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const m = Math.floor(s / 60);
+  return m > 0 ? `${m} mnt ${s % 60} dtk` : `${s} dtk`;
+}
+
 function startExercise() {
+  _timerStart = Date.now();
   state.qIdx = 0; state.score = 0; state.answered = false;
   renderQ(); show('sExercise');
 }
@@ -884,6 +899,10 @@ function showComplete() {
   document.getElementById('doneStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3-stars);
   document.getElementById('doneNum').textContent   = `${state.score}/${total}`;
   document.getElementById('doneMsg').textContent   = msgs[stars-1];
+
+  const elapsed = _timerStart ? Date.now() - _timerStart : 0;
+  _timerStart = null;
+  document.getElementById('doneTime').textContent = fmtTime(elapsed);
 
   show('sComplete');
   setTimeout(launchConfetti, 300);
