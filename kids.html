@@ -493,6 +493,19 @@
       type: 'course',
     },
     {
+      title: 'Matematika Kelas 3 SD 🚂',
+      subject: 'Matematika',
+      emoji: '🚂',
+      thumbBg: '#E8E9F8',
+      blurb: 'Petualangan KAI! 6 stasiun: nilai tempat ribuan, perkalian lanjutan, pembagian, penjumlahan besar, pengukuran, dan pecahan.',
+      href: 'courses/math/rayyan-math-grade3.html',
+      for: 'Rayyan · Kelas 3 SD',
+      forColor: '#2E3192',
+      progressKey: 'rayyanMath3',
+      totalChapters: 6,
+      type: 'course',
+    },
+    {
       title: 'Belajar Bersama Raya 🌸',
       subject: 'PAUD Visual',
       emoji: '🌸',
@@ -543,7 +556,7 @@
 
   function getTotalStars() {
     let total = 0;
-    const keys = ['rayyanMath', 'rayaLearning', 'rayaVisual'];
+    const keys = ['rayyanMath', 'rayyanMath3', 'rayaLearning', 'rayaVisual'];
     for (const k of keys) {
       try {
         const d = JSON.parse(localStorage.getItem(k) || '{}');

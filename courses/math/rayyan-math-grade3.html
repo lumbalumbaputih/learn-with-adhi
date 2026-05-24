@@ -1,0 +1,1974 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Matematika Rayyan — Kelas 3 SD · Petualangan KAI 🚂</title>
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== TOKENS ===== */
+    :root {
+      --tomato:  #FF5C39;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --mawar:   #E84BA0;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --paper-2: #F4ECD8;
+      --line:    rgba(26,22,20,0.14);
+      --muted:   #6B6259;
+
+      --tomato-bg: #FFE8E3;
+      --mango-bg:  #FFF5D6;
+      --forest-bg: #E3F5EB;
+      --sea-bg:    #E3F4F8;
+      --mawar-bg:  #FCE8F3;
+      --indigo-bg: #E8E9F8;
+
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Nunito', system-ui, sans-serif;
+
+      --r:    16px;
+      --r-sm: 10px;
+      --r-lg: 24px;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--fb);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input  { font-family: inherit; }
+
+    /* ===== HEADER ===== */
+    .hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 2px solid var(--ink);
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .hdr-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .hdr-brand-word {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+    .hdr-stars {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--mango);
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    /* ===== SCREENS ===== */
+    .screen {
+      display: none;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+      animation: fadeUp 0.28s ease;
+    }
+    .screen.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== HOME ===== */
+    .home-hero {
+      text-align: center;
+      padding: 32px 0 24px;
+    }
+    .home-avatar {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 16px;
+      background: var(--mango);
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+    }
+    .home-greeting {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(28px, 7vw, 46px);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    .home-greeting em {
+      font-style: normal;
+      background: var(--tomato);
+      color: var(--paper);
+      padding: 1px 8px;
+      border-radius: 8px;
+    }
+    .home-sub {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    /* ===== ROUTE MAP ===== */
+    .route-map {
+      background: var(--indigo);
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      padding: 20px 16px 18px;
+      margin-bottom: 28px;
+      overflow-x: auto;
+    }
+    .route-label {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mango);
+      margin-bottom: 14px;
+    }
+    .route-track {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      min-width: 360px;
+    }
+    .route-station {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .station-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      border: 2px solid rgba(255,255,255,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all .3s;
+    }
+    .station-dot.done {
+      background: var(--forest);
+      border-color: var(--forest);
+    }
+    .station-dot.active {
+      background: var(--mango);
+      border-color: var(--mango);
+      animation: stationPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes stationPulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(255,194,52,.5); }
+      50% { box-shadow: 0 0 0 8px rgba(255,194,52,0); }
+    }
+    .station-name {
+      font-family: var(--fd);
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
+    .station-name.done  { color: #7ee8a2; }
+    .station-name.active{ color: var(--mango); }
+    .route-rail {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,.18);
+      position: relative;
+      top: -10px;
+      min-width: 20px;
+    }
+    .route-rail.done { background: var(--forest); }
+
+    /* ===== PROGRESS OVERALL ===== */
+    .overall-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      padding: 18px;
+      margin-bottom: 36px;
+    }
+    .ov-ring {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+    }
+    .ov-info { flex: 1; text-align: left; }
+    .ov-label {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .ov-bar-wrap {
+      height: 10px;
+      background: var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .ov-bar {
+      height: 100%;
+      background: var(--forest);
+      border-radius: 999px;
+      transition: width 0.8s ease;
+    }
+    .ov-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .sec-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 500px) {
+      .chapters-grid { grid-template-columns: 1fr; }
+    }
+
+    .ch-card {
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--paper);
+      transition: transform .17s, box-shadow .17s;
+      text-align: left;
+    }
+    .ch-card:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .ch-thumb {
+      padding: 18px 18px 14px;
+      border-bottom: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ch-emoji { font-size: 38px; line-height: 1; }
+    .ch-stars-row { display: flex; gap: 2px; }
+    .ch-star { font-size: 18px; opacity: 0.25; }
+    .ch-star.on { opacity: 1; }
+    .ch-body { padding: 14px; }
+    .ch-num {
+      font-family: var(--fd);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .ch-city {
+      font-family: var(--fd);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--sea);
+      letter-spacing: .04em;
+      margin-bottom: 3px;
+    }
+    .ch-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .ch-desc { font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+    .ch-track { font-size: 11px; color: rgba(26,22,20,.3); letter-spacing: .08em; margin-top: 8px; }
+    .ch-status {
+      margin-top: 6px;
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ===== LESSON ===== */
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--fd);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--muted);
+      padding: 0;
+      margin-bottom: 24px;
+      transition: color .15s;
+    }
+    .back-btn:hover { color: var(--ink); }
+
+    .lesson-hdr {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .lesson-icon {
+      font-size: 52px;
+      line-height: 1;
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      padding: 10px 14px;
+      flex-shrink: 0;
+    }
+    .lesson-eyebrow {
+      font-family: var(--fd);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .lesson-city {
+      font-family: var(--fd);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--sea);
+      letter-spacing: .04em;
+      margin-bottom: 3px;
+    }
+    .lesson-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(24px, 5vw, 36px);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .lesson-body {
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .ls { margin-bottom: 22px; }
+    .ls:last-child { margin-bottom: 0; }
+    .ls-h {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ls p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .ex-box {
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: var(--r-sm);
+      padding: 18px;
+      margin-top: 12px;
+      text-align: center;
+    }
+    .big-num {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 32px;
+      letter-spacing: -0.03em;
+    }
+    .pv-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .pv-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      border: 2px solid var(--ink);
+      border-radius: var(--r-sm);
+      padding: 10px 12px;
+      min-width: 58px;
+    }
+    .pv-num {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 26px;
+    }
+    .pv-lbl {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+    }
+    .op-sym {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 22px;
+    }
+    .fraction-vis {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+    .frac-box {
+      width: 44px;
+      height: 44px;
+      border: 2.5px solid var(--ink);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .frac-box.filled { background: var(--tomato); }
+    .frac-box.empty  { background: var(--paper); }
+
+    .kai-box {
+      background: var(--indigo);
+      color: var(--paper);
+      border-radius: var(--r);
+      border: 2.5px dashed var(--sea);
+      padding: 18px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .kai-ico { font-size: 28px; flex-shrink: 0; line-height: 1; }
+    .kai-name {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--mango);
+      margin-bottom: 3px;
+    }
+    .kai-msg { font-size: 14px; line-height: 1.55; }
+
+    .start-btn {
+      width: 100%;
+      background: var(--tomato);
+      color: var(--paper);
+      border: 3px solid var(--ink);
+      border-radius: var(--r);
+      padding: 18px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform .17s, box-shadow .17s;
+    }
+    .start-btn:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    /* ===== EXERCISE ===== */
+    .ex-hdr {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .ex-back-btn {
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r-sm);
+      padding: 8px 12px;
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .ex-meta { flex: 1; }
+    .ex-ch-name {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .ex-bar-wrap {
+      height: 7px;
+      background: var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .ex-bar {
+      height: 100%;
+      background: var(--tomato);
+      border-radius: 999px;
+      transition: width .4s ease;
+    }
+    .ex-qnum {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .q-card {
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r-lg);
+      padding: 28px 24px;
+      margin-bottom: 20px;
+    }
+    .q-label {
+      font-family: var(--fd);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .q-text {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(18px, 4.5vw, 26px);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .q-visual {
+      font-size: 26px;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .opts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .opt-btn {
+      background: var(--paper);
+      border: 2.5px solid var(--ink);
+      border-radius: var(--r);
+      padding: 14px 10px;
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: clamp(14px, 3.5vw, 20px);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .14s, box-shadow .14s;
+      line-height: 1.3;
+    }
+    .opt-btn:hover:not(:disabled) {
+      transform: translate(-2px,-2px);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .opt-btn.correct {
+      background: var(--forest);
+      color: #fff;
+      border-color: var(--forest);
+      animation: pulse .45s ease;
+    }
+    .opt-btn.wrong {
+      background: var(--tomato);
+      color: #fff;
+      border-color: var(--tomato);
+      animation: shake .38s ease;
+    }
+    .opt-btn:disabled { cursor: not-allowed; }
+
+    @keyframes pulse {
+      0%  { transform: scale(1); }
+      50% { transform: scale(1.07); }
+      100%{ transform: scale(1); }
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    .inp-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .num-inp {
+      flex: 1;
+      border: 3px solid var(--ink);
+      border-radius: var(--r);
+      padding: 14px 16px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 26px;
+      text-align: center;
+      background: var(--paper);
+      color: var(--ink);
+      outline: none;
+      transition: border-color .15s;
+    }
+    .num-inp:focus { border-color: var(--sea); }
+    .num-inp.ok   { border-color: var(--forest); background: var(--forest-bg); }
+    .num-inp.bad  { border-color: var(--tomato); background: var(--tomato-bg); }
+    .chk-btn {
+      background: var(--sea);
+      color: var(--ink);
+      border: 2.5px solid var(--ink);
+      border-radius: var(--r);
+      padding: 14px 20px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: transform .14s, box-shadow .14s;
+    }
+    .chk-btn:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    .toast {
+      border-radius: var(--r);
+      padding: 14px 18px;
+      margin-top: 14px;
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 15px;
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      animation: toastIn .25s ease;
+    }
+    .toast.show { display: flex; }
+    .toast.ok  { background: var(--forest-bg); border: 2px solid var(--forest); color: #0e6032; }
+    .toast.bad { background: var(--tomato-bg); border: 2px solid var(--tomato); color: #c73013; }
+    .toast-expl { font-weight: 400; font-size: 13px; margin-top: 2px; }
+
+    @keyframes toastIn {
+      from { opacity:0; transform:translateY(-6px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .nxt-btn {
+      width: 100%;
+      margin-top: 14px;
+      background: var(--ink);
+      color: var(--paper);
+      border: 2.5px solid var(--ink);
+      border-radius: var(--r);
+      padding: 17px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 16px;
+      display: none;
+      transition: opacity .15s;
+    }
+    .nxt-btn.show { display: block; }
+    .nxt-btn:hover { opacity: .85; }
+
+    /* ===== COMPLETE ===== */
+    .done-hero {
+      text-align: center;
+      padding: 36px 0 24px;
+    }
+    .done-badge {
+      font-size: 76px;
+      line-height: 1;
+      margin-bottom: 16px;
+      animation: pop .5s cubic-bezier(.175,.885,.32,1.275);
+    }
+    @keyframes pop {
+      0%  { transform:scale(0); opacity:0; }
+      100%{ transform:scale(1); opacity:1; }
+    }
+    .done-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(24px, 6vw, 38px);
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .done-stars {
+      font-size: 44px;
+      margin: 14px 0;
+      animation: starsIn .5s ease .25s both;
+    }
+    @keyframes starsIn {
+      from { transform:scale(.5); opacity:0; }
+      to   { transform:scale(1);  opacity:1; }
+    }
+    .done-score-box {
+      background: var(--paper-2);
+      border: 2px solid var(--ink);
+      border-radius: var(--r);
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .done-score-num {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 52px;
+      letter-spacing: -0.04em;
+    }
+    .done-score-lbl { font-size: 14px; color: var(--muted); }
+    .done-msg {
+      font-size: 15px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 20px;
+      line-height: 1.55;
+    }
+    .done-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .act-btn {
+      border: 2.5px solid var(--ink);
+      border-radius: var(--r);
+      padding: 15px;
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .act-btn:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .act-btn.primary   { background: var(--tomato); color: var(--paper); }
+    .act-btn.secondary { background: var(--paper-2); color: var(--ink); }
+
+    /* ===== ALL DONE CELEBRATION ===== */
+    #allDoneScreen {
+      text-align: center;
+    }
+    .train-anim {
+      font-size: 48px;
+      display: inline-block;
+      animation: trainMove 3s ease-in-out infinite alternate;
+    }
+    @keyframes trainMove {
+      from { transform: translateX(-30px); }
+      to   { transform: translateX(30px); }
+    }
+    .all-done-track {
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin: 8px 0 24px;
+      overflow: hidden;
+    }
+
+    /* ===== CONFETTI ===== */
+    #confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    }
+    .cp {
+      position: absolute;
+      top: -16px;
+      border-radius: 2px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      from { top: -20px; opacity: 1; }
+      to   { top: 110vh; opacity: 0; }
+    }
+
+    /* ===== REVIEW PANEL ===== */
+    .review-panel { margin-top: 20px; }
+    .review-title {
+      font-family: var(--fd);
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+    .review-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--r-sm);
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .review-ico { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .review-q   { font-weight: 600; margin-bottom: 2px; }
+    .review-a   { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<!-- CONFETTI -->
+<div id="confetti"></div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <a href="/kids.html" class="hdr-brand">
+    <svg width="26" height="26" viewBox="0 0 100 100" fill="none">
+      <circle cx="38" cy="50" r="22" fill="none" stroke="var(--ink)" stroke-width="14"/>
+      <rect x="54" y="28" width="14" height="44" fill="var(--ink)"/>
+      <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+    </svg>
+    <span class="hdr-brand-word">← Kids Hub</span>
+  </a>
+  <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+</header>
+
+<!-- ═══ SCREEN: HOME ═══ -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="home-avatar">🚂</div>
+    <h1 class="home-greeting">Halo, <em>Masinis Rayyan!</em></h1>
+    <p class="home-sub">Naik kereta KAI bersama Kai si Kondektur! Selesaikan setiap stasiun untuk melanjutkan perjalanan. 🚉</p>
+  </div>
+
+  <!-- ROUTE MAP -->
+  <div class="route-map">
+    <div class="route-label">🗺️ Rute Perjalanan KAI Rayyan</div>
+    <div class="route-track" id="routeTrack"></div>
+  </div>
+
+  <div class="overall-box">
+    <svg class="ov-ring" viewBox="0 0 68 68" fill="none">
+      <circle cx="34" cy="34" r="28" stroke="var(--line)" stroke-width="6"/>
+      <circle cx="34" cy="34" r="28" stroke="var(--forest)" stroke-width="6"
+              stroke-linecap="round"
+              stroke-dasharray="176" stroke-dashoffset="176"
+              id="ov-ring-path" transform="rotate(-90 34 34)"
+              style="transition:stroke-dashoffset 1s ease"/>
+    </svg>
+    <div class="ov-info">
+      <div class="ov-label">Progress Perjalanan Rayyan 🚂</div>
+      <div class="ov-bar-wrap">
+        <div class="ov-bar" id="ovBar" style="width:0%"></div>
+      </div>
+      <div class="ov-sub" id="ovSub">0 dari 6 stasiun selesai</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Pilih Stasiun 🚉</div>
+  <div class="chapters-grid" id="chGrid"></div>
+
+  <div style="margin-top:28px;text-align:center">
+    <button onclick="resetProgress()" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline">
+      Reset progress (untuk orang tua)
+    </button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN: LESSON ═══ -->
+<div class="screen" id="sLesson">
+  <button class="back-btn" onclick="goHome()">← Kembali ke peta rute</button>
+  <div id="lessonHdr"></div>
+  <div class="lesson-body" id="lessonBody"></div>
+  <div class="kai-box">
+    <div class="kai-ico">🚂</div>
+    <div>
+      <div class="kai-name">Kai · Kondekturmu</div>
+      <div class="kai-msg" id="kaiMsg">Baca dulu ya, lalu kerjakan soal-soalnya!</div>
+    </div>
+  </div>
+  <button class="start-btn" onclick="startExercise()">✏️ Mulai Latihan di Stasiun Ini!</button>
+</div>
+
+<!-- ═══ SCREEN: EXERCISE ═══ -->
+<div class="screen" id="sExercise">
+  <div class="ex-hdr">
+    <button class="ex-back-btn" onclick="goHome()">←</button>
+    <div class="ex-meta">
+      <div class="ex-ch-name" id="exChName"></div>
+      <div class="ex-bar-wrap">
+        <div class="ex-bar" id="exBar" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="ex-qnum" id="exQNum">1/6</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-label">Soal</div>
+    <div class="q-text"    id="qText"></div>
+    <div class="q-visual"  id="qVisual" style="display:none"></div>
+    <div id="answerArea"></div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span id="toastIco"></span>
+    <div>
+      <div id="toastTitle"></div>
+      <div class="toast-expl" id="toastExpl"></div>
+    </div>
+  </div>
+  <button class="nxt-btn" id="nxtBtn" onclick="nextQ()">Soal berikutnya →</button>
+</div>
+
+<!-- ═══ SCREEN: CHAPTER COMPLETE ═══ -->
+<div class="screen" id="sComplete">
+  <div class="done-hero">
+    <div class="done-badge" id="doneBadge">🎉</div>
+    <div class="done-title" id="doneTitle">Stasiun Selesai!</div>
+    <div class="done-stars" id="doneStars">⭐⭐⭐</div>
+  </div>
+  <div class="done-score-box">
+    <div class="done-score-num" id="doneScoreNum">6/6</div>
+    <div class="done-score-lbl">jawaban benar</div>
+  </div>
+  <div class="done-score-box" style="margin-top:10px;background:var(--sea-bg)">
+    <div class="done-score-num" id="doneTime" style="font-size:36px">--</div>
+    <div class="done-score-lbl">⏱️ waktu belajar</div>
+  </div>
+  <div class="done-msg" id="doneMsg"></div>
+  <div class="done-actions">
+    <button class="act-btn primary"   onclick="retryChapter()">🔁 Coba Lagi</button>
+    <button class="act-btn secondary" onclick="goHome()">🗺️ Peta Rute</button>
+  </div>
+  <div class="review-panel">
+    <div class="review-title">📋 Ringkasan Soal</div>
+    <div id="reviewList"></div>
+  </div>
+</div>
+
+<!-- ═══ SCREEN: ALL DONE ═══ -->
+<div class="screen" id="sAllDone">
+  <div id="allDoneScreen">
+    <div style="padding:40px 0 16px">
+      <div class="train-anim">🚂💨</div>
+    </div>
+    <div class="all-done-track">━━━━━━━━━━━━━━━━━━━━</div>
+    <div style="font-size:64px;margin-bottom:16px;animation:pop .6s cubic-bezier(.175,.885,.32,1.275)">🏆</div>
+    <div style="font-family:var(--fd);font-weight:800;font-size:clamp(28px,7vw,44px);letter-spacing:-0.03em;margin-bottom:12px">
+      Selamat, Masinis Rayyan!<br>Kamu sudah sampai di <em style="font-style:normal;background:var(--tomato);color:#fff;padding:2px 10px;border-radius:8px">Bali!</em>
+    </div>
+    <div style="font-size:16px;color:var(--muted);margin-bottom:24px;line-height:1.6">
+      Rayyan telah menyelesaikan semua 6 stasiun perjalanan KAI.<br>
+      Kamu adalah <strong>Masinis Sejati KAI!</strong> 🌟
+    </div>
+    <div class="done-score-box">
+      <div class="done-score-num" id="allDoneStars"></div>
+      <div class="done-score-lbl">total bintang dikumpulkan dari 18</div>
+    </div>
+    <div style="font-size:40px;margin:20px 0;letter-spacing:4px" id="allDoneStarEmoji"></div>
+    <div style="display:grid;gap:10px;margin-top:16px">
+      <button class="act-btn primary" style="font-size:18px;padding:20px" onclick="goHome()">🗺️ Lihat Peta Rute</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   LESSON HTML BUILDERS
+═══════════════════════════════════════════ */
+function lessonPlaceValue4() {
+  return `
+<div class="ls">
+  <div class="ls-h">🚂 Selamat Datang di Jakarta!</div>
+  <p>Jakarta adalah kota terbesar Indonesia — penuh jutaan orang! Di sini kita belajar bilangan <strong>ribuan</strong>.</p>
+</div>
+<div class="ls">
+  <div class="ls-h">🔢 Empat Gerbong, Empat Tempat</div>
+  <p>Setiap gerbong kereta mewakili satu <strong>nilai tempat</strong>. Ada 4 gerbong sekarang!</p>
+  <div class="ex-box">
+    <div class="pv-row">
+      <div class="pv-box" style="background:#E8E9F8;border-color:#2E3192">
+        <div class="pv-num" style="color:#2E3192">5</div>
+        <div class="pv-lbl">Ribuan</div>
+      </div>
+      <div class="op-sym">+</div>
+      <div class="pv-box" style="background:#E3F4F8;border-color:#1FA9C7">
+        <div class="pv-num" style="color:#1FA9C7">2</div>
+        <div class="pv-lbl">Ratusan</div>
+      </div>
+      <div class="op-sym">+</div>
+      <div class="pv-box" style="background:#FFF5D6;border-color:#e6a800">
+        <div class="pv-num" style="color:#b38000">8</div>
+        <div class="pv-lbl">Puluhan</div>
+      </div>
+      <div class="op-sym">+</div>
+      <div class="pv-box" style="background:#E3F5EB;border-color:#1F9D55">
+        <div class="pv-num" style="color:#1F9D55">3</div>
+        <div class="pv-lbl">Satuan</div>
+      </div>
+      <div class="op-sym">=</div>
+      <div class="pv-box" style="background:var(--ink);border-color:var(--ink)">
+        <div class="pv-num" style="color:#fff">5.283</div>
+        <div class="pv-lbl" style="color:rgba(255,255,255,.6)">Angka</div>
+      </div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted)">5 ribuan = 5.000 &nbsp;·&nbsp; 2 ratusan = 200 &nbsp;·&nbsp; 8 puluhan = 80 &nbsp;·&nbsp; 3 satuan = 3</p>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🔍 Membandingkan Bilangan Ribuan</div>
+  <p>Sama seperti ratusan — bandingkan dari kiri ke kanan!<br>Lihat <strong>ribuan</strong> dulu. Kalau sama, baru lihat ratusan, puluhan, satuan.</p>
+  <div class="ex-box">
+    <p style="font-size:18px"><span style="color:#1F9D55;font-weight:800">4.523</span> vs <span style="color:#FF5C39;font-weight:800">4.532</span></p>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px">Ribuan sama (4=4) → Ratusan sama (5=5) → Puluhan: <strong>2 &lt; 3</strong> → 4.532 lebih besar!</p>
+  </div>
+</div>`;
+}
+
+function lessonMultiplication2d() {
+  return `
+<div class="ls">
+  <div class="ls-h">🏭 Pabrik Bandung Lagi Produksi!</div>
+  <p>Di Bandung, pabrik memproduksi barang banyak. Kita belajar perkalian bilangan <strong>dua angka</strong>!</p>
+</div>
+<div class="ls">
+  <div class="ls-h">✖️ Cara Mudah: Pecah Dulu!</div>
+  <p>Pecah bilangan dua angka jadi puluhan + satuan, lalu jumlahkan!</p>
+  <div class="ex-box">
+    <div class="big-num">23 × 4</div>
+    <div style="margin-top:14px;font-size:15px;line-height:2.2;text-align:left">
+      Langkah 1: 20 × 4 = <strong>80</strong> (puluhan)<br>
+      Langkah 2: 3 × 4 = <strong>12</strong> (satuan)<br>
+      Langkah 3: 80 + 12 = <span style="color:#1F9D55;font-weight:800">92</span> ✅
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🚃 Bayangkan Gerbong Kereta!</div>
+  <p>Setiap gerbong KAI punya kursi yang sama. Kalikan untuk tahu totalnya!</p>
+  <div class="ex-box">
+    <div style="font-size:26px;margin-bottom:8px">🚃🚃🚃</div>
+    <p style="font-size:14px;color:var(--muted)">3 gerbong × 12 kursi = 12+12+12 = <strong>36 kursi</strong></p>
+    <p style="font-size:13px;color:var(--muted);margin-top:4px">(10×3) + (2×3) = 30 + 6 = 36</p>
+  </div>
+</div>`;
+}
+
+function lessonDivision() {
+  return `
+<div class="ls">
+  <div class="ls-h">🏛️ Berbagi di Yogyakarta!</div>
+  <p>Di Yogyakarta, semua penumpang berbagi snack secara merata. Inilah <strong>pembagian</strong>!</p>
+</div>
+<div class="ls">
+  <div class="ls-h">➗ Pembagian = Kebalikan Perkalian</div>
+  <p>Kalau kamu tahu perkalian, pembagian itu mudah! Tinggal dibalik!</p>
+  <div class="ex-box">
+    <div style="font-size:16px;line-height:2.4;text-align:left">
+      <span style="color:#1FA9C7;font-weight:700">4 × 3 = 12</span> → maka → <span style="color:#1F9D55;font-weight:700">12 ÷ 4 = 3</span><br>
+      <span style="color:#1FA9C7;font-weight:700">5 × 6 = 30</span> → maka → <span style="color:#1F9D55;font-weight:700">30 ÷ 5 = 6</span><br>
+      <span style="color:#1FA9C7;font-weight:700">7 × 8 = 56</span> → maka → <span style="color:#1F9D55;font-weight:700">56 ÷ 7 = 8</span>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🍫 Bayangkan Membagi Coklat</div>
+  <p>Ada 24 coklat untuk 3 orang. Setiap orang dapat berapa?</p>
+  <div class="ex-box">
+    <div style="font-size:22px;margin-bottom:8px">🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫</div>
+    <p style="font-size:14px">24 ÷ 3 = <strong style="color:#1F9D55">8</strong> coklat per orang 😋</p>
+  </div>
+</div>`;
+}
+
+function lessonBigNumbers() {
+  return `
+<div class="ls">
+  <div class="ls-h">⚓ Pelabuhan Semarang Sibuk!</div>
+  <p>Ribuan kargo masuk dan keluar setiap hari. Kita belajar menjumlah dan mengurangi bilangan <strong>ribuan</strong>!</p>
+</div>
+<div class="ls">
+  <div class="ls-h">➕ Penjumlahan 4 Angka</div>
+  <p>Sama dengan sebelumnya — mulai dari satuan, terus ke kiri. Jangan lupa <strong>menyimpan</strong>!</p>
+  <div class="ex-box">
+    <div class="big-num">2.456 + 1.378</div>
+    <div style="margin-top:12px;font-size:14px;line-height:2.2;text-align:left">
+      Satuan : 6 + 8 = <strong>14</strong> → tulis 4, simpan 1<br>
+      Puluhan: 5 + 7 + 1 = <strong>13</strong> → tulis 3, simpan 1<br>
+      Ratusan: 4 + 3 + 1 = <strong>8</strong> → tulis 8<br>
+      Ribuan : 2 + 1 = <strong>3</strong> → tulis 3<br>
+      <span style="color:#1F9D55;font-weight:700">Jawaban = 3.834 ✅</span>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">➖ Pengurangan 4 Angka</div>
+  <p>Kalau angka atas lebih kecil, <strong>pinjam</strong> dari kolom sebelah kiri!</p>
+  <div class="ex-box">
+    <div class="big-num">5.000 − 1.234</div>
+    <div style="margin-top:10px;font-size:13px;color:var(--muted)">
+      Bayangkan: ada 5.000 ton kargo, dikirim 1.234 ton. Sisa 3.766 ton!
+    </div>
+    <div style="margin-top:8px;font-size:14px;font-weight:700;color:#1F9D55">Jawaban = 3.766 ✅</div>
+  </div>
+</div>`;
+}
+
+function lessonMeasurement() {
+  return `
+<div class="ls">
+  <div class="ls-h">🏗️ Insinyur Surabaya Mengukur!</div>
+  <p>Insinyur KAI harus tahu satuan ukuran dengan tepat. Yuk belajar <strong>pengukuran</strong>!</p>
+</div>
+<div class="ls">
+  <div class="ls-h">📏 Panjang: Meter & Sentimeter</div>
+  <p><strong>1 meter (m) = 100 sentimeter (cm)</strong></p>
+  <div class="ex-box">
+    <div style="font-size:16px;line-height:2.4;text-align:left">
+      📏 Rel kereta = <strong>ratusan meter</strong> panjangnya<br>
+      📏 Gerbong KAI = sekitar <strong>20–25 meter</strong><br>
+      📏 Tinggi badan kita = sekitar <strong>120–140 cm</strong> = <strong>1,2–1,4 m</strong>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">⚖️ Berat: Kilogram & Gram</div>
+  <p><strong>1 kilogram (kg) = 1.000 gram (g)</strong></p>
+  <div class="ex-box">
+    <div style="font-size:16px;line-height:2.4;text-align:left">
+      🎒 Tas sekolah = sekitar <strong>2–3 kg</strong><br>
+      🍎 Satu apel = sekitar <strong>200 gram</strong><br>
+      🚂 Gerbong KAI = <strong>ratusan ribu kilogram</strong>!
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🕐 Waktu: Jam & Menit</div>
+  <p><strong>1 jam = 60 menit</strong></p>
+  <div class="ex-box">
+    <div style="font-size:16px;line-height:2;text-align:left">
+      🚂 Jakarta → Bandung = sekitar <strong>3 jam</strong><br>
+      🚂 Jakarta → Surabaya = sekitar <strong>9 jam</strong>
+    </div>
+  </div>
+</div>`;
+}
+
+function lessonFractions() {
+  return `
+<div class="ls">
+  <div class="ls-h">🏝️ Berbagi Snack di Bali!</div>
+  <p>Rayyan sampai di Bali! Di sini kita belajar <strong>pecahan</strong> — cara membagi sesuatu jadi bagian yang sama.</p>
+</div>
+<div class="ls">
+  <div class="ls-h">🍕 Apa Itu Pecahan?</div>
+  <p><strong>Pecahan</strong> adalah bagian dari satu benda utuh yang dibagi sama rata.</p>
+  <div class="ex-box">
+    <div class="fraction-vis">
+      <div class="frac-box filled">🔴</div>
+      <div class="frac-box empty"></div>
+      <div class="frac-box empty"></div>
+      <div class="frac-box empty"></div>
+    </div>
+    <p style="font-size:18px;font-weight:800;margin:8px 0">1/4</p>
+    <p style="font-size:13px;color:var(--muted)">1 bagian dari 4 bagian sama besar = satu per empat</p>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">📊 Membandingkan Pecahan</div>
+  <p>Semakin besar angka bawah (penyebut), semakin <strong>kecil</strong> tiap bagiannya!</p>
+  <div class="ex-box">
+    <div style="font-size:18px;font-weight:700">1/2 &gt; 1/3 &gt; 1/4</div>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px">
+      Bayangkan pizza dibagi 2 vs dibagi 4 — bagian 1/2 lebih besar!
+    </p>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">💡 Pecahan Senilai</div>
+  <p><strong>2/4 = 1/2</strong> — sama besar! Bayangkan 2 dari 4 kotak = 1 dari 2 kotak.</p>
+  <div class="ex-box">
+    <div class="fraction-vis">
+      <div class="frac-box filled">🔴</div>
+      <div class="frac-box filled">🔴</div>
+      <div class="frac-box empty"></div>
+      <div class="frac-box empty"></div>
+    </div>
+    <p style="font-size:14px;margin-top:8px">2/4 = <strong>1/2</strong> (setengah!)</p>
+  </div>
+</div>`;
+}
+
+/* ═══════════════════════════════════════════
+   CHAPTER DATA
+═══════════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    id: 'place-value-4',
+    title: 'Nilai Tempat Ribuan',
+    city: '🚉 Jakarta',
+    emoji: '🔢',
+    color: '#2E3192',
+    colorBg: '#E8E9F8',
+    desc: 'Bilangan ribuan — 4 nilai tempat!',
+    kaiTip: 'Ribuan itu seperti 4 gerbong kereta: 🚃🚃🚃🚃 — ribuan, ratusan, puluhan, satuan! Ingat dari kiri ke kanan ya!',
+    lessonHTML: lessonPlaceValue4(),
+    questions: [
+      {
+        type: 'mc',
+        q: '3.000 + 400 + 20 + 5 = ?',
+        visual: '🚃🚃🚃 + 🚃 (kecil) + 🚃 (mini)',
+        opts: ['3.425', '3.045', '3.245', '3.025'],
+        ans: 0,
+        expl: '3.000 + 400 + 20 + 5 = 3.425. Ribuan 3, ratusan 4, puluhan 2, satuan 5!'
+      },
+      {
+        type: 'mc',
+        q: 'Dalam bilangan 4.732, berapa digit di posisi RIBUAN?',
+        visual: '4️⃣7️⃣3️⃣2️⃣',
+        opts: ['2', '3', '7', '4'],
+        ans: 3,
+        expl: 'Digit paling kiri adalah posisi ribuan. 4.732 → ribuannya adalah 4!'
+      },
+      {
+        type: 'mc',
+        q: 'Bilangan mana yang LEBIH BESAR?',
+        opts: ['3.456', '3.654', '3.546', '3.465'],
+        ans: 1,
+        expl: 'Ribuan sama (3=3), ratusan: 6 > 5 > 4. Jadi 3.654 paling besar!'
+      },
+      {
+        type: 'input',
+        q: 'Tulis dalam angka: 5 ribuan + 2 ratusan + 8 puluhan = ?',
+        ans: '5280',
+        expl: '5.000 + 200 + 80 + 0 = 5.280!'
+      },
+      {
+        type: 'mc',
+        q: 'Urutkan dari TERKECIL: 7.001, 7.100, 7.010',
+        opts: ['7.001, 7.010, 7.100', '7.100, 7.010, 7.001', '7.010, 7.001, 7.100', '7.001, 7.100, 7.010'],
+        ans: 0,
+        expl: 'Ribuan sama (7). Ratusan: 0 < 0 < 1. Jadi 7.001 < 7.010 < 7.100!'
+      },
+      {
+        type: 'mc',
+        q: 'Berapa angka yang ada di antara 4.599 dan 4.601?',
+        opts: ['4.500', '4.600', '4.700', '4.800'],
+        ans: 1,
+        expl: '4.599 ... 4.600 ... 4.601 — yang di tengah adalah 4.600!'
+      }
+    ]
+  },
+  {
+    id: 'multiplication-2d',
+    title: 'Perkalian Lanjutan',
+    city: '🌄 Bandung',
+    emoji: '✖️',
+    color: '#E84BA0',
+    colorBg: '#FCE8F3',
+    desc: '2 angka × 1 angka — produksi besar!',
+    kaiTip: 'Pecah dulu! 23×4 = (20×4) + (3×4) = 80+12 = 92. Pecah jadi puluhan dan satuan, lalu jumlahkan!',
+    lessonHTML: lessonMultiplication2d(),
+    questions: [
+      {
+        type: 'input',
+        q: '12 × 3 = ?',
+        visual: '🚃🚃🚃 (setiap gerbong: 12 kursi)',
+        ans: '36',
+        expl: '(10×3) + (2×3) = 30 + 6 = 36!'
+      },
+      {
+        type: 'input',
+        q: '21 × 4 = ?',
+        ans: '84',
+        expl: '(20×4) + (1×4) = 80 + 4 = 84!'
+      },
+      {
+        type: 'input',
+        q: '14 × 5 = ?',
+        ans: '70',
+        expl: '(10×5) + (4×5) = 50 + 20 = 70!'
+      },
+      {
+        type: 'input',
+        q: '32 × 3 = ?',
+        ans: '96',
+        expl: '(30×3) + (2×3) = 90 + 6 = 96!'
+      },
+      {
+        type: 'mc',
+        q: 'Setiap gerbong KAI ada 24 kursi. Ada 3 gerbong. Berapa total kursi?',
+        visual: '🚃🚃🚃',
+        opts: ['60', '72', '84', '96'],
+        ans: 1,
+        expl: '24 × 3 = (20×3) + (4×3) = 60 + 12 = 72 kursi!'
+      },
+      {
+        type: 'input',
+        q: '13 × 6 = ?',
+        ans: '78',
+        expl: '(10×6) + (3×6) = 60 + 18 = 78!'
+      }
+    ]
+  },
+  {
+    id: 'division',
+    title: 'Pembagian',
+    city: '🏛️ Yogyakarta',
+    emoji: '➗',
+    color: '#FF5C39',
+    colorBg: '#FFE8E3',
+    desc: 'Bagi merata, tidak ada yang iri!',
+    kaiTip: 'Pembagian itu kebalikan perkalian! Kalau 4×3=12, maka 12÷4=3. Balik aja! Ingat tabel perkalianmu!',
+    lessonHTML: lessonDivision(),
+    questions: [
+      {
+        type: 'input',
+        q: '20 ÷ 4 = ?',
+        visual: '🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫🍫',
+        ans: '5',
+        expl: '20 ÷ 4 = 5. Karena 4 × 5 = 20!'
+      },
+      {
+        type: 'input',
+        q: '36 ÷ 6 = ?',
+        ans: '6',
+        expl: '36 ÷ 6 = 6. Karena 6 × 6 = 36!'
+      },
+      {
+        type: 'input',
+        q: '45 ÷ 9 = ?',
+        ans: '5',
+        expl: '45 ÷ 9 = 5. Karena 9 × 5 = 45!'
+      },
+      {
+        type: 'mc',
+        q: 'Ada 24 penumpang dibagi rata ke 3 gerbong. Tiap gerbong berisi berapa orang?',
+        visual: '🚃🚃🚃',
+        opts: ['6', '7', '8', '9'],
+        ans: 2,
+        expl: '24 ÷ 3 = 8. Karena 3 × 8 = 24. Setiap gerbong berisi 8 penumpang!'
+      },
+      {
+        type: 'input',
+        q: '56 ÷ 7 = ?',
+        ans: '8',
+        expl: '56 ÷ 7 = 8. Karena 7 × 8 = 56!'
+      },
+      {
+        type: 'mc',
+        q: '63 ÷ __ = 9. Angka apa yang harus diisi?',
+        opts: ['6', '7', '8', '9'],
+        ans: 1,
+        expl: '63 ÷ 7 = 9. Karena 7 × 9 = 63!'
+      }
+    ]
+  },
+  {
+    id: 'big-numbers',
+    title: 'Penjumlahan & Pengurangan',
+    city: '⚓ Semarang',
+    emoji: '🔢',
+    color: '#1F9D55',
+    colorBg: '#E3F5EB',
+    desc: 'Bilangan ribuan — lebih besar, lebih seru!',
+    kaiTip: 'Sama seperti dulu — mulai dari satuan, lalu puluhan, ratusan, ribuan. Sabar dan teliti ya, Rayyan!',
+    lessonHTML: lessonBigNumbers(),
+    questions: [
+      {
+        type: 'input',
+        q: '1.234 + 2.345 = ?',
+        ans: '3579',
+        expl: 'Satuan: 4+5=9. Puluhan: 3+4=7. Ratusan: 2+3=5. Ribuan: 1+2=3. Jadi 3.579!'
+      },
+      {
+        type: 'input',
+        q: '4.567 + 1.234 = ?',
+        ans: '5801',
+        expl: 'Satuan: 7+4=11 (tulis 1, simpan 1). Puluhan: 6+3+1=10 (tulis 0, simpan 1). Ratusan: 5+2+1=8. Ribuan: 4+1=5. Jadi 5.801!'
+      },
+      {
+        type: 'mc',
+        q: '3.500 + 2.750 = ?',
+        opts: ['5.250', '6.250', '6.750', '5.750'],
+        ans: 1,
+        expl: '3.500 + 2.750 = 6.250. Ribuan: 3+2=5... satuan: 0+0=0, puluhan: 0+5=5, ratusan: 5+7=12 (tulis 2, simpan 1), ribuan: 3+2+1=6. Jadi 6.250!'
+      },
+      {
+        type: 'input',
+        q: '8.000 − 3.500 = ?',
+        ans: '4500',
+        expl: '8.000 − 3.500 = 4.500. Bayangkan 8 ribuan dikurangi 3 ribuan = 5 ribuan, tapi dikurangi 500 lagi = 4.500!'
+      },
+      {
+        type: 'input',
+        q: '6.234 − 1.111 = ?',
+        ans: '5123',
+        expl: 'Satuan: 4−1=3. Puluhan: 3−1=2. Ratusan: 2−1=1. Ribuan: 6−1=5. Jadi 5.123!'
+      },
+      {
+        type: 'mc',
+        q: 'Kereta pertama membawa 2.345 penumpang. Kereta kedua membawa 1.567. Berapa total?',
+        visual: '🚂 + 🚂',
+        opts: ['3.802', '3.902', '3.912', '4.012'],
+        ans: 2,
+        expl: '2.345 + 1.567 = 3.912. Satuan: 5+7=12, puluhan: 4+6+1=11, ratusan: 3+5+1=9, ribuan: 2+1=3!'
+      }
+    ]
+  },
+  {
+    id: 'measurement',
+    title: 'Pengukuran',
+    city: '📏 Surabaya',
+    emoji: '📐',
+    color: '#1FA9C7',
+    colorBg: '#E3F4F8',
+    desc: 'Panjang, berat, dan waktu — ukur semuanya!',
+    kaiTip: 'Hafalkan 3 ini: 1 m = 100 cm. 1 kg = 1.000 g. 1 jam = 60 menit. Kalau ragu, pikirkan rel kereta — panjangnya dalam meter!',
+    lessonHTML: lessonMeasurement(),
+    questions: [
+      {
+        type: 'mc',
+        q: 'Rel kereta panjangnya 5 meter. Berapa sentimeter?',
+        visual: '📏📏📏📏📏',
+        opts: ['50 cm', '500 cm', '5.000 cm', '5 cm'],
+        ans: 1,
+        expl: '5 meter × 100 = 500 cm. Ingat: 1 m = 100 cm!'
+      },
+      {
+        type: 'mc',
+        q: 'Kotak bekal penumpang 2 kg. Berapa gram?',
+        visual: '⚖️',
+        opts: ['200 gram', '2.000 gram', '20 gram', '200.000 gram'],
+        ans: 1,
+        expl: '2 kg × 1.000 = 2.000 gram. Ingat: 1 kg = 1.000 g!'
+      },
+      {
+        type: 'mc',
+        q: 'Kereta berangkat jam 08:00, tiba 2 jam kemudian. Jam berapa tiba?',
+        visual: '🕗 → ❓',
+        opts: ['09:00', '09:30', '10:00', '10:30'],
+        ans: 2,
+        expl: '08:00 + 2 jam = 10:00. Kereta tiba jam 10 pagi!'
+      },
+      {
+        type: 'mc',
+        q: '350 cm sama dengan berapa meter?',
+        opts: ['35 m', '3,5 m', '0,35 m', '3 m'],
+        ans: 1,
+        expl: '350 cm ÷ 100 = 3,5 m. Atau: 3 meter lebih 50 cm = 3,5 m!'
+      },
+      {
+        type: 'mc',
+        q: 'Perjalanan 90 menit = berapa jam berapa menit?',
+        visual: '⏱️',
+        opts: ['1 jam 10 menit', '1 jam 20 menit', '1 jam 30 menit', '2 jam'],
+        ans: 2,
+        expl: '90 menit = 60 menit + 30 menit = 1 jam 30 menit!'
+      },
+      {
+        type: 'mc',
+        q: 'Gerbong pertama 25 m, gerbong kedua 25 m. Berapa panjang total?',
+        visual: '🚃 + 🚃',
+        opts: ['40 m', '45 m', '50 m', '55 m'],
+        ans: 2,
+        expl: '25 m + 25 m = 50 m. Dua gerbong tersambung!'
+      }
+    ]
+  },
+  {
+    id: 'fractions',
+    title: 'Pecahan',
+    city: '🏝️ Bali',
+    emoji: '🍕',
+    color: '#b38000',
+    colorBg: '#FFF5D6',
+    desc: 'Bagian-bagian yang sama rata — stasiun terakhir!',
+    kaiTip: 'Pecahan itu bagian dari satu benda! 1/2 = 1 dari 2 bagian. 1/4 = 1 dari 4 bagian. Semakin besar penyebutnya, semakin kecil tiap bagiannya!',
+    lessonHTML: lessonFractions(),
+    questions: [
+      {
+        type: 'mc',
+        q: 'Pizza dipotong jadi 4 bagian sama rata. Rayyan makan 1 potong. Berapa bagian yang dimakan?',
+        visual: '🍕🍕🍕🍕 → Rayyan makan 1',
+        opts: ['1/2', '1/3', '1/4', '2/4'],
+        ans: 2,
+        expl: '1 dari 4 bagian = 1/4 (satu per empat). Rayyan makan seperempat pizza!'
+      },
+      {
+        type: 'mc',
+        q: '1/2 dibandingkan 1/4 — mana yang lebih besar?',
+        opts: ['1/4 lebih besar', '1/2 lebih besar', 'Sama besar', 'Tidak bisa dibandingkan'],
+        ans: 1,
+        expl: '1/2 lebih besar! Bayangkan pizza dibagi 2 vs dibagi 4 — potongan 1/2 jauh lebih besar!'
+      },
+      {
+        type: 'mc',
+        q: 'Rayyan makan 2/4 kue. Sisa kue berapa?',
+        visual: '🎂 (dipotong 4 bagian)',
+        opts: ['1/4', '2/4', '3/4', '4/4'],
+        ans: 1,
+        expl: '4/4 − 2/4 = 2/4 sisa. Ada 2 bagian dari 4 yang tersisa!'
+      },
+      {
+        type: 'mc',
+        q: '3 dari 6 bagian kue diarsir. Pecahan apa yang paling tepat?',
+        visual: '🟥🟥🟥⬜⬜⬜',
+        opts: ['1/3', '3/6', '1/2', '2/6'],
+        ans: 2,
+        expl: '3/6 = 1/2. Setengah kue diarsir! 3/6 dan 1/2 adalah pecahan yang sama (senilai).'
+      },
+      {
+        type: 'mc',
+        q: 'Urutkan dari TERKECIL: 1/2, 1/4, 1/3',
+        opts: ['1/2, 1/3, 1/4', '1/4, 1/3, 1/2', '1/3, 1/4, 1/2', '1/2, 1/4, 1/3'],
+        ans: 1,
+        expl: '1/4 < 1/3 < 1/2. Semakin besar angka bawah, semakin kecil nilainya!'
+      },
+      {
+        type: 'mc',
+        q: 'Kamu potong kue jadi 3 bagian sama rata dan makan 1. Kamu makan berapa?',
+        visual: '🎂 ÷ 3 → makan 1 bagian',
+        opts: ['1/2', '1/3', '2/3', '3/3'],
+        ans: 1,
+        expl: '1 dari 3 bagian = 1/3 (sepertiga). Kamu makan sepertiga kue!'
+      }
+    ]
+  }
+];
+
+/* ═══════════════════════════════════════════
+   STATE & STORAGE
+═══════════════════════════════════════════ */
+const state = {
+  chapter: null,
+  qIdx: 0,
+  score: 0,
+  answered: false,
+  totalStars: 0,
+  progress: {},
+  history: [],
+};
+
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem('rayyanMath3') || '{}');
+    state.progress   = d.progress   || {};
+    state.totalStars = d.totalStars || 0;
+    document.getElementById('starCount').textContent = state.totalStars;
+  } catch(e) {}
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('rayyanMath3', JSON.stringify({
+      progress:   state.progress,
+      totalStars: state.totalStars,
+    }));
+  } catch(e) {}
+}
+
+function resetProgress() {
+  const pw = prompt('Masukkan kata sandi untuk reset progress:');
+  if (pw === null) return;
+  if (pw !== 'bogor123') { alert('Kata sandi salah! ❌'); return; }
+  state.progress   = {};
+  state.totalStars = 0;
+  document.getElementById('starCount').textContent = 0;
+  saveState();
+  renderHome();
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  show('sHome');
+  renderHome();
+}
+
+function openChapter(idx) {
+  state.chapter = idx;
+  const ch = CHAPTERS[idx];
+
+  document.getElementById('lessonHdr').innerHTML = `
+    <div class="lesson-hdr">
+      <div class="lesson-icon">${ch.emoji}</div>
+      <div>
+        <div class="lesson-eyebrow">Stasiun ${idx+1} dari ${CHAPTERS.length}</div>
+        <div class="lesson-city">${ch.city}</div>
+        <div class="lesson-title">${ch.title}</div>
+      </div>
+    </div>`;
+  document.getElementById('lessonBody').innerHTML = ch.lessonHTML;
+  document.getElementById('kaiMsg').textContent = ch.kaiTip;
+  show('sLesson');
+}
+
+let _timerStart = null;
+
+function fmtTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const m = Math.floor(s / 60);
+  return m > 0 ? `${m} mnt ${s % 60} dtk` : `${s} dtk`;
+}
+
+function startExercise() {
+  _timerStart    = Date.now();
+  state.qIdx     = 0;
+  state.score    = 0;
+  state.answered = false;
+  state.history  = [];
+  renderQ();
+  show('sExercise');
+}
+
+function retryChapter() {
+  startExercise();
+}
+
+/* ═══════════════════════════════════════════
+   QUESTION RENDERING
+═══════════════════════════════════════════ */
+function renderQ() {
+  const ch    = CHAPTERS[state.chapter];
+  const q     = ch.questions[state.qIdx];
+  const total = ch.questions.length;
+
+  document.getElementById('exChName').textContent = `${ch.emoji} ${ch.title}`;
+  document.getElementById('exQNum').textContent   = `${state.qIdx+1}/${total}`;
+  document.getElementById('exBar').style.width    = `${(state.qIdx / total) * 100}%`;
+
+  document.getElementById('qText').textContent = q.q;
+
+  const vis = document.getElementById('qVisual');
+  if (q.visual) {
+    vis.innerHTML     = q.visual;
+    vis.style.display = '';
+  } else {
+    vis.style.display = 'none';
+  }
+
+  const area = document.getElementById('answerArea');
+  if (q.type === 'mc') {
+    area.innerHTML = `<div class="opts-grid">${
+      q.opts.map((o,i) => `<button class="opt-btn" onclick="pickOpt(${i})">${o}</button>`).join('')
+    }</div>`;
+  } else {
+    area.innerHTML = `
+      <div class="inp-row">
+        <input type="number" class="num-inp" id="numInp" placeholder="Tulis jawaban…"
+               inputmode="numeric" onkeydown="if(event.key==='Enter')checkInp()">
+        <button class="chk-btn" onclick="checkInp()">Cek ✓</button>
+      </div>`;
+    setTimeout(() => { const el = document.getElementById('numInp'); if(el) el.focus(); }, 80);
+  }
+
+  const toast = document.getElementById('toast');
+  toast.className = 'toast';
+  const nxt = document.getElementById('nxtBtn');
+  nxt.className = 'nxt-btn';
+  state.answered = false;
+}
+
+/* ═══════════════════════════════════════════
+   ANSWER CHECKING
+═══════════════════════════════════════════ */
+function pickOpt(idx) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const q       = CHAPTERS[state.chapter].questions[state.qIdx];
+  const correct = idx === q.ans;
+
+  document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+  document.querySelectorAll('.opt-btn')[idx].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) document.querySelectorAll('.opt-btn')[q.ans].classList.add('correct');
+
+  if (correct) state.score++;
+  state.history.push({ q: q.q, correct, correctAns: q.opts[q.ans], userAns: q.opts[idx] });
+
+  showToast(correct, q.opts[q.ans], q.expl);
+}
+
+function checkInp() {
+  if (state.answered) return;
+  const inp = document.getElementById('numInp');
+  const val = (inp.value || '').trim();
+  if (!val) return;
+
+  state.answered = true;
+  inp.disabled = true;
+
+  const q       = CHAPTERS[state.chapter].questions[state.qIdx];
+  const correct = val === q.ans;
+
+  inp.classList.add(correct ? 'ok' : 'bad');
+  if (correct) state.score++;
+  state.history.push({ q: q.q, correct, correctAns: q.ans, userAns: val });
+
+  showToast(correct, q.ans, q.expl);
+}
+
+function showToast(correct, correctAns, expl) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastIco').textContent   = correct ? '🎉' : '❌';
+  document.getElementById('toastTitle').textContent  = correct
+    ? 'Benar! Keren sekali, Masinis Rayyan!'
+    : `Belum tepat. Jawaban yang benar: ${correctAns}`;
+  document.getElementById('toastExpl').textContent  = expl || '';
+  toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
+  document.getElementById('nxtBtn').className = 'nxt-btn show';
+}
+
+function nextQ() {
+  const ch = CHAPTERS[state.chapter];
+  state.qIdx++;
+  if (state.qIdx >= ch.questions.length) {
+    showComplete();
+  } else {
+    renderQ();
+  }
+}
+
+/* ═══════════════════════════════════════════
+   COMPLETE SCREEN
+═══════════════════════════════════════════ */
+function showComplete() {
+  const ch    = CHAPTERS[state.chapter];
+  const total = ch.questions.length;
+  const pct   = state.score / total;
+
+  let stars = 1;
+  if (pct >= 0.6)  stars = 2;
+  if (pct >= 0.85) stars = 3;
+
+  const prev      = state.progress[ch.id] || { stars: 0, bestScore: 0 };
+  const newStars  = Math.max(prev.stars,     stars);
+  const newBest   = Math.max(prev.bestScore, state.score);
+  const earned    = newStars - prev.stars;
+  state.progress[ch.id]  = { stars: newStars, bestScore: newBest };
+  state.totalStars       += earned;
+  document.getElementById('starCount').textContent = state.totalStars;
+  saveState();
+
+  const badges  = ['😊', '🌟', '🏆'];
+  const titles  = ['Bagus! Yuk coba lagi ya!', 'Hebat! Hampir sempurna!', 'SEMPURNA! Masinis Rayyan luar biasa!'];
+  const msgs    = [
+    `Kamu menjawab ${state.score} dari ${total} soal dengan benar. Pelajari lagi materi stasiunnya, kamu pasti bisa! 💪`,
+    `Kamu menjawab ${state.score} dari ${total} soal dengan benar. Hampir sempurna! Coba sekali lagi? 👏`,
+    `Kamu menjawab SEMUA ${total} soal dengan benar! Rayyan adalah Masinis Terbaik KAI! 🚂🎊`,
+  ];
+
+  document.getElementById('doneBadge').textContent    = badges[stars-1];
+  document.getElementById('doneTitle').textContent    = titles[stars-1];
+  document.getElementById('doneStars').textContent    = '⭐'.repeat(stars) + '☆'.repeat(3-stars);
+  document.getElementById('doneScoreNum').textContent = `${state.score}/${total}`;
+  document.getElementById('doneMsg').textContent      = msgs[stars-1];
+
+  document.getElementById('reviewList').innerHTML = state.history.map(h => `
+    <div class="review-item">
+      <div class="review-ico">${h.correct ? '✅' : '❌'}</div>
+      <div>
+        <div class="review-q">${h.q}</div>
+        <div class="review-a">
+          ${h.correct
+            ? `Benar: <strong>${h.correctAns}</strong>`
+            : `Kamu jawab: ${h.userAns} &nbsp;·&nbsp; Jawaban: <strong>${h.correctAns}</strong>`}
+        </div>
+      </div>
+    </div>`).join('');
+
+  const elapsed = _timerStart ? Date.now() - _timerStart : 0;
+  _timerStart = null;
+  document.getElementById('doneTime').textContent = fmtTime(elapsed);
+
+  show('sComplete');
+  if (stars >= 2) setTimeout(launchConfetti, 350);
+  updateOverall();
+
+  // Check if all chapters complete
+  const allDone = CHAPTERS.every(c => (state.progress[c.id] || {}).stars > 0);
+  if (allDone) {
+    setTimeout(showAllDone, 2500);
+  }
+}
+
+function showAllDone() {
+  const total = state.totalStars;
+  document.getElementById('allDoneStars').textContent = `${total} / 18`;
+  document.getElementById('allDoneStarEmoji').textContent = '⭐'.repeat(Math.min(total, 18));
+  show('sAllDone');
+  setTimeout(launchConfetti, 300);
+  setTimeout(launchConfetti, 1200);
+}
+
+/* ═══════════════════════════════════════════
+   HOME RENDERING
+═══════════════════════════════════════════ */
+function renderHome() {
+  // Chapter cards
+  document.getElementById('chGrid').innerHTML = CHAPTERS.map((ch, i) => {
+    const p     = state.progress[ch.id] || { stars: 0, bestScore: 0 };
+    const done  = p.stars > 0;
+    const stars = [1,2,3].map(n => `<span class="ch-star${n<=p.stars?' on':''}" aria-hidden="true">⭐</span>`).join('');
+    const status = done
+      ? `✅ Terbaik: ${p.bestScore}/${ch.questions.length} soal`
+      : '▶️ Belum dimulai';
+    return `
+      <div class="ch-card" onclick="openChapter(${i})" role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter'||event.key===' ')openChapter(${i})">
+        <div class="ch-thumb" style="background:${ch.colorBg}">
+          <div class="ch-emoji">${ch.emoji}</div>
+          <div class="ch-stars-row">${stars}</div>
+        </div>
+        <div class="ch-body">
+          <div class="ch-num">Stasiun ${i+1}</div>
+          <div class="ch-city">${ch.city}</div>
+          <div class="ch-title">${ch.title}</div>
+          <div class="ch-desc">${ch.desc}</div>
+          <div class="ch-track">━━━━━━━━━━</div>
+          <div class="ch-status">${status}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  updateOverall();
+  renderRouteMap();
+}
+
+function renderRouteMap() {
+  const track = document.getElementById('routeTrack');
+  if (!track) return;
+
+  const stations = [
+    { emoji: '🚉', name: 'Jakarta' },
+    { emoji: '🌄', name: 'Bandung' },
+    { emoji: '🏛️', name: 'Yogya' },
+    { emoji: '⚓', name: 'Semarang' },
+    { emoji: '📏', name: 'Surabaya' },
+    { emoji: '🏝️', name: 'Bali' },
+  ];
+
+  let html = '';
+  stations.forEach((s, i) => {
+    const p    = state.progress[CHAPTERS[i].id] || { stars: 0 };
+    const done = p.stars > 0;
+    const allPrevDone = i === 0 || CHAPTERS.slice(0, i).every(c => (state.progress[c.id] || {}).stars > 0);
+    const active = !done && allPrevDone;
+    const cls  = done ? 'done' : active ? 'active' : '';
+
+    if (i > 0) {
+      html += `<div class="route-rail${done ? ' done' : ''}"></div>`;
+    }
+    html += `
+      <div class="route-station">
+        <div class="station-dot ${cls}">${done ? '✅' : active ? '🚂' : s.emoji}</div>
+        <div class="station-name ${cls}">${s.name}</div>
+      </div>`;
+  });
+  track.innerHTML = html;
+}
+
+function updateOverall() {
+  const total = CHAPTERS.length;
+  const done  = Object.values(state.progress).filter(p => p.stars > 0).length;
+  const pct   = (done / total) * 100;
+
+  document.getElementById('ovBar').style.width   = `${pct}%`;
+  document.getElementById('ovSub').textContent   = `${done} dari ${total} stasiun selesai`;
+
+  const circ  = document.getElementById('ov-ring-path');
+  const circum = 176;
+  circ.style.strokeDashoffset = circum - (pct / 100) * circum;
+}
+
+/* ═══════════════════════════════════════════
+   CONFETTI
+═══════════════════════════════════════════ */
+function launchConfetti() {
+  const c = document.getElementById('confetti');
+  const colors = ['#FF5C39','#FFC234','#1F9D55','#1FA9C7','#E84BA0','#2E3192'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'cp';
+    const size = 6 + Math.random() * 10;
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      width:${size}px;
+      height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${Math.random()>.5?'50%':'3px'};
+      animation-duration:${1.4+Math.random()*2}s;
+      animation-delay:${Math.random()*.7}s;
+    `;
+    c.appendChild(p);
+    p.addEventListener('animationend', () => p.remove());
+  }
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+loadState();
+renderHome();
+</script>
+</body>
+</html>
