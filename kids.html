@@ -486,10 +486,23 @@
       thumbBg: '#FFF5D6',
       blurb: '6 bab interaktif: nilai tempat, penjumlahan, pengurangan, perkalian, bangun datar, dan pola bilangan.',
       href: 'courses/math/rayyan-math-grade2-v1.html',
-      for: 'Rayyan · Kelas 2',
+      for: 'Rayyan · Kelas 2 SD',
       forColor: '#FF5C39',
-      progressKey: 'rayyanMath',    // localStorage key
+      progressKey: 'rayyanMath',
       totalChapters: 6,
+      type: 'course',
+    },
+    {
+      title: 'Belajar Bersama Raya',
+      subject: 'PAUD',
+      emoji: '🌸',
+      thumbBg: '#FCE8F3',
+      blurb: '5 bab seru: berhitung 1–10, warna-warni, bentuk-bentuk, hewan lucu, dan besar & kecil.',
+      href: 'courses/learning/raya-learning-paud-v1.html',
+      for: 'Raya · Usia 3–4 Tahun',
+      forColor: '#E84BA0',
+      progressKey: 'rayaLearning',
+      totalChapters: 5,
       type: 'course',
     },
     // ── add future courses below ──
@@ -529,10 +542,15 @@
   /* ─── PROGRESS ──────────────────────────────────────────── */
 
   function getTotalStars() {
-    try {
-      const d = JSON.parse(localStorage.getItem('rayyanMath') || '{}');
-      return d.totalStars || 0;
-    } catch(e) { return 0; }
+    let total = 0;
+    const keys = ['rayyanMath', 'rayaLearning'];
+    for (const k of keys) {
+      try {
+        const d = JSON.parse(localStorage.getItem(k) || '{}');
+        total += d.totalStars || 0;
+      } catch(e) {}
+    }
+    return total;
   }
 
   function getChaptersDone(progressKey) {
