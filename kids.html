@@ -493,15 +493,15 @@
       type: 'course',
     },
     {
-      title: 'Belajar Bersama Raya',
-      subject: 'PAUD',
+      title: 'Belajar Bersama Raya 🌸',
+      subject: 'PAUD Visual',
       emoji: '🌸',
       thumbBg: '#FCE8F3',
-      blurb: '5 bab seru: berhitung 1–10, warna-warni, bentuk-bentuk, hewan lucu, dan besar & kecil.',
-      href: 'courses/learning/raya-learning-paud-v1.html',
+      blurb: '5 bab visual tanpa membaca: berhitung, warna, bentuk, hewan, dan pasangkan gambar. Semua jawaban berupa gambar!',
+      href: 'courses/learning/raya-learning-visual-v1.html',
       for: 'Raya · Usia 3–4 Tahun',
       forColor: '#E84BA0',
-      progressKey: 'rayaLearning',
+      progressKey: 'rayaVisual',
       totalChapters: 5,
       type: 'course',
     },
@@ -543,7 +543,7 @@
 
   function getTotalStars() {
     let total = 0;
-    const keys = ['rayyanMath', 'rayaLearning'];
+    const keys = ['rayyanMath', 'rayaLearning', 'rayaVisual'];
     for (const k of keys) {
       try {
         const d = JSON.parse(localStorage.getItem(k) || '{}');
