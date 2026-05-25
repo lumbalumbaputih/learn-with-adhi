@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Your AI Agent Bot — Kai Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --hidup-tomato:#FF5C39; --hidup-mango:#FFC234; --hidup-forest:#1F9D55;
+  --hidup-sea:#1FA9C7; --hidup-mawar:#E84BA0; --hidup-indigo:#2E3192;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8; --muted:#6B6259;
+  --line:rgba(26,22,20,0.12); --line-strong:rgba(26,22,20,0.14);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --radius-8:8px; --radius-12:12px; --radius-14:14px; --radius-pill:999px;
+  --shadow-soft-md:0 12px 32px rgba(0,0,0,0.18);
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--fb);font-size:14px;line-height:1.5;display:flex;min-height:100vh}
+
+/* SIDEBAR */
+#sidebar{width:260px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;overflow-y:auto}
+.sb-logo{display:flex;align-items:center;gap:10px;padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sb-logo svg{flex-shrink:0}
+.sb-logo-text{font-family:var(--fd);font-weight:800;font-size:13px;line-height:1.2;letter-spacing:-0.02em}
+.sb-logo-text span{color:var(--hidup-mango)}
+
+.progress-wrap{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.progress-label{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:rgba(251,244,230,0.5);text-transform:uppercase;margin-bottom:8px}
+.progress-bar-bg{background:rgba(255,255,255,0.12);border-radius:var(--radius-pill);height:4px}
+.progress-bar-fill{height:4px;border-radius:var(--radius-pill);background:var(--hidup-mango);transition:width 400ms var(--ease)}
+.progress-pct{font-family:var(--fm);font-size:10px;color:var(--hidup-mango);margin-top:5px}
+
+.sb-nav{list-style:none;padding:12px 0;flex:1}
+.sb-nav li{padding:0 12px;margin-bottom:2px}
+.sb-nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-8);text-decoration:none;color:rgba(251,244,230,0.6);font-size:12px;font-weight:500;transition:all 200ms var(--ease);cursor:pointer}
+.sb-nav a:hover{background:rgba(255,255,255,0.08);color:var(--paper)}
+.sb-nav a.active{background:rgba(255,192,52,0.15);color:var(--hidup-mango)}
+.sb-nav .mod-num{font-family:var(--fm);font-size:9px;letter-spacing:0.08em;background:rgba(255,255,255,0.1);border-radius:4px;padding:2px 5px;flex-shrink:0}
+.sb-nav a.active .mod-num{background:var(--hidup-mango);color:var(--ink)}
+.sb-nav .done-tick{margin-left:auto;color:var(--hidup-forest);font-size:11px;opacity:0;transition:opacity 200ms}
+.sb-nav a.quiz-done .done-tick{opacity:1}
+
+/* MAIN */
+#main{margin-left:260px;flex:1;padding:48px 56px;max-width:900px}
+.module{display:none}
+.module.active{display:block}
+
+/* MODULE HEADER */
+.eyebrow{font-family:var(--fm);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--hidup-tomato);margin-bottom:10px}
+.mod-title{font-family:var(--fd);font-weight:800;font-size:36px;line-height:1.0;letter-spacing:-0.03em;margin-bottom:16px}
+.mod-title .accent{color:var(--hidup-tomato)}
+.lede{font-size:16px;line-height:1.55;color:var(--muted);margin-bottom:32px;max-width:640px}
+
+.objectives{background:var(--paper-2);border-left:3px solid var(--hidup-sea);border-radius:0 var(--radius-8) var(--radius-8) 0;padding:16px 20px;margin-bottom:36px}
+.objectives h4{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--hidup-sea);margin-bottom:8px}
+.objectives ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.objectives li{font-size:13px;display:flex;align-items:flex-start;gap:8px}
+.objectives li::before{content:"→";color:var(--hidup-sea);flex-shrink:0;margin-top:1px}
+
+/* BODY TEXT */
+h2.section-h{font-family:var(--fd);font-weight:700;font-size:22px;letter-spacing:-0.02em;margin:36px 0 12px}
+h3.sub-h{font-family:var(--fd);font-weight:600;font-size:17px;letter-spacing:-0.01em;margin:24px 0 8px}
+p.body{font-size:14px;line-height:1.6;margin-bottom:14px;max-width:680px}
+p.body strong{font-weight:600}
+
+/* CALLOUTS */
+.callout{border-radius:var(--radius-12);padding:16px 20px;margin:20px 0;font-size:13px;line-height:1.55}
+.callout-label{font-family:var(--fm);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;font-weight:500}
+.callout.tomato{background:#fff2ef;border-left:3px solid var(--hidup-tomato)}.callout.tomato .callout-label{color:var(--hidup-tomato)}
+.callout.forest{background:#eef8f2;border-left:3px solid var(--hidup-forest)}.callout.forest .callout-label{color:var(--hidup-forest)}
+.callout.sea{background:#edf7fa;border-left:3px solid var(--hidup-sea)}.callout.sea .callout-label{color:var(--hidup-sea)}
+.callout.mango{background:#fffaee;border-left:3px solid var(--hidup-mango)}.callout.mango .callout-label{color:#b88a00}
+
+/* STAT CARDS */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:var(--radius-14);padding:20px;display:flex;flex-direction:column;gap:6px}
+.stat-val{font-family:var(--fd);font-weight:800;font-size:28px;letter-spacing:-0.03em;color:var(--hidup-mango)}
+.stat-label{font-size:12px;color:rgba(251,244,230,0.6);line-height:1.4}
+
+/* CODE BLOCKS */
+.code-block{background:#1e1c1a;border-radius:var(--radius-12);padding:20px 24px;margin:20px 0;overflow-x:auto}
+.code-block pre{font-family:var(--fm);font-size:12px;line-height:1.6;color:#e8e0d4;white-space:pre}
+.code-label{font-family:var(--fm);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(232,224,212,0.4);margin-bottom:10px}
+.inline-code{font-family:var(--fm);font-size:12px;background:var(--paper-2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--hidup-tomato)}
+
+/* SVG DIAGRAMS */
+.diagram-wrap{background:var(--paper-2);border-radius:var(--radius-14);padding:24px;margin:28px 0;border:1px solid var(--line)}
+.diagram-caption{font-family:var(--fm);font-size:10px;letter-spacing:0.06em;color:var(--muted);text-align:center;margin-top:12px}
+
+/* QUIZ */
+.quiz-wrap{background:var(--ink);border-radius:var(--radius-14);padding:28px;margin:40px 0}
+.quiz-header{font-family:var(--fd);font-weight:700;font-size:18px;color:var(--paper);margin-bottom:4px}
+.quiz-sub{font-size:12px;color:rgba(251,244,230,0.5);margin-bottom:24px}
+.q-block{margin-bottom:24px}
+.q-text{font-size:13px;color:var(--paper);font-weight:500;margin-bottom:10px;line-height:1.5}
+.q-opts{display:flex;flex-direction:column;gap:7px}
+.q-opt{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-8);padding:10px 14px;font-size:12px;color:rgba(251,244,230,0.75);cursor:pointer;transition:all 200ms var(--ease);text-align:left}
+.q-opt:hover{background:rgba(255,255,255,0.12);color:var(--paper)}
+.q-opt.correct{background:rgba(31,157,85,0.2);border-color:var(--hidup-forest);color:#6ee7a0}
+.q-opt.wrong{background:rgba(255,92,57,0.15);border-color:var(--hidup-tomato);color:#ffa08a}
+.q-opt:disabled,.q-opt[disabled]{cursor:default}
+.q-feedback{font-size:11px;margin-top:6px;padding:7px 10px;border-radius:6px;display:none}
+.q-feedback.show{display:block}
+.q-feedback.ok{background:rgba(31,157,85,0.15);color:#6ee7a0}
+.q-feedback.bad{background:rgba(255,92,57,0.15);color:#ffa08a}
+.quiz-score{font-family:var(--fd);font-weight:700;font-size:22px;color:var(--hidup-mango);margin-top:16px;display:none}
+.quiz-score.show{display:block}
+.btn-quiz{background:var(--hidup-mango);color:var(--ink);border:none;border-radius:var(--radius-pill);padding:10px 24px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;transition:opacity 200ms}
+.btn-quiz:hover{opacity:0.85}
+
+/* NAV BUTTONS */
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.btn-nav{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:var(--paper);border:none;border-radius:var(--radius-pill);padding:11px 22px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;transition:opacity 200ms var(--ease);text-decoration:none}
+.btn-nav:hover{opacity:0.8}
+.btn-nav.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line-strong)}
+.btn-nav:disabled{opacity:0.3;cursor:default}
+
+/* PRICING CALCULATOR */
+.calc-wrap{background:var(--paper-2);border-radius:var(--radius-14);padding:28px;margin:28px 0;border:1px solid var(--line)}
+.calc-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.calc-label{font-size:13px;font-weight:500}
+.calc-sub{font-size:11px;color:var(--muted)}
+.calc-input{background:var(--paper);border:1.5px solid var(--line-strong);border-radius:var(--radius-8);padding:7px 12px;font-family:var(--fb);font-size:13px;width:100px;text-align:right}
+.calc-total{background:var(--ink);border-radius:var(--radius-12);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.calc-total-label{color:rgba(251,244,230,0.6);font-size:12px}
+.calc-total-val{font-family:var(--fd);font-weight:800;font-size:32px;color:var(--hidup-mango);letter-spacing:-0.03em}
+
+/* REF ITEMS */
+.ref-item{border-radius:var(--radius-12);padding:18px 20px;margin-bottom:14px;border-left:3px solid var(--hidup-sea)}
+.ref-item.tomato{border-color:var(--hidup-tomato);background:#fff2ef}
+.ref-item.sea{border-color:var(--hidup-sea);background:#edf7fa}
+.ref-item.forest{border-color:var(--hidup-forest);background:#eef8f2}
+.ref-item.mango{border-color:var(--hidup-mango);background:#fffaee}
+.ref-cite{font-size:13px;font-weight:500;margin-bottom:6px}
+.ref-annotation{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:11px;color:var(--hidup-sea);text-decoration:none}
+.ref-link:hover{text-decoration:underline}
+
+/* STEP LIST */
+.steps{list-style:none;counter-reset:step;display:flex;flex-direction:column;gap:16px;margin:20px 0}
+.steps li{counter-increment:step;display:flex;gap:14px;align-items:flex-start}
+.steps li::before{content:counter(step);flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--hidup-tomato);color:#fff;font-family:var(--fd);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.steps li p{font-size:13px;line-height:1.6}
+.steps li p strong{font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <svg width="28" height="28" viewBox="0 0 100 100">
+      <circle cx="38" cy="50" r="22" fill="none" stroke="#FBF4E6" stroke-width="14"/>
+      <rect x="54" y="28" width="14" height="44" fill="#FBF4E6"/>
+      <circle cx="78" cy="22" r="8" fill="#FFC234"/>
+    </svg>
+    <div class="sb-logo-text">Build Your<br><span>AI Agent</span> Bot</div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">Your Progress</div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-pct" id="progressPct">0 / 8 modules</div>
+  </div>
+
+  <ul class="sb-nav" id="navList">
+    <li><a onclick="goTo(0)" class="active" id="nav-0"><span class="mod-num">01</span>The Big Picture<span class="done-tick">✓</span></a></li>
+    <li><a onclick="goTo(1)" id="nav-1"><span class="mod-num">02</span>Rent a Kitchen<span class="done-tick">✓</span></a></li>
+    <li><a onclick="goTo(2)" id="nav-2"><span class="mod-num">03</span>First Day In<span class="done-tick">✓</span></a></li>
+    <li><a onclick="goTo(3)" id="nav-3"><span class="mod-num">04</span>Hire the Chef<span class="done-tick">✓</span></a></li>
+    <li><a onclick="goTo(4)" id="nav-4"><span class="mod-num">05</span>Write the Manager<span class="done-tick">✓</span></a></li>
+    <li><a onclick="goTo(5)" id="nav-5"><span class="mod-num">06</span>Open the Diner<span class="done-tick">✓</span></a></li>
+    <li><a onclick="goTo(6)" id="nav-6"><span class="mod-num">07</span>Keep Lights On<span class="done-tick">✓</span></a></li>
+    <li><a onclick="goTo(7)" id="nav-7"><span class="mod-num">08</span>The Monthly Bill<span class="done-tick">✓</span></a></li>
+    <li><a onclick="goTo(8)" id="nav-8"><span class="mod-num">REF</span>References<span class="done-tick">✓</span></a></li>
+  </ul>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════ MODULE 0: BIG PICTURE ═══════════════ -->
+<section class="module active" id="mod-0">
+  <div class="eyebrow">MODULE 01 / 08</div>
+  <h1 class="mod-title">The <span class="accent">Restaurant</span> Analogy</h1>
+  <p class="lede">Before writing a single line of code, you need to understand what you're building. We'll use one analogy throughout this entire course — and it will make everything click.</p>
+
+  <div class="objectives">
+    <h4>Learning Objectives</h4>
+    <ul>
+      <li>Understand what a VPS, OpenRouter, and Telegram bot each do</li>
+      <li>See how they connect together using the restaurant analogy</li>
+      <li>Know the four pieces you're about to build</li>
+    </ul>
+  </div>
+
+  <h2 class="section-h">Your Restaurant, Your Rules</h2>
+  <p class="body">Imagine you want to open a restaurant. You don't own a building yet, you don't have chefs, and you have no dining room. That's exactly where you are right now. This course gives you all three.</p>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <!-- user -->
+      <rect x="20" y="70" width="100" height="60" rx="10" fill="#1A1614"/>
+      <text x="70" y="96" text-anchor="middle" fill="#FBF4E6" font-family="Inter,sans-serif" font-size="10" font-weight="600">YOU</text>
+      <text x="70" y="110" text-anchor="middle" fill="#FFC234" font-family="JetBrains Mono,monospace" font-size="9">(on laptop)</text>
+      <!-- arrow 1 -->
+      <line x1="120" y1="100" x2="180" y2="100" stroke="#1A1614" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <polygon points="180,96 188,100 180,104" fill="#1A1614"/>
+      <text x="153" y="94" text-anchor="middle" fill="#6B6259" font-family="JetBrains Mono,monospace" font-size="8">SSH</text>
+      <!-- VPS -->
+      <rect x="188" y="55" width="130" height="90" rx="12" fill="#FF5C39"/>
+      <text x="253" y="85" text-anchor="middle" fill="#fff" font-family="Bricolage Grotesque,sans-serif" font-size="13" font-weight="800">VPS</text>
+      <text x="253" y="101" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Inter,sans-serif" font-size="9">Your Kitchen</text>
+      <text x="253" y="116" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Inter,sans-serif" font-size="9">Python bot lives here</text>
+      <text x="253" y="131" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="JetBrains Mono,monospace" font-size="8">DigitalOcean $6/mo</text>
+      <!-- arrow 2 -->
+      <line x1="318" y1="100" x2="378" y2="100" stroke="#1A1614" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <polygon points="378,96 386,100 378,104" fill="#1A1614"/>
+      <text x="350" y="94" text-anchor="middle" fill="#6B6259" font-family="JetBrains Mono,monospace" font-size="8">API call</text>
+      <!-- OpenRouter -->
+      <rect x="386" y="55" width="130" height="90" rx="12" fill="#1FA9C7"/>
+      <text x="451" y="85" text-anchor="middle" fill="#fff" font-family="Bricolage Grotesque,sans-serif" font-size="13" font-weight="800">OpenRouter</text>
+      <text x="451" y="101" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="Inter,sans-serif" font-size="9">Menu of AI Chefs</text>
+      <text x="451" y="116" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="Inter,sans-serif" font-size="9">GPT-4o · Claude · Gemini</text>
+      <text x="451" y="131" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="JetBrains Mono,monospace" font-size="8">pay per dish (token)</text>
+      <!-- arrow 3 -->
+      <line x1="253" y1="55" x2="253" y2="20" stroke="#1A1614" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <polygon points="249,20 253,12 257,20" fill="#1A1614"/>
+      <line x1="253" y1="12" x2="580" y2="12" stroke="#1A1614" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="580" y1="12" x2="580" y2="55" stroke="#1A1614" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <!-- Telegram -->
+      <rect x="516" y="55" width="130" height="90" rx="12" fill="#1F9D55"/>
+      <text x="581" y="85" text-anchor="middle" fill="#fff" font-family="Bricolage Grotesque,sans-serif" font-size="13" font-weight="800">Telegram</text>
+      <text x="581" y="101" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="Inter,sans-serif" font-size="9">Your Dining Room</text>
+      <text x="581" y="116" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="Inter,sans-serif" font-size="9">Customers chat here</text>
+      <text x="581" y="131" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="JetBrains Mono,monospace" font-size="8">free · 900M users</text>
+    </svg>
+    <div class="diagram-caption">The four pieces of your AI bot system</div>
+  </div>
+
+  <h2 class="section-h">The Four Pieces</h2>
+  <p class="body"><strong>VPS (Virtual Private Server)</strong> — This is your kitchen. A small computer rented in a data centre that runs 24/7 even when your laptop is off. Your bot code lives here.</p>
+  <p class="body"><strong>OpenRouter</strong> — This is the menu of chefs you can hire. Instead of picking one AI company and sticking with it, OpenRouter lets you send requests to GPT-4o, Claude, Gemini, and hundreds more — all through one single address. You pay per meal (per token).</p>
+  <p class="body"><strong>Your Python Bot</strong> — This is the restaurant manager. It receives orders from customers (Telegram messages), sends them to the chosen chef (OpenRouter), and delivers the food back (AI reply).</p>
+  <p class="body"><strong>Telegram</strong> — This is your dining room. It's where your customers (users) sit and chat with your bot. Free, works everywhere, and has a dead-simple bot API.</p>
+
+  <div class="callout mango">
+    <div class="callout-label">Why Telegram and not WhatsApp?</div>
+    WhatsApp's business API costs money and requires Meta approval. Telegram is free, instant, and bots work on the same account normal users have. For learning, it's the obvious choice.
+  </div>
+
+  <div class="callout forest">
+    <div class="callout-label">Analogy Cheat Sheet</div>
+    VPS = Kitchen building &nbsp;·&nbsp; OpenRouter = Chef hire menu &nbsp;·&nbsp; Python code = Restaurant manager &nbsp;·&nbsp; Telegram = Dining room &nbsp;·&nbsp; API key = Chef's employment contract &nbsp;·&nbsp; Token = One word of food
+  </div>
+
+  <!-- QUIZ 0 -->
+  <div class="quiz-wrap" id="quiz-0">
+    <div class="quiz-header">Quick Check</div>
+    <div class="quiz-sub">3 questions — get all right to unlock the ✓</div>
+
+    <div class="q-block">
+      <div class="q-text">1. In the restaurant analogy, what does OpenRouter represent?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,0,0,false)">Your kitchen building</button>
+        <button class="q-opt" onclick="answer(this,0,0,true)">A menu of AI chefs you can hire per request</button>
+        <button class="q-opt" onclick="answer(this,0,0,false)">The dining room where customers sit</button>
+      </div>
+      <div class="q-feedback" id="qf-0-0"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text">2. Why do we use Telegram instead of WhatsApp for this project?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,0,1,false)">WhatsApp has more users</button>
+        <button class="q-opt" onclick="answer(this,0,1,false)">Telegram is faster at delivering messages</button>
+        <button class="q-opt" onclick="answer(this,0,1,true)">Telegram's bot API is free with no approval process</button>
+      </div>
+      <div class="q-feedback" id="qf-0-1"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text">3. What does the VPS do that your laptop can't?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,0,2,false)">It runs faster Python code</button>
+        <button class="q-opt" onclick="answer(this,0,2,true)">It stays on 24/7 even when you close your laptop</button>
+        <button class="q-opt" onclick="answer(this,0,2,false)">It gives you a better internet connection</button>
+      </div>
+      <div class="q-feedback" id="qf-0-2"></div>
+    </div>
+
+    <div class="quiz-score" id="qs-0"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav ghost" disabled>← Previous</button>
+    <button class="btn-nav" onclick="goTo(1)">Next: Rent a Kitchen →</button>
+  </div>
+</section>
+
+<!-- ═══════════════ MODULE 1: DIGITALOCEAN ═══════════════ -->
+<section class="module" id="mod-1">
+  <div class="eyebrow">MODULE 02 / 08</div>
+  <h1 class="mod-title">Rent a <span class="accent">Kitchen</span></h1>
+  <p class="lede">A VPS is just a small computer you rent by the month. It lives in a data centre and never turns off. This module gets you one set up and ready.</p>
+
+  <div class="objectives">
+    <h4>Learning Objectives</h4>
+    <ul>
+      <li>Create a DigitalOcean account and deploy a Droplet</li>
+      <li>Pick the right size for a bot (spoiler: the smallest one)</li>
+      <li>Understand what you're paying for</li>
+    </ul>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-val">$6</div><div class="stat-label">per month — cheapest DigitalOcean Droplet (1 vCPU, 1GB RAM, 25GB SSD)</div></div>
+    <div class="stat-card"><div class="stat-val">24/7</div><div class="stat-label">uptime — your bot answers even at 3am while you sleep</div></div>
+    <div class="stat-card"><div class="stat-val">~2 min</div><div class="stat-label">to spin up a new Droplet from scratch on DigitalOcean</div></div>
+  </div>
+
+  <h2 class="section-h">Step-by-Step: Create Your Droplet</h2>
+  <ul class="steps">
+    <li><p>Go to <strong>cloud.digitalocean.com</strong> and create a free account. You'll get a $200 credit for 60 days — enough to run this entire project for free while learning.</p></li>
+    <li><p>Click <strong>Create → Droplets</strong> in the top menu.</p></li>
+    <li><p>Choose <strong>Region</strong>: pick the one closest to your users. For Indonesia-facing bots, Singapore (SGP1) is ideal.</p></li>
+    <li><p>Choose <strong>Image → Ubuntu 22.04 LTS</strong>. This is the most stable, widely documented Linux version for beginners.</p></li>
+    <li><p>Choose <strong>Size → Basic → Regular → $6/mo</strong> (1 vCPU, 1 GB RAM). More than enough for a Telegram bot.</p></li>
+    <li><p>Under <strong>Authentication</strong>, choose <em>Password</em> for now (simpler). Set a strong password — you'll use it to log in.</p></li>
+    <li><p>Click <strong>Create Droplet</strong>. In about 60 seconds, you'll see a green IP address. That's your kitchen's address.</p></li>
+  </ul>
+
+  <div class="callout sea">
+    <div class="callout-label">What's an IP address?</div>
+    Think of it as your kitchen's street address. When your bot needs to talk to Telegram or OpenRouter, they need to know where to deliver the response. That IP number is how the internet finds your VPS.
+  </div>
+
+  <h2 class="section-h">Choosing the Right Size</h2>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 640 180" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <!-- header -->
+      <text x="20" y="22" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">DROPLET SIZE COMPARISON</text>
+      <!-- row 1 -->
+      <rect x="20" y="35" width="600" height="38" rx="8" fill="#FF5C39"/>
+      <text x="36" y="57" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#fff">Basic · 1 vCPU · 1 GB RAM · $6/mo</text>
+      <text x="420" y="57" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">← PICK THIS ONE</text>
+      <text x="36" y="68" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,0.75)">Handles 100s of Telegram messages/day with ease</text>
+      <!-- row 2 -->
+      <rect x="20" y="83" width="600" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1"/>
+      <text x="36" y="105" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#1A1614">Basic · 1 vCPU · 2 GB RAM · $12/mo</text>
+      <text x="36" y="118" font-family="Inter,sans-serif" font-size="9" fill="#6B6259">Overkill for a single bot. Upgrade later if needed.</text>
+      <!-- row 3 -->
+      <rect x="20" y="131" width="600" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line)" stroke-width="1"/>
+      <text x="36" y="153" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#1A1614">General Purpose · 2 vCPU · 8 GB RAM · $63/mo</text>
+      <text x="36" y="166" font-family="Inter,sans-serif" font-size="9" fill="#6B6259">For production apps with thousands of concurrent users.</text>
+    </svg>
+    <div class="diagram-caption">Start small. You can resize up later with one click.</div>
+  </div>
+
+  <div class="callout tomato">
+    <div class="callout-label">Don't skip this</div>
+    After creating your Droplet, go to <strong>Backups</strong> in the left sidebar and enable weekly backups (+$1.20/mo). If you break something, you can restore to last week instantly. Worth it.
+  </div>
+
+  <!-- QUIZ 1 -->
+  <div class="quiz-wrap" id="quiz-1">
+    <div class="quiz-header">Quick Check</div>
+    <div class="quiz-sub">3 questions</div>
+    <div class="q-block">
+      <div class="q-text">1. Which Ubuntu version should you pick for maximum stability and documentation?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,1,0,false)">Ubuntu 20.04</button>
+        <button class="q-opt" onclick="answer(this,1,0,true)">Ubuntu 22.04 LTS</button>
+        <button class="q-opt" onclick="answer(this,1,0,false)">Ubuntu 24.04</button>
+      </div>
+      <div class="q-feedback" id="qf-1-0"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. What is the IP address of your Droplet?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,1,1,false)">Your Telegram bot token</button>
+        <button class="q-opt" onclick="answer(this,1,1,false)">Your DigitalOcean account email</button>
+        <button class="q-opt" onclick="answer(this,1,1,true)">The internet address of your VPS (your kitchen's street address)</button>
+      </div>
+      <div class="q-feedback" id="qf-1-1"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">3. Which region should you pick for an Indonesia-facing Telegram bot?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,1,2,false)">New York</button>
+        <button class="q-opt" onclick="answer(this,1,2,true)">Singapore (SGP1)</button>
+        <button class="q-opt" onclick="answer(this,1,2,false)">Amsterdam</button>
+      </div>
+      <div class="q-feedback" id="qf-1-2"></div>
+    </div>
+    <div class="quiz-score" id="qs-1"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav ghost" onclick="goTo(0)">← Previous</button>
+    <button class="btn-nav" onclick="goTo(2)">Next: First Day In →</button>
+  </div>
+</section>
+
+<!-- ═══════════════ MODULE 2: SSH & LINUX ═══════════════ -->
+<section class="module" id="mod-2">
+  <div class="eyebrow">MODULE 03 / 08</div>
+  <h1 class="mod-title">First Day <span class="accent">In</span></h1>
+  <p class="lede">SSH is the key to your kitchen. Once inside, you'll learn the five Linux commands you'll use 90% of the time.</p>
+
+  <div class="objectives">
+    <h4>Learning Objectives</h4>
+    <ul>
+      <li>Log into your VPS using SSH</li>
+      <li>Update the server and install Python</li>
+      <li>Navigate around with basic Linux commands</li>
+    </ul>
+  </div>
+
+  <h2 class="section-h">Logging In: SSH</h2>
+  <p class="body">SSH (Secure Shell) is how you type commands on your VPS from your laptop. Think of it as a walkie-talkie that lets you give instructions to your kitchen remotely.</p>
+
+  <p class="body">Open your laptop's terminal (Mac: search "Terminal" · Windows: install Windows Terminal from the Store) and type:</p>
+
+  <div class="code-block">
+    <div class="code-label">your laptop terminal</div>
+    <pre>ssh root@YOUR_DROPLET_IP</pre>
+  </div>
+
+  <p class="body">Replace <span class="inline-code">YOUR_DROPLET_IP</span> with the number DigitalOcean showed you. It'll ask for your password — type it (you won't see it appear, that's normal) and hit Enter.</p>
+
+  <div class="callout forest">
+    <div class="callout-label">You're in!</div>
+    When you see <span class="inline-code">root@ubuntu-s-1vcpu-1gb:~#</span> you've entered your kitchen. Every command you type now runs on the VPS, not your laptop.
+  </div>
+
+  <h2 class="section-h">The Five Commands You Need</h2>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 640 230" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <text x="20" y="22" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">ESSENTIAL LINUX COMMANDS</text>
+      <!-- commands -->
+      <rect x="20" y="35" width="200" height="36" rx="8" fill="#1A1614"/>
+      <text x="36" y="51" font-family="JetBrains Mono,monospace" font-size="11" fill="#FFC234">ls</text>
+      <text x="70" y="51" font-family="Inter,sans-serif" font-size="10" fill="rgba(251,244,230,0.7)">list files here</text>
+      <text x="36" y="64" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(251,244,230,0.4)">like "show me the fridge"</text>
+
+      <rect x="232" y="35" width="200" height="36" rx="8" fill="#1A1614"/>
+      <text x="248" y="51" font-family="JetBrains Mono,monospace" font-size="11" fill="#FFC234">cd botfolder</text>
+      <text x="248" y="64" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(251,244,230,0.4)">enter a folder</text>
+
+      <rect x="444" y="35" width="196" height="36" rx="8" fill="#1A1614"/>
+      <text x="460" y="51" font-family="JetBrains Mono,monospace" font-size="11" fill="#FFC234">mkdir mybot</text>
+      <text x="460" y="64" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(251,244,230,0.4)">create a folder</text>
+
+      <rect x="20" y="85" width="200" height="36" rx="8" fill="#1A1614"/>
+      <text x="36" y="101" font-family="JetBrains Mono,monospace" font-size="11" fill="#FFC234">cat bot.py</text>
+      <text x="36" y="114" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(251,244,230,0.4)">view a file's contents</text>
+
+      <rect x="232" y="85" width="200" height="36" rx="8" fill="#1A1614"/>
+      <text x="248" y="101" font-family="JetBrains Mono,monospace" font-size="11" fill="#FFC234">nano bot.py</text>
+      <text x="248" y="114" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(251,244,230,0.4)">edit a file (Ctrl+X to exit)</text>
+
+      <!-- update sequence -->
+      <text x="20" y="152" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">UPDATE SEQUENCE (run these first, in order)</text>
+      <rect x="20" y="162" width="600" height="56" rx="8" fill="#1e1c1a"/>
+      <text x="36" y="181" font-family="JetBrains Mono,monospace" font-size="11" fill="#6ee7a0">apt update &amp;&amp; apt upgrade -y</text>
+      <text x="36" y="196" font-family="JetBrains Mono,monospace" font-size="11" fill="#6ee7a0">apt install -y python3 python3-pip</text>
+      <text x="36" y="211" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(251,244,230,0.35)"># updates all software then installs Python</text>
+    </svg>
+    <div class="diagram-caption">Run the update sequence immediately after first login — takes ~2 minutes</div>
+  </div>
+
+  <h2 class="section-h">Create Your Bot Folder</h2>
+  <div class="code-block">
+    <div class="code-label">inside your VPS</div>
+    <pre>mkdir /root/mybot
+cd /root/mybot
+ls   # should show empty — that's fine</pre>
+  </div>
+
+  <p class="body">This is your bot's home. Every file we create will go here.</p>
+
+  <div class="callout tomato">
+    <div class="callout-label">Never close terminal mid-task</div>
+    If your SSH connection drops while a command is running, it stops. In Module 07 we'll fix this permanently with systemd. For now, if something goes wrong, just SSH back in.
+  </div>
+
+  <!-- QUIZ 2 -->
+  <div class="quiz-wrap" id="quiz-2">
+    <div class="quiz-header">Quick Check</div>
+    <div class="quiz-sub">3 questions</div>
+    <div class="q-block">
+      <div class="q-text">1. What does the <code style="color:#FFC234;font-family:monospace">ls</code> command do?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,2,0,false)">Logs you out of the server</button>
+        <button class="q-opt" onclick="answer(this,2,0,true)">Lists files in the current folder</button>
+        <button class="q-opt" onclick="answer(this,2,0,false)">Installs a package</button>
+      </div>
+      <div class="q-feedback" id="qf-2-0"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. What should you run immediately after first logging into a new VPS?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,2,1,false)">pip install openai</button>
+        <button class="q-opt" onclick="answer(this,2,1,true)">apt update && apt upgrade -y</button>
+        <button class="q-opt" onclick="answer(this,2,1,false)">python3 bot.py</button>
+      </div>
+      <div class="q-feedback" id="qf-2-1"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">3. How do you exit the nano text editor?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,2,2,false)">Type :q! and press Enter</button>
+        <button class="q-opt" onclick="answer(this,2,2,false)">Press Escape, then type exit</button>
+        <button class="q-opt" onclick="answer(this,2,2,true)">Press Ctrl+X</button>
+      </div>
+      <div class="q-feedback" id="qf-2-2"></div>
+    </div>
+    <div class="quiz-score" id="qs-2"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav ghost" onclick="goTo(1)">← Previous</button>
+    <button class="btn-nav" onclick="goTo(3)">Next: Hire the Chef →</button>
+  </div>
+</section>
+
+<!-- ═══════════════ MODULE 3: OPENROUTER ═══════════════ -->
+<section class="module" id="mod-3">
+  <div class="eyebrow">MODULE 04 / 08</div>
+  <h1 class="mod-title">Hire the <span class="accent">Chef</span></h1>
+  <p class="lede">OpenRouter is where you get access to AI models. Think of it as a staffing agency — you call them, tell them what kind of chef you need, they connect you, and you pay per dish cooked.</p>
+
+  <div class="objectives">
+    <h4>Learning Objectives</h4>
+    <ul>
+      <li>Create an OpenRouter account and get an API key</li>
+      <li>Understand what models are available and what they cost</li>
+      <li>Know which model to pick for a beginner bot</li>
+    </ul>
+  </div>
+
+  <h2 class="section-h">Get Your API Key</h2>
+  <ul class="steps">
+    <li><p>Go to <strong>openrouter.ai</strong> and sign up (free).</p></li>
+    <li><p>Click your profile → <strong>Keys</strong> → <strong>Create Key</strong>. Name it "telegram-bot".</p></li>
+    <li><p>Copy the key immediately — it starts with <span class="inline-code">sk-or-v1-...</span> and you can't see it again after closing the window.</p></li>
+    <li><p>Add credit: go to <strong>Credits</strong> → add $5. That's roughly <strong>33 million tokens</strong> on GPT-4o-mini — enough for months of casual use.</p></li>
+  </ul>
+
+  <div class="callout tomato">
+    <div class="callout-label">Treat your API key like a password</div>
+    Never paste it into a public GitHub repo or share it in a chat. Anyone who has it can spend your credits. We'll store it safely as an environment variable — not hardcoded in your script.
+  </div>
+
+  <h2 class="section-h">Choosing a Model</h2>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <text x="20" y="22" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">MODEL COMPARISON — via OpenRouter</text>
+      <!-- headers -->
+      <text x="20" y="42" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#6B6259">MODEL</text>
+      <text x="260" y="42" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#6B6259">COST / 1M TOKENS</text>
+      <text x="420" y="42" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#6B6259">BEST FOR</text>
+      <line x1="20" y1="48" x2="620" y2="48" stroke="var(--line)" stroke-width="1"/>
+      <!-- rows -->
+      <rect x="20" y="54" width="600" height="34" rx="6" fill="#1F9D55" opacity="0.1"/>
+      <text x="30" y="73" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614" font-weight="500">openai/gpt-4o-mini</text>
+      <text x="260" y="73" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">$0.15 in / $0.60 out</text>
+      <text x="420" y="73" font-family="Inter,sans-serif" font-size="10" fill="#1F9D55" font-weight="600">← START HERE ✓</text>
+      <text x="30" y="83" font-family="Inter,sans-serif" font-size="9" fill="#6B6259">Fast, cheap, smart enough for 95% of bot tasks</text>
+
+      <text x="30" y="111" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">anthropic/claude-haiku</text>
+      <text x="260" y="111" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">$0.25 in / $1.25 out</text>
+      <text x="420" y="111" font-family="Inter,sans-serif" font-size="10" fill="#6B6259">Great reasoning, pricier</text>
+      <line x1="20" y1="120" x2="620" y2="120" stroke="var(--line)" stroke-width="1"/>
+
+      <text x="30" y="148" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">google/gemini-flash-1.5</text>
+      <text x="260" y="148" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">$0.075 in / $0.30 out</text>
+      <text x="420" y="148" font-family="Inter,sans-serif" font-size="10" fill="#6B6259">Cheapest decent option</text>
+      <line x1="20" y1="158" x2="620" y2="158" stroke="var(--line)" stroke-width="1"/>
+
+      <text x="30" y="186" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">meta-llama/llama-3.1-8b</text>
+      <text x="260" y="186" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">FREE (rate limited)</text>
+      <text x="420" y="186" font-family="Inter,sans-serif" font-size="10" fill="#6B6259">Testing only — slow & capped</text>
+      <line x1="20" y1="195" x2="620" y2="195" stroke="var(--line)" stroke-width="1"/>
+      <text x="30" y="212" font-family="Inter,sans-serif" font-size="9" fill="#6B6259">All prices approximate — check openrouter.ai/models for live rates</text>
+    </svg>
+    <div class="diagram-caption">Token = roughly one word. A typical chat message is ~50–200 tokens.</div>
+  </div>
+
+  <div class="callout mango">
+    <div class="callout-label">What is a token?</div>
+    One token ≈ one word (roughly). When your user says "What is the weather today?" that's 6 tokens in. When the bot replies with a 100-word answer, that's ~100 tokens out. Out-tokens cost more. Keep your system prompt short and your bot concise to save money.
+  </div>
+
+  <h2 class="section-h">Set Your API Key on the VPS</h2>
+  <div class="code-block">
+    <div class="code-label">inside your VPS (paste your real key)</div>
+    <pre>export OPENROUTER_API_KEY="sk-or-v1-your-key-here"
+# To make it permanent across reboots:
+echo 'export OPENROUTER_API_KEY="sk-or-v1-your-key-here"' >> ~/.bashrc
+source ~/.bashrc</pre>
+  </div>
+
+  <!-- QUIZ 3 -->
+  <div class="quiz-wrap" id="quiz-3">
+    <div class="quiz-header">Quick Check</div>
+    <div class="quiz-sub">3 questions</div>
+    <div class="q-block">
+      <div class="q-text">1. What should you do immediately after generating your API key?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,3,0,false)">Share it with your team on Slack</button>
+        <button class="q-opt" onclick="answer(this,3,0,true)">Copy it immediately — you can't view it again after closing</button>
+        <button class="q-opt" onclick="answer(this,3,0,false)">Paste it directly into your bot.py file</button>
+      </div>
+      <div class="q-feedback" id="qf-3-0"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. Which model is recommended for a beginner Telegram bot?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,3,1,false)">anthropic/claude-opus</button>
+        <button class="q-opt" onclick="answer(this,3,1,true)">openai/gpt-4o-mini</button>
+        <button class="q-opt" onclick="answer(this,3,1,false)">meta-llama/llama-3.1-8b (free)</button>
+      </div>
+      <div class="q-feedback" id="qf-3-1"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">3. Why do we store the API key as an environment variable instead of in the code?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,3,2,false)">Environment variables run faster</button>
+        <button class="q-opt" onclick="answer(this,3,2,false)">It makes the code shorter</button>
+        <button class="q-opt" onclick="answer(this,3,2,true)">So it's not visible if you share or publish your code</button>
+      </div>
+      <div class="q-feedback" id="qf-3-2"></div>
+    </div>
+    <div class="quiz-score" id="qs-3"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav ghost" onclick="goTo(2)">← Previous</button>
+    <button class="btn-nav" onclick="goTo(4)">Next: Write the Manager →</button>
+  </div>
+</section>
+
+<!-- ═══════════════ MODULE 4: PYTHON BOT ═══════════════ -->
+<section class="module" id="mod-4">
+  <div class="eyebrow">MODULE 05 / 08</div>
+  <h1 class="mod-title">Write the <span class="accent">Manager</span></h1>
+  <p class="lede">This is the Python script that sits in your VPS kitchen, takes orders from Telegram, calls OpenRouter, and delivers the AI's reply back. We'll build it line by line.</p>
+
+  <div class="objectives">
+    <h4>Learning Objectives</h4>
+    <ul>
+      <li>Install the required Python packages on your VPS</li>
+      <li>Understand each section of the bot script</li>
+      <li>Create the full bot.py file</li>
+    </ul>
+  </div>
+
+  <h2 class="section-h">Install Packages</h2>
+  <div class="code-block">
+    <div class="code-label">on your VPS</div>
+    <pre>cd /root/mybot
+pip3 install openai python-telegram-bot --break-system-packages</pre>
+  </div>
+
+  <div class="callout sea">
+    <div class="callout-label">Why openai package for OpenRouter?</div>
+    OpenRouter is intentionally designed to be a drop-in replacement for the OpenAI API. You use the same <span class="inline-code">openai</span> Python library — you just change the <span class="inline-code">base_url</span>. This means switching models is one line of code.
+  </div>
+
+  <h2 class="section-h">The Full Bot Script</h2>
+  <p class="body">Create the file: <span class="inline-code">nano /root/mybot/bot.py</span> — then paste everything below.</p>
+
+  <div class="code-block">
+    <div class="code-label">bot.py — full script</div>
+    <pre>import os
+from openai import AsyncOpenAI
+from telegram import Update
+from telegram.ext import (
+    Application, CommandHandler,
+    MessageHandler, filters, ContextTypes
+)
+
+# ── 1. CONFIG ────────────────────────────────────────────
+OPENROUTER_API_KEY = os.environ["OPENROUTER_API_KEY"]
+TELEGRAM_TOKEN     = os.environ["TELEGRAM_TOKEN"]
+MODEL = "openai/gpt-4o-mini"  # swap to any OpenRouter model
+
+# ── 2. PERSONALITY ───────────────────────────────────────
+# Change this to make your bot behave differently
+SYSTEM_PROMPT = """You are a friendly, helpful AI assistant.
+Keep answers concise (2-3 sentences unless asked for more).
+Be warm and conversational, not robotic."""
+
+# ── 3. MEMORY ────────────────────────────────────────────
+# Each user gets their own conversation history
+conversations = {}
+
+# ── 4. AI CLIENT ─────────────────────────────────────────
+client = AsyncOpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=OPENROUTER_API_KEY,
+)
+
+# ── 5. HANDLERS ──────────────────────────────────────────
+async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    """Runs when user types /start"""
+    await update.message.reply_text(
+        "👋 Hi! I'm your AI assistant. Ask me anything!"
+    )
+
+async def handle_message(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    """Runs on every normal text message"""
+    user_id  = update.effective_user.id
+    user_msg = update.message.text
+
+    # Build or retrieve this user's history
+    if user_id not in conversations:
+        conversations[user_id] = [
+            {"role": "system", "content": SYSTEM_PROMPT}
+        ]
+
+    # Add what the user just said
+    conversations[user_id].append(
+        {"role": "user", "content": user_msg}
+    )
+
+    # Trim to last 20 exchanges (saves tokens)
+    if len(conversations[user_id]) > 21:
+        conversations[user_id] = (
+            [conversations[user_id][0]]   # keep system prompt
+            + conversations[user_id][-20:]
+        )
+
+    # Ask the AI
+    response = await client.chat.completions.create(
+        model=MODEL,
+        messages=conversations[user_id],
+    )
+    reply = response.choices[0].message.content
+
+    # Remember what the bot said
+    conversations[user_id].append(
+        {"role": "assistant", "content": reply}
+    )
+
+    await update.message.reply_text(reply)
+
+# ── 6. MAIN ──────────────────────────────────────────────
+def main():
+    app = Application.builder().token(TELEGRAM_TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(
+        MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
+    )
+    print("Bot is running...")
+    app.run_polling()
+
+if __name__ == "__main__":
+    main()</pre>
+  </div>
+
+  <h2 class="section-h">What Each Section Does</h2>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <text x="20" y="22" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">SCRIPT ANATOMY</text>
+      <!-- sections -->
+      <rect x="20" y="32" width="90" height="30" rx="6" fill="#FF5C39"/>
+      <text x="65" y="51" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff">1. CONFIG</text>
+      <text x="126" y="51" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Reads your API keys from environment variables (safe)</text>
+
+      <rect x="20" y="74" width="90" height="30" rx="6" fill="#1FA9C7"/>
+      <text x="65" y="93" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff">2. PERSONA</text>
+      <text x="126" y="93" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Your bot's personality — edit this to create any character</text>
+
+      <rect x="20" y="116" width="90" height="30" rx="6" fill="#E84BA0"/>
+      <text x="65" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff">3. MEMORY</text>
+      <text x="126" y="135" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Stores chat history per user — this is what makes it "agentic"</text>
+
+      <rect x="20" y="158" width="90" height="30" rx="6" fill="#1F9D55"/>
+      <text x="65" y="177" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff">4. AI CLIENT</text>
+      <text x="126" y="177" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Connection to OpenRouter — base_url is the magic line</text>
+
+      <rect x="20" y="200" width="90" height="30" rx="6" fill="#FFC234"/>
+      <text x="65" y="219" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">5. HANDLERS</text>
+      <text x="126" y="219" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Functions that run when a user sends a message or /start</text>
+
+      <rect x="20" y="242" width="90" height="14" rx="4" fill="#6B6259"/>
+      <text x="65" y="253" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#FBF4E6">6. MAIN</text>
+      <text x="126" y="253" font-family="Inter,sans-serif" font-size="10" fill="#6B6259">Wires everything together and starts listening for messages</text>
+    </svg>
+    <div class="diagram-caption">Memory (section 3) is what makes this a true agent — it remembers context across messages</div>
+  </div>
+
+  <!-- QUIZ 4 -->
+  <div class="quiz-wrap" id="quiz-4">
+    <div class="quiz-header">Quick Check</div>
+    <div class="quiz-sub">3 questions</div>
+    <div class="q-block">
+      <div class="q-text">1. What makes this bot "agentic" rather than just a simple chatbot?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,4,0,false)">It uses GPT-4o-mini which is a smarter model</button>
+        <button class="q-opt" onclick="answer(this,4,0,true)">It stores conversation history per user, so it remembers context</button>
+        <button class="q-opt" onclick="answer(this,4,0,false)">It runs on a VPS instead of a laptop</button>
+      </div>
+      <div class="q-feedback" id="qf-4-0"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. Why do we trim the conversation history to 20 messages?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,4,1,false)">Telegram has a message limit</button>
+        <button class="q-opt" onclick="answer(this,4,1,true)">To save tokens — long histories cost more money to send to the AI</button>
+        <button class="q-opt" onclick="answer(this,4,1,false)">Python can't handle more than 20 items in a list</button>
+      </div>
+      <div class="q-feedback" id="qf-4-1"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">3. How do you change your bot's personality?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,4,2,false)">Change the MODEL variable to a different AI</button>
+        <button class="q-opt" onclick="answer(this,4,2,true)">Edit the SYSTEM_PROMPT string</button>
+        <button class="q-opt" onclick="answer(this,4,2,false)">Modify the handle_message function</button>
+      </div>
+      <div class="q-feedback" id="qf-4-2"></div>
+    </div>
+    <div class="quiz-score" id="qs-4"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav ghost" onclick="goTo(3)">← Previous</button>
+    <button class="btn-nav" onclick="goTo(5)">Next: Open the Diner →</button>
+  </div>
+</section>
+
+<!-- ═══════════════ MODULE 5: TELEGRAM ═══════════════ -->
+<section class="module" id="mod-5">
+  <div class="eyebrow">MODULE 06 / 08</div>
+  <h1 class="mod-title">Open the <span class="accent">Diner</span></h1>
+  <p class="lede">Your kitchen is ready, your manager is written. Now you open the dining room — connect your bot to Telegram so real people can walk in and start chatting.</p>
+
+  <div class="objectives">
+    <h4>Learning Objectives</h4>
+    <ul>
+      <li>Create a Telegram bot via BotFather and get a token</li>
+      <li>Set the token on your VPS</li>
+      <li>Run the bot for the first time and test it</li>
+    </ul>
+  </div>
+
+  <h2 class="section-h">Step 1 — Create Your Bot in Telegram</h2>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 640 140" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <text x="20" y="22" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">BOTFATHER FLOW</text>
+      <!-- steps -->
+      <rect x="20" y="35" width="130" height="50" rx="10" fill="#1F9D55"/>
+      <text x="85" y="58" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#fff">Open Telegram</text>
+      <text x="85" y="72" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">search @BotFather</text>
+      <polygon points="150,60 162,55 162,65" fill="#1A1614"/>
+
+      <rect x="163" y="35" width="130" height="50" rx="10" fill="#1F9D55"/>
+      <text x="228" y="58" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#fff">Send /newbot</text>
+      <text x="228" y="72" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">follow the prompts</text>
+      <polygon points="293,60 305,55 305,65" fill="#1A1614"/>
+
+      <rect x="306" y="35" width="130" height="50" rx="10" fill="#1F9D55"/>
+      <text x="371" y="58" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#fff">Pick a name</text>
+      <text x="371" y="72" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">must end in "bot"</text>
+      <polygon points="436,60 448,55 448,65" fill="#1A1614"/>
+
+      <rect x="449" y="35" width="170" height="50" rx="10" fill="#FF5C39"/>
+      <text x="534" y="55" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#fff">Get your TOKEN</text>
+      <text x="534" y="69" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.9)">1234567890:ABC...</text>
+      <text x="534" y="82" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">Copy this immediately</text>
+
+      <text x="320" y="125" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6B6259">BotFather is Telegram's official bot that creates other bots. No sign-up needed.</text>
+    </svg>
+    <div class="diagram-caption">The whole process takes about 60 seconds inside Telegram</div>
+  </div>
+
+  <h2 class="section-h">Step 2 — Set the Token on Your VPS</h2>
+  <div class="code-block">
+    <div class="code-label">on your VPS</div>
+    <pre>export TELEGRAM_TOKEN="1234567890:ABCdefGHIjklMNOpqrSTUvwxYZ"
+# Make it permanent:
+echo 'export TELEGRAM_TOKEN="your-token-here"' >> ~/.bashrc
+source ~/.bashrc</pre>
+  </div>
+
+  <h2 class="section-h">Step 3 — Run the Bot!</h2>
+  <div class="code-block">
+    <div class="code-label">on your VPS</div>
+    <pre>cd /root/mybot
+python3 bot.py</pre>
+  </div>
+
+  <p class="body">You should see: <span class="inline-code">Bot is running...</span></p>
+  <p class="body">Now open Telegram, search for your bot's username, and send it a message. It should reply!</p>
+
+  <div class="callout tomato">
+    <div class="callout-label">The bot stops when you close SSH</div>
+    Right now, the bot only runs while your terminal is open. If you press Ctrl+C or close the window, it dies. Module 07 fixes this permanently.
+  </div>
+
+  <div class="callout forest">
+    <div class="callout-label">Test checklist</div>
+    ✓ Search your bot username in Telegram &nbsp;·&nbsp; ✓ Send /start → should reply &nbsp;·&nbsp; ✓ Send any message → should get an AI reply &nbsp;·&nbsp; ✓ Send a follow-up message → bot should remember the context
+  </div>
+
+  <!-- QUIZ 5 -->
+  <div class="quiz-wrap" id="quiz-5">
+    <div class="quiz-header">Quick Check</div>
+    <div class="quiz-sub">3 questions</div>
+    <div class="q-block">
+      <div class="q-text">1. What is BotFather?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,5,0,false)">A Python library for Telegram</button>
+        <button class="q-opt" onclick="answer(this,5,0,true)">Telegram's official bot for creating and managing other bots</button>
+        <button class="q-opt" onclick="answer(this,5,0,false)">A DigitalOcean feature for managing VPS servers</button>
+      </div>
+      <div class="q-feedback" id="qf-5-0"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. What must a Telegram bot's username end with?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,5,1,false)">_ai</button>
+        <button class="q-opt" onclick="answer(this,5,1,true)">bot</button>
+        <button class="q-opt" onclick="answer(this,5,1,false)">_telegram</button>
+      </div>
+      <div class="q-feedback" id="qf-5-1"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">3. What happens to the bot if you close your SSH terminal right now?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,5,2,false)">It keeps running — it's already on the VPS</button>
+        <button class="q-opt" onclick="answer(this,5,2,true)">It stops — we haven't set up a background service yet</button>
+        <button class="q-opt" onclick="answer(this,5,2,false)">It pauses until you reconnect</button>
+      </div>
+      <div class="q-feedback" id="qf-5-2"></div>
+    </div>
+    <div class="quiz-score" id="qs-5"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav ghost" onclick="goTo(4)">← Previous</button>
+    <button class="btn-nav" onclick="goTo(6)">Next: Keep Lights On →</button>
+  </div>
+</section>
+
+<!-- ═══════════════ MODULE 6: SYSTEMD ═══════════════ -->
+<section class="module" id="mod-6">
+  <div class="eyebrow">MODULE 07 / 08</div>
+  <h1 class="mod-title">Keep the <span class="accent">Lights</span> On</h1>
+  <p class="lede">Right now your bot dies the moment you close your laptop. We'll fix this with systemd — Linux's built-in process manager — so your bot runs forever and restarts automatically if it crashes.</p>
+
+  <div class="objectives">
+    <h4>Learning Objectives</h4>
+    <ul>
+      <li>Create a systemd service file for your bot</li>
+      <li>Enable the service to auto-start on reboot</li>
+      <li>Check logs when something goes wrong</li>
+    </ul>
+  </div>
+
+  <h2 class="section-h">The Service File</h2>
+  <p class="body">A systemd service file tells Linux: "here's a program, keep it running always, restart it if it crashes, and start it when the VPS boots."</p>
+
+  <div class="code-block">
+    <div class="code-label">create this file: nano /etc/systemd/system/mybot.service</div>
+    <pre>[Unit]
+Description=My Telegram AI Bot
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/mybot
+EnvironmentFile=/root/mybot/.env
+ExecStart=/usr/bin/python3 /root/mybot/bot.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target</pre>
+  </div>
+
+  <p class="body">Notice we switched to an <span class="inline-code">EnvironmentFile</span>. Create that file now:</p>
+
+  <div class="code-block">
+    <div class="code-label">create: nano /root/mybot/.env</div>
+    <pre>OPENROUTER_API_KEY=sk-or-v1-your-key-here
+TELEGRAM_TOKEN=1234567890:your-token-here</pre>
+  </div>
+
+  <div class="callout tomato">
+    <div class="callout-label">Secure the .env file</div>
+    Run this so only root can read it: <span class="inline-code">chmod 600 /root/mybot/.env</span>
+  </div>
+
+  <h2 class="section-h">Enable and Start</h2>
+  <div class="code-block">
+    <div class="code-label">on your VPS</div>
+    <pre># Tell systemd about the new service
+systemctl daemon-reload
+
+# Enable auto-start on reboot
+systemctl enable mybot
+
+# Start it now
+systemctl start mybot
+
+# Check it's running
+systemctl status mybot</pre>
+  </div>
+
+  <p class="body">You should see <span class="inline-code">Active: active (running)</span> in green. Your bot now runs forever.</p>
+
+  <h2 class="section-h">Useful Commands</h2>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 640 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <text x="20" y="22" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">SYSTEMD CHEAT SHEET</text>
+      <rect x="20" y="32" width="600" height="24" rx="6" fill="#1e1c1a"/>
+      <text x="32" y="48" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFC234">journalctl -u mybot -f</text>
+      <text x="260" y="48" font-family="Inter,sans-serif" font-size="10" fill="rgba(251,244,230,0.7)">Live logs — see every message in real time</text>
+
+      <rect x="20" y="62" width="600" height="24" rx="6" fill="#1e1c1a"/>
+      <text x="32" y="78" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFC234">systemctl restart mybot</text>
+      <text x="260" y="78" font-family="Inter,sans-serif" font-size="10" fill="rgba(251,244,230,0.7)">Restart after editing bot.py</text>
+
+      <rect x="20" y="92" width="600" height="24" rx="6" fill="#1e1c1a"/>
+      <text x="32" y="108" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFC234">systemctl stop mybot</text>
+      <text x="260" y="108" font-family="Inter,sans-serif" font-size="10" fill="rgba(251,244,230,0.7)">Pause the bot temporarily</text>
+
+      <rect x="20" y="122" width="600" height="24" rx="6" fill="#1e1c1a"/>
+      <text x="32" y="138" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFC234">systemctl status mybot</text>
+      <text x="260" y="138" font-family="Inter,sans-serif" font-size="10" fill="rgba(251,244,230,0.7)">Quick health check — shows uptime and last log lines</text>
+    </svg>
+    <div class="diagram-caption">Whenever you edit bot.py, run systemctl restart mybot to apply changes</div>
+  </div>
+
+  <div class="callout forest">
+    <div class="callout-label">You're done! Your bot is now production-ready</div>
+    It starts on boot, restarts on crash, runs with no terminal open, and logs everything. This is exactly how real production services are run on Linux.
+  </div>
+
+  <!-- QUIZ 6 -->
+  <div class="quiz-wrap" id="quiz-6">
+    <div class="quiz-header">Quick Check</div>
+    <div class="quiz-sub">3 questions</div>
+    <div class="q-block">
+      <div class="q-text">1. What does <code style="color:#FFC234;font-family:monospace">Restart=always</code> do in the service file?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,6,0,false)">Restarts the entire VPS every day</button>
+        <button class="q-opt" onclick="answer(this,6,0,true)">Automatically restarts the bot if it crashes or stops unexpectedly</button>
+        <button class="q-opt" onclick="answer(this,6,0,false)">Forces the bot to reload its config every hour</button>
+      </div>
+      <div class="q-feedback" id="qf-6-0"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. You edited bot.py and want the changes to take effect. What command do you run?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,6,1,false)">systemctl reload mybot</button>
+        <button class="q-opt" onclick="answer(this,6,1,true)">systemctl restart mybot</button>
+        <button class="q-opt" onclick="answer(this,6,1,false)">python3 bot.py</button>
+      </div>
+      <div class="q-feedback" id="qf-6-1"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">3. How do you view live logs from your bot?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,6,2,false)">cat /root/mybot/log.txt</button>
+        <button class="q-opt" onclick="answer(this,6,2,false)">systemctl logs mybot</button>
+        <button class="q-opt" onclick="answer(this,6,2,true)">journalctl -u mybot -f</button>
+      </div>
+      <div class="q-feedback" id="qf-6-2"></div>
+    </div>
+    <div class="quiz-score" id="qs-6"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav ghost" onclick="goTo(5)">← Previous</button>
+    <button class="btn-nav" onclick="goTo(7)">Next: The Monthly Bill →</button>
+  </div>
+</section>
+
+<!-- ═══════════════ MODULE 7: PRICING ═══════════════ -->
+<section class="module" id="mod-7">
+  <div class="eyebrow">MODULE 08 / 08</div>
+  <h1 class="mod-title">The Monthly <span class="accent">Bill</span></h1>
+  <p class="lede">Let's be honest about what this actually costs. Use the calculator below with your own numbers to get a realistic monthly estimate.</p>
+
+  <div class="objectives">
+    <h4>Learning Objectives</h4>
+    <ul>
+      <li>Understand the three cost components of running an AI bot</li>
+      <li>Estimate your personal monthly spend</li>
+      <li>Know how to keep costs low</li>
+    </ul>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-val">$6</div><div class="stat-label">DigitalOcean Basic Droplet — fixed monthly cost</div></div>
+    <div class="stat-card"><div class="stat-val">~$1–5</div><div class="stat-label">OpenRouter tokens for a personal bot with light-moderate usage</div></div>
+    <div class="stat-card"><div class="stat-val">$0</div><div class="stat-label">Telegram — completely free, no per-message fees ever</div></div>
+  </div>
+
+  <h2 class="section-h">Cost Calculator</h2>
+
+  <div class="calc-wrap">
+    <div class="calc-row">
+      <div><div class="calc-label">Daily active users</div><div class="calc-sub">People who message your bot each day</div></div>
+      <input class="calc-input" type="number" id="c-users" value="10" min="1" oninput="calcCost()">
+    </div>
+    <div class="calc-row">
+      <div><div class="calc-label">Messages per user per day</div><div class="calc-sub">Average back-and-forth exchanges</div></div>
+      <input class="calc-input" type="number" id="c-msgs" value="5" min="1" oninput="calcCost()">
+    </div>
+    <div class="calc-row">
+      <div><div class="calc-label">Avg tokens per message pair</div><div class="calc-sub">User msg + bot reply combined (150 is typical)</div></div>
+      <input class="calc-input" type="number" id="c-tokens" value="150" min="50" oninput="calcCost()">
+    </div>
+    <div class="calc-row">
+      <div><div class="calc-label">Model cost (per 1M output tokens, USD)</div><div class="calc-sub">GPT-4o-mini = 0.60 · Gemini Flash = 0.30 · Claude Haiku = 1.25</div></div>
+      <input class="calc-input" type="number" id="c-rate" value="0.60" min="0.01" step="0.01" oninput="calcCost()">
+    </div>
+    <div style="border-top:1px solid var(--line);padding-top:16px;margin-top:8px">
+      <div class="calc-total">
+        <div>
+          <div class="calc-total-label">Estimated monthly total</div>
+          <div style="font-size:11px;color:rgba(251,244,230,0.4);margin-top:3px">VPS $6 + token costs</div>
+        </div>
+        <div class="calc-total-val" id="calc-result">$7.35</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:var(--muted)">⚠ This is an estimate. Actual costs depend on model, message length, and usage spikes. Check your OpenRouter dashboard weekly at first.</div>
+  </div>
+
+  <h2 class="section-h">Cost-Saving Tips</h2>
+  <div class="callout forest">
+    <div class="callout-label">Keep it cheap without losing quality</div>
+    <p style="margin-bottom:8px">• <strong>Short system prompt</strong> — every message sends the full system prompt. 50 words &gt; 500 words.</p>
+    <p style="margin-bottom:8px">• <strong>Trim history</strong> — our script already limits to 20 messages. Consider 10 for cheaper bots.</p>
+    <p style="margin-bottom:8px">• <strong>Gemini Flash</strong> — if GPT-4o-mini feels expensive, swap to google/gemini-flash-1.5 (half the price, still excellent).</p>
+    <p>• <strong>Set a monthly limit</strong> — in OpenRouter dashboard → Settings, set a hard spend cap so you never get surprised.</p>
+  </div>
+
+  <div class="callout mango">
+    <div class="callout-label">Reality check for a personal project</div>
+    10 users × 5 messages × 150 tokens = 7,500 tokens/day. At $0.60/1M out tokens, that's about $0.0045/day in AI costs — less than half a cent. For most personal or small community bots, your VPS ($6/mo) will be your biggest expense by far.
+  </div>
+
+  <!-- QUIZ 7 -->
+  <div class="quiz-wrap" id="quiz-7">
+    <div class="quiz-header">Final Check</div>
+    <div class="quiz-sub">3 questions</div>
+    <div class="q-block">
+      <div class="q-text">1. Which of the three components of your bot has zero monthly cost?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,7,0,false)">The VPS (DigitalOcean)</button>
+        <button class="q-opt" onclick="answer(this,7,0,false)">OpenRouter tokens</button>
+        <button class="q-opt" onclick="answer(this,7,0,true)">Telegram (always free)</button>
+      </div>
+      <div class="q-feedback" id="qf-7-0"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">2. What is the single most effective way to reduce your OpenRouter token costs?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,7,1,false)">Use a more powerful (and expensive) model</button>
+        <button class="q-opt" onclick="answer(this,7,1,true)">Keep your system prompt short and trim conversation history</button>
+        <button class="q-opt" onclick="answer(this,7,1,false)">Run two VPS servers in different regions</button>
+      </div>
+      <div class="q-feedback" id="qf-7-1"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-text">3. For a small personal bot (10 users, 5 messages/day), what will likely be your largest monthly cost?</div>
+      <div class="q-opts">
+        <button class="q-opt" onclick="answer(this,7,2,false)">OpenRouter token fees</button>
+        <button class="q-opt" onclick="answer(this,7,2,true)">The $6/mo DigitalOcean Droplet</button>
+        <button class="q-opt" onclick="answer(this,7,2,false)">Telegram business API fees</button>
+      </div>
+      <div class="q-feedback" id="qf-7-2"></div>
+    </div>
+    <div class="quiz-score" id="qs-7"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav ghost" onclick="goTo(6)">← Previous</button>
+    <button class="btn-nav" onclick="goTo(8)">References →</button>
+  </div>
+</section>
+
+<!-- ═══════════════ MODULE 8: REFERENCES ═══════════════ -->
+<section class="module" id="mod-8">
+  <div class="eyebrow">REFERENCES</div>
+  <h1 class="mod-title">Sources &amp; <span class="accent">Further</span> Reading</h1>
+  <p class="lede">All primary sources used in this course, with annotations on what each contributes and any caveats.</p>
+
+  <div class="ref-item tomato">
+    <div class="ref-cite">OpenRouter. "Models." openrouter.ai/models. Accessed May 2026.</div>
+    <div class="ref-annotation">The authoritative live source for model pricing, rate limits, and availability across all supported providers. Prices change frequently — always check here for current rates rather than relying on figures in this course. Caveat: pricing shown is list price; actual billing may differ slightly due to rounding and provider-side changes.</div>
+    <a class="ref-link" href="https://openrouter.ai/models" target="_blank">→ openrouter.ai/models</a>
+  </div>
+
+  <div class="ref-item sea">
+    <div class="ref-cite">DigitalOcean. "Droplets Documentation." docs.digitalocean.com/products/droplets. Accessed May 2026.</div>
+    <div class="ref-annotation">Official documentation for creating, resizing, and managing DigitalOcean Droplets. Covers SSH key setup, backups, snapshots, and networking. The $6/mo Basic Droplet pricing referenced in this course is current as of May 2026 but subject to change. Methodology: DigitalOcean's own published specs and pricing pages.</div>
+    <a class="ref-link" href="https://docs.digitalocean.com/products/droplets/" target="_blank">→ docs.digitalocean.com/products/droplets</a>
+  </div>
+
+  <div class="ref-item forest">
+    <div class="ref-cite">python-telegram-bot Contributors. "python-telegram-bot v20+ Documentation." docs.python-telegram-bot.org. Accessed May 2026.</div>
+    <div class="ref-annotation">Official library documentation for building Telegram bots in Python. The Application/handler pattern used in bot.py follows the v20+ async architecture. V13 (older, synchronous) has different syntax — ensure you install v20+. Caveat: the library is actively developed; API may evolve.</div>
+    <a class="ref-link" href="https://docs.python-telegram-bot.org/" target="_blank">→ docs.python-telegram-bot.org</a>
+  </div>
+
+  <div class="ref-item mango">
+    <div class="ref-cite">Telegram. "Bot API Documentation." core.telegram.org/bots/api. Accessed May 2026.</div>
+    <div class="ref-annotation">Telegram's own official Bot API reference. Covers BotFather commands, polling vs webhooks, message types, and rate limits. The bot username requirement (must end in "bot") and BotFather /newbot flow described in Module 06 are sourced from this document. No significant caveats — this is the primary spec.</div>
+    <a class="ref-link" href="https://core.telegram.org/bots/api" target="_blank">→ core.telegram.org/bots/api</a>
+  </div>
+
+  <div class="ref-item sea">
+    <div class="ref-cite">OpenAI. "openai Python Library." github.com/openai/openai-python. Accessed May 2026.</div>
+    <div class="ref-annotation">The official Python SDK for the OpenAI API, which OpenRouter is designed to be compatible with. The base_url override technique used in Module 05 is documented in OpenRouter's own quickstart guide. Caveat: library version pinning is recommended for production — always check the latest release notes before upgrading.</div>
+    <a class="ref-link" href="https://github.com/openai/openai-python" target="_blank">→ github.com/openai/openai-python</a>
+  </div>
+
+  <div class="ref-item tomato">
+    <div class="ref-cite">systemd Project. "systemd.service(5) Man Page." freedesktop.org/software/systemd/man/systemd.service.html. Accessed May 2026.</div>
+    <div class="ref-annotation">The authoritative reference for systemd service unit files. The [Unit], [Service], and [Install] sections and directives (Restart=always, EnvironmentFile, WantedBy) used in Module 07 are all documented here. Linux distribution-specific behaviour may vary slightly between Ubuntu, Debian, and RHEL-based systems.</div>
+    <a class="ref-link" href="https://www.freedesktop.org/software/systemd/man/systemd.service.html" target="_blank">→ freedesktop.org systemd docs</a>
+  </div>
+
+  <div class="callout tomato">
+    <div class="callout-label">Data quality caveat</div>
+    Pricing data (OpenRouter, DigitalOcean) is highly volatile and changes without notice. All figures in this course reflect May 2026 rates. Always verify current pricing at the source before making financial decisions. Token cost estimates assume standard output pricing; batch or cached inputs may be cheaper.
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav ghost" onclick="goTo(6)">← Previous Module</button>
+    <button class="btn-nav" onclick="goTo(0)" style="background:var(--hidup-forest)">↩ Back to Start</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+// ── STATE ─────────────────────────────────────────────
+let current = 0;
+const TOTAL_MODS = 8; // excludes references
+const quizDone = new Array(9).fill(false);
+const quizAnswers = {}; // {modIdx: {qIdx: answered}}
+
+// ── NAVIGATION ────────────────────────────────────────
+function goTo(idx) {
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  document.getElementById('mod-' + idx).classList.add('active');
+  document.querySelectorAll('#navList a').forEach(a => a.classList.remove('active'));
+  document.getElementById('nav-' + idx).classList.add('active');
+  current = idx;
+  window.scrollTo(0,0);
+}
+
+// ── QUIZ ──────────────────────────────────────────────
+function answer(btn, modIdx, qIdx, correct) {
+  const key = modIdx + '-' + qIdx;
+  if (quizAnswers[key]) return; // already answered
+  quizAnswers[key] = true;
+
+  // Disable all options in this question
+  btn.closest('.q-opts').querySelectorAll('.q-opt').forEach(b => {
+    b.setAttribute('disabled', true);
+    b.style.pointerEvents = 'none';
+    b.style.opacity = '0.5';
+  });
+  btn.style.opacity = '1';
+
+  if (correct) {
+    btn.classList.add('correct');
+    const fb = document.getElementById('qf-' + modIdx + '-' + qIdx);
+    fb.textContent = '✓ Correct!';
+    fb.className = 'q-feedback ok show';
+  } else {
+    btn.classList.add('wrong');
+    const fb = document.getElementById('qf-' + modIdx + '-' + qIdx);
+    fb.textContent = '✗ Not quite — re-read the module section and try to spot the right answer above.';
+    fb.className = 'q-feedback bad show';
+  }
+
+  checkQuizComplete(modIdx);
+}
+
+function checkQuizComplete(modIdx) {
+  const allAnswered = [0,1,2].every(q => quizAnswers[modIdx + '-' + q]);
+  if (!allAnswered) return;
+
+  const score = [0,1,2].filter(q => {
+    const opts = document.querySelectorAll('#quiz-' + modIdx + ' .q-block:nth-child(' + (q+2) + ') .q-opt');
+    // count correct ones that have the correct class
+    return document.querySelectorAll('#quiz-' + modIdx + ' .q-opt.correct')[q] !== undefined;
+  }).length;
+
+  // simpler: count correct divs
+  const correctCount = document.querySelectorAll('#quiz-' + modIdx + ' .q-opt.correct').length;
+
+  const scoreEl = document.getElementById('qs-' + modIdx);
+  scoreEl.textContent = correctCount === 3
+    ? '🎯 Perfect — 3/3! Module complete.'
+    : correctCount === 2
+    ? '👍 2/3 — Good. Review the one you missed.'
+    : '📖 1/3 — Worth re-reading this module.';
+  scoreEl.className = 'quiz-score show';
+
+  // Mark done if at least 2/3
+  if (correctCount >= 2 && !quizDone[modIdx]) {
+    quizDone[modIdx] = true;
+    document.getElementById('nav-' + modIdx).classList.add('quiz-done');
+    updateProgress();
+  }
+}
+
+function updateProgress() {
+  const done = quizDone.slice(0, TOTAL_MODS).filter(Boolean).length;
+  const pct = Math.round((done / TOTAL_MODS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = done + ' / ' + TOTAL_MODS + ' modules';
+}
+
+// ── PRICING CALCULATOR ────────────────────────────────
+function calcCost() {
+  const users  = parseFloat(document.getElementById('c-users').value)  || 10;
+  const msgs   = parseFloat(document.getElementById('c-msgs').value)   || 5;
+  const tokens = parseFloat(document.getElementById('c-tokens').value) || 150;
+  const rate   = parseFloat(document.getElementById('c-rate').value)   || 0.60;
+
+  const tokensPerDay   = users * msgs * tokens;
+  const tokensPerMonth = tokensPerDay * 30;
+  const aiCost         = (tokensPerMonth / 1_000_000) * rate;
+  const vpsCost        = 6.00;
+  const total          = aiCost + vpsCost;
+
+  document.getElementById('calc-result').textContent = '$' + total.toFixed(2);
+}
+
+// init calc
+calcCost();
+</script>
+</body>
+</html>
