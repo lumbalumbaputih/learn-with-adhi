@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Build Your AI Agent Bot — Kai Course</title>
+<link rel="icon" href="/assets/favicon-32.png" type="image/png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -42,6 +43,10 @@ body{background:var(--paper);color:var(--ink);font-family:var(--fb);font-size:14
 .sb-nav a.active .mod-num{background:var(--hidup-mango);color:var(--ink)}
 .sb-nav .done-tick{margin-left:auto;color:var(--hidup-forest);font-size:11px;opacity:0;transition:opacity 200ms}
 .sb-nav a.quiz-done .done-tick{opacity:1}
+
+.sb-footer{padding:16px 20px 4px;border-top:1px solid rgba(255,255,255,0.1)}
+.sb-hub-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(251,244,230,0.7);text-decoration:none}
+.sb-hub-link:hover{color:var(--paper)}
 
 /* MAIN */
 #main{margin-left:260px;flex:1;padding:48px 56px;max-width:900px}
@@ -177,6 +182,9 @@ p.body strong{font-weight:600}
     <li><a onclick="goTo(7)" id="nav-7"><span class="mod-num">08</span>The Monthly Bill<span class="done-tick">✓</span></a></li>
     <li><a onclick="goTo(8)" id="nav-8"><span class="mod-num">REF</span>References<span class="done-tick">✓</span></a></li>
   </ul>
+  <div class="sb-footer">
+    <a class="sb-hub-link" href="../../index.html">← Learning Hub</a>
+  </div>
 </aside>
 
 <!-- MAIN CONTENT -->
