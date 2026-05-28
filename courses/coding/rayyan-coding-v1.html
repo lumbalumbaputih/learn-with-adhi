@@ -1611,7 +1611,7 @@ function renderC4(body, p){
           <span class="cond-pick" id="pickStr">?</span>
         </div>
         <div class="palette-label" style="margin-top:6px">Pilih kota tujuan:</div>
-        <div class="cond-options">${p.options.map(o=>`<button class="cond-opt" onclick="pickC4Str('${o}', this)">${o}</button>`).join('')}</div>
+        <div class="cond-options">${p.options.map(o=>`<button class="cond-opt" data-val='${o}' onclick="pickC4Str(this.dataset.val, this)">${o}</button>`).join('')}</div>
       </div>
       <div class="program-actions">
         <button class="act run" id="runBtn" onclick="checkC4Str()">▶ Simpan</button>
