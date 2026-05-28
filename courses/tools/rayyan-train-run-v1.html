@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>🚂 Kereta Rayyan: Lari Cepat!</title>
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FF5C39"/><text y=".9em" font-size="80" x="8">🚂</text></svg>'>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    height:100%; overflow:hidden;
+    font-family:'Comic Sans MS','Chalkboard SE','Bricolage Grotesque',cursive,sans-serif;
+    background:#0d1530; color:#fff;
+    -webkit-user-select:none; user-select:none;
+    -webkit-tap-highlight-color:transparent; touch-action:none;
+  }
+  #wrap {
+    position:relative; width:100vw; height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background:linear-gradient(180deg,#1a2a5e 0%,#3a5fb8 55%,#7fb8e8 100%);
+  }
+  canvas {
+    width:min(960px,100vw); height:min(540px,100vh);
+    max-width:100%; max-height:100%;
+    display:block; touch-action:none; image-rendering:pixelated;
+  }
+  #hud {
+    position:absolute; top:14px; left:14px; right:14px;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    pointer-events:none; z-index:5;
+  }
+  .pill {
+    background:rgba(13,21,48,.7); border:2px solid #FFC234;
+    color:#FFC234; padding:8px 14px; border-radius:999px;
+    font-weight:bold; font-size:clamp(13px,2.5vw,18px);
+    text-shadow:1px 1px 0 #000;
+    backdrop-filter:blur(4px);
+  }
+  .pill.score { color:#FFE566; }
+  .pill.coins { color:#FFD700; }
+  .pill.best  { color:#FF9CC8; border-color:#FF9CC8; }
+  #overlay {
+    position:absolute; inset:0; z-index:10;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background:rgba(13,21,48,.85); backdrop-filter:blur(6px);
+    text-align:center; padding:20px;
+  }
+  #overlay.hidden { display:none; }
+  #overlay h1 {
+    font-size:clamp(28px,6vw,52px); color:#FFC234;
+    text-shadow:4px 4px 0 #b71c1c; margin-bottom:8px; line-height:1;
+  }
+  #overlay h2 {
+    font-size:clamp(20px,4vw,32px); color:#fff;
+    margin-bottom:18px;
+  }
+  #overlay p {
+    font-size:clamp(14px,2.5vw,18px); color:#d8e2ff;
+    max-width:480px; margin-bottom:10px; line-height:1.5;
+  }
+  #overlay .keys {
+    display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:14px 0 24px;
+  }
+  #overlay .key {
+    background:#1a2a5e; border:2px solid #FFC234; color:#FFC234;
+    padding:6px 14px; border-radius:10px; font-size:14px; font-weight:bold;
+  }
+  #playBtn {
+    background:#FF5C39; color:#fff; border:3px solid #fff;
+    padding:14px 36px; border-radius:999px; font-size:clamp(18px,3.5vw,24px);
+    font-weight:bold; font-family:inherit; cursor:pointer;
+    box-shadow:0 6px 0 #b71c1c; transition:transform .1s, box-shadow .1s;
+  }
+  #playBtn:active { transform:translateY(4px); box-shadow:0 2px 0 #b71c1c; }
+  #scoreFinal { color:#FFE566; font-size:clamp(36px,8vw,72px); margin:6px 0; text-shadow:3px 3px 0 #000; }
+  .back {
+    position:absolute; top:14px; left:50%; transform:translateX(-50%);
+    z-index:15; background:rgba(13,21,48,.6); border:2px solid #fff;
+    color:#fff; padding:6px 16px; border-radius:999px;
+    font-size:13px; font-weight:bold; text-decoration:none;
+  }
+  @media (max-width:600px) {
+    .back { top:auto; bottom:10px; }
+  }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="game" width="960" height="540"></canvas>
+  <div id="hud">
+    <div class="pill score">🏆 <span id="score">0</span></div>
+    <div class="pill coins">⭐ <span id="coins">0</span></div>
+    <div class="pill best">🥇 <span id="best">0</span></div>
+  </div>
+  <a class="back" href="/kids.html">← Kembali</a>
+
+  <div id="overlay">
+    <h1>🚂 Kereta Rayyan</h1>
+    <h2>Lari Cepat di Atas Rel!</h2>
+    <p>Loncati batu, ambil bintang ⭐, dan jangan kena gerbong jatuh!</p>
+    <p id="finalLine" style="display:none">Skor akhir kamu:</p>
+    <div id="scoreFinal" style="display:none">0</div>
+    <div class="keys">
+      <span class="key">TAP / SPACE = Lompat</span>
+      <span class="key">TAHAN = Lompat Tinggi</span>
+    </div>
+    <button id="playBtn">MULAI MAIN!</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const cv  = document.getElementById('game');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const GROUND_Y = H - 96;
+
+  const scoreEl = document.getElementById('score');
+  const coinsEl = document.getElementById('coins');
+  const bestEl  = document.getElementById('best');
+  const overlay = document.getElementById('overlay');
+  const playBtn = document.getElementById('playBtn');
+  const finalLine = document.getElementById('finalLine');
+  const scoreFinal = document.getElementById('scoreFinal');
+
+  let best = +(localStorage.getItem('rayyanTrainRunBest') || 0);
+  bestEl.textContent = best;
+
+  // ── State ───────────────────────────────────────────
+  let running = false;
+  let t = 0;
+  let speed = 6;
+  let score = 0;
+  let coins = 0;
+  let obstacles = [];
+  let stars = [];
+  let clouds = [];
+  let trees = [];
+  let particles = [];
+  let spawnTimer = 0;
+  let starTimer  = 0;
+
+  const train = {
+    x: 140, y: GROUND_Y,
+    w: 110, h: 70,
+    vy: 0,
+    onGround: true,
+    holdJump: false,
+    jumpHoldTime: 0,
+  };
+
+  // Initial scenery
+  for (let i=0;i<6;i++) clouds.push({ x:Math.random()*W, y:30+Math.random()*120, s:0.3+Math.random()*0.5, r:24+Math.random()*20 });
+  for (let i=0;i<5;i++) trees.push({ x:Math.random()*W, kind:Math.floor(Math.random()*2) });
+
+  // ── Input ───────────────────────────────────────────
+  function jumpStart() {
+    if (!running) return;
+    if (train.onGround) {
+      train.vy = -13;
+      train.onGround = false;
+      train.holdJump = true;
+      train.jumpHoldTime = 0;
+      puff(train.x, GROUND_Y+20, 8);
+    }
+  }
+  function jumpEnd() { train.holdJump = false; }
+
+  window.addEventListener('keydown', e => {
+    if (e.code === 'Space' || e.code === 'ArrowUp') {
+      e.preventDefault();
+      if (!running && !overlay.classList.contains('hidden')) start();
+      else jumpStart();
+    }
+  });
+  window.addEventListener('keyup', e => {
+    if (e.code === 'Space' || e.code === 'ArrowUp') jumpEnd();
+  });
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); jumpStart(); });
+  cv.addEventListener('pointerup',   e => { e.preventDefault(); jumpEnd();   });
+  cv.addEventListener('pointercancel', jumpEnd);
+  playBtn.addEventListener('click', start);
+
+  // ── Start / End ─────────────────────────────────────
+  function start() {
+    overlay.classList.add('hidden');
+    finalLine.style.display = 'none';
+    scoreFinal.style.display = 'none';
+    running = true;
+    t = 0;
+    speed = 6;
+    score = 0;
+    coins = 0;
+    obstacles = [];
+    stars = [];
+    spawnTimer = 60;
+    starTimer = 90;
+    train.y = GROUND_Y;
+    train.vy = 0;
+    train.onGround = true;
+  }
+
+  function gameOver() {
+    running = false;
+    if (score > best) {
+      best = score;
+      localStorage.setItem('rayyanTrainRunBest', best);
+      bestEl.textContent = best;
+    }
+    finalLine.style.display = 'block';
+    scoreFinal.style.display = 'block';
+    scoreFinal.textContent = score;
+    overlay.classList.remove('hidden');
+    playBtn.textContent = 'MAIN LAGI!';
+    // crash particles
+    for (let i=0;i<24;i++) {
+      particles.push({
+        x: train.x+train.w/2, y: train.y-train.h/2,
+        vx:(Math.random()-0.5)*8, vy:-Math.random()*8-2,
+        life:60, color:['#FF5C39','#FFC234','#fff','#b71c1c'][i%4],
+      });
+    }
+  }
+
+  function puff(x,y,n=4) {
+    for (let i=0;i<n;i++) {
+      particles.push({ x,y, vx:(Math.random()-0.5)*3, vy:-Math.random()*2-0.5, life:30, color:'#dde7f5', smoke:true });
+    }
+  }
+
+  // ── Update ──────────────────────────────────────────
+  function update() {
+    t++;
+
+    // Scenery
+    for (const c of clouds) { c.x -= 0.3*c.s; if (c.x < -c.r) { c.x = W+c.r; c.y = 30+Math.random()*120; } }
+    for (const tr of trees) { tr.x -= speed*0.4; if (tr.x < -60) { tr.x = W+Math.random()*200; tr.kind=Math.floor(Math.random()*2); } }
+
+    if (!running) {
+      // gentle idle animation while overlay shown
+      drawAll();
+      return;
+    }
+
+    // Smoke
+    if (t % 6 === 0) puff(train.x+20, train.y - train.h + 8, 1);
+
+    // Difficulty up
+    speed = Math.min(13, 6 + score*0.02);
+
+    // Train physics
+    if (train.holdJump && train.jumpHoldTime < 12 && train.vy < 0) {
+      train.vy -= 0.45;
+      train.jumpHoldTime++;
+    }
+    train.vy += 0.7;
+    train.y += train.vy;
+    if (train.y >= GROUND_Y) {
+      train.y = GROUND_Y;
+      train.vy = 0;
+      if (!train.onGround) puff(train.x+30, GROUND_Y+10, 5);
+      train.onGround = true;
+    }
+
+    // Spawn obstacles
+    spawnTimer--;
+    if (spawnTimer <= 0) {
+      const kind = Math.random();
+      if (kind < 0.6) {
+        obstacles.push({ x: W+40, y: GROUND_Y, w: 36, h: 36, type:'rock' });
+      } else if (kind < 0.85) {
+        obstacles.push({ x: W+40, y: GROUND_Y, w: 48, h: 56, type:'cactus' });
+      } else {
+        // flying log (must NOT hold jump too high)
+        obstacles.push({ x: W+40, y: GROUND_Y - 90, w: 60, h: 28, type:'log' });
+      }
+      spawnTimer = Math.max(38, 90 - Math.floor(score/4));
+    }
+
+    // Spawn stars
+    starTimer--;
+    if (starTimer <= 0) {
+      const sy = Math.random() < 0.5 ? GROUND_Y - 40 : GROUND_Y - 110;
+      stars.push({ x: W+30, y: sy, r: 16, picked:false, spin:0 });
+      starTimer = 70 + Math.floor(Math.random()*70);
+    }
+
+    // Move + collide
+    for (const o of obstacles) o.x -= speed;
+    for (const s of stars) { s.x -= speed; s.spin += 0.2; }
+    obstacles = obstacles.filter(o => o.x + o.w > -20);
+    stars = stars.filter(s => s.x + s.r > -20 && !s.picked);
+
+    const trainBox = { x: train.x+8, y: train.y - train.h + 6, w: train.w-16, h: train.h-10 };
+
+    for (const o of obstacles) {
+      const ob = { x:o.x, y:o.y - o.h, w:o.w, h:o.h };
+      if (intersects(trainBox, ob)) { gameOver(); return; }
+    }
+    for (const s of stars) {
+      const sb = { x:s.x-s.r, y:s.y-s.r, w:s.r*2, h:s.r*2 };
+      if (intersects(trainBox, sb)) {
+        s.picked = true;
+        coins++;
+        score += 5;
+        coinsEl.textContent = coins;
+        // sparkle
+        for (let i=0;i<8;i++) particles.push({ x:s.x, y:s.y, vx:(Math.random()-0.5)*5, vy:(Math.random()-0.5)*5, life:24, color:'#FFD700' });
+      }
+    }
+
+    // particle update
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      p.vy += p.smoke ? -0.04 : 0.4;
+      p.life--;
+    }
+    particles = particles.filter(p => p.life > 0);
+
+    score++;
+    scoreEl.textContent = score;
+
+    drawAll();
+  }
+
+  function intersects(a, b) {
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  }
+
+  // ── Draw ────────────────────────────────────────────
+  function drawAll() {
+    // sky
+    const sky = ctx.createLinearGradient(0,0,0,H);
+    sky.addColorStop(0,'#7fb8e8');
+    sky.addColorStop(0.6,'#cfe4f7');
+    sky.addColorStop(1,'#ffe6c4');
+    ctx.fillStyle = sky; ctx.fillRect(0,0,W,H);
+
+    // sun
+    ctx.fillStyle = '#FFD66B';
+    ctx.beginPath(); ctx.arc(W-100, 100, 50, 0, Math.PI*2); ctx.fill();
+
+    // clouds
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    for (const c of clouds) {
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, c.r, 0, Math.PI*2);
+      ctx.arc(c.x+c.r*0.8, c.y+4, c.r*0.8, 0, Math.PI*2);
+      ctx.arc(c.x-c.r*0.7, c.y+6, c.r*0.7, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    // hills
+    ctx.fillStyle = '#3a7a3a';
+    ctx.beginPath();
+    ctx.moveTo(0, GROUND_Y);
+    for (let x=0; x<=W; x+=20) {
+      const y = GROUND_Y - 30 - Math.sin((x+t*0.5)*0.01)*20 - Math.sin((x+t*0.3)*0.02)*10;
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(W, GROUND_Y); ctx.closePath(); ctx.fill();
+
+    // trees
+    for (const tr of trees) {
+      drawTree(tr.x, GROUND_Y - 20, tr.kind);
+    }
+
+    // ground
+    ctx.fillStyle = '#8B5A2B';
+    ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+    ctx.fillStyle = '#6b4220';
+    for (let x = -((t*speed)%30); x < W; x += 30) {
+      ctx.fillRect(x, GROUND_Y+12, 18, 5);
+    }
+    // rails
+    ctx.fillStyle = '#2a2a2a';
+    ctx.fillRect(0, GROUND_Y+4, W, 4);
+    ctx.fillRect(0, GROUND_Y+22, W, 4);
+    ctx.fillStyle = '#444';
+    for (let x = -((t*speed)%40); x < W; x += 40) {
+      ctx.fillRect(x, GROUND_Y, 16, 30);
+    }
+
+    // particles (behind train when smoke, in front otherwise — simple: all behind)
+    for (const p of particles) {
+      ctx.globalAlpha = Math.max(0, p.life/30);
+      ctx.fillStyle = p.color;
+      const sz = p.smoke ? 8 : 4;
+      ctx.fillRect(p.x-sz/2, p.y-sz/2, sz, sz);
+    }
+    ctx.globalAlpha = 1;
+
+    // obstacles
+    for (const o of obstacles) drawObstacle(o);
+
+    // stars
+    for (const s of stars) drawStar(s);
+
+    // train
+    drawTrain(train.x, train.y);
+  }
+
+  function drawTree(x, y, kind) {
+    // trunk
+    ctx.fillStyle = '#6b4220';
+    ctx.fillRect(x-5, y-30, 10, 30);
+    // leaves
+    ctx.fillStyle = kind ? '#2e7d32' : '#1b5e20';
+    ctx.beginPath();
+    ctx.arc(x, y-40, 22, 0, Math.PI*2);
+    ctx.arc(x-15, y-30, 16, 0, Math.PI*2);
+    ctx.arc(x+15, y-30, 16, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  function drawObstacle(o) {
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#1A1614';
+    ctx.lineWidth = 4;
+    if (o.type === 'rock') {
+      // bright magenta boulder — pops against green hills + brown ground
+      ctx.fillStyle = '#E84BA0';
+      ctx.beginPath();
+      ctx.ellipse(o.x+o.w/2, o.y - o.h/2, o.w/2, o.h/2, 0, 0, Math.PI*2);
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#FF9CC8';
+      ctx.beginPath();
+      ctx.ellipse(o.x+o.w/2-5, o.y - o.h/2-5, o.w/3, o.h/4.5, 0, 0, Math.PI*2);
+      ctx.fill();
+    } else if (o.type === 'cactus') {
+      // bright orange spiky obstacle — distinct from green trees
+      ctx.fillStyle = '#FF5C39';
+      roundRect(o.x+12, o.y - o.h,        16, o.h,    4, true, true);
+      roundRect(o.x,    o.y - o.h + 14,   14, 22,     4, true, true);
+      roundRect(o.x+28, o.y - o.h + 8,    14, 26,     4, true, true);
+      // bright spikes
+      ctx.fillStyle = '#FFE566';
+      for (let i=0;i<3;i++) {
+        const yy = o.y - o.h + 10 + i*14;
+        ctx.beginPath();
+        ctx.moveTo(o.x+12, yy); ctx.lineTo(o.x+6, yy+4); ctx.lineTo(o.x+12, yy+8);
+        ctx.closePath(); ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(o.x+28, yy); ctx.lineTo(o.x+34, yy+4); ctx.lineTo(o.x+28, yy+8);
+        ctx.closePath(); ctx.fill();
+      }
+    } else if (o.type === 'log') {
+      // bright yellow floating crate with hazard stripes
+      ctx.fillStyle = '#FFC234';
+      ctx.fillRect(o.x, o.y, o.w, o.h);
+      ctx.strokeRect(o.x, o.y, o.w, o.h);
+      // diagonal hazard stripes
+      ctx.fillStyle = '#1A1614';
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(o.x+2, o.y+2, o.w-4, o.h-4);
+      ctx.clip();
+      for (let i = -o.h; i < o.w; i += 12) {
+        ctx.beginPath();
+        ctx.moveTo(o.x+i,    o.y);
+        ctx.lineTo(o.x+i+6,  o.y);
+        ctx.lineTo(o.x+i+6+o.h, o.y+o.h);
+        ctx.lineTo(o.x+i+o.h,   o.y+o.h);
+        ctx.closePath(); ctx.fill();
+      }
+      ctx.restore();
+    }
+  }
+
+  function drawStar(s) {
+    ctx.save();
+    ctx.translate(s.x, s.y);
+    ctx.rotate(Math.sin(s.spin)*0.2);
+    ctx.fillStyle = '#FFD700';
+    ctx.strokeStyle = '#b8860b'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i=0;i<5;i++) {
+      const a = -Math.PI/2 + i*Math.PI*2/5;
+      const a2 = a + Math.PI/5;
+      ctx.lineTo(Math.cos(a)*s.r, Math.sin(a)*s.r);
+      ctx.lineTo(Math.cos(a2)*s.r*0.45, Math.sin(a2)*s.r*0.45);
+    }
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawTrain(x, y) {
+    // y is the bottom of the train (wheels on ground)
+    const wob = Math.sin(t*0.4) * (train.onGround ? 1 : 0);
+    ctx.save();
+    ctx.translate(x, y + wob);
+
+    // cab (back)
+    ctx.fillStyle = '#FF5C39';
+    roundRect(56, -64, 56, 50, 6, true, false);
+    // boiler (front)
+    ctx.fillStyle = '#d94926';
+    roundRect(0, -44, 60, 30, 6, true, false);
+    // smokestack
+    ctx.fillStyle = '#2e3192';
+    ctx.fillRect(8, -64, 16, 22);
+    ctx.fillStyle = '#1a1f6e';
+    ctx.fillRect(4, -68, 24, 6);
+    // front bumper
+    ctx.fillStyle = '#FFC234';
+    ctx.beginPath();
+    ctx.moveTo(60, -44); ctx.lineTo(70, -32); ctx.lineTo(60, -14); ctx.closePath();
+    ctx.fill();
+    // cab window
+    ctx.fillStyle = '#cfe4f7';
+    ctx.fillRect(70, -58, 28, 22);
+    ctx.fillStyle = '#1A1614';
+    ctx.fillRect(70, -58, 28, 4);
+    // RAYYAN sign
+    ctx.fillStyle = '#FFC234';
+    ctx.fillRect(58, -36, 50, 14);
+    ctx.fillStyle = '#1A1614';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('RAYYAN', 83, -25);
+    // boiler ring
+    ctx.strokeStyle = '#FFC234'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0,-30); ctx.lineTo(60,-30); ctx.stroke();
+    // wheels
+    const wheelSpin = (t*speed*0.15) % (Math.PI*2);
+    drawWheel(14, -8, 12, wheelSpin);
+    drawWheel(46, -8, 12, wheelSpin);
+    drawWheel(86, -8, 14, wheelSpin);
+    // headlight (only on, glow)
+    ctx.fillStyle = 'rgba(255,255,0,0.6)';
+    ctx.beginPath(); ctx.arc(64, -22, 6, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#FFE566';
+    ctx.beginPath(); ctx.arc(64, -22, 3, 0, Math.PI*2); ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawWheel(cx, cy, r, ang) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.fillStyle = '#1A1614';
+    ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#666';
+    ctx.beginPath(); ctx.arc(0,0,r-4,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#1A1614'; ctx.lineWidth = 2;
+    ctx.rotate(ang);
+    ctx.beginPath();
+    ctx.moveTo(-r,0); ctx.lineTo(r,0);
+    ctx.moveTo(0,-r); ctx.lineTo(0,r);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function roundRect(x, y, w, h, r, fill, stroke) {
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y,   x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x,   y+h, r);
+    ctx.arcTo(x,   y+h, x,   y,   r);
+    ctx.arcTo(x,   y,   x+w, y,   r);
+    ctx.closePath();
+    if (fill) ctx.fill();
+    if (stroke) ctx.stroke();
+  }
+
+  // ── Loop ────────────────────────────────────────────
+  function loop() {
+    update();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
+</body>
+</html>
