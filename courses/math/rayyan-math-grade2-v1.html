@@ -88,6 +88,127 @@
       font-weight: 800;
       font-size: 16px;
     }
+    .hdr-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bug-btn {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--paper-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: background .18s;
+    }
+    .bug-btn:hover {
+      background: var(--tomato);
+    }
+
+    /* ===== BUG REPORT MODAL ===== */
+    .bug-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26,22,20,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .bug-modal.show {
+      display: flex;
+    }
+    .bug-modal-box {
+      background: var(--paper);
+      border: 3px solid var(--ink);
+      border-radius: 20px;
+      padding: 28px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .bug-modal-title {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    .bug-modal-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .bug-form-group {
+      margin-bottom: 16px;
+    }
+    .bug-form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .bug-form-input,
+    .bug-form-textarea {
+      width: 100%;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: var(--paper-2);
+    }
+    .bug-form-textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-family: inherit;
+    }
+    .bug-form-input:focus,
+    .bug-form-textarea:focus {
+      outline: none;
+      background: var(--mango);
+    }
+    .bug-modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .bug-btn-submit,
+    .bug-btn-cancel {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .18s;
+    }
+    .bug-btn-submit {
+      background: var(--tomato);
+      color: var(--paper);
+    }
+    .bug-btn-submit:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .bug-btn-cancel {
+      background: var(--paper-2);
+    }
+    .bug-btn-cancel:hover {
+      background: var(--line);
+    }
 
     /* ===== SCREENS ===== */
     .screen {
@@ -791,8 +912,43 @@
     </svg>
     <span class="hdr-brand-word">← Kids Hub</span>
   </a>
-  <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+  <div class="hdr-right">
+    <button class="bug-btn" onclick="openBugReport()" title="Laporkan masalah">🐛</button>
+    <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+  </div>
 </header>
+
+<!-- BUG REPORT MODAL -->
+<div class="bug-modal" id="bugModal">
+  <div class="bug-modal-box">
+    <h2 class="bug-modal-title">Laporkan Masalah 🐛</h2>
+    <p class="bug-modal-desc">Ada yang tidak bekerja? Ceritakan apa yang terjadi!</p>
+    <form id="bugForm" onsubmit="submitBugReport(event)">
+      <div class="bug-form-group">
+        <label class="bug-form-label">Jelaskan masalahnya:</label>
+        <textarea
+          class="bug-form-textarea"
+          name="message"
+          id="bugDescription"
+          required
+          placeholder="Contoh: Tombol tidak bisa diklik, soal tidak muncul, dll..."></textarea>
+      </div>
+      <div class="bug-form-group">
+        <label class="bug-form-label">Email (opsional, jika ingin balasan):</label>
+        <input
+          type="email"
+          class="bug-form-input"
+          name="email"
+          id="bugEmail"
+          placeholder="namamu@email.com">
+      </div>
+      <div class="bug-modal-actions">
+        <button type="button" class="bug-btn-cancel" onclick="closeBugReport()">Batal</button>
+        <button type="submit" class="bug-btn-submit">Kirim Laporan</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <!-- ═══ SCREEN: HOME ═══ -->
 <div class="screen active" id="sHome">
@@ -1789,6 +1945,63 @@ function launchConfetti() {
     p.addEventListener('animationend', () => p.remove());
   }
 }
+
+/* ═══════════════════════════════════════════
+   BUG REPORTING
+═══════════════════════════════════════════ */
+function openBugReport() {
+  document.getElementById('bugModal').classList.add('show');
+  document.getElementById('bugDescription').focus();
+}
+
+function closeBugReport() {
+  document.getElementById('bugModal').classList.remove('show');
+  document.getElementById('bugForm').reset();
+}
+
+function submitBugReport(event) {
+  event.preventDefault();
+  const modal = document.getElementById('bugModal');
+  const desc = document.getElementById('bugDescription').value;
+  const email = document.getElementById('bugEmail').value || 'tidak-ada@example.com';
+  const courseName = 'Matematika Rayyan — Kelas 2 SD';
+
+  const formData = new FormData();
+  formData.append('_subject', `[Learn with Adhi Bug Report] ${courseName}`);
+  formData.append('message', `Course: ${courseName}\n\nBug Description:\n${desc}`);
+  formData.append('email', email);
+  formData.append('_captcha', 'false');
+
+  fetch('https://formspree.io/f/mbjkzbag', {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(response => {
+    if (response.ok) {
+      const btn = event.target.querySelector('[type="submit"]');
+      btn.textContent = '✅ Terima kasih!';
+      btn.disabled = true;
+      setTimeout(() => {
+        closeBugReport();
+        btn.textContent = 'Kirim Laporan';
+        btn.disabled = false;
+      }, 1500);
+    } else {
+      alert('Gagal mengirim laporan. Coba lagi.');
+    }
+  })
+  .catch(err => {
+    console.error('Error:', err);
+    alert('Gagal mengirim laporan. Periksa koneksi Anda.');
+  });
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.getElementById('bugModal').classList.contains('show')) {
+    closeBugReport();
+  }
+});
 
 /* ═══════════════════════════════════════════
    INIT
