@@ -703,7 +703,7 @@ const PUZZLES = {
     {
       mission: 'Bawa robot dari A ke B!',
       sub: 'Klik blok perintah satu per satu, lalu tekan Run ▶.',
-      stations: [{x:80,y:160,label:'A',start:true},{x:280,y:160,label:'B',goal:true}],
+      stations: [{x:80,y:160,label:'A',start:true},{x:240,y:160,label:'B',goal:true}],
       track: [{from:0,to:1,type:'straight'}],
       startDir: 0, // 0=right
       answer: ['move_forward','move_forward','stop'],
@@ -713,7 +713,7 @@ const PUZZLES = {
     {
       mission: 'Rute belok! A → kanan → atas → B.',
       sub: 'Hati-hati: setelah maju 2x, robot harus belok kiri ke atas.',
-      stations:[{x:60,y:200,label:'A',start:true},{x:220,y:200,corner:true},{x:220,y:80,label:'B',goal:true}],
+      stations:[{x:60,y:200,label:'A',start:true},{x:220,y:200,corner:true},{x:220,y:40,label:'B',goal:true}],
       track:[{from:0,to:1,type:'straight'},{from:1,to:2,type:'straight'}],
       startDir: 0,
       answer: ['move_forward','move_forward','turn_left','move_forward','move_forward','stop'],
@@ -723,7 +723,7 @@ const PUZZLES = {
     {
       mission: 'Rute zig-zag: A → kanan → bawah → kanan → B.',
       sub: 'Tiga belokan! Pikirkan ke mana robot menghadap setelah tiap belok.',
-      stations:[{x:50,y:80,label:'A',start:true},{x:140,y:80,corner:true},{x:140,y:180,corner:true},{x:280,y:180,label:'B',goal:true}],
+      stations:[{x:50,y:40,label:'A',start:true},{x:130,y:40,corner:true},{x:130,y:200,corner:true},{x:290,y:200,label:'B',goal:true}],
       track:[{from:0,to:1,type:'straight'},{from:1,to:2,type:'straight'},{from:2,to:3,type:'straight'}],
       startDir: 0,
       answer: ['move_forward','turn_right','move_forward','move_forward','turn_left','move_forward','move_forward','stop'],
