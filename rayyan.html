@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dunia Rayyan · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FF5C39"/><text y=".9em" font-size="80" x="8">🚂</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <style>
+    :root {
+      --tomato:  #FF5C39;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --mawar:   #E84BA0;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --paper-2: #F4ECD8;
+      --line:    rgba(26,22,20,0.12);
+      --muted:   #6B6259;
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body { font-family: var(--fb); background: var(--paper); color: var(--ink); }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .shell { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+    @media (max-width: 860px) { .shell { padding: 0 28px; } }
+    @media (max-width: 560px) { .shell { padding: 0 18px; } }
+
+    /* NAV */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 0; border-bottom: 2px solid var(--ink);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-wordmark { font-family: var(--fd); font-weight: 800; font-size: 24px; letter-spacing: -0.03em; }
+    .brand-divider { width: 1.5px; height: 22px; background: var(--line); }
+    .brand-sub { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .nav-back {
+      font-size: 14px; font-weight: 700; color: var(--ink);
+      background: var(--paper-2); border: 2px solid var(--ink); border-radius: 999px; padding: 8px 18px;
+      transition: background .18s;
+    }
+    .nav-back:hover { background: var(--mango); }
+
+    /* HERO */
+    .hero { padding: 64px 0 48px; position: relative; }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 32px; height: 3px; background: var(--tomato); flex-shrink: 0;
+    }
+    .hero-h1 {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(52px, 9vw, 108px);
+      line-height: .9; letter-spacing: -0.04em; margin-bottom: 24px;
+    }
+    .hero-h1 em { color: var(--tomato); font-style: normal; }
+    .hero-lead { font-size: 18px; line-height: 1.55; color: var(--muted); max-width: 500px; margin-bottom: 32px; }
+    .hero-stats {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding-top: 20px; border-top: 1px solid var(--line);
+    }
+    .stat-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--paper-2); border: 1.5px solid var(--ink);
+      border-radius: 999px; padding: 6px 14px;
+      font-size: 13px; font-weight: 600; color: var(--ink);
+    }
+
+    /* ── JOURNEY MAP ───────────────────────────────── */
+    .section { margin-top: 80px; }
+    .section-hdr {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 16px; padding-bottom: 20px; border-bottom: 2px solid var(--ink); margin-bottom: 40px;
+    }
+    .section-title {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.03em; line-height: 1;
+    }
+    .section-sub {
+      font-size: 12px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted); padding-bottom: 4px;
+    }
+
+    .journey-wrap {
+      overflow-x: auto; padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .journey-wrap::-webkit-scrollbar { height: 4px; }
+    .journey-wrap::-webkit-scrollbar-track { background: var(--paper-2); border-radius: 2px; }
+    .journey-wrap::-webkit-scrollbar-thumb { background: var(--ink); border-radius: 2px; }
+
+    .journey {
+      position: relative; min-width: 640px;
+      padding: 8px 0 16px;
+    }
+
+    /* The rail line sits behind the circles */
+    .journey-rail {
+      position: absolute;
+      /* top = loco-space(44px) + half of circle(36px) = 80px, but add 8px journey padding-top */
+      top: calc(8px + 44px + 36px);
+      left: 80px; right: 80px;
+      height: 5px;
+      background: repeating-linear-gradient(
+        90deg, var(--ink) 0, var(--ink) 24px, transparent 24px, transparent 32px
+      );
+      z-index: 0;
+    }
+    /* Completed portion of the rail */
+    .journey-rail-done {
+      position: absolute;
+      top: calc(8px + 44px + 36px);
+      left: 80px;
+      height: 5px;
+      background: var(--mango);
+      z-index: 1;
+      transition: width .6s ease;
+    }
+
+    .stops {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stop {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; flex: 1;
+      text-decoration: none; color: inherit;
+    }
+
+    /* space above circle — holds the loco emoji */
+    .stop-loco {
+      height: 44px;
+      display: flex; align-items: flex-end; justify-content: center;
+      font-size: 26px; padding-bottom: 4px;
+      opacity: 0; transition: opacity .3s;
+    }
+    .stop.active .stop-loco { opacity: 1; animation: loco-bounce .7s ease-in-out infinite alternate; }
+    @keyframes loco-bounce { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+
+    .stop-circle {
+      width: 72px; height: 72px; border-radius: 50%;
+      border: 3px solid var(--ink);
+      background: var(--paper);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px;
+      transition: transform .18s ease, box-shadow .18s ease, background .3s;
+      position: relative;
+    }
+    .stop:hover .stop-circle {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .stop.completed .stop-circle { background: var(--mango); }
+    .stop.active    .stop-circle { background: var(--tomato); }
+
+    /* Checkmark badge for completed */
+    .stop.completed .stop-circle::after {
+      content: '✓';
+      position: absolute; bottom: -4px; right: -4px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--forest); color: white;
+      font-size: 12px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--ink);
+    }
+
+    .stop-name {
+      font-family: var(--fd); font-weight: 700; font-size: 12px;
+      text-align: center; max-width: 100px; line-height: 1.3;
+    }
+    .stop-prog {
+      font-size: 11px; color: var(--muted); text-align: center; font-weight: 600;
+      line-height: 1.4;
+    }
+    .stop.completed .stop-prog { color: var(--forest); }
+    .stop.active    .stop-prog { color: var(--tomato); font-weight: 700; }
+
+    /* ── NEXT ADVENTURE BANNER ─────────────────────── */
+    .next-banner {
+      margin-top: 32px;
+      background: var(--tomato); color: white;
+      border: 2px solid var(--ink); border-radius: 18px;
+      padding: 20px 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      flex-wrap: wrap;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .next-banner:hover { transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--ink); }
+    .next-banner-label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
+    .next-banner-title { font-family: var(--fd); font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+    .next-banner-cta {
+      background: white; color: var(--tomato);
+      border: 2px solid var(--ink); border-radius: 999px;
+      padding: 10px 22px; font-size: 14px; font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* ── GAMES GRID ────────────────────────────────── */
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; gap: 16px; } }
+
+    .card {
+      border: 2px solid var(--ink); border-radius: 18px; overflow: hidden;
+      background: var(--paper); display: flex; flex-direction: column;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover { transform: translate(-4px,-4px); box-shadow: 7px 7px 0 var(--ink); }
+    .card-thumb {
+      aspect-ratio: 16/9; border-bottom: 2px solid var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px; position: relative;
+    }
+    .card-badge {
+      position: absolute; top: 12px; right: 12px;
+      background: var(--forest); color: white;
+      font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+    .card-title {
+      font-family: var(--fd); font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px;
+    }
+    .card-blurb { font-size: 13.5px; line-height: 1.55; color: var(--muted); flex: 1; margin-bottom: 14px; }
+    .card-foot {
+      display: flex; align-items: center; justify-content: flex-end;
+      padding-top: 12px; border-top: 1px solid var(--line);
+    }
+    .card-cta { font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--ink); }
+
+    /* FOOTER */
+    .footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 80px; padding: 24px 0 52px; border-top: 2px solid var(--ink);
+      font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); flex-wrap: wrap; gap: 12px;
+    }
+    .footer a:hover { color: var(--tomato); }
+
+    @media (max-width: 500px) { .hero { padding-top: 44px; } .section { margin-top: 56px; } }
+  </style>
+</head>
+<body>
+
+<div class="shell">
+
+  <header>
+    <nav class="nav">
+      <a href="/kids.html" class="brand">
+        <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+          <circle cx="38" cy="50" r="22" fill="none" stroke="var(--ink)" stroke-width="14"/>
+          <rect x="54" y="28" width="14" height="44" fill="var(--ink)"/>
+          <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+        </svg>
+        <div class="brand-divider"></div>
+        <div>
+          <div class="brand-wordmark">adhi</div>
+          <div class="brand-sub">Learn</div>
+        </div>
+      </a>
+      <a href="/kids.html" class="nav-back">← Ganti Pemain</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Dunia Petualangan Rayyan</div>
+    <h1 class="hero-h1">Halo,<br><em>Rayyan!</em> 🚂</h1>
+    <p class="hero-lead">Peta petualanganmu ada di bawah. Pilih stasiun berikutnya dan lanjutkan perjalanan!</p>
+    <div class="hero-stats">
+      <div class="stat-pill">⭐ <span id="totalStars">0</span> bintang terkumpul</div>
+      <div class="stat-pill">🗺️ <span id="doneCount">0</span> / 5 petualangan selesai</div>
+    </div>
+  </section>
+
+  <!-- JOURNEY MAP -->
+  <section class="section">
+    <div class="section-hdr">
+      <h2 class="section-title">🗺️ Peta Petualanganmu</h2>
+      <div class="section-sub" id="journeyStatus"></div>
+    </div>
+
+    <div class="journey-wrap">
+      <div class="journey">
+        <div class="journey-rail"></div>
+        <div class="journey-rail-done" id="railDone"></div>
+        <div class="stops" id="stopsRow"></div>
+      </div>
+    </div>
+
+    <!-- Next adventure CTA — hidden if all done or none started -->
+    <a href="#" class="next-banner" id="nextBanner" style="display:none">
+      <div>
+        <div class="next-banner-label">Petualangan Berikutnya</div>
+        <div class="next-banner-title" id="nextTitle"></div>
+      </div>
+      <div class="next-banner-cta">Mulai Sekarang →</div>
+    </a>
+  </section>
+
+  <!-- GAMES -->
+  <section class="section">
+    <div class="section-hdr">
+      <h2 class="section-title">🎮 Ayo Main!</h2>
+      <div class="section-sub">2 game tersedia</div>
+    </div>
+    <div class="grid-2" id="gameGrid"></div>
+  </section>
+
+  <footer class="footer">
+    <span>© 2026 Learn with Adhi · Dibuat dengan ❤️ untuk Rayyan</span>
+    <a href="/kids.html">← Ganti Pemain</a>
+  </footer>
+
+</div>
+
+<script>
+  /* ─── ADVENTURE DATA ───────────────────────────────────── */
+
+  const ADVENTURES = [
+    {
+      emoji: '🔢',
+      title: 'Petualangan Angka',
+      blurb: 'Nilai tempat, penjumlahan, pengurangan, perkalian, bangun datar, dan pola bilangan.',
+      href: 'courses/math/rayyan-math-grade2-v1.html',
+      progressKey: 'rayyanMath',
+      totalChapters: 6,
+    },
+    {
+      emoji: '🚂',
+      title: 'Petualangan KAI',
+      blurb: 'Nilai tempat ribuan, perkalian lanjutan, pembagian, pengukuran, dan pecahan.',
+      href: 'courses/math/rayyan-math-grade3.html',
+      progressKey: 'rayyanMath3',
+      totalChapters: 6,
+    },
+    {
+      emoji: '🚀',
+      title: 'Petualangan Antariksa',
+      blurb: 'Bilangan besar, pecahan, keliling & luas, KPK & FPB — keliling galaksi!',
+      href: 'courses/math/rayyan-math-grade4.html',
+      progressKey: 'rayyanMath4',
+      totalChapters: 6,
+    },
+    {
+      emoji: '🌊',
+      title: 'Laut Dalam',
+      blurb: 'Bilangan bulat, perbandingan, persen & desimal, bangun ruang, dan statistika.',
+      href: 'courses/math/rayyan-math-grade5.html',
+      progressKey: 'rayyanMath5',
+      totalChapters: 6,
+    },
+    {
+      emoji: '🤖',
+      title: 'Pabrik Robot KAI',
+      blurb: 'Ajari robot kereta cara bekerja — perintah berurutan, kalau-maka, ulangi, memori.',
+      href: 'courses/coding/rayyan-coding-v1.html',
+      progressKey: 'rayyanCoding',
+      totalChapters: 6,
+    },
+  ];
+
+  const GAMES = [
+    {
+      emoji: '🚂',
+      title: 'Kereta Rayyan: Lari Cepat!',
+      thumbBg: '#FFE0D6',
+      blurb: 'Pacu kereta Rayyan! Loncati rintangan, sambar bintang ⭐, kejar skor tertinggi. Tekan SPASI atau tap untuk lompat!',
+      href: 'courses/tools/rayyan-train-run-v1.html',
+    },
+    {
+      emoji: '🗺️',
+      title: 'Petualangan Kereta',
+      thumbBg: '#E3F5EB',
+      blurb: 'Pilih petualanganmu sendiri — 3 versi cerita kereta yang seru. Keputusanmu menentukan akhir cerita!',
+      href: 'courses/tools/train_adventure_v3.html',
+    },
+  ];
+
+  /* ─── PROGRESS HELPERS ─────────────────────────────────── */
+
+  function getProgress(key) {
+    try {
+      const d = JSON.parse(localStorage.getItem(key) || '{}');
+      const prog = d.progress || {};
+      const done = Object.values(prog).filter(p => p.stars > 0).length;
+      const stars = d.totalStars || 0;
+      return { done, stars };
+    } catch(e) { return { done: 0, stars: 0 }; }
+  }
+
+  function isCompleted(adv) {
+    return getProgress(adv.progressKey).done >= adv.totalChapters;
+  }
+
+  /* ─── JOURNEY MAP ──────────────────────────────────────── */
+
+  function buildMap() {
+    // Determine status of each stop
+    let foundActive = false;
+    const statuses = ADVENTURES.map((adv, i) => {
+      if (isCompleted(adv)) return 'completed';
+      if (!foundActive) { foundActive = true; return 'active'; }
+      return 'next';
+    });
+
+    // Count completed for stats
+    const completedCount = statuses.filter(s => s === 'completed').length;
+
+    // Update rail done width (percentage of total rail width)
+    // Rail spans from stop 1 center to stop 5 center → (completedCount / (total-1)) * 100%
+    const railPct = completedCount > 0
+      ? Math.min(completedCount / (ADVENTURES.length - 1), 1) * 100
+      : 0;
+    // Rail left is same as journey-rail (80px from each side) — replicate in JS
+    // We'll use width as % of the rail div's parent; the rail itself is already offset
+    // Use a data-done attribute and let the rail-done element span from left:80px
+    const railEl = document.getElementById('railDone');
+    if (railPct > 0) {
+      // journey min-width is 640px; rail goes from 80px to (640-80)px = 560px wide max
+      // Easier: set width as % of the rail span
+      railEl.style.width = `calc((100% - 160px) * ${railPct / 100})`;
+    } else {
+      railEl.style.width = '0';
+    }
+
+    // Render stops
+    document.getElementById('stopsRow').innerHTML = ADVENTURES.map((adv, i) => {
+      const s = statuses[i];
+      const prog = getProgress(adv.progressKey);
+      const progText = prog.done === 0
+        ? 'Belum dimulai'
+        : prog.done >= adv.totalChapters
+          ? '✅ Selesai!'
+          : `${prog.done}/${adv.totalChapters} bab`;
+
+      return `
+        <a href="${adv.href}" class="stop ${s}" title="${adv.title}">
+          <div class="stop-loco">🚂</div>
+          <div class="stop-circle">${adv.emoji}</div>
+          <div class="stop-name">${adv.title}</div>
+          <div class="stop-prog">${progText}</div>
+        </a>`;
+    }).join('');
+
+    // Hero stats
+    const totalStars = ADVENTURES.reduce((sum, a) => sum + getProgress(a.progressKey).stars, 0);
+    document.getElementById('totalStars').textContent = totalStars;
+    document.getElementById('doneCount').textContent = completedCount;
+
+    // Journey status label
+    const statusLabel = completedCount === ADVENTURES.length
+      ? '🏆 Semua selesai!'
+      : `${completedCount} / ${ADVENTURES.length} selesai`;
+    document.getElementById('journeyStatus').textContent = statusLabel;
+
+    // Next adventure banner
+    const activeIdx = statuses.indexOf('active');
+    if (activeIdx !== -1) {
+      const next = ADVENTURES[activeIdx];
+      const banner = document.getElementById('nextBanner');
+      const prog = getProgress(next.progressKey);
+      const label = prog.done > 0 ? `Lanjutkan — bab ${prog.done + 1}` : next.title;
+      document.getElementById('nextTitle').textContent = label;
+      banner.href = next.href;
+      banner.style.display = 'flex';
+    }
+  }
+
+  /* ─── GAMES ────────────────────────────────────────────── */
+
+  function buildGames() {
+    document.getElementById('gameGrid').innerHTML = GAMES.map(g => `
+      <a href="${g.href}" class="card">
+        <div class="card-thumb" style="background:${g.thumbBg}">
+          <span>${g.emoji}</span>
+          <span class="card-badge">Game</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">${g.title}</div>
+          <div class="card-blurb">${g.blurb}</div>
+          <div class="card-foot">
+            <div class="card-cta">Main Sekarang →</div>
+          </div>
+        </div>
+      </a>`).join('');
+  }
+
+  buildMap();
+  buildGames();
+</script>
+
+</body>
+</html>
