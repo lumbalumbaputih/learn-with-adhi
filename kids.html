@@ -519,6 +519,19 @@
       type: 'course',
     },
     {
+      title: 'Matematika Kelas 5 SD 🌊',
+      subject: 'Matematika',
+      emoji: '🤿',
+      thumbBg: '#E3F4F8',
+      blurb: 'Petualangan Laut Dalam! 6 zona: bilangan bulat, perbandingan & skala, pecahan lanjutan, persen & desimal, bangun ruang, dan boss battle statistika!',
+      href: 'courses/math/rayyan-math-grade5.html',
+      for: 'Rayyan · Kelas 5 SD',
+      forColor: '#1FA9C7',
+      progressKey: 'rayyanMath5',
+      totalChapters: 6,
+      type: 'course',
+    },
+    {
       title: 'Matematika Raya 🔢',
       subject: 'Matematika PAUD',
       emoji: '🔢',
@@ -602,7 +615,7 @@
 
   function getTotalStars() {
     let total = 0;
-    const keys = ['rayyanMath', 'rayyanMath3', 'rayyanMath4', 'rayaLearning', 'rayaVisual', 'rayaMath'];
+    const keys = ['rayyanMath', 'rayyanMath3', 'rayyanMath4', 'rayyanMath5', 'rayaLearning', 'rayaVisual', 'rayaMath'];
     for (const k of keys) {
       try {
         const d = JSON.parse(localStorage.getItem(k) || '{}');
