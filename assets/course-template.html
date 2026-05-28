@@ -1,0 +1,115 @@
+<!doctype html>
+<!--
+  Learn with Adhi — canonical course page template.
+  Copy this file when starting a new course. Replace every {{PLACEHOLDER}}.
+  Existing course pages should migrate toward this shape; see /assets/css and
+  /assets/js for the shared shell, theme toggle, progress bar, and breadcrumb.
+-->
+<html lang="en" data-course-id="{{COURSE_ID}}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- SEO -->
+  <title>{{COURSE_TITLE}} — Learn with Adhi</title>
+  <meta name="description" content="{{COURSE_BLURB}}" />
+  <meta name="author" content="Adhi" />
+  <link rel="canonical" href="https://learnwithadhi.com/{{COURSE_PATH}}" />
+
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="{{COURSE_TITLE}}" />
+  <meta property="og:description" content="{{COURSE_BLURB}}" />
+  <meta property="og:url" content="https://learnwithadhi.com/{{COURSE_PATH}}" />
+  <meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- JSON-LD: Course schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "{{COURSE_TITLE}}",
+    "description": "{{COURSE_BLURB}}",
+    "provider": { "@type": "Person", "name": "Adhi", "url": "https://learnwithadhi.com" }
+  }
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/favicon-32.png" />
+
+  <!-- Theme: set early to avoid flash -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var sys = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || sys);
+    })();
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+  />
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/base.css" />
+  <link rel="stylesheet" href="/assets/css/course.css" />
+
+  <!-- Analytics -->
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress-bar" role="presentation"></div>
+
+  <div class="course-shell">
+
+    <header>
+      <div class="course-bar">
+        <a href="/index.html" class="course-back" aria-label="Back to Learn with Adhi hub">All courses</a>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode" aria-pressed="false">☾ Dark</button>
+      </div>
+
+      <nav class="breadcrumb" aria-label="Breadcrumb" data-course-breadcrumb></nav>
+
+      <div class="course-header">
+        <div class="course-eyebrow">{{CATEGORY}} · {{DURATION}}</div>
+        <h1 class="course-title">{{COURSE_TITLE}}</h1>
+        <p class="course-lead">{{COURSE_BLURB}}</p>
+        <div class="course-meta">
+          <span><strong>{{DURATION}}</strong> to complete</span>
+          <span>{{LEVEL}}</span>
+          <span>Free · No login</span>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Course sections -->
+      <section class="course-section" aria-labelledby="s1">
+        <h2 id="s1">Section title</h2>
+        <p><span class="lesson-marker lesson-marker--concept" aria-label="Concept">◆</span> Concept body…</p>
+        <p><span class="lesson-marker lesson-marker--read" aria-label="Read">R</span> Read body…</p>
+        <p><span class="lesson-marker lesson-marker--do" aria-label="Do">✓</span> Practice body…</p>
+        <p><span class="lesson-marker lesson-marker--warn" aria-label="Warning">!</span> Watch out…</p>
+      </section>
+    </main>
+
+    <nav class="course-pager" aria-label="Course pagination" data-course-pager></nav>
+
+    <footer class="course-footer">
+      <span>© 2026 Learn with Adhi · Made slowly in Melbourne</span>
+    </footer>
+  </div>
+
+  <script defer src="/assets/js/theme-toggle.js"></script>
+  <script defer src="/assets/js/progress.js"></script>
+  <script defer src="/assets/js/course-nav.js"></script>
+</body>
+</html>
