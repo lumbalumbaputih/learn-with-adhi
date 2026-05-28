@@ -1,9 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-course-id="ai-bridging-gap">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bridging the AI Gap — A Practical Course</title>
+<title>Bridging the AI Gap — A Practical Course · Learn with Adhi</title>
+<meta name="description" content="Build real AI literacy and useful workflows for everyday work. No coding required — just clarity and five focused days." />
+<meta name="author" content="Adhi" />
+<link rel="canonical" href="https://learnwithadhi.com/courses/ai/ai-capability-course.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Bridging the AI Gap — A Practical Course" />
+<meta property="og:description" content="Build real AI literacy and useful workflows for everyday work. No coding required." />
+<meta property="og:url" content="https://learnwithadhi.com/courses/ai/ai-capability-course.html" />
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Bridging the AI Gap",
+  "description": "Build real AI literacy and useful workflows for everyday work. No coding required — just clarity and five focused days.",
+  "provider": { "@type": "Person", "name": "Adhi", "url": "https://learnwithadhi.com" }
+}
+</script>
 <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
 <script>
 (() => {
@@ -365,10 +383,15 @@ code {
 </head>
 <body>
 
+<a class="skip-link" href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
 <div class="top-actions">
+  <a class="backlink" href="/index.html" aria-label="Back to Learn with Adhi hub">← All courses</a>
   <a class="backlink" href="https://learn.tokocurahaustralia.com" target="_blank" rel="noopener noreferrer">Toko Curah Learning ↗</a>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
 </div>
+
+<nav class="breadcrumb" aria-label="Breadcrumb" data-course-breadcrumb style="max-width:720px;margin:0 auto;padding:16px 1.5rem 0;font-family:monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim)"></nav>
 
 <div class="progress-bar" id="progressBar" style="width: 0%"></div>
 
@@ -378,10 +401,10 @@ code {
   <p class="subtitle">A practical course for understanding frontier AI capabilities, where they actually are vs. where hype says, and how to use them — built for someone technical but not a full-time developer.</p>
 </header>
 
-<div class="container">
-  <div class="module-nav" id="moduleNav"></div>
+<main id="main" class="container">
+  <nav class="module-nav" id="moduleNav" aria-label="Course modules"></nav>
   <div id="moduleContent"></div>
-</div>
+</main>
 
 <script>
 const root = document.documentElement;
@@ -795,5 +818,17 @@ function toggleCheck(el) {
 
 render();
 </script>
+
+<nav class="course-pager" aria-label="Course pagination" data-course-pager style="max-width:720px;margin:0 auto;padding:32px 1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:1px solid var(--border)"></nav>
+<script defer src="/assets/js/course-nav.js"></script>
+<style>
+  .course-pager a, .course-pager > div { display:block; padding:16px; border:1px solid var(--border); border-radius:12px; transition:border-color .2s, transform .2s; }
+  .course-pager a:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .course-pager .pager-label { font-family: monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color: var(--text-dim); margin-bottom:6px; }
+  .course-pager .pager-title { font-family: var(--serif, inherit); font-weight:700; font-size:17px; color: var(--text); }
+  .course-pager .pager-next { text-align:right; }
+  .course-pager .pager-disabled { opacity:.4; pointer-events:none; }
+  @media (max-width:640px){ .course-pager{grid-template-columns:1fr} .course-pager .pager-next{text-align:left} }
+</style>
 </body>
 </html>

@@ -1,0 +1,56 @@
+/* Learn with Adhi — design tokens
+   Canonical color, type, and spacing variables shared by the hub and every course page.
+   Course pages that opt into dark mode override these via [data-theme="dark"]. */
+
+:root {
+  /* Brand palette */
+  --tomato:  #FF5C39;
+  --mango:   #FFC234;
+  --forest:  #1F9D55;
+  --sea:     #1FA9C7;
+  --mawar:   #E84BA0;
+  --indigo:  #2E3192;
+
+  /* Neutrals */
+  --ink:     #1A1614;
+  --paper:   #FBF4E6;
+  --paper-2: #F4ECD8;
+  --line:    rgba(26, 22, 20, 0.14);
+  --muted:   #6B6259;
+
+  /* Semantic aliases (used by course shells) */
+  --bg:        var(--paper);
+  --surface:   var(--paper);
+  --surface-2: var(--paper-2);
+  --text:      var(--ink);
+  --text-dim:  var(--muted);
+  --accent:    var(--tomato);
+  --border:    var(--line);
+
+  /* Type families */
+  --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;   /* display */
+  --fb: 'Inter', system-ui, sans-serif;                      /* body */
+  --fm: 'JetBrains Mono', ui-monospace, monospace;          /* mono / eyebrow */
+
+  /* Spacing scale (multiples of 4) */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-7: 32px; --s-8: 40px;
+  --s-9: 56px; --s-10: 72px; --s-11: 96px;
+
+  /* Radii */
+  --r-sm: 8px;  --r-md: 12px; --r-lg: 18px; --r-xl: 28px;
+}
+
+:root[data-theme="dark"] {
+  --bg:        #0F0D0C;
+  --surface:   #1A1614;
+  --surface-2: #221E1B;
+  --text:      #F4ECD8;
+  --text-dim:  #A39A8E;
+  --border:    rgba(244, 236, 216, 0.14);
+  --paper:     #1A1614;
+  --paper-2:   #221E1B;
+  --ink:       #F4ECD8;
+  --muted:     #A39A8E;
+  --line:      rgba(244, 236, 216, 0.14);
+}
