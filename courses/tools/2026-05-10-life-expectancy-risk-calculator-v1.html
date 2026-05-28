@@ -1,9 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-course-id="tool-life-expectancy">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Life Expectancy Risk Calculator</title>
+  <title>Life Expectancy Risk Calculator · Learn with Adhi</title>
+<meta name="description" content="Select your risk factors and see how they affect your estimated lifespan." />
+<meta name="author" content="Adhi" />
+<link rel="canonical" href="https://learnwithadhi.com/courses/tools/2026-05-10-life-expectancy-risk-calculator-v1.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Life Expectancy Risk Calculator" />
+<meta property="og:description" content="Select your risk factors and see how they affect your estimated lifespan." />
+<meta property="og:url" content="https://learnwithadhi.com/courses/tools/2026-05-10-life-expectancy-risk-calculator-v1.html" />
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Life Expectancy Risk Calculator",
+  "description": "Select your risk factors and see how they affect your estimated lifespan.",
+  "provider": { "@type": "Person", "name": "Adhi", "url": "https://learnwithadhi.com" }
+}
+</script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -587,13 +606,15 @@
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
 
 <!-- ══════════════════ HERO ══════════════════ -->
 <header class="hero">
   <div class="hero-orb-a"></div>
   <div class="hero-orb-b"></div>
   <div class="hero-eyebrow">Evidence-based · 25 risk factors · Peer-reviewed sources</div>
-  <h1>Life Expectancy<br><em>Risk Calculator</em></h1>
+  <h1 id="main" tabindex="-1">Life Expectancy<br><em>Risk Calculator</em></h1>
   <p class="hero-sub">Select the risk factors that apply to you. Each factor shows the estimated years of life lost at a population level, drawn from landmark peer-reviewed studies.</p>
 </header>
 
@@ -1003,7 +1024,7 @@ function renderFactors() {
           <div class="factor-years-unit">YRS</div>
         </div>
         <div class="card-check">
-          <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+          <svg width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true">
             <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round"/>
           </svg>

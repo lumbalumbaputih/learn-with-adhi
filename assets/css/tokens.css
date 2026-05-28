@@ -41,6 +41,23 @@
   --r-sm: 8px;  --r-md: 12px; --r-lg: 18px; --r-xl: 28px;
 }
 
+/* System B compat aliases — variables used by older course pages (DM Sans set).
+   Mapped to canonical brand colors so any page that references them stays
+   on-brand without redefining its own :root. */
+:root {
+  --text-strong:  var(--ink);
+  --accent2:      var(--tomato);
+  --green:        var(--forest);
+  --blue:         var(--sea);
+  --purple:       var(--mawar);
+  --on-accent:    var(--paper);
+  --toggle-track: var(--paper-2);
+  --toggle-knob:  var(--ink);
+  --serif:        var(--fd);
+  --sans:         var(--fb);
+  --mono:         var(--fm);
+}
+
 :root[data-theme="dark"] {
   --bg:        #0F0D0C;
   --surface:   #1A1614;

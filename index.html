@@ -647,44 +647,53 @@
     ink: '#FBF4E6', 'paper-2': '#1A1614', paper: '#1A1614',
   };
 
-  const COURSES = [
-    { n:'01', title:'How to Code for Non-Coders',            blurb:'Learn coding fundamentals in a practical, beginner-first way.',                                    tag:'Foundations', meta:['Beginner'], primitive:'blade', accent:'ink',     href:'courses/coding/code-ecosystem-guide-complete-v1.html',                         duration:'~2 weeks' },
-    { n:'02', title:'Carbon Accounting',                      blurb:'Understand emissions measurement and reporting with practical examples.',                           tag:'Life',        meta:['Beginner', 'Climate'],  primitive:'arc',   accent:'forest',  href:'courses/carbon-accounting/carbon-accounting-course.html',                       duration:'~1 week'  },
-    { n:'03', title:'Life Cycle Assessment',                  blurb:'Go from LCA basics to ISO-aligned practice with real-world examples.',                             tag:'Life',        meta:['Beginner', 'Climate'],  primitive:'eye',   accent:'forest',  href:'courses/lca/life-cycle-assessment-course-v1.html',                              duration:'~1 week'  },
-    { n:'04', title:'Clothing, Textiles & Our World',         blurb:'Follow the clothing supply chain and learn about impact and circular solutions.',                   tag:'Life',        meta:['Beginner', 'Climate'],  primitive:'wave',  accent:'sea',     href:'courses/clothing-textiles/2026-05-08-clothing-textiles-course-v2.html',         duration:'~1 week'  },
-    { n:'05', title:'Disaster Management Fundamentals',       blurb:'Learn the disaster management cycle, risk basics, and preparedness essentials.',                   tag:'Life',        meta:['Beginner', 'Safety'],   primitive:'plus',  accent:'sea',     href:'courses/disaster-management/2026-05-08-disaster-management-course-v1.html',    duration:'~4 days'  },
-    { n:'06', title:'Bridging the AI Gap',                    blurb:'Build AI literacy and useful workflows for real-world work.',                                       tag:'Foundations', meta:['Beginner', 'AI'],       primitive:'dot',   accent:'tomato',  href:'courses/ai/ai-capability-course.html',                                         duration:'~5 days'  },
-    { n:'07', title:'Claude Without Burning Tokens',          blurb:'Save tokens with smarter context, prompts, and tool workflows.',                                   tag:'Practice',    meta:['Intermediate', 'AI'],   primitive:'slab',  accent:'mango',   href:'courses/ai/2026-04-18-claude-efficiency-course-v1.html',                       duration:'~3 days'  },
-    { n:'08', title:'Rumah Harmonis — Architecture',          blurb:'Design a tropical home that unites climate science, Feng Shui spatial wisdom, and Islamic values.',tag:'Life',        meta:['Beginner', 'Design'],   primitive:'slab',  accent:'forest',  href:'courses/architecture/2026-05-21-tropical-islamic-home-v1.html',                 duration:'~3 days'  },
-    { n:'09', title:'Build Your AI Agent Bot',                blurb:'Launch a Telegram AI bot on a VPS with OpenRouter, systemd, and production-ready workflows.',       tag:'Practice',    meta:['Intermediate', 'AI', 'VPS'], primitive:'dot', accent:'indigo', href:'courses/ai/2026-05-24-ai-bot-vps-course-v1.html',               duration:'~4 days'  },
-  ];
+  // Hub renders from /assets/courses.json — the single source of truth.
+  // The manifest schema uses { category, tags } per item; we adapt to the
+  // existing { tag, meta } shape used by the cards below.
 
-  const TOOLS = [
-    { n:'T1', title:'Feifelusiac Safe Area Calculator',       blurb:'Quickly calculate safe area values with practical controls.',                                      tag:'Tools', meta:['Tool', 'Live'],       primitive:'plus', accent:'tomato', href:'courses/tools/feifelusiac-safe-area-calculator-v4.html',             duration:'Tool'      },
-    { n:'T2', title:'Life Expectancy Risk Calculator',        blurb:'Select your risk factors and see how they affect your estimated lifespan.',                        tag:'Tools', meta:['Tool', 'Health'],     primitive:'eye',  accent:'indigo', href:'courses/tools/2026-05-10-life-expectancy-risk-calculator-v1.html',    duration:'Tool'      },
-    { n:'T3', title:'AU vs ID Specialist Doctor Dashboard',   blurb:'Side-by-side comparison of specialist availability across Australia and Indonesia.',               tag:'Tools', meta:['Dashboard', 'Health'],primitive:'dot',  accent:'forest', href:'courses/health/2026-05-11-au-id-specialist-dashboard-v2.html',       duration:'Dashboard' },
-  ];
+  let ALL = [];
+  let currentFilter = 'all';
 
-  const ALL = [...COURSES, ...TOOLS];
+  function adapt(item) {
+    return {
+      n: item.n,
+      title: item.title,
+      blurb: item.blurb,
+      tag: item.category,
+      meta: item.tags || [],
+      primitive: item.primitive,
+      accent: item.accent,
+      href: item.path,
+      duration: item.duration,
+    };
+  }
+
+  function completedSet() {
+    try { return new Set(JSON.parse(localStorage.getItem('lwa:completed') || '[]')); }
+    catch (_) { return new Set(); }
+  }
 
   function renderCards(filter) {
+    currentFilter = filter;
     const items = filter === 'all' ? ALL : ALL.filter(c => c.tag === filter);
+    const done = completedSet();
     const grid = document.getElementById('courseGrid');
     grid.innerHTML = items.map(item => {
       const bg = ACCENT_BG[item.accent] || '#1A1614';
       const fg = ACCENT_FG[item.accent] || '#FBF4E6';
       const icon = PRIMITIVES[item.primitive] || PRIMITIVES.dot;
       const pills = item.meta.map(m => `<span class="card-pill">${m}</span>`).join('');
+      const completed = done.has(item.id) ? '<span class="card-pill" style="background:var(--forest);color:var(--paper)">✓ Read</span>' : '';
       return `
         <a href="${item.href}" class="card">
           <div class="card-thumb" style="background:${bg}">
-            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:${fg}">${icon}</svg>
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:${fg}" aria-hidden="true">${icon}</svg>
           </div>
           <div class="card-body">
             <div class="card-tag"><strong>${item.n}</strong> · ${item.tag}</div>
             <h4 class="card-title">${item.title}</h4>
             <p class="card-blurb">${item.blurb}</p>
-            <div class="card-pills">${pills}</div>
+            <div class="card-pills">${pills}${completed}</div>
             <div class="card-foot">
               <span class="card-duration">${item.duration}</span>
               <span class="card-open">Open →</span>
@@ -702,7 +711,16 @@
     });
   });
 
-  renderCards('all');
+  fetch('/assets/courses.json', { cache: 'no-cache' })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(manifest => {
+      ALL = manifest.map(m => Object.assign(adapt(m), { id: m.id }));
+      renderCards(currentFilter);
+    })
+    .catch(() => {
+      document.getElementById('courseGrid').innerHTML =
+        '<p style="grid-column:1/-1;color:var(--muted);font-family:var(--fm);font-size:13px">Could not load courses. Please refresh.</p>';
+    });
 </script>
 
 </body>
