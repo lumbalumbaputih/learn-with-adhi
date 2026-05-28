@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Matematika Rayyan — Kelas 4 SD · Petualangan Antariksa 🚀</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%232E3192"/><text y=".9em" font-size="78" x="10">🚀</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --tomato:#FF5C39; --mango:#FFC234; --forest:#1F9D55; --sea:#1FA9C7;
+      --mawar:#E84BA0; --indigo:#2E3192; --purple:#7B3FA8;
+      --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+      --line:rgba(26,22,20,0.14); --muted:#6B6259;
+      --tomato-bg:#FFE8E3; --mango-bg:#FFF5D6; --forest-bg:#E3F5EB;
+      --sea-bg:#E3F4F8; --mawar-bg:#FCE8F3; --indigo-bg:#E8E9F8;
+      --purple-bg:#EFE3F8;
+      --fd:'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb:'Nunito',system-ui,sans-serif;
+      --r:16px; --r-sm:10px; --r-lg:24px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased}
+    body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden}
+    button{font-family:inherit;cursor:pointer;border:none;background:none}
+    input{font-family:inherit}
+
+    .hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:2px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:100}
+    .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit}
+    .hdr-brand-word{font-family:var(--fd);font-weight:800;font-size:20px;letter-spacing:-0.03em}
+    .hdr-stars{display:flex;align-items:center;gap:6px;background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:7px 16px;font-family:var(--fd);font-weight:800;font-size:16px}
+
+    .screen{display:none;max-width:800px;margin:0 auto;padding:28px 20px 80px;animation:fadeUp .28s ease}
+    .screen.active{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+    .home-hero{text-align:center;padding:32px 0 24px}
+    .home-avatar{width:88px;height:88px;margin:0 auto 16px;background:var(--indigo);border:3px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:44px;animation:float 3s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .home-greeting{font-family:var(--fd);font-weight:800;font-size:clamp(28px,7vw,46px);letter-spacing:-0.03em;line-height:1.05;margin-bottom:10px}
+    .home-greeting em{font-style:normal;background:var(--indigo);color:var(--paper);padding:1px 10px;border-radius:8px}
+    .home-sub{font-size:16px;color:var(--muted);margin-bottom:28px}
+
+    .route-map{background:linear-gradient(180deg,#0a0a2e 0%,#1a1a4e 100%);border:2px solid var(--ink);border-radius:var(--r);padding:20px 16px 18px;margin-bottom:28px;overflow-x:auto;position:relative}
+    .route-map::before{content:"✨ ⭐ 🌟 ✨ ⭐ 🌟 ✨ ⭐ 🌟";position:absolute;top:6px;left:0;right:0;font-size:9px;opacity:.4;text-align:center;letter-spacing:8px;color:white}
+    .route-label{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mango);margin-bottom:14px;margin-top:8px}
+    .route-track{display:flex;align-items:center;gap:0;min-width:380px}
+    .route-station{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0}
+    .station-dot{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .3s}
+    .station-dot.done{background:var(--forest);border-color:var(--forest)}
+    .station-dot.active{background:var(--mango);border-color:var(--mango);animation:rocketPulse 1.4s ease-in-out infinite}
+    @keyframes rocketPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,194,52,.6)}50%{box-shadow:0 0 0 10px rgba(255,194,52,0)}}
+    .station-name{font-family:var(--fd);font-size:9px;font-weight:700;color:rgba(255,255,255,.6);text-align:center;letter-spacing:.04em;white-space:nowrap}
+    .station-name.done{color:#7ee8a2}
+    .station-name.active{color:var(--mango)}
+    .route-rail{flex:1;height:3px;background:rgba(255,255,255,.18);position:relative;top:-12px;min-width:20px;background-image:linear-gradient(to right,rgba(255,255,255,.4) 50%,transparent 50%);background-size:8px 3px}
+    .route-rail.done{background:var(--forest);background-image:none}
+
+    .overall-box{display:flex;align-items:center;gap:16px;background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:18px;margin-bottom:36px}
+    .ov-ring{width:68px;height:68px;flex-shrink:0}
+    .ov-info{flex:1;text-align:left}
+    .ov-label{font-family:var(--fd);font-weight:700;font-size:16px;margin-bottom:8px}
+    .ov-bar-wrap{height:10px;background:var(--line);border-radius:999px;overflow:hidden}
+    .ov-bar{height:100%;background:var(--indigo);border-radius:999px;transition:width .8s ease}
+    .ov-sub{font-size:13px;color:var(--muted);margin-top:5px}
+
+    .sec-title{font-family:var(--fd);font-weight:800;font-size:20px;letter-spacing:-0.02em;margin-bottom:14px}
+    .chapters-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width:500px){.chapters-grid{grid-template-columns:1fr}}
+
+    .ch-card{border:2px solid var(--ink);border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--paper);transition:transform .17s,box-shadow .17s;text-align:left}
+    .ch-card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .ch-thumb{padding:18px 18px 14px;border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between}
+    .ch-emoji{font-size:38px;line-height:1}
+    .ch-stars-row{display:flex;gap:2px}
+    .ch-star{font-size:18px;opacity:.25}
+    .ch-star.on{opacity:1}
+    .ch-body{padding:14px}
+    .ch-num{font-family:var(--fd);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .ch-planet{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--purple);letter-spacing:.04em;margin-bottom:3px}
+    .ch-title{font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-0.02em;margin-bottom:4px}
+    .ch-desc{font-size:12.5px;color:var(--muted);line-height:1.45}
+    .ch-track{font-size:11px;color:rgba(26,22,20,.3);letter-spacing:.08em;margin-top:8px}
+    .ch-status{margin-top:6px;font-family:var(--fd);font-weight:600;font-size:12px;display:flex;align-items:center;gap:5px}
+
+    .back-btn{display:flex;align-items:center;gap:6px;font-family:var(--fd);font-weight:600;font-size:14px;color:var(--muted);padding:0;margin-bottom:24px;transition:color .15s}
+    .back-btn:hover{color:var(--ink)}
+    .lesson-hdr{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+    .lesson-icon{font-size:52px;line-height:1;background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:10px 14px;flex-shrink:0}
+    .lesson-eyebrow{font-family:var(--fd);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+    .lesson-planet{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--purple);letter-spacing:.04em;margin-bottom:3px}
+    .lesson-title{font-family:var(--fd);font-weight:800;font-size:clamp(24px,5vw,36px);letter-spacing:-0.03em;line-height:1.05}
+
+    .lesson-body{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:24px;margin-bottom:24px}
+    .ls{margin-bottom:22px}
+    .ls:last-child{margin-bottom:0}
+    .ls-h{font-family:var(--fd);font-weight:700;font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .ls p{font-size:15px;line-height:1.6;color:var(--ink)}
+    .ex-box{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r-sm);padding:18px;margin-top:12px;text-align:center}
+    .big-num{font-family:var(--fd);font-weight:800;font-size:32px;letter-spacing:-0.03em}
+    .pv-row{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}
+    .pv-box{display:flex;flex-direction:column;align-items:center;gap:3px;border:2px solid var(--ink);border-radius:var(--r-sm);padding:10px 12px;min-width:58px}
+    .pv-num{font-family:var(--fd);font-weight:800;font-size:24px}
+    .pv-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+    .op-sym{font-family:var(--fd);font-weight:800;font-size:22px}
+    .fraction-vis{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+    .frac-box{width:44px;height:44px;border:2.5px solid var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .frac-box.filled{background:var(--tomato)}
+    .frac-box.empty{background:var(--paper)}
+
+    .nova-box{background:var(--purple);color:var(--paper);border-radius:var(--r);border:2.5px dashed var(--mango);padding:18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start}
+    .nova-ico{font-size:28px;flex-shrink:0;line-height:1}
+    .nova-name{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mango);margin-bottom:3px}
+    .nova-msg{font-size:14px;line-height:1.55}
+
+    .start-btn{width:100%;background:var(--indigo);color:var(--paper);border:3px solid var(--ink);border-radius:var(--r);padding:18px;font-family:var(--fd);font-weight:800;font-size:19px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .17s,box-shadow .17s}
+    .start-btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+
+    .ex-hdr{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+    .ex-back-btn{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-sm);padding:8px 12px;font-family:var(--fd);font-weight:700;font-size:14px}
+    .ex-meta{flex:1}
+    .ex-ch-name{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:5px}
+    .ex-bar-wrap{height:7px;background:var(--line);border-radius:999px;overflow:hidden}
+    .ex-bar{height:100%;background:var(--indigo);border-radius:999px;transition:width .4s ease}
+    .ex-qnum{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--muted);flex-shrink:0}
+
+    .q-card{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-lg);padding:28px 24px;margin-bottom:20px}
+    .q-label{font-family:var(--fd);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+    .q-text{font-family:var(--fd);font-weight:800;font-size:clamp(18px,4.5vw,26px);letter-spacing:-0.02em;line-height:1.2;margin-bottom:14px}
+    .q-visual{font-size:26px;line-height:1.5;margin-bottom:14px;text-align:center}
+
+    .opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .opt-btn{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:14px 10px;font-family:var(--fd);font-weight:700;font-size:clamp(14px,3.5vw,20px);text-align:center;display:flex;align-items:center;justify-content:center;transition:transform .14s,box-shadow .14s;line-height:1.3}
+    .opt-btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .opt-btn.correct{background:var(--forest);color:#fff;border-color:var(--forest);animation:pulse .45s ease}
+    .opt-btn.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato);animation:shake .38s ease}
+    .opt-btn:disabled{cursor:not-allowed}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+    .inp-row{display:flex;gap:10px;align-items:center}
+    .num-inp{flex:1;border:3px solid var(--ink);border-radius:var(--r);padding:14px 16px;font-family:var(--fd);font-weight:800;font-size:26px;text-align:center;background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s}
+    .num-inp:focus{border-color:var(--purple)}
+    .num-inp.ok{border-color:var(--forest);background:var(--forest-bg)}
+    .num-inp.bad{border-color:var(--tomato);background:var(--tomato-bg)}
+    .chk-btn{background:var(--mango);color:var(--ink);border:2.5px solid var(--ink);border-radius:var(--r);padding:14px 20px;font-family:var(--fd);font-weight:800;font-size:16px;flex-shrink:0;transition:transform .14s,box-shadow .14s}
+    .chk-btn:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+
+    .toast{border-radius:var(--r);padding:14px 18px;margin-top:14px;font-family:var(--fd);font-weight:700;font-size:15px;display:none;align-items:flex-start;gap:10px;animation:toastIn .25s ease}
+    .toast.show{display:flex}
+    .toast.ok{background:var(--forest-bg);border:2px solid var(--forest);color:#0e6032}
+    .toast.bad{background:var(--tomato-bg);border:2px solid var(--tomato);color:#c73013}
+    .toast-expl{font-weight:400;font-size:13px;margin-top:2px}
+    @keyframes toastIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+    .nxt-btn{width:100%;margin-top:14px;background:var(--ink);color:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:17px;font-family:var(--fd);font-weight:800;font-size:16px;display:none;transition:opacity .15s}
+    .nxt-btn.show{display:block}
+    .nxt-btn:hover{opacity:.85}
+
+    .done-hero{text-align:center;padding:36px 0 24px}
+    .done-badge{font-size:76px;line-height:1;margin-bottom:16px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+    .done-title{font-family:var(--fd);font-weight:800;font-size:clamp(24px,6vw,38px);letter-spacing:-0.03em;margin-bottom:10px}
+    .done-stars{font-size:44px;margin:14px 0;animation:starsIn .5s ease .25s both}
+    @keyframes starsIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+    .done-score-box{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:20px;margin:20px 0;text-align:center}
+    .done-score-num{font-family:var(--fd);font-weight:800;font-size:52px;letter-spacing:-0.04em}
+    .done-score-lbl{font-size:14px;color:var(--muted)}
+    .done-msg{font-size:15px;color:var(--muted);text-align:center;margin-bottom:20px;line-height:1.55}
+    .done-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .act-btn{border:2.5px solid var(--ink);border-radius:var(--r);padding:15px;font-family:var(--fd);font-weight:800;font-size:15px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s}
+    .act-btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--ink)}
+    .act-btn.primary{background:var(--indigo);color:var(--paper)}
+    .act-btn.secondary{background:var(--paper-2);color:var(--ink)}
+
+    #allDoneScreen{text-align:center}
+    .rocket-anim{font-size:48px;display:inline-block;animation:rocketFly 3s ease-in-out infinite alternate}
+    @keyframes rocketFly{from{transform:translate(-30px,10px) rotate(-10deg)}to{transform:translate(30px,-10px) rotate(10deg)}}
+    .all-done-track{font-size:22px;letter-spacing:2px;color:var(--muted);margin:8px 0 24px;overflow:hidden}
+
+    #confetti{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+    .cp{position:absolute;top:-16px;border-radius:2px;animation:fall linear forwards}
+    @keyframes fall{from{top:-20px;opacity:1}to{top:110vh;opacity:0}}
+
+    .review-panel{margin-top:20px}
+    .review-title{font-family:var(--fd);font-weight:700;font-size:15px;margin-bottom:10px}
+    .review-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--r-sm);margin-bottom:8px;font-size:13px}
+    .review-ico{font-size:16px;flex-shrink:0;margin-top:1px}
+    .review-q{font-weight:600;margin-bottom:2px}
+    .review-a{color:var(--muted)}
+  </style>
+</head>
+<body>
+
+<div id="confetti"></div>
+
+<header class="hdr">
+  <a href="/kids.html" class="hdr-brand">
+    <svg width="26" height="26" viewBox="0 0 100 100" fill="none">
+      <circle cx="38" cy="50" r="22" fill="none" stroke="var(--ink)" stroke-width="14"/>
+      <rect x="54" y="28" width="14" height="44" fill="var(--ink)"/>
+      <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+    </svg>
+    <span class="hdr-brand-word">← Kids Hub</span>
+  </a>
+  <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+</header>
+
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="home-avatar">🚀</div>
+    <h1 class="home-greeting">Halo, <em>Astronaut Rayyan!</em></h1>
+    <p class="home-sub">Mulai misi antariksa bersama Nova si Robot! Selesaikan tiap planet untuk lanjut ke planet berikutnya. 🌌</p>
+  </div>
+
+  <div class="route-map">
+    <div class="route-label">🛸 Misi Antariksa Rayyan</div>
+    <div class="route-track" id="routeTrack"></div>
+  </div>
+
+  <div class="overall-box">
+    <svg class="ov-ring" viewBox="0 0 68 68" fill="none">
+      <circle cx="34" cy="34" r="28" stroke="var(--line)" stroke-width="6"/>
+      <circle cx="34" cy="34" r="28" stroke="var(--indigo)" stroke-width="6"
+              stroke-linecap="round" stroke-dasharray="176" stroke-dashoffset="176"
+              id="ov-ring-path" transform="rotate(-90 34 34)"
+              style="transition:stroke-dashoffset 1s ease"/>
+    </svg>
+    <div class="ov-info">
+      <div class="ov-label">Progress Misi Rayyan 🚀</div>
+      <div class="ov-bar-wrap"><div class="ov-bar" id="ovBar" style="width:0%"></div></div>
+      <div class="ov-sub" id="ovSub">0 dari 6 planet ditaklukkan</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Pilih Planet 🪐</div>
+  <div class="chapters-grid" id="chGrid"></div>
+
+  <div style="margin-top:28px;text-align:center">
+    <button onclick="resetProgress()" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline">
+      Reset progress (untuk orang tua)
+    </button>
+  </div>
+</div>
+
+<div class="screen" id="sLesson">
+  <button class="back-btn" onclick="goHome()">← Kembali ke peta antariksa</button>
+  <div id="lessonHdr"></div>
+  <div class="lesson-body" id="lessonBody"></div>
+  <div class="nova-box">
+    <div class="nova-ico">🤖</div>
+    <div>
+      <div class="nova-name">Nova · Robot Pemandu</div>
+      <div class="nova-msg" id="novaMsg">Baca dulu, lalu kerjakan misinya!</div>
+    </div>
+  </div>
+  <button class="start-btn" onclick="startExercise()">🚀 Mulai Misi di Planet Ini!</button>
+</div>
+
+<div class="screen" id="sExercise">
+  <div class="ex-hdr">
+    <button class="ex-back-btn" onclick="goHome()">←</button>
+    <div class="ex-meta">
+      <div class="ex-ch-name" id="exChName"></div>
+      <div class="ex-bar-wrap"><div class="ex-bar" id="exBar" style="width:0%"></div></div>
+    </div>
+    <div class="ex-qnum" id="exQNum">1/6</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-label">Misi</div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-visual" id="qVisual" style="display:none"></div>
+    <div id="answerArea"></div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span id="toastIco"></span>
+    <div>
+      <div id="toastTitle"></div>
+      <div class="toast-expl" id="toastExpl"></div>
+    </div>
+  </div>
+  <button class="nxt-btn" id="nxtBtn" onclick="nextQ()">Misi berikutnya →</button>
+</div>
+
+<div class="screen" id="sComplete">
+  <div class="done-hero">
+    <div class="done-badge" id="doneBadge">🎉</div>
+    <div class="done-title" id="doneTitle">Planet Ditaklukkan!</div>
+    <div class="done-stars" id="doneStars">⭐⭐⭐</div>
+  </div>
+  <div class="done-score-box">
+    <div class="done-score-num" id="doneScoreNum">6/6</div>
+    <div class="done-score-lbl">jawaban benar</div>
+  </div>
+  <div class="done-score-box" style="margin-top:10px;background:var(--sea-bg)">
+    <div class="done-score-num" id="doneTime" style="font-size:36px">--</div>
+    <div class="done-score-lbl">⏱️ waktu misi</div>
+  </div>
+  <div class="done-msg" id="doneMsg"></div>
+  <div class="done-actions">
+    <button class="act-btn primary" onclick="retryChapter()">🔁 Coba Lagi</button>
+    <button class="act-btn secondary" onclick="goHome()">🌌 Peta Antariksa</button>
+  </div>
+  <div class="review-panel">
+    <div class="review-title">📋 Ringkasan Misi</div>
+    <div id="reviewList"></div>
+  </div>
+</div>
+
+<div class="screen" id="sAllDone">
+  <div id="allDoneScreen">
+    <div style="padding:40px 0 16px"><div class="rocket-anim">🚀✨</div></div>
+    <div class="all-done-track">━━━━━━━━━━━━━━━━━━━━</div>
+    <div style="font-size:64px;margin-bottom:16px;animation:pop .6s cubic-bezier(.175,.885,.32,1.275)">🏆</div>
+    <div style="font-family:var(--fd);font-weight:800;font-size:clamp(28px,7vw,44px);letter-spacing:-0.03em;margin-bottom:12px">
+      Selamat, Astronaut Rayyan!<br>Kamu menaklukkan <em style="font-style:normal;background:var(--indigo);color:#fff;padding:2px 10px;border-radius:8px">Seluruh Galaksi!</em>
+    </div>
+    <div style="font-size:16px;color:var(--muted);margin-bottom:24px;line-height:1.6">
+      Rayyan telah menaklukkan semua 6 planet misi.<br>
+      Kamu adalah <strong>Astronaut Matematika Sejati!</strong> 🌟
+    </div>
+    <div class="done-score-box">
+      <div class="done-score-num" id="allDoneStars"></div>
+      <div class="done-score-lbl">total bintang dikumpulkan dari 18</div>
+    </div>
+    <div style="font-size:40px;margin:20px 0;letter-spacing:4px" id="allDoneStarEmoji"></div>
+    <div style="display:grid;gap:10px;margin-top:16px">
+      <button class="act-btn primary" style="font-size:18px;padding:20px" onclick="goHome()">🌌 Lihat Peta Antariksa</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══ LESSON BUILDERS ═══ */
+function lessonBigNumbers(){return `
+<div class="ls"><div class="ls-h">🌍 Misi Dimulai di Bumi!</div>
+<p>Kelas 4 itu seperti naik level! Sekarang kita bermain dengan bilangan <strong>puluh ribuan & ratus ribuan</strong>. Sampai 6 angka!</p></div>
+<div class="ls"><div class="ls-h">🔢 Enam Nilai Tempat</div>
+<p>Setiap digit punya posisi penting. Lihat contohnya:</p>
+<div class="ex-box">
+  <div class="pv-row">
+    <div class="pv-box" style="background:#EFE3F8;border-color:#7B3FA8"><div class="pv-num" style="color:#7B3FA8">2</div><div class="pv-lbl">Ratus rb</div></div>
+    <div class="pv-box" style="background:#E8E9F8;border-color:#2E3192"><div class="pv-num" style="color:#2E3192">4</div><div class="pv-lbl">Puluh rb</div></div>
+    <div class="pv-box" style="background:#FCE8F3;border-color:#E84BA0"><div class="pv-num" style="color:#E84BA0">5</div><div class="pv-lbl">Ribuan</div></div>
+    <div class="pv-box" style="background:#E3F4F8;border-color:#1FA9C7"><div class="pv-num" style="color:#1FA9C7">3</div><div class="pv-lbl">Ratusan</div></div>
+    <div class="pv-box" style="background:#FFF5D6;border-color:#b38000"><div class="pv-num" style="color:#b38000">1</div><div class="pv-lbl">Puluhan</div></div>
+    <div class="pv-box" style="background:#E3F5EB;border-color:#1F9D55"><div class="pv-num" style="color:#1F9D55">7</div><div class="pv-lbl">Satuan</div></div>
+  </div>
+  <p style="margin-top:12px;font-size:14px">Angkanya: <strong>245.317</strong> — dibaca <em>dua ratus empat puluh lima ribu tiga ratus tujuh belas</em>!</p>
+</div></div>
+<div class="ls"><div class="ls-h">📏 Pembulatan</div>
+<p>Bulatkan ke <strong>puluhan/ratusan terdekat</strong>! Lihat angka di sebelah kanannya:</p>
+<div class="ex-box"><div style="font-size:14px;line-height:2.2;text-align:left">
+🔸 <strong>47</strong> → puluhan terdekat = <strong>50</strong> (karena 7 ≥ 5, bulatkan ke atas)<br>
+🔸 <strong>43</strong> → puluhan terdekat = <strong>40</strong> (karena 3 &lt; 5, bulatkan ke bawah)<br>
+🔸 <strong>356</strong> → ratusan terdekat = <strong>400</strong>
+</div></div></div>`;}
+
+function lessonMultiBig(){return `
+<div class="ls"><div class="ls-h">🌕 Pabrik di Bulan!</div>
+<p>Astronaut buka pabrik produksi di Bulan. Kita perlu hitung perkalian <strong>besar</strong> sekarang!</p></div>
+<div class="ls"><div class="ls-h">✖️ Perkalian 3 Angka × 1 Angka</div>
+<p>Pakai cara <strong>pecah</strong> yang sama, tapi sekarang ada ratusan!</p>
+<div class="ex-box"><div class="big-num">234 × 3</div>
+<div style="margin-top:14px;font-size:15px;line-height:2;text-align:left">
+Langkah 1: 200 × 3 = <strong>600</strong><br>
+Langkah 2: 30 × 3 = <strong>90</strong><br>
+Langkah 3: 4 × 3 = <strong>12</strong><br>
+Langkah 4: 600 + 90 + 12 = <span style="color:#1F9D55;font-weight:800">702</span> ✅
+</div></div></div>
+<div class="ls"><div class="ls-h">✖️ Perkalian 2 Angka × 2 Angka</div>
+<p>Pecah keduanya! Contoh: 23 × 14:</p>
+<div class="ex-box"><div style="font-size:14px;line-height:2;text-align:left">
+23 × 14 = 23 × (10 + 4)<br>
+= (23 × 10) + (23 × 4)<br>
+= 230 + 92<br>
+= <strong style="color:#1F9D55">322</strong> ✅
+</div></div></div>`;}
+
+function lessonDivBig(){return `
+<div class="ls"><div class="ls-h">🔴 Pembagian di Mars!</div>
+<p>Astronaut harus bagi persediaan air merata. Mari belajar <strong>pembagian besar</strong>!</p></div>
+<div class="ls"><div class="ls-h">➗ Pembagian 2 Angka : 1 Angka</div>
+<div class="ex-box"><div class="big-num">84 ÷ 4</div>
+<div style="margin-top:14px;font-size:15px;line-height:2;text-align:left">
+Pecah: 84 = 80 + 4<br>
+80 ÷ 4 = <strong>20</strong><br>
+4 ÷ 4 = <strong>1</strong><br>
+Total: 20 + 1 = <span style="color:#1F9D55;font-weight:800">21</span> ✅
+</div></div></div>
+<div class="ls"><div class="ls-h">🎁 Sisa Pembagian</div>
+<p>Kadang tidak habis dibagi! Ada <strong>sisa</strong>:</p>
+<div class="ex-box"><div style="font-size:16px;line-height:2;text-align:left">
+🍎 17 apel dibagi 5 anak<br>
+17 ÷ 5 = 3 sisa 2<br>
+Tiap anak dapat 3 apel, sisa 2 di toples!
+</div></div></div>`;}
+
+function lessonFractionOps(){return `
+<div class="ls"><div class="ls-h">🪐 Pecahan di Yupiter!</div>
+<p>Astronaut bagi-bagi makanan ke kru. Kita belajar <strong>operasi pecahan</strong>!</p></div>
+<div class="ls"><div class="ls-h">➕ Tambah & Kurang Pecahan (penyebut SAMA)</div>
+<p>Kalau penyebutnya sama, tinggal tambah/kurang yang atas (pembilang)!</p>
+<div class="ex-box"><div style="font-size:18px;line-height:2.2">
+<strong>1/4 + 2/4 = 3/4</strong> ✅<br>
+<strong>5/6 − 2/6 = 3/6 = 1/2</strong> ✅
+</div></div></div>
+<div class="ls"><div class="ls-h">📊 Pecahan Senilai</div>
+<p>Pecahan yang nilainya sama walau ditulis berbeda. Kalikan/bagi atas-bawah dengan angka yang sama!</p>
+<div class="ex-box"><div style="font-size:16px;line-height:2;text-align:left">
+1/2 = 2/4 = 3/6 = 4/8 ✅ (kalikan atas-bawah dengan 2, 3, 4)<br>
+4/8 = 2/4 = 1/2 (bagi atas-bawah dengan 2)
+</div></div></div>`;}
+
+function lessonGeoArea(){return `
+<div class="ls"><div class="ls-h">🪐 Stasiun Saturnus — Bangun Datar!</div>
+<p>Bangun stasiun perlu hitung <strong>keliling & luas</strong>!</p></div>
+<div class="ls"><div class="ls-h">📏 Keliling = jumlah SEMUA sisi</div>
+<div class="ex-box"><div style="font-size:15px;line-height:2;text-align:left">
+🟫 Persegi panjang 5 × 3:<br>
+Keliling = 5 + 3 + 5 + 3 = <strong>16</strong><br>
+Rumus cepat: 2 × (panjang + lebar)
+</div></div></div>
+<div class="ls"><div class="ls-h">⬛ Luas = panjang × lebar</div>
+<div class="ex-box"><div style="font-size:15px;line-height:2;text-align:left">
+🟦 Persegi sisi 4 cm:<br>
+Luas = 4 × 4 = <strong>16 cm²</strong><br>
+🟧 Persegi panjang 6 × 4:<br>
+Luas = 6 × 4 = <strong>24 cm²</strong>
+</div></div></div>
+<div class="ls"><div class="ls-h">📐 Sudut</div>
+<p>Sudut <strong>siku-siku</strong> = 90° (seperti pojok meja). Sudut <strong>lancip</strong> &lt; 90°. Sudut <strong>tumpul</strong> &gt; 90°.</p></div>`;}
+
+function lessonKpkFpb(){return `
+<div class="ls"><div class="ls-h">✨ Galaksi Terjauh — KPK & FPB!</div>
+<p>Misi terakhir! Kita belajar <strong>Kelipatan Persekutuan Terkecil (KPK)</strong> dan <strong>Faktor Persekutuan Terbesar (FPB)</strong>!</p></div>
+<div class="ls"><div class="ls-h">🔢 KPK — Kelipatan Persekutuan Terkecil</div>
+<p>Kelipatan = perkalian. Cari yang sama dan paling kecil!</p>
+<div class="ex-box"><div style="font-size:14px;line-height:2;text-align:left">
+Kelipatan 4 → 4, 8, <strong style="color:#1F9D55">12</strong>, 16, 20, 24...<br>
+Kelipatan 6 → 6, <strong style="color:#1F9D55">12</strong>, 18, 24...<br>
+<strong>KPK(4, 6) = 12</strong> ✅
+</div></div></div>
+<div class="ls"><div class="ls-h">🎯 FPB — Faktor Persekutuan Terbesar</div>
+<p>Faktor = angka pembagi habis. Cari yang sama dan paling besar!</p>
+<div class="ex-box"><div style="font-size:14px;line-height:2;text-align:left">
+Faktor 12 → 1, 2, 3, 4, <strong style="color:#1F9D55">6</strong>, 12<br>
+Faktor 18 → 1, 2, 3, <strong style="color:#1F9D55">6</strong>, 9, 18<br>
+<strong>FPB(12, 18) = 6</strong> ✅
+</div></div></div>`;}
+
+/* ═══ DATA ═══ */
+const CHAPTERS = [
+  {
+    id:'big-numbers-4',title:'Bilangan Besar & Pembulatan',planet:'🌍 Bumi',emoji:'🔢',
+    color:'#1F9D55',colorBg:'#E3F5EB',
+    desc:'Sampai ratus ribuan dan pembulatan!',
+    novaTip:'Baca dari kiri ke kanan. 245.317 = dua ratus empat puluh lima ribu tiga ratus tujuh belas. Pembulatan: lihat angka kanannya — kalau ≥ 5 naik, kalau &lt; 5 turun!',
+    lessonHTML: lessonBigNumbers(),
+    questions:[
+      {type:'mc',q:'Bilangan apa yang dibaca "tiga puluh dua ribu lima ratus"?',opts:['3.250','32.500','325.000','32.050'],ans:1,expl:'32.500 → tiga puluh dua ribu lima ratus.'},
+      {type:'input',q:'Berapa nilai angka 7 pada bilangan 47.823?',ans:'7000',expl:'7 berada di posisi RIBUAN → nilainya 7.000.'},
+      {type:'mc',q:'Bulatkan 67 ke puluhan terdekat:',opts:['60','65','70','80'],ans:2,expl:'7 ≥ 5, bulatkan ke atas → 70!'},
+      {type:'mc',q:'Bulatkan 432 ke ratusan terdekat:',opts:['300','400','430','500'],ans:1,expl:'Digit puluhannya 3 (&lt;5), bulatkan ke bawah → 400!'},
+      {type:'input',q:'Tulis dengan angka: 125.000 + 4.000 + 300 + 60 + 7 = ?',ans:'129367',expl:'125.000 + 4.000 + 300 + 60 + 7 = 129.367!'},
+      {type:'mc',q:'Bilangan TERBESAR adalah:',opts:['89.999','98.000','89.998','100.000'],ans:3,expl:'100.000 paling besar — 6 angka, sedangkan yang lain 5 angka!'}
+    ]
+  },
+  {
+    id:'multi-big',title:'Perkalian Besar',planet:'🌕 Bulan',emoji:'✖️',
+    color:'#7B3FA8',colorBg:'#EFE3F8',
+    desc:'3 × 1 angka dan 2 × 2 angka!',
+    novaTip:'Selalu PECAH dulu! 234 = 200+30+4. Kalikan satu-satu lalu jumlahkan. Untuk 2×2 angka, pecah jadi (×10) + (×satuan).',
+    lessonHTML: lessonMultiBig(),
+    questions:[
+      {type:'input',q:'123 × 3 = ?',ans:'369',expl:'(100×3) + (20×3) + (3×3) = 300 + 60 + 9 = 369!'},
+      {type:'input',q:'234 × 4 = ?',ans:'936',expl:'(200×4) + (30×4) + (4×4) = 800 + 120 + 16 = 936!'},
+      {type:'input',q:'12 × 15 = ?',ans:'180',expl:'12 × 15 = (12×10) + (12×5) = 120 + 60 = 180!'},
+      {type:'mc',q:'23 × 12 = ?',opts:['256','276','266','286'],ans:1,expl:'23×12 = (23×10) + (23×2) = 230 + 46 = 276!'},
+      {type:'input',q:'306 × 2 = ?',ans:'612',expl:'(300×2) + (0×2) + (6×2) = 600 + 12 = 612!'},
+      {type:'mc',q:'Satu modul roket bisa muat 25 astronaut. Berapa total astronaut di 16 modul?',visual:'🚀×16',opts:['350','375','400','425'],ans:2,expl:'25×16 = (25×10)+(25×6) = 250+150 = 400 astronaut!'}
+    ]
+  },
+  {
+    id:'div-big',title:'Pembagian dengan Sisa',planet:'🔴 Mars',emoji:'➗',
+    color:'#FF5C39',colorBg:'#FFE8E3',
+    desc:'Pembagian besar — kadang ada sisa!',
+    novaTip:'Pembagian itu kebalikan perkalian! Kalau tidak habis dibagi, tulis sisanya. 17÷5 = 3 sisa 2 (karena 5×3 = 15, dan 17−15 = 2).',
+    lessonHTML: lessonDivBig(),
+    questions:[
+      {type:'input',q:'84 ÷ 4 = ?',ans:'21',expl:'80÷4=20, 4÷4=1, total = 21!'},
+      {type:'input',q:'96 ÷ 8 = ?',ans:'12',expl:'80÷8=10, 16÷8=2, total = 12!'},
+      {type:'mc',q:'17 ÷ 5 = ? (dengan sisa)',opts:['3 sisa 2','3 sisa 1','4 sisa 1','2 sisa 7'],ans:0,expl:'5×3=15. 17−15=2 sisa. Jadi 3 sisa 2!'},
+      {type:'mc',q:'25 ÷ 4 = ? (dengan sisa)',opts:['5 sisa 5','6 sisa 1','7 sisa 0','6 sisa 2'],ans:1,expl:'4×6=24. 25−24=1. Jadi 6 sisa 1!'},
+      {type:'input',q:'144 ÷ 12 = ?',ans:'12',expl:'12 × 12 = 144, jadi 144 ÷ 12 = 12!'},
+      {type:'mc',q:'Ada 50 botol air dibagi 6 astronaut. Tiap astronaut dapat berapa? Sisa berapa?',visual:'💧 × 50',opts:['8 sisa 2','7 sisa 8','9 sisa 4','8 sisa 0'],ans:0,expl:'6×8=48. 50−48=2. Tiap orang 8 botol, sisa 2!'}
+    ]
+  },
+  {
+    id:'fraction-ops',title:'Operasi Pecahan',planet:'🪐 Yupiter',emoji:'🍕',
+    color:'#E84BA0',colorBg:'#FCE8F3',
+    desc:'Tambah, kurang & pecahan senilai!',
+    novaTip:'Kalau penyebutnya (angka bawah) SAMA, tinggal tambah/kurang pembilangnya (angka atas). Pecahan senilai: kalikan/bagi atas-bawah dengan angka yang sama!',
+    lessonHTML: lessonFractionOps(),
+    questions:[
+      {type:'mc',q:'1/4 + 2/4 = ?',opts:['3/8','3/4','2/4','3/16'],ans:1,expl:'Penyebut sama (4). Tambah pembilang: 1+2=3. Jadi 3/4!'},
+      {type:'mc',q:'5/6 − 2/6 = ?',opts:['3/6','3/0','7/6','3/12'],ans:0,expl:'Penyebut sama (6). 5−2=3. Jadi 3/6 (atau 1/2)!'},
+      {type:'mc',q:'Pecahan mana SENILAI dengan 1/2?',opts:['1/3','2/3','3/6','3/4'],ans:2,expl:'3/6 = 1/2 (bagi atas-bawah dengan 3). Coba bayangkan pizza 6 potong — 3 potong = setengah!'},
+      {type:'mc',q:'Pecahan mana SENILAI dengan 2/3?',opts:['4/6','3/6','5/6','2/6'],ans:0,expl:'2/3 × 2/2 = 4/6. Kalikan atas-bawah dengan angka yang sama!'},
+      {type:'mc',q:'Mana yang LEBIH BESAR: 3/5 atau 2/5?',opts:['3/5','2/5','Sama','Tidak bisa'],ans:0,expl:'Penyebut sama. Pembilang lebih besar = lebih besar. 3/5 &gt; 2/5!'},
+      {type:'mc',q:'Pizza dipotong 8. Rayyan makan 3 potong, Raya makan 2 potong. Total dimakan?',visual:'🍕',opts:['5/16','5/8','6/8','1/8'],ans:1,expl:'3/8 + 2/8 = 5/8. Tinggal 3/8 di kotak!'}
+    ]
+  },
+  {
+    id:'geo-area',title:'Keliling & Luas',planet:'🪐 Saturnus',emoji:'📐',
+    color:'#1FA9C7',colorBg:'#E3F4F8',
+    desc:'Bangun datar — sudut, keliling, luas!',
+    novaTip:'KELILING = jumlah SEMUA sisi (jalan keliling pinggirnya). LUAS = panjang × lebar (isinya). Persegi: semua sisinya sama.',
+    lessonHTML: lessonGeoArea(),
+    questions:[
+      {type:'input',q:'Persegi sisi 5 cm. Keliling = ?',visual:'⬛ 5cm',ans:'20',expl:'Keliling persegi = 4 × sisi = 4 × 5 = 20 cm!'},
+      {type:'input',q:'Persegi sisi 7 cm. Luas = ? (cm²)',ans:'49',expl:'Luas persegi = sisi × sisi = 7 × 7 = 49 cm²!'},
+      {type:'input',q:'Persegi panjang 8 cm × 5 cm. Luas = ? (cm²)',ans:'40',expl:'Luas = panjang × lebar = 8 × 5 = 40 cm²!'},
+      {type:'mc',q:'Persegi panjang 10 × 4. Keliling = ?',opts:['14','28','40','24'],ans:1,expl:'Keliling = 2×(10+4) = 2×14 = 28!'},
+      {type:'mc',q:'Sudut 90° namanya:',opts:['Lancip','Tumpul','Siku-siku','Lurus'],ans:2,expl:'Sudut 90° = sudut SIKU-SIKU. Seperti pojok meja!'},
+      {type:'mc',q:'Panel surya berbentuk persegi panjang 6m × 4m. Berapa luasnya?',visual:'☀️',opts:['10 m²','20 m²','24 m²','30 m²'],ans:2,expl:'6 × 4 = 24 m². Cukup besar untuk daya roket!'}
+    ]
+  },
+  {
+    id:'kpk-fpb',title:'KPK & FPB',planet:'✨ Galaksi',emoji:'🎯',
+    color:'#2E3192',colorBg:'#E8E9F8',
+    desc:'Misi terakhir — KPK dan FPB!',
+    novaTip:'KPK = Kelipatan Persekutuan TERKECIL (cari yang sama, pilih yang paling kecil). FPB = Faktor Persekutuan TERBESAR (faktor=pembagi habis, pilih yang paling besar).',
+    lessonHTML: lessonKpkFpb(),
+    questions:[
+      {type:'mc',q:'KPK dari 3 dan 4 = ?',opts:['6','7','12','24'],ans:2,expl:'Kelipatan 3: 3,6,9,12... Kelipatan 4: 4,8,12... Yang sama paling kecil = 12!'},
+      {type:'mc',q:'KPK dari 6 dan 8 = ?',opts:['14','24','48','12'],ans:1,expl:'6: 6,12,18,24... 8: 8,16,24... KPK = 24!'},
+      {type:'input',q:'FPB dari 8 dan 12 = ?',ans:'4',expl:'Faktor 8: 1,2,4,8. Faktor 12: 1,2,3,4,6,12. Yang sama paling besar = 4!'},
+      {type:'mc',q:'FPB dari 15 dan 20 = ?',opts:['3','5','10','15'],ans:1,expl:'15: 1,3,5,15. 20: 1,2,4,5,10,20. FPB = 5!'},
+      {type:'mc',q:'Rayyan punya 12 permen, Raya 18 permen. Dibagi ke beberapa anak sama rata. Berapa anak maksimum?',visual:'🍬',opts:['3','4','6','9'],ans:2,expl:'FPB(12,18) = 6. Bisa dibagi ke 6 anak: Rayyan beri 2 tiap anak, Raya beri 3 tiap anak!'},
+      {type:'mc',q:'Lampu A nyala tiap 4 detik, Lampu B tiap 6 detik. Kapan keduanya nyala bersamaan?',visual:'💡💡',opts:['Tiap 8 dtk','Tiap 10 dtk','Tiap 12 dtk','Tiap 24 dtk'],ans:2,expl:'KPK(4,6) = 12. Keduanya nyala bersama tiap 12 detik!'}
+    ]
+  },
+];
+
+/* ═══ STATE ═══ */
+const state = {chapter:null,qIdx:0,score:0,answered:false,totalStars:0,progress:{},history:[]};
+
+function loadState(){try{const d=JSON.parse(localStorage.getItem('rayyanMath4')||'{}');state.progress=d.progress||{};state.totalStars=d.totalStars||0;document.getElementById('starCount').textContent=state.totalStars;}catch(e){}}
+function saveState(){try{localStorage.setItem('rayyanMath4',JSON.stringify({progress:state.progress,totalStars:state.totalStars}));}catch(e){}}
+function resetProgress(){const pw=prompt('Masukkan kata sandi untuk reset progress:');if(pw===null)return;if(pw!=='bogor123'){alert('Kata sandi salah! ❌');return;}state.progress={};state.totalStars=0;document.getElementById('starCount').textContent=0;saveState();renderHome();}
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function goHome(){show('sHome');renderHome();}
+function openChapter(idx){
+  state.chapter=idx;const ch=CHAPTERS[idx];
+  document.getElementById('lessonHdr').innerHTML=`
+    <div class="lesson-hdr">
+      <div class="lesson-icon">${ch.emoji}</div>
+      <div>
+        <div class="lesson-eyebrow">Planet ${idx+1} dari ${CHAPTERS.length}</div>
+        <div class="lesson-planet">${ch.planet}</div>
+        <div class="lesson-title">${ch.title}</div>
+      </div>
+    </div>`;
+  document.getElementById('lessonBody').innerHTML=ch.lessonHTML;
+  document.getElementById('novaMsg').textContent=ch.novaTip;
+  show('sLesson');
+}
+
+let _timerStart=null;
+function fmtTime(ms){const s=Math.floor(ms/1000);const m=Math.floor(s/60);return m>0?`${m} mnt ${s%60} dtk`:`${s} dtk`;}
+function startExercise(){_timerStart=Date.now();state.qIdx=0;state.score=0;state.answered=false;state.history=[];renderQ();show('sExercise');}
+function retryChapter(){startExercise();}
+
+function renderQ(){
+  const ch=CHAPTERS[state.chapter];const q=ch.questions[state.qIdx];const total=ch.questions.length;
+  document.getElementById('exChName').textContent=`${ch.emoji} ${ch.title}`;
+  document.getElementById('exQNum').textContent=`${state.qIdx+1}/${total}`;
+  document.getElementById('exBar').style.width=`${(state.qIdx/total)*100}%`;
+  document.getElementById('qText').textContent=q.q;
+  const vis=document.getElementById('qVisual');
+  if(q.visual){vis.innerHTML=q.visual;vis.style.display='';}else{vis.style.display='none';}
+  const area=document.getElementById('answerArea');
+  if(q.type==='mc'){area.innerHTML=`<div class="opts-grid">${q.opts.map((o,i)=>`<button class="opt-btn" onclick="pickOpt(${i})">${o}</button>`).join('')}</div>`;}
+  else{area.innerHTML=`<div class="inp-row"><input type="number" class="num-inp" id="numInp" placeholder="Tulis jawaban…" inputmode="numeric" onkeydown="if(event.key==='Enter')checkInp()"><button class="chk-btn" onclick="checkInp()">Cek ✓</button></div>`;setTimeout(()=>{const el=document.getElementById('numInp');if(el)el.focus();},80);}
+  document.getElementById('toast').className='toast';
+  document.getElementById('nxtBtn').className='nxt-btn';
+  state.answered=false;
+}
+
+function pickOpt(idx){
+  if(state.answered)return;state.answered=true;
+  const q=CHAPTERS[state.chapter].questions[state.qIdx];const correct=idx===q.ans;
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  document.querySelectorAll('.opt-btn')[idx].classList.add(correct?'correct':'wrong');
+  if(!correct)document.querySelectorAll('.opt-btn')[q.ans].classList.add('correct');
+  if(correct)state.score++;
+  state.history.push({q:q.q,correct,correctAns:q.opts[q.ans],userAns:q.opts[idx]});
+  showToast(correct,q.opts[q.ans],q.expl);
+}
+function checkInp(){
+  if(state.answered)return;
+  const inp=document.getElementById('numInp');const val=(inp.value||'').trim();if(!val)return;
+  state.answered=true;inp.disabled=true;
+  const q=CHAPTERS[state.chapter].questions[state.qIdx];const correct=val===q.ans;
+  inp.classList.add(correct?'ok':'bad');
+  if(correct)state.score++;
+  state.history.push({q:q.q,correct,correctAns:q.ans,userAns:val});
+  showToast(correct,q.ans,q.expl);
+}
+function showToast(correct,correctAns,expl){
+  const toast=document.getElementById('toast');
+  document.getElementById('toastIco').textContent=correct?'🚀':'❌';
+  document.getElementById('toastTitle').textContent=correct?'Benar! Hebat, Astronaut Rayyan!':`Belum tepat. Jawaban: ${correctAns}`;
+  document.getElementById('toastExpl').textContent=expl||'';
+  toast.className=`toast show ${correct?'ok':'bad'}`;
+  document.getElementById('nxtBtn').className='nxt-btn show';
+}
+function nextQ(){const ch=CHAPTERS[state.chapter];state.qIdx++;if(state.qIdx>=ch.questions.length)showComplete();else renderQ();}
+
+function showComplete(){
+  const ch=CHAPTERS[state.chapter];const total=ch.questions.length;const pct=state.score/total;
+  let stars=1;if(pct>=0.6)stars=2;if(pct>=0.85)stars=3;
+  const prev=state.progress[ch.id]||{stars:0,bestScore:0};
+  const newStars=Math.max(prev.stars,stars);const newBest=Math.max(prev.bestScore,state.score);
+  const earned=newStars-prev.stars;
+  state.progress[ch.id]={stars:newStars,bestScore:newBest};
+  state.totalStars+=earned;
+  document.getElementById('starCount').textContent=state.totalStars;
+  saveState();
+  const badges=['😊','🌟','🏆'];
+  const titles=['Mendarat selamat! Coba lagi ya!','Hebat! Hampir sempurna!','SEMPURNA! Astronaut Rayyan luar biasa!'];
+  const msgs=[
+    `Kamu menjawab ${state.score} dari ${total} misi dengan benar. Pelajari lagi materinya, kamu pasti bisa! 💪`,
+    `Kamu menjawab ${state.score} dari ${total} misi dengan benar. Hampir sempurna! 👏`,
+    `Kamu menjawab SEMUA ${total} misi dengan benar! Rayyan = Astronaut Terbaik! 🚀🎊`
+  ];
+  document.getElementById('doneBadge').textContent=badges[stars-1];
+  document.getElementById('doneTitle').textContent=titles[stars-1];
+  document.getElementById('doneStars').textContent='⭐'.repeat(stars)+'☆'.repeat(3-stars);
+  document.getElementById('doneScoreNum').textContent=`${state.score}/${total}`;
+  document.getElementById('doneMsg').textContent=msgs[stars-1];
+  document.getElementById('reviewList').innerHTML=state.history.map(h=>`
+    <div class="review-item">
+      <div class="review-ico">${h.correct?'✅':'❌'}</div>
+      <div>
+        <div class="review-q">${h.q}</div>
+        <div class="review-a">${h.correct?`Benar: <strong>${h.correctAns}</strong>`:`Kamu jawab: ${h.userAns} · Jawaban: <strong>${h.correctAns}</strong>`}</div>
+      </div>
+    </div>`).join('');
+  const elapsed=_timerStart?Date.now()-_timerStart:0;
+  _timerStart=null;
+  document.getElementById('doneTime').textContent=fmtTime(elapsed);
+  show('sComplete');
+  if(stars>=2)setTimeout(launchConfetti,350);
+  updateOverall();
+  const allDone=CHAPTERS.every(c=>(state.progress[c.id]||{}).stars>0);
+  if(allDone)setTimeout(showAllDone,2500);
+}
+
+function showAllDone(){
+  const total=state.totalStars;
+  document.getElementById('allDoneStars').textContent=`${total} / 18`;
+  document.getElementById('allDoneStarEmoji').textContent='⭐'.repeat(Math.min(total,18));
+  show('sAllDone');
+  setTimeout(launchConfetti,300);
+  setTimeout(launchConfetti,1200);
+}
+
+function renderHome(){
+  document.getElementById('chGrid').innerHTML=CHAPTERS.map((ch,i)=>{
+    const p=state.progress[ch.id]||{stars:0,bestScore:0};
+    const done=p.stars>0;
+    const stars=[1,2,3].map(n=>`<span class="ch-star${n<=p.stars?' on':''}" aria-hidden="true">⭐</span>`).join('');
+    const status=done?`✅ Terbaik: ${p.bestScore}/${ch.questions.length} misi`:'▶️ Belum dimulai';
+    return `
+      <div class="ch-card" onclick="openChapter(${i})" role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter'||event.key===' ')openChapter(${i})">
+        <div class="ch-thumb" style="background:${ch.colorBg}">
+          <div class="ch-emoji">${ch.emoji}</div>
+          <div class="ch-stars-row">${stars}</div>
+        </div>
+        <div class="ch-body">
+          <div class="ch-num">Planet ${i+1}</div>
+          <div class="ch-planet">${ch.planet}</div>
+          <div class="ch-title">${ch.title}</div>
+          <div class="ch-desc">${ch.desc}</div>
+          <div class="ch-track">━━━━━━━━━━</div>
+          <div class="ch-status">${status}</div>
+        </div>
+      </div>`;
+  }).join('');
+  updateOverall();
+  renderRouteMap();
+}
+
+function renderRouteMap(){
+  const track=document.getElementById('routeTrack');if(!track)return;
+  const stations=[
+    {emoji:'🌍',name:'Bumi'},{emoji:'🌕',name:'Bulan'},{emoji:'🔴',name:'Mars'},
+    {emoji:'🪐',name:'Yupiter'},{emoji:'🪐',name:'Saturnus'},{emoji:'✨',name:'Galaksi'}
+  ];
+  let html='';
+  stations.forEach((s,i)=>{
+    const p=state.progress[CHAPTERS[i].id]||{stars:0};
+    const done=p.stars>0;
+    const allPrevDone=i===0||CHAPTERS.slice(0,i).every(c=>(state.progress[c.id]||{}).stars>0);
+    const active=!done&&allPrevDone;
+    const cls=done?'done':active?'active':'';
+    if(i>0)html+=`<div class="route-rail${done?' done':''}"></div>`;
+    html+=`<div class="route-station"><div class="station-dot ${cls}">${done?'✅':active?'🚀':s.emoji}</div><div class="station-name ${cls}">${s.name}</div></div>`;
+  });
+  track.innerHTML=html;
+}
+
+function updateOverall(){
+  const total=CHAPTERS.length;
+  const done=Object.values(state.progress).filter(p=>p.stars>0).length;
+  const pct=(done/total)*100;
+  document.getElementById('ovBar').style.width=`${pct}%`;
+  document.getElementById('ovSub').textContent=`${done} dari ${total} planet ditaklukkan`;
+  const circ=document.getElementById('ov-ring-path');
+  circ.style.strokeDashoffset=176-(pct/100)*176;
+}
+
+function launchConfetti(){
+  const c=document.getElementById('confetti');
+  const colors=['#FF5C39','#FFC234','#1F9D55','#1FA9C7','#E84BA0','#2E3192','#7B3FA8'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div');p.className='cp';
+    const size=6+Math.random()*10;
+    p.style.cssText=`left:${Math.random()*100}%;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.7}s;`;
+    c.appendChild(p);
+    p.addEventListener('animationend',()=>p.remove());
+  }
+}
+
+loadState();renderHome();
+</script>
+</body>
+</html>
