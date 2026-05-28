@@ -415,35 +415,56 @@
   }
 
   function drawObstacle(o) {
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#1A1614';
+    ctx.lineWidth = 4;
     if (o.type === 'rock') {
-      ctx.fillStyle = '#5a5a6e';
+      // bright magenta boulder — pops against green hills + brown ground
+      ctx.fillStyle = '#E84BA0';
       ctx.beginPath();
       ctx.ellipse(o.x+o.w/2, o.y - o.h/2, o.w/2, o.h/2, 0, 0, Math.PI*2);
-      ctx.fill();
-      ctx.fillStyle = '#7a7a8e';
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#FF9CC8';
       ctx.beginPath();
-      ctx.ellipse(o.x+o.w/2-4, o.y - o.h/2-4, o.w/3, o.h/4, 0, 0, Math.PI*2);
+      ctx.ellipse(o.x+o.w/2-5, o.y - o.h/2-5, o.w/3, o.h/4.5, 0, 0, Math.PI*2);
       ctx.fill();
     } else if (o.type === 'cactus') {
-      ctx.fillStyle = '#2e7d32';
-      ctx.fillRect(o.x+12, o.y - o.h, 16, o.h);
-      ctx.fillRect(o.x, o.y - o.h + 14, 14, 22);
-      ctx.fillRect(o.x+28, o.y - o.h + 8, 14, 26);
-      // spikes
-      ctx.fillStyle = '#1b5e20';
-      ctx.fillRect(o.x+19, o.y - o.h + 6, 2, o.h-12);
+      // bright orange spiky obstacle — distinct from green trees
+      ctx.fillStyle = '#FF5C39';
+      roundRect(o.x+12, o.y - o.h,        16, o.h,    4, true, true);
+      roundRect(o.x,    o.y - o.h + 14,   14, 22,     4, true, true);
+      roundRect(o.x+28, o.y - o.h + 8,    14, 26,     4, true, true);
+      // bright spikes
+      ctx.fillStyle = '#FFE566';
+      for (let i=0;i<3;i++) {
+        const yy = o.y - o.h + 10 + i*14;
+        ctx.beginPath();
+        ctx.moveTo(o.x+12, yy); ctx.lineTo(o.x+6, yy+4); ctx.lineTo(o.x+12, yy+8);
+        ctx.closePath(); ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(o.x+28, yy); ctx.lineTo(o.x+34, yy+4); ctx.lineTo(o.x+28, yy+8);
+        ctx.closePath(); ctx.fill();
+      }
     } else if (o.type === 'log') {
-      // floating crate
-      ctx.fillStyle = '#a35a1f';
+      // bright yellow floating crate with hazard stripes
+      ctx.fillStyle = '#FFC234';
       ctx.fillRect(o.x, o.y, o.w, o.h);
-      ctx.fillStyle = '#7a3f12';
-      ctx.fillRect(o.x, o.y, o.w, 4);
-      ctx.fillRect(o.x, o.y+o.h-4, o.w, 4);
-      ctx.strokeStyle = '#7a3f12'; ctx.lineWidth = 3;
+      ctx.strokeRect(o.x, o.y, o.w, o.h);
+      // diagonal hazard stripes
+      ctx.fillStyle = '#1A1614';
+      ctx.save();
       ctx.beginPath();
-      ctx.moveTo(o.x, o.y); ctx.lineTo(o.x+o.w, o.y+o.h);
-      ctx.moveTo(o.x+o.w, o.y); ctx.lineTo(o.x, o.y+o.h);
-      ctx.stroke();
+      ctx.rect(o.x+2, o.y+2, o.w-4, o.h-4);
+      ctx.clip();
+      for (let i = -o.h; i < o.w; i += 12) {
+        ctx.beginPath();
+        ctx.moveTo(o.x+i,    o.y);
+        ctx.lineTo(o.x+i+6,  o.y);
+        ctx.lineTo(o.x+i+6+o.h, o.y+o.h);
+        ctx.lineTo(o.x+i+o.h,   o.y+o.h);
+        ctx.closePath(); ctx.fill();
+      }
+      ctx.restore();
     }
   }
 
