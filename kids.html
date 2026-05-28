@@ -506,6 +506,32 @@
       type: 'course',
     },
     {
+      title: 'Matematika Kelas 4 SD 🚀',
+      subject: 'Matematika',
+      emoji: '🚀',
+      thumbBg: '#EFE3F8',
+      blurb: 'Petualangan Antariksa! 6 planet: bilangan besar, perkalian & pembagian besar, operasi pecahan, keliling & luas, KPK & FPB.',
+      href: 'courses/math/rayyan-math-grade4.html',
+      for: 'Rayyan · Kelas 4 SD',
+      forColor: '#7B3FA8',
+      progressKey: 'rayyanMath4',
+      totalChapters: 6,
+      type: 'course',
+    },
+    {
+      title: 'Matematika Raya 🔢',
+      subject: 'Matematika PAUD',
+      emoji: '🔢',
+      thumbBg: '#FCE8F3',
+      blurb: 'Visual & interaktif tanpa membaca: ketuk untuk hitung, bandingkan banyak/sedikit, tambah sederhana, dan seret gambar ke angka!',
+      href: 'courses/math/raya-math-v1.html',
+      for: 'Raya · Usia 3–4 Tahun',
+      forColor: '#E84BA0',
+      progressKey: 'rayaMath',
+      totalChapters: 5,
+      type: 'course',
+    },
+    {
       title: 'Belajar Bersama Raya 🌸',
       subject: 'PAUD Visual',
       emoji: '🌸',
@@ -556,7 +582,7 @@
 
   function getTotalStars() {
     let total = 0;
-    const keys = ['rayyanMath', 'rayyanMath3', 'rayaLearning', 'rayaVisual'];
+    const keys = ['rayyanMath', 'rayyanMath3', 'rayyanMath4', 'rayaLearning', 'rayaVisual', 'rayaMath'];
     for (const k of keys) {
       try {
         const d = JSON.parse(localStorage.getItem(k) || '{}');

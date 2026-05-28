@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Matematika Raya 🌸 · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23E84BA0"/><text y=".9em" font-size="70" x="14">🔢</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink:#E84BA0;--mango:#FFC234;--forest:#1F9D55;--sea:#1FA9C7;
+      --tomato:#FF5C39;--indigo:#2E3192;
+      --ink:#1A1614;--paper:#FBF4E6;--paper-2:#F4ECD8;
+      --line:rgba(26,22,20,0.12);--muted:#6B6259;
+      --pink-bg:#FCE8F3;--forest-bg:#E3F5EB;--tomato-bg:#FFE8E3;
+      --mango-bg:#FFF5D6;--sea-bg:#E3F4F8;
+      --fd:'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb:'Inter',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased}
+    body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden}
+    button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+    .hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:2.5px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:100}
+    .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit}
+    .hdr-word{font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-0.03em}
+    .hdr-stars{background:var(--pink);color:white;border:2px solid var(--ink);border-radius:999px;padding:6px 14px;font-family:var(--fd);font-weight:800;font-size:16px;display:flex;align-items:center;gap:6px}
+
+    .screen{display:none;max-width:640px;margin:0 auto;padding:20px 14px 80px;animation:fadeUp .28s ease}
+    .screen.active{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    .home-hero{text-align:center;padding:24px 0 18px}
+    .home-avatar{width:100px;height:100px;border-radius:50%;border:3px solid var(--ink);background:var(--pink-bg);display:flex;align-items:center;justify-content:center;font-size:52px;margin:0 auto 14px;animation:wobble 3s ease-in-out infinite}
+    @keyframes wobble{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+    .home-greeting{font-family:var(--fd);font-weight:800;font-size:clamp(30px,8vw,50px);letter-spacing:-0.04em;line-height:1;margin-bottom:8px}
+    .home-greeting em{font-style:normal;background:var(--pink);color:white;padding:2px 10px;border-radius:10px}
+    .home-sub{font-size:15px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+
+    .parent-notice{background:var(--indigo);color:white;border-radius:14px;padding:14px 16px;margin-bottom:24px;display:flex;gap:10px;align-items:flex-start}
+    .parent-ico{font-size:22px;flex-shrink:0;line-height:1;margin-top:2px}
+    .parent-text{font-size:13px;line-height:1.55}
+    .parent-label{font-family:var(--fd);font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mango);margin-bottom:2px}
+
+    .overall-box{display:flex;align-items:center;gap:14px;background:var(--pink-bg);border:2.5px solid var(--ink);border-radius:16px;padding:16px;margin-bottom:28px}
+    .ov-ring{width:60px;height:60px;flex-shrink:0}
+    .ov-info{flex:1}
+    .ov-label{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:6px}
+    .ov-bar-wrap{height:10px;background:var(--line);border-radius:999px;overflow:hidden}
+    .ov-bar{height:100%;background:var(--pink);border-radius:999px;transition:width .8s ease}
+    .ov-sub{font-size:11px;color:var(--muted);margin-top:4px}
+
+    .sec-title{font-family:var(--fd);font-weight:800;font-size:18px;margin-bottom:12px}
+    .ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:400px){.ch-grid{grid-template-columns:1fr}}
+    .ch-card{border:2.5px solid var(--ink);border-radius:18px;overflow:hidden;cursor:pointer;background:var(--paper);transition:transform .17s,box-shadow .17s}
+    .ch-card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .ch-thumb{padding:18px 16px 12px;border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between}
+    .ch-emoji{font-size:44px;line-height:1}
+    .ch-stars{display:flex;gap:2px}
+    .ch-star{font-size:18px;opacity:.22}
+    .ch-star.on{opacity:1}
+    .ch-body{padding:12px 14px 14px}
+    .ch-num{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .ch-title{font-family:var(--fd);font-weight:800;font-size:16px;letter-spacing:-0.02em;margin-bottom:3px}
+    .ch-desc{font-size:11.5px;color:var(--muted);line-height:1.4}
+    .ch-status{margin-top:8px;font-family:var(--fd);font-weight:700;font-size:11px}
+
+    .back-btn{display:flex;align-items:center;gap:6px;font-family:var(--fd);font-weight:700;font-size:14px;color:var(--muted);margin-bottom:20px;padding:0;transition:color .15s}
+    .back-btn:hover{color:var(--ink)}
+    .lesson-hdr{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+    .lesson-icon{font-size:50px;background:var(--paper-2);border:2px solid var(--ink);border-radius:14px;padding:10px 14px;flex-shrink:0;line-height:1}
+    .lesson-eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .lesson-title{font-family:var(--fd);font-weight:800;font-size:clamp(20px,5vw,32px);letter-spacing:-0.03em;line-height:1.05}
+
+    .parent-card{background:var(--indigo);color:white;border-radius:14px;padding:16px 18px;margin-bottom:18px;display:flex;gap:10px}
+    .pc-ico{font-size:24px;flex-shrink:0;line-height:1}
+    .pc-label{font-family:var(--fd);font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mango);margin-bottom:4px}
+    .pc-text{font-size:14px;line-height:1.6}
+
+    .preview-box{background:var(--paper-2);border:2px solid var(--ink);border-radius:14px;padding:20px;margin-bottom:18px;text-align:center}
+    .preview-title{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--muted);margin-bottom:12px;letter-spacing:.06em;text-transform:uppercase}
+    .preview-emojis{font-size:44px;line-height:1.4;letter-spacing:4px}
+
+    .start-btn{width:100%;background:var(--pink);color:white;border:3px solid var(--ink);border-radius:16px;padding:20px;font-family:var(--fd);font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .17s,box-shadow .17s}
+    .start-btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+
+    .ex-hdr{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+    .ex-back{background:var(--paper-2);border:2px solid var(--ink);border-radius:10px;padding:8px 12px;font-family:var(--fd);font-weight:700;font-size:14px}
+    .ex-meta{flex:1}
+    .ex-ch-name{font-family:var(--fd);font-weight:700;font-size:13px;margin-bottom:4px}
+    .ex-bar-wrap{height:7px;background:var(--line);border-radius:999px;overflow:hidden}
+    .ex-bar{height:100%;background:var(--pink);border-radius:999px;transition:width .4s ease}
+    .ex-qnum{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--muted);flex-shrink:0}
+
+    .read-aloud{background:var(--indigo);color:white;border-radius:12px 12px 0 0;padding:8px 16px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px;color:var(--mango)}
+
+    .q-card{border:2.5px solid var(--ink);border-radius:0 0 20px 20px;overflow:hidden;margin-bottom:16px;background:var(--paper-2)}
+    .q-inner{padding:22px 18px 22px}
+    .q-text{font-family:var(--fd);font-weight:800;font-size:clamp(20px,6.5vw,32px);letter-spacing:-0.02em;line-height:1.15;margin-bottom:14px;text-align:center}
+    .q-visual{font-size:48px;line-height:1.4;text-align:center;margin-bottom:18px;letter-spacing:4px}
+
+    /* ── TAP-TO-COUNT — interactive ── */
+    .tap-area{background:var(--paper);border:2.5px dashed var(--pink);border-radius:14px;padding:18px 10px;margin-bottom:14px;text-align:center}
+    .tap-hint{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pink);margin-bottom:10px}
+    .tap-items{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:10px}
+    .tap-item{font-size:46px;line-height:1;cursor:pointer;user-select:none;transition:transform .2s;display:inline-block;padding:6px}
+    .tap-item:active{transform:scale(.85)}
+    .tap-item.counted{animation:tapPop .35s ease;filter:drop-shadow(0 0 6px var(--mango))}
+    @keyframes tapPop{0%{transform:scale(1)}50%{transform:scale(1.3) rotate(8deg)}100%{transform:scale(1)}}
+    .tap-counter{display:inline-flex;align-items:center;gap:6px;background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:6px 16px;font-family:var(--fd);font-weight:800;font-size:18px}
+
+    /* ── COMPARE — two groups ── */
+    .compare-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+    .compare-group{background:var(--paper);border:3px solid var(--ink);border-radius:16px;padding:18px 8px;cursor:pointer;text-align:center;min-height:120px;display:flex;flex-direction:column;justify-content:center;transition:transform .14s,box-shadow .14s}
+    .compare-group:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+    .compare-emoji{font-size:32px;line-height:1.3;letter-spacing:2px}
+    .compare-group.correct{background:var(--forest);border-color:var(--forest);animation:bounce .5s ease}
+    .compare-group.wrong{background:var(--tomato);border-color:var(--tomato);animation:shake .38s ease}
+    .compare-group.correct .compare-emoji,.compare-group.wrong .compare-emoji{filter:none}
+
+    /* ── NUMBER OPTIONS ── */
+    .opts-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .opts-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .opt{background:var(--paper);border:3px solid var(--ink);border-radius:18px;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:transform .14s,box-shadow .14s;padding:10px 6px;-webkit-tap-highlight-color:transparent}
+    .opt:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+    .opt-visual{display:flex;align-items:center;justify-content:center}
+    .opt-visual.num{font-family:var(--fd);font-weight:800;font-size:48px;line-height:1}
+    .opt-visual.emoji{font-size:48px;line-height:1}
+    .opt.correct{background:var(--forest);border-color:var(--forest);animation:bounce .5s ease}
+    .opt.correct .opt-visual{filter:brightness(0) invert(1)}
+    .opt.wrong{background:var(--tomato);border-color:var(--tomato);animation:shake .38s ease}
+    .opt.wrong .opt-visual{filter:brightness(0) invert(1)}
+    .opt:disabled,.compare-group:disabled{cursor:not-allowed}
+
+    @keyframes bounce{0%,100%{transform:translateY(0) scale(1)}30%{transform:translateY(-10px) scale(1.12)}60%{transform:translateY(-3px) scale(1.05)}}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+    /* ── DRAG-AND-DROP ── */
+    .dnd-wrap{margin-bottom:12px}
+    .dnd-source{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;min-height:80px;padding:8px;background:var(--paper);border:2px dashed var(--ink);border-radius:14px}
+    .dnd-chip{font-size:42px;line-height:1;padding:8px 10px;cursor:grab;user-select:none;border:3px solid transparent;border-radius:12px;transition:transform .15s;touch-action:none}
+    .dnd-chip:active{cursor:grabbing;transform:scale(1.1)}
+    .dnd-chip.placed{opacity:.25;cursor:default}
+    .dnd-targets{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .dnd-target{background:var(--paper);border:3px dashed var(--pink);border-radius:14px;padding:16px 8px;min-height:100px;text-align:center;transition:background .2s}
+    .dnd-target.hover{background:var(--mango-bg);border-style:solid}
+    .dnd-target-label{font-family:var(--fd);font-size:42px;line-height:1;margin-bottom:8px}
+    .dnd-target-slots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:46px;align-items:center}
+    .dnd-slot{font-size:36px;line-height:1;animation:pop .35s ease}
+    @keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+
+    .check-btn{margin-top:14px;width:100%;background:var(--mango);color:var(--ink);border:3px solid var(--ink);border-radius:14px;padding:16px;font-family:var(--fd);font-weight:800;font-size:18px;transition:transform .14s,box-shadow .14s}
+    .check-btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+    .check-btn:disabled{opacity:.5;cursor:not-allowed}
+
+    .toast{border-radius:14px;padding:14px 16px;margin-top:12px;font-family:var(--fd);font-weight:700;font-size:16px;display:none;align-items:center;gap:10px;animation:toastIn .25s ease}
+    .toast.show{display:flex}
+    .toast.ok{background:var(--forest-bg);border:2px solid var(--forest);color:#0e6032}
+    .toast.bad{background:var(--tomato-bg);border:2px solid var(--tomato);color:#c73013}
+    @keyframes toastIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+    .nxt-btn{width:100%;margin-top:12px;background:var(--ink);color:var(--paper);border:2.5px solid var(--ink);border-radius:14px;padding:18px;font-family:var(--fd);font-weight:800;font-size:17px;display:none;transition:opacity .15s}
+    .nxt-btn.show{display:block}
+    .nxt-btn:hover{opacity:.85}
+
+    .done-hero{text-align:center;padding:32px 0 18px}
+    .done-badge{font-size:90px;line-height:1;margin-bottom:14px;animation:pop2 .5s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes pop2{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+    .done-title{font-family:var(--fd);font-weight:800;font-size:clamp(26px,7vw,42px);letter-spacing:-0.03em;margin-bottom:8px}
+    .done-stars{font-size:54px;margin:12px 0;animation:starsIn .5s ease .25s both}
+    @keyframes starsIn{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+    .done-score-box{background:var(--pink-bg);border:2px solid var(--ink);border-radius:16px;padding:18px;margin:16px 0;text-align:center}
+    .done-score-num{font-family:var(--fd);font-weight:800;font-size:52px;letter-spacing:-0.04em}
+    .done-score-lbl{font-size:14px;color:var(--muted)}
+    .done-msg{font-size:16px;color:var(--muted);text-align:center;margin-bottom:16px;line-height:1.5}
+    .done-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .act-btn{border:2.5px solid var(--ink);border-radius:14px;padding:16px;font-family:var(--fd);font-weight:800;font-size:16px;cursor:pointer;text-align:center;transition:transform .15s,box-shadow .15s}
+    .act-btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+    .act-btn.primary{background:var(--pink);color:white}
+    .act-btn.secondary{background:var(--paper-2);color:var(--ink)}
+
+    #confetti{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+    .cp{position:absolute;top:-16px;border-radius:3px;animation:fall linear forwards}
+    @keyframes fall{from{top:-20px;opacity:1}to{top:110vh;opacity:0}}
+  </style>
+</head>
+<body>
+
+<div id="confetti"></div>
+
+<header class="hdr">
+  <a href="/kids.html" class="hdr-brand">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
+      <circle cx="38" cy="50" r="22" fill="none" stroke="var(--ink)" stroke-width="14"/>
+      <rect x="54" y="28" width="14" height="44" fill="var(--ink)"/>
+      <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+    </svg>
+    <span class="hdr-word">← Kids Hub</span>
+  </a>
+  <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+</header>
+
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="home-avatar">🔢</div>
+    <h1 class="home-greeting">Matematika <em>Raya!</em></h1>
+    <p class="home-sub">Hitung, bandingkan, dan pasangkan! 🌸</p>
+  </div>
+
+  <div class="parent-notice">
+    <div class="parent-ico">👨‍👩‍👧</div>
+    <div class="parent-text">
+      <div class="parent-label">Untuk Orang Tua</div>
+      Raya belum bisa membaca, jadi <strong>bacakan pertanyaannya</strong>. Beberapa soal punya gambar yang bisa <strong>diketuk satu-satu untuk dihitung</strong>, dan ada juga <strong>seret-letakkan</strong> (drag-and-drop) untuk memasangkan!
+    </div>
+  </div>
+
+  <div class="overall-box">
+    <svg class="ov-ring" viewBox="0 0 60 60" fill="none">
+      <circle cx="30" cy="30" r="24" stroke="var(--line)" stroke-width="6"/>
+      <circle cx="30" cy="30" r="24" stroke="var(--pink)" stroke-width="6"
+              stroke-linecap="round" stroke-dasharray="151" stroke-dashoffset="151"
+              id="ovRing" transform="rotate(-90 30 30)"
+              style="transition:stroke-dashoffset 1s ease"/>
+    </svg>
+    <div class="ov-info">
+      <div class="ov-label">Progress Matematika Raya 🌸</div>
+      <div class="ov-bar-wrap"><div class="ov-bar" id="ovBar" style="width:0%"></div></div>
+      <div class="ov-sub" id="ovSub">0 dari 5 bab selesai</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Pilih Bab 👇</div>
+  <div class="ch-grid" id="chGrid"></div>
+
+  <div style="margin-top:20px;text-align:center">
+    <button onclick="resetProgress()" style="font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline">
+      Reset progress (untuk orang tua)
+    </button>
+  </div>
+</div>
+
+<div class="screen" id="sLesson">
+  <button class="back-btn" onclick="goHome()">← Kembali</button>
+  <div id="lessonHdr"></div>
+
+  <div class="parent-card">
+    <div class="pc-ico">👨‍👩‍👧</div>
+    <div>
+      <div class="pc-label">Untuk Orang Tua</div>
+      <div class="pc-text" id="parentGuide"></div>
+    </div>
+  </div>
+
+  <div class="preview-box">
+    <div class="preview-title">Yang akan dipelajari Raya 👇</div>
+    <div class="preview-emojis" id="previewEmojis"></div>
+  </div>
+
+  <button class="start-btn" onclick="startExercise()">▶️ Mulai!</button>
+</div>
+
+<div class="screen" id="sExercise">
+  <div class="ex-hdr">
+    <button class="ex-back" onclick="goHome()">←</button>
+    <div class="ex-meta">
+      <div class="ex-ch-name" id="exChName"></div>
+      <div class="ex-bar-wrap"><div class="ex-bar" id="exBar" style="width:0%"></div></div>
+    </div>
+    <div class="ex-qnum" id="exQNum">1/5</div>
+  </div>
+
+  <div class="read-aloud"><span>👨‍👩‍👧</span> Bacakan untuk Raya:</div>
+  <div class="q-card">
+    <div class="q-inner">
+      <div class="q-text" id="qText"></div>
+      <div class="q-visual" id="qVisual" style="display:none"></div>
+      <div id="answerArea"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span id="toastIco" style="font-size:24px;flex-shrink:0"></span>
+    <div id="toastMsg"></div>
+  </div>
+  <button class="nxt-btn" id="nxtBtn" onclick="nextQ()">Soal selanjutnya →</button>
+</div>
+
+<div class="screen" id="sComplete">
+  <div class="done-hero">
+    <div class="done-badge" id="doneBadge">🎉</div>
+    <div class="done-title" id="doneTitle">Hebat Raya!</div>
+    <div class="done-stars" id="doneStars">⭐⭐⭐</div>
+  </div>
+  <div class="done-score-box">
+    <div class="done-score-num" id="doneNum">5/5</div>
+    <div class="done-score-lbl">jawaban benar</div>
+  </div>
+  <div class="done-score-box" style="margin-top:10px;background:#E3F4F8">
+    <div class="done-score-num" id="doneTime" style="font-size:36px">--</div>
+    <div class="done-score-lbl">⏱️ waktu belajar</div>
+  </div>
+  <div class="done-msg" id="doneMsg"></div>
+  <div class="done-actions">
+    <button class="act-btn primary" onclick="retryChapter()">🔁 Coba Lagi</button>
+    <button class="act-btn secondary" onclick="goHome()">🏠 Pilih Bab Lain</button>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   CHAPTER DATA
+   Question types:
+   • 'tap-count' — Raya taps emojis to count, then picks number
+   • 'compare'   — Two groups; pick which has more/less
+   • 'pick-num'  — Show visual, pick number answer
+   • 'pick-add'  — Simple addition with visuals, pick number
+   • 'pick-sub'  — Simple subtraction with visuals, pick number
+   • 'drag-match'— Drag emoji items to matching number target
+════════════════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    id:'count-5',title:'Hitung 1-5',emoji:'1️⃣',colorBg:'#FFF5D6',
+    desc:'Ketuk dan hitung sampai 5!',
+    parentGuide:'Minta Raya KETUK SATU PER SATU gambar di atas untuk menghitung. Setiap ketukan akan diberi tanda kuning. Setelah selesai, minta Raya memilih angka yang benar di bawah!',
+    previewEmojis:'1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣',
+    questions:[
+      {type:'tap-count',q:'Ketuk apel-apelnya, lalu pilih angkanya!',items:['🍎','🍎','🍎'],ans:'3',opts:['2','3','4'],ok:'Hebat! Ada 3 apel! 🍎🍎🍎'},
+      {type:'tap-count',q:'Ketuk bintangnya, lalu pilih angkanya!',items:['⭐','⭐'],ans:'2',opts:['1','2','3'],ok:'Pintar! Ada 2 bintang! ⭐⭐'},
+      {type:'tap-count',q:'Ketuk balonnya, lalu pilih angkanya!',items:['🎈','🎈','🎈','🎈'],ans:'4',opts:['3','4','5'],ok:'Hebat! Ada 4 balon! 🎈🎈🎈🎈'},
+      {type:'tap-count',q:'Ketuk bunganya, lalu pilih angkanya!',items:['🌸','🌸','🌸','🌸','🌸'],ans:'5',opts:['4','5','6'],ok:'Wah pintar! 5 bunga seperti jari tanganmu! ✋'},
+      {type:'tap-count',q:'Ketuk kucingnya, lalu pilih angkanya!',items:['🐱'],ans:'1',opts:['1','2','3'],ok:'Benar! Hanya 1 kucing! 🐱'},
+    ]
+  },
+  {
+    id:'count-10',title:'Hitung 6-10',emoji:'🔟',colorBg:'#FCE8F3',
+    desc:'Hitung sampai 10!',
+    parentGuide:'Bantu Raya hitung perlahan-lahan satu per satu. Untuk angka 6-10, lebih sulit—pastikan Raya mengetuk semua gambar sebelum menjawab!',
+    previewEmojis:'6️⃣ 7️⃣ 8️⃣ 9️⃣ 🔟',
+    questions:[
+      {type:'tap-count',q:'Ketuk strawberry-nya, lalu pilih angkanya!',items:['🍓','🍓','🍓','🍓','🍓','🍓'],ans:'6',opts:['5','6','7'],ok:'Hebat! Ada 6 strawberry! 🍓'},
+      {type:'tap-count',q:'Ketuk kue-kuenya!',items:['🧁','🧁','🧁','🧁','🧁','🧁','🧁'],ans:'7',opts:['6','7','8'],ok:'Pintar! Ada 7 kue! 🧁'},
+      {type:'tap-count',q:'Ketuk semua ikannya!',items:['🐟','🐟','🐟','🐟','🐟','🐟','🐟','🐟'],ans:'8',opts:['7','8','9'],ok:'Wah pintar! 8 ikan! 🐟'},
+      {type:'tap-count',q:'Ketuk semua donatnya!',items:['🍩','🍩','🍩','🍩','🍩','🍩','🍩','🍩','🍩'],ans:'9',opts:['8','9','10'],ok:'Hebat! Ada 9 donat! 🍩'},
+      {type:'tap-count',q:'Ketuk semua kupu-kupunya!',items:['🦋','🦋','🦋','🦋','🦋','🦋','🦋','🦋','🦋','🦋'],ans:'10',opts:['9','10','11'],ok:'LUAR BIASA! 10 kupu-kupu! 🦋✨'},
+    ]
+  },
+  {
+    id:'compare',title:'Banyak vs Sedikit',emoji:'⚖️',colorBg:'#E3F4F8',
+    desc:'Mana yang lebih banyak?',
+    parentGuide:'Ada dua kelompok gambar — kiri dan kanan. Bacakan pertanyaan, lalu minta Raya KETUK kelompok yang benar. Bantu hitung bersama jika perlu!',
+    previewEmojis:'🍎🍎 vs 🍎🍎🍎🍎',
+    questions:[
+      {type:'compare',q:'Mana yang LEBIH BANYAK?',left:'🍎🍎',right:'🍎🍎🍎🍎',ans:1,ok:'Betul! Kanan ada 4, kiri ada 2! 4 lebih banyak! 🍎'},
+      {type:'compare',q:'Mana yang LEBIH SEDIKIT?',left:'⭐⭐⭐',right:'⭐',ans:1,ok:'Pintar! Kanan ada 1, kiri ada 3. 1 lebih sedikit! ⭐'},
+      {type:'compare',q:'Mana yang LEBIH BANYAK?',left:'🐶🐶🐶🐶🐶',right:'🐶🐶',ans:0,ok:'Betul! Kiri ada 5, kanan ada 2. 5 lebih banyak! 🐶'},
+      {type:'compare',q:'Mana yang JUMLAHNYA SAMA dengan 🌸🌸🌸?',left:'🌷🌷',right:'🌷🌷🌷',ans:1,ok:'Hebat! Sama-sama 3! 🌸🌷'},
+      {type:'compare',q:'Mana yang LEBIH SEDIKIT?',left:'🍓',right:'🍓🍓🍓🍓🍓',ans:0,ok:'Pintar! Kiri cuma 1, kanan ada 5! 🍓'},
+    ]
+  },
+  {
+    id:'add',title:'Tambah Sedikit',emoji:'➕',colorBg:'#E3F5EB',
+    desc:'1 + 1, 2 + 1 ... ayo coba!',
+    parentGuide:'Tunjukkan gambar yang ada — pertama satu kelompok, lalu DITAMBAH kelompok kedua. Hitung bersama: "Satu apel ditambah satu apel jadi DUA apel!" Lalu minta Raya pilih angka yang benar.',
+    previewEmojis:'1+1=2 · 2+2=4 · 3+1=4',
+    questions:[
+      {type:'pick-num',q:'🍎 + 🍎 = ?',visual:'🍎 ➕ 🍎',ans:1,opts:[{t:'num',v:'1'},{t:'num',v:'2'},{t:'num',v:'3'}],ok:'Betul! 1 + 1 = 2 apel! 🍎🍎'},
+      {type:'pick-num',q:'🌸🌸 + 🌸 = ?',visual:'🌸🌸 ➕ 🌸',ans:1,opts:[{t:'num',v:'2'},{t:'num',v:'3'},{t:'num',v:'4'}],ok:'Hebat! 2 + 1 = 3 bunga! 🌸🌸🌸'},
+      {type:'pick-num',q:'⭐⭐ + ⭐⭐ = ?',visual:'⭐⭐ ➕ ⭐⭐',ans:1,opts:[{t:'num',v:'3'},{t:'num',v:'4'},{t:'num',v:'5'}],ok:'Pintar! 2 + 2 = 4 bintang! ⭐⭐⭐⭐'},
+      {type:'pick-num',q:'🐱🐱🐱 + 🐱 = ?',visual:'🐱🐱🐱 ➕ 🐱',ans:1,opts:[{t:'num',v:'3'},{t:'num',v:'4'},{t:'num',v:'5'}],ok:'Hebat! 3 + 1 = 4 kucing! 🐱'},
+      {type:'pick-num',q:'🍓🍓🍓 + 🍓🍓 = ?',visual:'🍓🍓🍓 ➕ 🍓🍓',ans:2,opts:[{t:'num',v:'4'},{t:'num',v:'6'},{t:'num',v:'5'}],ok:'LUAR BIASA! 3 + 2 = 5 strawberry! 🍓'},
+    ]
+  },
+  {
+    id:'match-count',title:'Pasangkan Angka',emoji:'🎯',colorBg:'#FFE8E3',
+    desc:'Seret gambar ke angka yang cocok!',
+    parentGuide:'Ini permainan SERET-LETAKKAN (drag-and-drop)! Bantu Raya seret setiap kelompok gambar ke kotak angka yang benar. Tahan jari di gambar, lalu geser ke kotak angka yang cocok!',
+    previewEmojis:'🍎🍎 → 2️⃣',
+    questions:[
+      {type:'drag-match',q:'Seret tiap gambar ke angka yang cocok!',
+       chips:[{id:'a',emoji:'🍎🍎',count:'2'},{id:'b',emoji:'⭐⭐⭐',count:'3'}],
+       targets:[{label:'2',v:'2'},{label:'3',v:'3'}],
+       ok:'Hebat! 2 apel ke kotak 2, 3 bintang ke kotak 3! 🎯'},
+      {type:'drag-match',q:'Seret tiap gambar ke angka yang cocok!',
+       chips:[{id:'a',emoji:'🌸',count:'1'},{id:'b',emoji:'🌷🌷🌷🌷',count:'4'}],
+       targets:[{label:'1',v:'1'},{label:'4',v:'4'}],
+       ok:'Pintar! Pasangan tepat! 🌸🌷'},
+      {type:'drag-match',q:'Seret tiap gambar ke angka yang cocok!',
+       chips:[{id:'a',emoji:'🐶🐶🐶',count:'3'},{id:'b',emoji:'🐱🐱🐱🐱🐱',count:'5'}],
+       targets:[{label:'3',v:'3'},{label:'5',v:'5'}],
+       ok:'Hebat! 3 anjing & 5 kucing! 🐶🐱'},
+      {type:'drag-match',q:'Seret tiap gambar ke angka yang cocok!',
+       chips:[{id:'a',emoji:'🎈🎈',count:'2'},{id:'b',emoji:'🎂',count:'1'},{id:'c',emoji:'🍩🍩🍩',count:'3'}],
+       targets:[{label:'1',v:'1'},{label:'2',v:'2'},{label:'3',v:'3'}],
+       ok:'LUAR BIASA! Semua cocok! 🎉'},
+      {type:'drag-match',q:'Seret tiap gambar ke angka yang cocok!',
+       chips:[{id:'a',emoji:'⭐⭐⭐⭐',count:'4'},{id:'b',emoji:'🌟🌟',count:'2'}],
+       targets:[{label:'4',v:'4'},{label:'2',v:'2'}],
+       ok:'Pintar! Raya pandai berhitung! ⭐'},
+    ]
+  },
+];
+
+/* ════════════════════════════════════════════════
+   STATE
+════════════════════════════════════════════════ */
+const state = {chapter:null,qIdx:0,score:0,answered:false,totalStars:0,progress:{},
+  tap:{counted:0,picked:false}, drag:{placed:{}}};
+
+function loadState(){try{const d=JSON.parse(localStorage.getItem('rayaMath')||'{}');state.progress=d.progress||{};state.totalStars=d.totalStars||0;document.getElementById('starCount').textContent=state.totalStars;}catch(e){}}
+function saveState(){try{localStorage.setItem('rayaMath',JSON.stringify({progress:state.progress,totalStars:state.totalStars}));}catch(e){}}
+function resetProgress(){const pw=prompt('Masukkan kata sandi untuk reset progress:');if(pw===null)return;if(pw!=='bogor123'){alert('Kata sandi salah! ❌');return;}state.progress={};state.totalStars=0;document.getElementById('starCount').textContent=0;saveState();renderHome();}
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function goHome(){show('sHome');renderHome();}
+
+function openChapter(idx){
+  state.chapter=idx;const ch=CHAPTERS[idx];
+  document.getElementById('lessonHdr').innerHTML=`
+    <div class="lesson-hdr">
+      <div class="lesson-icon">${ch.emoji}</div>
+      <div>
+        <div class="lesson-eyebrow">Bab ${idx+1} dari ${CHAPTERS.length}</div>
+        <div class="lesson-title">${ch.title}</div>
+      </div>
+    </div>`;
+  document.getElementById('parentGuide').textContent=ch.parentGuide;
+  document.getElementById('previewEmojis').innerHTML=ch.previewEmojis;
+  show('sLesson');
+}
+
+let _timerStart=null;
+function fmtTime(ms){const s=Math.floor(ms/1000);const m=Math.floor(s/60);return m>0?`${m} mnt ${s%60} dtk`:`${s} dtk`;}
+function startExercise(){_timerStart=Date.now();state.qIdx=0;state.score=0;state.answered=false;renderQ();show('sExercise');}
+function retryChapter(){startExercise();}
+
+function renderQ(){
+  const ch=CHAPTERS[state.chapter];const q=ch.questions[state.qIdx];const total=ch.questions.length;
+  document.getElementById('exChName').textContent=`${ch.emoji} ${ch.title}`;
+  document.getElementById('exQNum').textContent=`${state.qIdx+1}/${total}`;
+  document.getElementById('exBar').style.width=`${(state.qIdx/total)*100}%`;
+  document.getElementById('qText').textContent=q.q;
+  const vis=document.getElementById('qVisual');
+  if(q.visual){vis.innerHTML=q.visual;vis.style.display='';}else{vis.style.display='none';}
+
+  const area=document.getElementById('answerArea');
+  state.tap={counted:0,picked:false};
+  state.drag={placed:{}};
+
+  if(q.type==='tap-count'){
+    area.innerHTML=`
+      <div class="tap-area">
+        <div class="tap-hint">👆 Ketuk satu per satu untuk menghitung</div>
+        <div class="tap-items" id="tapItems">
+          ${q.items.map((e,i)=>`<span class="tap-item" data-i="${i}" onclick="tapItem(${i})">${e}</span>`).join('')}
+        </div>
+        <div class="tap-counter">Sudah dihitung: <span id="tapCount">0</span> / ${q.items.length}</div>
+      </div>
+      <div style="font-family:var(--fd);font-weight:700;font-size:14px;color:var(--muted);text-align:center;margin-bottom:10px">👇 Sekarang pilih angkanya:</div>
+      <div class="opts-3" id="numOpts">
+        ${q.opts.map((v,i)=>`<button class="opt" onclick="pickTapAns('${v}')"><span class="opt-visual num">${v}</span></button>`).join('')}
+      </div>`;
+  } else if(q.type==='compare'){
+    area.innerHTML=`
+      <div class="compare-row">
+        <button class="compare-group" data-idx="0" onclick="pickCompare(0)"><div class="compare-emoji">${q.left}</div></button>
+        <button class="compare-group" data-idx="1" onclick="pickCompare(1)"><div class="compare-emoji">${q.right}</div></button>
+      </div>`;
+  } else if(q.type==='pick-num'){
+    area.innerHTML=`
+      <div class="opts-3">
+        ${q.opts.map((o,i)=>`<button class="opt" onclick="pickNum(${i})"><span class="opt-visual num">${o.v}</span></button>`).join('')}
+      </div>`;
+  } else if(q.type==='drag-match'){
+    area.innerHTML=`
+      <div class="dnd-wrap">
+        <div class="dnd-source" id="dndSource">
+          ${q.chips.map(c=>`<span class="dnd-chip" data-id="${c.id}" data-count="${c.count}" draggable="true">${c.emoji}</span>`).join('')}
+        </div>
+        <div class="dnd-targets" id="dndTargets">
+          ${q.targets.map(t=>`
+            <div class="dnd-target" data-v="${t.v}">
+              <div class="dnd-target-label">${t.label}</div>
+              <div class="dnd-target-slots" data-v="${t.v}"></div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <button class="check-btn" id="dndCheckBtn" onclick="checkDrag()" disabled>Cek jawaban ✓</button>`;
+    setupDnD();
+  }
+
+  document.getElementById('toast').className='toast';
+  document.getElementById('nxtBtn').className='nxt-btn';
+  state.answered=false;
+}
+
+/* ── TAP-COUNT ── */
+function tapItem(i){
+  if(state.answered)return;
+  const el=document.querySelector(`.tap-item[data-i="${i}"]`);
+  if(!el||el.classList.contains('counted'))return;
+  el.classList.add('counted');
+  state.tap.counted++;
+  document.getElementById('tapCount').textContent=state.tap.counted;
+}
+function pickTapAns(val){
+  if(state.answered)return;
+  state.answered=true;
+  const q=CHAPTERS[state.chapter].questions[state.qIdx];
+  const correct=val===q.ans;
+  const btns=document.querySelectorAll('#numOpts .opt');
+  btns.forEach((b,i)=>{b.disabled=true;if(q.opts[i]===val)b.classList.add(correct?'correct':'wrong');if(!correct&&q.opts[i]===q.ans)b.classList.add('correct');});
+  if(correct)state.score++;
+  showToast(correct,q.ok);
+}
+
+/* ── COMPARE ── */
+function pickCompare(idx){
+  if(state.answered)return;
+  state.answered=true;
+  const q=CHAPTERS[state.chapter].questions[state.qIdx];
+  const correct=idx===q.ans;
+  const btns=document.querySelectorAll('.compare-group');
+  btns.forEach(b=>b.disabled=true);
+  btns[idx].classList.add(correct?'correct':'wrong');
+  if(!correct)btns[q.ans].classList.add('correct');
+  if(correct)state.score++;
+  showToast(correct,q.ok);
+}
+
+/* ── PICK-NUM ── */
+function pickNum(idx){
+  if(state.answered)return;
+  state.answered=true;
+  const q=CHAPTERS[state.chapter].questions[state.qIdx];
+  const correct=idx===q.ans;
+  const btns=document.querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  btns[idx].classList.add(correct?'correct':'wrong');
+  if(!correct)btns[q.ans].classList.add('correct');
+  if(correct)state.score++;
+  showToast(correct,q.ok);
+}
+
+/* ── DRAG & DROP ── */
+function setupDnD(){
+  const chips=document.querySelectorAll('.dnd-chip');
+  const targets=document.querySelectorAll('.dnd-target');
+  let dragChipId=null;
+
+  chips.forEach(chip=>{
+    chip.addEventListener('dragstart',e=>{
+      if(chip.classList.contains('placed')){e.preventDefault();return;}
+      dragChipId=chip.dataset.id;
+      e.dataTransfer.setData('text/plain',dragChipId);
+      e.dataTransfer.effectAllowed='move';
+    });
+
+    // Touch support
+    let touchEl=null,startX=0,startY=0;
+    chip.addEventListener('touchstart',e=>{
+      if(chip.classList.contains('placed'))return;
+      dragChipId=chip.dataset.id;
+      const t=e.touches[0];startX=t.clientX;startY=t.clientY;
+      touchEl=chip.cloneNode(true);
+      touchEl.style.cssText='position:fixed;pointer-events:none;z-index:9999;opacity:.85;transform:scale(1.1);left:'+(t.clientX-30)+'px;top:'+(t.clientY-30)+'px;';
+      document.body.appendChild(touchEl);
+      chip.style.opacity='.3';
+      e.preventDefault();
+    },{passive:false});
+    chip.addEventListener('touchmove',e=>{
+      if(!touchEl)return;
+      const t=e.touches[0];
+      touchEl.style.left=(t.clientX-30)+'px';
+      touchEl.style.top=(t.clientY-30)+'px';
+      // Hover detect
+      targets.forEach(tg=>tg.classList.remove('hover'));
+      const elBelow=document.elementFromPoint(t.clientX,t.clientY);
+      const tg=elBelow?elBelow.closest('.dnd-target'):null;
+      if(tg)tg.classList.add('hover');
+      e.preventDefault();
+    },{passive:false});
+    chip.addEventListener('touchend',e=>{
+      if(!touchEl)return;
+      const t=e.changedTouches[0];
+      const elBelow=document.elementFromPoint(t.clientX,t.clientY);
+      const tg=elBelow?elBelow.closest('.dnd-target'):null;
+      targets.forEach(x=>x.classList.remove('hover'));
+      touchEl.remove();touchEl=null;
+      chip.style.opacity='';
+      if(tg)placeChip(dragChipId,tg.dataset.v);
+      dragChipId=null;
+    });
+  });
+
+  targets.forEach(target=>{
+    target.addEventListener('dragover',e=>{e.preventDefault();target.classList.add('hover');});
+    target.addEventListener('dragleave',()=>target.classList.remove('hover'));
+    target.addEventListener('drop',e=>{
+      e.preventDefault();target.classList.remove('hover');
+      const id=e.dataTransfer.getData('text/plain')||dragChipId;
+      if(id)placeChip(id,target.dataset.v);
+      dragChipId=null;
+    });
+  });
+}
+
+function placeChip(chipId,targetV){
+  const q=CHAPTERS[state.chapter].questions[state.qIdx];
+  const chip=document.querySelector(`.dnd-chip[data-id="${chipId}"]`);
+  if(!chip||chip.classList.contains('placed'))return;
+  const target=document.querySelector(`.dnd-target[data-v="${targetV}"]`);
+  if(!target)return;
+  // If chip was previously placed elsewhere, remove that slot
+  if(state.drag.placed[chipId]){
+    const prevSlot=document.querySelector(`.dnd-slot[data-chip="${chipId}"]`);
+    if(prevSlot)prevSlot.remove();
+  }
+  const slots=target.querySelector('.dnd-target-slots');
+  const slot=document.createElement('span');
+  slot.className='dnd-slot';slot.dataset.chip=chipId;slot.textContent=chip.textContent;
+  slots.appendChild(slot);
+  chip.classList.add('placed');
+  state.drag.placed[chipId]=targetV;
+  if(Object.keys(state.drag.placed).length>=q.chips.length){
+    document.getElementById('dndCheckBtn').disabled=false;
+  }
+}
+
+function checkDrag(){
+  if(state.answered)return;
+  state.answered=true;
+  const q=CHAPTERS[state.chapter].questions[state.qIdx];
+  let allCorrect=true;
+  q.chips.forEach(c=>{if(state.drag.placed[c.id]!==c.count)allCorrect=false;});
+  document.getElementById('dndCheckBtn').disabled=true;
+  document.querySelectorAll('.dnd-chip').forEach(c=>c.draggable=false);
+  // Mark targets visually
+  q.chips.forEach(c=>{
+    const placedV=state.drag.placed[c.id];
+    const target=document.querySelector(`.dnd-target[data-v="${placedV}"]`);
+    if(target){
+      target.style.background=(placedV===c.count)?'var(--forest-bg)':'var(--tomato-bg)';
+      target.style.borderColor=(placedV===c.count)?'var(--forest)':'var(--tomato)';
+      target.style.borderStyle='solid';
+    }
+  });
+  if(allCorrect)state.score++;
+  showToast(allCorrect,allCorrect?q.ok:'Belum tepat — coba lagi setelah ini ya!');
+}
+
+/* ── TOAST ── */
+function showToast(correct,okMsg){
+  const toast=document.getElementById('toast');
+  document.getElementById('toastIco').textContent=correct?'🎉':'💪';
+  document.getElementById('toastMsg').textContent=correct?okMsg:'Belum tepat, Raya. Tidak apa-apa, coba lagi nanti ya!';
+  toast.className=`toast show ${correct?'ok':'bad'}`;
+  document.getElementById('nxtBtn').className='nxt-btn show';
+}
+
+function nextQ(){
+  state.qIdx++;
+  if(state.qIdx>=CHAPTERS[state.chapter].questions.length)showComplete();
+  else renderQ();
+}
+
+function showComplete(){
+  const ch=CHAPTERS[state.chapter];const total=ch.questions.length;const pct=state.score/total;
+  let stars=1;if(pct>=0.4)stars=2;if(pct>=0.7)stars=3;
+  const prev=state.progress[ch.id]||{stars:0,bestScore:0};
+  const newStars=Math.max(prev.stars,stars);const newBest=Math.max(prev.bestScore,state.score);
+  const earned=newStars-prev.stars;
+  state.progress[ch.id]={stars:newStars,bestScore:newBest};
+  state.totalStars+=earned;
+  document.getElementById('starCount').textContent=state.totalStars;
+  saveState();
+  const badges=['🌸','🌟','👑'];
+  const titles=['Bagus Raya!','Wah, Raya pintar!','LUAR BIASA! Raya juara!'];
+  const msgs=[
+    `Raya menjawab ${state.score} dari ${total} soal. Yuk coba lagi! 💪`,
+    `Raya menjawab ${state.score} dari ${total} soal dengan benar! Keren! 🌟`,
+    `Raya menjawab SEMUA soal dengan benar! Raya memang juara! 👑🎉`
+  ];
+  document.getElementById('doneBadge').textContent=badges[stars-1];
+  document.getElementById('doneTitle').textContent=titles[stars-1];
+  document.getElementById('doneStars').textContent='⭐'.repeat(stars)+'☆'.repeat(3-stars);
+  document.getElementById('doneNum').textContent=`${state.score}/${total}`;
+  document.getElementById('doneMsg').textContent=msgs[stars-1];
+  const elapsed=_timerStart?Date.now()-_timerStart:0;
+  _timerStart=null;
+  document.getElementById('doneTime').textContent=fmtTime(elapsed);
+  show('sComplete');
+  setTimeout(launchConfetti,300);
+  updateOverall();
+}
+
+function renderHome(){
+  document.getElementById('chGrid').innerHTML=CHAPTERS.map((ch,i)=>{
+    const p=state.progress[ch.id]||{stars:0,bestScore:0};
+    const stars=[1,2,3].map(n=>`<span class="ch-star${n<=p.stars?' on':''}" aria-hidden="true">⭐</span>`).join('');
+    const status=p.stars>0?`✅ Terbaik: ${p.bestScore}/${ch.questions.length}`:'▶️ Belum dimulai';
+    return `
+      <div class="ch-card" onclick="openChapter(${i})" role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter'||event.key===' ')openChapter(${i})">
+        <div class="ch-thumb" style="background:${ch.colorBg}">
+          <div class="ch-emoji">${ch.emoji}</div>
+          <div class="ch-stars">${stars}</div>
+        </div>
+        <div class="ch-body">
+          <div class="ch-num">Bab ${i+1}</div>
+          <div class="ch-title">${ch.title}</div>
+          <div class="ch-desc">${ch.desc}</div>
+          <div class="ch-status">${status}</div>
+        </div>
+      </div>`;
+  }).join('');
+  updateOverall();
+}
+
+function updateOverall(){
+  const total=CHAPTERS.length;
+  const done=Object.values(state.progress).filter(p=>p.stars>0).length;
+  const pct=(done/total)*100;
+  document.getElementById('ovBar').style.width=`${pct}%`;
+  document.getElementById('ovSub').textContent=`${done} dari ${total} bab selesai`;
+  document.getElementById('ovRing').style.strokeDashoffset=151-(pct/100)*151;
+}
+
+function launchConfetti(){
+  const c=document.getElementById('confetti');
+  const colors=['#E84BA0','#FFC234','#1F9D55','#1FA9C7','#FF5C39','#fff','#2E3192'];
+  for(let i=0;i<90;i++){
+    const p=document.createElement('div');p.className='cp';
+    const size=8+Math.random()*10;
+    p.style.cssText=`left:${Math.random()*100}%;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};animation-duration:${1.2+Math.random()*2}s;animation-delay:${Math.random()*.6}s;`;
+    c.appendChild(p);
+    p.addEventListener('animationend',()=>p.remove());
+  }
+}
+
+loadState();renderHome();
+</script>
+</body>
+</html>
