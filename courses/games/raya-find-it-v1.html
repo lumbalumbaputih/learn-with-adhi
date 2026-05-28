@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cari Bersama Raya 🔍 · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23E84BA0"/><text y=".9em" font-size="70" x="14">🔍</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #E84BA0;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --tomato:  #FF5C39;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --paper-2: #F4ECD8;
+      --line:    rgba(26,22,20,0.12);
+      --muted:   #6B6259;
+      --pink-bg:   #FCE8F3;
+      --forest-bg: #E3F5EB;
+      --sea-bg:    #DDF1F6;
+      --mango-bg:  #FFF1CC;
+      --tomato-bg: #FFE8E3;
+      --indigo-bg: #E0E2F4;
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--fb);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100dvh;
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* HEADER */
+    .hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 2.5px solid var(--ink);
+      background: var(--paper);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .hdr-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; }
+    .hdr-word  { font-family: var(--fd); font-weight: 800; font-size: 18px; letter-spacing: -0.03em; }
+    .hdr-stars {
+      background: var(--pink); color: white;
+      border: 2px solid var(--ink); border-radius: 999px;
+      padding: 5px 12px;
+      font-family: var(--fd); font-weight: 800; font-size: 15px;
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    /* SCREENS */
+    .screen { display: none; max-width: 720px; margin: 0 auto; padding: 18px 14px 60px; animation: fadeUp .28s ease; }
+    .screen.active { display: block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
+
+    /* HOME */
+    .home-hero { text-align: center; padding: 18px 0 14px; }
+    .home-avatar {
+      width: 96px; height: 96px; border-radius: 50%;
+      border: 3px solid var(--ink); background: var(--pink-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 50px; margin: 0 auto 12px;
+      animation: wobble 3s ease-in-out infinite;
+    }
+    @keyframes wobble { 0%,100%{transform:rotate(-4deg);} 50%{transform:rotate(4deg);} }
+    .home-greeting {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(28px,7vw,46px);
+      letter-spacing: -0.04em; line-height: 1; margin-bottom: 8px;
+    }
+    .home-greeting em { font-style:normal; background:var(--pink); color:white; padding:2px 10px; border-radius:10px; }
+    .home-sub { font-size: 14px; color: var(--muted); margin-bottom: 18px; line-height: 1.5; padding: 0 12px; }
+
+    .parent-notice {
+      background: var(--indigo); color: white;
+      border-radius: 14px; padding: 12px 14px;
+      margin-bottom: 22px;
+      display: flex; gap: 10px; align-items: flex-start;
+      text-align: left;
+    }
+    .parent-ico { font-size: 20px; flex-shrink: 0; line-height: 1; margin-top: 1px; }
+    .parent-text { font-size: 12.5px; line-height: 1.55; }
+    .parent-label {
+      font-family: var(--fd); font-weight: 700; font-size: 10px;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--mango); margin-bottom: 2px;
+    }
+
+    .sec-title { font-family: var(--fd); font-weight: 800; font-size: 18px; margin: 0 0 12px; text-align: left; }
+
+    /* LEVEL GRID */
+    .lvl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 380px){ .lvl-grid { grid-template-columns: 1fr; } }
+    .lvl-card {
+      border: 2.5px solid var(--ink); border-radius: 18px; overflow: hidden;
+      cursor: pointer; background: var(--paper); text-align: left;
+      transition: transform .17s, box-shadow .17s;
+    }
+    .lvl-card:hover { transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--ink); }
+    .lvl-card:disabled { cursor: not-allowed; opacity: .55; }
+    .lvl-card:disabled:hover { transform: none; box-shadow: none; }
+    .lvl-thumb {
+      height: 90px; display:flex; align-items:center; justify-content:center;
+      font-size: 44px; border-bottom: 2.5px solid var(--ink);
+    }
+    .lvl-body { padding: 10px 12px 12px; }
+    .lvl-num {
+      font-family: var(--fd); font-weight: 700; font-size: 10px;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+    }
+    .lvl-title { font-family: var(--fd); font-weight: 800; font-size: 16px; line-height: 1.15; margin-bottom: 4px; }
+    .lvl-meta { font-size: 11px; color: var(--muted); display:flex; align-items:center; gap:6px; }
+    .lvl-stars { color: var(--mango); letter-spacing: 1px; }
+
+    /* GAME SCREEN */
+    .game-top {
+      display: flex; gap: 10px; align-items: center;
+      margin-bottom: 12px;
+    }
+    .back-btn {
+      width: 38px; height: 38px; border-radius: 12px;
+      border: 2.5px solid var(--ink); background: var(--paper);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .back-btn:hover { background: var(--paper-2); }
+    .target-card {
+      flex: 1; border: 2.5px solid var(--ink); border-radius: 14px;
+      background: var(--mango-bg); padding: 8px 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .target-emoji {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: white; border: 2px solid var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; flex-shrink: 0;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.08);} }
+    .target-text { flex: 1; line-height: 1.2; }
+    .target-label { font-size: 10px; letter-spacing:.12em; text-transform:uppercase; color: var(--muted); font-weight:700; }
+    .target-name { font-family: var(--fd); font-weight: 800; font-size: 15px; }
+    .hint-btn {
+      width: 42px; height: 42px; border-radius: 12px;
+      border: 2.5px solid var(--ink); background: var(--sea);
+      color: white; font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .hint-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+    .stats-row {
+      display: flex; gap: 8px; margin-bottom: 12px;
+    }
+    .stat-chip {
+      flex: 1;
+      border: 2px solid var(--ink); border-radius: 10px;
+      background: var(--paper); padding: 6px 8px;
+      font-size: 12px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+    }
+    .stat-chip strong { font-family: var(--fd); font-weight: 800; font-size: 14px; }
+
+    /* SCENE */
+    .scene {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border: 3px solid var(--ink); border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 5px 5px 0 var(--ink);
+      touch-action: manipulation;
+    }
+    .scene-emoji {
+      position: absolute;
+      cursor: pointer;
+      line-height: 1;
+      transform: translate(-50%,-50%);
+      transition: transform .15s;
+      will-change: transform;
+    }
+    .scene-emoji:hover { transform: translate(-50%,-50%) scale(1.15); }
+    .scene-emoji.target-found {
+      animation: foundPop .55s ease forwards;
+    }
+    @keyframes foundPop {
+      0%   { transform: translate(-50%,-50%) scale(1); }
+      40%  { transform: translate(-50%,-50%) scale(1.7); filter: drop-shadow(0 0 14px gold); }
+      100% { transform: translate(-50%,-50%) scale(1.3); filter: drop-shadow(0 0 8px gold); }
+    }
+    .hint-ring {
+      position: absolute;
+      width: 90px; height: 90px;
+      border: 4px dashed var(--tomato);
+      border-radius: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      animation: hintRing 1.6s ease-in-out infinite;
+      z-index: 5;
+    }
+    @keyframes hintRing {
+      0%,100% { opacity: .9; transform: translate(-50%,-50%) scale(1); }
+      50%     { opacity: .4; transform: translate(-50%,-50%) scale(1.25); }
+    }
+    .miss-x {
+      position: absolute;
+      pointer-events: none;
+      font-size: 36px;
+      transform: translate(-50%,-50%);
+      animation: missPop .6s ease forwards;
+      z-index: 6;
+    }
+    @keyframes missPop {
+      0% { opacity: 0; transform: translate(-50%,-50%) scale(.3); }
+      30% { opacity: 1; transform: translate(-50%,-50%) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%,-50%) scale(1); }
+    }
+
+    .hint-text {
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* WIN MODAL */
+    .modal-bg {
+      position: fixed; inset: 0;
+      background: rgba(26,22,20,.55);
+      display: none; align-items: center; justify-content: center;
+      z-index: 200; padding: 18px;
+    }
+    .modal-bg.active { display: flex; animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .modal {
+      background: var(--paper);
+      border: 3px solid var(--ink); border-radius: 22px;
+      padding: 26px 22px;
+      text-align: center;
+      max-width: 360px; width: 100%;
+      box-shadow: 6px 6px 0 var(--ink);
+      animation: pop .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes pop { from{transform:scale(.7);opacity:0;} to{transform:scale(1);opacity:1;} }
+    .modal-emoji { font-size: 64px; margin-bottom: 8px; line-height: 1; }
+    .modal-title {
+      font-family: var(--fd); font-weight: 800;
+      font-size: 28px; letter-spacing: -.03em; margin-bottom: 6px;
+    }
+    .modal-sub { font-size: 14px; color: var(--muted); margin-bottom: 14px; line-height: 1.4; }
+    .stars-row { font-size: 36px; margin-bottom: 16px; letter-spacing: 4px; }
+    .star { display: inline-block; transition: transform .3s, opacity .3s; opacity:.2; }
+    .star.lit { opacity: 1; animation: starPop .4s ease; }
+    @keyframes starPop { 0%{transform:scale(.3);} 60%{transform:scale(1.3);} 100%{transform:scale(1);} }
+    .modal-btns { display: flex; gap: 10px; }
+    .btn {
+      flex: 1; padding: 12px 14px;
+      border: 2.5px solid var(--ink); border-radius: 14px;
+      font-family: var(--fd); font-weight: 800; font-size: 15px;
+      background: var(--paper);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--ink); }
+    .btn.primary { background: var(--pink); color: white; }
+    .btn.secondary { background: var(--mango); }
+
+    /* CONFETTI */
+    .confetti {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 300; overflow: hidden;
+    }
+    .confetti span {
+      position: absolute; top: -20px;
+      font-size: 22px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(720deg); }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <a href="../../kids.html" class="hdr-brand">
+    <span style="font-size:22px;">🔍</span>
+    <span class="hdr-word">Cari Bersama Raya</span>
+  </a>
+  <div class="hdr-stars">⭐ <span id="totalStars">0</span></div>
+</header>
+
+<!-- ── HOME ── -->
+<section class="screen active" id="home">
+  <div class="home-hero">
+    <div class="home-avatar">🔍</div>
+    <h1 class="home-greeting">Halo, <em>Raya!</em></h1>
+    <p class="home-sub">Ayo cari benda yang sembunyi di tiap gambar. Ketuk benda yang benar untuk menang! 🌸</p>
+  </div>
+
+  <div class="parent-notice">
+    <div class="parent-ico">👨‍👩‍👧</div>
+    <div class="parent-text">
+      <div class="parent-label">Untuk Orang Tua</div>
+      Permainan mencari benda gaya "Where's Waldo" — melatih konsentrasi, pengenalan bentuk, dan kosakata. 6 level dengan tema berbeda. Aman untuk anak 3–5 tahun.
+    </div>
+  </div>
+
+  <h2 class="sec-title">Pilih Level</h2>
+  <div class="lvl-grid" id="lvlGrid"></div>
+</section>
+
+<!-- ── GAME ── -->
+<section class="screen" id="game">
+  <div class="game-top">
+    <button class="back-btn" id="backBtn" aria-label="Kembali">←</button>
+    <div class="target-card">
+      <div class="target-emoji" id="targetEmoji">🐱</div>
+      <div class="target-text">
+        <div class="target-label">Cari ini</div>
+        <div class="target-name" id="targetName">Kucing</div>
+      </div>
+    </div>
+    <button class="hint-btn" id="hintBtn" aria-label="Petunjuk">💡</button>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-chip">⏱️ <strong id="timeLbl">0</strong>s</div>
+    <div class="stat-chip">👆 <strong id="tapLbl">0</strong></div>
+    <div class="stat-chip">💡 <strong id="hintLbl">2</strong></div>
+  </div>
+
+  <div class="scene" id="scene"></div>
+  <p class="hint-text" id="hintText">Geser mata dan cari yang mirip di gambar!</p>
+</section>
+
+<!-- ── WIN MODAL ── -->
+<div class="modal-bg" id="winModal">
+  <div class="modal">
+    <div class="modal-emoji" id="winEmoji">🎉</div>
+    <div class="modal-title">Ketemu!</div>
+    <div class="modal-sub" id="winSub">Hebat sekali, Raya!</div>
+    <div class="stars-row">
+      <span class="star" id="s1">⭐</span>
+      <span class="star" id="s2">⭐</span>
+      <span class="star" id="s3">⭐</span>
+    </div>
+    <div class="modal-btns">
+      <button class="btn secondary" id="againBtn">Lagi</button>
+      <button class="btn primary" id="nextBtn">Lanjut →</button>
+    </div>
+  </div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+<script>
+  /* ───────── LEVEL DATA ───────── */
+  // distractors = emojis filling the scene; target = the one to find
+  const LEVELS = [
+    {
+      title: 'Kebun Binatang',
+      thumb: '🦁',
+      bg: 'linear-gradient(180deg, #C8E6C9 0%, #A5D6A7 100%)',
+      target: { emoji: '🐱', name: 'Kucing' },
+      distractors: ['🐶','🐰','🐻','🐼','🦊','🐯','🦁','🐮','🐷','🐵','🐨','🐭','🐹','🐔','🐧'],
+      count: 60,
+      hint: 'Si kecil berbulu yang suka meong meong.',
+    },
+    {
+      title: 'Kebun Buah',
+      thumb: '🍓',
+      bg: 'linear-gradient(180deg, #FFE0B2 0%, #FFCC80 100%)',
+      target: { emoji: '🍓', name: 'Stroberi' },
+      distractors: ['🍎','🍊','🍋','🍌','🍉','🍇','🍑','🍒','🥝','🍍','🥭','🍐','🍏','🥥','🍈'],
+      count: 80,
+      hint: 'Merah, ada bintik-bintik kecil, manis!',
+    },
+    {
+      title: 'Laut Dalam',
+      thumb: '🐙',
+      bg: 'linear-gradient(180deg, #81D4FA 0%, #4FC3F7 100%)',
+      target: { emoji: '🐙', name: 'Gurita' },
+      distractors: ['🐠','🐟','🐡','🦀','🦐','🦞','🐬','🐳','🐋','🦈','🐢','🪸','🐚','🪼','⭐'],
+      count: 90,
+      hint: 'Punya 8 kaki dan suka berenang.',
+    },
+    {
+      title: 'Toko Permen',
+      thumb: '🍭',
+      bg: 'linear-gradient(180deg, #F8BBD0 0%, #F48FB1 100%)',
+      target: { emoji: '🦄', name: 'Unicorn' },
+      distractors: ['🍭','🍬','🍫','🧁','🍰','🍩','🍪','🍡','🍮','🍦','🍨','🍧','🎂','🍯','🌈'],
+      count: 100,
+      hint: 'Kuda ajaib bertanduk satu — warna pelangi!',
+    },
+    {
+      title: 'Taman Bunga',
+      thumb: '🌸',
+      bg: 'linear-gradient(180deg, #C5E1A5 0%, #AED581 100%)',
+      target: { emoji: '🦋', name: 'Kupu-kupu' },
+      distractors: ['🌸','🌷','🌹','🌻','🌼','💐','🌺','🍀','🍄','🐝','🐞','🐌','🌱','🌿','🪻'],
+      count: 110,
+      hint: 'Sayapnya warna-warni dan terbang dari bunga ke bunga.',
+    },
+    {
+      title: 'Luar Angkasa',
+      thumb: '🚀',
+      bg: 'linear-gradient(180deg, #1A237E 0%, #311B92 100%)',
+      target: { emoji: '🌍', name: 'Bumi' },
+      distractors: ['⭐','🌟','✨','🌙','☄️','🪐','🛸','🚀','👽','👾','🌠','☀️','💫','🌑','🌕'],
+      count: 130,
+      hint: 'Rumah kita! Bulat, warna biru dan hijau.',
+    },
+  ];
+
+  /* ───────── STATE ───────── */
+  const STORAGE_KEY = 'rayaFindIt';
+  let progress = loadProgress();
+  let current = null;       // current level state
+  let timerId = null;
+
+  function loadProgress(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch(e){ return {}; }
+  }
+  function saveProgress(){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); } catch(e){}
+  }
+  function totalStars(){
+    let t = 0;
+    for (const k in progress) t += progress[k]?.stars || 0;
+    return t;
+  }
+
+  /* ───────── RENDER HOME ───────── */
+  function renderHome(){
+    document.getElementById('totalStars').textContent = totalStars();
+    const grid = document.getElementById('lvlGrid');
+    grid.innerHTML = '';
+    LEVELS.forEach((lvl, i) => {
+      const prev = i > 0 ? (progress[i-1]?.stars || 0) : 1;
+      const unlocked = i === 0 || prev > 0;
+      const stars = progress[i]?.stars || 0;
+      const starStr = unlocked ? ('⭐'.repeat(stars) + '☆'.repeat(3 - stars)) : '🔒 Selesaikan dulu sebelumnya';
+      const btn = document.createElement('button');
+      btn.className = 'lvl-card';
+      btn.disabled = !unlocked;
+      btn.innerHTML = `
+        <div class="lvl-thumb" style="background:${lvl.bg};">${lvl.thumb}</div>
+        <div class="lvl-body">
+          <div class="lvl-num">Level ${i+1}</div>
+          <div class="lvl-title">${lvl.title}</div>
+          <div class="lvl-meta"><span class="lvl-stars">${starStr}</span></div>
+        </div>`;
+      btn.onclick = () => unlocked && startLevel(i);
+      grid.appendChild(btn);
+    });
+  }
+
+  /* ───────── START LEVEL ───────── */
+  function startLevel(idx){
+    const lvl = LEVELS[idx];
+    current = {
+      idx,
+      lvl,
+      time: 0,
+      taps: 0,
+      hintsLeft: 2,
+      found: false,
+      hintUsed: false,
+      targetX: 0, targetY: 0,
+    };
+    document.getElementById('targetEmoji').textContent = lvl.target.emoji;
+    document.getElementById('targetName').textContent = lvl.target.name;
+    document.getElementById('hintText').textContent = lvl.hint;
+    document.getElementById('tapLbl').textContent = '0';
+    document.getElementById('timeLbl').textContent = '0';
+    document.getElementById('hintLbl').textContent = '2';
+    document.getElementById('hintBtn').disabled = false;
+
+    buildScene(lvl);
+    showScreen('game');
+
+    clearInterval(timerId);
+    timerId = setInterval(() => {
+      if (!current || current.found) return;
+      current.time++;
+      document.getElementById('timeLbl').textContent = current.time;
+    }, 1000);
+  }
+
+  /* ───────── BUILD SCENE ───────── */
+  function buildScene(lvl){
+    const scene = document.getElementById('scene');
+    scene.innerHTML = '';
+    scene.style.background = lvl.bg;
+
+    // pick random target position (with margins so it stays inside)
+    const tx = 8 + Math.random() * 84;
+    const ty = 8 + Math.random() * 84;
+    current.targetX = tx;
+    current.targetY = ty;
+
+    // base size depends on count (more = smaller)
+    const baseSize = Math.max(18, 40 - lvl.count * 0.15);
+
+    // place distractors
+    const positions = [{x: tx, y: ty, r: baseSize * 0.7}];
+    let placed = 0;
+    let attempts = 0;
+    const maxAttempts = lvl.count * 30;
+    while (placed < lvl.count && attempts < maxAttempts) {
+      attempts++;
+      const x = 3 + Math.random() * 94;
+      const y = 3 + Math.random() * 94;
+      const size = baseSize + (Math.random() * 10 - 5);
+      const r = size * 0.55;
+      // avoid heavy overlap with target ONLY (let distractors overlap each other for chaos)
+      const dx = x - tx, dy = y - ty;
+      if (Math.sqrt(dx*dx + dy*dy) < baseSize * 0.9) continue;
+      const emoji = lvl.distractors[Math.floor(Math.random() * lvl.distractors.length)];
+      // do not allow accidental target emoji as distractor
+      if (emoji === lvl.target.emoji) continue;
+      addSceneEmoji(scene, emoji, x, y, size, false);
+      positions.push({x, y, r});
+      placed++;
+    }
+
+    // place target last so it sits visually on top (still mixed-in feel)
+    addSceneEmoji(scene, lvl.target.emoji, tx, ty, baseSize + 2, true);
+
+    // click background = miss feedback
+    scene.onclick = (e) => {
+      if (!current || current.found) return;
+      if (e.target === scene) {
+        const rect = scene.getBoundingClientRect();
+        const px = ((e.clientX - rect.left) / rect.width) * 100;
+        const py = ((e.clientY - rect.top) / rect.height) * 100;
+        showMiss(scene, px, py);
+      }
+    };
+  }
+
+  function addSceneEmoji(scene, emoji, x, y, size, isTarget){
+    const el = document.createElement('div');
+    el.className = 'scene-emoji';
+    if (isTarget) el.dataset.target = '1';
+    el.style.left = x + '%';
+    el.style.top = y + '%';
+    el.style.fontSize = size + 'px';
+    el.style.transform = `translate(-50%,-50%) rotate(${(Math.random()*30-15).toFixed(1)}deg)`;
+    el.textContent = emoji;
+    el.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      if (!current || current.found) return;
+      current.taps++;
+      document.getElementById('tapLbl').textContent = current.taps;
+      if (isTarget) {
+        win(el);
+      } else {
+        // miss feedback on the clicked emoji
+        const rect = scene.getBoundingClientRect();
+        const px = ((ev.clientX - rect.left) / rect.width) * 100;
+        const py = ((ev.clientY - rect.top) / rect.height) * 100;
+        showMiss(scene, px, py);
+      }
+    });
+    scene.appendChild(el);
+  }
+
+  function showMiss(scene, x, y){
+    const m = document.createElement('div');
+    m.className = 'miss-x';
+    m.textContent = '❌';
+    m.style.left = x + '%';
+    m.style.top = y + '%';
+    scene.appendChild(m);
+    setTimeout(() => m.remove(), 600);
+  }
+
+  /* ───────── HINT ───────── */
+  document.getElementById('hintBtn').onclick = () => {
+    if (!current || current.found) return;
+    if (current.hintsLeft <= 0) return;
+    current.hintsLeft--;
+    current.hintUsed = true;
+    document.getElementById('hintLbl').textContent = current.hintsLeft;
+    if (current.hintsLeft === 0) document.getElementById('hintBtn').disabled = true;
+    const scene = document.getElementById('scene');
+    const ring = document.createElement('div');
+    ring.className = 'hint-ring';
+    ring.style.left = current.targetX + '%';
+    ring.style.top = current.targetY + '%';
+    scene.appendChild(ring);
+    setTimeout(() => ring.remove(), 1800);
+  };
+
+  /* ───────── WIN ───────── */
+  function win(el){
+    current.found = true;
+    clearInterval(timerId);
+    el.classList.add('target-found');
+
+    // calculate stars
+    let stars = 3;
+    if (current.taps > 4 || current.time > 30) stars = 2;
+    if (current.taps > 10 || current.time > 60 || current.hintUsed) stars = Math.min(stars, 2);
+    if (current.taps > 18 || current.time > 90) stars = 1;
+    stars = Math.max(1, stars);
+
+    // save best
+    const prev = progress[current.idx]?.stars || 0;
+    if (stars > prev) {
+      progress[current.idx] = { stars };
+      saveProgress();
+    }
+
+    setTimeout(() => showWin(stars), 700);
+  }
+
+  function showWin(stars){
+    document.getElementById('totalStars').textContent = totalStars();
+    document.getElementById('winSub').textContent =
+      `Kamu nemu ${current.lvl.target.name.toLowerCase()} dalam ${current.time} detik!`;
+    ['s1','s2','s3'].forEach((id, i) => {
+      const s = document.getElementById(id);
+      s.classList.remove('lit');
+      if (i < stars) setTimeout(() => s.classList.add('lit'), 200 + i * 220);
+    });
+    const isLast = current.idx === LEVELS.length - 1;
+    document.getElementById('nextBtn').textContent = isLast ? 'Selesai ✓' : 'Lanjut →';
+    document.getElementById('winModal').classList.add('active');
+    confetti();
+  }
+
+  document.getElementById('againBtn').onclick = () => {
+    document.getElementById('winModal').classList.remove('active');
+    startLevel(current.idx);
+  };
+  document.getElementById('nextBtn').onclick = () => {
+    document.getElementById('winModal').classList.remove('active');
+    const isLast = current.idx === LEVELS.length - 1;
+    if (isLast) { showScreen('home'); renderHome(); }
+    else startLevel(current.idx + 1);
+  };
+
+  document.getElementById('backBtn').onclick = () => {
+    clearInterval(timerId);
+    current = null;
+    showScreen('home');
+    renderHome();
+  };
+
+  /* ───────── CONFETTI ───────── */
+  function confetti(){
+    const c = document.getElementById('confetti');
+    c.innerHTML = '';
+    const emojis = ['🎉','🌟','✨','🌸','💖','🎊','⭐'];
+    for (let i = 0; i < 36; i++){
+      const s = document.createElement('span');
+      s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      s.style.left = Math.random()*100 + '%';
+      s.style.animationDuration = (2 + Math.random()*2) + 's';
+      s.style.animationDelay = (Math.random()*0.5) + 's';
+      s.style.fontSize = (16 + Math.random()*14) + 'px';
+      c.appendChild(s);
+    }
+    setTimeout(() => c.innerHTML = '', 4500);
+  }
+
+  /* ───────── NAV ───────── */
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+
+  renderHome();
+</script>
+
+</body>
+</html>
