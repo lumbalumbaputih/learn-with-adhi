@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rayyan & Raya's Learning World · Learn with Adhi</title>
+  <title>Rayyan & Raya · Pilih Petualangan</title>
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FFC234"/><text y=".9em" font-size="80" x="10">🌟</text></svg>'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,6 @@
   <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <style>
-    /* ===== TOKENS ===== */
     :root {
       --tomato:  #FF5C39;
       --mango:   #FFC234;
@@ -27,377 +26,117 @@
       --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
       --fb: 'Inter', system-ui, sans-serif;
     }
-
-    /* ===== RESET ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
-    body { font-family: var(--fb); background: var(--paper); color: var(--ink); }
+    html { -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--fb); background: var(--paper); color: var(--ink); min-height: 100vh; }
     a { color: inherit; text-decoration: none; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-    /* ===== SHELL ===== */
-    .shell { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
-    @media (max-width: 860px)  { .shell { padding: 0 28px; } }
-    @media (max-width: 560px)  { .shell { padding: 0 18px; } }
+    .shell { max-width: 1000px; margin: 0 auto; padding: 0 48px; }
+    @media (max-width: 860px) { .shell { padding: 0 28px; } }
+    @media (max-width: 560px) { .shell { padding: 0 18px; } }
 
-    /* ===== NAV ===== */
+    /* NAV */
     .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 0;
-      border-bottom: 2px solid var(--ink);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 0; border-bottom: 2px solid var(--ink);
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .brand-wordmark {
-      font-family: var(--fd);
-      font-weight: 800;
-      font-size: 24px;
-      letter-spacing: -0.03em;
-    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-wordmark { font-family: var(--fd); font-weight: 800; font-size: 24px; letter-spacing: -0.03em; }
     .brand-divider { width: 1.5px; height: 22px; background: var(--line); }
-    .brand-sub {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+    .brand-sub { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
     .nav-back {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transition: color .2s;
+      font-size: 14px; font-weight: 700; color: var(--ink);
+      background: var(--paper-2); border: 2px solid var(--ink); border-radius: 999px; padding: 8px 18px;
+      transition: background .18s;
     }
-    .nav-back:hover { color: var(--ink); }
+    .nav-back:hover { background: var(--mango); }
 
-    /* ===== HERO ===== */
-    .hero {
-      padding: 72px 0 56px;
-      position: relative;
-    }
-    .hero-avatars {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-    .avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      border: 3px solid var(--ink);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-    }
+    /* HERO */
+    .hero { padding: 72px 0 48px; }
     .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 20px;
     }
     .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 3px;
-      background: var(--mango);
-      flex-shrink: 0;
+      content: ''; display: block; width: 32px; height: 3px; background: var(--mango); flex-shrink: 0;
     }
     .hero-h1 {
-      font-family: var(--fd);
-      font-weight: 800;
-      font-size: clamp(48px, 8vw, 100px);
-      line-height: .92;
-      letter-spacing: -0.04em;
-      margin-bottom: 28px;
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(52px, 9vw, 108px);
+      line-height: .9; letter-spacing: -0.04em; margin-bottom: 20px;
     }
-    .hero-h1 .hi-ray  { color: var(--tomato); }
-    .hero-h1 .hi-raya { color: var(--mawar); }
-    .hero-h1 .hi-and  {
-      display: inline-block;
-      background: var(--mango);
-      color: var(--ink);
-      padding: 0 .08em;
-      border-radius: 8px;
-    }
-    .hero-lead {
-      font-size: 18px;
-      line-height: 1.55;
-      color: var(--muted);
-      max-width: 520px;
-      margin-bottom: 32px;
-    }
-    .hero-stats {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      padding-top: 20px;
-      border-top: 1px solid var(--line);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .06em;
-      color: var(--muted);
-    }
-    .stat-pill {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--paper-2);
-      border: 1.5px solid var(--ink);
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink);
-    }
+    .hero-lead { font-size: 18px; line-height: 1.55; color: var(--muted); max-width: 480px; }
 
-    /* ===== SECTION ===== */
-    .section { margin-top: 80px; }
-    .section-hdr {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 16px;
-      padding-bottom: 20px;
-      border-bottom: 2px solid var(--ink);
-      margin-bottom: 32px;
+    /* CHOOSER */
+    .chooser {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-top: 56px; margin-bottom: 80px;
     }
-    .section-title {
-      font-family: var(--fd);
-      font-weight: 800;
-      font-size: clamp(32px, 4.5vw, 48px);
-      letter-spacing: -0.03em;
+    @media (max-width: 580px) { .chooser { grid-template-columns: 1fr; gap: 20px; margin-top: 40px; } }
+
+    .chooser-card {
+      border: 3px solid var(--ink); border-radius: 28px;
+      padding: 48px 40px; display: flex; flex-direction: column; gap: 16px;
+      transition: transform .18s ease, box-shadow .18s ease;
+      position: relative; overflow: hidden;
+    }
+    .chooser-card:hover {
+      transform: translate(-5px, -5px);
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+    .chooser-card.rayyan { background: #FFF0EC; }
+    .chooser-card.raya   { background: #FFF0F7; }
+
+    .chooser-avatar {
+      font-size: 72px; line-height: 1;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.15));
+    }
+    .chooser-name {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(40px, 6vw, 60px); letter-spacing: -0.03em;
       line-height: 1;
     }
-    .section-count {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding-bottom: 6px;
-    }
+    .chooser-card.rayyan .chooser-name { color: var(--tomato); }
+    .chooser-card.raya   .chooser-name { color: var(--mawar); }
 
-    /* ===== GRID ===== */
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+    .chooser-desc {
+      font-size: 15px; line-height: 1.5; color: var(--muted); font-weight: 500;
     }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
+    .chooser-stats {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;
     }
-    @media (max-width: 860px) {
-      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .chooser-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: white; border: 1.5px solid var(--ink);
+      border-radius: 999px; padding: 4px 12px;
+      font-size: 12px; font-weight: 700;
     }
-    @media (max-width: 600px) {
-      .grid-3, .grid-2 { grid-template-columns: 1fr; gap: 16px; }
+    .chooser-cta {
+      margin-top: auto; padding-top: 24px;
+      font-family: var(--fd); font-weight: 800; font-size: 18px;
+      display: flex; align-items: center; gap: 8px;
+      border-top: 1.5px solid var(--line);
     }
+    .chooser-card.rayyan .chooser-cta { color: var(--tomato); }
+    .chooser-card.raya   .chooser-cta { color: var(--mawar); }
 
-    /* ===== CARD ===== */
-    .card {
-      border: 2px solid var(--ink);
-      border-radius: 18px;
-      overflow: hidden;
-      background: var(--paper);
-      display: flex;
-      flex-direction: column;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .card:hover {
-      transform: translate(-4px, -4px);
-      box-shadow: 7px 7px 0 var(--ink);
-    }
-    .card-thumb {
-      aspect-ratio: 16/9;
-      border-bottom: 2px solid var(--ink);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 56px;
-      position: relative;
-      overflow: hidden;
-    }
-    .card-badge {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: var(--ink);
-      color: var(--paper);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 999px;
-    }
-    .card-badge.game   { background: var(--forest); }
-    .card-badge.course { background: var(--indigo); }
-    .card-badge.coming { background: var(--muted); }
-    .card-body {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    .card-for {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-    .card-title {
-      font-family: var(--fd);
-      font-weight: 800;
-      font-size: 20px;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 8px;
-    }
-    .card-blurb {
-      font-size: 13.5px;
-      line-height: 1.55;
-      color: var(--muted);
-      flex: 1;
-      margin-bottom: 14px;
-    }
-    .card-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 12px;
-      border-top: 1px solid var(--line);
-    }
-    .card-prog {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .prog-stars { font-size: 13px; }
-    .card-cta {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .06em;
-      color: var(--ink);
-    }
-
-    /* COMING SOON card */
-    .card.coming {
-      opacity: .55;
-      pointer-events: none;
-    }
-    .card.coming .card-thumb {
-      background: var(--paper-2) !important;
-    }
-
-    /* ===== WHO STRIP ===== */
-    .who-strip {
-      margin-top: 80px;
-      background: var(--ink);
-      color: var(--paper);
-      border-radius: 24px;
-      padding: 48px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-    }
-    @media (max-width: 640px) {
-      .who-strip { grid-template-columns: 1fr; padding: 32px 24px; gap: 28px; }
-    }
-    .who-card { }
-    .who-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 2.5px solid rgba(255,255,255,.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      margin-bottom: 14px;
-    }
-    .who-name {
-      font-family: var(--fd);
-      font-weight: 800;
-      font-size: 28px;
-      letter-spacing: -0.03em;
-      margin-bottom: 6px;
-    }
-    .who-desc {
-      font-size: 14px;
-      line-height: 1.55;
-      color: rgba(251,244,230,.7);
-    }
-    .who-tag {
-      display: inline-block;
-      margin-top: 12px;
-      background: rgba(255,255,255,.1);
-      border: 1.5px solid rgba(255,255,255,.2);
-      border-radius: 999px;
-      padding: 4px 12px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: rgba(251,244,230,.8);
-    }
-
-    /* ===== FOOTER ===== */
+    /* FOOTER */
     .footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 80px;
-      padding: 24px 0 52px;
-      border-top: 2px solid var(--ink);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      flex-wrap: wrap;
-      gap: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 0 52px; border-top: 2px solid var(--ink);
+      font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); flex-wrap: wrap; gap: 12px;
     }
-    .footer a { transition: color .2s; }
     .footer a:hover { color: var(--tomato); }
 
-    /* ===== RESPONSIVE NAV ===== */
-    @media (max-width: 500px) {
-      .hero { padding-top: 44px; }
-      .who-strip { margin-top: 56px; }
-      .section { margin-top: 56px; }
-    }
+    @media (max-width: 500px) { .hero { padding-top: 44px; } }
   </style>
 </head>
 <body>
 
 <div class="shell">
 
-  <!-- NAV -->
   <header>
     <nav class="nav">
       <a href="/" class="brand">
@@ -412,61 +151,41 @@
           <div class="brand-sub">Learn</div>
         </div>
       </a>
-      <a href="/" class="nav-back" style="background:var(--paper-2);border:2px solid var(--ink);border-radius:999px;padding:8px 18px;font-weight:700;color:var(--ink);letter-spacing:0;text-transform:none;font-size:14px">← Kembali ke semua kursus</a>
+      <a href="/" class="nav-back">← Semua Kursus</a>
     </nav>
   </header>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-eyebrow">Zona Belajar Khusus</div>
-    <h1 class="hero-h1">
-      <span class="hi-ray">Rayyan</span><br>
-      <span class="hi-and">&amp;</span>
-      <span class="hi-raya"> Raya</span>
-    </h1>
-    <p class="hero-lead">Tempat belajar dan main yang dibuat khusus buat kalian. Pilih pelajaran atau game, dan mulai petualanganmu! 🚀</p>
-    <div class="hero-stats">
-      <div class="stat-pill" id="statCourses">📚 1 kursus</div>
-      <div class="stat-pill" id="statGames">🎮 1 game</div>
-      <div class="stat-pill" id="statStars">⭐ <span id="totalStarsHero">0</span> bintang</div>
-    </div>
+    <h1 class="hero-h1">Siapa<br>yang main<br>hari ini?</h1>
+    <p class="hero-lead">Pilih namamu — lalu langsung masuk ke dunia petualanganmu sendiri!</p>
   </section>
 
-  <!-- SECTION: BELAJAR YUK -->
-  <section class="section" id="courses">
-    <div class="section-hdr">
-      <h2 class="section-title">📚 Belajar Yuk!</h2>
-      <div class="section-count" id="courseCount">1 kursus tersedia</div>
-    </div>
-    <div class="grid-3" id="courseGrid"></div>
-  </section>
-
-  <!-- SECTION: AYO MAIN -->
-  <section class="section" id="games">
-    <div class="section-hdr">
-      <h2 class="section-title">🎮 Ayo Main!</h2>
-      <div class="section-count" id="gameCount">1 game tersedia</div>
-    </div>
-    <div class="grid-2" id="gameGrid"></div>
-  </section>
-
-  <!-- WHO ARE THEY -->
-  <div class="who-strip">
-    <div class="who-card">
-      <div class="who-avatar" style="background:rgba(255,92,57,.25)">🧒</div>
-      <div class="who-name" style="color:#FFC234">Rayyan</div>
-      <div class="who-desc">Suka petualangan, kereta, dan tantangan seru. Selalu siap jelajahi dunia baru!</div>
-      <div class="who-tag">Petualang Sejati</div>
-    </div>
-    <div class="who-card">
-      <div class="who-avatar" style="background:rgba(232,75,160,.25)">👧</div>
-      <div class="who-name" style="color:#E84BA0">Raya</div>
-      <div class="who-desc">Suka cerita, petualangan, dan tantangan seru. Selalu siap main bareng Rayyan!</div>
-      <div class="who-tag">Petualang Sejati</div>
-    </div>
+  <div class="chooser">
+    <a href="rayyan.html" class="chooser-card rayyan">
+      <div class="chooser-avatar">🧒</div>
+      <div class="chooser-name">Rayyan</div>
+      <div class="chooser-desc">Petualangan angka, robot kereta, dan game seru.</div>
+      <div class="chooser-stats">
+        <div class="chooser-pill">📚 5 petualangan</div>
+        <div class="chooser-pill">🎮 2 game</div>
+        <div class="chooser-pill">⭐ <span id="rayyanStars">0</span> bintang</div>
+      </div>
+      <div class="chooser-cta">Masuk Dunia Rayyan →</div>
+    </a>
+    <a href="raya.html" class="chooser-card raya">
+      <div class="chooser-avatar">👧</div>
+      <div class="chooser-name">Raya</div>
+      <div class="chooser-desc">Belajar visual, warna, bentuk, dan game cari-cari.</div>
+      <div class="chooser-stats">
+        <div class="chooser-pill">📚 2 kursus</div>
+        <div class="chooser-pill">🎮 1 game</div>
+        <div class="chooser-pill">⭐ <span id="rayaStars">0</span> bintang</div>
+      </div>
+      <div class="chooser-cta">Masuk Dunia Raya →</div>
+    </a>
   </div>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <span>© 2026 Learn with Adhi · Dibuat dengan ❤️ untuk Rayyan &amp; Raya</span>
     <a href="/">← Kembali ke semua kursus</a>
@@ -475,242 +194,17 @@
 </div>
 
 <script>
-  /* ─── DATA ─────────────────────────────────────────────── */
-
-  // To add a new course in the future, just add an entry here.
-  const COURSES = [
-    {
-      title: 'Petualangan Angka 🔢',
-      subject: 'Matematika',
-      emoji: '🔢',
-      thumbBg: '#FFF5D6',
-      blurb: '6 bab interaktif: nilai tempat, penjumlahan, pengurangan, perkalian, bangun datar, dan pola bilangan.',
-      href: 'courses/math/rayyan-math-grade2-v1.html',
-      for: 'Rayyan · Penjelajah Angka',
-      forColor: '#FF5C39',
-      progressKey: 'rayyanMath',
-      totalChapters: 6,
-      type: 'course',
-    },
-    {
-      title: 'Petualangan KAI 🚂',
-      subject: 'Matematika',
-      emoji: '🚂',
-      thumbBg: '#E8E9F8',
-      blurb: 'Petualangan KAI! 6 stasiun: nilai tempat ribuan, perkalian lanjutan, pembagian, penjumlahan besar, pengukuran, dan pecahan.',
-      href: 'courses/math/rayyan-math-grade3.html',
-      for: 'Rayyan · Masinis Muda',
-      forColor: '#2E3192',
-      progressKey: 'rayyanMath3',
-      totalChapters: 6,
-      type: 'course',
-    },
-    {
-      title: 'Petualangan Antariksa 🚀',
-      subject: 'Matematika',
-      emoji: '🚀',
-      thumbBg: '#EFE3F8',
-      blurb: 'Petualangan Antariksa! 6 planet: bilangan besar, perkalian & pembagian besar, operasi pecahan, keliling & luas, KPK & FPB.',
-      href: 'courses/math/rayyan-math-grade4.html',
-      for: 'Rayyan · Astronaut Muda',
-      forColor: '#7B3FA8',
-      progressKey: 'rayyanMath4',
-      totalChapters: 6,
-      type: 'course',
-    },
-    {
-      title: 'Petualangan Laut Dalam 🌊',
-      subject: 'Matematika',
-      emoji: '🤿',
-      thumbBg: '#E3F4F8',
-      blurb: 'Petualangan Laut Dalam! 6 zona: bilangan bulat, perbandingan & skala, pecahan lanjutan, persen & desimal, bangun ruang, dan boss battle statistika!',
-      href: 'courses/math/rayyan-math-grade5.html',
-      for: 'Rayyan · Penyelam Hebat',
-      forColor: '#1FA9C7',
-      progressKey: 'rayyanMath5',
-      totalChapters: 6,
-      type: 'course',
-    },
-    {
-      title: 'Pabrik Robot KAI 🤖🚂',
-      subject: 'Logika & Instruksi',
-      emoji: '🤖',
-      thumbBg: '#1a2a3a',
-      blurb: 'Jadi insinyur KAI! Ajari robot kereta cara bekerja — perintah berurutan, kalau-maka, ulangi, memori, dan resep rahasia. Boss battle: program rute Jakarta–Surabaya!',
-      href: 'courses/coding/rayyan-coding-v1.html',
-      for: 'Rayyan · Insinyur Robot',
-      forColor: '#FFC234',
-      progressKey: 'rayyanCoding',
-      totalChapters: 6,
-      type: 'course',
-    },
-    {
-      title: 'Matematika Raya 🔢',
-      subject: 'Matematika PAUD',
-      emoji: '🔢',
-      thumbBg: '#FCE8F3',
-      blurb: 'Visual & interaktif tanpa membaca: ketuk untuk hitung, bandingkan banyak/sedikit, tambah sederhana, dan seret gambar ke angka!',
-      href: 'courses/math/raya-math-v1.html',
-      for: 'Raya · Usia 3–4 Tahun',
-      forColor: '#E84BA0',
-      progressKey: 'rayaMath',
-      totalChapters: 5,
-      type: 'course',
-    },
-    {
-      title: 'Belajar Bersama Raya 🌸',
-      subject: 'PAUD Visual',
-      emoji: '🌸',
-      thumbBg: '#FCE8F3',
-      blurb: '5 bab visual tanpa membaca: berhitung, warna, bentuk, hewan, dan pasangkan gambar. Semua jawaban berupa gambar!',
-      href: 'courses/learning/raya-learning-visual-v1.html',
-      for: 'Raya · Usia 3–4 Tahun',
-      forColor: '#E84BA0',
-      progressKey: 'rayaVisual',
-      totalChapters: 5,
-      type: 'course',
-    },
-    // ── add future courses below ──
-    // {
-    //   title: 'Bahasa Indonesia Kelas 2',
-    //   emoji: '📖',
-    //   thumbBg: '#E3F4F8',
-    //   blurb: 'Membaca, menulis, dan mengenal huruf dengan seru.',
-    //   href: 'courses/bahasa/rayyan-bahasa-grade2-v1.html',
-    //   for: 'Rayyan & Raya',
-    //   type: 'course',
-    //   coming: true,
-    // },
-  ];
-
-  // To add a new game, add an entry here.
-  const GAMES = [
-    {
-      title: "Petualangan Kereta",
-      emoji: '🚂',
-      thumbBg: '#E3F5EB',
-      blurb: 'Pilih petualanganmu sendiri — 3 versi cerita kereta yang seru buat Rayyan & Raya!',
-      href: 'courses/tools/train_adventure_hub.html',
-      for: 'Rayyan & Raya',
-      forColor: '#1F9D55',
-      type: 'game',
-    },
-    {
-      title: "Kereta Rayyan: Lari Cepat! 🚂💨",
-      emoji: '🚂',
-      thumbBg: '#FFE0D6',
-      blurb: 'Pacu kereta Rayyan! Loncati batu & kaktus, sambar bintang ⭐, kejar skor tertinggi. Tekan SPASI atau tap untuk lompat!',
-      href: 'courses/tools/rayyan-train-run-v1.html',
-      for: 'Rayyan',
-      forColor: '#FF5C39',
-      type: 'game',
-    },
-    {
-      title: 'Cari Bersama Raya',
-      emoji: '🔍',
-      thumbBg: '#FCE8F3',
-      blurb: 'Temukan benda yang sembunyi di tiap gambar! Gaya "Where\'s Waldo" — 6 level seru buat Raya.',
-      href: 'courses/games/raya-find-it-v1.html',
-      for: 'Raya · Usia 3–5 Tahun',
-      forColor: '#E84BA0',
-      type: 'game',
-    },
-    // ── add future games below ──
-    // {
-    //   title: 'Kuis Matematika',
-    //   emoji: '🧮',
-    //   ...
-    //   coming: true,
-    // },
-  ];
-
-  /* ─── PROGRESS ──────────────────────────────────────────── */
-
-  function getTotalStars() {
-    let total = 0;
-    const keys = ['rayyanMath', 'rayyanMath3', 'rayyanMath4', 'rayyanMath5', 'rayyanCoding', 'rayaLearning', 'rayaVisual', 'rayaMath'];
+  function sumStars(keys) {
+    let t = 0;
     for (const k of keys) {
-      try {
-        const d = JSON.parse(localStorage.getItem(k) || '{}');
-        total += d.totalStars || 0;
-      } catch(e) {}
+      try { const d = JSON.parse(localStorage.getItem(k)||'{}'); t += d.totalStars||0; } catch(e){}
     }
-    return total;
+    return t;
   }
-
-  function getChaptersDone(progressKey) {
-    try {
-      const d = JSON.parse(localStorage.getItem(progressKey) || '{}');
-      const prog = d.progress || {};
-      return Object.values(prog).filter(p => p.stars > 0).length;
-    } catch(e) { return 0; }
-  }
-
-  function getStarsString(progressKey, total) {
-    const done = getChaptersDone(progressKey);
-    if (done === 0) return 'Belum dimulai';
-    if (done === total) return `✅ Selesai semua (${total} bab)`;
-    return `📖 ${done}/${total} bab selesai`;
-  }
-
-  /* ─── RENDER ─────────────────────────────────────────────── */
-
-  function renderCard(item) {
-    const badge    = item.coming ? 'coming' : item.type;
-    const badgeLbl = item.coming ? 'Segera' : (item.type === 'game' ? 'Game' : 'Kursus');
-    const progText = item.progressKey
-      ? getStarsString(item.progressKey, item.totalChapters)
-      : '';
-
-    return `
-      <a href="${item.coming ? '#' : item.href}" class="card${item.coming ? ' coming' : ''}">
-        <div class="card-thumb" style="background:${item.thumbBg}">
-          <span style="font-size:52px">${item.emoji}</span>
-          <span class="card-badge ${badge}">${badgeLbl}</span>
-        </div>
-        <div class="card-body">
-          <div class="card-for" style="color:${item.forColor || 'var(--muted)'}">
-            ${item.for || ''}
-          </div>
-          <div class="card-title">${item.title}</div>
-          <div class="card-blurb">${item.blurb}</div>
-          <div class="card-foot">
-            <div class="card-prog">
-              ${progText ? `<span>${progText}</span>` : ''}
-            </div>
-            <div class="card-cta">${item.coming ? 'Segera →' : 'Buka →'}</div>
-          </div>
-        </div>
-      </a>`;
-  }
-
-  function render() {
-    // Courses
-    const live    = COURSES.filter(c => !c.coming);
-    const coming  = COURSES.filter(c => c.coming);
-    document.getElementById('courseGrid').innerHTML =
-      [...live, ...coming].map(renderCard).join('');
-    document.getElementById('courseCount').textContent =
-      `${live.length} kursus tersedia${coming.length ? ` · ${coming.length} segera hadir` : ''}`;
-
-    // Games
-    const liveG   = GAMES.filter(g => !g.coming);
-    const comingG = GAMES.filter(g => g.coming);
-    document.getElementById('gameGrid').innerHTML =
-      [...liveG, ...comingG].map(renderCard).join('');
-    document.getElementById('gameCount').textContent =
-      `${liveG.length} game tersedia${comingG.length ? ` · ${comingG.length} segera hadir` : ''}`;
-
-    // Stats
-    const stars = getTotalStars();
-    document.getElementById('totalStarsHero').textContent = stars;
-    document.getElementById('statCourses').textContent =
-      `📚 ${COURSES.filter(c=>!c.coming).length} kursus`;
-    document.getElementById('statGames').textContent =
-      `🎮 ${GAMES.filter(g=>!g.coming).length} game`;
-  }
-
-  render();
+  document.getElementById('rayyanStars').textContent =
+    sumStars(['rayyanMath','rayyanMath3','rayyanMath4','rayyanMath5','rayyanCoding']);
+  document.getElementById('rayaStars').textContent =
+    sumStars(['rayaMath','rayaVisual','rayaLearning']);
 </script>
 
 </body>
