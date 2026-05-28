@@ -532,6 +532,19 @@
       type: 'course',
     },
     {
+      title: 'Pabrik Robot KAI 🤖🚂',
+      subject: 'Logika & Instruksi',
+      emoji: '🤖',
+      thumbBg: '#1a2a3a',
+      blurb: 'Jadi insinyur KAI! Ajari robot kereta cara bekerja — perintah berurutan, kalau-maka, ulangi, memori, dan resep rahasia. Boss battle: program rute Jakarta–Surabaya!',
+      href: 'courses/coding/rayyan-coding-v1.html',
+      for: 'Rayyan · Insinyur Robot',
+      forColor: '#FFC234',
+      progressKey: 'rayyanCoding',
+      totalChapters: 6,
+      type: 'course',
+    },
+    {
       title: 'Matematika Raya 🔢',
       subject: 'Matematika PAUD',
       emoji: '🔢',
@@ -615,7 +628,7 @@
 
   function getTotalStars() {
     let total = 0;
-    const keys = ['rayyanMath', 'rayyanMath3', 'rayyanMath4', 'rayyanMath5', 'rayaLearning', 'rayaVisual', 'rayaMath'];
+    const keys = ['rayyanMath', 'rayyanMath3', 'rayyanMath4', 'rayyanMath5', 'rayyanCoding', 'rayaLearning', 'rayaVisual', 'rayaMath'];
     for (const k of keys) {
       try {
         const d = JSON.parse(localStorage.getItem(k) || '{}');

@@ -1,0 +1,2325 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pabrik Robot KAI — Petualangan Rayyan 🚂🤖</title>
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FF5C39"/><text y=".9em" font-size="78" x="12">🤖</text></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* ════════════ TOKENS ════════════ */
+  :root {
+    --tomato:#FF5C39; --mango:#FFC234; --forest:#1F9D55;
+    --sea:#1FA9C7; --mawar:#E84BA0; --indigo:#2E3192;
+    --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+    --line:rgba(26,22,20,0.14); --muted:#6B6259;
+    --tomato-bg:#FFE8E3; --mango-bg:#FFF5D6; --forest-bg:#E3F5EB;
+    --sea-bg:#E3F4F8; --mawar-bg:#FCE8F3; --indigo-bg:#E8E9F8;
+    /* Factory palette */
+    --steel-deep:#0c1622; --steel-mid:#16263c; --steel-light:#243a58;
+    --rust:#c44e2a; --bolt:#6c7d92; --spark:#ffd166;
+    --fd:'Bricolage Grotesque','Arial Black',sans-serif;
+    --fb:'Nunito',system-ui,sans-serif;
+    --fc:'JetBrains Mono',monospace;
+    --r:16px; --r-sm:10px; --r-lg:24px;
+  }
+
+  /* ════════════ RESET ════════════ */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+  body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input{font-family:inherit}
+
+  /* ════════════ FACTORY BACKGROUND ════════════ */
+  #factoryBg{position:fixed;inset:0;z-index:-2;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(255,194,52,.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(255,92,57,.12) 0%, transparent 55%),
+      linear-gradient(180deg,var(--steel-deep) 0%,var(--steel-mid) 60%,var(--steel-light) 100%);
+    pointer-events:none}
+  #factoryBg.hidden{opacity:0;transition:opacity .4s}
+  /* drifting smoke/dust particles */
+  .dust{position:absolute;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);animation:dustRise linear infinite;pointer-events:none}
+  @keyframes dustRise{
+    0%{transform:translateY(110vh) translateX(0) scale(.4);opacity:0}
+    10%{opacity:.8}
+    50%{transform:translateY(50vh) translateX(20px) scale(.9)}
+    90%{opacity:.4}
+    100%{transform:translateY(-10vh) translateX(-15px) scale(1.2);opacity:0}
+  }
+  /* big slow gear silhouettes */
+  .gear-bg{position:absolute;opacity:.08;color:#9eb8da;pointer-events:none;animation:gearSpin linear infinite}
+  @keyframes gearSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  /* factory silhouette */
+  .factory-silhouette{position:absolute;bottom:0;left:0;right:0;height:32vh;pointer-events:none;opacity:.22;
+    background:linear-gradient(to top, var(--steel-deep) 30%, transparent 100%);
+    -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" preserveAspectRatio="none"><polygon points="0,300 0,180 80,180 80,120 180,120 180,180 260,180 260,90 280,90 290,40 300,90 320,90 320,180 420,180 420,140 520,140 520,200 600,200 600,100 620,100 630,60 640,100 660,100 660,200 780,200 780,150 880,150 880,210 980,210 980,170 1080,170 1080,210 1200,210 1200,300" fill="black"/></svg>');
+    mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" preserveAspectRatio="none"><polygon points="0,300 0,180 80,180 80,120 180,120 180,180 260,180 260,90 280,90 290,40 300,90 320,90 320,180 420,180 420,140 520,140 520,200 600,200 600,100 620,100 630,60 640,100 660,100 660,200 780,200 780,150 880,150 880,210 980,210 980,170 1080,170 1080,210 1200,210 1200,300" fill="black"/></svg>');
+    -webkit-mask-size:cover;mask-size:cover;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
+  /* moving rail-track on home */
+  .home-track{position:absolute;bottom:6vh;left:-200px;right:-200px;height:6px;background:repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0 14px, transparent 14px 28px);pointer-events:none}
+  .home-train{position:absolute;bottom:8vh;left:-160px;font-size:48px;animation:homeTrain 22s linear infinite;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4));pointer-events:none}
+  @keyframes homeTrain{
+    0%{left:-160px}
+    100%{left:110vw}
+  }
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+  .cp{position:absolute;top:-16px;border-radius:2px;animation:cFall linear forwards}
+  @keyframes cFall{from{top:-20px;opacity:1}to{top:110vh;opacity:0}}
+
+  /* ════════════ HEADER ════════════ */
+  .hdr{display:flex;align-items:center;justify-content:space-between;
+    padding:13px 18px;
+    background:rgba(12,22,34,.82);backdrop-filter:blur(8px);
+    border-bottom:2px solid rgba(255,255,255,.1);
+    position:sticky;top:0;z-index:200;transition:background .4s,border-color .4s}
+  .hdr.light{background:var(--paper);border-bottom-color:var(--ink)}
+  .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:rgba(255,255,255,.92)}
+  .hdr.light .hdr-brand{color:var(--ink)}
+  .hdr-brand svg{flex-shrink:0}
+  .hdr-brand-word{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.03em}
+  .hdr-right{display:flex;align-items:center;gap:10px}
+  .hdr-stars{display:flex;align-items:center;gap:5px;background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:5px 13px;font-family:var(--fd);font-weight:800;font-size:15px;color:var(--ink)}
+
+  /* ════════════ SCREENS ════════════ */
+  .screen{display:none;max-width:840px;margin:0 auto;padding:24px 16px 80px;animation:fadeUp .28s ease}
+  .screen.active{display:block}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ════════════ HOME ════════════ */
+  .home-hero{text-align:center;padding:30px 0 22px;position:relative;z-index:1}
+  .robot-anim{width:120px;height:120px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:78px;animation:robotBob 2.4s ease-in-out infinite;filter:drop-shadow(0 6px 18px rgba(255,194,52,.35))}
+  @keyframes robotBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+  .home-title{font-family:var(--fd);font-weight:800;font-size:clamp(28px,7vw,46px);letter-spacing:-.03em;line-height:1.04;color:var(--paper);margin-bottom:10px}
+  .home-title em{font-style:normal;background:var(--tomato);padding:1px 12px;border-radius:10px;color:#fff;display:inline-block}
+  .home-sub{font-size:15px;color:rgba(255,255,255,.72);margin-bottom:24px;line-height:1.55;padding:0 6px}
+
+  .factory-stamp{display:inline-flex;align-items:center;gap:6px;background:rgba(255,194,52,.15);border:1.5px solid rgba(255,194,52,.5);color:var(--mango);font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:18px}
+
+  /* Progress meter */
+  .progress-wrap{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15);border-radius:var(--r);padding:16px;margin-bottom:22px}
+  .progress-row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .progress-icon{width:50px;height:50px;border-radius:14px;background:var(--tomato);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;border:2px solid var(--ink)}
+  .progress-info{flex:1;min-width:0}
+  .progress-label{font-family:var(--fd);font-weight:800;font-size:14px;color:var(--paper);margin-bottom:4px}
+  .progress-bar-wrap{height:9px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden}
+  .progress-bar{height:100%;background:linear-gradient(90deg,var(--mango),var(--tomato));border-radius:999px;transition:width .8s ease}
+  .progress-sub{font-size:12px;color:rgba(255,255,255,.55);margin-top:5px}
+
+  /* room track */
+  .room-track{display:flex;gap:0;align-items:center;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+  .room-track::-webkit-scrollbar{height:4px}
+  .room-track::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:4px}
+  .room-node{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;min-width:54px}
+  .room-dot{width:42px;height:42px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .3s}
+  .room-dot.done{background:var(--forest);border-color:var(--forest)}
+  .room-dot.active{background:var(--tomato);border-color:var(--tomato);animation:dotPulse 1.4s ease-in-out infinite}
+  @keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,92,57,.5)}50%{box-shadow:0 0 0 10px rgba(255,92,57,0)}}
+  .room-name{font-size:9px;font-family:var(--fd);font-weight:700;color:rgba(255,255,255,.5);text-align:center;white-space:nowrap}
+  .room-name.done{color:#7ee8a2}.room-name.active{color:var(--tomato)}
+  .room-rail{flex:1;height:3px;background:rgba(255,255,255,.15);min-width:14px;position:relative;top:-14px;background-image:linear-gradient(to right,rgba(255,255,255,.4) 50%,transparent 50%);background-size:8px 3px}
+  .room-rail.done{background:var(--forest);background-image:none}
+
+  .sec-title{font-family:var(--fd);font-weight:800;font-size:18px;color:var(--paper);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+
+  .chapters-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:520px){.chapters-grid{grid-template-columns:1fr}}
+
+  .ch-card{border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--paper);transition:transform .17s,box-shadow .17s;text-align:left;display:block}
+  .ch-card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+  .ch-card.locked{opacity:.5;cursor:not-allowed}
+  .ch-card.locked:hover{transform:none;box-shadow:none}
+  .ch-thumb{padding:14px 16px;border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;background:var(--mango-bg)}
+  .ch-emoji{font-size:34px;line-height:1}
+  .ch-stars-row{display:flex;gap:2px}
+  .ch-star{font-size:16px;opacity:.22;filter:grayscale(.7)}
+  .ch-star.on{opacity:1;filter:none}
+  .ch-body{padding:12px 14px}
+  .ch-num{font-family:var(--fd);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+  .ch-concept{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--tomato);letter-spacing:.04em;margin-bottom:2px}
+  .ch-title{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.02em;margin-bottom:4px;line-height:1.15}
+  .ch-desc{font-size:12px;color:var(--muted);line-height:1.4}
+  .ch-status{margin-top:6px;font-family:var(--fd);font-weight:700;font-size:11.5px}
+  .ch-card.boss{border-color:var(--indigo)}
+  .ch-card.boss .ch-thumb{background:linear-gradient(135deg,#1a0030,#3d0060);color:#fff}
+  .ch-card.boss .ch-concept{color:#e879f9}
+
+  /* ════════════ CHAPTER INTRO ════════════ */
+  .back-btn{display:flex;align-items:center;gap:5px;font-family:var(--fd);font-weight:700;font-size:13px;color:var(--muted);margin-bottom:18px;padding:6px 10px;border-radius:8px;background:var(--paper-2);border:1.5px solid var(--line)}
+  .back-btn:hover{color:var(--ink);background:var(--mango-bg)}
+  .ch-hdr{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .ch-hdr-icon{font-size:46px;background:var(--paper-2);border:2.5px solid var(--ink);border-radius:var(--r);padding:8px 14px;flex-shrink:0;line-height:1}
+  .ch-hdr-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,5vw,32px);letter-spacing:-.03em;line-height:1.06}
+  .ch-hdr-tag{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--tomato);margin-bottom:3px;letter-spacing:.04em}
+
+  .story-card{background:var(--paper-2);border:2.5px solid var(--ink);border-radius:var(--r);padding:18px 18px 16px;margin-bottom:16px}
+  .story-card p{font-size:15px;line-height:1.65;margin-bottom:10px}
+  .story-card p:last-child{margin-bottom:0}
+  .story-card strong{background:var(--mango);padding:1px 6px;border-radius:6px}
+
+  .mentor-tip{background:var(--indigo);color:#fff;border-radius:var(--r);border:2.5px dashed rgba(255,255,255,.4);padding:14px 16px;margin-bottom:16px;display:flex;gap:11px;align-items:flex-start}
+  .mentor-ico{font-size:30px;flex-shrink:0;line-height:1}
+  .mentor-name{font-family:var(--fd);font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:2px}
+  .mentor-msg{font-size:13.5px;line-height:1.55}
+  .mentor-msg code{font-family:var(--fc);background:rgba(255,255,255,.18);padding:1px 5px;border-radius:4px;font-size:12.5px}
+
+  .start-btn{width:100%;background:var(--tomato);color:#fff;border:3px solid var(--ink);border-radius:var(--r);padding:16px;font-family:var(--fd);font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .17s,box-shadow .17s}
+  .start-btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+  .start-btn.boss-btn{background:linear-gradient(135deg,#7B3FA8,var(--indigo))}
+
+  /* ════════════ PUZZLE SHELL ════════════ */
+  .puz-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .puz-back{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-sm);padding:7px 11px;font-family:var(--fd);font-weight:700;font-size:13px;flex-shrink:0}
+  .puz-meta{flex:1;min-width:0}
+  .puz-ch-name{font-family:var(--fd);font-weight:800;font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .puz-bar-wrap{height:6px;background:var(--line);border-radius:999px;overflow:hidden}
+  .puz-bar{height:100%;background:var(--tomato);border-radius:999px;transition:width .4s ease}
+  .puz-num{font-family:var(--fd);font-weight:700;font-size:12px;color:var(--muted);flex-shrink:0}
+
+  .mission-card{background:var(--paper-2);border:2.5px solid var(--ink);border-radius:var(--r-lg);padding:18px 18px 14px;margin-bottom:14px}
+  .mission-label{font-family:var(--fd);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tomato);margin-bottom:6px;font-weight:800}
+  .mission-text{font-family:var(--fd);font-weight:800;font-size:clamp(16px,4vw,21px);letter-spacing:-.02em;line-height:1.3;margin-bottom:10px}
+  .mission-sub{font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:4px}
+
+  /* ════════════ TRACK & ROBOT (Chapter 1 etc) ════════════ */
+  .stage{background:linear-gradient(180deg,#0f1c2e,#1a2d44);border:2.5px solid var(--ink);border-radius:var(--r);padding:18px 14px;margin-bottom:14px;position:relative;overflow:hidden}
+  .stage-label{font-family:var(--fd);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mango);margin-bottom:10px;font-weight:800}
+
+  /* SVG track container */
+  .track-svg-wrap{display:flex;justify-content:center;align-items:center;padding:10px 0;min-height:200px}
+  .track-svg{display:block;max-width:100%;height:auto}
+
+  /* ════════════ BLOCK PALETTE ════════════ */
+  .palette{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:12px;margin-bottom:12px}
+  .palette-label{font-family:var(--fd);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .palette-blocks{display:flex;flex-wrap:wrap;gap:8px}
+
+  .blk{position:relative;display:inline-flex;align-items:center;gap:6px;
+    border:2.5px solid var(--ink);border-radius:10px;
+    padding:9px 13px 10px;
+    font-family:var(--fc);font-weight:700;font-size:13.5px;
+    color:#fff;background:var(--sea);
+    cursor:pointer;user-select:none;
+    transition:transform .12s,box-shadow .12s;
+    line-height:1.1;
+    box-shadow:0 3px 0 var(--ink)}
+  .blk:hover:not(.disabled){transform:translateY(-2px);box-shadow:0 5px 0 var(--ink)}
+  .blk:active{transform:translateY(0);box-shadow:0 2px 0 var(--ink)}
+  .blk.disabled{opacity:.45;cursor:not-allowed}
+  .blk .blk-id{font-size:10px;font-family:var(--fd);font-weight:700;color:rgba(255,255,255,.7);margin-left:4px}
+  .blk-tip{display:block;font-size:10px;font-weight:600;color:rgba(255,255,255,.78);font-family:var(--fb);margin-top:1px;letter-spacing:.02em}
+  .blk-stack{display:flex;flex-direction:column;align-items:flex-start;gap:0}
+  /* color variants */
+  .blk.c-move{background:var(--sea)}
+  .blk.c-turn{background:var(--mango);color:var(--ink);box-shadow:0 3px 0 var(--ink)}
+  .blk.c-turn .blk-tip,.blk.c-turn .blk-id{color:rgba(26,22,20,.65)}
+  .blk.c-stop{background:var(--tomato)}
+  .blk.c-action{background:var(--forest)}
+  .blk.c-control{background:var(--indigo)}
+  .blk.c-condition{background:var(--mawar)}
+  .blk.c-var{background:#7B3FA8}
+  .blk.c-fn{background:#e08a14;color:var(--ink);box-shadow:0 3px 0 var(--ink)}
+  .blk.c-fn .blk-tip,.blk.c-fn .blk-id{color:rgba(26,22,20,.65)}
+
+  /* program slot — vertical stack of selected blocks */
+  .program{background:var(--ink);border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;margin-bottom:14px;min-height:120px;position:relative}
+  .program-label{font-family:var(--fd);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mango);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+  .program-count{background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:2px 9px;font-size:11px;letter-spacing:.04em}
+  .program-list{display:flex;flex-direction:column;gap:6px;min-height:50px;
+    border:2px dashed rgba(255,255,255,.18);border-radius:10px;padding:8px;background:rgba(255,255,255,.03)}
+  .program-empty{color:rgba(255,255,255,.4);font-family:var(--fd);font-size:13px;text-align:center;padding:14px 6px;letter-spacing:.02em}
+  .pg-line{display:flex;align-items:center;gap:6px;color:#fff;font-family:var(--fc);font-size:13.5px;font-weight:700;padding:7px 10px;border-radius:8px;border:2px solid #fff;background:rgba(255,255,255,.06);position:relative;animation:lineIn .2s ease}
+  @keyframes lineIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+  .pg-line.l-move{background:#1FA9C7;border-color:#1FA9C7}
+  .pg-line.l-turn{background:#FFC234;border-color:#FFC234;color:var(--ink)}
+  .pg-line.l-stop{background:#FF5C39;border-color:#FF5C39}
+  .pg-line.l-action{background:#1F9D55;border-color:#1F9D55}
+  .pg-line.l-control{background:#2E3192;border-color:#2E3192}
+  .pg-line.l-condition{background:#E84BA0;border-color:#E84BA0}
+  .pg-line.l-var{background:#7B3FA8;border-color:#7B3FA8}
+  .pg-line.l-fn{background:#e08a14;border-color:#e08a14;color:var(--ink)}
+  .pg-line .pg-num{font-family:var(--fd);font-size:11px;font-weight:800;color:rgba(255,255,255,.7);min-width:18px;text-align:center}
+  .pg-line.l-turn .pg-num,.pg-line.l-fn .pg-num{color:rgba(26,22,20,.65)}
+  .pg-line .pg-x{margin-left:auto;font-size:14px;opacity:.7;cursor:pointer;padding:2px 6px;line-height:1}
+  .pg-line .pg-x:hover{opacity:1}
+  .pg-line.running{animation:lineFlash 0.6s ease}
+  @keyframes lineFlash{0%,100%{transform:scale(1)}50%{transform:scale(1.04);box-shadow:0 0 0 4px rgba(255,194,52,.5)}}
+  /* indented children for repeat/function */
+  .pg-line.indent{margin-left:24px}
+  .pg-line.indent2{margin-left:48px}
+
+  .program-actions{display:flex;gap:8px;margin-top:10px}
+  .act{flex:1;border:2.5px solid var(--ink);border-radius:10px;padding:11px;font-family:var(--fd);font-weight:800;font-size:14px;text-align:center;transition:transform .14s,box-shadow .14s;display:flex;align-items:center;justify-content:center;gap:5px}
+  .act:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+  .act:disabled{opacity:.5;cursor:not-allowed}
+  .act.run{background:var(--forest);color:#fff;flex:1.4}
+  .act.reset{background:var(--paper-2);color:var(--ink)}
+  .act.undo{background:var(--mango);color:var(--ink)}
+
+  /* toast */
+  .toast{border-radius:var(--r);padding:13px 16px;margin-top:12px;font-family:var(--fd);font-weight:700;font-size:14px;display:none;align-items:flex-start;gap:9px;animation:toastIn .22s ease;line-height:1.4}
+  .toast.show{display:flex}
+  .toast.ok{background:var(--forest-bg);border:2px solid var(--forest);color:#0e6032}
+  .toast.bad{background:var(--tomato-bg);border:2px solid var(--tomato);color:#c73013}
+  .toast-expl{font-weight:500;font-size:12.5px;margin-top:2px;display:block}
+  @keyframes toastIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+  .nxt-btn{width:100%;margin-top:12px;background:var(--ink);color:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;font-family:var(--fd);font-weight:800;font-size:15px;display:none;transition:opacity .15s}
+  .nxt-btn.show{display:block}
+  .nxt-btn:hover{opacity:.85}
+
+  /* ════════════ CONDITION BUILDER (Chapter 2) ════════════ */
+  .cond-builder{background:var(--paper-2);border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;margin-bottom:12px}
+  .cond-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;font-family:var(--fc);font-weight:700;font-size:13px}
+  .cond-kw{background:var(--indigo);color:#fff;padding:6px 10px;border-radius:8px;font-family:var(--fd);font-weight:800;font-size:12px;letter-spacing:.04em}
+  .cond-kw.then{background:var(--mawar)}
+  .cond-pick{border:2.5px dashed var(--ink);border-radius:8px;padding:6px 10px;background:#fff;cursor:pointer;font-family:var(--fc);font-weight:700;font-size:13px;min-width:60px;text-align:center}
+  .cond-pick.chosen{background:var(--mango);border-style:solid}
+  .cond-pick.err{background:var(--tomato-bg);border-color:var(--tomato)}
+  .cond-options{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .cond-opt{border:2px solid var(--ink);border-radius:8px;padding:6px 10px;background:#fff;font-family:var(--fc);font-weight:700;font-size:12.5px;cursor:pointer;transition:transform .12s}
+  .cond-opt:hover:not(.disabled){background:var(--mango-bg)}
+  .cond-opt.sel{background:var(--mango)}
+  .cond-opt.disabled{opacity:.5;cursor:not-allowed}
+
+  /* signal stage */
+  .signal-stage{display:flex;align-items:center;justify-content:center;gap:16px;padding:8px 4px;flex-wrap:wrap}
+  .signal-light{width:54px;height:54px;border-radius:50%;border:3px solid var(--ink);background:#444;box-shadow:inset 0 4px 8px rgba(0,0,0,.5);transition:background .3s,box-shadow .3s}
+  .signal-light.red{background:radial-gradient(circle at 35% 30%,#ff8d70,#cc1a00);box-shadow:0 0 22px rgba(255,80,30,.7),inset 0 4px 8px rgba(0,0,0,.3)}
+  .signal-light.green{background:radial-gradient(circle at 35% 30%,#7fe89c,#0c8f37);box-shadow:0 0 22px rgba(31,157,85,.7),inset 0 4px 8px rgba(0,0,0,.3)}
+  .signal-light.yellow{background:radial-gradient(circle at 35% 30%,#ffe28a,#d49400);box-shadow:0 0 22px rgba(255,194,52,.7),inset 0 4px 8px rgba(0,0,0,.3)}
+
+  .sit-card{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.18);border-radius:12px;padding:10px 12px;color:#fff;font-family:var(--fc);font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px}
+  .sit-card .em{font-size:22px}
+
+  /* ════════════ REPEAT NUMBER PICKER (Chapter 3) ════════════ */
+  .num-picker{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+  .num-pick-btn{width:42px;height:42px;border:2.5px solid var(--ink);border-radius:10px;background:var(--paper);font-family:var(--fd);font-weight:800;font-size:18px;cursor:pointer;transition:transform .1s,box-shadow .1s}
+  .num-pick-btn:hover:not(.disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+  .num-pick-btn.sel{background:var(--mango);box-shadow:3px 3px 0 var(--ink);transform:translate(-2px,-2px)}
+  .num-pick-btn.disabled{opacity:.5}
+
+  /* train cars */
+  .cars-row{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;padding:8px 0}
+  .car{width:32px;height:24px;border-radius:5px;border:2px solid var(--ink);background:#5a6d83;position:relative;transition:background .3s}
+  .car.clean{background:linear-gradient(135deg,#1FA9C7,#79e2ff);box-shadow:0 0 8px rgba(31,169,199,.6)}
+  .car::before,.car::after{content:'';position:absolute;bottom:-5px;width:7px;height:7px;border-radius:50%;background:var(--ink)}
+  .car::before{left:3px}.car::after{right:3px}
+
+  /* ════════════ VARIABLE BOXES (Chapter 4) ════════════ */
+  .mem-panel{background:linear-gradient(180deg,#142133,#1f3552);border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;margin-bottom:12px}
+  .mem-label{font-family:var(--fd);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mango);margin-bottom:10px;font-weight:800}
+  .mem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+  .mem-box{background:#fff;border:2px solid var(--ink);border-radius:10px;padding:10px;text-align:center}
+  .mem-name{font-family:var(--fc);font-weight:700;font-size:12px;color:var(--muted);margin-bottom:4px}
+  .mem-val{font-family:var(--fd);font-weight:800;font-size:24px;color:var(--ink);min-height:30px;display:flex;align-items:center;justify-content:center;transition:transform .2s,color .3s}
+  .mem-val.bump{animation:memBump .35s ease}
+  @keyframes memBump{0%{transform:scale(1)}50%{transform:scale(1.25);color:var(--tomato)}100%{transform:scale(1)}}
+  .mem-val.text{font-size:16px}
+
+  .var-builder{background:var(--paper-2);border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;margin-bottom:12px}
+  .var-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px;font-family:var(--fc);font-weight:700;font-size:13.5px}
+  .var-row:last-child{margin-bottom:0}
+  .var-tag{background:#7B3FA8;color:#fff;padding:5px 9px;border-radius:7px;font-family:var(--fc);font-weight:700;font-size:12.5px}
+  .var-op{font-family:var(--fc);font-weight:800;font-size:16px;color:var(--muted)}
+  .var-inp{border:2.5px solid var(--ink);border-radius:8px;padding:7px 10px;font-family:var(--fc);font-weight:700;font-size:14px;width:80px;text-align:center;background:#fff;outline:none}
+  .var-inp:focus{border-color:var(--tomato);background:var(--mango-bg)}
+  .var-inp.ok{border-color:var(--forest);background:var(--forest-bg)}
+  .var-inp.bad{border-color:var(--tomato);background:var(--tomato-bg)}
+  .var-pill{display:inline-flex;align-items:center;gap:5px;background:#fff;border:2px solid var(--ink);border-radius:8px;padding:5px 9px;cursor:pointer;font-family:var(--fc);font-weight:700;font-size:12.5px}
+  .var-pill.sel{background:var(--mango)}
+
+  /* ════════════ FUNCTION ASSEMBLER (Chapter 5) ════════════ */
+  .fn-def{background:#1a2438;border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;margin-bottom:12px;color:#fff}
+  .fn-def-head{font-family:var(--fc);font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+  .fn-kw{background:#e08a14;color:var(--ink);padding:4px 9px;border-radius:6px;font-family:var(--fd);font-weight:800;font-size:12px}
+  .fn-name{background:rgba(255,255,255,.15);padding:4px 9px;border-radius:6px}
+  .fn-body{background:rgba(255,255,255,.05);border:2px dashed rgba(255,255,255,.2);border-radius:10px;padding:8px;min-height:60px;display:flex;flex-direction:column;gap:6px}
+  .fn-body-empty{color:rgba(255,255,255,.4);font-family:var(--fd);font-size:13px;text-align:center;padding:14px 4px}
+  .fn-line{font-family:var(--fc);font-size:13px;font-weight:700;color:#fff;background:rgba(255,255,255,.1);padding:7px 10px;border-radius:8px;display:flex;align-items:center;gap:6px;padding-left:18px}
+  .fn-line .pg-x{margin-left:auto;font-size:14px;opacity:.7;cursor:pointer;padding:2px 6px;line-height:1}
+  .fn-line .pg-x:hover{opacity:1}
+
+  /* ════════════ COMPLETE SCREEN ════════════ */
+  .done-hero{text-align:center;padding:24px 0 18px}
+  .done-badge{font-size:78px;line-height:1;margin-bottom:14px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+  @keyframes pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+  .done-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,5.5vw,36px);letter-spacing:-.03em;margin-bottom:8px}
+  .done-stars{font-size:42px;margin:14px 0;animation:starsIn .5s ease .2s both;letter-spacing:4px}
+  @keyframes starsIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+  .done-msg{font-size:14px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.6;padding:0 12px}
+  .done-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .act-btn{border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;font-family:var(--fd);font-weight:800;font-size:13.5px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s;line-height:1.2}
+  .act-btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--ink)}
+  .act-btn.primary{background:var(--tomato);color:#fff}
+  .act-btn.secondary{background:var(--paper-2);color:var(--ink)}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .stat-cell{background:var(--paper-2);border:2px solid var(--ink);border-radius:12px;padding:12px;text-align:center}
+  .stat-cell-val{font-family:var(--fd);font-weight:800;font-size:24px;letter-spacing:-.03em}
+  .stat-cell-lbl{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-family:var(--fd);font-weight:700}
+
+  /* ALL DONE */
+  .all-done-wrap{text-align:center;padding:28px 0}
+  .all-done-anim{font-size:72px;display:inline-block;animation:robotBob 2s ease-in-out infinite;margin-bottom:10px}
+  .all-done-title{font-family:var(--fd);font-weight:800;font-size:clamp(24px,6vw,40px);letter-spacing:-.03em;margin-bottom:10px}
+
+  /* train animation on success */
+  @keyframes trainPuff{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  .train-svg .train-body{animation:trainPuff 0.6s ease-in-out infinite}
+  .train-svg .train-wheel{transform-origin:center;animation:wheelSpin 0.6s linear infinite}
+  @keyframes wheelSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .train-svg.idle .train-body,.train-svg.idle .train-wheel{animation:none}
+
+  /* tooltip below blocks for clarity */
+  .blk-grp{display:inline-flex;flex-direction:column;align-items:stretch}
+
+  /* journey log */
+  .journey-log{background:#0a0f17;color:#7ee8a2;border:2px solid var(--ink);border-radius:10px;padding:10px 12px;margin-top:10px;font-family:var(--fc);font-size:12.5px;line-height:1.55;max-height:160px;overflow-y:auto}
+  .journey-log .log-line{padding:1px 0}
+  .journey-log .log-line.warn{color:#ffd166}
+  .journey-log .log-line.err{color:#ff7e6b}
+
+  /* hint button */
+  .hint-btn{display:inline-flex;align-items:center;gap:5px;background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:6px 12px;font-family:var(--fd);font-weight:800;font-size:12px;margin-top:8px}
+  .hint-box{background:var(--mango-bg);border:2px dashed var(--mango);border-radius:10px;padding:11px 13px;margin-top:8px;font-size:13px;line-height:1.5;display:none}
+  .hint-box.show{display:block;animation:toastIn .2s ease}
+
+  /* shake on wrong */
+  @keyframes screenShake{0%,100%{transform:translate(0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(3px,-3px)}}
+  .shake{animation:screenShake .35s ease}
+
+  /* tiny "what you'll learn" pill */
+  .learn-pill{display:inline-block;background:var(--sea-bg);border:1.5px solid var(--sea);color:var(--sea);font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.06em;padding:3px 8px;border-radius:6px;text-transform:uppercase;margin-top:8px}
+</style>
+</head>
+<body>
+
+<div id="factoryBg">
+  <div class="factory-silhouette"></div>
+  <div class="home-track"></div>
+  <div class="home-train">🚂</div>
+</div>
+<div id="confetti"></div>
+
+<header class="hdr" id="mainHdr">
+  <a href="/kids.html" class="hdr-brand">
+    <svg width="22" height="22" viewBox="0 0 100 100" fill="none">
+      <circle cx="38" cy="50" r="22" fill="none" stroke="currentColor" stroke-width="14"/>
+      <rect x="54" y="28" width="14" height="44" fill="currentColor"/>
+      <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+    </svg>
+    <span class="hdr-brand-word">← Kids Hub</span>
+  </a>
+  <div class="hdr-right">
+    <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+  </div>
+</header>
+
+<!-- ═══════════ HOME SCREEN ═══════════ -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="factory-stamp">⚙ Pabrik Robot KAI</div>
+    <div class="robot-anim">🤖</div>
+    <h1 class="home-title">Halo, <em>Insinyur Rayyan!</em></h1>
+    <p class="home-sub">Kamu adalah <strong style="color:var(--mango)">Insinyur KAI</strong> yang mengajari robot kereta cara bekerja. Selesaikan tiap ruang pabrik untuk membuat robot makin pintar! 🚂⚙</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-row">
+      <div class="progress-icon">🏭</div>
+      <div class="progress-info">
+        <div class="progress-label">Kemajuan Pabrik</div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="ovBar" style="width:0%"></div></div>
+        <div class="progress-sub" id="ovSub">0 dari 6 ruang selesai</div>
+      </div>
+    </div>
+    <div class="room-track" id="roomTrack"></div>
+  </div>
+
+  <div class="sec-title">🚪 Ruang Pabrik</div>
+  <div class="chapters-grid" id="chGrid"></div>
+</div>
+
+<!-- ═══════════ CHAPTER INTRO ═══════════ -->
+<div class="screen" id="sIntro">
+  <button class="back-btn" onclick="goHome()">← Kembali ke Pabrik</button>
+  <div class="ch-hdr">
+    <div class="ch-hdr-icon" id="introIcon">🚂</div>
+    <div>
+      <div class="ch-hdr-tag" id="introTag">RUANG 1</div>
+      <div class="ch-hdr-title" id="introTitle">Perintah Berurutan</div>
+    </div>
+  </div>
+  <div class="story-card" id="introStory"></div>
+  <div class="mentor-tip">
+    <div class="mentor-ico">🧑‍🔧</div>
+    <div>
+      <div class="mentor-name">Pak Adhi · Kepala Insinyur</div>
+      <div class="mentor-msg" id="introMentor">Robot KAI hanya mengerti perintah satu per satu. Tugasmu: susun perintah dengan urutan yang benar!</div>
+    </div>
+  </div>
+  <button class="start-btn" id="introStart" onclick="startPuzzles()">⚙ Mulai Membangun Robot</button>
+</div>
+
+<!-- ═══════════ PUZZLE SCREEN ═══════════ -->
+<div class="screen" id="sPuzzle">
+  <div class="puz-hdr">
+    <button class="puz-back" onclick="confirmExit()">← Pabrik</button>
+    <div class="puz-meta">
+      <div class="puz-ch-name" id="puzChName">Ruang 1 · Perintah Berurutan</div>
+      <div class="puz-bar-wrap"><div class="puz-bar" id="puzBar" style="width:0%"></div></div>
+    </div>
+    <div class="puz-num" id="puzNum">1/3</div>
+  </div>
+  <div class="mission-card">
+    <div class="mission-label">🎯 Misi</div>
+    <div class="mission-text" id="missionText"></div>
+    <div class="mission-sub" id="missionSub"></div>
+  </div>
+  <div id="puzBody"></div>
+  <button class="hint-btn" id="hintBtn" onclick="toggleHint()" style="display:none">💡 Petunjuk</button>
+  <div class="hint-box" id="hintBox"></div>
+  <div class="toast" id="toast"></div>
+  <button class="nxt-btn" id="nxtBtn" onclick="nextPuzzle()">Lanjut ▶</button>
+</div>
+
+<!-- ═══════════ COMPLETE SCREEN ═══════════ -->
+<div class="screen" id="sDone">
+  <div class="done-hero">
+    <div class="done-badge" id="doneBadge">🎉</div>
+    <div class="done-title" id="doneTitle">Ruang Selesai!</div>
+    <div class="done-stars" id="doneStars">⭐⭐⭐</div>
+    <div class="done-msg" id="doneMsg"></div>
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="stat-cell-val" id="doneStarsNum">3</div>
+        <div class="stat-cell-lbl">Bintang</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-val" id="doneRetries">0</div>
+        <div class="stat-cell-lbl">Kesalahan</div>
+      </div>
+    </div>
+    <div class="done-actions">
+      <button class="act-btn secondary" onclick="retryChapter()">🔁 Ulangi</button>
+      <button class="act-btn primary" onclick="goHome()">Pabrik ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ ALL DONE ═══════════ -->
+<div class="screen" id="sAllDone">
+  <div class="all-done-wrap">
+    <div class="all-done-anim">🚂</div>
+    <h1 class="all-done-title" style="color:var(--paper)">Insinyur Robot KAI Sejati!</h1>
+    <p style="color:rgba(255,255,255,.8);font-size:15px;margin-bottom:18px;line-height:1.6">Kamu sudah menguasai semua ruang di Pabrik Robot KAI! Robot-robotmu sekarang siap menjelajah dari Jakarta sampai Surabaya. 🚂⭐</p>
+    <div style="color:var(--mango);font-family:var(--fd);font-weight:800;font-size:28px;margin:16px 0" id="allDoneStars">⭐ 18 / 18</div>
+    <button class="act-btn primary" onclick="goHome()" style="max-width:300px;margin:0 auto">🏭 Kembali ke Pabrik</button>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   AUDIO (Web Audio API generated sounds)
+════════════════════════════════════════ */
+const AX = {
+  ctx: null,
+  init(){ if(this.ctx) return; try{ this.ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} },
+  tone(freq, dur, vol=0.18, type='sine', delay=0){
+    if(!this.ctx) return;
+    const t = this.ctx.currentTime + delay;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(t); o.stop(t + dur + 0.02);
+  },
+  slide(from, to, dur, vol=0.18, type='sine'){
+    if(!this.ctx) return;
+    const t = this.ctx.currentTime;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(from, t);
+    o.frequency.exponentialRampToValueAtTime(to, t + dur);
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(t); o.stop(t + dur + 0.02);
+  },
+  play(type){
+    this.init();
+    if(!this.ctx) return;
+    if(type === 'click'){ this.tone(620, 0.05, 0.08, 'square'); }
+    else if(type === 'snap'){ this.tone(880, 0.05, 0.1, 'square'); setTimeout(()=>this.tone(1100, 0.04, 0.08, 'square'), 30); }
+    else if(type === 'wrong'){ this.tone(220, 0.16, 0.16, 'sawtooth'); setTimeout(()=>this.tone(180, 0.22, 0.14, 'sawtooth'), 150); }
+    else if(type === 'horn'){ // train horn
+      this.tone(180, 0.4, 0.22, 'sawtooth');
+      this.tone(240, 0.4, 0.18, 'sawtooth');
+      setTimeout(()=>{ this.tone(180, 0.5, 0.22, 'sawtooth'); this.tone(240, 0.5, 0.18, 'sawtooth'); }, 480);
+    }
+    else if(type === 'chime'){
+      [523, 659, 784, 1047].forEach((f,i)=> setTimeout(()=>this.tone(f, 0.28, 0.16), i*100));
+    }
+    else if(type === 'fanfare'){
+      [523, 659, 784, 880, 1047, 1318].forEach((f,i)=> setTimeout(()=>this.tone(f, 0.3, 0.18), i*100));
+      setTimeout(()=>this.play('horn'), 700);
+    }
+    else if(type === 'step'){ this.tone(440, 0.06, 0.1, 'triangle'); }
+    else if(type === 'whoosh'){ this.slide(800, 200, 0.25, 0.12, 'sawtooth'); }
+    else if(type === 'tick'){ this.tone(1200, 0.04, 0.08, 'square'); }
+  }
+};
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+const S = {
+  chapterIdx: null,
+  puzIdx: 0,
+  retries: 0,        // for current chapter
+  totalRetries: 0,   // for current puzzle (resets each puzzle attempt session)
+  perfectChapter: true,
+  totalStars: 0,
+  progress: {},
+  current: null,     // active puzzle object
+};
+
+const SAVE_KEY = 'rayyanCoding';
+function loadState(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(raw){
+      const d = JSON.parse(raw);
+      S.totalStars = d.totalStars || 0;
+      S.progress = d.progress || {};
+    }
+  }catch(e){}
+  document.getElementById('starCount').textContent = S.totalStars;
+}
+function saveState(){
+  try{
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ totalStars: S.totalStars, progress: S.progress }));
+  }catch(e){}
+}
+
+/* ════════════════════════════════════════
+   CHAPTERS DEFINITION
+════════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    id:'c1', emoji:'🚂', tag:'RUANG 1',
+    title:'Perintah Berurutan',
+    concept:'Urutan langkah',
+    learn:'Algoritma',
+    desc:'Ajari robot menempuh rute Jakarta–Surabaya satu langkah demi satu langkah.',
+    color:'#1FA9C7',
+    mentor:'Robot KAI hanya mengerti perintah satu per satu. Kalau urutannya salah, dia akan keluar rel! Coba susun perintah yang tepat.'
+  },
+  {
+    id:'c2', emoji:'🚦', tag:'RUANG 2',
+    title:'Kalau… Maka…',
+    concept:'Membuat keputusan',
+    learn:'Kondisional',
+    desc:'Ajari robot membaca sinyal: kapan jalan, kapan berhenti.',
+    color:'#E84BA0',
+    mentor:'Sinyal kereta bisa berubah! Robot perlu tahu: <code>IF</code> sinyal merah, <code>THEN</code> berhenti. Susun aturannya!'
+  },
+  {
+    id:'c3', emoji:'🔁', tag:'RUANG 3',
+    title:'Ulangi Terus',
+    concept:'Pengulangan',
+    learn:'Loops',
+    desc:'Membersihkan 10 gerbong dengan satu perintah ajaib, bukan 10 perintah!',
+    color:'#1F9D55',
+    mentor:'Menulis perintah yang sama 10 kali itu lelah. Pakai <code>repeat()</code> — robot akan ulangi sendiri!'
+  },
+  {
+    id:'c4', emoji:'📦', tag:'RUANG 4',
+    title:'Kotak Memori',
+    concept:'Menyimpan informasi',
+    learn:'Variables',
+    desc:'Buat robot ingat: jumlah penumpang, kecepatan, dan tujuan.',
+    color:'#7B3FA8',
+    mentor:'Robot perlu otak! Pakai kotak memori untuk menyimpan angka dan kata. Kotak bisa ditambah, dikurang, atau diganti.'
+  },
+  {
+    id:'c5', emoji:'📜', tag:'RUANG 5',
+    title:'Resep Rahasia',
+    concept:'Membuat perintah baru',
+    learn:'Functions',
+    desc:'Ajari robot resep "berhenti di stasiun" — sekali ajar, terus pakai.',
+    color:'#e08a14',
+    mentor:'Daripada ulang 6 perintah tiap stasiun, kita ajari robot satu "resep". Lalu cukup panggil <code>stop_at_station()</code>!'
+  },
+  {
+    id:'c6', emoji:'🏆', tag:'BOSS', boss:true,
+    title:'Misi Akhir: Jakarta → Surabaya',
+    concept:'Pakai semua jurus!',
+    learn:'Boss Battle',
+    desc:'Program robot untuk rute lengkap 5 stasiun, dengan sinyal, penumpang, dan resep!',
+    color:'#7B3FA8',
+    mentor:'Saatnya menjadi Insinyur KAI Sejati! Pakai semua yang kamu pelajari: urutan, IF, ulangi, kotak memori, dan resep. Kamu pasti bisa!'
+  }
+];
+
+const CHAPTER_STORIES = {
+  c1: `<p>Robot KAI baru saja keluar dari pabrik. Dia <strong>belum tahu jalan</strong> menuju stasiun berikutnya! Tugasmu adalah memberikan urutan perintah yang tepat.</p>
+       <p>Robot hanya mengerti 4 perintah: <code>move_forward(1)</code> untuk maju, <code>turn_left()</code> belok kiri, <code>turn_right()</code> belok kanan, dan <code>stop()</code> untuk berhenti.</p>
+       <p>Klik blok perintah secara berurutan, lalu tekan <strong>Run ▶</strong> untuk melihat robotmu beraksi!</p>
+       <span class="learn-pill">Belajar: urutan langkah</span>`,
+  c2: `<p>Sekarang robot bisa jalan, tapi di rel ada <strong>sinyal kereta</strong>! Kalau sinyalnya merah dan robot tetap jalan… bahaya!</p>
+       <p>Robot perlu belajar membuat <strong>keputusan</strong>: <code>IF signal == "red" THEN stop()</code>. Artinya: "Kalau sinyal merah, MAKA berhenti."</p>
+       <p>Setiap misi punya situasi berbeda. Pilih kondisi dan aksi yang tepat!</p>
+       <span class="learn-pill">Belajar: membuat aturan</span>`,
+  c3: `<p>Robot harus membersihkan <strong>10 gerbong</strong> sebelum kereta jalan! Kalau kamu tulis <code>clean()</code> sepuluh kali, jari kamu pegal!</p>
+       <p>Ada cara cerdas: gunakan <code>repeat(10) { clean() }</code> — artinya "ulangi <code>clean()</code> sebanyak 10 kali".</p>
+       <p>Robot juga bisa mengulang sampai sesuatu selesai dengan <code>repeat_until(...)</code>. Kita coba!</p>
+       <span class="learn-pill">Belajar: mengulang otomatis</span>`,
+  c4: `<p>Robot perlu <strong>ingat</strong> banyak hal: ada berapa penumpang? Kecepatannya berapa? Mau ke stasiun mana?</p>
+       <p>Kita buatkan <strong>kotak memori</strong> dengan nama, lalu isi nilainya. Contoh: <code>passengers = 5</code> artinya "kotak penumpang berisi 5".</p>
+       <p>Kotak bisa diubah: <code>passengers = passengers + 1</code> artinya "tambah 1 penumpang".</p>
+       <span class="learn-pill">Belajar: menyimpan data</span>`,
+  c5: `<p>Setiap berhenti di stasiun, robot harus melakukan 6 perintah: pelan, berhenti, buka pintu, tunggu, tutup pintu, jalan lagi. Lelah!</p>
+       <p>Kita buat <strong>resep rahasia</strong> bernama <code>stop_at_station()</code> yang berisi semua perintah itu. Sekali ajar — selamanya pakai!</p>
+       <p>Setelah resepnya jadi, kamu cukup panggil namanya. Robot tahu apa yang harus dilakukan.</p>
+       <span class="learn-pill">Belajar: membuat perintah baru</span>`,
+  c6: `<p><strong>Tugas akhir!</strong> Program robot untuk perjalanan Jakarta → Surabaya, melewati 5 stasiun.</p>
+       <p>Kamu akan pakai SEMUA yang sudah dipelajari: urutan, IF/THEN, repeat, kotak memori <code>passengers</code>, dan resep <code>handle_station()</code>.</p>
+       <p>Robot KAI andalanmu menunggu perintah, Insinyur Rayyan! 🚂⭐</p>
+       <span class="learn-pill" style="background:#f3e5ff;border-color:#7B3FA8;color:#7B3FA8">Boss Battle</span>`,
+};
+
+/* ════════════════════════════════════════
+   PUZZLES per chapter (3 each, except boss = 1 big)
+════════════════════════════════════════ */
+// Chapter 1: sequencing on a track
+// Each puzzle defines a starting orientation + path + correct command sequence
+const PUZZLES = {
+  c1: [
+    {
+      mission: 'Bawa robot dari A ke B!',
+      sub: 'Klik blok perintah satu per satu, lalu tekan Run ▶.',
+      stations: [{x:80,y:160,label:'A',start:true},{x:280,y:160,label:'B',goal:true}],
+      track: [{from:0,to:1,type:'straight'}],
+      startDir: 0, // 0=right
+      answer: ['move_forward','move_forward','stop'],
+      palette: ['move_forward','turn_left','turn_right','stop'],
+      hint: 'Robot perlu maju 2 kali ke kanan, lalu berhenti di B.'
+    },
+    {
+      mission: 'Rute belok! A → kanan → atas → B.',
+      sub: 'Hati-hati: setelah maju 2x, robot harus belok kiri ke atas.',
+      stations:[{x:60,y:200,label:'A',start:true},{x:220,y:200,corner:true},{x:220,y:80,label:'B',goal:true}],
+      track:[{from:0,to:1,type:'straight'},{from:1,to:2,type:'straight'}],
+      startDir: 0,
+      answer: ['move_forward','move_forward','turn_left','move_forward','move_forward','stop'],
+      palette: ['move_forward','turn_left','turn_right','stop'],
+      hint: 'Maju 2x → belok KIRI (karena B di atas dan robot menghadap kanan) → maju 2x → stop.'
+    },
+    {
+      mission: 'Rute zig-zag: A → kanan → bawah → kanan → B.',
+      sub: 'Tiga belokan! Pikirkan ke mana robot menghadap setelah tiap belok.',
+      stations:[{x:50,y:80,label:'A',start:true},{x:140,y:80,corner:true},{x:140,y:180,corner:true},{x:280,y:180,label:'B',goal:true}],
+      track:[{from:0,to:1,type:'straight'},{from:1,to:2,type:'straight'},{from:2,to:3,type:'straight'}],
+      startDir: 0,
+      answer: ['move_forward','turn_right','move_forward','move_forward','turn_left','move_forward','move_forward','stop'],
+      palette: ['move_forward','turn_left','turn_right','stop'],
+      hint: 'Mulai menghadap kanan. Maju 1 → belok KANAN (sekarang menghadap bawah) → maju 2 → belok KIRI (sekarang menghadap kanan) → maju 2 → stop.'
+    }
+  ],
+  // Chapter 2: conditionals
+  c2: [
+    {
+      mission: 'Sinyal MERAH muncul. Ajari robot keputusan yang tepat!',
+      sub: 'Bangun aturan: IF signal == ___ THEN ___',
+      signal: 'red',
+      condParts: [
+        { kw:'IF', label:'signal ==', options:['"red"','"green"','"yellow"'], correct:'"red"' },
+        { kw:'THEN', label:'aksi', options:['stop()','move_forward(1)','open_door()'], correct:'stop()' }
+      ],
+      hint: 'Sinyal merah = bahaya. Robot harus stop().'
+    },
+    {
+      mission: 'Sinyal HIJAU dan terowongan AMAN. Robot boleh apa?',
+      sub: 'Gabungkan 2 kondisi pakai "dan" (AND).',
+      signal: 'green',
+      tunnel: 'clear',
+      condParts: [
+        { kw:'IF', label:'signal ==', options:['"red"','"green"','"yellow"'], correct:'"green"' },
+        { kw:'AND', label:'tunnel ==', options:['"clear"','"blocked"'], correct:'"clear"' },
+        { kw:'THEN', label:'aksi', options:['stop()','move_forward(1)','open_door()'], correct:'move_forward(1)' }
+      ],
+      hint: 'Sinyal hijau DAN terowongan kosong → robot bisa maju.'
+    },
+    {
+      mission: 'Penumpang ramai (lebih dari 10). Buka pintu otomatis!',
+      sub: 'Pakai operator > (lebih dari).',
+      passengers: 15,
+      condParts: [
+        { kw:'IF', label:'passengers', options:['> 10','< 10','== 0'], correct:'> 10' },
+        { kw:'THEN', label:'aksi', options:['stop()','close_door()','open_door()'], correct:'open_door()' }
+      ],
+      hint: 'Jumlah penumpang 15 (lebih dari 10) → buka pintu.'
+    }
+  ],
+  // Chapter 3: loops
+  c3: [
+    {
+      mission: 'Bersihkan 5 gerbong dengan repeat()!',
+      sub: 'Pilih angka yang tepat di dalam repeat(__).',
+      cars: 5,
+      action: 'clean()',
+      correctN: 5,
+      mode: 'repeat',
+      hint: 'Ada 5 gerbong → repeat(5).'
+    },
+    {
+      mission: 'Cek tiket 8 penumpang dengan repeat()!',
+      sub: 'Berapa kali robot harus mengulang check_ticket()?',
+      cars: 8,
+      action: 'check_ticket()',
+      correctN: 8,
+      mode: 'repeat',
+      hint: 'Setiap penumpang dicek sekali → 8 penumpang → repeat(8).'
+    },
+    {
+      mission: 'Panggil penumpang sampai semua duduk!',
+      sub: 'Pakai repeat_until() — ulang sampai kondisi tercapai.',
+      mode: 'repeat_until',
+      conditionOptions: ['all_passengers_seated','train_empty','door_open'],
+      actionOptions: ['call_next_passenger()','close_door()','stop()'],
+      correctCond: 'all_passengers_seated',
+      correctAction: 'call_next_passenger()',
+      hint: 'Ulang panggil penumpang SAMPAI semua duduk → repeat_until(all_passengers_seated) { call_next_passenger() }.'
+    }
+  ],
+  // Chapter 4: variables
+  c4: [
+    {
+      mission: 'Buat kotak memori "speed" dan isi dengan 80.',
+      sub: 'Robot akan jalan dengan kecepatan dari kotak speed.',
+      mode: 'assign',
+      varName: 'speed',
+      correctValue: 80,
+      hint: 'Ketik 80 di kotak isi nilai.'
+    },
+    {
+      mission: 'Naik 3 penumpang! Tambah passengers sebanyak 3.',
+      sub: 'passengers mulai dari 5. Setelah 3 naik, jadi berapa?',
+      mode: 'increment',
+      varName: 'passengers',
+      startValue: 5,
+      addValue: 3,
+      correctFinal: 8,
+      hint: 'passengers = passengers + 3 → 5 + 3 = 8.'
+    },
+    {
+      mission: 'Atur tujuan robot ke "Surabaya".',
+      sub: 'Pilih kota yang benar untuk variabel destination.',
+      mode: 'string',
+      varName: 'destination',
+      options: ['"Jakarta"','"Bandung"','"Surabaya"','"Yogya"'],
+      correct: '"Surabaya"',
+      hint: 'Tujuan akhir rute kita = Surabaya.'
+    }
+  ],
+  // Chapter 5: functions
+  c5: [
+    {
+      mission: 'Susun resep stop_at_station() — urutan benar!',
+      sub: 'Tap blok perintah dalam urutan yang masuk akal.',
+      mode: 'define',
+      fnName: 'stop_at_station',
+      palette: ['slow_down','stop','open_door','wait(30)','close_door','move_forward(1)'],
+      answer: ['slow_down','stop','open_door','wait(30)','close_door','move_forward(1)'],
+      hint: 'Mulai dari pelankan, lalu berhenti, buka, tunggu, tutup, jalan lagi.'
+    },
+    {
+      mission: 'Panggil stop_at_station() sebanyak 3 stasiun!',
+      sub: 'Sekarang resep sudah jadi. Cukup panggil 3 kali.',
+      mode: 'call',
+      fnName: 'stop_at_station',
+      timesNeeded: 3,
+      hint: 'Tap stop_at_station() 3 kali → robot pintar ulang resepnya sendiri.'
+    },
+    {
+      mission: 'Gabungkan: pakai repeat(4) untuk stop_at_station()!',
+      sub: 'Kombinasi resep + repeat = super efisien.',
+      mode: 'combo',
+      fnName: 'stop_at_station',
+      timesNeeded: 4,
+      hint: 'Pilih repeat lalu angka 4, dan isi dengan stop_at_station().'
+    }
+  ],
+  // Chapter 6: boss battle (multi-step)
+  c6: [
+    {
+      mission: 'Tugas Akhir: Program rute Jakarta → Surabaya!',
+      sub: 'Selesaikan 5 langkah berikut untuk meluncurkan robot.',
+      mode: 'boss'
+    }
+  ]
+};
+
+/* ════════════════════════════════════════
+   BLOCK METADATA (palette colors + Indonesian labels)
+════════════════════════════════════════ */
+const BLOCK_META = {
+  'move_forward':   { color:'c-move', label:'maju 1 stasiun', text:'move_forward(1)' },
+  'turn_left':      { color:'c-turn', label:'belok kiri',     text:'turn_left()' },
+  'turn_right':     { color:'c-turn', label:'belok kanan',    text:'turn_right()' },
+  'stop':           { color:'c-stop', label:'berhenti',       text:'stop()' },
+  'clean':          { color:'c-action', label:'bersihkan',   text:'clean()' },
+  'check_ticket':   { color:'c-action', label:'cek tiket',   text:'check_ticket()' },
+  'open_door':      { color:'c-action', label:'buka pintu',  text:'open_door()' },
+  'close_door':     { color:'c-action', label:'tutup pintu', text:'close_door()' },
+  'slow_down':      { color:'c-move',  label:'pelan-pelan',  text:'slow_down()' },
+  'wait(30)':       { color:'c-control', label:'tunggu 30 dtk', text:'wait(30)' },
+  'move_forward(1)':{ color:'c-move',  label:'maju 1 stasiun', text:'move_forward(1)' },
+  'call_next_passenger': { color:'c-action', label:'panggil penumpang', text:'call_next_passenger()' },
+  'stop_at_station': { color:'c-fn', label:'resep berhenti', text:'stop_at_station()' }
+};
+
+/* ════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════ */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goHome(){
+  document.getElementById('mainHdr').classList.remove('light');
+  document.getElementById('factoryBg').classList.remove('hidden');
+  show('sHome');
+  renderHome();
+}
+function confirmExit(){
+  if(confirm('Yakin keluar? Kemajuan ruang ini akan hilang.')) { goHome(); }
+}
+
+/* ════════════════════════════════════════
+   HOME RENDER
+════════════════════════════════════════ */
+function renderHome(){
+  // chapter grid
+  document.getElementById('chGrid').innerHTML = CHAPTERS.map((ch,i)=>{
+    const p = S.progress[ch.id] || { stars:0 };
+    const done = p.stars > 0;
+    const prevDone = i === 0 || CHAPTERS.slice(0,i).every(c => (S.progress[c.id]||{}).stars > 0);
+    const locked = !done && !prevDone;
+    const stars = [1,2,3].map(n => `<span class="ch-star${n <= p.stars ? ' on' : ''}">⭐</span>`).join('');
+    const status = done ? `✅ ${p.stars}/3 bintang` : locked ? '🔒 Selesaikan ruang sebelumnya' : '▶ Belum dimulai';
+    const bgStyle = ch.boss ? '' : `background:linear-gradient(135deg, ${hexA(ch.color,0.18)}, ${hexA(ch.color,0.32)})`;
+    return `<div class="ch-card${ch.boss?' boss':''}${locked?' locked':''}" onclick="${locked?'':`openChapter(${i})`}" role="button" tabindex="${locked?-1:0}">
+      <div class="ch-thumb" style="${bgStyle}">
+        <div class="ch-emoji">${ch.emoji}</div>
+        <div class="ch-stars-row">${stars}</div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-num">${ch.tag}</div>
+        <div class="ch-concept">${ch.concept}</div>
+        <div class="ch-title">${ch.title}</div>
+        <div class="ch-desc">${ch.desc}</div>
+        <div class="ch-status">${status}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // room track
+  const rt = document.getElementById('roomTrack');
+  let html = '';
+  CHAPTERS.forEach((ch,i)=>{
+    const p = S.progress[ch.id] || {stars:0};
+    const done = p.stars > 0;
+    const allPrev = i === 0 || CHAPTERS.slice(0,i).every(c => (S.progress[c.id]||{}).stars > 0);
+    const active = !done && allPrev;
+    const cls = done ? 'done' : active ? 'active' : '';
+    if(i > 0) html += `<div class="room-rail${done?' done':''}"></div>`;
+    html += `<div class="room-node">
+      <div class="room-dot ${cls}">${done?'✅':active?ch.emoji:ch.emoji}</div>
+      <div class="room-name ${cls}">R${i+1}</div>
+    </div>`;
+  });
+  rt.innerHTML = html;
+
+  // overall
+  const total = CHAPTERS.length;
+  const done = Object.values(S.progress).filter(p=>p.stars>0).length;
+  document.getElementById('ovBar').style.width = `${(done/total)*100}%`;
+  document.getElementById('ovSub').textContent = `${done} dari ${total} ruang selesai · ⭐ ${S.totalStars}/18`;
+  document.getElementById('starCount').textContent = S.totalStars;
+}
+
+function hexA(hex, alpha){
+  const h = hex.replace('#','');
+  const r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+/* ════════════════════════════════════════
+   OPEN CHAPTER & INTRO
+════════════════════════════════════════ */
+function openChapter(i){
+  AX.play('click');
+  S.chapterIdx = i;
+  S.puzIdx = 0;
+  S.retries = 0;
+  S.perfectChapter = true;
+  const ch = CHAPTERS[i];
+  document.getElementById('introIcon').textContent = ch.emoji;
+  document.getElementById('introTag').textContent = ch.tag;
+  document.getElementById('introTitle').textContent = ch.title;
+  document.getElementById('introStory').innerHTML = CHAPTER_STORIES[ch.id];
+  document.getElementById('introMentor').innerHTML = ch.mentor;
+  const btn = document.getElementById('introStart');
+  btn.textContent = ch.boss ? '🏆 Mulai Misi Akhir' : '⚙ Mulai Membangun Robot';
+  btn.className = 'start-btn' + (ch.boss ? ' boss-btn' : '');
+  // switch header to light
+  document.getElementById('mainHdr').classList.add('light');
+  document.getElementById('factoryBg').classList.add('hidden');
+  show('sIntro');
+}
+
+function startPuzzles(){
+  AX.play('click');
+  S.puzIdx = 0;
+  S.retries = 0;
+  S.perfectChapter = true;
+  renderPuzzle();
+  show('sPuzzle');
+}
+
+function retryChapter(){
+  if(S.chapterIdx == null) return;
+  S.puzIdx = 0;
+  S.retries = 0;
+  S.perfectChapter = true;
+  renderPuzzle();
+  show('sPuzzle');
+}
+
+/* ════════════════════════════════════════
+   PUZZLE RENDER
+════════════════════════════════════════ */
+function renderPuzzle(){
+  const ch = CHAPTERS[S.chapterIdx];
+  const puzzles = PUZZLES[ch.id];
+  const total = puzzles.length;
+  document.getElementById('puzChName').textContent = `${ch.tag} · ${ch.title}`;
+  document.getElementById('puzBar').style.width = `${(S.puzIdx/total)*100}%`;
+  document.getElementById('puzNum').textContent = `${S.puzIdx+1}/${total}`;
+
+  const p = puzzles[S.puzIdx];
+  S.current = p;
+  S.totalRetries = 0;
+  // reset addBlock to default — per-chapter renderers may override it
+  window.addBlock = defaultAddBlock;
+  document.getElementById('missionText').textContent = p.mission;
+  document.getElementById('missionSub').textContent = p.sub || '';
+  document.getElementById('toast').className = 'toast';
+  document.getElementById('toast').innerHTML = '';
+  document.getElementById('nxtBtn').className = 'nxt-btn';
+  document.getElementById('hintBox').className = 'hint-box';
+  document.getElementById('hintBox').textContent = p.hint || '';
+  document.getElementById('hintBtn').style.display = p.hint ? 'inline-flex' : 'none';
+
+  // render body based on chapter id
+  const body = document.getElementById('puzBody');
+  if(ch.id === 'c1') renderC1(body, p);
+  else if(ch.id === 'c2') renderC2(body, p);
+  else if(ch.id === 'c3') renderC3(body, p);
+  else if(ch.id === 'c4') renderC4(body, p);
+  else if(ch.id === 'c5') renderC5(body, p);
+  else if(ch.id === 'c6') renderC6(body, p);
+}
+
+function toggleHint(){
+  AX.play('click');
+  document.getElementById('hintBox').classList.toggle('show');
+}
+
+function nextPuzzle(){
+  AX.play('click');
+  const ch = CHAPTERS[S.chapterIdx];
+  const total = PUZZLES[ch.id].length;
+  S.puzIdx++;
+  if(S.puzIdx >= total){
+    finishChapter();
+  } else {
+    renderPuzzle();
+  }
+}
+
+function showToast(ok, msg, expl){
+  const t = document.getElementById('toast');
+  t.className = 'toast show ' + (ok?'ok':'bad');
+  t.innerHTML = `<div style="font-size:20px;line-height:1">${ok?'✅':'❌'}</div>
+    <div>${msg}${expl?`<span class="toast-expl">${expl}</span>`:''}</div>`;
+  if(!ok){
+    document.getElementById('puzBody').classList.add('shake');
+    setTimeout(()=>document.getElementById('puzBody').classList.remove('shake'), 400);
+  }
+}
+
+function clearToast(){
+  document.getElementById('toast').className = 'toast';
+  document.getElementById('toast').innerHTML = '';
+}
+
+function showNext(){
+  document.getElementById('nxtBtn').classList.add('show');
+}
+
+/* ════════════════════════════════════════
+   CHAPTER 1: SEQUENCING (track + program blocks)
+════════════════════════════════════════ */
+function renderC1(body, p){
+  // build SVG track
+  const svg = drawTrackSVG(p);
+  const palette = p.palette.map(k => blockHTML(k)).join('');
+  body.innerHTML = `
+    <div class="stage">
+      <div class="stage-label">🛤️ Rel Robot</div>
+      <div class="track-svg-wrap">${svg}</div>
+    </div>
+    <div class="palette">
+      <div class="palette-label">🧰 Blok Perintah — Tap untuk Tambah</div>
+      <div class="palette-blocks">${palette}</div>
+    </div>
+    <div class="program">
+      <div class="program-label">📜 Program Robot <span class="program-count" id="progCount">0 baris</span></div>
+      <div class="program-list" id="progList"><div class="program-empty">Belum ada perintah… tap blok di atas!</div></div>
+      <div class="program-actions">
+        <button class="act undo" onclick="popProgram()">⤺ Undo</button>
+        <button class="act reset" onclick="resetProgram()">🔄 Reset</button>
+        <button class="act run" id="runBtn" onclick="runC1()">▶ Run</button>
+      </div>
+    </div>
+  `;
+  S.userSeq = [];
+  updateProgListView();
+  attachBlockHandlers();
+}
+
+function blockHTML(key, extraText){
+  const m = BLOCK_META[key] || { color:'c-action', label:'', text:extraText||key };
+  const txt = extraText || m.text;
+  return `<button class="blk ${m.color}" data-key="${key}" onclick="addBlock('${key}')">
+    <div class="blk-stack">
+      <span>${txt}</span>
+      ${m.label ? `<span class="blk-tip">${m.label}</span>` : ''}
+    </div>
+  </button>`;
+}
+
+function addBlock(key){
+  AX.play('snap');
+  S.userSeq.push(key);
+  updateProgListView();
+}
+function popProgram(){
+  if(S.userSeq.length === 0) return;
+  AX.play('click');
+  S.userSeq.pop();
+  updateProgListView();
+}
+function resetProgram(){
+  AX.play('click');
+  S.userSeq = [];
+  updateProgListView();
+  // also reset robot visual position
+  drawTrackSVG(S.current, true);
+}
+function updateProgListView(){
+  const list = document.getElementById('progList');
+  const count = document.getElementById('progCount');
+  if(!list) return;
+  if(S.userSeq.length === 0){
+    list.innerHTML = `<div class="program-empty">Belum ada perintah… tap blok di atas!</div>`;
+  } else {
+    list.innerHTML = S.userSeq.map((k,i)=>{
+      const m = BLOCK_META[k] || {color:'c-action',text:k};
+      const cls = m.color.replace('c-','l-');
+      return `<div class="pg-line ${cls}" data-idx="${i}"><span class="pg-num">${i+1}</span><span>${m.text}</span><span class="pg-x" onclick="removeBlock(${i})">✕</span></div>`;
+    }).join('');
+  }
+  if(count) count.textContent = `${S.userSeq.length} baris`;
+}
+function removeBlock(i){
+  AX.play('click');
+  S.userSeq.splice(i,1);
+  updateProgListView();
+}
+
+function attachBlockHandlers(){ /* delegation via onclick already in HTML */ }
+
+/* ── Draw SVG track ── */
+function drawTrackSVG(p, replaceOnly=false){
+  const W = 360, H = 240;
+  const stops = p.stations || [];
+  const tracks = p.track || [];
+  // build segments
+  let segs = '';
+  tracks.forEach(t=>{
+    const a = stops[t.from], b = stops[t.to];
+    segs += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#5a6d83" stroke-width="14" stroke-linecap="round"/>
+             <line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#fff" stroke-width="2" stroke-dasharray="4 6" stroke-linecap="round"/>`;
+  });
+  // stations
+  let stn = '';
+  stops.forEach((s,i)=>{
+    if(s.corner) return;
+    const fill = s.start ? '#FFC234' : (s.goal ? '#FF5C39' : '#fff');
+    stn += `<circle cx="${s.x}" cy="${s.y}" r="20" fill="${fill}" stroke="#1A1614" stroke-width="3"/>
+            <text x="${s.x}" y="${s.y+5}" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="16" fill="#1A1614">${s.label||''}</text>`;
+  });
+  const start = stops.find(s=>s.start);
+  const dir = p.startDir || 0;
+  const rotate = [0,90,180,270][dir];
+  const robotSvg = `<g id="robotG" transform="translate(${start.x},${start.y}) rotate(${rotate})">
+    <g class="train-svg idle">
+      <rect class="train-body" x="-18" y="-12" width="36" height="22" rx="6" fill="#FF5C39" stroke="#1A1614" stroke-width="2.5"/>
+      <rect x="-6" y="-8" width="12" height="10" fill="#FFC234" stroke="#1A1614" stroke-width="1.5"/>
+      <circle class="train-wheel" cx="-10" cy="12" r="4" fill="#1A1614"/>
+      <circle class="train-wheel" cx="10" cy="12" r="4" fill="#1A1614"/>
+      <text x="0" y="-15" text-anchor="middle" font-size="10">🤖</text>
+    </g>
+  </g>`;
+  const svg = `<svg class="track-svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+    ${segs}
+    ${stn}
+    ${robotSvg}
+  </svg>`;
+  if(replaceOnly){
+    const wrap = document.querySelector('.track-svg-wrap');
+    if(wrap) wrap.innerHTML = svg;
+  }
+  return svg;
+}
+
+/* ── Run sequence for Chapter 1 ── */
+async function runC1(){
+  if(S.userSeq.length === 0){
+    showToast(false, 'Belum ada perintah!', 'Tap blok perintah untuk menyusun program robot.');
+    AX.play('wrong');
+    return;
+  }
+  clearToast();
+  document.getElementById('runBtn').disabled = true;
+  AX.play('whoosh');
+  // simulate robot movement step by step
+  const robotG = document.querySelector('#robotG');
+  const trainSvg = document.querySelector('.train-svg');
+  trainSvg.classList.remove('idle');
+  const p = S.current;
+  const start = p.stations.find(s=>s.start);
+  let x = start.x, y = start.y;
+  let dir = p.startDir || 0; // 0=right,1=down,2=left,3=up
+  const STEP = 80;
+  // path of visited points to check
+  const allowed = new Set(p.stations.filter(s=>!s.corner).map(s=>`${s.x},${s.y}`).concat(p.stations.filter(s=>s.corner).map(s=>`${s.x},${s.y}`)));
+  let crashed = false;
+  let stopped = false;
+  for(let i=0; i<S.userSeq.length; i++){
+    // highlight current line
+    document.querySelectorAll('.pg-line').forEach(el=>el.classList.remove('running'));
+    const line = document.querySelector(`.pg-line[data-idx="${i}"]`);
+    if(line) line.classList.add('running');
+    AX.play('step');
+    const cmd = S.userSeq[i];
+    if(cmd === 'move_forward'){
+      const dx = [STEP,0,-STEP,0][dir], dy = [0,STEP,0,-STEP][dir];
+      const nx = x+dx, ny = y+dy;
+      // check if on a track segment
+      const onTrack = isOnTrack(p, x, y, nx, ny);
+      if(!onTrack){ crashed = true; break; }
+      x = nx; y = ny;
+      await animateTo(robotG, x, y, dir);
+    } else if(cmd === 'turn_left'){
+      dir = (dir+3)%4;
+      await animateRot(robotG, x, y, dir);
+    } else if(cmd === 'turn_right'){
+      dir = (dir+1)%4;
+      await animateRot(robotG, x, y, dir);
+    } else if(cmd === 'stop'){
+      stopped = true;
+      break;
+    }
+  }
+  trainSvg.classList.add('idle');
+  document.querySelectorAll('.pg-line').forEach(el=>el.classList.remove('running'));
+  // verify
+  const goal = p.stations.find(s=>s.goal);
+  const atGoal = goal && x === goal.x && y === goal.y;
+  const exactMatch = arraysEqual(S.userSeq, p.answer);
+
+  if(crashed){
+    showToast(false, 'Robot keluar rel!', 'Periksa urutan belok dan maju.');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+    document.getElementById('runBtn').disabled = false;
+  } else if(!atGoal){
+    showToast(false, 'Robot belum sampai tujuan B!', stopped ? 'Robot berhenti terlalu cepat.' : 'Tambah perintah agar mencapai stasiun B.');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+    document.getElementById('runBtn').disabled = false;
+  } else {
+    showToast(true, 'Berhasil! Robot sampai di B! 🎉', exactMatch ? 'Urutan sempurna!' : 'Robotmu sampai tujuan — kerja bagus.');
+    AX.play('chime');
+    showNext();
+  }
+}
+
+function isOnTrack(p, ax, ay, bx, by){
+  // segment from a to b must lie on some track line
+  for(const t of p.track){
+    const s1 = p.stations[t.from], s2 = p.stations[t.to];
+    // check both points lie on this segment
+    if(pointOnSeg(ax, ay, s1, s2) && pointOnSeg(bx, by, s1, s2)){
+      // also moving along the segment direction
+      return true;
+    }
+  }
+  return false;
+}
+function pointOnSeg(x, y, a, b){
+  if(a.x === b.x){ // vertical
+    if(x !== a.x) return false;
+    return y >= Math.min(a.y,b.y) - 1 && y <= Math.max(a.y,b.y) + 1;
+  } else { // horizontal
+    if(y !== a.y) return false;
+    return x >= Math.min(a.x,b.x) - 1 && x <= Math.max(a.x,b.x) + 1;
+  }
+}
+
+function animateTo(g, x, y, dir){
+  return new Promise(res=>{
+    const rot = [0,90,180,270][dir];
+    g.style.transition = 'transform .4s ease';
+    g.setAttribute('transform', `translate(${x},${y}) rotate(${rot})`);
+    setTimeout(res, 420);
+  });
+}
+function animateRot(g, x, y, dir){
+  return new Promise(res=>{
+    const rot = [0,90,180,270][dir];
+    g.style.transition = 'transform .3s ease';
+    g.setAttribute('transform', `translate(${x},${y}) rotate(${rot})`);
+    setTimeout(res, 320);
+  });
+}
+
+function arraysEqual(a, b){
+  if(a.length !== b.length) return false;
+  for(let i=0;i<a.length;i++) if(a[i]!==b[i]) return false;
+  return true;
+}
+
+/* ════════════════════════════════════════
+   CHAPTER 2: CONDITIONALS
+════════════════════════════════════════ */
+function renderC2(body, p){
+  // signal stage
+  let stageBits = `<div class="signal-light ${p.signal||'red'}"></div>`;
+  stageBits += `<div class="sit-card"><span class="em">📍</span><div>signal = <strong>"${p.signal}"</strong></div></div>`;
+  if(p.tunnel) stageBits += `<div class="sit-card"><span class="em">🚇</span><div>tunnel = <strong>"${p.tunnel}"</strong></div></div>`;
+  if(p.passengers != null) stageBits += `<div class="sit-card"><span class="em">👥</span><div>passengers = <strong>${p.passengers}</strong></div></div>`;
+
+  // condition builder
+  let parts = '';
+  p.condParts.forEach((part, idx) => {
+    parts += `<div class="cond-row" data-idx="${idx}">
+      <span class="cond-kw ${part.kw==='THEN'?'then':''}">${part.kw}</span>
+      ${part.label ? `<span style="font-family:var(--fc);font-weight:700;font-size:13px">${part.label}</span>` : ''}
+      <span class="cond-pick" id="pick${idx}">?</span>
+      <div class="cond-options" style="width:100%">
+        ${part.options.map(o => `<button class="cond-opt" data-idx="${idx}" data-val='${o.replace(/'/g,"&apos;")}' onclick="pickCondOption(${idx}, this)">${o}</button>`).join('')}
+      </div>
+    </div>`;
+  });
+
+  body.innerHTML = `
+    <div class="stage">
+      <div class="stage-label">🚦 Situasi di Rel</div>
+      <div class="signal-stage">${stageBits}</div>
+    </div>
+    <div class="cond-builder">${parts}</div>
+    <div class="program-actions" style="margin-bottom:8px">
+      <button class="act reset" onclick="renderPuzzle()">🔄 Reset</button>
+      <button class="act run" id="runBtn" onclick="checkC2()">▶ Cek Aturan</button>
+    </div>
+  `;
+  S.condChoices = new Array(p.condParts.length).fill(null);
+}
+
+function pickCondOption(idx, btn){
+  AX.play('snap');
+  const val = btn.dataset.val;
+  // un-select siblings
+  document.querySelectorAll(`.cond-opt[data-idx="${idx}"]`).forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  S.condChoices[idx] = val;
+  const pick = document.getElementById(`pick${idx}`);
+  pick.textContent = val;
+  pick.classList.add('chosen');
+  pick.classList.remove('err');
+}
+
+function checkC2(){
+  const p = S.current;
+  const choices = S.condChoices;
+  let allOk = true;
+  p.condParts.forEach((part, idx) => {
+    const pick = document.getElementById(`pick${idx}`);
+    if(choices[idx] !== part.correct){
+      allOk = false;
+      pick.classList.add('err');
+    } else {
+      pick.classList.remove('err');
+    }
+  });
+  if(allOk){
+    showToast(true, 'Aturan benar! Robot membuat keputusan tepat. 🎯', `Robot akan: ${p.condParts[p.condParts.length-1].correct}`);
+    AX.play('chime');
+    showNext();
+    // animate signal flash on success
+    const sig = document.querySelector('.signal-light');
+    if(sig){ sig.style.transform='scale(1.2)'; setTimeout(()=>sig.style.transform='scale(1)', 300); }
+  } else {
+    showToast(false, 'Salah pilihan!', 'Coba periksa lagi situasi di atas dan pilih yang masuk akal.');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+  }
+}
+
+/* ════════════════════════════════════════
+   CHAPTER 3: LOOPS
+════════════════════════════════════════ */
+function renderC3(body, p){
+  if(p.mode === 'repeat'){
+    let cars = '';
+    for(let i=0;i<p.cars;i++) cars += `<div class="car" data-i="${i}"></div>`;
+    // number picker 1..12
+    let picks = '';
+    for(let n=2;n<=12;n++) picks += `<button class="num-pick-btn" data-n="${n}" onclick="pickRepeatN(${n})">${n}</button>`;
+    body.innerHTML = `
+      <div class="stage">
+        <div class="stage-label">🚃 Gerbong Kereta</div>
+        <div class="cars-row" id="carsRow">${cars}</div>
+      </div>
+      <div class="cond-builder">
+        <div class="cond-row">
+          <span class="cond-kw" style="background:var(--forest)">repeat</span>
+          <span style="font-family:var(--fc);font-weight:700">(</span>
+          <span class="cond-pick" id="pickN">?</span>
+          <span style="font-family:var(--fc);font-weight:700">) {</span>
+        </div>
+        <div class="cond-row" style="margin-left:18px">
+          <span style="font-family:var(--fc);font-weight:700;color:var(--forest)">${p.action}</span>
+        </div>
+        <div class="cond-row"><span style="font-family:var(--fc);font-weight:700">}</span></div>
+        <div class="palette-label" style="margin-top:8px">Pilih angka untuk repeat:</div>
+        <div class="num-picker">${picks}</div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" id="runBtn" onclick="runC3Repeat()">▶ Run</button>
+      </div>
+    `;
+    S.pickedN = null;
+  } else if(p.mode === 'repeat_until'){
+    body.innerHTML = `
+      <div class="stage">
+        <div class="stage-label">👥 Antrian Penumpang</div>
+        <div style="display:flex;justify-content:center;gap:8px;font-size:28px;padding:10px;flex-wrap:wrap" id="paxRow">
+          <span>🧍</span><span>🧍</span><span>🧍</span><span>🧍</span><span>🧍</span><span>🧍</span>
+        </div>
+      </div>
+      <div class="cond-builder">
+        <div class="cond-row">
+          <span class="cond-kw" style="background:var(--forest)">repeat_until</span>
+          <span style="font-family:var(--fc);font-weight:700">(</span>
+          <span class="cond-pick" id="pickCond">?</span>
+          <span style="font-family:var(--fc);font-weight:700">) {</span>
+        </div>
+        <div class="cond-row" style="margin-left:18px">
+          <span class="cond-pick" id="pickAct">?</span>
+        </div>
+        <div class="cond-row"><span style="font-family:var(--fc);font-weight:700">}</span></div>
+        <div class="palette-label" style="margin-top:8px">Pilih kondisi berhenti:</div>
+        <div class="cond-options">${p.conditionOptions.map(o=>`<button class="cond-opt" onclick="pickRUCond('${o}', this)">${o}</button>`).join('')}</div>
+        <div class="palette-label" style="margin-top:8px">Pilih aksi yang diulang:</div>
+        <div class="cond-options">${p.actionOptions.map(o=>`<button class="cond-opt" onclick="pickRUAct('${o}', this)">${o}</button>`).join('')}</div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" id="runBtn" onclick="runC3Until()">▶ Run</button>
+      </div>
+    `;
+    S.ruCond = null; S.ruAct = null;
+  }
+}
+
+function pickRepeatN(n){
+  AX.play('snap');
+  document.querySelectorAll('.num-pick-btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelector(`.num-pick-btn[data-n="${n}"]`).classList.add('sel');
+  document.getElementById('pickN').textContent = n;
+  document.getElementById('pickN').classList.add('chosen');
+  S.pickedN = n;
+}
+
+async function runC3Repeat(){
+  const p = S.current;
+  if(S.pickedN == null){
+    showToast(false, 'Pilih angka dulu!', 'Tap salah satu angka untuk mengisi repeat(__).');
+    AX.play('wrong'); return;
+  }
+  document.getElementById('runBtn').disabled = true;
+  AX.play('whoosh');
+  // animate cleaning carriages
+  const cars = document.querySelectorAll('#carsRow .car');
+  const N = Math.min(S.pickedN, cars.length);
+  for(let i=0; i<N; i++){
+    cars[i].classList.add('clean');
+    AX.play('tick');
+    await sleep(180);
+  }
+  if(S.pickedN === p.correctN){
+    showToast(true, `Semua ${p.correctN} gerbong bersih! 🚿✨`, `repeat(${p.correctN}) menjalankan ${p.action} sebanyak ${p.correctN} kali — sangat efisien!`);
+    AX.play('chime');
+    showNext();
+  } else {
+    showToast(false, `Hmm, ${S.pickedN === N ? 'jumlahnya pas tapi salah angka':'masih ada gerbong yang belum bersih'}!`, `Ada ${p.cars} gerbong, kamu pilih ${S.pickedN}. Coba lagi.`);
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+    document.getElementById('runBtn').disabled = false;
+    // reset cars
+    setTimeout(()=>cars.forEach(c=>c.classList.remove('clean')), 800);
+  }
+}
+
+function pickRUCond(o, btn){
+  AX.play('snap');
+  document.querySelectorAll('.cond-options')[0].querySelectorAll('.cond-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  S.ruCond = o;
+  document.getElementById('pickCond').textContent = o;
+  document.getElementById('pickCond').classList.add('chosen');
+}
+function pickRUAct(o, btn){
+  AX.play('snap');
+  document.querySelectorAll('.cond-options')[1].querySelectorAll('.cond-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  S.ruAct = o;
+  document.getElementById('pickAct').textContent = o;
+  document.getElementById('pickAct').classList.add('chosen');
+}
+
+async function runC3Until(){
+  const p = S.current;
+  if(!S.ruCond || !S.ruAct){
+    showToast(false, 'Pilih kondisi dan aksi dulu!', 'Lengkapi kedua kotak.');
+    AX.play('wrong'); return;
+  }
+  document.getElementById('runBtn').disabled = true;
+  AX.play('whoosh');
+  // animate passengers sitting
+  const pax = document.querySelectorAll('#paxRow span');
+  for(let i=0;i<pax.length;i++){
+    pax[i].textContent = '💺';
+    AX.play('tick');
+    await sleep(180);
+  }
+  if(S.ruCond === p.correctCond && S.ruAct === p.correctAction){
+    showToast(true, 'Semua penumpang duduk! 🪑✨', `repeat_until(${p.correctCond}) — robot ulang ${p.correctAction} sampai kondisi tercapai!`);
+    AX.play('chime');
+    showNext();
+  } else {
+    showToast(false, 'Belum tepat!', `Periksa lagi: kita ingin ULANG aksi SAMPAI kondisi benar.`);
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+    document.getElementById('runBtn').disabled = false;
+  }
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+/* ════════════════════════════════════════
+   CHAPTER 4: VARIABLES
+════════════════════════════════════════ */
+function renderC4(body, p){
+  // memory panel
+  let memBoxes = '';
+  if(p.mode === 'assign'){
+    memBoxes = `<div class="mem-box"><div class="mem-name">${p.varName}</div><div class="mem-val" id="memVal">?</div></div>`;
+    body.innerHTML = `
+      <div class="mem-panel">
+        <div class="mem-label">🧠 Memori Robot</div>
+        <div class="mem-grid">${memBoxes}</div>
+      </div>
+      <div class="var-builder">
+        <div class="var-row">
+          <span class="var-tag">${p.varName}</span>
+          <span class="var-op">=</span>
+          <input class="var-inp" id="varInp" type="number" inputmode="numeric" placeholder="?" />
+        </div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" id="runBtn" onclick="checkC4Assign()">▶ Simpan</button>
+      </div>
+    `;
+  } else if(p.mode === 'increment'){
+    memBoxes = `<div class="mem-box"><div class="mem-name">${p.varName}</div><div class="mem-val" id="memVal">${p.startValue}</div></div>`;
+    body.innerHTML = `
+      <div class="mem-panel">
+        <div class="mem-label">🧠 Memori Robot</div>
+        <div class="mem-grid">${memBoxes}</div>
+      </div>
+      <div class="var-builder">
+        <div class="var-row">
+          <span class="var-tag">${p.varName}</span>
+          <span class="var-op">=</span>
+          <span class="var-tag">${p.varName}</span>
+          <span class="var-op">+</span>
+          <input class="var-inp" id="varInpAdd" type="number" inputmode="numeric" value="${p.addValue}" readonly />
+        </div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:6px">Setelah dijalankan, isi <strong>${p.varName}</strong> akan jadi berapa?</div>
+        <div class="var-row" style="margin-top:8px">
+          <span style="font-family:var(--fc);font-weight:700">${p.varName} akhir =</span>
+          <input class="var-inp" id="varInpFinal" type="number" inputmode="numeric" placeholder="?" />
+        </div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" id="runBtn" onclick="checkC4Increment()">▶ Jalankan</button>
+      </div>
+    `;
+  } else if(p.mode === 'string'){
+    memBoxes = `<div class="mem-box"><div class="mem-name">${p.varName}</div><div class="mem-val text" id="memVal">?</div></div>`;
+    body.innerHTML = `
+      <div class="mem-panel">
+        <div class="mem-label">🧠 Memori Robot</div>
+        <div class="mem-grid">${memBoxes}</div>
+      </div>
+      <div class="var-builder">
+        <div class="var-row">
+          <span class="var-tag">${p.varName}</span>
+          <span class="var-op">=</span>
+          <span class="cond-pick" id="pickStr">?</span>
+        </div>
+        <div class="palette-label" style="margin-top:6px">Pilih kota tujuan:</div>
+        <div class="cond-options">${p.options.map(o=>`<button class="cond-opt" onclick="pickC4Str('${o}', this)">${o}</button>`).join('')}</div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" id="runBtn" onclick="checkC4Str()">▶ Simpan</button>
+      </div>
+    `;
+    S.c4Str = null;
+  }
+}
+
+function checkC4Assign(){
+  const p = S.current;
+  const inp = document.getElementById('varInp');
+  const val = parseInt(inp.value, 10);
+  if(val === p.correctValue){
+    inp.classList.add('ok'); inp.classList.remove('bad');
+    const mv = document.getElementById('memVal');
+    mv.textContent = val; mv.classList.add('bump');
+    showToast(true, `${p.varName} = ${val} tersimpan! 📦`, `Robot sekarang ingat kecepatan ${val} km/jam.`);
+    AX.play('chime');
+    showNext();
+  } else {
+    inp.classList.add('bad');
+    showToast(false, 'Belum tepat!', `Kita butuh ${p.varName} = ${p.correctValue}.`);
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+  }
+}
+
+function checkC4Increment(){
+  const p = S.current;
+  const inp = document.getElementById('varInpFinal');
+  const val = parseInt(inp.value, 10);
+  if(val === p.correctFinal){
+    inp.classList.add('ok'); inp.classList.remove('bad');
+    const mv = document.getElementById('memVal');
+    mv.textContent = val; mv.classList.add('bump');
+    showToast(true, `Benar! ${p.varName} jadi ${val}. ➕`, `${p.startValue} + ${p.addValue} = ${p.correctFinal}. Variabel bisa diubah!`);
+    AX.play('chime');
+    showNext();
+  } else {
+    inp.classList.add('bad');
+    showToast(false, 'Hitung lagi!', `${p.startValue} + ${p.addValue} = ?`);
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+  }
+}
+
+function pickC4Str(o, btn){
+  AX.play('snap');
+  document.querySelectorAll('.cond-options .cond-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  S.c4Str = o;
+  document.getElementById('pickStr').textContent = o;
+  document.getElementById('pickStr').classList.add('chosen');
+}
+function checkC4Str(){
+  const p = S.current;
+  if(S.c4Str === p.correct){
+    const mv = document.getElementById('memVal');
+    mv.textContent = p.correct.replace(/"/g,''); mv.classList.add('bump');
+    showToast(true, `${p.varName} = ${p.correct}! 🎯`, `Robot tahu mau ke ${p.correct.replace(/"/g,'')}.`);
+    AX.play('chime');
+    showNext();
+  } else {
+    document.getElementById('pickStr').classList.add('err');
+    showToast(false, 'Belum benar!', 'Tujuan akhir kita adalah Surabaya.');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+  }
+}
+
+/* ════════════════════════════════════════
+   CHAPTER 5: FUNCTIONS
+════════════════════════════════════════ */
+function renderC5(body, p){
+  if(p.mode === 'define'){
+    const palette = p.palette.map(k => blockHTML(k)).join('');
+    body.innerHTML = `
+      <div class="fn-def">
+        <div class="fn-def-head">
+          <span class="fn-kw">function</span>
+          <span class="fn-name">${p.fnName}()</span>
+          <span style="font-family:var(--fc);font-weight:700">{</span>
+        </div>
+        <div class="fn-body" id="fnBody"><div class="fn-body-empty">Belum ada perintah — tap blok untuk menyusun resep…</div></div>
+        <div style="font-family:var(--fc);font-weight:700;margin-top:6px">}</div>
+      </div>
+      <div class="palette">
+        <div class="palette-label">🧰 Blok Perintah</div>
+        <div class="palette-blocks">${palette}</div>
+      </div>
+      <div class="program-actions">
+        <button class="act undo" onclick="popFnBody()">⤺ Undo</button>
+        <button class="act reset" onclick="resetFnBody()">🔄 Reset</button>
+        <button class="act run" id="runBtn" onclick="checkC5Define()">▶ Cek Resep</button>
+      </div>
+    `;
+    S.fnSeq = [];
+    // override addBlock to push to fnSeq for this mode
+    window.addBlock = function(key){
+      AX.play('snap');
+      S.fnSeq.push(key);
+      updateFnBody();
+    };
+  } else if(p.mode === 'call'){
+    body.innerHTML = `
+      <div class="stage">
+        <div class="stage-label">🏪 Stasiun</div>
+        <div style="display:flex;justify-content:space-around;align-items:center;padding:14px 4px;flex-wrap:wrap;gap:10px" id="stationsRow">
+          ${[1,2,3].map(i=>`<div style="text-align:center"><div style="font-size:32px">🏪</div><div style="font-family:var(--fd);font-size:11px;color:rgba(255,255,255,.6)">Stasiun ${i}</div><div id="stRes${i}" style="font-size:24px;min-height:28px"></div></div>`).join('')}
+        </div>
+      </div>
+      <div class="fn-def">
+        <div class="fn-def-head">
+          <span class="fn-kw" style="background:#1FA9C7;color:#fff">Resep:</span>
+          <span class="fn-name">${p.fnName}()</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.6)">(slow_down → stop → open_door → wait(30) → close_door → move_forward(1))</span>
+        </div>
+      </div>
+      <div class="palette">
+        <div class="palette-label">🧰 Panggil Resep</div>
+        <div class="palette-blocks">${blockHTML('stop_at_station')}</div>
+      </div>
+      <div class="program">
+        <div class="program-label">📜 Program Robot <span class="program-count" id="progCount">0 panggilan</span></div>
+        <div class="program-list" id="progList"><div class="program-empty">Tap stop_at_station() sebanyak ${p.timesNeeded}x!</div></div>
+        <div class="program-actions">
+          <button class="act undo" onclick="popProgram()">⤺ Undo</button>
+          <button class="act reset" onclick="resetProgram()">🔄 Reset</button>
+          <button class="act run" id="runBtn" onclick="runC5Call()">▶ Run</button>
+        </div>
+      </div>
+    `;
+    S.userSeq = [];
+    // restore default addBlock for call mode
+    window.addBlock = defaultAddBlock;
+    updateProgListView();
+  } else if(p.mode === 'combo'){
+    // pick number for repeat + drag stop_at_station
+    let picks = '';
+    for(let n=2;n<=6;n++) picks += `<button class="num-pick-btn" data-n="${n}" onclick="pickComboN(${n})">${n}</button>`;
+    body.innerHTML = `
+      <div class="stage">
+        <div class="stage-label">🏪 4 Stasiun</div>
+        <div style="display:flex;justify-content:space-around;align-items:center;padding:14px 4px;flex-wrap:wrap;gap:8px" id="stationsRow">
+          ${[1,2,3,4].map(i=>`<div style="text-align:center"><div style="font-size:30px">🏪</div><div id="stRes${i}" style="font-size:22px;min-height:24px"></div></div>`).join('')}
+        </div>
+      </div>
+      <div class="cond-builder">
+        <div class="cond-row">
+          <span class="cond-kw" style="background:var(--forest)">repeat</span>
+          <span style="font-family:var(--fc);font-weight:700">(</span>
+          <span class="cond-pick" id="pickN">?</span>
+          <span style="font-family:var(--fc);font-weight:700">) {</span>
+        </div>
+        <div class="cond-row" style="margin-left:18px">
+          <span class="cond-pick" id="pickFn">?</span>
+        </div>
+        <div class="cond-row"><span style="font-family:var(--fc);font-weight:700">}</span></div>
+        <div class="palette-label" style="margin-top:8px">Pilih angka pengulangan:</div>
+        <div class="num-picker">${picks}</div>
+        <div class="palette-label" style="margin-top:8px">Pilih resep yang dipanggil:</div>
+        <div class="cond-options">
+          <button class="cond-opt" onclick="pickComboFn('stop_at_station()', this)">stop_at_station()</button>
+          <button class="cond-opt" onclick="pickComboFn('clean()', this)">clean()</button>
+          <button class="cond-opt" onclick="pickComboFn('move_forward(1)', this)">move_forward(1)</button>
+        </div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" id="runBtn" onclick="runC5Combo()">▶ Run</button>
+      </div>
+    `;
+    S.comboN = null; S.comboFn = null;
+  }
+}
+
+function defaultAddBlock(key){
+  AX.play('snap');
+  S.userSeq.push(key);
+  updateProgListView();
+}
+
+function updateFnBody(){
+  const fb = document.getElementById('fnBody');
+  if(!fb) return;
+  if(S.fnSeq.length === 0){
+    fb.innerHTML = '<div class="fn-body-empty">Belum ada perintah — tap blok untuk menyusun resep…</div>';
+  } else {
+    fb.innerHTML = S.fnSeq.map((k,i)=>{
+      const m = BLOCK_META[k] || {text:k};
+      return `<div class="fn-line">${m.text}<span class="pg-x" onclick="removeFnLine(${i})">✕</span></div>`;
+    }).join('');
+  }
+}
+function popFnBody(){ if(S.fnSeq.length){ AX.play('click'); S.fnSeq.pop(); updateFnBody(); }}
+function resetFnBody(){ AX.play('click'); S.fnSeq = []; updateFnBody(); }
+function removeFnLine(i){ AX.play('click'); S.fnSeq.splice(i,1); updateFnBody(); }
+
+function checkC5Define(){
+  const p = S.current;
+  if(arraysEqual(S.fnSeq, p.answer)){
+    showToast(true, 'Resep stop_at_station() jadi! 📜✨', 'Mulai sekarang, robot bisa pakai resep ini kapan saja.');
+    AX.play('chime');
+    showNext();
+  } else {
+    showToast(false, 'Urutan resep belum tepat!', 'Pikirkan: apa yang masuk akal saat kereta sampai stasiun?');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+  }
+}
+
+async function runC5Call(){
+  const p = S.current;
+  if(S.userSeq.length !== p.timesNeeded){
+    showToast(false, `Butuh tepat ${p.timesNeeded} panggilan!`, `Sekarang ada ${S.userSeq.length}.`);
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+    return;
+  }
+  // check all blocks are stop_at_station
+  if(!S.userSeq.every(k => k === 'stop_at_station')){
+    showToast(false, 'Pakai resep yang benar!', 'Cuma stop_at_station() yang kita butuh.');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+    return;
+  }
+  document.getElementById('runBtn').disabled = true;
+  AX.play('whoosh');
+  for(let i=0; i<p.timesNeeded; i++){
+    const el = document.getElementById(`stRes${i+1}`);
+    if(el){ el.textContent = '🚂'; AX.play('tick'); }
+    await sleep(450);
+    if(el) el.textContent = '✅';
+  }
+  showToast(true, `${p.timesNeeded} stasiun ditangani! 🚉✨`, `Cukup 1 baris untuk 6 perintah — itulah kekuatan resep!`);
+  AX.play('chime');
+  showNext();
+}
+
+function pickComboN(n){
+  AX.play('snap');
+  document.querySelectorAll('.num-pick-btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelector(`.num-pick-btn[data-n="${n}"]`).classList.add('sel');
+  document.getElementById('pickN').textContent = n;
+  document.getElementById('pickN').classList.add('chosen');
+  S.comboN = n;
+}
+function pickComboFn(name, btn){
+  AX.play('snap');
+  document.querySelectorAll('.cond-options .cond-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  S.comboFn = name;
+  document.getElementById('pickFn').textContent = name;
+  document.getElementById('pickFn').classList.add('chosen');
+}
+async function runC5Combo(){
+  const p = S.current;
+  if(S.comboN !== p.timesNeeded || S.comboFn !== 'stop_at_station()'){
+    showToast(false, 'Belum tepat!', `Kita perlu repeat(${p.timesNeeded}) { stop_at_station() }`);
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+    return;
+  }
+  document.getElementById('runBtn').disabled = true;
+  AX.play('whoosh');
+  for(let i=0; i<p.timesNeeded; i++){
+    const el = document.getElementById(`stRes${i+1}`);
+    if(el){ el.textContent = '🚂'; AX.play('tick'); }
+    await sleep(380);
+    if(el) el.textContent = '✅';
+  }
+  showToast(true, `Wow! ${p.timesNeeded} stasiun cuma pakai 1 baris! 🎉`, `repeat() + resep = super efisien!`);
+  AX.play('chime');
+  showNext();
+}
+
+/* ════════════════════════════════════════
+   CHAPTER 6: BOSS BATTLE
+════════════════════════════════════════ */
+function renderC6(body, p){
+  body.innerHTML = `
+    <div class="stage">
+      <div class="stage-label">🛤️ Rute Jakarta → Surabaya</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;flex-wrap:nowrap;overflow-x:auto;gap:0" id="bossStations">
+        ${['JKT','BDG','CRB','SMG','SBY'].map((s,i)=>`
+          <div style="display:flex;align-items:center;flex-shrink:0">
+            <div style="text-align:center;min-width:54px">
+              <div id="bs${i}" style="width:38px;height:38px;border-radius:50%;background:#fff;border:2.5px solid #1A1614;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto">🏪</div>
+              <div style="font-family:var(--fd);font-size:10px;color:rgba(255,255,255,.7);margin-top:3px">${s}</div>
+            </div>
+            ${i<4?`<div style="width:24px;height:3px;background:rgba(255,255,255,.3);background-image:linear-gradient(to right,rgba(255,255,255,.5) 50%,transparent 50%);background-size:6px 3px"></div>`:''}
+          </div>
+        `).join('')}
+      </div>
+      <div style="display:flex;justify-content:space-around;color:#fff;font-family:var(--fc);font-size:12px;font-weight:700;margin-top:8px;flex-wrap:wrap;gap:8px">
+        <div>🚦 signal = <span id="bossSig" style="color:#FFC234">"green"</span></div>
+        <div>👥 passengers = <span id="bossPax" style="color:#FFC234">0</span></div>
+      </div>
+    </div>
+
+    <!-- Step 1: define function -->
+    <div class="mission-card" id="bossStep1Card">
+      <div class="mission-label">🎯 LANGKAH 1 dari 5</div>
+      <div class="mission-text">Susun resep handle_station()</div>
+      <div class="mission-sub">Urutan: pelan → berhenti → buka pintu → tunggu → tutup pintu → maju.</div>
+    </div>
+    <div id="bossStep1">
+      <div class="fn-def">
+        <div class="fn-def-head">
+          <span class="fn-kw">function</span>
+          <span class="fn-name">handle_station()</span>
+          <span style="font-family:var(--fc);font-weight:700">{</span>
+        </div>
+        <div class="fn-body" id="bossFnBody"><div class="fn-body-empty">Tap blok untuk susun resep…</div></div>
+        <div style="font-family:var(--fc);font-weight:700;margin-top:6px">}</div>
+      </div>
+      <div class="palette">
+        <div class="palette-label">🧰 Blok Perintah</div>
+        <div class="palette-blocks">
+          ${['slow_down','stop','open_door','wait(30)','close_door','move_forward(1)'].map(k=>blockHTML(k)).join('')}
+        </div>
+      </div>
+      <div class="program-actions">
+        <button class="act undo" onclick="bossPopFn()">⤺ Undo</button>
+        <button class="act reset" onclick="bossResetFn()">🔄 Reset</button>
+        <button class="act run" onclick="bossCheckStep1()">▶ Cek Resep</button>
+      </div>
+    </div>
+
+    <!-- Steps 2-5 hidden initially -->
+    <div id="bossStep2" style="display:none">
+      <div class="mission-card">
+        <div class="mission-label">🎯 LANGKAH 2 dari 5</div>
+        <div class="mission-text">Pakai repeat(5) untuk 5 stasiun!</div>
+        <div class="mission-sub">Pilih angka pengulangan.</div>
+      </div>
+      <div class="cond-builder">
+        <div class="cond-row">
+          <span class="cond-kw" style="background:var(--forest)">repeat</span>
+          <span style="font-family:var(--fc);font-weight:700">(</span>
+          <span class="cond-pick" id="bossRepN">?</span>
+          <span style="font-family:var(--fc);font-weight:700">) {</span>
+        </div>
+        <div class="cond-row" style="margin-left:18px">
+          <span style="font-family:var(--fc);font-weight:700;color:var(--forest)">handle_station()</span>
+        </div>
+        <div class="cond-row"><span style="font-family:var(--fc);font-weight:700">}</span></div>
+        <div class="num-picker">
+          ${[3,4,5,6].map(n=>`<button class="num-pick-btn" data-n="${n}" onclick="bossPickN(${n})">${n}</button>`).join('')}
+        </div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" onclick="bossCheckStep2()">▶ Cek</button>
+      </div>
+    </div>
+
+    <div id="bossStep3" style="display:none">
+      <div class="mission-card">
+        <div class="mission-label">🎯 LANGKAH 3 dari 5</div>
+        <div class="mission-text">Tambah aturan sinyal!</div>
+        <div class="mission-sub">IF signal == "green" THEN ___</div>
+      </div>
+      <div class="cond-builder">
+        <div class="cond-row">
+          <span class="cond-kw">IF</span>
+          <span style="font-family:var(--fc);font-weight:700">signal ==</span>
+          <span class="cond-pick chosen">"green"</span>
+        </div>
+        <div class="cond-row">
+          <span class="cond-kw then">THEN</span>
+          <span class="cond-pick" id="bossAct">?</span>
+        </div>
+        <div class="cond-options">
+          ${['stop()','move_forward(1)','clean()'].map(o=>`<button class="cond-opt" onclick="bossPickAct('${o}', this)">${o}</button>`).join('')}
+        </div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" onclick="bossCheckStep3()">▶ Cek</button>
+      </div>
+    </div>
+
+    <div id="bossStep4" style="display:none">
+      <div class="mission-card">
+        <div class="mission-label">🎯 LANGKAH 4 dari 5</div>
+        <div class="mission-text">Hitung penumpang!</div>
+        <div class="mission-sub">Setiap stasiun, tambah 10 penumpang. Setelah 5 stasiun jadi berapa?</div>
+      </div>
+      <div class="var-builder">
+        <div class="var-row">
+          <span class="var-tag">passengers</span>
+          <span class="var-op">=</span>
+          <span class="var-tag">passengers</span>
+          <span class="var-op">+</span>
+          <input class="var-inp" value="10" readonly />
+        </div>
+        <div style="font-size:13px;color:var(--muted);margin-top:6px">Mulai dari 0, ulang 5x. passengers akhir =</div>
+        <div class="var-row" style="margin-top:6px">
+          <input class="var-inp" id="bossFinalPax" type="number" inputmode="numeric" placeholder="?" />
+        </div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" onclick="bossCheckStep4()">▶ Cek</button>
+      </div>
+    </div>
+
+    <div id="bossStep5" style="display:none">
+      <div class="mission-card">
+        <div class="mission-label">🎯 LANGKAH 5 dari 5</div>
+        <div class="mission-text">Luncurkan robot Jakarta → Surabaya!</div>
+        <div class="mission-sub">Semua program sudah siap. Tekan tombol luncur untuk lihat petualangan robotmu!</div>
+      </div>
+      <div class="program-actions">
+        <button class="act run" onclick="bossLaunch()" style="background:linear-gradient(135deg,#7B3FA8,#2E3192)">🚀 LUNCURKAN!</button>
+      </div>
+      <div class="journey-log" id="journeyLog" style="display:none"></div>
+    </div>
+  `;
+  S.bossFnSeq = [];
+  S.bossFnDone = false;
+  S.bossN = null;
+  S.bossAct = null;
+  // re-override addBlock for boss step1
+  window.addBlock = function(key){
+    AX.play('snap');
+    if(!S.bossFnDone){
+      S.bossFnSeq.push(key);
+      bossUpdateFn();
+    }
+  };
+}
+
+function bossUpdateFn(){
+  const fb = document.getElementById('bossFnBody');
+  if(!fb) return;
+  if(S.bossFnSeq.length === 0){
+    fb.innerHTML = '<div class="fn-body-empty">Tap blok untuk susun resep…</div>';
+  } else {
+    fb.innerHTML = S.bossFnSeq.map((k,i)=>{
+      const m = BLOCK_META[k] || {text:k};
+      return `<div class="fn-line">${m.text}<span class="pg-x" onclick="bossRemoveFn(${i})">✕</span></div>`;
+    }).join('');
+  }
+}
+function bossPopFn(){ if(S.bossFnSeq.length){ AX.play('click'); S.bossFnSeq.pop(); bossUpdateFn(); }}
+function bossResetFn(){ AX.play('click'); S.bossFnSeq = []; bossUpdateFn(); }
+function bossRemoveFn(i){ AX.play('click'); S.bossFnSeq.splice(i,1); bossUpdateFn(); }
+
+function bossCheckStep1(){
+  const correct = ['slow_down','stop','open_door','wait(30)','close_door','move_forward(1)'];
+  if(arraysEqual(S.bossFnSeq, correct)){
+    S.bossFnDone = true;
+    AX.play('chime');
+    showToast(true, 'Resep handle_station() jadi! 📜', 'Lanjut ke langkah 2.');
+    setTimeout(()=>{
+      document.getElementById('bossStep2').style.display = 'block';
+      document.getElementById('bossStep1').style.opacity = '0.55';
+      document.getElementById('bossStep1Card').style.opacity = '0.55';
+      clearToast();
+      document.getElementById('bossStep2').scrollIntoView({behavior:'smooth',block:'start'});
+    }, 1100);
+  } else {
+    showToast(false, 'Urutan resep belum tepat.', 'Coba: slow_down → stop → open_door → wait(30) → close_door → move_forward(1).');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+  }
+}
+
+function bossPickN(n){
+  AX.play('snap');
+  document.querySelectorAll('#bossStep2 .num-pick-btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelector(`#bossStep2 .num-pick-btn[data-n="${n}"]`).classList.add('sel');
+  document.getElementById('bossRepN').textContent = n;
+  document.getElementById('bossRepN').classList.add('chosen');
+  S.bossN = n;
+}
+function bossCheckStep2(){
+  if(S.bossN === 5){
+    AX.play('chime');
+    showToast(true, 'repeat(5) — pas! 🔁', 'Lanjut atur sinyal.');
+    setTimeout(()=>{
+      document.getElementById('bossStep3').style.display = 'block';
+      document.getElementById('bossStep2').style.opacity = '0.55';
+      clearToast();
+      document.getElementById('bossStep3').scrollIntoView({behavior:'smooth',block:'start'});
+    }, 1000);
+  } else {
+    showToast(false, 'Kita punya 5 stasiun.', 'Pilih angka 5.');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+  }
+}
+
+function bossPickAct(act, btn){
+  AX.play('snap');
+  document.querySelectorAll('#bossStep3 .cond-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('bossAct').textContent = act;
+  document.getElementById('bossAct').classList.add('chosen');
+  S.bossAct = act;
+}
+function bossCheckStep3(){
+  if(S.bossAct === 'move_forward(1)'){
+    AX.play('chime');
+    showToast(true, 'Sinyal hijau → maju! 🚦', 'Sekarang kotak memori penumpang.');
+    setTimeout(()=>{
+      document.getElementById('bossStep4').style.display = 'block';
+      document.getElementById('bossStep3').style.opacity = '0.55';
+      clearToast();
+      document.getElementById('bossStep4').scrollIntoView({behavior:'smooth',block:'start'});
+    }, 1000);
+  } else {
+    showToast(false, 'Sinyal hijau berarti aman jalan.', 'Pilih move_forward(1).');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+  }
+}
+
+function bossCheckStep4(){
+  const v = parseInt(document.getElementById('bossFinalPax').value, 10);
+  if(v === 50){
+    AX.play('chime');
+    showToast(true, 'Tepat! 0 + 10×5 = 50 penumpang. 👥', 'Saatnya meluncurkan robot!');
+    setTimeout(()=>{
+      document.getElementById('bossStep5').style.display = 'block';
+      document.getElementById('bossStep4').style.opacity = '0.55';
+      clearToast();
+      document.getElementById('bossStep5').scrollIntoView({behavior:'smooth',block:'start'});
+    }, 1000);
+  } else {
+    document.getElementById('bossFinalPax').classList.add('bad');
+    showToast(false, 'Hitung lagi.', '0 + 10 + 10 + 10 + 10 + 10 = ?');
+    AX.play('wrong');
+    S.totalRetries++; S.perfectChapter = false;
+  }
+}
+
+async function bossLaunch(){
+  AX.play('horn');
+  const log = document.getElementById('journeyLog');
+  log.style.display = 'block';
+  log.innerHTML = '';
+  const lines = [
+    {t:'> Boot robot KAI...',d:400},
+    {t:'> Compile function handle_station() ✓',d:500},
+    {t:'> Init variable passengers = 0 ✓',d:400},
+    {t:'> repeat(5) { ... }',d:500},
+  ];
+  for(const l of lines){
+    log.innerHTML += `<div class="log-line">${l.t}</div>`;
+    log.scrollTop = log.scrollHeight;
+    AX.play('tick');
+    await sleep(l.d);
+  }
+  // simulate journey through 5 stations
+  let pax = 0;
+  for(let i=0; i<5; i++){
+    document.getElementById('bossSig').textContent = '"green"';
+    log.innerHTML += `<div class="log-line">> [Stasiun ${i+1}] signal == "green" → handle_station()</div>`;
+    log.scrollTop = log.scrollHeight;
+    AX.play('step');
+    await sleep(350);
+    // animate station marker
+    const st = document.getElementById(`bs${i}`);
+    if(st){ st.style.background='#FFC234'; st.textContent='🚂'; }
+    await sleep(450);
+    pax += 10;
+    document.getElementById('bossPax').textContent = pax;
+    log.innerHTML += `<div class="log-line">  ↳ slow_down → stop → open_door → wait → close_door → move</div>`;
+    log.innerHTML += `<div class="log-line">  ↳ passengers = ${pax}</div>`;
+    log.scrollTop = log.scrollHeight;
+    if(st){ st.style.background='#1F9D55'; st.textContent='✅'; }
+    AX.play('chime');
+    await sleep(350);
+  }
+  log.innerHTML += `<div class="log-line">> ✓ Selesai! Robot sampai di Surabaya. 🎉</div>`;
+  log.innerHTML += `<div class="log-line">> Total penumpang: ${pax}</div>`;
+  log.scrollTop = log.scrollHeight;
+  await sleep(600);
+  AX.play('fanfare');
+  launchConfetti();
+  setTimeout(launchConfetti, 800);
+  setTimeout(launchConfetti, 1600);
+  await sleep(1200);
+  // mark boss done & show finish
+  S.puzIdx = 1; // force completion
+  finishChapter();
+}
+
+/* ════════════════════════════════════════
+   CHAPTER COMPLETE
+════════════════════════════════════════ */
+function finishChapter(){
+  const ch = CHAPTERS[S.chapterIdx];
+  // compute stars based on retries across chapter
+  const retries = S.totalRetries + S.retries;
+  let stars = 3;
+  if(retries === 1) stars = 2;
+  else if(retries >= 2) stars = 1;
+  if(retries === 0 && S.perfectChapter) stars = 3;
+
+  // save progress (only improve)
+  const prev = S.progress[ch.id] || { stars:0 };
+  if(stars > prev.stars){
+    S.totalStars += (stars - prev.stars);
+    S.progress[ch.id] = { stars, retries };
+  } else {
+    S.progress[ch.id] = prev;
+  }
+  saveState();
+  document.getElementById('starCount').textContent = S.totalStars;
+
+  document.getElementById('doneBadge').textContent = ch.boss ? '🏆' : ['🎉','✨','🎯','⭐','🚂','🤖'][S.chapterIdx % 6];
+  document.getElementById('doneTitle').textContent = ch.boss ? 'INSINYUR KAI SEJATI!' : `${ch.title} — Selesai!`;
+  document.getElementById('doneStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3-stars);
+  document.getElementById('doneStarsNum').textContent = stars;
+  document.getElementById('doneRetries').textContent = retries;
+  const msgs = [
+    'Robotmu sudah jago menyusun perintah. Lanjut ke ruang berikutnya!',
+    'Robot sekarang bisa membuat keputusan! Hebat.',
+    'Loop = senjata rahasia insinyur cerdas. Mantap!',
+    'Memori robot kamu udah nyala. Robot makin pintar!',
+    'Resep rahasia berhasil! Kode jadi rapi dan singkat.',
+    'Kamu sudah jadi Insinyur Robot KAI Sejati! 🚂⭐ Robotmu siap mengarungi rel Jakarta sampai Surabaya.'
+  ];
+  document.getElementById('doneMsg').textContent = msgs[S.chapterIdx];
+
+  AX.play(ch.boss ? 'fanfare' : 'chime');
+  if(stars === 3) { setTimeout(launchConfetti, 250); }
+  if(ch.boss) {
+    setTimeout(launchConfetti, 200);
+    setTimeout(launchConfetti, 900);
+  }
+
+  show('sDone');
+
+  // if all chapters done with stars, show all done after a moment
+  const allDone = CHAPTERS.every(c => (S.progress[c.id]||{}).stars > 0);
+  if(allDone && ch.boss){
+    setTimeout(()=>{
+      document.getElementById('allDoneStars').textContent = `⭐ ${S.totalStars} / 18`;
+      show('sAllDone');
+      document.getElementById('mainHdr').classList.remove('light');
+      document.getElementById('factoryBg').classList.remove('hidden');
+      AX.play('fanfare');
+      setTimeout(launchConfetti, 200);
+      setTimeout(launchConfetti, 900);
+    }, 2800);
+  }
+}
+
+/* ════════════════════════════════════════
+   CONFETTI
+════════════════════════════════════════ */
+function launchConfetti(){
+  const c = document.getElementById('confetti');
+  const colors = ['#FF5C39','#FFC234','#1F9D55','#1FA9C7','#E84BA0','#2E3192','#7B3FA8'];
+  for(let i=0; i<90; i++){
+    const p = document.createElement('div');
+    p.className = 'cp';
+    const sz = 6 + Math.random()*12;
+    p.style.cssText = `left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${colors[~~(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.6}s;transform:rotate(${Math.random()*360}deg);`;
+    c.appendChild(p);
+    p.addEventListener('animationend', ()=>p.remove());
+  }
+}
+
+/* ════════════════════════════════════════
+   BACKGROUND PARTICLES
+════════════════════════════════════════ */
+function spawnDust(){
+  const bg = document.getElementById('factoryBg');
+  for(let i=0; i<22; i++){
+    const d = document.createElement('div');
+    d.className = 'dust';
+    const sz = 6 + Math.random()*22;
+    d.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;animation-duration:${10+Math.random()*16}s;animation-delay:${Math.random()*14}s;`;
+    bg.appendChild(d);
+  }
+  // big drifting gears
+  const gearSvg = '<svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M50 5 L58 18 L72 14 L74 28 L88 32 L82 45 L92 56 L80 65 L84 78 L70 80 L65 92 L52 86 L40 94 L34 82 L20 84 L20 70 L8 64 L16 52 L6 40 L18 34 L18 20 L32 22 L36 8 Z M50 32 A18 18 0 1 0 50 68 A18 18 0 1 0 50 32 Z" fill="currentColor"/></svg>';
+  const positions = [{t:'5%',l:'-8%',s:'180px',d:'40s'},{t:'30%',r:'-10%',s:'140px',d:'55s'},{t:'62%',l:'-6%',s:'120px',d:'34s'}];
+  positions.forEach(pos=>{
+    const g = document.createElement('div');
+    g.className = 'gear-bg';
+    g.style.cssText = `top:${pos.t};${pos.l?'left:'+pos.l:'right:'+pos.r};width:${pos.s};height:${pos.s};animation-duration:${pos.d};`;
+    g.innerHTML = gearSvg;
+    bg.appendChild(g);
+  });
+}
+
+/* ════════════════════════════════════════
+   ADDBLOCK DEFAULT (re-exposed)
+════════════════════════════════════════ */
+window.addBlock = defaultAddBlock;
+window.popProgram = popProgram;
+window.resetProgram = resetProgram;
+window.removeBlock = removeBlock;
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+loadState();
+renderHome();
+spawnDust();
+
+// global click to unlock audio
+document.addEventListener('click', ()=>AX.init(), { once:true });
+document.addEventListener('touchstart', ()=>AX.init(), { once:true });
+</script>
+</body>
+</html>
