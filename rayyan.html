@@ -255,6 +255,67 @@
     .footer a:hover { color: var(--tomato); }
 
     @media (max-width: 500px) { .hero { padding-top: 44px; } .section { margin-top: 56px; } }
+
+    /* ── SYNC ─────────────────────────────────────────────── */
+    .sync-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--paper-2); border: 1.5px solid var(--ink);
+      border-radius: 999px; padding: 6px 14px;
+      font-size: 13px; font-weight: 600; color: var(--ink);
+      cursor: pointer; transition: background .18s;
+      user-select: none;
+    }
+    .sync-pill:hover { background: var(--sea); color: #fff; border-color: var(--sea); }
+    .sync-pill.syncing { opacity: .7; cursor: default; }
+    .sync-pill.synced { border-color: var(--forest); color: var(--forest); }
+    .sync-pill.error  { border-color: var(--tomato); color: var(--tomato); }
+
+    .sync-backdrop {
+      position: fixed; inset: 0; background: rgba(26,22,20,.55); z-index: 900;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .sync-box {
+      background: var(--paper); border: 2.5px solid var(--ink); border-radius: 20px;
+      padding: 32px 28px; max-width: 400px; width: 100%;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .sync-box h3 {
+      font-family: var(--fd); font-weight: 800; font-size: 22px;
+      letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .sync-box p {
+      font-size: 14px; line-height: 1.6; color: var(--muted); margin-bottom: 20px;
+    }
+    .sync-row { display: flex; gap: 8px; margin-bottom: 16px; }
+    .sync-input {
+      flex: 1; padding: 11px 14px; border: 2px solid var(--ink); border-radius: 10px;
+      font-size: 14px; font-family: monospace; background: #fff;
+      outline: none;
+    }
+    .sync-input:focus { border-color: var(--sea); }
+    .sync-btn-dice {
+      padding: 11px 14px; border: 2px solid var(--ink); border-radius: 10px;
+      background: var(--mango); font-size: 18px; cursor: pointer;
+      transition: transform .15s;
+    }
+    .sync-btn-dice:hover { transform: rotate(20deg); }
+    .sync-actions { display: flex; gap: 10px; }
+    .sync-btn-save {
+      flex: 1; padding: 13px; background: var(--forest); color: #fff;
+      border: 2px solid var(--ink); border-radius: 10px;
+      font-family: var(--fd); font-weight: 700; font-size: 15px; cursor: pointer;
+      transition: background .18s;
+    }
+    .sync-btn-save:hover { background: #188042; }
+    .sync-btn-cancel {
+      padding: 13px 18px; background: transparent; color: var(--muted);
+      border: 2px solid var(--line); border-radius: 10px;
+      font-size: 14px; cursor: pointer;
+    }
+    .sync-note {
+      margin-top: 14px; font-size: 12px; color: var(--muted); line-height: 1.5;
+      background: var(--paper-2); border-radius: 8px; padding: 10px 12px;
+    }
   </style>
 </head>
 <body>
@@ -287,6 +348,9 @@
     <div class="hero-stats">
       <div class="stat-pill">⭐ <span id="totalStars">0</span> bintang terkumpul</div>
       <div class="stat-pill">🗺️ <span id="doneCount">0</span> / 11 petualangan selesai</div>
+      <div class="sync-pill" id="syncPill" onclick="openSyncModal()" title="Sinkronisasi antar perangkat">
+        <span id="syncIcon">☁️</span> <span id="syncLabel">Sinkron</span>
+      </div>
     </div>
   </section>
 
@@ -553,6 +617,126 @@
 
   buildMap();
   buildGames();
+</script>
+
+<!-- ── SYNC MODAL ──────────────────────────────────────────────────── -->
+<div class="sync-backdrop" id="syncModal" style="display:none" onclick="if(event.target===this)closeSyncModal()">
+  <div class="sync-box">
+    <h3>☁️ Sinkron Antar Perangkat</h3>
+    <p>Buat <strong>Kode Keluarga</strong> yang sama di semua gadget — HP, tablet, laptop. Bintang ⭐ dan progres Rayyan akan tersinkron otomatis.</p>
+    <div class="sync-row">
+      <input type="text" id="syncCodeInput" class="sync-input" placeholder="contoh: keluarga-rayyan-2024" maxlength="50" autocomplete="off" spellcheck="false">
+      <button class="sync-btn-dice" id="syncDiceBtn" title="Buat kode acak" onclick="generateCode()">🎲</button>
+    </div>
+    <div class="sync-actions">
+      <button class="sync-btn-save" id="syncSaveBtn" onclick="saveSyncCode()">Simpan & Sinkron</button>
+      <button class="sync-btn-cancel" onclick="closeSyncModal()">Batal</button>
+    </div>
+    <div class="sync-note" id="syncNote">
+      💡 <strong>Tips:</strong> Gunakan kode yang mudah diingat, misalnya nama keluarga + angka. Kode ini bersifat rahasia — siapa pun yang tahu kode ini bisa melihat progres.
+    </div>
+  </div>
+</div>
+
+<!-- ── FIREBASE (loaded async, gracefully optional) ─────────────── -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js" defer></script>
+<script src="/assets/js/sync.js" defer></script>
+
+<script>
+  /* ── Sync integration ──────────────────────────────────────────── */
+
+  const SYNC_ICONS = {
+    'offline':  ['☁️', 'Offline'],
+    'no-code':  ['☁️', 'Sinkron'],
+    'syncing':  ['⏳', 'Menyinkron…'],
+    'synced':   ['✅', 'Tersinkron'],
+    'error':    ['⚠️', 'Gagal sinkron'],
+  };
+
+  function setSyncStatus(state) {
+    const pill = document.getElementById('syncPill');
+    const icon = document.getElementById('syncIcon');
+    const label = document.getElementById('syncLabel');
+    if (!pill) return;
+    const [ic, lb] = SYNC_ICONS[state] || SYNC_ICONS['offline'];
+    icon.textContent = ic;
+    label.textContent = lb;
+    pill.className = 'sync-pill' + (state === 'syncing' ? ' syncing' : state === 'synced' ? ' synced' : state === 'error' ? ' error' : '');
+    if (state === 'syncing') pill.onclick = null;
+    else pill.onclick = openSyncModal;
+  }
+
+  function openSyncModal() {
+    const modal = document.getElementById('syncModal');
+    const input = document.getElementById('syncCodeInput');
+    const note = document.getElementById('syncNote');
+    const code = (typeof SYNC !== 'undefined') ? SYNC.getFamilyCode() : '';
+    input.value = code;
+    if (code) {
+      note.innerHTML = `☁️ Kode aktif: <strong>${code}</strong>. Masukkan kode yang sama di perangkat lain untuk sinkron.`;
+    } else {
+      note.innerHTML = `💡 <strong>Tips:</strong> Gunakan kode yang mudah diingat. Kode ini bersifat rahasia — siapa pun yang tahu kode ini bisa melihat progres.`;
+    }
+    modal.style.display = 'flex';
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function closeSyncModal() {
+    document.getElementById('syncModal').style.display = 'none';
+  }
+
+  function generateCode() {
+    const words = ['keluarga','rayyan','adhi','petualangan','bintang','kereta','roket','lautan'];
+    const a = words[Math.floor(Math.random() * words.length)];
+    const b = words[Math.floor(Math.random() * words.length)];
+    const n = Math.floor(1000 + Math.random() * 9000);
+    document.getElementById('syncCodeInput').value = `${a}-${b}-${n}`;
+  }
+
+  async function saveSyncCode() {
+    const raw = document.getElementById('syncCodeInput').value.trim();
+    if (!raw) { document.getElementById('syncCodeInput').focus(); return; }
+    if (typeof SYNC === 'undefined') {
+      alert('Firebase belum siap. Coba lagi dalam beberapa detik.');
+      return;
+    }
+    SYNC.setFamilyCode(raw);
+    closeSyncModal();
+    await runSync();
+  }
+
+  async function runSync() {
+    if (typeof SYNC === 'undefined' || !SYNC.isConfigured()) {
+      setSyncStatus('offline');
+      return;
+    }
+    SYNC.init();
+    if (!SYNC.getFamilyCode()) { setSyncStatus('no-code'); return; }
+    const changed = await SYNC.sync(setSyncStatus);
+    if (changed) {
+      buildMap();
+    }
+  }
+
+  /* Run sync once Firebase scripts have loaded */
+  window.addEventListener('load', () => {
+    setTimeout(runSync, 1500);
+  });
+
+  /* Re-sync when the tab becomes visible again (user switches back from a course) */
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') runSync();
+  });
+
+  /* Show setup prompt if Firebase is configured but no code set yet */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (typeof SYNC !== 'undefined' && SYNC.isConfigured() && !SYNC.getFamilyCode()) {
+        openSyncModal();
+      }
+    }, 2500);
+  });
 </script>
 
 </body>
