@@ -1,0 +1,1518 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Lab Misteri X 🧪</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%2300C9A7"/><text y=".9em" font-size="78" x="10">🧪</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --lab:#00C9A7; --lab-d:#009d82; --lab-bg:#E0FAF5;
+      --tomato:#FF5C39; --mango:#FFC234; --forest:#1F9D55;
+      --mawar:#E84BA0; --indigo:#2E3192; --purple:#7B3FA8;
+      --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+      --line:rgba(26,22,20,0.14); --muted:#6B6259;
+      --tomato-bg:#FFE8E3; --mango-bg:#FFF5D6; --forest-bg:#E3F5EB;
+      --mawar-bg:#FCE8F3; --indigo-bg:#E8E9F8;
+      --lab-deep:#0d1117; --lab-mid:#1a0a2e; --lab-light:#0d1117;
+      --fd:'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb:'Nunito',system-ui,sans-serif;
+      --r:16px; --r-sm:10px; --r-lg:24px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased}
+    body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden}
+    button{font-family:inherit;cursor:pointer;border:none;background:none}
+    input{font-family:inherit}
+
+    /* LAB BG */
+    #labBg{position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,#0d1117 0%,#1a0a2e 50%,#0d1117 100%);pointer-events:none;overflow:hidden}
+    #labBg.hidden{opacity:0;transition:opacity .4s}
+    .lab-bubble{position:absolute;border-radius:50%;pointer-events:none;animation:bubbleFloat linear infinite}
+    @keyframes bubbleFloat{0%{transform:translateY(0) scale(1);opacity:.7}50%{transform:translateY(-40px) scale(1.1);opacity:.4}100%{transform:translateY(-90vh) scale(0.6);opacity:0}}
+
+    /* HEADER */
+    .hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(13,17,23,.85);backdrop-filter:blur(8px);border-bottom:2px solid rgba(0,201,167,.2);position:sticky;top:0;z-index:200;transition:background .4s}
+    .hdr.light{background:var(--paper);border-bottom-color:var(--ink)}
+    .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:rgba(255,255,255,.9)}
+    .hdr.light .hdr-brand{color:var(--ink)}
+    .hdr-brand-word{font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-.03em}
+    .hdr-right{display:flex;align-items:center;gap:10px}
+    .hdr-stars{display:flex;align-items:center;gap:5px;background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:5px 12px;font-family:var(--fd);font-weight:800;font-size:15px;color:var(--ink)}
+    .hdr-right{display:flex;align-items:center;gap:12px}
+    .bug-btn{width:44px;height:44px;border:2px solid var(--ink);border-radius:999px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-size:20px;transition:background .18s}
+    .bug-btn:hover{background:var(--tomato)}
+
+    /* BUG REPORT MODAL */
+    .bug-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(26,22,20,0.6);z-index:1000;align-items:center;justify-content:center;padding:20px}
+    .bug-modal.show{display:flex}
+    .bug-modal-box{background:var(--paper);border:3px solid var(--ink);border-radius:20px;padding:28px;max-width:500px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,0.2);animation:slideUp 0.3s ease}
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .bug-modal-title{font-family:var(--fd);font-weight:800;font-size:24px;margin-bottom:12px}
+    .bug-modal-desc{font-size:14px;color:var(--muted);margin-bottom:20px}
+    .bug-form-group{margin-bottom:16px}
+    .bug-form-label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+    .bug-form-input,.bug-form-textarea{width:100%;border:2px solid var(--ink);border-radius:8px;padding:10px 12px;font-size:14px;background:var(--paper-2)}
+    .bug-form-textarea{resize:vertical;min-height:100px;font-family:inherit}
+    .bug-form-input:focus,.bug-form-textarea:focus{outline:none;background:var(--mango)}
+    .bug-modal-actions{display:flex;gap:12px;margin-top:24px}
+    .bug-btn-submit,.bug-btn-cancel{flex:1;padding:12px;border:2px solid var(--ink);border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;transition:all .18s}
+    .bug-btn-submit{background:var(--tomato);color:var(--paper)}
+    .bug-btn-submit:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+    .bug-btn-cancel{background:var(--paper-2)}
+    .bug-btn-cancel:hover{background:var(--line)}
+    .hdr-hearts{display:flex;gap:3px;font-size:20px}
+
+    /* SCREENS */
+    .screen{display:none;max-width:820px;margin:0 auto;padding:24px 18px 80px;animation:fadeUp .28s ease}
+    .screen.active{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    /* HOME SCREEN */
+    .home-hero{text-align:center;padding:28px 0 20px}
+    .sub-anim{width:90px;height:90px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:56px;animation:labFloat 3s ease-in-out infinite}
+    @keyframes labFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+    .home-title{font-family:var(--fd);font-weight:800;font-size:clamp(26px,6vw,42px);letter-spacing:-.03em;line-height:1.05;color:var(--paper);margin-bottom:8px}
+    .home-title em{font-style:normal;background:var(--lab);padding:1px 10px;border-radius:8px;color:#0d1117}
+    .home-sub{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:24px}
+
+    /* DEPTH GAUGE = INVESTIGATION LEVEL */
+    .depth-wrap{background:rgba(255,255,255,.08);border:2px solid rgba(0,201,167,.2);border-radius:var(--r);padding:16px;margin-bottom:24px}
+    .depth-label{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--lab);margin-bottom:12px}
+    .depth-track{display:flex;gap:0;align-items:center;overflow-x:auto;padding-bottom:4px;min-width:0}
+    .depth-node{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;min-width:52px}
+    .depth-dot{width:42px;height:42px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .3s}
+    .depth-dot.done{background:var(--forest);border-color:var(--forest)}
+    .depth-dot.active{background:var(--lab);border-color:var(--lab);animation:labPulse 1.5s ease-in-out infinite}
+    @keyframes labPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,201,167,.5)}50%{box-shadow:0 0 0 10px rgba(0,201,167,0)}}
+    .depth-name{font-size:9px;font-family:var(--fd);font-weight:700;color:rgba(255,255,255,.5);text-align:center;white-space:nowrap}
+    .depth-name.done{color:#7ee8a2}.depth-name.active{color:var(--lab)}
+    .depth-rail{flex:1;height:3px;background:rgba(255,255,255,.15);min-width:16px;position:relative;top:-14px;background-image:linear-gradient(to right,rgba(255,255,255,.4) 50%,transparent 50%);background-size:8px 3px}
+    .depth-rail.done{background:var(--forest);background-image:none}
+
+    .overall-box{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.08);border:2px solid rgba(0,201,167,.2);border-radius:var(--r);padding:16px;margin-bottom:24px}
+    .ov-ring{width:60px;height:60px;flex-shrink:0}
+    .ov-info{flex:1}
+    .ov-label{font-family:var(--fd);font-weight:700;font-size:14px;color:var(--paper);margin-bottom:6px}
+    .ov-bar-wrap{height:8px;background:rgba(255,255,255,.15);border-radius:999px;overflow:hidden}
+    .ov-bar{height:100%;background:var(--lab);border-radius:999px;transition:width .8s ease}
+    .ov-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+
+    .sec-title{font-family:var(--fd);font-weight:800;font-size:18px;color:var(--paper);margin-bottom:12px}
+    .chapters-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:500px){.chapters-grid{grid-template-columns:1fr}}
+
+    .ch-card{border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--paper);transition:transform .17s,box-shadow .17s;text-align:left}
+    .ch-card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .ch-card.locked{opacity:.5;cursor:not-allowed}
+    .ch-card.locked:hover{transform:none;box-shadow:none}
+    .ch-thumb{padding:16px 16px 12px;border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between}
+    .ch-emoji{font-size:34px;line-height:1}
+    .ch-stars-row{display:flex;gap:2px}
+    .ch-star{font-size:16px;opacity:.2}.ch-star.on{opacity:1}
+    .ch-body{padding:12px}
+    .ch-num{font-family:var(--fd);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .ch-depth{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--lab);letter-spacing:.04em;margin-bottom:2px}
+    .ch-title{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.02em;margin-bottom:3px}
+    .ch-desc{font-size:12px;color:var(--muted);line-height:1.4}
+    .ch-status{margin-top:6px;font-family:var(--fd);font-weight:600;font-size:12px}
+    .ch-card.boss .ch-thumb{background:linear-gradient(135deg,#1a0030,#3d0060)}
+    .ch-card.boss .ch-depth{color:#e879f9}
+    .ch-card.boss{border-color:#7B3FA8}
+
+    /* LESSON */
+    .back-btn{display:flex;align-items:center;gap:5px;font-family:var(--fd);font-weight:600;font-size:13px;color:var(--muted);margin-bottom:20px}
+    .back-btn:hover{color:var(--ink)}
+    .lesson-hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+    .lesson-icon{font-size:48px;background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:10px 14px;flex-shrink:0;line-height:1}
+    .lesson-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,5vw,34px);letter-spacing:-.03em;line-height:1.05}
+    .lesson-depth{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--lab);margin-bottom:3px}
+    .lesson-body{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:22px;margin-bottom:20px}
+    .ls{margin-bottom:20px}.ls:last-child{margin-bottom:0}
+    .ls-h{font-family:var(--fd);font-weight:700;font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .ls p{font-size:14.5px;line-height:1.65;color:var(--ink)}
+    .ex-box{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r-sm);padding:16px;margin-top:10px;text-align:center}
+    .big-num{font-family:var(--fd);font-weight:800;font-size:30px;letter-spacing:-.03em}
+    .tip-box{background:var(--lab);color:#0d1117;border-radius:var(--r);border:2.5px dashed rgba(0,0,0,.2);padding:16px;margin-bottom:18px;display:flex;gap:10px;align-items:flex-start}
+    .tip-ico{font-size:26px;flex-shrink:0;line-height:1}
+    .tip-name{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.6);margin-bottom:2px}
+    .tip-msg{font-size:14px;line-height:1.55}
+    .start-btn{width:100%;background:var(--lab);color:#0d1117;border:3px solid var(--ink);border-radius:var(--r);padding:17px;font-family:var(--fd);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .17s,box-shadow .17s}
+    .start-btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .start-btn.boss-btn{background:var(--purple);color:#fff}
+
+    /* EXERCISE */
+    .ex-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+    .ex-back-btn{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-sm);padding:7px 11px;font-family:var(--fd);font-weight:700;font-size:13px;flex-shrink:0}
+    .ex-meta{flex:1;min-width:0}
+    .ex-ch-name{font-family:var(--fd);font-weight:700;font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ex-bar-wrap{height:6px;background:var(--line);border-radius:999px;overflow:hidden}
+    .ex-bar{height:100%;background:var(--lab);border-radius:999px;transition:width .4s ease}
+    .ex-qnum{font-family:var(--fd);font-weight:700;font-size:12px;color:var(--muted);flex-shrink:0}
+
+    /* HEARTS + COMBO */
+    .hud{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .hearts{display:flex;gap:4px;font-size:22px}
+    .combo-badge{background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:4px 12px;font-family:var(--fd);font-weight:800;font-size:13px;display:none}
+    .combo-badge.show{display:block;animation:comboPop .25s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes comboPop{0%{transform:scale(.7)}100%{transform:scale(1)}}
+
+    /* TIMER RING */
+    .timer-wrap{display:flex;justify-content:flex-end;margin-bottom:10px}
+    .timer-ring-svg{transform:rotate(-90deg)}
+    .timer-bg{fill:none;stroke:var(--line);stroke-width:4}
+    .timer-fg{fill:none;stroke:var(--lab);stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .95s linear,stroke .3s}
+    .timer-num{font-family:var(--fd);font-weight:800;font-size:13px;fill:var(--ink)}
+
+    /* QUESTION CARD */
+    .q-card{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-lg);padding:24px 20px;margin-bottom:16px}
+    .q-label{font-family:var(--fd);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    .q-text{font-family:var(--fd);font-weight:800;font-size:clamp(17px,4vw,24px);letter-spacing:-.02em;line-height:1.25;margin-bottom:12px}
+    .q-visual{font-size:24px;line-height:1.6;margin-bottom:12px;text-align:center}
+
+    /* MC */
+    .opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .opt-btn{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:13px 10px;font-family:var(--fd);font-weight:700;font-size:clamp(13px,3.5vw,19px);text-align:center;display:flex;align-items:center;justify-content:center;transition:transform .14s,box-shadow .14s;line-height:1.3}
+    .opt-btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .opt-btn.correct{background:var(--forest);color:#fff;border-color:var(--forest);animation:pulse .45s ease}
+    .opt-btn.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato);animation:shake .38s ease}
+    .opt-btn:disabled{cursor:not-allowed}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+    /* INPUT */
+    .inp-row{display:flex;gap:9px;align-items:center}
+    .num-inp{flex:1;border:3px solid var(--ink);border-radius:var(--r);padding:13px 14px;font-family:var(--fd);font-weight:800;font-size:24px;text-align:center;background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s}
+    .num-inp:focus{border-color:var(--lab)}
+    .num-inp.ok{border-color:var(--forest);background:var(--forest-bg)}
+    .num-inp.bad{border-color:var(--tomato);background:var(--tomato-bg)}
+    .chk-btn{background:var(--mango);color:var(--ink);border:2.5px solid var(--ink);border-radius:var(--r);padding:13px 18px;font-family:var(--fd);font-weight:800;font-size:15px;flex-shrink:0;transition:transform .14s,box-shadow .14s}
+    .chk-btn:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+
+    /* DRAG-SORT */
+    .sort-label{font-size:12px;color:var(--muted);margin-bottom:10px;text-align:center}
+    .sort-items{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+    .sort-item{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r-sm);padding:12px 16px;font-family:var(--fd);font-weight:800;font-size:18px;cursor:pointer;transition:all .15s;user-select:none;min-width:58px;text-align:center}
+    .sort-item:hover:not(.disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .sort-item.selected{background:var(--lab);color:#0d1117;border-color:var(--lab);transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .sort-item.correct{background:var(--forest);color:#fff;border-color:var(--forest)}
+    .sort-item.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato)}
+    .sort-item.disabled{cursor:not-allowed}
+    .sort-direction{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+
+    /* NUMBER LINE */
+    .nline-wrap{overflow-x:auto;padding:10px 0}
+    .nline-svg{display:block;margin:0 auto;cursor:pointer}
+    .nline-tick{font-family:var(--fd);font-weight:700;font-size:11px;fill:var(--ink)}
+    .nline-zone{cursor:pointer;opacity:0}
+    .nline-zone:hover{opacity:.15;fill:var(--lab)}
+    .nline-marker{font-size:20px;transition:all .2s}
+
+    /* BAR-FILL */
+    .bar-fill-wrap{margin:12px 0}
+    .bar-fill-label{font-size:12px;color:var(--muted);margin-bottom:8px;text-align:center}
+    .bar-segments{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+    .bar-seg{width:44px;height:44px;border:2.5px solid var(--ink);border-radius:6px;cursor:pointer;transition:background .15s,transform .1s;background:var(--paper)}
+    .bar-seg:hover:not(.disabled){transform:scale(1.08)}
+    .bar-seg.filled{background:var(--lab)}
+    .bar-seg.correct-fill{background:var(--forest)}
+    .bar-seg.wrong-fill{background:var(--tomato)}
+    .bar-seg.disabled{cursor:not-allowed}
+    .bar-fill-count{font-family:var(--fd);font-weight:700;font-size:13px;text-align:center;margin-top:6px;color:var(--lab)}
+
+    /* BOSS BATTLE */
+    .boss-hdr{text-align:center;margin-bottom:16px}
+    .boss-enemy{font-size:72px;display:inline-block;line-height:1;transition:transform .3s}
+    .boss-enemy.hit{animation:bossHit .4s ease}
+    @keyframes bossHit{0%{transform:scale(1) rotate(0)}30%{transform:scale(1.15) rotate(-10deg)}60%{transform:scale(.9) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+    .boss-enemy.damage{animation:bossDmg .3s ease}
+    @keyframes bossDmg{0%,100%{filter:none}50%{filter:hue-rotate(120deg) brightness(1.3)}}
+    .boss-hp{width:100%;height:14px;background:var(--line);border-radius:999px;overflow:hidden;border:2px solid var(--ink);margin:10px 0}
+    .boss-hp-bar{height:100%;background:var(--tomato);border-radius:999px;transition:width .5s ease}
+    .boss-hp-label{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:8px}
+    .boss-q-wrap{background:linear-gradient(135deg,#1a0030,#3d0060);border:2px solid var(--purple);border-radius:var(--r-lg);padding:24px 20px;margin-bottom:16px}
+    .boss-q-wrap .q-label{color:rgba(255,255,255,.5)}
+    .boss-q-wrap .q-text{color:#fff}
+    .boss-q-wrap .q-visual{color:#fff}
+
+    /* VENN DIAGRAM */
+    .venn-wrap{position:relative;width:280px;height:130px;margin:12px auto}
+    .venn-a{position:absolute;left:10px;top:10px;width:140px;height:110px;border-radius:50%;background:rgba(0,201,167,.25);border:3px solid var(--lab)}
+    .venn-b{position:absolute;right:10px;top:10px;width:140px;height:110px;border-radius:50%;background:rgba(123,63,168,.25);border:3px solid var(--purple)}
+    .venn-label-a{position:absolute;left:20px;top:50px;font-family:var(--fd);font-weight:800;font-size:13px;color:var(--lab)}
+    .venn-label-b{position:absolute;right:16px;top:50px;font-family:var(--fd);font-weight:800;font-size:13px;color:var(--purple)}
+    .venn-label-ab{position:absolute;left:50%;top:50px;transform:translateX(-50%);font-family:var(--fd);font-weight:800;font-size:11px;color:var(--ink);text-align:center}
+
+    /* BALANCE SCALE */
+    .scale-wrap{display:flex;align-items:flex-end;justify-content:center;gap:0;margin:12px auto;width:240px}
+    .scale-pan{background:var(--lab-bg);border:2.5px solid var(--lab);border-radius:8px;padding:10px 16px;min-width:80px;text-align:center;font-family:var(--fd);font-weight:800;font-size:15px;color:var(--ink)}
+    .scale-beam{width:80px;height:4px;background:var(--ink);align-self:center;position:relative}
+    .scale-beam::after{content:'▲';position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);font-size:14px;color:var(--ink)}
+
+    /* TOAST */
+    .toast{border-radius:var(--r);padding:12px 16px;margin-top:12px;font-family:var(--fd);font-weight:700;font-size:14px;display:none;align-items:flex-start;gap:9px;animation:toastIn .22s ease}
+    .toast.show{display:flex}
+    .toast.ok{background:var(--forest-bg);border:2px solid var(--forest);color:#0e6032}
+    .toast.bad{background:var(--tomato-bg);border:2px solid var(--tomato);color:#c73013}
+    .toast-expl{font-weight:400;font-size:12.5px;margin-top:2px}
+    @keyframes toastIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+    .nxt-btn{width:100%;margin-top:12px;background:var(--ink);color:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:15px;font-family:var(--fd);font-weight:800;font-size:15px;display:none;transition:opacity .15s}
+    .nxt-btn.show{display:block}
+    .nxt-btn:hover{opacity:.82}
+
+    /* COMPLETE */
+    .done-hero{text-align:center;padding:32px 0 20px}
+    .done-badge{font-size:72px;line-height:1;margin-bottom:14px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+    .done-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,5vw,36px);letter-spacing:-.03em;margin-bottom:8px}
+    .done-stars{font-size:40px;margin:12px 0;animation:starsIn .5s ease .2s both}
+    @keyframes starsIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+    .score-box{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:18px;margin:16px 0;text-align:center}
+    .score-num{font-family:var(--fd);font-weight:800;font-size:48px;letter-spacing:-.04em}
+    .score-lbl{font-size:13px;color:var(--muted)}
+    .done-msg{font-size:14px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.6}
+    .done-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .act-btn{border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;font-family:var(--fd);font-weight:800;font-size:14px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s}
+    .act-btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--ink)}
+    .act-btn.primary{background:var(--lab);color:#0d1117}
+    .act-btn.secondary{background:var(--paper-2);color:var(--ink)}
+
+    .review-panel{margin-top:18px}
+    .review-title{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:8px}
+    .review-item{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border:1.5px solid var(--line);border-radius:var(--r-sm);margin-bottom:7px;font-size:12.5px}
+    .review-ico{font-size:15px;flex-shrink:0;margin-top:1px}
+    .review-q{font-weight:600;margin-bottom:1px}
+    .review-a{color:var(--muted)}
+
+    /* ALL DONE */
+    .all-done-wrap{text-align:center;padding:32px 0}
+    .all-done-anim{font-size:60px;display:inline-block;animation:labFloat 2s ease-in-out infinite;margin-bottom:12px}
+    .all-done-title{font-family:var(--fd);font-weight:800;font-size:clamp(24px,6vw,40px);letter-spacing:-.03em;margin-bottom:10px}
+
+    /* CONFETTI */
+    #confetti{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+    .cp{position:absolute;top:-16px;border-radius:2px;animation:fall linear forwards}
+    @keyframes fall{from{top:-20px;opacity:1}to{top:110vh;opacity:0}}
+
+    /* SCREEN-SHAKE */
+    @keyframes screenShake{0%,100%{transform:translate(0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(3px,-3px)}}
+    .shake{animation:screenShake .35s ease}
+  </style>
+</head>
+<body>
+
+<div id="labBg"></div>
+<div id="confetti"></div>
+
+<header class="hdr" id="mainHdr">
+  <a href="/kids.html" class="hdr-brand">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
+      <circle cx="38" cy="50" r="22" fill="none" stroke="currentColor" stroke-width="14"/>
+      <rect x="54" y="28" width="14" height="44" fill="currentColor"/>
+      <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+    </svg>
+    <span class="hdr-brand-word">← Kids Hub</span>
+  </a>
+  <div class="hdr-right">
+    <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+  </div>
+
+<!-- BUG REPORT MODAL -->
+<div class="bug-modal" id="bugModal">
+  <div class="bug-modal-box">
+    <h2 class="bug-modal-title">Laporkan Masalah 🐛</h2>
+    <p class="bug-modal-desc">Ada yang tidak bekerja? Ceritakan apa yang terjadi!</p>
+    <form id="bugForm" onsubmit="submitBugReport(event)">
+      <div class="bug-form-group">
+        <label class="bug-form-label">Jelaskan masalahnya:</label>
+        <textarea
+          class="bug-form-textarea"
+          name="message"
+          id="bugDescription"
+          required
+          placeholder="Contoh: Tombol tidak bisa diklik, soal tidak muncul, dll..."></textarea>
+      </div>
+      <div class="bug-form-group">
+        <label class="bug-form-label">Email (opsional, jika ingin balasan):</label>
+        <input
+          type="email"
+          class="bug-form-input"
+          name="email"
+          id="bugEmail"
+          placeholder="namamu@email.com">
+      </div>
+      <div class="bug-modal-actions">
+        <button type="button" class="bug-btn-cancel" onclick="closeBugReport()">Batal</button>
+        <button type="submit" class="bug-btn-submit">Kirim Laporan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</header>
+
+<!-- ═══ HOME ═══ -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="sub-anim">🧪</div>
+    <h1 class="home-title">Selamat datang, <em>Detektif Rayyan!</em></h1>
+    <p class="home-sub">Lab Misteri X menunggumu! Pecahkan setiap petunjuk bersama Detektif Kapi. Temukan X yang tersembunyi! 🔍</p>
+  </div>
+
+  <div class="depth-wrap">
+    <div class="depth-label">🔍 Level Investigasi</div>
+    <div class="depth-track" id="depthTrack"></div>
+  </div>
+
+  <div class="overall-box">
+    <svg class="ov-ring" viewBox="0 0 60 60" fill="none">
+      <circle cx="30" cy="30" r="24" stroke="rgba(255,255,255,.15)" stroke-width="5"/>
+      <circle cx="30" cy="30" r="24" stroke="var(--lab)" stroke-width="5"
+              stroke-linecap="round" stroke-dasharray="151" stroke-dashoffset="151"
+              id="ovRingPath" transform="rotate(-90 30 30)"
+              style="transition:stroke-dashoffset 1s ease"/>
+    </svg>
+    <div class="ov-info">
+      <div class="ov-label">Progress Detektif Rayyan 🧪</div>
+      <div class="ov-bar-wrap"><div class="ov-bar" id="ovBar" style="width:0%"></div></div>
+      <div class="ov-sub" id="ovSub">0 dari 6 petunjuk terpecahkan</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Pilih Petunjuk Misteri 🔬</div>
+  <div class="chapters-grid" id="chGrid"></div>
+
+  <div style="margin-top:24px;text-align:center">
+    <button onclick="resetProgress()" style="font-size:12px;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;text-decoration:underline">
+      Reset progress (untuk orang tua)
+    </button>
+  </div>
+</div>
+
+<!-- ═══ LESSON ═══ -->
+<div class="screen" id="sLesson">
+  <button class="back-btn" onclick="goHome()">← Kembali ke lab misteri</button>
+  <div id="lessonHdr"></div>
+  <div class="lesson-body" id="lessonBody"></div>
+  <div class="tip-box">
+    <div class="tip-ico">🕵️</div>
+    <div>
+      <div class="tip-name">Detektif Kapi</div>
+      <div class="tip-msg" id="kapiMsg">Baca petunjuknya dulu, lalu selesaikan misinya!</div>
+    </div>
+  </div>
+  <button class="start-btn" id="startBtn" onclick="startExercise()">🔍 Mulai Investigasi!</button>
+</div>
+
+<!-- ═══ EXERCISE ═══ -->
+<div class="screen" id="sExercise">
+  <div class="ex-hdr">
+    <button class="ex-back-btn" onclick="goHome()">←</button>
+    <div class="ex-meta">
+      <div class="ex-ch-name" id="exChName"></div>
+      <div class="ex-bar-wrap"><div class="ex-bar" id="exBar" style="width:0%"></div></div>
+    </div>
+    <div class="ex-qnum" id="exQNum">1/6</div>
+  </div>
+
+  <div class="hud">
+    <div class="hearts" id="heartsDisplay">❤️❤️❤️</div>
+    <div class="combo-badge" id="comboBadge">🔥 2×</div>
+  </div>
+
+  <div class="timer-wrap">
+    <svg width="48" height="48" class="timer-ring-svg" id="timerRing">
+      <circle class="timer-bg" cx="24" cy="24" r="20"/>
+      <circle class="timer-fg" id="timerFg" cx="24" cy="24" r="20" stroke-dasharray="126" stroke-dashoffset="0"/>
+      <text x="24" y="24" class="timer-num" text-anchor="middle" dominant-baseline="central" id="timerNum" transform="rotate(90 24 24)">30</text>
+    </svg>
+  </div>
+
+  <div id="bossHdr" style="display:none" class="boss-hdr">
+    <div class="boss-enemy" id="bossEnemy">🤯</div>
+    <div class="boss-hp-label" id="bossHpLabel">HP Sang Penjahat: 6/6</div>
+    <div class="boss-hp"><div class="boss-hp-bar" id="bossHpBar" style="width:100%"></div></div>
+  </div>
+
+  <div id="qCardWrap">
+    <div class="q-card" id="qCard">
+      <div class="q-label" id="qLabel">Petunjuk Misteri</div>
+      <div class="q-text" id="qText"></div>
+      <div class="q-visual" id="qVisual" style="display:none"></div>
+      <div id="answerArea"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span id="toastIco"></span>
+    <div>
+      <div id="toastTitle"></div>
+      <div class="toast-expl" id="toastExpl"></div>
+    </div>
+  </div>
+  <button class="nxt-btn" id="nxtBtn" onclick="nextQ()">Lanjut →</button>
+</div>
+
+<!-- ═══ COMPLETE ═══ -->
+<div class="screen" id="sComplete">
+  <div class="done-hero">
+    <div class="done-badge" id="doneBadge">🎉</div>
+    <div class="done-title" id="doneTitle">Petunjuk Terpecahkan!</div>
+    <div class="done-stars" id="doneStars">⭐⭐⭐</div>
+  </div>
+  <div class="score-box">
+    <div class="score-num" id="doneScoreNum">6/6</div>
+    <div class="score-lbl">jawaban benar</div>
+  </div>
+  <div class="score-box" style="background:var(--lab-bg)">
+    <div class="score-num" id="doneTime" style="font-size:32px">--</div>
+    <div class="score-lbl">⏱️ total waktu</div>
+  </div>
+  <div class="done-msg" id="doneMsg"></div>
+  <div class="done-actions">
+    <button class="act-btn primary" onclick="retryChapter()">🔁 Coba Lagi</button>
+    <button class="act-btn secondary" onclick="goHome()">🧪 Lab Misteri</button>
+  </div>
+  <div class="review-panel">
+    <div class="review-title">📋 Ringkasan Petunjuk</div>
+    <div id="reviewList"></div>
+  </div>
+</div>
+
+<!-- ═══ ALL DONE ═══ -->
+<div class="screen" id="sAllDone">
+  <div class="all-done-wrap">
+    <div class="all-done-anim">🧪✨</div>
+    <div style="font-size:64px;margin-bottom:14px;animation:pop .6s cubic-bezier(.175,.885,.32,1.275)">🏆</div>
+    <div class="all-done-title">
+      Selamat, Detektif Rayyan!<br>
+      Semua misteri <em style="font-style:normal;background:var(--lab);color:#0d1117;padding:2px 10px;border-radius:8px">Terungkap!</em>
+    </div>
+    <p style="font-size:15px;color:var(--muted);margin:14px 0 22px;line-height:1.6">
+      Rayyan telah memecahkan semua 6 petunjuk misteri!<br>
+      Kamu adalah <strong>Detektif Matematika Terhebat!</strong> 🌟
+    </p>
+    <div class="score-box">
+      <div class="score-num" id="allDoneStars"></div>
+      <div class="score-lbl">total bintang dikumpulkan dari 18</div>
+    </div>
+    <div style="font-size:36px;margin:16px 0;letter-spacing:3px" id="allDoneStarEmoji"></div>
+    <div style="display:grid;gap:10px;margin-top:14px">
+      <button class="act-btn primary" style="font-size:17px;padding:18px" onclick="goHome()">🧪 Kembali ke Lab Misteri</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   AUDIO SYSTEM
+════════════════════════════════════════ */
+const Audio = {
+  ctx: null,
+  init() {
+    if (this.ctx) return;
+    try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  },
+  tone(freq, dur, vol=0.2, type='sine') {
+    if (!this.ctx) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(); o.stop(this.ctx.currentTime + dur);
+  },
+  play(type) {
+    this.init();
+    if (!this.ctx) return;
+    if (type === 'correct') {
+      this.tone(523, .15, .15); setTimeout(()=>this.tone(659, .15, .15), 120); setTimeout(()=>this.tone(784, .3, .15), 240);
+    } else if (type === 'wrong') {
+      this.tone(220, .15, .15); setTimeout(()=>this.tone(196, .25, .12), 130);
+    } else if (type === 'select') {
+      this.tone(440, .08, .1, 'square');
+    } else if (type === 'tick') {
+      this.tone(880, .05, .06, 'square');
+    } else if (type === 'warn') {
+      this.tone(330, .1, .15, 'sawtooth');
+    } else if (type === 'fanfare') {
+      [523,659,784,1047].forEach((f,i) => setTimeout(()=>this.tone(f, .3, .18), i*110));
+    } else if (type === 'boss-hit') {
+      this.tone(150, .2, .25, 'sawtooth');
+    }
+  }
+};
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+const S = {
+  chapter: null,
+  qIdx: 0,
+  score: 0,
+  answered: false,
+  lives: 3,
+  combo: 0,
+  totalStars: 0,
+  progress: {},
+  history: [],
+  bossHP: 6,
+  timerVal: 30,
+  timerInterval: null,
+  startTime: null,
+};
+
+/* ════════════════════════════════════════
+   LESSON CONTENT
+════════════════════════════════════════ */
+function lsn1() { return `
+<div class="ls"><div class="ls-h">📦 Apa Itu Himpunan?</div>
+<p>Himpunan adalah <strong>kumpulan benda atau angka yang sejenis</strong>. Ditulis dalam kurung kurawal {}. Setiap anggota hanya ditulis sekali!</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+🔵 Himpunan A = {1, 2, 3} — tiga anggota<br>
+🟣 Himpunan B = {3, 4, 5} — tiga anggota<br>
+📌 Anggota ditulis satu kali saja!
+</div></div></div>
+<div class="ls"><div class="ls-h">🔗 Gabungan (Union ∪) = Kumpulkan Semua!</div>
+<p>A ∪ B = semua anggota yang ada di A <strong>atau</strong> B (tidak diulang).</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2">
+A = {1,2,3}, B = {3,4,5}<br>
+A ∪ B = <strong>{1,2,3,4,5}</strong><br>
+<em style="font-size:12px;color:#666">(angka 3 ada di keduanya, tapi ditulis sekali)</em>
+</div>
+<div class="venn-wrap">
+  <div class="venn-a"></div>
+  <div class="venn-b"></div>
+  <div class="venn-label-a">A</div>
+  <div class="venn-label-b">B</div>
+  <div class="venn-label-ab">A∩B</div>
+</div>
+</div></div>
+<div class="ls"><div class="ls-h">🎯 Irisan (Intersection ∩) = Yang Sama Saja!</div>
+<p>A ∩ B = hanya anggota yang ada di <strong>kedua</strong> himpunan.</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2">
+A = {1,2,3}, B = {3,4,5}<br>
+A ∩ B = <strong>{3}</strong><br>
+<em style="font-size:12px;color:#666">(hanya 3 yang ada di A dan B sekaligus!)</em>
+</div></div></div>
+<div class="ls"><div class="ls-h">✂️ Selisih (Difference A−B)</div>
+<p>A − B = anggota A yang <strong>tidak ada</strong> di B.</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2">
+A = {1,2,3,4}, B = {3,4,5,6}<br>
+A − B = <strong>{1,2}</strong><br>
+<em style="font-size:12px;color:#666">(1 dan 2 ada di A tapi tidak di B)</em>
+</div></div></div>`; }
+
+function lsn2() { return `
+<div class="ls"><div class="ls-h">💥 Pangkat — Perkalian Berulang!</div>
+<p>Pangkat artinya mengalikan bilangan dengan dirinya sendiri sebanyak kali tertentu.</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+2³ = 2×2×2 = <strong>8</strong> (2 dikali 3 kali)<br>
+3⁴ = 3×3×3×3 = <strong>81</strong><br>
+5² = 5×5 = <strong>25</strong><br>
+(−3)² = (−3)×(−3) = <strong>+9</strong> (negatif × negatif = positif!)
+</div></div></div>
+<div class="ls"><div class="ls-h">🔍 Akar Kuadrat — Kebalikan Pangkat!</div>
+<p>√n = angka yang jika dikuadratkan menghasilkan n.</p>
+<div class="ex-box">
+<div style="font-size:15px;line-height:2.2">
+√25 = <strong>5</strong> karena 5×5 = 25<br>
+√64 = <strong>8</strong> karena 8×8 = 64<br>
+√144 = <strong>12</strong> karena 12×12 = 144<br>
+√100 = <strong>10</strong> karena 10×10 = 100
+</div></div></div>
+<div class="ls"><div class="ls-h">📐 KABATAKU — Urutan Operasi!</div>
+<p><strong>KA</strong>li, <strong>BA</strong>gi, <strong>TA</strong>mbah, <strong>KU</strong>rang. Kalikan dan bagi DULU sebelum tambah dan kurang!</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+2 + 3 × 4 − 1<br>
+= 2 + <strong>12</strong> − 1 (kali dulu: 3×4)<br>
+= <strong>13</strong> (kiri ke kanan)<br><br>
+10 − 2 + 4 × 3<br>
+= 10 − 2 + <strong>12</strong> = <strong>20</strong>
+</div></div></div>`; }
+
+function lsn3() { return `
+<div class="ls"><div class="ls-h">📦 Variabel — Kotak Misteri!</div>
+<p>Variabel (seperti x, y, n) adalah <strong>kotak yang menyimpan angka yang belum kita tahu</strong>. Kita harus menemukannya!</p>
+<div class="ex-box">
+<div style="font-size:28px;margin-bottom:8px">📦 = x</div>
+<div style="font-size:14px;line-height:2;text-align:left">
+3x artinya 3 × x (3 kotak berisi x)<br>
+5y artinya 5 × y<br>
+Jika x = 4, maka 3x = 3 × 4 = <strong>12</strong>
+</div></div></div>
+<div class="ls"><div class="ls-h">🔗 Suku Sejenis — Bisa Digabung!</div>
+<p>Suku sejenis = punya variabel yang sama. Hanya suku sejenis yang bisa digabungkan!</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+✅ 3x + 5x = <strong>8x</strong> (sama-sama x, bisa digabung!)<br>
+✅ 7y − 3y = <strong>4y</strong><br>
+❌ 3x + 2y = <strong>3x + 2y</strong> (beda variabel, tidak bisa!)<br>
+✅ 4x + 3y + 2x − y = <strong>6x + 2y</strong>
+</div></div></div>
+<div class="ls"><div class="ls-h">🔄 Substitusi — Ganti dengan Angkanya!</div>
+<p>Substitusi = mengganti variabel dengan nilai yang diketahui.</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+Jika x = 3:<br>
+5x + 2 = 5(3) + 2 = 15 + 2 = <strong>17</strong><br><br>
+Jika y = 4:<br>
+3y − 5 = 3(4) − 5 = 12 − 5 = <strong>7</strong>
+</div></div></div>`; }
+
+function lsn4() { return `
+<div class="ls"><div class="ls-h">⚖️ Persamaan = Timbangan!</div>
+<p>Persamaan seperti timbangan yang seimbang. <strong>Apa yang kamu lakukan ke satu sisi, lakukan juga ke sisi lain!</strong></p>
+<div class="ex-box">
+<div class="scale-wrap">
+  <div class="scale-pan">x + 5</div>
+  <div class="scale-beam"></div>
+  <div class="scale-pan">12</div>
+</div>
+<div style="font-size:14px;line-height:2;margin-top:8px;text-align:left">
+x + 5 = 12<br>
+→ kurangi 5 di kedua sisi:<br>
+x = 12 − 5 = <strong>7</strong><br>
+Cek: 7 + 5 = 12 ✓
+</div></div></div>
+<div class="ls"><div class="ls-h">🔢 Langkah Menyelesaikan Persamaan</div>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+<strong>3x = 24</strong><br>
+→ bagi kedua sisi dengan 3<br>
+x = 24 ÷ 3 = <strong>8</strong> ✓<br><br>
+<strong>2x + 3 = 11</strong><br>
+→ kurangi 3: 2x = 8<br>
+→ bagi 2: x = <strong>4</strong> ✓<br><br>
+<strong>x/3 + 2 = 6</strong><br>
+→ kurangi 2: x/3 = 4<br>
+→ kali 3: x = <strong>12</strong> ✓
+</div></div></div>
+<div class="ls"><div class="ls-h">📊 Pertidaksamaan</div>
+<p>Pertidaksamaan pakai tanda &lt; (kurang dari) atau &gt; (lebih dari). Cara menyelesaikannya sama seperti persamaan!</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2">
+3x &lt; 18 → x &lt; <strong>6</strong><br>
+(bagi kedua sisi dengan 3)
+</div></div></div>`; }
+
+function lsn5() { return `
+<div class="ls"><div class="ls-h">💰 Untung & Rugi</div>
+<p>Untung = harga jual lebih besar dari harga beli. Rugi = sebaliknya.</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+Beli Rp 80.000, Jual Rp 100.000<br>
+<strong>Untung</strong> = 100.000 − 80.000 = <strong>Rp 20.000</strong><br>
+%Untung = (20.000 ÷ 80.000) × 100 = <strong>25%</strong>
+</div></div></div>
+<div class="ls"><div class="ls-h">🏷️ Diskon & PPN</div>
+<p>Diskon = potongan harga. PPN = pajak yang ditambahkan ke harga.</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+<strong>Diskon 20%</strong> dari Rp 150.000:<br>
+Diskon = 20% × 150.000 = Rp 30.000<br>
+Bayar = 150.000 − 30.000 = <strong>Rp 120.000</strong><br><br>
+<strong>PPN 11%</strong> dari Rp 100.000:<br>
+PPN = 11% × 100.000 = Rp 11.000<br>
+Total = 100.000 + 11.000 = <strong>Rp 111.000</strong>
+</div></div></div>
+<div class="ls"><div class="ls-h">🏦 Bunga Sederhana</div>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+Modal Rp 500.000, bunga 10%/tahun<br>
+Bunga 1 tahun = 10% × 500.000 = <strong>Rp 50.000</strong><br>
+Total 2 tahun = 500.000 + (50.000 × 2) = <strong>Rp 600.000</strong>
+</div></div></div>`; }
+
+function lsn6() { return `
+<div class="ls"><div class="ls-h">📐 Sudut-sudut Penting</div>
+<p>Ingat 3 aturan emas sudut untuk jadi detektif geometri!</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+<strong>Segitiga:</strong> jumlah sudut = <strong>180°</strong><br>
+→ 60° + 80° + x° = 180° → x = <strong>40°</strong><br><br>
+<strong>Segiempat:</strong> jumlah sudut = <strong>360°</strong><br>
+→ 90° + 85° + 95° + x° = 360° → x = <strong>90°</strong><br><br>
+<strong>Sudut pelurus:</strong> jumlah = <strong>180°</strong><br>
+→ 65° + x° = 180° → x = <strong>115°</strong>
+</div></div></div>
+<div class="ls"><div class="ls-h">🔺 Segitiga Istimewa</div>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+<strong>Segitiga sama kaki:</strong> dua sudut alas sama besar<br>
+Sudut alas 70°, 70° → puncak = 180 − 70 − 70 = <strong>40°</strong><br><br>
+<strong>Segitiga sama sisi:</strong> semua sudut = <strong>60°</strong>
+</div></div></div>
+<div class="ls"><div class="ls-h">🔲 Keliling Bangun + Aljabar</div>
+<p>Kombinasikan rumus keliling dengan aljabar — temukan nilai x dulu!</p>
+<div class="ex-box">
+<div style="font-size:14px;line-height:2;text-align:left">
+Persegi panjang: panjang = 2x+3, lebar = x+1, x = 4<br>
+p = 2(4)+3 = <strong>11</strong>, l = 4+1 = <strong>5</strong><br>
+Keliling = 2(11+5) = 2 × 16 = <strong>32</strong>
+</div></div></div>`; }
+
+/* ════════════════════════════════════════
+   CHAPTERS DATA
+════════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    id:'sets', title:'Kotak Petunjuk', depth:'🔍 Petunjuk Pertama', emoji:'📦',
+    color:'#00C9A7', colorBg:'#E0FAF5',
+    desc:'Kumpulan petunjuk: gabung, irisan & selisih himpunan!',
+    kapi:'Himpunan = kumpulan benda sejenis! {1,2,3} ∪ {2,3,4} = {1,2,3,4} (gabung semua). {1,2,3} ∩ {2,3,4} = {2,3} (yang sama saja)!',
+    lessonHTML: lsn1(), isBoss: false,
+    questions:[
+      {type:'mc', q:'A = {1,2,3}, B = {3,4,5}. A ∪ B = ?', opts:['{3}','{1,2,3,4,5}','{1,2}','{4,5}'], ans:1, expl:'Union = gabungkan semua: {1,2,3,4,5}!'},
+      {type:'mc', q:'A = {1,2,3}, B = {3,4,5}. A ∩ B = ?', visual:'🔵🔴 Irisan = yang ada di KEDUA himpunan!', opts:['{3}','{1,2,4,5}','{1,2,3,4,5}','{1,2}'], ans:0, expl:'Irisan = yang ada di KEDUANYA: hanya {3}!'},
+      {type:'drag-sort', q:'Urutkan anggota himpunan dari terkecil!', items:[5,1,3,2,4], ans:[1,2,3,4,5], expl:'Himpunan bisa diurutkan: {1,2,3,4,5}!'},
+      {type:'input', q:'A = {a,b,c,d}, B = {c,d,e}. Berapa anggota A ∪ B?', ans:'5', expl:'A ∪ B = {a,b,c,d,e} → 5 anggota!'},
+      {type:'mc', q:'A = {merah,biru,hijau}, B = {biru,kuning}. A ∩ B = ?', visual:'🎨', opts:['{biru}','{merah}','{hijau,kuning}','{merah,biru,hijau,kuning}'], ans:0, expl:'Yang ada di kedua himpunan = hanya {biru}!'},
+      {type:'mc', q:'A = {1,2,3,4}, B = {3,4,5,6}. Berapa anggota A − B?', opts:['2','4','6','3'], ans:0, expl:'A − B = anggota A yang TIDAK ada di B = {1,2} → 2 anggota!'},
+    ]
+  },
+  {
+    id:'number-ops', title:'Mesin Hitung Lab', depth:'🧫 Jejak Tersembunyi', emoji:'⚗️',
+    color:'#E84BA0', colorBg:'#FCE8F3',
+    desc:'Pangkat, akar & urutan operasi KABATAKU!',
+    kapi:'Pangkat: 2³ = 2×2×2 = 8. Akar: √64 = 8 (karena 8² = 64). Operasi campuran: Kalikan/bagi dulu, lalu jumlah/kurang — KABATAKU!',
+    lessonHTML: lsn2(), isBoss: false,
+    questions:[
+      {type:'mc', q:'3⁴ = ?', opts:['12','27','81','64'], ans:2, expl:'3⁴ = 3×3×3×3 = 9×9 = 81!'},
+      {type:'input', q:'√144 = ?', ans:'12', expl:'12 × 12 = 144 → √144 = 12!'},
+      {type:'mc', q:'2³ + √25 = ?', opts:['10','11','13','15'], ans:2, expl:'2³ = 8, √25 = 5 → 8 + 5 = 13!'},
+      {type:'drag-sort', q:'Urutkan dari TERKECIL: 2³, 3², √100, 5¹', items:['5¹','3²','2³','√100'], ans:['5¹','2³','3²','√100'], expl:'5¹=5, 2³=8, 3²=9, √100=10 → urut: 5,8,9,10!'},
+      {type:'input', q:'(−3)² = ?', ans:'9', expl:'(−3)² = (−3)×(−3) = +9! Negatif × negatif = positif!'},
+      {type:'mc', q:'2 + 3 × 4 − 1 = ? (KABATAKU!)', visual:'🔢 Ingat: kali dulu!', opts:['19','13','20','16'], ans:1, expl:'Kali dulu: 3×4=12. Lalu: 2+12−1 = 13!'},
+    ]
+  },
+  {
+    id:'algebra-expr', title:'Bahasa Rahasia', depth:'🔬 Kode Rahasia', emoji:'🔤',
+    color:'#FFC234', colorBg:'#FFF5D6',
+    desc:'Variabel misterius, suku sejenis & substitusi!',
+    kapi:'x adalah kotak misterius yang menyimpan angka! 3x + 2x = 5x (suku sejenis). 3x + 2y TIDAK bisa digabung (beda jenis). Substitusi: ganti x dengan angkanya!',
+    lessonHTML: lsn3(), isBoss: false,
+    questions:[
+      {type:'mc', q:'3x + 5x = ?', opts:['8x','15x','8x²','35x'], ans:0, expl:'Suku sejenis: 3x + 5x = (3+5)x = 8x!'},
+      {type:'input', q:'7y − 3y = ?y', ans:'4', expl:'7y − 3y = (7−3)y = 4y!'},
+      {type:'mc', q:'Sederhanakan: 4x + 3y + 2x − y', opts:['6x + 2y','9xy','6x − 2y','7x + 4y'], ans:0, expl:'4x+2x=6x, 3y−y=2y → 6x + 2y!'},
+      {type:'mc', q:'Jika x = 3, nilai 5x + 2 = ?', visual:'📦 = 3', opts:['17','13','20','15'], ans:0, expl:'5(3) + 2 = 15 + 2 = 17!'},
+      {type:'input', q:'Jika y = 4, nilai 3y − 5 = ?', ans:'7', expl:'3(4) − 5 = 12 − 5 = 7!'},
+      {type:'drag-sort', q:'Kelompokkan suku sejenis: suku-x dulu lalu suku-y!', items:['2x','3y','5x','y'], ans:['2x','5x','3y','y'], expl:'Suku x: {2x, 5x}. Suku y: {3y, y}. Suku sejenis dikumpulkan!'},
+    ]
+  },
+  {
+    id:'equations', title:'Temukan X!', depth:'🧪 Formula Misterius', emoji:'🎯',
+    color:'#2E3192', colorBg:'#E8E9F8',
+    desc:'Pecahkan persamaan & temukan nilai X yang tersembunyi!',
+    kapi:'Persamaan = timbangan! Apa yang kamu lakukan ke satu sisi, lakukan juga ke sisi lain. x + 5 = 12 → x = 12 − 5 = 7. Selalu cek jawabanmu!',
+    lessonHTML: lsn4(), isBoss: false,
+    questions:[
+      {type:'mc', q:'x + 7 = 15. Nilai x = ?', opts:['8','22','7','9'], ans:0, expl:'x = 15 − 7 = 8! Cek: 8+7=15 ✓'},
+      {type:'input', q:'3x = 24. Nilai x = ?', ans:'8', expl:'x = 24 ÷ 3 = 8! Cek: 3×8=24 ✓'},
+      {type:'mc', q:'2x + 3 = 11. Nilai x = ?', visual:'⚖️', opts:['4','7','5','3'], ans:0, expl:'2x = 11−3 = 8, x = 8÷2 = 4! Cek: 2(4)+3=11 ✓'},
+      {type:'input', q:'5x − 4 = 21. Nilai x = ?', ans:'5', expl:'5x = 21+4 = 25, x = 25÷5 = 5!'},
+      {type:'mc', q:'x/3 + 2 = 6. Nilai x = ?', opts:['12','4','8','18'], ans:0, expl:'x/3 = 6−2 = 4, x = 4×3 = 12!'},
+      {type:'mc', q:'Pertidaksamaan: 3x < 18. Nilai x yang benar?', visual:'🎯', opts:['x < 6','x > 6','x = 6','x ≤ 6'], ans:0, expl:'3x < 18 → x < 6 (bagi kedua sisi dengan 3)!'},
+    ]
+  },
+  {
+    id:'social-arith', title:'Uang & Skala Misi', depth:'💡 Persamaan Akhir', emoji:'💰',
+    color:'#1F9D55', colorBg:'#E3F5EB',
+    desc:'Untung rugi, diskon, pajak & bunga lab!',
+    kapi:'Untung = Jual − Beli (jika positif). Rugi = Beli − Jual (jika positif). Diskon = % × harga. Bunga = Pokok × %bunga × waktu!',
+    lessonHTML: lsn5(), isBoss: false,
+    questions:[
+      {type:'mc', q:'Beli alat Rp 80.000, jual Rp 100.000. Untung berapa?', visual:'💰', opts:['Rp 20.000','Rp 180.000','Rp 80.000','Rp 10.000'], ans:0, expl:'Untung = 100.000 − 80.000 = Rp 20.000!'},
+      {type:'input', q:'Harga bahan Rp 150.000, diskon 20%. Bayar = Rp ?', ans:'120000', expl:'Diskon = 20%×150.000 = 30.000. Bayar = 150.000−30.000 = Rp 120.000!'},
+      {type:'mc', q:'Modal Rp 500.000, bunga 10% per tahun. Bunga 1 tahun = ?', opts:['Rp 50.000','Rp 100.000','Rp 5.000','Rp 500.000'], ans:0, expl:'Bunga = 10% × 500.000 = Rp 50.000!'},
+      {type:'mc', q:'Harga barang setelah PPN 11% jadi Rp 111.000. Harga aslinya?', visual:'🧾', opts:['Rp 100.000','Rp 90.000','Rp 122.100','Rp 99.000'], ans:0, expl:'111.000 = 111% × harga asli → harga asli = 111.000 ÷ 1,11 = Rp 100.000!'},
+      {type:'input', q:'Beli Rp 200.000 jual Rp 250.000. Persentase untung = ?%', ans:'25', expl:'Untung = 50.000. %untung = 50.000/200.000 × 100 = 25%!'},
+      {type:'drag-sort', q:'Urutkan dari % untung TERBESAR ke terkecil!', items:['40% (beli 50 jual 70)','20% (beli 100 jual 120)','15% (beli 200 jual 230)'], ans:['40% (beli 50 jual 70)','20% (beli 100 jual 120)','15% (beli 200 jual 230)'], expl:'Cek % untung: 40% > 20% > 15%!'},
+    ]
+  },
+  {
+    id:'geometry-boss', title:'BOSS: Bukti Akhir', depth:'🏆 Bukti Puncak', emoji:'📐',
+    color:'#7B3FA8', colorBg:'#EFE3F8',
+    desc:'Sudut, segitiga, segiempat & aljabar — BOSS BATTLE!',
+    kapi:'BOSS! Ingat: segitiga = 180°. Segiempat = 360°. Sudut lurus = 180°. Sudut bertolak belakang = sama besar. Gabungkan dengan aljabar untuk menang!',
+    lessonHTML: lsn6(), isBoss: true,
+    questions:[
+      {type:'mc', q:'Sudut segitiga: 60°, 80°, x°. Nilai x = ?', opts:['40°','50°','60°','30°'], ans:0, expl:'60+80+x=180 → x=180−140=40°!'},
+      {type:'input', q:'Segiempat: 90°, 85°, 95°, x°. Nilai x = ?', ans:'90', expl:'90+85+95+x=360 → x=360−270=90°!'},
+      {type:'mc', q:'Dua sudut saling pelurus. Satu = 65°, yang lain = ?', visual:'📐', opts:['115°','125°','65°','25°'], ans:0, expl:'Sudut pelurus = 180°: 180−65=115°!'},
+      {type:'mc', q:'Segitiga sama kaki: dua sudut alas = 70° masing-masing. Sudut puncaknya?', opts:['40°','70°','110°','50°'], ans:0, expl:'70+70+x=180 → x=180−140=40°!'},
+      {type:'input', q:'Persegi panjang: panjang = 2x+3, lebar = x+1, x = 4. Kelilingnya?', ans:'32', expl:'p=2(4)+3=11, l=4+1=5. Keliling=2×(11+5)=2×16=32!'},
+      {type:'mc', q:'MISI AKHIR: 3x + 15 = 180 (sudut lurus). Nilai x = ?', visual:'🎯', opts:['55°','45°','60°','50°'], ans:0, expl:'3x=180−15=165, x=165÷3=55°!'},
+    ]
+  },
+];
+
+/* ════════════════════════════════════════
+   PERSISTENCE
+════════════════════════════════════════ */
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem('rayyanMath7') || '{}');
+    S.progress = d.progress || {};
+    S.totalStars = d.totalStars || 0;
+    document.getElementById('starCount').textContent = S.totalStars;
+  } catch(e) {}
+}
+function saveState() {
+  try {
+    localStorage.setItem('rayyanMath7', JSON.stringify({ progress: S.progress, totalStars: S.totalStars }));
+  } catch(e) {}
+}
+function resetProgress() {
+  const pw = prompt('Masukkan kata sandi untuk reset:');
+  if (pw === null) return;
+  if (pw !== 'bogor123') { alert('Kata sandi salah!'); return; }
+  S.progress = {}; S.totalStars = 0;
+  document.getElementById('starCount').textContent = 0;
+  saveState(); renderHome();
+}
+
+/* ════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  const isHome = id === 'sHome';
+  document.getElementById('labBg').classList.toggle('hidden', !isHome);
+  document.getElementById('mainHdr').classList.toggle('light', !isHome);
+}
+
+function goHome() {
+  stopTimer();
+  show('sHome');
+  renderHome();
+}
+
+function openChapter(idx) {
+  const prevDone = idx === 0 || CHAPTERS.slice(0, idx).every(c => (S.progress[c.id] || {}).stars > 0);
+  if (!prevDone) { Audio.play('wrong'); return; }
+  S.chapter = idx;
+  const ch = CHAPTERS[idx];
+  document.getElementById('lessonHdr').innerHTML = `
+    <div class="lesson-hdr">
+      <div class="lesson-icon">${ch.emoji}</div>
+      <div>
+        <div class="lesson-depth">${ch.depth}</div>
+        <div class="lesson-title">${ch.title}</div>
+      </div>
+    </div>`;
+  document.getElementById('lessonBody').innerHTML = ch.lessonHTML;
+  document.getElementById('kapiMsg').textContent = ch.kapi;
+  const btn = document.getElementById('startBtn');
+  btn.className = `start-btn${ch.isBoss ? ' boss-btn' : ''}`;
+  btn.innerHTML = ch.isBoss ? '🤯 Hadapi Sang Penjahat!' : '🔍 Mulai Investigasi!';
+  show('sLesson');
+}
+
+/* ════════════════════════════════════════
+   EXERCISE
+════════════════════════════════════════ */
+function startExercise() {
+  S.qIdx = 0; S.score = 0; S.answered = false;
+  S.lives = 3; S.combo = 0; S.history = [];
+  S.startTime = Date.now();
+  const ch = CHAPTERS[S.chapter];
+  S.bossHP = ch.questions.length;
+  document.getElementById('bossHdr').style.display = ch.isBoss ? 'block' : 'none';
+  document.getElementById('qCard').className = ch.isBoss ? 'boss-q-wrap' : 'q-card';
+  document.getElementById('qLabel').textContent = ch.isBoss ? '⚔️ Serangan Sang Penjahat' : 'Petunjuk Misteri';
+  updateHearts();
+  renderQ();
+  show('sExercise');
+}
+
+function retryChapter() { startExercise(); }
+
+function renderQ() {
+  const ch = CHAPTERS[S.chapter];
+  const q = ch.questions[S.qIdx];
+  const total = ch.questions.length;
+
+  document.getElementById('exChName').textContent = `${ch.emoji} ${ch.title}`;
+  document.getElementById('exQNum').textContent = `${S.qIdx + 1}/${total}`;
+  document.getElementById('exBar').style.width = `${(S.qIdx / total) * 100}%`;
+  document.getElementById('qText').textContent = q.q;
+
+  const vis = document.getElementById('qVisual');
+  if (q.visual) { vis.innerHTML = q.visual; vis.style.display = ''; }
+  else { vis.style.display = 'none'; }
+
+  const area = document.getElementById('answerArea');
+  if (q.type === 'mc')            renderMC(q, area);
+  else if (q.type === 'input')    renderInput(area);
+  else if (q.type === 'drag-sort') renderDragSort(q, area);
+  else if (q.type === 'number-line') renderNumberLine(q, area);
+  else if (q.type === 'bar-fill') renderBarFill(q, area);
+
+  document.getElementById('toast').className = 'toast';
+  document.getElementById('nxtBtn').className = 'nxt-btn';
+  updateCombo();
+  S.answered = false;
+
+  if (ch.isBoss) updateBossHP();
+  startTimer(q.type === 'drag-sort' || q.type === 'bar-fill' ? 45 : 30);
+}
+
+/* ─── MC ─── */
+function renderMC(q, area) {
+  area.innerHTML = `<div class="opts-grid">${q.opts.map((o, i) =>
+    `<button class="opt-btn" onclick="pickOpt(${i})">${o}</button>`
+  ).join('')}</div>`;
+}
+function pickOpt(idx) {
+  if (S.answered) return;
+  S.answered = true; stopTimer();
+  Audio.play('select');
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = idx === q.ans;
+  document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+  document.querySelectorAll('.opt-btn')[idx].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) document.querySelectorAll('.opt-btn')[q.ans].classList.add('correct');
+  handleAnswer(correct, q.opts[q.ans], q.opts[idx], q.expl);
+}
+
+/* ─── INPUT ─── */
+function renderInput(area) {
+  area.innerHTML = `<div class="inp-row">
+    <input type="text" inputmode="numeric" class="num-inp" id="numInp" placeholder="Jawaban…" onkeydown="if(event.key==='Enter')checkInp()">
+    <button class="chk-btn" onclick="checkInp()">Cek ✓</button>
+  </div>`;
+  setTimeout(() => { const el = document.getElementById('numInp'); if (el) el.focus(); }, 80);
+}
+function checkInp() {
+  if (S.answered) return;
+  const inp = document.getElementById('numInp');
+  const val = (inp.value || '').trim();
+  if (!val) return;
+  S.answered = true; stopTimer();
+  inp.disabled = true;
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = val === q.ans;
+  inp.classList.add(correct ? 'ok' : 'bad');
+  handleAnswer(correct, q.ans, val, q.expl);
+}
+
+/* ─── DRAG-SORT ─── */
+let _sortState = { order: [], selected: null };
+function renderDragSort(q, area) {
+  _sortState.order = [...q.items];
+  _sortState.selected = null;
+  area.innerHTML = `
+    <div class="sort-label">Klik dua item untuk menukar posisi, lalu tekan Cek!</div>
+    <div class="sort-items" id="sortItems"></div>
+    <div class="sort-direction">Klik item pertama lalu item kedua untuk menukar!</div>
+    <div style="margin-top:12px;text-align:center">
+      <button class="chk-btn" onclick="checkSort()">Cek Urutan ✓</button>
+    </div>`;
+  renderSortItems();
+}
+function renderSortItems() {
+  const wrap = document.getElementById('sortItems');
+  if (!wrap) return;
+  wrap.innerHTML = _sortState.order.map((v, i) =>
+    `<div class="sort-item${i === _sortState.selected ? ' selected' : ''}" onclick="sortClick(${i})">${v}</div>`
+  ).join('');
+}
+function sortClick(idx) {
+  if (S.answered) return;
+  Audio.play('select');
+  if (_sortState.selected === null) {
+    _sortState.selected = idx;
+  } else if (_sortState.selected === idx) {
+    _sortState.selected = null;
+  } else {
+    const tmp = _sortState.order[_sortState.selected];
+    _sortState.order[_sortState.selected] = _sortState.order[idx];
+    _sortState.order[idx] = tmp;
+    _sortState.selected = null;
+  }
+  renderSortItems();
+}
+function checkSort() {
+  if (S.answered) return;
+  S.answered = true; stopTimer();
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = JSON.stringify(_sortState.order) === JSON.stringify(q.ans);
+  document.querySelectorAll('.sort-item').forEach((el, i) => {
+    el.classList.add('disabled');
+    el.classList.add(correct ? 'correct' : (_sortState.order[i] === q.ans[i] ? 'correct' : 'wrong'));
+  });
+  handleAnswer(correct, q.ans.join(' → '), _sortState.order.join(' → '), q.expl);
+}
+
+/* ─── NUMBER LINE ─── */
+function renderNumberLine(q, area) {
+  const min = q.nlMin, max = q.nlMax;
+  const W = 320, H = 80, pad = 30;
+  const range = max - min;
+  const toX = v => pad + ((v - min) / range) * (W - 2 * pad);
+  let ticks = '';
+  let zones = '';
+  for (let v = min; v <= max; v++) {
+    const x = toX(v);
+    ticks += `<line x1="${x}" y1="32" x2="${x}" y2="44" stroke="var(--ink)" stroke-width="2"/>`;
+    ticks += `<text x="${x}" y="58" class="nline-tick" text-anchor="middle">${v}</text>`;
+    zones += `<rect x="${x - 12}" y="16" width="24" height="32" class="nline-zone" rx="4" onclick="pickNL(${v})"/>`;
+  }
+  const mainLine = `<line x1="${pad}" y1="38" x2="${W - pad}" y2="38" stroke="var(--ink)" stroke-width="2.5"/>`;
+  area.innerHTML = `
+    <div class="nline-wrap">
+      <svg class="nline-svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+        ${mainLine}${ticks}
+        <text id="nlMarker" x="-999" y="26" class="nline-marker" text-anchor="middle">🧪</text>
+        ${zones}
+      </svg>
+    </div>
+    <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:4px">Klik angka pada garis bilangan!</p>`;
+  area._nlMin = min; area._nlMax = max; area._nlToX = toX;
+}
+let _nlSelected = null;
+function pickNL(val) {
+  if (S.answered) return;
+  _nlSelected = val;
+  Audio.play('select');
+  const marker = document.getElementById('nlMarker');
+  const area = document.getElementById('answerArea');
+  if (marker && area._nlToX) {
+    marker.setAttribute('x', area._nlToX(val));
+  }
+  S.answered = true; stopTimer();
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = val === q.ans;
+  handleAnswer(correct, q.ans, val, q.expl);
+}
+
+/* ─── BAR-FILL ─── */
+let _barFilled = [];
+function renderBarFill(q, area) {
+  _barFilled = Array(q.bTotal).fill(false);
+  area.innerHTML = `
+    <div class="bar-fill-wrap">
+      <div class="bar-fill-label">Klik kotak untuk mengisi!</div>
+      <div class="bar-segments" id="barSegs">
+        ${Array(q.bTotal).fill(0).map((_,i) =>
+          `<div class="bar-seg" id="bseg${i}" onclick="toggleBar(${i})"></div>`
+        ).join('')}
+      </div>
+      <div class="bar-fill-count" id="barCount">0 / ${q.bTotal} terisi</div>
+    </div>
+    <div style="margin-top:10px;text-align:center">
+      <button class="chk-btn" onclick="checkBar()">Cek ✓</button>
+    </div>`;
+}
+function toggleBar(i) {
+  if (S.answered) return;
+  _barFilled[i] = !_barFilled[i];
+  Audio.play('select');
+  const el = document.getElementById(`bseg${i}`);
+  el.classList.toggle('filled', _barFilled[i]);
+  const cnt = _barFilled.filter(Boolean).length;
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  document.getElementById('barCount').textContent = `${cnt} / ${q.bTotal} terisi`;
+}
+function checkBar() {
+  if (S.answered) return;
+  S.answered = true; stopTimer();
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const cnt = _barFilled.filter(Boolean).length;
+  const correct = cnt === q.bFill;
+  document.querySelectorAll('.bar-seg').forEach(s => s.classList.add('disabled'));
+  if (correct) {
+    _barFilled.forEach((f, i) => { if (f) document.getElementById(`bseg${i}`).classList.add('correct-fill'); });
+  } else {
+    _barFilled.forEach((f, i) => {
+      const el = document.getElementById(`bseg${i}`);
+      el.classList.add(f ? 'wrong-fill' : '');
+    });
+    for (let i = 0; i < q.bFill; i++) document.getElementById(`bseg${i}`)?.classList.add('correct-fill');
+  }
+  handleAnswer(correct, `${q.bFill} kotak`, `${cnt} kotak`, q.expl);
+}
+
+/* ════════════════════════════════════════
+   ANSWER LOGIC
+════════════════════════════════════════ */
+function handleAnswer(correct, correctAns, userAns, expl) {
+  const ch = CHAPTERS[S.chapter];
+  if (correct) {
+    S.score++;
+    S.combo++;
+    Audio.play('correct');
+    if (ch.isBoss) {
+      S.bossHP--;
+      updateBossHP();
+      document.getElementById('bossEnemy').classList.add('hit');
+      setTimeout(() => document.getElementById('bossEnemy').classList.remove('hit'), 450);
+      Audio.play('boss-hit');
+    }
+  } else {
+    S.lives--;
+    S.combo = 0;
+    Audio.play('wrong');
+    document.body.classList.add('shake');
+    setTimeout(() => document.body.classList.remove('shake'), 380);
+    updateHearts();
+  }
+  S.history.push({ q: CHAPTERS[S.chapter].questions[S.qIdx].q, correct, correctAns, userAns });
+  updateCombo();
+  showToast(correct, correctAns, expl);
+
+  if (S.lives <= 0) {
+    setTimeout(() => { stopTimer(); showComplete(true); }, 1200);
+  }
+}
+
+function showToast(correct, correctAns, expl) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastIco').textContent = correct ? '🎉' : '❌';
+  document.getElementById('toastTitle').textContent = correct
+    ? 'Benar! Luar biasa, Detektif Rayyan!'
+    : `Belum tepat. Jawaban: ${correctAns}`;
+  document.getElementById('toastExpl').textContent = expl || '';
+  toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
+  document.getElementById('nxtBtn').className = 'nxt-btn show';
+}
+
+function nextQ() {
+  const ch = CHAPTERS[S.chapter];
+  S.qIdx++;
+  if (S.qIdx >= ch.questions.length) {
+    showComplete(false);
+  } else {
+    renderQ();
+  }
+}
+
+/* ════════════════════════════════════════
+   TIMER
+════════════════════════════════════════ */
+function startTimer(secs) {
+  stopTimer();
+  S.timerVal = secs;
+  const circ = 2 * Math.PI * 20;
+  const fg = document.getElementById('timerFg');
+  const num = document.getElementById('timerNum');
+  fg.style.stroke = 'var(--lab)';
+  S.timerInterval = setInterval(() => {
+    S.timerVal--;
+    if (num) num.textContent = S.timerVal;
+    if (fg) fg.style.strokeDashoffset = circ * (1 - S.timerVal / secs);
+    if (S.timerVal <= 5) {
+      Audio.play('tick');
+      if (fg) fg.style.stroke = 'var(--tomato)';
+    }
+    if (S.timerVal <= 0) {
+      stopTimer();
+      if (!S.answered) {
+        S.answered = true;
+        S.lives--; S.combo = 0;
+        Audio.play('warn');
+        updateHearts(); updateCombo();
+        const q = CHAPTERS[S.chapter].questions[S.qIdx];
+        document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+        showToast(false, q.ans ?? (q.opts?.[q.ans]), '⏰ Waktu habis!');
+        document.body.classList.add('shake');
+        setTimeout(() => document.body.classList.remove('shake'), 380);
+        S.history.push({ q: q.q, correct: false, correctAns: q.ans ?? q.opts?.[q.ans], userAns: '⏰' });
+        if (S.lives <= 0) setTimeout(() => showComplete(true), 1200);
+      }
+    }
+  }, 1000);
+}
+function stopTimer() {
+  clearInterval(S.timerInterval);
+  S.timerInterval = null;
+}
+
+/* ════════════════════════════════════════
+   HEARTS & COMBO
+════════════════════════════════════════ */
+function updateHearts() {
+  const el = document.getElementById('heartsDisplay');
+  if (!el) return;
+  el.innerHTML = '❤️'.repeat(S.lives) + '🖤'.repeat(Math.max(0, 3 - S.lives));
+}
+function updateCombo() {
+  const el = document.getElementById('comboBadge');
+  if (!el) return;
+  if (S.combo >= 2) {
+    el.textContent = `🔥 ${S.combo}×`;
+    el.classList.add('show');
+  } else {
+    el.classList.remove('show');
+  }
+}
+
+/* ════════════════════════════════════════
+   BOSS HP
+════════════════════════════════════════ */
+function updateBossHP() {
+  const ch = CHAPTERS[S.chapter];
+  const total = ch.questions.length;
+  const pct = (S.bossHP / total) * 100;
+  document.getElementById('bossHpBar').style.width = `${pct}%`;
+  document.getElementById('bossHpLabel').textContent = `HP Sang Penjahat: ${S.bossHP}/${total}`;
+  if (pct <= 40) document.getElementById('bossHpBar').style.background = 'var(--mango)';
+  if (pct <= 15) document.getElementById('bossHpBar').style.background = 'var(--forest)';
+}
+
+/* ════════════════════════════════════════
+   COMPLETE
+════════════════════════════════════════ */
+function showComplete(ranOutOfLives) {
+  stopTimer();
+  const ch = CHAPTERS[S.chapter];
+  const total = ch.questions.length;
+  const pct = S.score / total;
+  let stars = ranOutOfLives ? 1 : (pct >= 0.85 ? 3 : pct >= 0.65 ? 2 : pct >= 0.5 ? 1 : 0);
+  if (stars === 0) stars = 1;
+  const prev = S.progress[ch.id] || { stars: 0, bestScore: 0 };
+  const newStars = Math.max(prev.stars, stars);
+  const earned = newStars - prev.stars;
+  S.progress[ch.id] = { stars: newStars, bestScore: Math.max(prev.bestScore || 0, S.score) };
+  S.totalStars += earned;
+  document.getElementById('starCount').textContent = S.totalStars;
+  saveState();
+
+  const badges = ['😓', '🧪', '🏆'];
+  const titles = [
+    ranOutOfLives ? 'Kehabisan nyawa! Coba lagi ya!' : 'Terus semangat, detektif!',
+    'Hebat! Hampir semua terpecahkan!',
+    ch.isBoss ? '🤯 SANG PENJAHAT DIKALAHKAN! 🏆' : 'SEMPURNA! Detektif sejati!'
+  ];
+  document.getElementById('doneBadge').textContent = badges[stars - 1];
+  document.getElementById('doneTitle').textContent = titles[stars - 1];
+  document.getElementById('doneStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+  document.getElementById('doneScoreNum').textContent = `${S.score}/${total}`;
+  const elapsed = S.startTime ? Date.now() - S.startTime : 0;
+  document.getElementById('doneTime').textContent = fmtTime(elapsed);
+  document.getElementById('doneMsg').textContent = stars === 3
+    ? `Semua ${total} petunjuk terpecahkan! Kamu detektif terhebat!`
+    : `${S.score} dari ${total} benar. ${stars < 2 ? 'Pelajari lagi, kamu pasti bisa!' : 'Hampir sempurna!'}`;
+
+  document.getElementById('reviewList').innerHTML = S.history.map(h => `
+    <div class="review-item">
+      <div class="review-ico">${h.correct ? '✅' : '❌'}</div>
+      <div>
+        <div class="review-q">${h.q}</div>
+        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu: ${h.userAns} · Jawaban: <strong>${h.correctAns}</strong>`}</div>
+      </div>
+    </div>`).join('');
+
+  show('sComplete');
+  if (stars >= 2) setTimeout(launchConfetti, 300);
+  if (stars === 3 && ch.isBoss) { Audio.play('fanfare'); setTimeout(launchConfetti, 800); }
+  updateOverall();
+
+  const allDone = CHAPTERS.every(c => (S.progress[c.id] || {}).stars > 0);
+  if (allDone) setTimeout(showAllDone, 3000);
+}
+
+function showAllDone() {
+  document.getElementById('allDoneStars').textContent = `${S.totalStars} / 18`;
+  document.getElementById('allDoneStarEmoji').textContent = '⭐'.repeat(Math.min(S.totalStars, 18));
+  show('sAllDone');
+  Audio.play('fanfare');
+  setTimeout(launchConfetti, 300);
+  setTimeout(launchConfetti, 1100);
+}
+
+/* ════════════════════════════════════════
+   HOME RENDER
+════════════════════════════════════════ */
+function renderHome() {
+  document.getElementById('chGrid').innerHTML = CHAPTERS.map((ch, i) => {
+    const p = S.progress[ch.id] || { stars: 0, bestScore: 0 };
+    const done = p.stars > 0;
+    const prevDone = i === 0 || CHAPTERS.slice(0, i).every(c => (S.progress[c.id] || {}).stars > 0);
+    const locked = !done && !prevDone;
+    const stars = [1,2,3].map(n => `<span class="ch-star${n <= p.stars ? ' on' : ''}">⭐</span>`).join('');
+    const status = done ? `✅ Terbaik: ${p.bestScore}/${ch.questions.length}` : locked ? '🔒 Selesaikan petunjuk sebelumnya' : '▶️ Belum dimulai';
+    return `<div class="ch-card${ch.isBoss ? ' boss' : ''}${locked ? ' locked' : ''}" onclick="${locked ? '' : `openChapter(${i})`}" role="button" tabindex="${locked ? -1 : 0}" onkeydown="if(!${locked}&&(event.key==='Enter'||event.key===' '))openChapter(${i})">
+      <div class="ch-thumb" style="${ch.isBoss ? '' : `background:${ch.colorBg}`}">
+        <div class="ch-emoji">${ch.emoji}</div>
+        <div class="ch-stars-row">${stars}</div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-num">Petunjuk ${i + 1}</div>
+        <div class="ch-depth">${ch.depth}</div>
+        <div class="ch-title">${ch.title}</div>
+        <div class="ch-desc">${ch.desc}</div>
+        <div class="ch-status">${status}</div>
+      </div>
+    </div>`;
+  }).join('');
+  updateOverall();
+  renderDepthTrack();
+}
+
+function renderDepthTrack() {
+  const track = document.getElementById('depthTrack');
+  if (!track) return;
+  const trackNames = ['Petunjuk Pertama','Jejak Tersembunyi','Kode Rahasia','Formula Misterius','Persamaan Akhir','Bukti Puncak'];
+  let html = '';
+  CHAPTERS.forEach((ch, i) => {
+    const p = S.progress[ch.id] || { stars: 0 };
+    const done = p.stars > 0;
+    const allPrev = i === 0 || CHAPTERS.slice(0, i).every(c => (S.progress[c.id] || {}).stars > 0);
+    const active = !done && allPrev;
+    const cls = done ? 'done' : active ? 'active' : '';
+    if (i > 0) html += `<div class="depth-rail${done ? ' done' : ''}"></div>`;
+    html += `<div class="depth-node">
+      <div class="depth-dot ${cls}">${done ? '✅' : active ? '🔍' : ch.emoji}</div>
+      <div class="depth-name ${cls}">${trackNames[i]}</div>
+    </div>`;
+  });
+  track.innerHTML = html;
+}
+
+function updateOverall() {
+  const total = CHAPTERS.length;
+  const done = Object.values(S.progress).filter(p => p.stars > 0).length;
+  const pct = (done / total) * 100;
+  document.getElementById('ovBar').style.width = `${pct}%`;
+  document.getElementById('ovSub').textContent = `${done} dari ${total} petunjuk terpecahkan`;
+  const el = document.getElementById('ovRingPath');
+  if (el) el.style.strokeDashoffset = 151 - (pct / 100) * 151;
+}
+
+/* ════════════════════════════════════════
+   CONFETTI
+════════════════════════════════════════ */
+function launchConfetti() {
+  const c = document.getElementById('confetti');
+  const colors = ['#00C9A7','#FFC234','#1F9D55','#FF5C39','#E84BA0','#7B3FA8','#00e5c9'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'cp';
+    const sz = 6 + Math.random() * 10;
+    p.style.cssText = `left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${colors[~~(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.6}s;`;
+    c.appendChild(p);
+    p.addEventListener('animationend', () => p.remove());
+  }
+}
+
+/* ════════════════════════════════════════
+   LAB PARTICLE ANIMATION
+════════════════════════════════════════ */
+function spawnLabParticles() {
+  const bg = document.getElementById('labBg');
+  const colors = [
+    'rgba(0,201,167,0.6)',   // teal/lab
+    'rgba(123,63,168,0.5)',  // purple
+    'rgba(255,194,52,0.45)', // amber/mango
+    'rgba(0,220,200,0.4)',   // bright teal
+    'rgba(180,60,200,0.35)', // violet
+    'rgba(255,140,0,0.4)',   // orange
+  ];
+  const sizes = [6, 8, 10, 14, 18, 22, 28];
+  for (let i = 0; i < 38; i++) {
+    const p = document.createElement('div');
+    p.className = 'lab-bubble';
+    const sz = sizes[Math.floor(Math.random() * sizes.length)];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const left = Math.random() * 100;
+    const bottom = Math.random() * 40;
+    const dur = 6 + Math.random() * 14;
+    const delay = Math.random() * 10;
+    p.style.cssText = `
+      width:${sz}px;height:${sz}px;
+      background:${color};
+      left:${left}%;
+      bottom:${bottom}%;
+      animation-duration:${dur}s;
+      animation-delay:-${delay}s;
+      border:1px solid rgba(255,255,255,0.15);
+    `;
+    bg.appendChild(p);
+  }
+}
+
+/* ════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════ */
+function fmtTime(ms) {
+  const s = Math.floor(ms / 1000), m = Math.floor(s / 60);
+  return m > 0 ? `${m} mnt ${s % 60} dtk` : `${s} dtk`;
+}
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+loadState();
+renderHome();
+spawnLabParticles();
+
+function openBugReport() {
+  document.getElementById('bugModal').classList.add('show');
+  document.getElementById('bugDescription').focus();
+}
+
+function closeBugReport() {
+  document.getElementById('bugModal').classList.remove('show');
+  document.getElementById('bugForm').reset();
+}
+
+function submitBugReport(event) {
+  event.preventDefault();
+  const modal = document.getElementById('bugModal');
+  const desc = document.getElementById('bugDescription').value;
+  const email = document.getElementById('bugEmail').value || 'tidak-ada@example.com';
+  const courseName = 'Lab Misteri X — Petualangan Detektif 🧪';
+
+  const formData = new FormData();
+  formData.append('_subject', `[Learn with Adhi Bug Report] ${courseName}`);
+  formData.append('message', `Course: ${courseName}\n\nBug Description:\n${desc}`);
+  formData.append('email', email);
+  formData.append('_captcha', 'false');
+
+  fetch('https://formspree.io/f/mbjkzbag', {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(response => {
+    if (response.ok) {
+      const btn = event.target.querySelector('[type="submit"]');
+      btn.textContent = '✅ Terima kasih!';
+      btn.disabled = true;
+      setTimeout(() => {
+        closeBugReport();
+        btn.textContent = 'Kirim Laporan';
+        btn.disabled = false;
+      }, 1500);
+    } else {
+      alert('Gagal mengirim laporan. Coba lagi.');
+    }
+  })
+  .catch(err => {
+    console.error('Error:', err);
+    alert('Gagal mengirim laporan. Periksa koneksi Anda.');
+  });
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.getElementById('bugModal').classList.contains('show')) {
+    closeBugReport();
+  }
+});
+</script>
+</body>
+</html>
