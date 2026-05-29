@@ -1,0 +1,1523 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Robot Antariksa — Petualangan Antariksa 🛰️</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%237B3FA8"/><text y=".9em" font-size="78" x="10">🛰️</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space:#7B3FA8; --space-d:#5a2d85; --space-bg:#EFE3F8;
+      --tomato:#FF5C39; --mango:#FFC234; --forest:#1F9D55;
+      --sea:#1FA9C7; --mawar:#E84BA0; --indigo:#2E3192;
+      --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+      --line:rgba(26,22,20,0.14); --muted:#6B6259;
+      --tomato-bg:#FFE8E3; --mango-bg:#FFF5D6; --forest-bg:#E3F5EB;
+      --sea-bg:#E3F4F8; --mawar-bg:#FCE8F3; --indigo-bg:#E8E9F8;
+      --void:#0a0015; --void-mid:#0d0030; --void-dark:#060020;
+      --fd:'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb:'Nunito',system-ui,sans-serif;
+      --r:16px; --r-sm:10px; --r-lg:24px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+    body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+    input{font-family:inherit}
+
+    /* ══════════════════════════════════════
+       SPACE BACKGROUND
+    ══════════════════════════════════════ */
+    #spaceBg{position:fixed;inset:0;z-index:-2;
+      background:linear-gradient(180deg,var(--void) 0%,var(--void-mid) 50%,var(--void-dark) 100%);
+      pointer-events:none}
+    #spaceBg.hidden{opacity:0;transition:opacity .4s}
+
+    .star-dot{position:absolute;border-radius:50%;background:#fff;pointer-events:none;animation:twinkle ease-in-out infinite}
+    @keyframes twinkle{
+      0%,100%{opacity:.15;transform:scale(1)}
+      50%{opacity:1;transform:scale(1.3)}
+    }
+
+    /* ══════════════════════════════════════
+       HEADER
+    ══════════════════════════════════════ */
+    .hdr{display:flex;align-items:center;justify-content:space-between;
+      padding:13px 18px;
+      background:rgba(10,0,21,.85);backdrop-filter:blur(8px);
+      border-bottom:2px solid rgba(123,63,168,.3);
+      position:sticky;top:0;z-index:200;transition:background .4s,border-color .4s}
+    .hdr.light{background:var(--paper);border-bottom-color:var(--ink)}
+    .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:rgba(255,255,255,.92)}
+    .hdr.light .hdr-brand{color:var(--ink)}
+    .hdr-brand-word{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.03em}
+    .hdr-right{display:flex;align-items:center;gap:12px}
+    .hdr-stars{display:flex;align-items:center;gap:5px;background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:5px 13px;font-family:var(--fd);font-weight:800;font-size:15px;color:var(--ink)}
+    .bug-btn{width:44px;height:44px;border:2px solid var(--ink);border-radius:999px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-size:20px;transition:background .18s}
+    .bug-btn:hover{background:var(--tomato)}
+
+    /* ══════════════════════════════════════
+       BUG REPORT MODAL
+    ══════════════════════════════════════ */
+    .bug-modal{display:none;position:fixed;inset:0;background:rgba(26,22,20,.6);z-index:1000;align-items:center;justify-content:center;padding:20px}
+    .bug-modal.show{display:flex}
+    .bug-modal-box{background:var(--paper);border:3px solid var(--ink);border-radius:20px;padding:28px;max-width:500px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.25);animation:slideUp .3s ease}
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .bug-modal-title{font-family:var(--fd);font-weight:800;font-size:24px;margin-bottom:12px}
+    .bug-modal-desc{font-size:14px;color:var(--muted);margin-bottom:20px}
+    .bug-form-group{margin-bottom:16px}
+    .bug-form-label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+    .bug-form-input,.bug-form-textarea{width:100%;border:2px solid var(--ink);border-radius:8px;padding:10px 12px;font-size:14px;background:var(--paper-2)}
+    .bug-form-textarea{resize:vertical;min-height:100px;font-family:inherit}
+    .bug-form-input:focus,.bug-form-textarea:focus{outline:none;background:var(--mango)}
+    .bug-modal-actions{display:flex;gap:12px;margin-top:24px}
+    .bug-btn-submit,.bug-btn-cancel{flex:1;padding:12px;border:2px solid var(--ink);border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;transition:all .18s}
+    .bug-btn-submit{background:var(--tomato);color:var(--paper)}
+    .bug-btn-submit:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+    .bug-btn-cancel{background:var(--paper-2)}
+    .bug-btn-cancel:hover{background:var(--line)}
+
+    /* ══════════════════════════════════════
+       SCREENS
+    ══════════════════════════════════════ */
+    .screen{display:none;max-width:820px;margin:0 auto;padding:24px 18px 80px;animation:fadeUp .28s ease}
+    .screen.active{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ══════════════════════════════════════
+       HOME
+    ══════════════════════════════════════ */
+    .home-hero{text-align:center;padding:28px 0 20px}
+    .sub-anim{width:90px;height:90px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:56px;animation:satOrbit 4s ease-in-out infinite}
+    @keyframes satOrbit{
+      0%{transform:translate(0,0) rotate(-8deg)}
+      25%{transform:translate(8px,-10px) rotate(4deg)}
+      50%{transform:translate(0,-16px) rotate(8deg)}
+      75%{transform:translate(-8px,-10px) rotate(-4deg)}
+      100%{transform:translate(0,0) rotate(-8deg)}
+    }
+    .home-title{font-family:var(--fd);font-weight:800;font-size:clamp(26px,6vw,42px);letter-spacing:-.03em;line-height:1.05;color:var(--paper);margin-bottom:8px}
+    .home-title em{font-style:normal;background:var(--space);padding:1px 10px;border-radius:8px;color:#fff}
+    .home-sub{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:24px}
+
+    /* MISSION TRACK */
+    .mission-wrap{background:rgba(255,255,255,.06);border:2px solid rgba(123,63,168,.3);border-radius:var(--r);padding:16px;margin-bottom:24px}
+    .mission-label{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mango);margin-bottom:12px}
+    .mission-track{display:flex;gap:0;align-items:center;overflow-x:auto;padding-bottom:4px;min-width:0}
+    .mission-node{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;min-width:52px}
+    .mission-dot{width:42px;height:42px;border-radius:50%;border:2.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .3s}
+    .mission-dot.done{background:var(--forest);border-color:var(--forest)}
+    .mission-dot.active{background:var(--space);border-color:var(--space);animation:spacePulse 1.5s ease-in-out infinite}
+    @keyframes spacePulse{0%,100%{box-shadow:0 0 0 0 rgba(123,63,168,.6)}50%{box-shadow:0 0 0 10px rgba(123,63,168,0)}}
+    .mission-name{font-size:9px;font-family:var(--fd);font-weight:700;color:rgba(255,255,255,.45);text-align:center;white-space:nowrap}
+    .mission-name.done{color:#7ee8a2}.mission-name.active{color:var(--space-bg)}
+    .mission-rail{flex:1;height:3px;background:rgba(255,255,255,.12);min-width:16px;position:relative;top:-14px;background-image:linear-gradient(to right,rgba(255,255,255,.35) 50%,transparent 50%);background-size:8px 3px}
+    .mission-rail.done{background:var(--forest);background-image:none}
+
+    /* OVERALL PROGRESS */
+    .overall-box{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);border:2px solid rgba(123,63,168,.3);border-radius:var(--r);padding:16px;margin-bottom:24px}
+    .ov-ring{width:60px;height:60px;flex-shrink:0}
+    .ov-info{flex:1}
+    .ov-label{font-family:var(--fd);font-weight:700;font-size:14px;color:var(--paper);margin-bottom:6px}
+    .ov-bar-wrap{height:8px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden}
+    .ov-bar{height:100%;background:var(--space);border-radius:999px;transition:width .8s ease}
+    .ov-sub{font-size:12px;color:rgba(255,255,255,.45);margin-top:4px}
+
+    .sec-title{font-family:var(--fd);font-weight:800;font-size:18px;color:var(--paper);margin-bottom:12px}
+    .chapters-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:500px){.chapters-grid{grid-template-columns:1fr}}
+
+    /* CHAPTER CARDS */
+    .ch-card{border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--paper);transition:transform .17s,box-shadow .17s;text-align:left}
+    .ch-card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .ch-card.locked{opacity:.5;cursor:not-allowed}
+    .ch-card.locked:hover{transform:none;box-shadow:none}
+    .ch-thumb{padding:16px 16px 12px;border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between}
+    .ch-emoji{font-size:34px;line-height:1}
+    .ch-stars-row{display:flex;gap:2px}
+    .ch-star{font-size:16px;opacity:.2}.ch-star.on{opacity:1}
+    .ch-body{padding:12px}
+    .ch-num{font-family:var(--fd);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .ch-depth{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--space);letter-spacing:.04em;margin-bottom:2px}
+    .ch-title{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.02em;margin-bottom:3px}
+    .ch-desc{font-size:12px;color:var(--muted);line-height:1.4}
+    .ch-status{margin-top:6px;font-family:var(--fd);font-weight:600;font-size:12px}
+    .ch-card.boss .ch-thumb{background:linear-gradient(135deg,#1a0030,#3d0060)}
+    .ch-card.boss .ch-depth{color:#e879f9}
+    .ch-card.boss{border-color:var(--space)}
+
+    /* ══════════════════════════════════════
+       LESSON SCREEN
+    ══════════════════════════════════════ */
+    .back-btn{display:flex;align-items:center;gap:5px;font-family:var(--fd);font-weight:600;font-size:13px;color:var(--muted);margin-bottom:20px}
+    .back-btn:hover{color:var(--ink)}
+    .lesson-hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+    .lesson-icon{font-size:48px;background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:10px 14px;flex-shrink:0;line-height:1}
+    .lesson-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,5vw,34px);letter-spacing:-.03em;line-height:1.05}
+    .lesson-depth{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--space);margin-bottom:3px}
+    .lesson-body{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:22px;margin-bottom:20px}
+    .ls{margin-bottom:20px}.ls:last-child{margin-bottom:0}
+    .ls-h{font-family:var(--fd);font-weight:700;font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .ls p{font-size:14.5px;line-height:1.65;color:var(--ink)}
+    .ex-box{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r-sm);padding:16px;margin-top:10px}
+
+    /* BLOCK CODE VISUALS */
+    .block-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:flex-start}
+    .code-block{display:inline-flex;align-items:center;gap:6px;border-radius:8px;padding:8px 14px;font-family:var(--fd);font-weight:700;font-size:13px;border:2px solid rgba(0,0,0,.2);line-height:1.2}
+    .block-event{background:#7B3FA8;color:#fff}
+    .block-action{background:#1F9D55;color:#fff}
+    .block-cond{background:#FFC234;color:#1A1614}
+    .block-loop{background:#1FA9C7;color:#fff}
+    .block-var{background:#FF5C39;color:#fff}
+    .block-list{background:#E84BA0;color:#fff}
+    .block-logic{background:#2E3192;color:#fff}
+    .block-arrow{font-size:18px;color:var(--muted);align-self:center}
+    .block-indent{margin-left:24px;border-left:3px solid var(--line);padding-left:10px}
+
+    .tip-box{background:var(--space);color:#fff;border-radius:var(--r);border:2.5px dashed rgba(255,255,255,.35);padding:16px;margin-bottom:18px;display:flex;gap:10px;align-items:flex-start}
+    .tip-ico{font-size:26px;flex-shrink:0;line-height:1}
+    .tip-name{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:2px}
+    .tip-msg{font-size:14px;line-height:1.55}
+    .start-btn{width:100%;background:var(--space);color:#fff;border:3px solid var(--ink);border-radius:var(--r);padding:17px;font-family:var(--fd);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .17s,box-shadow .17s}
+    .start-btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .start-btn.boss-btn{background:linear-gradient(135deg,var(--space-d),#9a1feb)}
+
+    /* ══════════════════════════════════════
+       EXERCISE SCREEN
+    ══════════════════════════════════════ */
+    .ex-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+    .ex-back-btn{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-sm);padding:7px 11px;font-family:var(--fd);font-weight:700;font-size:13px;flex-shrink:0}
+    .ex-meta{flex:1;min-width:0}
+    .ex-ch-name{font-family:var(--fd);font-weight:700;font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ex-bar-wrap{height:6px;background:var(--line);border-radius:999px;overflow:hidden}
+    .ex-bar{height:100%;background:var(--space);border-radius:999px;transition:width .4s ease}
+    .ex-qnum{font-family:var(--fd);font-weight:700;font-size:12px;color:var(--muted);flex-shrink:0}
+
+    /* HEARTS + COMBO */
+    .hud{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .hearts{display:flex;gap:4px;font-size:22px}
+    .combo-badge{background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:4px 12px;font-family:var(--fd);font-weight:800;font-size:13px;display:none}
+    .combo-badge.show{display:block;animation:comboPop .25s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes comboPop{0%{transform:scale(.7)}100%{transform:scale(1)}}
+
+    /* TIMER RING */
+    .timer-wrap{display:flex;justify-content:flex-end;margin-bottom:10px}
+    .timer-ring-svg{transform:rotate(-90deg)}
+    .timer-bg{fill:none;stroke:var(--line);stroke-width:4}
+    .timer-fg{fill:none;stroke:var(--space);stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .95s linear,stroke .3s}
+    .timer-num{font-family:var(--fd);font-weight:800;font-size:13px;fill:var(--ink)}
+
+    /* QUESTION CARD */
+    .q-card{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-lg);padding:24px 20px;margin-bottom:16px}
+    .q-label{font-family:var(--fd);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    .q-text{font-family:var(--fd);font-weight:800;font-size:clamp(16px,4vw,22px);letter-spacing:-.02em;line-height:1.3;margin-bottom:12px}
+    .q-visual{font-size:24px;line-height:1.7;margin-bottom:12px;text-align:center}
+
+    /* MC */
+    .opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .opt-btn{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:13px 10px;font-family:var(--fd);font-weight:700;font-size:clamp(12px,3.3vw,17px);text-align:center;display:flex;align-items:center;justify-content:center;transition:transform .14s,box-shadow .14s;line-height:1.3;min-height:56px}
+    .opt-btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .opt-btn.correct{background:var(--forest);color:#fff;border-color:var(--forest);animation:pulse .45s ease}
+    .opt-btn.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato);animation:shake .38s ease}
+    .opt-btn:disabled{cursor:not-allowed}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+    /* INPUT */
+    .inp-row{display:flex;gap:9px;align-items:center}
+    .num-inp{flex:1;border:3px solid var(--ink);border-radius:var(--r);padding:13px 14px;font-family:var(--fd);font-weight:800;font-size:24px;text-align:center;background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s}
+    .num-inp:focus{border-color:var(--space)}
+    .num-inp.ok{border-color:var(--forest);background:var(--forest-bg)}
+    .num-inp.bad{border-color:var(--tomato);background:var(--tomato-bg)}
+    .chk-btn{background:var(--mango);color:var(--ink);border:2.5px solid var(--ink);border-radius:var(--r);padding:13px 18px;font-family:var(--fd);font-weight:800;font-size:15px;flex-shrink:0;transition:transform .14s,box-shadow .14s}
+    .chk-btn:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+
+    /* DRAG-SORT */
+    .sort-label{font-size:12px;color:var(--muted);margin-bottom:10px;text-align:center}
+    .sort-items{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+    .sort-item{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r-sm);padding:10px 14px;font-family:var(--fd);font-weight:800;font-size:clamp(12px,3vw,15px);cursor:pointer;transition:all .15s;user-select:none;text-align:center;line-height:1.3}
+    .sort-item:hover:not(.disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .sort-item.selected{background:var(--space);color:#fff;border-color:var(--space);transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .sort-item.correct{background:var(--forest);color:#fff;border-color:var(--forest)}
+    .sort-item.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato)}
+    .sort-item.disabled{cursor:not-allowed}
+
+    /* BOSS BATTLE */
+    .boss-hdr{text-align:center;margin-bottom:16px}
+    .boss-enemy{font-size:72px;display:inline-block;line-height:1;transition:transform .3s}
+    .boss-enemy.hit{animation:bossHit .4s ease}
+    @keyframes bossHit{0%{transform:scale(1) rotate(0)}30%{transform:scale(1.15) rotate(-10deg)}60%{transform:scale(.9) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+    .boss-hp{width:100%;height:14px;background:var(--line);border-radius:999px;overflow:hidden;border:2px solid var(--ink);margin:10px 0}
+    .boss-hp-bar{height:100%;background:var(--tomato);border-radius:999px;transition:width .5s ease}
+    .boss-hp-label{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:8px}
+    .boss-q-wrap{background:linear-gradient(135deg,#1a0030,#3d0060);border:2px solid var(--space);border-radius:var(--r-lg);padding:24px 20px;margin-bottom:16px}
+    .boss-q-wrap .q-label{color:rgba(255,255,255,.5)}
+    .boss-q-wrap .q-text{color:#fff}
+    .boss-q-wrap .q-visual{color:#fff}
+
+    /* TOAST */
+    .toast{border-radius:var(--r);padding:12px 16px;margin-top:12px;font-family:var(--fd);font-weight:700;font-size:14px;display:none;align-items:flex-start;gap:9px;animation:toastIn .22s ease}
+    .toast.show{display:flex}
+    .toast.ok{background:var(--forest-bg);border:2px solid var(--forest);color:#0e6032}
+    .toast.bad{background:var(--tomato-bg);border:2px solid var(--tomato);color:#c73013}
+    .toast-expl{font-weight:400;font-size:12.5px;margin-top:2px;line-height:1.5}
+    @keyframes toastIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+    .nxt-btn{width:100%;margin-top:12px;background:var(--ink);color:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:15px;font-family:var(--fd);font-weight:800;font-size:15px;display:none;transition:opacity .15s}
+    .nxt-btn.show{display:block}
+    .nxt-btn:hover{opacity:.82}
+
+    /* ══════════════════════════════════════
+       COMPLETE SCREEN
+    ══════════════════════════════════════ */
+    .done-hero{text-align:center;padding:32px 0 20px}
+    .done-badge{font-size:72px;line-height:1;margin-bottom:14px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+    .done-title{font-family:var(--fd);font-weight:800;font-size:clamp(20px,5vw,34px);letter-spacing:-.03em;margin-bottom:8px}
+    .done-stars{font-size:40px;margin:12px 0;animation:starsIn .5s ease .2s both}
+    @keyframes starsIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+    .score-box{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:18px;margin:16px 0;text-align:center}
+    .score-num{font-family:var(--fd);font-weight:800;font-size:48px;letter-spacing:-.04em}
+    .score-lbl{font-size:13px;color:var(--muted)}
+    .done-msg{font-size:14px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.6}
+    .done-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .act-btn{border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;font-family:var(--fd);font-weight:800;font-size:14px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s}
+    .act-btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--ink)}
+    .act-btn.primary{background:var(--space);color:#fff}
+    .act-btn.secondary{background:var(--paper-2);color:var(--ink)}
+
+    .review-panel{margin-top:18px}
+    .review-title{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:8px}
+    .review-item{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border:1.5px solid var(--line);border-radius:var(--r-sm);margin-bottom:7px;font-size:12.5px}
+    .review-ico{font-size:15px;flex-shrink:0;margin-top:1px}
+    .review-q{font-weight:600;margin-bottom:1px}
+    .review-a{color:var(--muted)}
+
+    /* ══════════════════════════════════════
+       ALL DONE SCREEN
+    ══════════════════════════════════════ */
+    .all-done-wrap{text-align:center;padding:32px 0}
+    .all-done-anim{font-size:60px;display:inline-block;animation:satOrbit 3s ease-in-out infinite;margin-bottom:12px}
+    .all-done-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,6vw,38px);letter-spacing:-.03em;margin-bottom:10px;line-height:1.2}
+
+    /* CONFETTI */
+    #confetti{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+    .cp{position:absolute;top:-16px;border-radius:2px;animation:fall linear forwards}
+    @keyframes fall{from{top:-20px;opacity:1}to{top:110vh;opacity:0}}
+
+    /* SCREEN-SHAKE */
+    @keyframes screenShake{0%,100%{transform:translate(0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(3px,-3px)}}
+    .shake{animation:screenShake .35s ease}
+  </style>
+</head>
+<body>
+
+<div id="spaceBg"></div>
+<div id="confetti"></div>
+
+<header class="hdr" id="mainHdr">
+  <a href="/kids.html" class="hdr-brand">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
+      <circle cx="38" cy="50" r="22" fill="none" stroke="currentColor" stroke-width="14"/>
+      <rect x="54" y="28" width="14" height="44" fill="currentColor"/>
+      <circle cx="78" cy="22" r="8" fill="#FF5C39"/>
+    </svg>
+    <span class="hdr-brand-word">← Kids Hub</span>
+  </a>
+  <div class="hdr-right">
+    <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+    <button class="bug-btn" onclick="openBugReport()" title="Laporkan Masalah">🐛</button>
+  </div>
+</header>
+
+<!-- BUG REPORT MODAL -->
+<div class="bug-modal" id="bugModal">
+  <div class="bug-modal-box">
+    <h2 class="bug-modal-title">Laporkan Masalah 🐛</h2>
+    <p class="bug-modal-desc">Ada yang tidak bekerja? Ceritakan apa yang terjadi!</p>
+    <form id="bugForm" onsubmit="submitBugReport(event)">
+      <div class="bug-form-group">
+        <label class="bug-form-label">Jelaskan masalahnya:</label>
+        <textarea class="bug-form-textarea" name="message" id="bugDescription" required
+          placeholder="Contoh: Tombol tidak bisa diklik, soal tidak muncul, dll..."></textarea>
+      </div>
+      <div class="bug-form-group">
+        <label class="bug-form-label">Email (opsional, jika ingin balasan):</label>
+        <input type="email" class="bug-form-input" name="email" id="bugEmail" placeholder="namamu@email.com">
+      </div>
+      <div class="bug-modal-actions">
+        <button type="button" class="bug-btn-cancel" onclick="closeBugReport()">Batal</button>
+        <button type="submit" class="bug-btn-submit">Kirim Laporan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="sub-anim">🛰️</div>
+    <h1 class="home-title">Robot <em>Antariksa!</em></h1>
+    <p class="home-sub">Ajari robotmu menaklukkan galaksi! 🌌 6 misi menantang menantimu.</p>
+  </div>
+
+  <div class="mission-wrap">
+    <div class="mission-label">🛸 Jalur Misi Antariksa</div>
+    <div class="mission-track" id="missionTrack"></div>
+  </div>
+
+  <div class="overall-box">
+    <svg class="ov-ring" viewBox="0 0 60 60" fill="none">
+      <circle cx="30" cy="30" r="24" stroke="rgba(255,255,255,.12)" stroke-width="5"/>
+      <circle cx="30" cy="30" r="24" stroke="var(--space)" stroke-width="5"
+              stroke-linecap="round" stroke-dasharray="151" stroke-dashoffset="151"
+              id="ovRingPath" transform="rotate(-90 30 30)"
+              style="transition:stroke-dashoffset 1s ease"/>
+    </svg>
+    <div class="ov-info">
+      <div class="ov-label">Progress Robot Rayyan 🛰️</div>
+      <div class="ov-bar-wrap"><div class="ov-bar" id="ovBar" style="width:0%"></div></div>
+      <div class="ov-sub" id="ovSub">0 dari 6 misi selesai</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Pilih Misi 🚀</div>
+  <div class="chapters-grid" id="chGrid"></div>
+
+  <div style="margin-top:24px;text-align:center">
+    <button onclick="resetProgress()" style="font-size:12px;color:rgba(255,255,255,.35);background:none;border:none;cursor:pointer;text-decoration:underline">
+      Reset progress (untuk orang tua)
+    </button>
+  </div>
+</div>
+
+<!-- ═══ LESSON ═══ -->
+<div class="screen" id="sLesson">
+  <button class="back-btn" onclick="goHome()">← Kembali ke peta misi</button>
+  <div id="lessonHdr"></div>
+  <div class="lesson-body" id="lessonBody"></div>
+  <div class="tip-box">
+    <div class="tip-ico">🤖</div>
+    <div>
+      <div class="tip-name">Kapi · Robot Antariksa</div>
+      <div class="tip-msg" id="kapiMsg">Baca dulu, lalu terjun ke tantangannya!</div>
+    </div>
+  </div>
+  <button class="start-btn" id="startBtn" onclick="startExercise()">🛰️ Mulai Misi!</button>
+</div>
+
+<!-- ═══ EXERCISE ═══ -->
+<div class="screen" id="sExercise">
+  <div class="ex-hdr">
+    <button class="ex-back-btn" onclick="goHome()">←</button>
+    <div class="ex-meta">
+      <div class="ex-ch-name" id="exChName"></div>
+      <div class="ex-bar-wrap"><div class="ex-bar" id="exBar" style="width:0%"></div></div>
+    </div>
+    <div class="ex-qnum" id="exQNum">1/6</div>
+  </div>
+
+  <div class="hud">
+    <div class="hearts" id="heartsDisplay">❤️❤️❤️</div>
+    <div class="combo-badge" id="comboBadge">🔥 2×</div>
+  </div>
+
+  <div class="timer-wrap">
+    <svg width="48" height="48" class="timer-ring-svg" id="timerRing">
+      <circle class="timer-bg" cx="24" cy="24" r="20"/>
+      <circle class="timer-fg" id="timerFg" cx="24" cy="24" r="20" stroke-dasharray="126" stroke-dashoffset="0"/>
+      <text x="24" y="24" class="timer-num" text-anchor="middle" dominant-baseline="central" id="timerNum" transform="rotate(90 24 24)">30</text>
+    </svg>
+  </div>
+
+  <div id="bossHdr" style="display:none" class="boss-hdr">
+    <div class="boss-enemy" id="bossEnemy">👾</div>
+    <div class="boss-hp-label" id="bossHpLabel">HP Alien: 6/6</div>
+    <div class="boss-hp"><div class="boss-hp-bar" id="bossHpBar" style="width:100%"></div></div>
+  </div>
+
+  <div id="qCardWrap">
+    <div class="q-card" id="qCard">
+      <div class="q-label" id="qLabel">Pertanyaan</div>
+      <div class="q-text" id="qText"></div>
+      <div class="q-visual" id="qVisual" style="display:none"></div>
+      <div id="answerArea"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span id="toastIco"></span>
+    <div>
+      <div id="toastTitle"></div>
+      <div class="toast-expl" id="toastExpl"></div>
+    </div>
+  </div>
+  <button class="nxt-btn" id="nxtBtn" onclick="nextQ()">Lanjut →</button>
+</div>
+
+<!-- ═══ COMPLETE ═══ -->
+<div class="screen" id="sComplete">
+  <div class="done-hero">
+    <div class="done-badge" id="doneBadge">🎉</div>
+    <div class="done-title" id="doneTitle">Misi Selesai!</div>
+    <div class="done-stars" id="doneStars">⭐⭐⭐</div>
+  </div>
+  <div class="score-box">
+    <div class="score-num" id="doneScoreNum">6/6</div>
+    <div class="score-lbl">jawaban benar</div>
+  </div>
+  <div class="score-box" style="background:var(--space-bg)">
+    <div class="score-num" id="doneTime" style="font-size:32px">--</div>
+    <div class="score-lbl">⏱️ total waktu</div>
+  </div>
+  <div class="done-msg" id="doneMsg"></div>
+  <div class="done-actions">
+    <button class="act-btn primary" onclick="retryChapter()">🔁 Coba Lagi</button>
+    <button class="act-btn secondary" onclick="goHome()">🌌 Peta Misi</button>
+  </div>
+  <div class="review-panel">
+    <div class="review-title">📋 Ringkasan Jawaban</div>
+    <div id="reviewList"></div>
+  </div>
+</div>
+
+<!-- ═══ ALL DONE ═══ -->
+<div class="screen" id="sAllDone">
+  <div class="all-done-wrap">
+    <div class="all-done-anim">🛰️</div>
+    <div style="font-size:64px;margin-bottom:14px;animation:pop .6s cubic-bezier(.175,.885,.32,1.275)">🏆</div>
+    <div class="all-done-title">
+      Luar Biasa, Rayyan!<br>
+      Semua Misi <em style="font-style:normal;background:var(--space);color:#fff;padding:2px 10px;border-radius:8px">Ditaklukkan!</em>
+    </div>
+    <p style="font-size:15px;color:var(--muted);margin:14px 0 22px;line-height:1.6">
+      Rayyan telah menyelesaikan semua 6 misi antariksa!<br>
+      Kamu adalah <strong>Komandan Robot Sejati!</strong> 🌟
+    </p>
+    <div class="score-box">
+      <div class="score-num" id="allDoneStars"></div>
+      <div class="score-lbl">total bintang dikumpulkan dari 18</div>
+    </div>
+    <div style="font-size:36px;margin:16px 0;letter-spacing:3px" id="allDoneStarEmoji"></div>
+    <div style="display:grid;gap:10px;margin-top:14px">
+      <button class="act-btn primary" style="font-size:17px;padding:18px" onclick="goHome()">🌌 Kembali ke Peta Misi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   AUDIO
+════════════════════════════════════════ */
+const Snd = {
+  ctx: null,
+  init() {
+    if (this.ctx) return;
+    try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  },
+  tone(freq, dur, vol=0.2, type='sine') {
+    if (!this.ctx) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(); o.stop(this.ctx.currentTime + dur);
+  },
+  play(type) {
+    this.init();
+    if (!this.ctx) return;
+    if (type === 'correct') {
+      this.tone(523,.15,.15); setTimeout(()=>this.tone(659,.15,.15),120); setTimeout(()=>this.tone(784,.3,.15),240);
+    } else if (type === 'wrong') {
+      this.tone(220,.15,.15); setTimeout(()=>this.tone(196,.25,.12),130);
+    } else if (type === 'select') {
+      this.tone(440,.08,.1,'square');
+    } else if (type === 'tick') {
+      this.tone(880,.05,.06,'square');
+    } else if (type === 'warn') {
+      this.tone(330,.1,.15,'sawtooth');
+    } else if (type === 'fanfare') {
+      [523,659,784,1047].forEach((f,i)=>setTimeout(()=>this.tone(f,.3,.18),i*110));
+    } else if (type === 'boss-hit') {
+      this.tone(150,.2,.25,'sawtooth');
+    }
+  }
+};
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+const S = {
+  chapter: null,
+  qIdx: 0,
+  score: 0,
+  answered: false,
+  lives: 3,
+  combo: 0,
+  totalStars: 0,
+  progress: {},
+  history: [],
+  bossHP: 6,
+  timerVal: 30,
+  timerInterval: null,
+  startTime: null,
+};
+
+/* ════════════════════════════════════════
+   LESSON HTML BUILDERS
+════════════════════════════════════════ */
+function lsn_events() { return `
+<div class="ls">
+  <div class="ls-h">🔘 Apa Itu Sinyal &amp; Aksi?</div>
+  <p>Robot perlu tahu <strong>KAPAN</strong> harus bertindak dan <strong>APA</strong> yang harus dilakukan. Sinyal = tombol yang memberitahu robot kapan beraksi!</p>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-event">🔴 Saat tombol ditekan</div>
+      <div class="block-arrow">→</div>
+      <div class="code-block block-action">💡 Nyalakan lampu</div>
+    </div>
+    <div class="block-row" style="margin-top:8px">
+      <div class="code-block block-event">🟢 Saat pintu terbuka</div>
+      <div class="block-arrow">→</div>
+      <div class="code-block block-action">🔔 Bunyikan alarm</div>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">⏱️ Jenis-Jenis Sinyal</div>
+  <p>Sinyal bisa berdasarkan <strong>sentuhan</strong>, <strong>waktu</strong>, <strong>suara</strong>, atau <strong>kondisi</strong>. Robot bisa punya banyak sinyal sekaligus!</p>
+  <div class="ex-box">
+    <div style="font-size:13.5px;line-height:2.1">
+      🖐️ Sentuh → langsung bereaksi<br>
+      ⏰ Setiap 5 detik → tindakan terjadwal<br>
+      🔊 Saat terdengar suara → merespon suara<br>
+      💡 Saat lampu padam → merespon kondisi
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🤖 Satu Robot, Banyak Sinyal!</div>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-event">⏱️ Setiap 1 detik</div>
+      <div class="block-arrow">→</div>
+      <div class="code-block block-action">🚶 Melangkah</div>
+    </div>
+    <div class="block-row" style="margin-top:8px">
+      <div class="code-block block-event">🧱 Saat menabrak tembok</div>
+      <div class="block-arrow">→</div>
+      <div class="code-block block-action">↩️ Berbalik arah</div>
+    </div>
+    <div class="block-row" style="margin-top:8px">
+      <div class="code-block block-event">⚡ Baterai &lt; 10%</div>
+      <div class="block-arrow">→</div>
+      <div class="code-block block-action">🔌 Cari pengisian daya</div>
+    </div>
+  </div>
+</div>`; }
+
+function lsn_lists() { return `
+<div class="ls">
+  <div class="ls-h">📋 Apa Itu Daftar (List)?</div>
+  <p>Daftar = kotak penyimpan banyak item berurutan! Setiap item punya <strong>nomor urut</strong> mulai dari 1. Panjang daftar = berapa item ada di dalamnya.</p>
+  <div class="ex-box">
+    <div style="font-size:13.5px;line-height:2.1">
+      📦 daftar_muatan = [oksigen, air, makanan, baju]<br>
+      🔢 item ke-1: oksigen<br>
+      🔢 item ke-2: air<br>
+      🔢 item ke-3: makanan<br>
+      🔢 item ke-4: baju<br>
+      📏 panjang daftar = <strong>4</strong>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">➕➖ Operasi Daftar</div>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-list">📋 Tambah item</div>
+      <div class="block-arrow">→</div>
+      <div class="code-block block-action">masuk ke akhir daftar</div>
+    </div>
+    <div class="block-row" style="margin-top:8px">
+      <div class="code-block block-list">🗑️ Hapus item</div>
+      <div class="block-arrow">→</div>
+      <div class="code-block block-action">panjang berkurang 1</div>
+    </div>
+    <div class="block-row" style="margin-top:8px">
+      <div class="code-block block-list">🔢 Hitung panjang</div>
+      <div class="block-arrow">→</div>
+      <div class="code-block block-action">berapa item ada?</div>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🔄 Loop Daftar</div>
+  <p>Untuk melihat <strong>semua</strong> item daftar satu per satu, pakai <strong>ulang (loop)</strong>!</p>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-loop">🔄 Untuk setiap item di daftar</div>
+    </div>
+    <div class="block-indent" style="margin-top:6px">
+      <div class="block-row">
+        <div class="code-block block-action">👀 Tampilkan item ini</div>
+      </div>
+    </div>
+  </div>
+</div>`; }
+
+function lsn_nested() { return `
+<div class="ls">
+  <div class="ls-h">🔄 Ulang di Dalam Ulang</div>
+  <p>Kadang kita perlu <strong>loop di dalam loop</strong>! Seperti mengisi meja: untuk setiap baris, isi setiap kolom. Ini disebut <strong>nested loop</strong>.</p>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-loop">🔄 Untuk setiap BARIS (3 baris)</div>
+    </div>
+    <div class="block-indent" style="margin-top:6px">
+      <div class="block-row">
+        <div class="code-block block-loop">🔄 Untuk setiap KOLOM (4 kolom)</div>
+      </div>
+      <div class="block-indent" style="margin-top:6px">
+        <div class="block-row">
+          <div class="code-block block-action">🤖 Tempatkan robot</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-family:var(--fd);font-weight:700;font-size:14px;text-align:center">
+      3 baris × 4 kolom = <span style="color:var(--space);font-size:18px">12 robot! 🤖</span>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">📊 Grid Robot</div>
+  <div class="ex-box">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;max-width:200px;margin:0 auto">
+      ${Array(12).fill(0).map(()=>`<div style="background:var(--space-bg);border:2px solid var(--space);border-radius:6px;padding:6px;text-align:center;font-size:16px">🤖</div>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:8px;font-family:var(--fd);font-weight:700;font-size:13px;color:var(--space)">3 baris × 4 kolom = 12 robot</div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">💡 Rumus Mudah</div>
+  <p>Total = <strong>loop luar × loop dalam</strong>. Contoh: 5 baris × 6 kolom = 30 item total!</p>
+</div>`; }
+
+function lsn_boolean() { return `
+<div class="ls">
+  <div class="ls-h">⚡ Logika AND / OR / NOT</div>
+  <p>Logika membantu robot membuat <strong>keputusan</strong>. Ada tiga operator utama: <strong>AND</strong>, <strong>OR</strong>, dan <strong>NOT</strong>.</p>
+</div>
+<div class="ls">
+  <div class="ls-h">🔵 AND — Keduanya harus BENAR</div>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-logic">Bahan bakar penuh</div>
+      <div class="code-block block-cond">AND</div>
+      <div class="code-block block-logic">Cuaca bagus</div>
+    </div>
+    <div style="text-align:center;margin-top:8px;font-family:var(--fd);font-weight:700;font-size:13px">
+      ✅ BENAR AND BENAR = <span style="color:var(--forest)">BENAR → Boleh terbang!</span><br>
+      ❌ BENAR AND SALAH = <span style="color:var(--tomato)">SALAH → Jangan terbang!</span>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🟡 OR — Minimal satu BENAR</div>
+  <div class="ex-box">
+    <div style="font-size:13.5px;line-height:2">
+      ✅ BENAR OR SALAH = <strong style="color:var(--forest)">BENAR</strong><br>
+      ✅ SALAH OR BENAR = <strong style="color:var(--forest)">BENAR</strong><br>
+      ❌ SALAH OR SALAH = <strong style="color:var(--tomato)">SALAH</strong>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🔴 NOT — Membalik nilai!</div>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-logic">NOT</div>
+      <div class="code-block block-cond">BENAR</div>
+      <div class="block-arrow">=</div>
+      <div class="code-block block-var">SALAH</div>
+    </div>
+    <div class="block-row" style="margin-top:8px">
+      <div class="code-block block-logic">NOT</div>
+      <div class="code-block block-var">SALAH</div>
+      <div class="block-arrow">=</div>
+      <div class="code-block block-cond">BENAR</div>
+    </div>
+  </div>
+</div>`; }
+
+function lsn_combine() { return `
+<div class="ls">
+  <div class="ls-h">🧠 Robot Pintar = Gabungkan Semuanya!</div>
+  <p>Robot cerdas menyimpan data di <strong>variabel</strong>, mengumpulkan item di <strong>daftar</strong>, lalu membuat <strong>keputusan logis</strong>. Seperti otak robot!</p>
+</div>
+<div class="ls">
+  <div class="ls-h">📦 Variabel = Kotak Penyimpan Data</div>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-var">bahan_bakar = 80</div>
+    </div>
+    <div class="block-row" style="margin-top:8px">
+      <div class="code-block block-var">misi = "Mars"</div>
+    </div>
+    <div class="block-row" style="margin-top:8px">
+      <div class="code-block block-var">siap_terbang = BENAR</div>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🚀 Misi Lengkap Robot</div>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-var">bahan_bakar = 60</div>
+    </div>
+    <div class="block-row" style="margin-top:6px">
+      <div class="code-block block-list">daftar_muatan = [oksigen, air]</div>
+    </div>
+    <div class="block-row" style="margin-top:6px">
+      <div class="code-block block-cond">Jika bahan_bakar &gt; 50</div>
+    </div>
+    <div class="block-indent" style="margin-top:6px">
+      <div class="block-row">
+        <div class="code-block block-logic">AND panjang(daftar_muatan) &gt; 0</div>
+      </div>
+      <div class="block-row" style="margin-top:6px">
+        <div class="code-block block-action">🚀 Terbang ke Mars!</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">💡 Ingat!</div>
+  <p>Variabel menyimpan <em>satu nilai</em>. Daftar menyimpan <em>banyak nilai berurutan</em>. Logika memutuskan <em>apa yang dilakukan</em>!</p>
+</div>`; }
+
+function lsn_boss() { return `
+<div class="ls">
+  <div class="ls-h">🚀 Misi Mars — Persiapan!</div>
+  <p>Ini misi terbesarmu! Gabungkan semua yang sudah dipelajari: <strong>sinyal</strong>, <strong>daftar</strong>, <strong>nested loop</strong>, dan <strong>logika</strong> untuk mendarat di Mars!</p>
+</div>
+<div class="ls">
+  <div class="ls-h">🛸 Langkah Misi Mars</div>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-event">🛸 Sinyal: ketinggian &lt; 100m</div>
+    </div>
+    <div class="block-indent" style="margin-top:6px">
+      <div class="code-block block-action">🪂 Aktifkan pendaratan</div>
+    </div>
+    <div style="margin-top:10px">
+      <div class="block-row">
+        <div class="code-block block-loop">🔄 Untuk setiap paket (5 paket)</div>
+      </div>
+      <div class="block-indent" style="margin-top:6px">
+        <div class="block-row">
+          <div class="code-block block-loop">🔄 Kirim 3 kali</div>
+        </div>
+        <div class="block-indent" style="margin-top:6px">
+          <div class="code-block block-action">📦 Kirim paket</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">⚡ Kondisi Misi Selesai</div>
+  <div class="ex-box">
+    <div class="block-row">
+      <div class="code-block block-cond">Jika semua_terkirim</div>
+      <div class="code-block block-cond">AND</div>
+      <div class="code-block block-cond">bahan_bakar &gt; 20</div>
+    </div>
+    <div class="block-indent" style="margin-top:6px">
+      <div class="block-row">
+        <div class="code-block block-action">🏆 Misi BERHASIL!</div>
+      </div>
+    </div>
+  </div>
+</div>`; }
+
+/* ════════════════════════════════════════
+   CHAPTERS DATA
+════════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    id: 'events',
+    title: 'Tombol & Sinyal',
+    depth: '🛸 Misi 1 — Stasiun Bumi',
+    emoji: '🔘',
+    color: '#7B3FA8', colorBg: '#EFE3F8',
+    desc: 'Sinyal = kapan robot bertindak. Aksi = apa yang dilakukan!',
+    kapi: 'Robot perlu tahu KAPAN harus bertindak! Sinyal = tombol yang menyalakan robot. Contoh: "Kalau tombol MERAH ditekan → nyalakan mesin"!',
+    lessonHTML: lsn_events(),
+    isBoss: false,
+    questions: [
+      {type:'mc', q:'Robot harus menyalakan lampu SAAT pintu terbuka. Sinyalnya apa?', visual:'🚪💡', opts:['Saat pintu terbuka','Saat lampu mati','Setiap 5 detik','Saat baterai penuh'], ans:0, expl:'"Saat pintu terbuka" adalah sinyal yang tepat → menyalakan lampu!'},
+      {type:'mc', q:'Roket harus meluncur SAAT tombol hijau ditekan. Ini contoh…', visual:'🚀🟢', opts:['Sinyal + Aksi','Hanya Aksi','Hanya Sinyal','Kondisi'], ans:0, expl:'Sinyal = "tombol hijau ditekan", Aksi = "roket meluncur" → Sinyal + Aksi!'},
+      {type:'drag-sort', q:'Susun pasangan: sinyal (S) lalu aksi (A)!', items:['🔴 Ditekan','Lampu menyala','🟢 Ditekan','Roket meluncur'], ans:['🔴 Ditekan','Lampu menyala','🟢 Ditekan','Roket meluncur'], expl:'Sinyal selalu mendahului aksinya!'},
+      {type:'mc', q:'Berapa sinyal berbeda yang bisa dimiliki 1 robot?', visual:'🤖', opts:['Hanya 1','Hanya 2','Berapapun!','Maksimal 5'], ans:2, expl:'Robot bisa punya banyak sinyal berbeda untuk banyak aksi!'},
+      {type:'mc', q:'Robot bergerak SETIAP DETIK. Ini jenis sinyal…', visual:'⏱️', opts:['Sinyal waktu','Sinyal sentuh','Sinyal suara','Sinyal cahaya'], ans:0, expl:'"Setiap detik" adalah sinyal berdasarkan WAKTU!'},
+      {type:'input', q:'Jika robot punya 3 sinyal yang berbeda, berapa aksi berbeda yang bisa dilakukan?', ans:'3', expl:'Setiap sinyal memicu 1 aksi → 3 sinyal = 3 aksi!'},
+    ]
+  },
+  {
+    id: 'lists',
+    title: 'Daftar Muatan',
+    depth: '🌙 Misi 2 — Dok Antariksa',
+    emoji: '📋',
+    color: '#E84BA0', colorBg: '#FCE8F3',
+    desc: 'Daftar = kotak penyimpan banyak item berurutan!',
+    kapi: 'Daftar robot = kotak penyimpan banyak item berurutan! Item ke-1, ke-2, ke-3... Panjang daftar = berapa item ada di dalamnya.',
+    lessonHTML: lsn_lists(),
+    isBoss: false,
+    questions: [
+      {type:'mc', q:'Daftar muatan: [oksigen, air, makanan, baju]. Ada berapa item?', visual:'📋', opts:['3','4','5','2'], ans:1, expl:'Hitung: oksigen(1), air(2), makanan(3), baju(4) = 4 item!'},
+      {type:'drag-sort', q:'Susun daftar dari urutan ke-1 hingga ke-4: oksigen, air, makanan, baju', items:['baju','oksigen','makanan','air'], ans:['oksigen','air','makanan','baju'], expl:'Urutan aslinya: oksigen(1), air(2), makanan(3), baju(4)!'},
+      {type:'mc', q:'Daftar [A, B, C]. Setelah tambah D, daftarnya jadi?', opts:['[D,A,B,C]','[A,B,C,D]','[A,D,B,C]','[A,B,D,C]'], ans:1, expl:'Tambah ke AKHIR daftar → [A, B, C, D]!'},
+      {type:'mc', q:'Daftar [roket, satelit, rover, probe]. Item ke-3 adalah?', visual:'🛰️', opts:['satelit','rover','roket','probe'], ans:1, expl:'Urutan: roket(1), satelit(2), rover(3), probe(4) → ke-3 = rover!'},
+      {type:'input', q:'Daftar punya 6 item. Setelah hapus 2 item, tersisa berapa?', ans:'4', expl:'6 − 2 = 4 item!'},
+      {type:'mc', q:'Untuk lihat SEMUA item daftar satu per satu, kita pakai…', visual:'🔄', opts:['Hapus','Tambah','Ulang (loop)','Hitung'], ans:2, expl:'Loop = ulangi untuk setiap item → melihat semua item satu per satu!'},
+    ]
+  },
+  {
+    id: 'nested-loops',
+    title: 'Ulang di Dalam Ulang',
+    depth: '⭐ Misi 3 — Orbit Planet',
+    emoji: '🔄',
+    color: '#1FA9C7', colorBg: '#E3F4F8',
+    desc: 'Nested loops — baris × kolom = total!',
+    kapi: 'Ulang di dalam ulang = nested loop! Luar: berapa baris. Dalam: berapa kolom. 3 baris × 4 kolom = 12 robot total!',
+    lessonHTML: lsn_nested(),
+    isBoss: false,
+    questions: [
+      {type:'mc', q:'Ulang luar 3x, ulang dalam 4x. Total berapa?', visual:'3️⃣×4️⃣', opts:['7','12','34','10'], ans:1, expl:'3 × 4 = 12 total!'},
+      {type:'input', q:'Grid 5 baris × 6 kolom. Total robot = ?', ans:'30', expl:'5 × 6 = 30 robot!'},
+      {type:'mc', q:'Ulang luar: untuk setiap BARIS (4 baris). Ulang dalam: untuk setiap KOLOM (3 kolom). Total?', visual:'🔲', opts:['4','3','12','7'], ans:2, expl:'4 baris × 3 kolom = 12!'},
+      {type:'drag-sort', q:'Susun urutan pengulangan dari LUAR ke DALAM!', items:['ulang dalam (kolom)','mulai','ulang luar (baris)','selesai'], ans:['mulai','ulang luar (baris)','ulang dalam (kolom)','selesai'], expl:'Mulai → luar (baris) → dalam (kolom) → selesai!'},
+      {type:'input', q:'Kapal punya 8 baris × 8 kolom kursi. Total kursi = ?', ans:'64', expl:'8 × 8 = 64 kursi!'},
+      {type:'mc', q:'Untuk mencetak 10 bintang per baris selama 5 baris, kita butuh loop…', visual:'⭐', opts:['Hanya 1 loop','2 loop bersarang','5 loop terpisah','Tidak perlu loop'], ans:1, expl:'Loop luar untuk 5 baris, loop dalam untuk 10 bintang = 2 loop bersarang!'},
+    ]
+  },
+  {
+    id: 'boolean',
+    title: 'Logika AND / OR / NOT',
+    depth: '🪐 Misi 4 — Sabuk Asteroid',
+    emoji: '⚡',
+    color: '#2E3192', colorBg: '#E8E9F8',
+    desc: 'AND, OR, NOT — cara robot membuat keputusan!',
+    kapi: 'AND = keduanya harus benar. OR = minimal satu benar. NOT = membalik! Benar→Salah, Salah→Benar. Gunakan untuk kondisi kompleks!',
+    lessonHTML: lsn_boolean(),
+    isBoss: false,
+    questions: [
+      {type:'mc', q:'Bahan bakar PENUH dan cuaca BAGUS. Robot boleh terbang?', visual:'⛽✅ ☀️✅', opts:['Ya (AND = kedua benar)','Tidak','Mungkin','Tergantung'], ans:0, expl:'Bahan bakar penuh AND cuaca bagus → BENAR AND BENAR = YA!'},
+      {type:'mc', q:'Bahan bakar KOSONG atau sensor RUSAK. Bahaya?', visual:'⛽❌ 🔧❌', opts:['Ya (OR = minimal satu benar)','Tidak','Hanya jika keduanya rusak','Tidak tahu'], ans:0, expl:'Kosong OR rusak → salah satu benar = berbahaya!'},
+      {type:'mc', q:'NOT(lampu mati) artinya…', visual:'💡', opts:['Lampu mati','Lampu menyala','Lampu berkedip','Tidak ada lampu'], ans:1, expl:'NOT membalik: NOT(mati) = menyala!'},
+      {type:'drag-sort', q:'Susun pernyataan: BENAR AND SALAH = ?', items:['SALAH','AND','BENAR','='], ans:['BENAR','AND','SALAH','='], expl:'BENAR AND SALAH = SALAH (keduanya harus benar untuk AND)!'},
+      {type:'mc', q:'SALAH OR BENAR = ?', opts:['SALAH','BENAR','ERROR','MUNGKIN'], ans:1, expl:'SALAH OR BENAR = BENAR (minimal satu benar = OR benar)!'},
+      {type:'input', q:'Jika A=BENAR dan B=SALAH: NOT(A AND B) hasilnya? Tulis 1 jika BENAR, 0 jika SALAH', ans:'1', expl:'A AND B = BENAR AND SALAH = SALAH. NOT(SALAH) = BENAR = 1!'},
+    ]
+  },
+  {
+    id: 'combine',
+    title: 'Robot Pintar',
+    depth: '☄️ Misi 5 — Lintasan Komet',
+    emoji: '🤖',
+    color: '#FF5C39', colorBg: '#FFE8E3',
+    desc: 'Gabungkan variabel, daftar, dan logika!',
+    kapi: 'Robot pintar gabungkan semuanya: simpan data di variabel, kumpulkan di daftar, dan buat keputusan dengan logika! Seperti otak robot!',
+    lessonHTML: lsn_combine(),
+    isBoss: false,
+    questions: [
+      {type:'mc', q:'bahan_bakar = 80, misi = "Mars". Nilai bahan_bakar adalah?', visual:'📦', opts:['misi','80','"Mars"','bahan_bakar'], ans:1, expl:'Variabel bahan_bakar menyimpan nilai 80!'},
+      {type:'mc', q:'daftar_muatan = [oksigen, air]. Panjang daftarnya?', opts:['1','2','3','0'], ans:1, expl:'Ada 2 item → panjang = 2!'},
+      {type:'mc', q:'bahan_bakar = 60. Jika bahan_bakar > 50 → terbang. Robot terbang?', visual:'🚀', opts:['Ya (60 > 50)','Tidak','Error','Tergantung'], ans:0, expl:'60 > 50 = BENAR → robot terbang!'},
+      {type:'drag-sort', q:'Susun langkah robot yang benar!', items:['terbang','periksa bahan bakar','catat misi','isi jika perlu'], ans:['periksa bahan bakar','isi jika perlu','terbang','catat misi'], expl:'Urutan logis: periksa → isi jika perlu → terbang → catat!'},
+      {type:'mc', q:'bahan_bakar = 30, cek = bahan_bakar > 50. Nilai cek?', opts:['30','50','BENAR','SALAH'], ans:3, expl:'30 > 50 = SALAH → variabel cek = SALAH!'},
+      {type:'input', q:'daftar = [A,B,C,D,E]. Loop untuk setiap item → cetak. Berapa kali robot mencetak?', ans:'5', expl:'5 item → loop berjalan 5 kali → mencetak 5 kali!'},
+    ]
+  },
+  {
+    id: 'boss-mission',
+    title: 'BOSS: Misi Mars!',
+    depth: '🚀 Misi Terakhir — Mendarat di Mars!',
+    emoji: '🚀',
+    color: '#7B3FA8', colorBg: '#EFE3F8',
+    desc: 'Kalahkan alien penghalang — gabungkan semua kemampuanmu!',
+    kapi: 'BOSS BATTLE! Kalahkan alien penghalang! Gunakan semua yang kamu tahu: sinyal, daftar, pengulangan, logika — untuk mendarat di Mars!',
+    lessonHTML: lsn_boss(),
+    isBoss: true,
+    questions: [
+      {type:'mc', q:'Sinyal mendarat: "ketinggian < 100m". Ini jenis sinyal?', visual:'🛸', opts:['Sinyal kondisi','Sinyal waktu','Sinyal suara','Sinyal acak'], ans:0, expl:'"ketinggian < 100m" adalah kondisi yang memicu pendaratan!'},
+      {type:'drag-sort', q:'Urutan misi Mars yang benar!', items:['mendarat','luncur dari Bumi','orbit Mars','perjalanan'], ans:['luncur dari Bumi','perjalanan','orbit Mars','mendarat'], expl:'Luncur → perjalanan → orbit → mendarat — urutan yang benar!'},
+      {type:'mc', q:'Loop pengiriman: 5 paket × 3 kali kirim per paket. Total pengiriman?', visual:'📦', opts:['8','15','53','2'], ans:1, expl:'5 × 3 = 15 pengiriman (nested loop)!'},
+      {type:'mc', q:'bahan_bakar > 0 AND mesin_ok = BENAR. Boleh terbang?', visual:'🚀', opts:['Ya (kedua benar)','Tidak','Hanya cek mesin','Hanya cek bahan bakar'], ans:0, expl:'AND: keduanya benar → BOLEH terbang!'},
+      {type:'input', q:'daftar_planet = [Bumi, Mars, Jupiter, Saturnus]. Item ke-2 adalah Mars? Tulis 1=ya, 0=tidak', ans:'1', expl:'Bumi(1), Mars(2) → item ke-2 = Mars = ya = 1!'},
+      {type:'mc', q:'Semua paket terkirim = YA, bahan bakar = 15. Misi selesai jika: terkirim AND bahan_bakar > 20?', visual:'🎯', opts:['Ya','Tidak (bahan bakar kurang)','Tidak tahu','Mungkin'], ans:1, expl:'YA AND (15 > 20 = SALAH) = SALAH → misi BELUM selesai!'},
+    ]
+  },
+];
+
+/* ════════════════════════════════════════
+   PERSISTENCE
+════════════════════════════════════════ */
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem('rayyanCoding2') || '{}');
+    S.progress = d.progress || {};
+    S.totalStars = d.totalStars || 0;
+    document.getElementById('starCount').textContent = S.totalStars;
+  } catch(e) {}
+}
+function saveState() {
+  try {
+    localStorage.setItem('rayyanCoding2', JSON.stringify({ progress: S.progress, totalStars: S.totalStars }));
+  } catch(e) {}
+}
+function resetProgress() {
+  const pw = prompt('Masukkan kata sandi untuk reset:');
+  if (pw === null) return;
+  if (pw !== 'bogor123') { alert('Kata sandi salah!'); return; }
+  S.progress = {}; S.totalStars = 0;
+  document.getElementById('starCount').textContent = 0;
+  saveState(); renderHome();
+}
+
+/* ════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  const isHome = id === 'sHome';
+  document.getElementById('spaceBg').classList.toggle('hidden', !isHome);
+  document.getElementById('mainHdr').classList.toggle('light', !isHome);
+}
+
+function goHome() {
+  stopTimer();
+  show('sHome');
+  renderHome();
+}
+
+function openChapter(idx) {
+  const prevDone = idx === 0 || CHAPTERS.slice(0, idx).every(c => (S.progress[c.id] || {}).stars > 0);
+  if (!prevDone) { Snd.play('wrong'); return; }
+  S.chapter = idx;
+  const ch = CHAPTERS[idx];
+  document.getElementById('lessonHdr').innerHTML = `
+    <div class="lesson-hdr">
+      <div class="lesson-icon">${ch.emoji}</div>
+      <div>
+        <div class="lesson-depth">${ch.depth}</div>
+        <div class="lesson-title">${ch.title}</div>
+      </div>
+    </div>`;
+  document.getElementById('lessonBody').innerHTML = ch.lessonHTML;
+  document.getElementById('kapiMsg').textContent = ch.kapi;
+  const btn = document.getElementById('startBtn');
+  btn.className = `start-btn${ch.isBoss ? ' boss-btn' : ''}`;
+  btn.textContent = ch.isBoss ? '👾 Hadapi Sang Alien!' : '🛰️ Mulai Misi!';
+  show('sLesson');
+}
+
+/* ════════════════════════════════════════
+   EXERCISE
+════════════════════════════════════════ */
+function startExercise() {
+  S.qIdx = 0; S.score = 0; S.answered = false;
+  S.lives = 3; S.combo = 0; S.history = [];
+  S.startTime = Date.now();
+  const ch = CHAPTERS[S.chapter];
+  S.bossHP = ch.questions.length;
+  document.getElementById('bossHdr').style.display = ch.isBoss ? 'block' : 'none';
+  document.getElementById('qCard').className = ch.isBoss ? 'boss-q-wrap' : 'q-card';
+  document.getElementById('qLabel').textContent = ch.isBoss ? '⚔️ Serangan Alien' : 'Pertanyaan';
+  updateHearts();
+  renderQ();
+  show('sExercise');
+}
+
+function retryChapter() { startExercise(); }
+
+function renderQ() {
+  const ch = CHAPTERS[S.chapter];
+  const q = ch.questions[S.qIdx];
+  const total = ch.questions.length;
+
+  document.getElementById('exChName').textContent = `${ch.emoji} ${ch.title}`;
+  document.getElementById('exQNum').textContent = `${S.qIdx + 1}/${total}`;
+  document.getElementById('exBar').style.width = `${(S.qIdx / total) * 100}%`;
+  document.getElementById('qText').textContent = q.q;
+
+  const vis = document.getElementById('qVisual');
+  if (q.visual) { vis.innerHTML = q.visual; vis.style.display = ''; }
+  else { vis.style.display = 'none'; }
+
+  const area = document.getElementById('answerArea');
+  if (q.type === 'mc')             renderMC(q, area);
+  else if (q.type === 'input')     renderInput(area);
+  else if (q.type === 'drag-sort') renderDragSort(q, area);
+
+  document.getElementById('toast').className = 'toast';
+  document.getElementById('nxtBtn').className = 'nxt-btn';
+  updateCombo();
+  S.answered = false;
+
+  if (ch.isBoss) updateBossHP();
+  startTimer(q.type === 'drag-sort' ? 45 : 30);
+}
+
+/* ─── MC ─── */
+function renderMC(q, area) {
+  area.innerHTML = `<div class="opts-grid">${q.opts.map((o, i) =>
+    `<button class="opt-btn" onclick="pickOpt(${i})">${o}</button>`
+  ).join('')}</div>`;
+}
+function pickOpt(idx) {
+  if (S.answered) return;
+  S.answered = true; stopTimer();
+  Snd.play('select');
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = idx === q.ans;
+  document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+  document.querySelectorAll('.opt-btn')[idx].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) document.querySelectorAll('.opt-btn')[q.ans].classList.add('correct');
+  handleAnswer(correct, q.opts[q.ans], q.opts[idx], q.expl);
+}
+
+/* ─── INPUT ─── */
+function renderInput(area) {
+  area.innerHTML = `<div class="inp-row">
+    <input type="text" inputmode="text" class="num-inp" id="numInp" placeholder="Jawaban…"
+      onkeydown="if(event.key==='Enter')checkInp()">
+    <button class="chk-btn" onclick="checkInp()">Cek ✓</button>
+  </div>`;
+  setTimeout(() => { const el = document.getElementById('numInp'); if (el) el.focus(); }, 80);
+}
+function checkInp() {
+  if (S.answered) return;
+  const inp = document.getElementById('numInp');
+  const val = (inp.value || '').trim();
+  if (!val) return;
+  S.answered = true; stopTimer();
+  inp.disabled = true;
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = val === q.ans;
+  inp.classList.add(correct ? 'ok' : 'bad');
+  handleAnswer(correct, q.ans, val, q.expl);
+}
+
+/* ─── DRAG-SORT ─── */
+let _sortState = { order: [], selected: null };
+function renderDragSort(q, area) {
+  _sortState.order = [...q.items];
+  _sortState.selected = null;
+  area.innerHTML = `
+    <div class="sort-label">Klik dua item untuk menukar posisi, lalu tekan Cek!</div>
+    <div class="sort-items" id="sortItems"></div>
+    <div style="margin-top:12px;text-align:center">
+      <button class="chk-btn" onclick="checkSort()">Cek Urutan ✓</button>
+    </div>`;
+  renderSortItems();
+}
+function renderSortItems() {
+  const wrap = document.getElementById('sortItems');
+  if (!wrap) return;
+  wrap.innerHTML = _sortState.order.map((v, i) =>
+    `<div class="sort-item${i === _sortState.selected ? ' selected' : ''}" onclick="sortClick(${i})">${v}</div>`
+  ).join('');
+}
+function sortClick(idx) {
+  if (S.answered) return;
+  Snd.play('select');
+  if (_sortState.selected === null) {
+    _sortState.selected = idx;
+  } else if (_sortState.selected === idx) {
+    _sortState.selected = null;
+  } else {
+    const tmp = _sortState.order[_sortState.selected];
+    _sortState.order[_sortState.selected] = _sortState.order[idx];
+    _sortState.order[idx] = tmp;
+    _sortState.selected = null;
+  }
+  renderSortItems();
+}
+function checkSort() {
+  if (S.answered) return;
+  S.answered = true; stopTimer();
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = JSON.stringify(_sortState.order) === JSON.stringify(q.ans);
+  document.querySelectorAll('.sort-item').forEach((el, i) => {
+    el.classList.add('disabled');
+    el.classList.add(correct ? 'correct' : (_sortState.order[i] === q.ans[i] ? 'correct' : 'wrong'));
+  });
+  handleAnswer(correct, q.ans.join(' → '), _sortState.order.join(' → '), q.expl);
+}
+
+/* ════════════════════════════════════════
+   ANSWER LOGIC
+════════════════════════════════════════ */
+function handleAnswer(correct, correctAns, userAns, expl) {
+  const ch = CHAPTERS[S.chapter];
+  if (correct) {
+    S.score++;
+    S.combo++;
+    Snd.play('correct');
+    if (ch.isBoss) {
+      S.bossHP--;
+      updateBossHP();
+      document.getElementById('bossEnemy').classList.add('hit');
+      setTimeout(() => document.getElementById('bossEnemy').classList.remove('hit'), 450);
+      Snd.play('boss-hit');
+    }
+  } else {
+    S.lives--;
+    S.combo = 0;
+    Snd.play('wrong');
+    document.body.classList.add('shake');
+    setTimeout(() => document.body.classList.remove('shake'), 380);
+    updateHearts();
+  }
+  S.history.push({ q: CHAPTERS[S.chapter].questions[S.qIdx].q, correct, correctAns, userAns });
+  updateCombo();
+  showToast(correct, correctAns, expl);
+  if (S.lives <= 0) {
+    setTimeout(() => { stopTimer(); showComplete(true); }, 1200);
+  }
+}
+
+function showToast(correct, correctAns, expl) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastIco').textContent = correct ? '🎉' : '❌';
+  document.getElementById('toastTitle').textContent = correct
+    ? 'Benar! Luar biasa, Komandan Rayyan!'
+    : `Belum tepat. Jawaban: ${correctAns}`;
+  document.getElementById('toastExpl').textContent = expl || '';
+  toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
+  document.getElementById('nxtBtn').className = 'nxt-btn show';
+}
+
+function nextQ() {
+  const ch = CHAPTERS[S.chapter];
+  S.qIdx++;
+  if (S.qIdx >= ch.questions.length) {
+    showComplete(false);
+  } else {
+    renderQ();
+  }
+}
+
+/* ════════════════════════════════════════
+   TIMER
+════════════════════════════════════════ */
+function startTimer(secs) {
+  stopTimer();
+  S.timerVal = secs;
+  const circ = 2 * Math.PI * 20;
+  const fg = document.getElementById('timerFg');
+  const num = document.getElementById('timerNum');
+  if (fg) fg.style.stroke = 'var(--space)';
+  S.timerInterval = setInterval(() => {
+    S.timerVal--;
+    if (num) num.textContent = S.timerVal;
+    if (fg) fg.style.strokeDashoffset = circ * (1 - S.timerVal / secs);
+    if (S.timerVal <= 5) {
+      Snd.play('tick');
+      if (fg) fg.style.stroke = 'var(--tomato)';
+    }
+    if (S.timerVal <= 0) {
+      stopTimer();
+      if (!S.answered) {
+        S.answered = true;
+        S.lives--; S.combo = 0;
+        Snd.play('warn');
+        updateHearts(); updateCombo();
+        const q = CHAPTERS[S.chapter].questions[S.qIdx];
+        document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+        const ans = q.ans !== undefined
+          ? (q.opts ? q.opts[q.ans] : q.ans)
+          : q.ans;
+        showToast(false, ans, '⏰ Waktu habis!');
+        document.body.classList.add('shake');
+        setTimeout(() => document.body.classList.remove('shake'), 380);
+        S.history.push({ q: q.q, correct: false, correctAns: ans, userAns: '⏰' });
+        if (S.lives <= 0) setTimeout(() => showComplete(true), 1200);
+      }
+    }
+  }, 1000);
+}
+function stopTimer() {
+  clearInterval(S.timerInterval);
+  S.timerInterval = null;
+}
+
+/* ════════════════════════════════════════
+   HEARTS & COMBO
+════════════════════════════════════════ */
+function updateHearts() {
+  const el = document.getElementById('heartsDisplay');
+  if (!el) return;
+  el.innerHTML = '❤️'.repeat(S.lives) + '🖤'.repeat(Math.max(0, 3 - S.lives));
+}
+function updateCombo() {
+  const el = document.getElementById('comboBadge');
+  if (!el) return;
+  if (S.combo >= 2) {
+    el.textContent = `🔥 ${S.combo}×`;
+    el.classList.add('show');
+  } else {
+    el.classList.remove('show');
+  }
+}
+
+/* ════════════════════════════════════════
+   BOSS HP
+════════════════════════════════════════ */
+function updateBossHP() {
+  const ch = CHAPTERS[S.chapter];
+  const total = ch.questions.length;
+  const pct = (S.bossHP / total) * 100;
+  document.getElementById('bossHpBar').style.width = `${pct}%`;
+  document.getElementById('bossHpLabel').textContent = `HP Alien: ${S.bossHP}/${total}`;
+  if (pct <= 40) document.getElementById('bossHpBar').style.background = 'var(--mango)';
+  if (pct <= 15) document.getElementById('bossHpBar').style.background = 'var(--forest)';
+}
+
+/* ════════════════════════════════════════
+   COMPLETE
+════════════════════════════════════════ */
+function showComplete(ranOutOfLives) {
+  stopTimer();
+  const ch = CHAPTERS[S.chapter];
+  const total = ch.questions.length;
+  const pct = S.score / total;
+  let stars = ranOutOfLives ? 1 : (pct >= 0.85 ? 3 : pct >= 0.6 ? 2 : 1);
+  const prev = S.progress[ch.id] || { stars: 0, bestScore: 0 };
+  const newStars = Math.max(prev.stars, stars);
+  const earned = newStars - prev.stars;
+  S.progress[ch.id] = { stars: newStars, bestScore: Math.max(prev.bestScore || 0, S.score) };
+  S.totalStars += earned;
+  document.getElementById('starCount').textContent = S.totalStars;
+  saveState();
+
+  const badges = ['😓','🛸','🏆'];
+  const titles = [
+    ranOutOfLives ? 'Kehabisan nyawa! Coba lagi ya!' : 'Terus semangat, Komandan!',
+    'Hebat! Hampir sempurna!',
+    ch.isBoss ? '👾 ALIEN DIKALAHKAN! 🏆' : 'SEMPURNA! Misi berhasil!'
+  ];
+  document.getElementById('doneBadge').textContent = badges[stars - 1];
+  document.getElementById('doneTitle').textContent = titles[stars - 1];
+  document.getElementById('doneStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+  document.getElementById('doneScoreNum').textContent = `${S.score}/${total}`;
+  const elapsed = S.startTime ? Date.now() - S.startTime : 0;
+  document.getElementById('doneTime').textContent = fmtTime(elapsed);
+  document.getElementById('doneMsg').textContent = stars === 3
+    ? `Semua ${total} pertanyaan benar! Robotmu luar biasa!`
+    : `${S.score} dari ${total} benar. ${stars < 2 ? 'Pelajari lagi, kamu pasti bisa!' : 'Hampir sempurna!'}`;
+
+  document.getElementById('reviewList').innerHTML = S.history.map(h => `
+    <div class="review-item">
+      <div class="review-ico">${h.correct ? '✅' : '❌'}</div>
+      <div>
+        <div class="review-q">${h.q}</div>
+        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu: ${h.userAns} · Jawaban: <strong>${h.correctAns}</strong>`}</div>
+      </div>
+    </div>`).join('');
+
+  show('sComplete');
+  if (stars >= 2) setTimeout(launchConfetti, 300);
+  if (stars === 3 && ch.isBoss) { Snd.play('fanfare'); setTimeout(launchConfetti, 800); }
+  updateOverall();
+
+  const allDone = CHAPTERS.every(c => (S.progress[c.id] || {}).stars > 0);
+  if (allDone) setTimeout(showAllDone, 3000);
+}
+
+function showAllDone() {
+  document.getElementById('allDoneStars').textContent = `${S.totalStars} / 18`;
+  document.getElementById('allDoneStarEmoji').textContent = '⭐'.repeat(Math.min(S.totalStars, 18));
+  show('sAllDone');
+  Snd.play('fanfare');
+  setTimeout(launchConfetti, 300);
+  setTimeout(launchConfetti, 1100);
+}
+
+/* ════════════════════════════════════════
+   HOME RENDER
+════════════════════════════════════════ */
+const CHAPTER_PLANET_EMOJIS = ['🌍','🌙','⭐','🪐','☄️','🚀'];
+const CHAPTER_MISSION_NAMES = ['Stasiun Bumi','Dok Antariksa','Orbit Planet','Sabuk Asteroid','Lintasan Komet','Misi Mars'];
+
+function renderHome() {
+  document.getElementById('chGrid').innerHTML = CHAPTERS.map((ch, i) => {
+    const p = S.progress[ch.id] || { stars: 0, bestScore: 0 };
+    const done = p.stars > 0;
+    const prevDone = i === 0 || CHAPTERS.slice(0, i).every(c => (S.progress[c.id] || {}).stars > 0);
+    const locked = !done && !prevDone;
+    const stars = [1,2,3].map(n => `<span class="ch-star${n <= p.stars ? ' on' : ''}">⭐</span>`).join('');
+    const status = done
+      ? `✅ Terbaik: ${p.bestScore || 0}/${ch.questions.length}`
+      : locked ? '🔒 Selesaikan misi sebelumnya' : '▶️ Belum dimulai';
+    return `<div class="ch-card${ch.isBoss ? ' boss' : ''}${locked ? ' locked' : ''}"
+      onclick="${locked ? '' : `openChapter(${i})`}"
+      role="button" tabindex="${locked ? -1 : 0}"
+      onkeydown="if(!${locked}&&(event.key==='Enter'||event.key===' '))openChapter(${i})">
+      <div class="ch-thumb" style="${ch.isBoss ? '' : `background:${ch.colorBg}`}">
+        <div class="ch-emoji">${ch.emoji}</div>
+        <div class="ch-stars-row">${stars}</div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-num">Misi ${i + 1}</div>
+        <div class="ch-depth">${ch.depth}</div>
+        <div class="ch-title">${ch.title}</div>
+        <div class="ch-desc">${ch.desc}</div>
+        <div class="ch-status">${status}</div>
+      </div>
+    </div>`;
+  }).join('');
+  updateOverall();
+  renderMissionTrack();
+}
+
+function renderMissionTrack() {
+  const track = document.getElementById('missionTrack');
+  if (!track) return;
+  let html = '';
+  CHAPTERS.forEach((ch, i) => {
+    const p = S.progress[ch.id] || { stars: 0 };
+    const done = p.stars > 0;
+    const allPrev = i === 0 || CHAPTERS.slice(0, i).every(c => (S.progress[c.id] || {}).stars > 0);
+    const active = !done && allPrev;
+    const cls = done ? 'done' : active ? 'active' : '';
+    if (i > 0) html += `<div class="mission-rail${done ? ' done' : ''}"></div>`;
+    html += `<div class="mission-node">
+      <div class="mission-dot ${cls}">${done ? '✅' : active ? '🛰️' : CHAPTER_PLANET_EMOJIS[i]}</div>
+      <div class="mission-name ${cls}">${CHAPTER_MISSION_NAMES[i]}</div>
+    </div>`;
+  });
+  track.innerHTML = html;
+}
+
+function updateOverall() {
+  const total = CHAPTERS.length;
+  const done = Object.values(S.progress).filter(p => p.stars > 0).length;
+  const pct = (done / total) * 100;
+  document.getElementById('ovBar').style.width = `${pct}%`;
+  document.getElementById('ovSub').textContent = `${done} dari ${total} misi selesai`;
+  const el = document.getElementById('ovRingPath');
+  if (el) el.style.strokeDashoffset = 151 - (pct / 100) * 151;
+}
+
+/* ════════════════════════════════════════
+   CONFETTI
+════════════════════════════════════════ */
+function launchConfetti() {
+  const c = document.getElementById('confetti');
+  const colors = ['#FF5C39','#FFC234','#1F9D55','#1FA9C7','#E84BA0','#7B3FA8','#fff'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'cp';
+    const sz = 6 + Math.random() * 10;
+    p.style.cssText = `left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${colors[~~(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'3px'};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.6}s;`;
+    c.appendChild(p);
+    p.addEventListener('animationend', () => p.remove());
+  }
+}
+
+/* ════════════════════════════════════════
+   STAR FIELD ANIMATION
+════════════════════════════════════════ */
+function spawnStars() {
+  const bg = document.getElementById('spaceBg');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star-dot';
+    const sz = Math.random() < 0.7 ? (1 + Math.random() * 1.5) : (2 + Math.random() * 3);
+    const dur = 2 + Math.random() * 4;
+    const delay = Math.random() * 5;
+    s.style.cssText = `
+      width:${sz}px;height:${sz}px;
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      animation-duration:${dur}s;
+      animation-delay:${delay}s;
+    `;
+    bg.appendChild(s);
+  }
+}
+
+/* ════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════ */
+function fmtTime(ms) {
+  const s = Math.floor(ms / 1000), m = Math.floor(s / 60);
+  return m > 0 ? `${m} mnt ${s % 60} dtk` : `${s} dtk`;
+}
+
+/* ════════════════════════════════════════
+   BUG REPORT
+════════════════════════════════════════ */
+function openBugReport() {
+  document.getElementById('bugModal').classList.add('show');
+  document.getElementById('bugDescription').focus();
+}
+function closeBugReport() {
+  document.getElementById('bugModal').classList.remove('show');
+  document.getElementById('bugForm').reset();
+}
+function submitBugReport(event) {
+  event.preventDefault();
+  const desc = document.getElementById('bugDescription').value;
+  const email = document.getElementById('bugEmail').value || 'tidak-ada@example.com';
+  const courseName = 'Robot Antariksa — Petualangan Antariksa 🛰️';
+  const formData = new FormData();
+  formData.append('_subject', `[Learn with Adhi Bug Report] ${courseName}`);
+  formData.append('message', `Course: ${courseName}\n\nBug Description:\n${desc}`);
+  formData.append('email', email);
+  formData.append('_captcha', 'false');
+  fetch('https://formspree.io/f/mbjkzbag', {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(response => {
+    if (response.ok) {
+      const btn = event.target.querySelector('[type="submit"]');
+      btn.textContent = '✅ Terima kasih!';
+      btn.disabled = true;
+      setTimeout(() => {
+        closeBugReport();
+        btn.textContent = 'Kirim Laporan';
+        btn.disabled = false;
+      }, 1500);
+    } else {
+      alert('Gagal mengirim laporan. Coba lagi.');
+    }
+  })
+  .catch(() => alert('Gagal mengirim laporan. Periksa koneksi Anda.'));
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.getElementById('bugModal').classList.contains('show')) {
+    closeBugReport();
+  }
+});
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+loadState();
+renderHome();
+spawnStars();
+</script>
+</body>
+</html>
