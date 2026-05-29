@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Buat Game-mu Sendiri 🎮 — Studio Game Rayyan</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FFC234"/><text y=".9em" font-size="78" x="10">🎮</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --game:#FFC234; --game-d:#d49e00; --game-bg:#FFF5D6;
+      --tomato:#FF5C39; --mango:#FFC234; --forest:#1F9D55;
+      --mawar:#E84BA0; --indigo:#2E3192; --sea:#1FA9C7;
+      --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+      --line:rgba(26,22,20,0.14); --muted:#6B6259;
+      --tomato-bg:#FFE8E3; --mango-bg:#FFF5D6; --forest-bg:#E3F5EB;
+      --mawar-bg:#FCE8F3; --indigo-bg:#E8E9F8;
+      --arcade-deep:#0a0a1a; --arcade-mid:#0d0d2e; --arcade-light:#1a1a4e;
+      --fd:'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb:'Nunito',system-ui,sans-serif;
+      --r:16px; --r-sm:10px; --r-lg:24px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased}
+    body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden}
+    button{font-family:inherit;cursor:pointer;border:none;background:none}
+    input,textarea{font-family:inherit}
+
+    /* ARCADE BG */
+    #arcadeBg{position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,var(--arcade-deep) 0%,var(--arcade-mid) 50%,var(--arcade-light) 100%);pointer-events:none;overflow:hidden}
+    #arcadeBg.hidden{opacity:0;transition:opacity .4s}
+    .pixel{position:absolute;animation:pixelBlink ease-in-out infinite;pointer-events:none}
+    @keyframes pixelBlink{0%,100%{opacity:0.05}50%{opacity:0.9}}
+
+    /* HEADER */
+    .hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(10,10,26,.88);backdrop-filter:blur(8px);border-bottom:2px solid rgba(255,194,52,.25);position:sticky;top:0;z-index:200;transition:background .4s}
+    .hdr.light{background:var(--paper);border-bottom-color:var(--ink)}
+    .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:rgba(255,255,255,.9)}
+    .hdr.light .hdr-brand{color:var(--ink)}
+    .hdr-brand-word{font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-.03em}
+    .hdr-right{display:flex;align-items:center;gap:12px}
+    .hdr-stars{display:flex;align-items:center;gap:5px;background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:5px 12px;font-family:var(--fd);font-weight:800;font-size:15px;color:var(--ink)}
+    .bug-btn{width:44px;height:44px;border:2px solid var(--ink);border-radius:999px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-size:20px;transition:background .18s}
+    .bug-btn:hover{background:var(--tomato)}
+
+    /* BUG MODAL */
+    .bug-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(26,22,20,.6);z-index:1000;align-items:center;justify-content:center;padding:20px}
+    .bug-modal.show{display:flex}
+    .bug-modal-box{background:var(--paper);border:3px solid var(--ink);border-radius:20px;padding:28px;max-width:500px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.2);animation:slideUp .3s ease}
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .bug-modal-title{font-family:var(--fd);font-weight:800;font-size:24px;margin-bottom:12px}
+    .bug-modal-desc{font-size:14px;color:var(--muted);margin-bottom:20px}
+    .bug-form-group{margin-bottom:16px}
+    .bug-form-label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+    .bug-form-input,.bug-form-textarea{width:100%;border:2px solid var(--ink);border-radius:8px;padding:10px 12px;font-size:14px;background:var(--paper-2)}
+    .bug-form-textarea{resize:vertical;min-height:100px}
+    .bug-form-input:focus,.bug-form-textarea:focus{outline:none;background:var(--mango)}
+    .bug-modal-actions{display:flex;gap:12px;margin-top:24px}
+    .bug-btn-submit,.bug-btn-cancel{flex:1;padding:12px;border:2px solid var(--ink);border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;transition:all .18s}
+    .bug-btn-submit{background:var(--tomato);color:var(--paper)}
+    .bug-btn-submit:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+    .bug-btn-cancel{background:var(--paper-2)}
+    .bug-btn-cancel:hover{background:var(--line)}
+
+    /* SCREENS */
+    .screen{display:none;max-width:820px;margin:0 auto;padding:24px 18px 80px;animation:fadeUp .28s ease}
+    .screen.active{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    /* HOME */
+    .home-hero{text-align:center;padding:28px 0 20px}
+    .ctrl-anim{width:90px;height:90px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:56px;animation:ctrlFloat 3s ease-in-out infinite}
+    @keyframes ctrlFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.08)}}
+    .home-title{font-family:var(--fd);font-weight:800;font-size:clamp(26px,6vw,42px);letter-spacing:-.03em;line-height:1.05;color:var(--paper);margin-bottom:8px}
+    .home-title em{font-style:normal;background:var(--game);padding:1px 10px;border-radius:8px;color:var(--ink)}
+    .home-sub{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:24px}
+
+    /* TRACK */
+    .depth-wrap{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);border-radius:var(--r);padding:16px;margin-bottom:24px}
+    .depth-label{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mango);margin-bottom:12px}
+    .depth-track{display:flex;gap:0;align-items:center;overflow-x:auto;padding-bottom:4px;min-width:0}
+    .depth-node{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;min-width:52px}
+    .depth-dot{width:42px;height:42px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .3s}
+    .depth-dot.done{background:var(--forest);border-color:var(--forest)}
+    .depth-dot.active{background:var(--game);border-color:var(--game);animation:gamePulse 1.5s ease-in-out infinite}
+    @keyframes gamePulse{0%,100%{box-shadow:0 0 0 0 rgba(255,194,52,.5)}50%{box-shadow:0 0 0 10px rgba(255,194,52,0)}}
+    .depth-name{font-size:9px;font-family:var(--fd);font-weight:700;color:rgba(255,255,255,.5);text-align:center;white-space:nowrap}
+    .depth-name.done{color:#7ee8a2}.depth-name.active{color:var(--game)}
+    .depth-rail{flex:1;height:3px;background:rgba(255,255,255,.15);min-width:16px;position:relative;top:-14px;background-image:linear-gradient(to right,rgba(255,255,255,.4) 50%,transparent 50%);background-size:8px 3px}
+    .depth-rail.done{background:var(--forest);background-image:none}
+
+    .overall-box{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);border-radius:var(--r);padding:16px;margin-bottom:24px}
+    .ov-ring{width:60px;height:60px;flex-shrink:0}
+    .ov-info{flex:1}
+    .ov-label{font-family:var(--fd);font-weight:700;font-size:14px;color:var(--paper);margin-bottom:6px}
+    .ov-bar-wrap{height:8px;background:rgba(255,255,255,.15);border-radius:999px;overflow:hidden}
+    .ov-bar{height:100%;background:var(--game);border-radius:999px;transition:width .8s ease}
+    .ov-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+
+    .sec-title{font-family:var(--fd);font-weight:800;font-size:18px;color:var(--paper);margin-bottom:12px}
+    .chapters-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:500px){.chapters-grid{grid-template-columns:1fr}}
+
+    .ch-card{border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--paper);transition:transform .17s,box-shadow .17s;text-align:left}
+    .ch-card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .ch-card.locked{opacity:.5;cursor:not-allowed}
+    .ch-card.locked:hover{transform:none;box-shadow:none}
+    .ch-thumb{padding:16px 16px 12px;border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between}
+    .ch-emoji{font-size:34px;line-height:1}
+    .ch-stars-row{display:flex;gap:2px}
+    .ch-star{font-size:16px;opacity:.2}.ch-star.on{opacity:1}
+    .ch-body{padding:12px}
+    .ch-num{font-family:var(--fd);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .ch-depth{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--game-d);letter-spacing:.04em;margin-bottom:2px}
+    .ch-title{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.02em;margin-bottom:3px}
+    .ch-desc{font-size:12px;color:var(--muted);line-height:1.4}
+    .ch-status{margin-top:6px;font-family:var(--fd);font-weight:600;font-size:12px}
+    .ch-card.boss .ch-thumb{background:linear-gradient(135deg,#0a0a1a,#1a1a4e)}
+    .ch-card.boss .ch-depth{color:var(--game)}
+    .ch-card.boss{border-color:var(--game)}
+
+    /* LESSON */
+    .back-btn{display:flex;align-items:center;gap:5px;font-family:var(--fd);font-weight:600;font-size:13px;color:var(--muted);margin-bottom:20px}
+    .back-btn:hover{color:var(--ink)}
+    .lesson-hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+    .lesson-icon{font-size:48px;background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:10px 14px;flex-shrink:0;line-height:1}
+    .lesson-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,5vw,34px);letter-spacing:-.03em;line-height:1.05}
+    .lesson-depth{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--game-d);margin-bottom:3px}
+    .lesson-body{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:22px;margin-bottom:20px}
+    .ls{margin-bottom:20px}.ls:last-child{margin-bottom:0}
+    .ls-h{font-family:var(--fd);font-weight:700;font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .ls p{font-size:14.5px;line-height:1.65;color:var(--ink)}
+    .ex-box{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r-sm);padding:16px;margin-top:10px;text-align:center}
+    .tip-box{background:var(--game);color:var(--ink);border-radius:var(--r);border:2.5px dashed rgba(0,0,0,.2);padding:16px;margin-bottom:18px;display:flex;gap:10px;align-items:flex-start}
+    .tip-ico{font-size:26px;flex-shrink:0;line-height:1}
+    .tip-name{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.5);margin-bottom:2px}
+    .tip-msg{font-size:14px;line-height:1.55;color:var(--ink)}
+    .start-btn{width:100%;background:var(--game);color:var(--ink);border:3px solid var(--ink);border-radius:var(--r);padding:17px;font-family:var(--fd);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .17s,box-shadow .17s}
+    .start-btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .start-btn.boss-btn{background:linear-gradient(135deg,#0a0a1a,#1a1a4e);color:#fff;border-color:var(--game)}
+
+    /* CODE PANEL */
+    .spellbook{background:#1e1e2e;border:3px solid var(--game);border-radius:14px;padding:18px;font-family:'Courier New',monospace;font-size:14px;color:#cdd6f4;line-height:2;margin-bottom:12px;overflow-x:auto;white-space:pre-wrap}
+    .spell-output{background:#11111b;border:2px solid #45475a;border-radius:8px;padding:12px 16px;font-family:'Courier New',monospace;color:#a6e3a1;font-size:13px;margin-top:8px;display:none}
+    .spell-output.show{display:block;animation:fadeUp .25s ease}
+    .spell-output-label{font-size:10px;color:#6c7086;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;font-family:var(--fb)}
+
+    /* GAME DEMO CANVAS */
+    .game-demo{background:#000;border:3px solid var(--game);border-radius:10px;display:block;margin:12px auto;max-width:100%}
+    .game-demo-label{font-size:11px;color:var(--muted);text-align:center;margin-bottom:4px;font-family:var(--fd);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+    /* EXERCISE */
+    .ex-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+    .ex-back-btn{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-sm);padding:7px 11px;font-family:var(--fd);font-weight:700;font-size:13px;flex-shrink:0}
+    .ex-meta{flex:1;min-width:0}
+    .ex-ch-name{font-family:var(--fd);font-weight:700;font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ex-bar-wrap{height:6px;background:var(--line);border-radius:999px;overflow:hidden}
+    .ex-bar{height:100%;background:var(--game);border-radius:999px;transition:width .4s ease}
+    .ex-qnum{font-family:var(--fd);font-weight:700;font-size:12px;color:var(--muted);flex-shrink:0}
+
+    .hud{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .hearts{display:flex;gap:4px;font-size:22px}
+    .combo-badge{background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:4px 12px;font-family:var(--fd);font-weight:800;font-size:13px;display:none}
+    .combo-badge.show{display:block;animation:comboPop .25s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes comboPop{0%{transform:scale(.7)}100%{transform:scale(1)}}
+
+    .timer-wrap{display:flex;justify-content:flex-end;margin-bottom:10px}
+    .timer-ring-svg{transform:rotate(-90deg)}
+    .timer-bg{fill:none;stroke:var(--line);stroke-width:4}
+    .timer-fg{fill:none;stroke:var(--game);stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .95s linear,stroke .3s}
+    .timer-num{font-family:var(--fd);font-weight:800;font-size:13px;fill:var(--ink)}
+
+    .q-card{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-lg);padding:24px 20px;margin-bottom:16px}
+    .q-label{font-family:var(--fd);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    .q-text{font-family:var(--fd);font-weight:800;font-size:clamp(15px,3.5vw,22px);letter-spacing:-.02em;line-height:1.25;margin-bottom:12px}
+    .q-visual{font-size:24px;line-height:1.6;margin-bottom:12px;text-align:center}
+
+    .opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .opt-btn{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:12px 8px;font-family:var(--fd);font-weight:700;font-size:clamp(10px,2.5vw,14px);text-align:center;display:flex;align-items:center;justify-content:center;transition:transform .14s,box-shadow .14s;line-height:1.3;word-break:break-all}
+    .opt-btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .opt-btn.correct{background:var(--forest);color:#fff;border-color:var(--forest);animation:pulse .45s ease}
+    .opt-btn.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato);animation:shake .38s ease}
+    .opt-btn:disabled{cursor:not-allowed}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+    .inp-row{display:flex;gap:9px;align-items:center}
+    .num-inp{flex:1;border:3px solid var(--ink);border-radius:var(--r);padding:13px 14px;font-family:var(--fd);font-weight:800;font-size:22px;text-align:center;background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s}
+    .num-inp:focus{border-color:var(--game)}
+    .num-inp.ok{border-color:var(--forest);background:var(--forest-bg)}
+    .num-inp.bad{border-color:var(--tomato);background:var(--tomato-bg)}
+    .chk-btn{background:var(--game);color:var(--ink);border:2.5px solid var(--ink);border-radius:var(--r);padding:13px 18px;font-family:var(--fd);font-weight:800;font-size:15px;flex-shrink:0;transition:transform .14s,box-shadow .14s}
+    .chk-btn:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+
+    .sort-label{font-size:12px;color:var(--muted);margin-bottom:10px;text-align:center}
+    .sort-items{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+    .sort-item{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r-sm);padding:10px 14px;font-family:var(--fd);font-weight:800;font-size:13px;cursor:pointer;transition:all .15s;user-select:none;min-width:50px;text-align:center;word-break:break-all}
+    .sort-item:hover:not(.disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .sort-item.selected{background:var(--game);color:var(--ink);border-color:var(--game-d)}
+    .sort-item.correct{background:var(--forest);color:#fff;border-color:var(--forest)}
+    .sort-item.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato)}
+    .sort-item.disabled{cursor:not-allowed}
+
+    .code-blank{background:#313244;border:2.5px solid var(--game);border-radius:6px;color:#fab387;font-family:'Courier New',monospace;font-size:15px;font-weight:bold;text-align:center;min-width:70px;max-width:150px;padding:3px 6px;outline:none;display:inline-block;vertical-align:middle;-webkit-appearance:none}
+    .code-blank:focus{border-color:#ffd700;background:#45475a}
+    .code-blank.ok{border-color:var(--forest);background:#1e3a2a;color:#a6e3a1}
+    .code-blank.bad{border-color:var(--tomato);background:#3a1a1a;color:#f38ba8}
+
+    .boss-hdr{text-align:center;margin-bottom:16px}
+    .boss-enemy{font-size:72px;display:inline-block;line-height:1;transition:transform .3s}
+    .boss-enemy.hit{animation:bossHit .4s ease}
+    @keyframes bossHit{0%{transform:scale(1)}30%{transform:scale(1.15) rotate(-10deg)}60%{transform:scale(.9) rotate(8deg)}100%{transform:scale(1)}}
+    .boss-hp{width:100%;height:14px;background:var(--line);border-radius:999px;overflow:hidden;border:2px solid var(--ink);margin:10px 0}
+    .boss-hp-bar{height:100%;background:var(--tomato);border-radius:999px;transition:width .5s ease}
+    .boss-hp-label{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:8px}
+    .boss-q-wrap{background:linear-gradient(135deg,#0a0a1a,#1a1a4e);border:2px solid var(--game);border-radius:var(--r-lg);padding:24px 20px;margin-bottom:16px}
+    .boss-q-wrap .q-label{color:rgba(255,255,255,.5)}
+    .boss-q-wrap .q-text{color:#fff}
+
+    .toast{border-radius:var(--r);padding:12px 16px;margin-top:12px;font-family:var(--fd);font-weight:700;font-size:14px;display:none;align-items:flex-start;gap:9px;animation:toastIn .22s ease}
+    .toast.show{display:flex}
+    .toast.ok{background:var(--forest-bg);border:2px solid var(--forest);color:#0e6032}
+    .toast.bad{background:var(--tomato-bg);border:2px solid var(--tomato);color:#c73013}
+    .toast-expl{font-weight:400;font-size:12.5px;margin-top:2px}
+    @keyframes toastIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+    .nxt-btn{width:100%;margin-top:12px;background:var(--ink);color:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:15px;font-family:var(--fd);font-weight:800;font-size:15px;display:none;transition:opacity .15s}
+    .nxt-btn.show{display:block}
+    .nxt-btn:hover{opacity:.82}
+
+    .done-hero{text-align:center;padding:32px 0 20px}
+    .done-badge{font-size:72px;line-height:1;margin-bottom:14px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+    .done-title{font-family:var(--fd);font-weight:800;font-size:clamp(20px,5vw,34px);letter-spacing:-.03em;margin-bottom:8px}
+    .done-stars{font-size:40px;margin:12px 0;animation:starsIn .5s ease .2s both}
+    @keyframes starsIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+    .score-box{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:18px;margin:16px 0;text-align:center}
+    .score-num{font-family:var(--fd);font-weight:800;font-size:48px;letter-spacing:-.04em}
+    .score-lbl{font-size:13px;color:var(--muted)}
+    .done-msg{font-size:14px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.6}
+    .done-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .act-btn{border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;font-family:var(--fd);font-weight:800;font-size:14px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s}
+    .act-btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--ink)}
+    .act-btn.primary{background:var(--game);color:var(--ink)}
+    .act-btn.secondary{background:var(--paper-2);color:var(--ink)}
+    .review-panel{margin-top:18px}
+    .review-title{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:8px}
+    .review-item{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border:1.5px solid var(--line);border-radius:var(--r-sm);margin-bottom:7px;font-size:12.5px}
+    .review-ico{font-size:15px;flex-shrink:0;margin-top:1px}
+    .review-q{font-weight:600;margin-bottom:1px}
+    .review-a{color:var(--muted)}
+
+    .all-done-wrap{text-align:center;padding:32px 0}
+    .all-done-anim{font-size:60px;display:inline-block;animation:ctrlFloat 2s ease-in-out infinite;margin-bottom:12px}
+    .all-done-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,5vw,38px);letter-spacing:-.03em;margin-bottom:10px}
+
+    #confetti{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+    .cp{position:absolute;top:-16px;animation:fall linear forwards}
+    @keyframes fall{from{top:-20px;opacity:1}to{top:110vh;opacity:0}}
+    @keyframes screenShake{0%,100%{transform:translate(0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(3px,-3px)}}
+    .shake{animation:screenShake .35s ease}
+  </style>
+</head>
+<body>
+<div id="arcadeBg"></div>
+<div id="confetti"></div>
+
+<header class="hdr" id="mainHdr">
+  <a href="/kids.html" class="hdr-brand">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
+      <circle cx="38" cy="50" r="22" fill="none" stroke="currentColor" stroke-width="14"/>
+      <rect x="54" y="28" width="14" height="44" fill="currentColor"/>
+    </svg>
+    <span class="hdr-brand-word">Studio Game</span>
+  </a>
+  <div class="hdr-right">
+    <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+    <button class="bug-btn" onclick="openBugReport()" title="Laporkan masalah">🐛</button>
+  </div>
+</header>
+
+<div class="bug-modal" id="bugModal">
+  <div class="bug-modal-box">
+    <div class="bug-modal-title">🐛 Laporan Masalah</div>
+    <div class="bug-modal-desc">Temukan sesuatu yang aneh? Beritahu kami!</div>
+    <form id="bugForm" onsubmit="submitBugReport(event)">
+      <div class="bug-form-group">
+        <label class="bug-form-label">Apa masalahnya?</label>
+        <textarea class="bug-form-textarea" id="bugDescription" placeholder="Ceritakan masalahnya..." required></textarea>
+      </div>
+      <div class="bug-form-group">
+        <label class="bug-form-label">Email (opsional)</label>
+        <input type="email" class="bug-form-input" id="bugEmail" placeholder="email@contoh.com">
+      </div>
+      <div class="bug-modal-actions">
+        <button type="button" class="bug-btn-cancel" onclick="closeBugReport()">Batal</button>
+        <button type="submit" class="bug-btn-submit">Kirim Laporan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="ctrl-anim">🎮</div>
+    <div class="home-title">Buat <em>Game-mu</em> Sendiri 🎮</div>
+    <div class="home-sub">Dari game loop sampai boss — buat game nyata langkah demi langkah!</div>
+  </div>
+  <div class="depth-wrap">
+    <div class="depth-label">🕹️ Level Studio Game</div>
+    <div class="depth-track" id="depthTrack"></div>
+  </div>
+  <div class="overall-box">
+    <svg class="ov-ring" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="6"/>
+      <circle cx="30" cy="30" r="24" fill="none" stroke="var(--game)" stroke-width="6" stroke-linecap="round"
+        stroke-dasharray="151" id="ovRingPath" stroke-dashoffset="151" transform="rotate(-90 30 30)"/>
+    </svg>
+    <div class="ov-info">
+      <div class="ov-label">🎮 Progress Gamemu</div>
+      <div class="ov-bar-wrap"><div class="ov-bar" id="ovBar" style="width:0%"></div></div>
+      <div class="ov-sub" id="ovSub">0 dari 6 level selesai</div>
+    </div>
+  </div>
+  <div class="sec-title">🕹️ Pilih Level</div>
+  <div class="chapters-grid" id="chGrid"></div>
+  <div style="margin-top:20px;text-align:center">
+    <button onclick="resetProgress()" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;padding:8px">🔄 Reset Progress</button>
+  </div>
+</div>
+
+<!-- LESSON -->
+<div class="screen" id="sLesson">
+  <button class="back-btn" onclick="goHome()">← Kembali ke Studio</button>
+  <div id="lessonHdr"></div>
+  <div class="lesson-body" id="lessonBody"></div>
+  <div class="tip-box">
+    <div class="tip-ico">🎯</div>
+    <div>
+      <div class="tip-name">Desainer Kapi</div>
+      <div class="tip-msg" id="kapiMsg">Baca dulu, lalu coba tantangannya!</div>
+    </div>
+  </div>
+  <button class="start-btn" id="startBtn" onclick="startExercise()">🕹️ Mulai Level!</button>
+</div>
+
+<!-- EXERCISE -->
+<div class="screen" id="sExercise">
+  <div class="ex-hdr">
+    <button class="ex-back-btn" onclick="goHome()">←</button>
+    <div class="ex-meta">
+      <div class="ex-ch-name" id="exChName"></div>
+      <div class="ex-bar-wrap"><div class="ex-bar" id="exBar" style="width:0%"></div></div>
+    </div>
+    <div class="ex-qnum" id="exQNum">1/6</div>
+  </div>
+  <div class="hud">
+    <div class="hearts" id="heartsDisplay">❤️❤️❤️</div>
+    <div class="combo-badge" id="comboBadge">🔥 2×</div>
+  </div>
+  <div class="timer-wrap">
+    <svg width="48" height="48" class="timer-ring-svg" id="timerRing">
+      <circle class="timer-bg" cx="24" cy="24" r="20"/>
+      <circle class="timer-fg" id="timerFg" cx="24" cy="24" r="20" stroke-dasharray="126" stroke-dashoffset="0"/>
+      <text x="24" y="24" class="timer-num" text-anchor="middle" dominant-baseline="central" id="timerNum" transform="rotate(90 24 24)">30</text>
+    </svg>
+  </div>
+  <div id="bossHdr" style="display:none" class="boss-hdr">
+    <div class="boss-enemy" id="bossEnemy">👾</div>
+    <div class="boss-hp-label" id="bossHpLabel">HP Boss Alien: 6/6</div>
+    <div class="boss-hp"><div class="boss-hp-bar" id="bossHpBar" style="width:100%"></div></div>
+  </div>
+  <div id="qCardWrap">
+    <div class="q-card" id="qCard">
+      <div class="q-label" id="qLabel">Tantangan</div>
+      <div class="q-text" id="qText"></div>
+      <div class="q-visual" id="qVisual" style="display:none"></div>
+      <div id="answerArea"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast">
+    <span id="toastIco"></span>
+    <div>
+      <div id="toastTitle"></div>
+      <div class="toast-expl" id="toastExpl"></div>
+    </div>
+  </div>
+  <button class="nxt-btn" id="nxtBtn" onclick="nextQ()">Lanjut →</button>
+</div>
+
+<!-- COMPLETE -->
+<div class="screen" id="sComplete">
+  <div class="done-hero">
+    <div class="done-badge" id="doneBadge">🎉</div>
+    <div class="done-title" id="doneTitle">Level Selesai!</div>
+    <div class="done-stars" id="doneStars">⭐⭐⭐</div>
+  </div>
+  <div class="score-box">
+    <div class="score-num" id="doneScoreNum">6/6</div>
+    <div class="score-lbl">jawaban benar</div>
+  </div>
+  <div class="score-box" style="background:var(--game-bg)">
+    <div class="score-num" id="doneTime" style="font-size:32px">--</div>
+    <div class="score-lbl">⏱️ total waktu</div>
+  </div>
+  <div class="done-msg" id="doneMsg"></div>
+  <div class="done-actions">
+    <button class="act-btn primary" onclick="retryChapter()">🔁 Coba Lagi</button>
+    <button class="act-btn secondary" onclick="goHome()">🎮 Studio Game</button>
+  </div>
+  <div class="review-panel">
+    <div class="review-title">📋 Ringkasan Jawaban</div>
+    <div id="reviewList"></div>
+  </div>
+</div>
+
+<!-- ALL DONE -->
+<div class="screen" id="sAllDone">
+  <div class="all-done-wrap">
+    <div class="all-done-anim">🎮🏆🎮</div>
+    <div style="font-size:64px;margin-bottom:14px;animation:pop .6s cubic-bezier(.175,.885,.32,1.275)">🏆</div>
+    <div class="all-done-title">
+      Selamat, Game Developer<br>
+      <em style="font-style:normal;background:var(--game);color:var(--ink);padding:2px 10px;border-radius:8px">Rayyan!</em>
+    </div>
+    <p style="font-size:15px;color:var(--muted);margin:14px 0 22px;line-height:1.6">
+      Kamu telah menyelesaikan semua 6 level Studio Game!<br>
+      Kamu adalah <strong>Game Developer sejati!</strong> 🌟
+    </p>
+    <div class="score-box">
+      <div class="score-num" id="allDoneStars"></div>
+      <div class="score-lbl">total bintang dikumpulkan dari 18</div>
+    </div>
+    <div style="font-size:36px;margin:16px 0;letter-spacing:3px" id="allDoneStarEmoji"></div>
+    <button class="act-btn primary" style="max-width:320px;margin:0 auto;display:block" onclick="goHome()">🎮 Lihat Semua Level</button>
+  </div>
+</div>
+
+<script>
+const S = {
+  chapter:0, qIdx:0, score:0, lives:3, combo:0,
+  startTime:0, answered:false, bossHP:0, history:[],
+  progress:{}, totalStars:0, timerVal:0, timerInterval:null
+};
+
+const Audio = (() => {
+  const ctx = (() => { try { return new (window.AudioContext||window.webkitAudioContext)(); } catch(e){return null;} })();
+  function beep(freq,dur,type='sine',vol=0.18) {
+    if(!ctx) return;
+    try {
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type=type; o.frequency.value=freq;
+      g.gain.setValueAtTime(vol,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);
+      o.start(); o.stop(ctx.currentTime+dur);
+    } catch(e){}
+  }
+  return {
+    play(t) {
+      if(t==='correct'){beep(523,.1);setTimeout(()=>beep(659,.1),110);setTimeout(()=>beep(784,.18),220);}
+      else if(t==='wrong'){beep(220,.18,'sawtooth',.12);setTimeout(()=>beep(180,.25,'sawtooth',.1),200);}
+      else if(t==='select'){beep(440,.06,'sine',.08);}
+      else if(t==='boss-hit'){beep(880,.08,'square',.1);}
+      else if(t==='fanfare'){[523,659,784,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.15),i*130));}
+      else if(t==='tick'){beep(800,.05,'square',.06);}
+    }
+  };
+})();
+
+/* LESSONS */
+function lsn1() {
+  return `<div class="ls"><div class="ls-h">🎬 Tiga Langkah Game Loop</div>
+<p>Setiap game berjalan dalam loop: <strong>1) Terima Input → 2) Update posisi → 3) Gambar ulang</strong>. requestAnimationFrame melakukan ini 60× per detik!</p>
+<div class="spellbook"><span style="color:#cba6f7">function</span> <span style="color:#89dceb">gameLoop</span>() {
+  update();   <span style="color:#6c7086">// gerakkan semua objek</span>
+  draw();     <span style="color:#6c7086">// gambar semua ke canvas</span>
+  <span style="color:#89dceb">requestAnimationFrame</span>(gameLoop);
+}
+<span style="color:#89dceb">gameLoop</span>(); <span style="color:#6c7086">// mulai!</span></div></div>
+<div class="ls"><div class="ls-h">🖥️ Demo Game Loop</div>
+<div class="game-demo-label">🎬 Game loop berjalan — kotak bergerak!</div>
+<canvas id="demoLoop" class="game-demo" width="250" height="140"></canvas></div>`;
+}
+function lsn2() {
+  return `<div class="ls"><div class="ls-h">🦸 Objek Pahlawan</div>
+<p>Pahlawan = objek JavaScript dengan posisi, ukuran, dan kecepatan. Keyboard mengubah posisinya setiap frame!</p>
+<div class="spellbook"><span style="color:#cba6f7">const</span> player = {
+  x: <span style="color:#fab387">100</span>, y: <span style="color:#fab387">50</span>,
+  w: <span style="color:#fab387">30</span>, h: <span style="color:#fab387">30</span>, speed: <span style="color:#fab387">4</span>
+};
+<span style="color:#6c7086">// Dalam update():</span>
+<span style="color:#cba6f7">if</span>(keys[<span style="color:#a6e3a1">'ArrowLeft'</span>]) player.x -= player.speed;</div></div>
+<div class="ls"><div class="ls-h">🕹️ Demo Interaktif</div>
+<div class="game-demo-label">🕹️ Klik canvas lalu tekan tombol panah!</div>
+<canvas id="demoHero" class="game-demo" width="250" height="140" tabindex="0"></canvas></div>`;
+}
+function lsn3() {
+  return `<div class="ls"><div class="ls-h">🚧 Array Rintangan</div>
+<p>Rintangan disimpan dalam array. Setiap frame: gerakkan ke kiri, hapus yang sudah keluar layar, dan sesekali tambah yang baru!</p>
+<div class="spellbook"><span style="color:#cba6f7">let</span> obstacles = [];
+<span style="color:#6c7086">// Spawn rintangan baru:</span>
+obstacles.<span style="color:#89dceb">push</span>({x: canvas.width, y: <span style="color:#fab387">50</span>, w:<span style="color:#fab387">25</span>, h:<span style="color:#fab387">25</span>, speed:<span style="color:#fab387">3</span>});
+<span style="color:#6c7086">// Gerakkan semua:</span>
+obstacles.<span style="color:#89dceb">forEach</span>(o => o.x -= o.speed);
+<span style="color:#6c7086">// Hapus yang keluar:</span>
+obstacles = obstacles.<span style="color:#89dceb">filter</span>(o => o.x > <span style="color:#fab387">-50</span>);</div></div>
+<div class="ls"><div class="ls-h">🚧 Demo Rintangan</div>
+<div class="game-demo-label">🚧 Rintangan bergerak dari kanan ke kiri!</div>
+<canvas id="demoObs" class="game-demo" width="250" height="140"></canvas></div>`;
+}
+function lsn4() {
+  return `<div class="ls"><div class="ls-h">💥 AABB Collision Detection</div>
+<p>Cek apakah dua kotak bertumpang tindih dengan 4 kondisi sederhana:</p>
+<div class="spellbook"><span style="color:#cba6f7">function</span> <span style="color:#89dceb">collide</span>(a, b) {
+  <span style="color:#cba6f7">return</span> a.x &lt; b.x+b.w &&
+         a.x+a.w &gt; b.x &&
+         a.y &lt; b.y+b.h &&
+         a.y+a.h &gt; b.y;
+}</div></div>
+<div class="ls"><div class="ls-h">💥 Demo Tabrakan</div>
+<div class="game-demo-label">💥 Gerakkan kotak biru ke kotak merah!</div>
+<canvas id="demoColl" class="game-demo" width="250" height="140" tabindex="0"></canvas></div>`;
+}
+function lsn5() {
+  return `<div class="ls"><div class="ls-h">🏆 Game State & Skor</div>
+<p>Game punya 3 kondisi: <strong>'playing'</strong> (sedang main), <strong>'gameover'</strong> (kalah), <strong>'win'</strong> (menang). Skor bertambah saat berhasil melewati rintangan!</p>
+<div class="spellbook"><span style="color:#cba6f7">let</span> gameState = <span style="color:#a6e3a1">'playing'</span>;
+<span style="color:#cba6f7">let</span> score = <span style="color:#fab387">0</span>;
+<span style="color:#cba6f7">let</span> lives = <span style="color:#fab387">3</span>;
+<span style="color:#6c7086">// Tampilkan skor:</span>
+ctx.<span style="color:#89dceb">fillText</span>(<span style="color:#a6e3a1">'Skor: '</span> + score, <span style="color:#fab387">10</span>, <span style="color:#fab387">25</span>);</div></div>
+<div class="ls"><div class="ls-h">🎮 Demo Game Lengkap</div>
+<div class="game-demo-label">🎮 Game mini dengan skor & nyawa — coba hindari merah!</div>
+<canvas id="demoScore" class="game-demo" width="250" height="140" tabindex="0"></canvas></div>`;
+}
+function lsn6() {
+  return `<div class="ls"><div class="ls-h">🚀 Game Loop Lengkap</div>
+<p>Gabungkan semua: canvas setup → objek player → array rintangan → collision → skor → state = game lengkap!</p>
+<div class="spellbook"><span style="color:#6c7086">// Struktur game lengkap:</span>
+<span style="color:#6c7086">// 1. Setup canvas & variabel</span>
+<span style="color:#6c7086">// 2. Game loop (update + draw)</span>
+<span style="color:#6c7086">// 3. Input handling</span>
+<span style="color:#6c7086">// 4. Collision detection</span>
+<span style="color:#6c7086">// 5. Score & state management</span>
+<span style="color:#6c7086">// 6. Win/lose screens</span></div></div>
+<div class="ls"><div class="ls-h">👾 Siap Hadapi Boss?</div><p>Gunakan semua ilmumu untuk mengalahkan Boss Alien terakhir dan merilis gamemu!</p></div>`;
+}
+
+const CHAPTERS = [
+  {
+    id:'game-loop', title:'Panggung Game', depth:'🎬 Level 1', emoji:'🎬',
+    color:'#FFC234', colorBg:'#FFF5D6',
+    desc:'Game loop, canvas setup, requestAnimationFrame — jantung setiap game!',
+    kapi:'Game loop = jantung game! Setiap frame: 1) Update posisi 2) Gambar ulang. requestAnimationFrame melakukan ini 60× per detik!',
+    lessonHTML:lsn1(), isBoss:false,
+    questions:[
+      {type:'mc', q:'requestAnimationFrame(draw) memanggil draw() berapa kali per detik?', opts:['60 kali','1 kali','24 kali','Sekali saja'], ans:0, expl:'requestAnimationFrame menargetkan 60fps!'},
+      {type:'mc', q:'Urutan game loop yang benar?', opts:['Update → Draw → requestAnimationFrame','Draw → Update → requestAnimationFrame','requestAnimationFrame → Update → Draw','Draw → requestAnimationFrame → Update'], ans:0, expl:'Update posisi dulu → gambar → minta frame berikutnya!'},
+      {type:'code-fill', q:'Lengkapi untuk memulai game loop', code:'function gameLoop() {\n  update();\n  draw();\n  requestAnimationFrame(___);\n}\ngameLoop();', blankIdx:1, ans:'gameLoop', output:'(game loop berjalan!)', expl:'requestAnimationFrame(gameLoop) → panggil gameLoop lagi setiap frame!'},
+      {type:'mc', q:'canvas.width dan canvas.height digunakan untuk?', visual:'🖥️', opts:['Ukuran area game','Warna game','Kecepatan game','Skor game'], ans:0, expl:'canvas.width dan height = ukuran area bermain!'},
+      {type:'code-fill', q:'Lengkapi: hapus canvas setiap frame', code:'function draw() {\n  ctx.clearRect(0, 0, canvas.___, canvas.height);\n}', blankIdx:1, ans:'width', output:'(canvas bersih!)', expl:'clearRect(0,0,width,height) → bersihkan seluruh canvas!'},
+      {type:'mc', q:'Tanpa clearRect di game loop, apa yang terjadi?', visual:'👻', opts:['Objek meninggalkan jejak','Game lebih cepat','Gambar menghilang','Tidak ada efek'], ans:0, expl:'Tanpa clearRect → gambar lama tetap terlihat = jejak/trail!'},
+    ]
+  },
+  {
+    id:'hero-input', title:'Sang Pahlawan', depth:'🦸 Level 2', emoji:'🦸',
+    color:'#1FA9C7', colorBg:'#E3F4F8',
+    desc:'Buat pahlawan yang bisa digerakkan dengan keyboard atau tap!',
+    kapi:'Sprite pahlawan = objek dengan posisi (x,y) dan ukuran (w,h). Tekan ArrowLeft → player.x -= speed!',
+    lessonHTML:lsn2(), isBoss:false,
+    questions:[
+      {type:'mc', q:'Objek pahlawan: {x:100, y:50, w:30, h:30}. Artinya?', opts:['Posisi (100,50), ukuran 30×30','Posisi (30,30), ukuran 100×50','Kecepatan 100','Warna pahlawan'], ans:0, expl:'x,y = posisi; w,h = lebar dan tinggi sprite!'},
+      {type:'code-fill', q:'Lengkapi: gerakkan pahlawan ke kiri', code:"if(keys['ArrowLeft']) {\n  player.x -= player.___;\n}", blankIdx:1, ans:'speed', output:'(pahlawan gerak kiri!)', expl:'player.x -= speed → kurangi x = gerak ke kiri!'},
+      {type:'mc', q:'Cara mendeteksi tombol ArrowUp ditekan?', opts:["keys['ArrowUp']","key==='up'","keyboard.up","input.arrow"], ans:0, expl:"keys['ArrowUp'] = true saat tombol ditekan!"},
+      {type:'mc', q:'Agar pahlawan tidak keluar canvas di tepi kiri?', visual:'🦸', opts:['if(player.x<0) player.x=0','if(player.x>0) player.x=0','player.x=canvas.width','player.x++'], ans:0, expl:'if(player.x < 0) player.x = 0 → batasi di tepi kiri!'},
+      {type:'code-fill', q:'Lengkapi: gambar pahlawan sebagai kotak biru', code:"ctx.fillStyle = '___';\nctx.fillRect(player.x, player.y, player.w, player.h);", blankIdx:0, ans:'blue', output:'(pahlawan biru!)', expl:"fillStyle='blue' → kotak biru = pahlawan!"},
+      {type:'mc', q:'addEventListener("keydown", ...) berguna untuk?', opts:['Mendeteksi tombol ditekan','Menggambar tombol','Menggerakkan otomatis','Membuat suara'], ans:0, expl:'keydown event = dipanggil saat tombol keyboard ditekan!'},
+    ]
+  },
+  {
+    id:'obstacles', title:'Rintangan', depth:'🚧 Level 3', emoji:'🚧',
+    color:'#FF5C39', colorBg:'#FFE8E3',
+    desc:'Spawn rintangan dari kanan, gerakkan ke kiri, hapus saat keluar!',
+    kapi:'Rintangan = array of objects! Spawn di tepi kanan, gerak ke kiri, filter hapus yang sudah keluar layar!',
+    lessonHTML:lsn3(), isBoss:false,
+    questions:[
+      {type:'mc', q:'Rintangan disimpan dalam array karena?', visual:'🚧', opts:['Bisa simpan banyak rintangan sekaligus','Lebih cepat','Lebih berwarna','Lebih mudah dihapus'], ans:0, expl:'Array = bisa simpan banyak rintangan dan loop semuanya!'},
+      {type:'code-fill', q:'Lengkapi: spawn rintangan di tepi kanan canvas', code:'obstacles.push({\n  x: canvas.___,\n  y: 50, w:25, h:25, speed:3\n});', blankIdx:1, ans:'width', output:'(rintangan muncul di kanan!)', expl:'x = canvas.width → mulai dari tepi kanan!'},
+      {type:'mc', q:'Cara menggerakkan SEMUA rintangan ke kiri?', opts:['obstacles.forEach(o => o.x -= o.speed)','obstacles.x -= speed','obstacles.move()','obstacles[0].x--'], ans:0, expl:'forEach loop semua rintangan, kurangi x masing-masing!'},
+      {type:'code-fill', q:'Lengkapi: hapus rintangan yang sudah keluar layar', code:'obstacles = obstacles.filter(o => o.x > -___);', blankIdx:0, ans:'50', output:'(rintangan hilang saat keluar!)', expl:'o.x > -50 = hapus saat sudah 50px di luar kiri layar!'},
+      {type:'mc', q:'Berapa sering spawn rintangan baru?', visual:'⏰', opts:['Setiap beberapa frame/detik','Setiap frame','Hanya sekali','Tidak pernah'], ans:0, expl:'Spawn terlalu sering = terlalu sulit — pakai frame counter!'},
+      {type:'mc', q:'obstacles.length memberikan?', opts:['Jumlah rintangan saat ini','Kecepatan rintangan','Posisi rintangan','Ukuran rintangan'], ans:0, expl:'array.length = jumlah elemen dalam array!'},
+    ]
+  },
+  {
+    id:'collision', title:'Tabrakan!', depth:'💥 Level 4', emoji:'💥',
+    color:'#7B3FA8', colorBg:'#EFE3F8',
+    desc:'Deteksi tabrakan antara pahlawan dan rintangan dengan AABB!',
+    kapi:'AABB collision = cek 4 kondisi tumpang tindih kotak. Jika tabrakan: kurangi nyawa!',
+    lessonHTML:lsn4(), isBoss:false,
+    questions:[
+      {type:'mc', q:'AABB collision detection untuk?', opts:['Cek apakah dua kotak bertabrakan','Menghitung skor','Menggerakkan karakter','Menggambar kotak'], ans:0, expl:'AABB = Axis-Aligned Bounding Box — cek tumpang tindih!'},
+      {type:'mc', q:'Pahlawan x=50,w=30. Rintangan x=70,w=30. Tabrakan?', visual:'💥', opts:['Ya (50<100 dan 80>70)','Tidak','Tergantung y','Tidak bisa dihitung'], ans:0, expl:'px(50)<ox+ow(100)✓ dan px+pw(80)>ox(70)✓ → tabrakan!'},
+      {type:'code-fill', q:'Lengkapi fungsi collision — cek batas kanan pahlawan vs kiri rintangan', code:'function collide(p, o) {\n  return p.x < o.x+o.w &&\n         p.x+p.w > ___ &&\n         p.y < o.y+o.h &&\n         p.y+p.h > o.y;\n}', blankIdx:1, ans:'o.x', output:'(deteksi tabrakan aktif!)', expl:'p.x+p.w > o.x → sisi kanan pahlawan melewati sisi kiri rintangan!'},
+      {type:'mc', q:'Saat tabrakan terdeteksi, biasanya kita?', opts:['Kurangi nyawa','Tambah rintangan','Percepat game','Tidak perlu dilakukan'], ans:0, expl:'Tabrakan = event penting! Kurangi nyawa atau game over!'},
+      {type:'mc', q:'obstacles.some(o => collide(player, o)) artinya?', visual:'🔍', opts:['Cek apakah ADA rintangan yang tabrakan','Cek semua rintangan sekaligus','Hapus rintangan yang tabrakan','Hitung jumlah tabrakan'], ans:0, expl:'Array.some() = true jika minimal satu elemen memenuhi kondisi!'},
+      {type:'code-fill', q:'Lengkapi: kurangi nyawa saat tabrakan', code:'if(obstacles.some(o => collide(player,o))){\n  ___--;\n}', blankIdx:0, ans:'lives', output:'(nyawa berkurang!)', expl:'lives-- → kurangi nyawa saat terdeteksi tabrakan!'},
+    ]
+  },
+  {
+    id:'score-state', title:'Skor & Bintang', depth:'🏆 Level 5', emoji:'🏆',
+    color:'#1F9D55', colorBg:'#E3F5EB',
+    desc:'Game state, sistem skor, menang/kalah — akhirnya game terasa nyata!',
+    kapi:"Game state = kondisi game: 'playing', 'gameover', 'win'. Skor bertambah tiap rintangan dilewati. Menang jika skor >= target!",
+    lessonHTML:lsn5(), isBoss:false,
+    questions:[
+      {type:'mc', q:"Game state biasanya punya kondisi?", opts:["'playing','gameover','win'","'on','off'","'start','stop'","'red','green','blue'"], ans:0, expl:"State: 'playing' (main), 'gameover' (kalah), 'win' (menang)!"},
+      {type:'code-fill', q:'Lengkapi: tambah skor saat rintangan berhasil dilewati', code:'if(obstacle.x < 0) {\n  ___++;\n}', blankIdx:0, ans:'score', output:'(skor bertambah!)', expl:'score++ → tambah 1 skor tiap rintangan dilewati!'},
+      {type:'mc', q:'Cara menampilkan skor di canvas?', visual:'💯', opts:["ctx.fillText('Skor: '+score, 10, 30)","ctx.drawScore(score)","score.display()","canvas.showScore(score)"], ans:0, expl:'fillText(text, x, y) untuk menulis teks di canvas!'},
+      {type:'mc', q:"Kapan kondisi 'win' tercapai?", opts:['Saat skor mencapai target','Saat nyawa habis','Saat game dimulai','Saat canvas bersih'], ans:0, expl:'Menang = skor >= target yang ditentukan!'},
+      {type:'code-fill', q:"Lengkapi: set state 'gameover' saat nyawa habis", code:"if(lives <= 0) {\n  gameState = '___';\n}", blankIdx:0, ans:'gameover', output:"(state gameover aktif!)", expl:"lives=0 → gameState='gameover' → tampilkan layar kalah!"},
+      {type:'mc', q:'ctx.font = "bold 24px Arial" digunakan sebelum?', opts:['ctx.fillText()','ctx.fillRect()','ctx.arc()','ctx.moveTo()'], ans:0, expl:'font harus diset sebelum fillText!'},
+    ]
+  },
+  {
+    id:'boss-release', title:'BOSS: Rilis Game-mu!', depth:'🚀 FINAL BOSS', emoji:'🚀',
+    color:'#FFC234', colorBg:'#FFF5D6',
+    desc:'Gabungkan segalanya — kalahkan Boss Alien dan rilis gamemu!',
+    kapi:'BOSS TERAKHIR! Game loop + pahlawan + rintangan + tabrakan + skor = game lengkap. Kalahkan 👾 untuk merilis game pertamamu!',
+    lessonHTML:lsn6(), isBoss:true,
+    questions:[
+      {type:'mc', q:'Urutan membuat game dari awal?', opts:['Canvas → objek → game loop → input → collision → skor','Skor → collision → input → game loop → objek','Input → canvas → objek → game loop → skor','Collision → canvas → skor → input → objek'], ans:0, expl:'Setup dulu, lalu objek, lalu loop, lalu fitur tambahan!'},
+      {type:'code-fill', q:'Lengkapi game loop yang lengkap', code:"function gameLoop() {\n  ctx.clearRect(0,0,W,H);\n  if(gameState==='playing'){\n    update();\n    draw();\n  }\n  requestAnimationFrame(___);\n}\ngameLoop();", blankIdx:1, ans:'gameLoop', output:'(game loop lengkap!)', expl:'requestAnimationFrame(gameLoop) → loop terus berjalan!'},
+      {type:'mc', q:'Game lengkap minimal harus punya?', visual:'🎮', opts:['Player, rintangan, collision, score','Hanya player','Hanya score','Hanya rintangan'], ans:0, expl:'Game minimal: sesuatu yang dikendalikan, tantangan, collision, dan score!'},
+      {type:'mc', q:'Cara restart game setelah gameover?', opts:['Reset semua variabel lalu panggil gameLoop()','Reload halaman','Buat canvas baru','Tidak bisa restart'], ans:0, expl:'Reset score=0, lives=3, obstacles=[], gameState="playing" → mulai ulang!'},
+      {type:'code-fill', q:"Lengkapi: set state 'win' jika skor >= 10", code:"if(score >= 10) {\n  gameState = '___';\n}", blankIdx:0, ans:'win', output:"(state win aktif!)", expl:"score>=10 → gameState='win' → tampilkan layar menang!"},
+      {type:'mc', q:'Setelah jadi, bagaimana Rayyan bisa berbagi gamenya?', visual:'🌐', opts:['Bagikan file HTML — buka di browser mana saja!','Perlu server mahal','Tidak bisa dibagi','Hanya bisa di komputer sendiri'], ans:0, expl:'Game HTML bisa dibuka di browser siapa saja — share file HTML-nya!'},
+    ]
+  },
+];
+
+/* PERSISTENCE */
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem('rayyanCoding5')||'{}');
+    S.progress = d.progress||{}; S.totalStars = d.totalStars||0;
+    document.getElementById('starCount').textContent = S.totalStars;
+  } catch(e){}
+}
+function saveState() {
+  try { localStorage.setItem('rayyanCoding5', JSON.stringify({progress:S.progress,totalStars:S.totalStars})); } catch(e){}
+}
+function resetProgress() {
+  const pw = prompt('Masukkan kata sandi untuk reset:');
+  if(pw===null) return;
+  if(pw!=='bogor123'){alert('Kata sandi salah!');return;}
+  S.progress={}; S.totalStars=0;
+  document.getElementById('starCount').textContent=0;
+  saveState(); renderHome();
+}
+
+/* NAVIGATION */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  const isHome = id==='sHome';
+  document.getElementById('arcadeBg').classList.toggle('hidden',!isHome);
+  document.getElementById('mainHdr').classList.toggle('light',!isHome);
+  if(id==='sLesson') setTimeout(initDemos, 100);
+}
+function goHome(){stopTimer();show('sHome');renderHome();}
+
+function openChapter(idx){
+  const prev=CHAPTERS.slice(0,idx);
+  const prevDone=prev.every(c=>(S.progress[c.id]||{}).stars>0);
+  if(idx>0&&!prevDone){Audio.play('wrong');return;}
+  S.chapter=idx;
+  const ch=CHAPTERS[idx];
+  document.getElementById('lessonHdr').innerHTML=`
+    <div class="lesson-hdr">
+      <div class="lesson-icon">${ch.emoji}</div>
+      <div><div class="lesson-depth">${ch.depth}</div><div class="lesson-title">${ch.title}</div></div>
+    </div>`;
+  document.getElementById('lessonBody').innerHTML=ch.lessonHTML;
+  document.getElementById('kapiMsg').textContent=ch.kapi;
+  const btn=document.getElementById('startBtn');
+  btn.className=`start-btn${ch.isBoss?' boss-btn':''}`;
+  btn.textContent=ch.isBoss?'👾 Lawan Boss Terakhir!':'🕹️ Mulai Level!';
+  show('sLesson');
+}
+
+/* DEMO CANVASES */
+let _demoRAFs=[];
+function stopDemos(){_demoRAFs.forEach(id=>cancelAnimationFrame(id));_demoRAFs=[];}
+function initDemos(){
+  stopDemos();
+  const ch=CHAPTERS[S.chapter];
+  if(ch.id==='game-loop') demoLoop();
+  else if(ch.id==='hero-input') demoHero();
+  else if(ch.id==='obstacles') demoObs();
+  else if(ch.id==='collision') demoColl();
+  else if(ch.id==='score-state') demoScore();
+}
+
+function demoLoop(){
+  const cv=document.getElementById('demoLoop'); if(!cv)return;
+  const ctx=cv.getContext('2d');
+  let x=125,y=70,dx=2,dy=1.5;
+  function frame(){
+    ctx.fillStyle='#0a0a1a'; ctx.fillRect(0,0,250,140);
+    ctx.fillStyle='#FFC234'; ctx.font='bold 13px Nunito'; ctx.textAlign='center';
+    ctx.fillText('🎬 GAME LOOP BERJALAN',125,20);
+    x+=dx; y+=dy;
+    if(x>230||x<20) dx=-dx;
+    if(y>120||y<30) dy=-dy;
+    ctx.fillStyle='#C084FC'; ctx.beginPath(); ctx.arc(x,y,14,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='10px monospace'; ctx.fillText('UPDATE+DRAW',125,135);
+    _demoRAFs.push(requestAnimationFrame(frame));
+  }
+  frame();
+}
+function demoHero(){
+  const cv=document.getElementById('demoHero'); if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const p={x:110,y:55,w:28,h:28,speed:4};
+  const keys={};
+  cv.addEventListener('keydown',e=>{keys[e.key]=true;e.preventDefault();});
+  cv.addEventListener('keyup',e=>{keys[e.key]=false;});
+  function frame(){
+    ctx.fillStyle='#0a0a1a'; ctx.fillRect(0,0,250,140);
+    if(keys['ArrowLeft']||keys['a']){p.x-=p.speed;} if(keys['ArrowRight']||keys['d']){p.x+=p.speed;}
+    if(keys['ArrowUp']||keys['w']){p.y-=p.speed;} if(keys['ArrowDown']||keys['s']){p.y+=p.speed;}
+    p.x=Math.max(0,Math.min(250-p.w,p.x)); p.y=Math.max(0,Math.min(140-p.h,p.y));
+    ctx.fillStyle='#1FA9C7'; ctx.fillRect(p.x,p.y,p.w,p.h);
+    ctx.fillStyle='#FFC234'; ctx.font='bold 11px Nunito'; ctx.textAlign='center';
+    ctx.fillText('Klik canvas lalu tekan ← → ↑ ↓',125,132);
+    _demoRAFs.push(requestAnimationFrame(frame));
+  }
+  frame();
+}
+function demoObs(){
+  const cv=document.getElementById('demoObs'); if(!cv)return;
+  const ctx=cv.getContext('2d');
+  let obs=[]; let frame_n=0;
+  function frame(){
+    ctx.fillStyle='#0a0a1a'; ctx.fillRect(0,0,250,140);
+    frame_n++;
+    if(frame_n%70===0) obs.push({x:250,y:20+Math.random()*80,w:22,h:22,speed:2+Math.random()*2});
+    obs.forEach(o=>{o.x-=o.speed; ctx.fillStyle='#FF5C39'; ctx.fillRect(o.x,o.y,o.w,o.h);});
+    obs=obs.filter(o=>o.x>-30);
+    ctx.fillStyle='rgba(255,194,52,.6)'; ctx.font='bold 11px Nunito'; ctx.textAlign='center';
+    ctx.fillText('🚧 Rintangan bergerak ke kiri!',125,132);
+    _demoRAFs.push(requestAnimationFrame(frame));
+  }
+  frame();
+}
+function demoColl(){
+  const cv=document.getElementById('demoColl'); if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const p={x:30,y:55,w:28,h:28,speed:3};
+  const ob={x:170,y:50,w:35,h:35};
+  const keys={};
+  cv.addEventListener('keydown',e=>{keys[e.key]=true;e.preventDefault();});
+  cv.addEventListener('keyup',e=>{keys[e.key]=false;});
+  function collide(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
+  function frame(){
+    ctx.fillStyle='#0a0a1a'; ctx.fillRect(0,0,250,140);
+    if(keys['ArrowLeft']){p.x-=p.speed;} if(keys['ArrowRight']){p.x+=p.speed;}
+    if(keys['ArrowUp']){p.y-=p.speed;} if(keys['ArrowDown']){p.y+=p.speed;}
+    p.x=Math.max(0,Math.min(250-p.w,p.x)); p.y=Math.max(0,Math.min(140-p.h,p.y));
+    const hit=collide(p,ob);
+    ctx.fillStyle=hit?'#FF5C39':'#FF8C00'; ctx.fillRect(ob.x,ob.y,ob.w,ob.h);
+    ctx.fillStyle='#1FA9C7'; ctx.fillRect(p.x,p.y,p.w,p.h);
+    ctx.fillStyle=hit?'#FF5C39':'rgba(255,194,52,.7)'; ctx.font='bold 11px Nunito'; ctx.textAlign='center';
+    ctx.fillText(hit?'💥 TABRAKAN!':'← → ↑ ↓ gerakkan kotak biru',125,132);
+    _demoRAFs.push(requestAnimationFrame(frame));
+  }
+  frame();
+}
+function demoScore(){
+  const cv=document.getElementById('demoScore'); if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const p={x:20,y:55,w:24,h:24,speed:3};
+  let obs=[]; let score=0; let lives=3; let state='playing'; let fn=0;
+  const keys={};
+  cv.addEventListener('keydown',e=>{keys[e.key]=true;e.preventDefault();});
+  cv.addEventListener('keyup',e=>{keys[e.key]=false;});
+  function collide(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
+  function frame(){
+    ctx.fillStyle='#0a0a1a'; ctx.fillRect(0,0,250,140);
+    if(state==='playing'){
+      fn++;
+      if(keys['ArrowUp']&&p.y>0){p.y-=p.speed;} if(keys['ArrowDown']&&p.y<116){p.y+=p.speed;}
+      if(fn%60===0) obs.push({x:250,y:15+Math.random()*100,w:20,h:20,speed:2.5});
+      obs.forEach(o=>o.x-=o.speed);
+      const hit=obs.some(o=>collide(p,o));
+      if(hit){lives--;obs=obs.filter(o=>!collide(p,o));if(lives<=0)state='gameover';}
+      obs.filter(o=>o.x<0).forEach(()=>score++);
+      obs=obs.filter(o=>o.x>-25);
+      if(score>=5) state='win';
+      ctx.fillStyle='#1FA9C7'; ctx.fillRect(p.x,p.y,p.w,p.h);
+      obs.forEach(o=>{ctx.fillStyle='#FF5C39';ctx.fillRect(o.x,o.y,o.w,o.h);});
+      ctx.fillStyle='#FFC234'; ctx.font='bold 11px Nunito'; ctx.textAlign='left';
+      ctx.fillText('Skor:'+score+'  ❤️×'+lives,5,14);
+      ctx.textAlign='center'; ctx.fillStyle='rgba(255,255,255,.4)'; ctx.font='10px Nunito';
+      ctx.fillText('↑↓ hindari merah, kumpul skor 5',125,132);
+    } else if(state==='gameover'){
+      ctx.fillStyle='#FF5C39'; ctx.font='bold 18px Nunito'; ctx.textAlign='center'; ctx.fillText('GAME OVER',125,60);
+      ctx.fillStyle='#fff'; ctx.font='12px Nunito'; ctx.fillText('Tekan Enter untuk coba lagi',125,85);
+      if(keys['Enter']){score=0;lives=3;obs=[];state='playing';fn=0;}
+    } else {
+      ctx.fillStyle='#1F9D55'; ctx.font='bold 18px Nunito'; ctx.textAlign='center'; ctx.fillText('YOU WIN! 🏆',125,60);
+      ctx.fillStyle='#fff'; ctx.font='12px Nunito'; ctx.fillText('Tekan Enter untuk main lagi',125,85);
+      if(keys['Enter']){score=0;lives=3;obs=[];state='playing';fn=0;}
+    }
+    _demoRAFs.push(requestAnimationFrame(frame));
+  }
+  frame();
+}
+
+/* EXERCISE */
+function startExercise(){
+  stopDemos();
+  S.qIdx=0;S.score=0;S.answered=false;S.lives=3;S.combo=0;S.history=[];S.startTime=Date.now();
+  const ch=CHAPTERS[S.chapter];
+  S.bossHP=ch.questions.length;
+  document.getElementById('bossHdr').style.display=ch.isBoss?'block':'none';
+  document.getElementById('qCard').className=ch.isBoss?'boss-q-wrap':'q-card';
+  document.getElementById('qLabel').textContent=ch.isBoss?'⚔️ Serangan Boss':'Tantangan';
+  updateHearts(); renderQ(); show('sExercise');
+}
+function retryChapter(){startExercise();}
+
+function renderQ(){
+  const ch=CHAPTERS[S.chapter];
+  const q=ch.questions[S.qIdx];
+  const total=ch.questions.length;
+  document.getElementById('exChName').textContent=`${ch.emoji} ${ch.title}`;
+  document.getElementById('exQNum').textContent=`${S.qIdx+1}/${total}`;
+  document.getElementById('exBar').style.width=`${(S.qIdx/total)*100}%`;
+  document.getElementById('qText').textContent=q.q;
+  const vis=document.getElementById('qVisual');
+  if(q.visual){vis.innerHTML=q.visual;vis.style.display='';}else{vis.style.display='none';}
+  const area=document.getElementById('answerArea');
+  if(q.type==='mc') renderMC(q,area);
+  else if(q.type==='input') renderInput(area);
+  else if(q.type==='drag-sort') renderDragSort(q,area);
+  else if(q.type==='code-fill') renderCodeFill(q,area);
+  document.getElementById('toast').className='toast';
+  document.getElementById('nxtBtn').className='nxt-btn';
+  updateCombo(); S.answered=false;
+  if(ch.isBoss) updateBossHP();
+  startTimer(q.type==='code-fill'||q.type==='drag-sort'?45:30);
+}
+
+function renderMC(q,area){
+  area.innerHTML=`<div class="opts-grid">${q.opts.map((o,i)=>`<button class="opt-btn" onclick="pickOpt(${i})">${o}</button>`).join('')}</div>`;
+}
+function pickOpt(idx){
+  if(S.answered) return;
+  S.answered=true; stopTimer(); Audio.play('select');
+  const q=CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct=idx===q.ans;
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  document.querySelectorAll('.opt-btn')[idx].classList.add(correct?'correct':'wrong');
+  if(!correct) document.querySelectorAll('.opt-btn')[q.ans].classList.add('correct');
+  handleAnswer(correct,q.opts[q.ans],q.opts[idx],q.expl);
+}
+function renderInput(area){
+  area.innerHTML=`<div class="inp-row"><input type="text" class="num-inp" id="numInp" placeholder="Jawaban…" onkeydown="if(event.key==='Enter')checkInp()" autocapitalize="off" autocorrect="off"><button class="chk-btn" onclick="checkInp()">Cek ✓</button></div>`;
+  setTimeout(()=>{const el=document.getElementById('numInp');if(el)el.focus();},80);
+}
+function checkInp(){
+  if(S.answered) return;
+  const inp=document.getElementById('numInp');
+  const val=(inp.value||'').trim(); if(!val) return;
+  S.answered=true; stopTimer(); inp.disabled=true;
+  const q=CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct=val===q.ans;
+  inp.classList.add(correct?'ok':'bad');
+  handleAnswer(correct,q.ans,val,q.expl);
+}
+let _sortState={order:[],selected:null};
+function renderDragSort(q,area){
+  _sortState.order=[...q.items]; _sortState.selected=null;
+  area.innerHTML=`<div class="sort-label">Klik dua item untuk menukar posisi!</div><div class="sort-items" id="sortItems"></div><div style="margin-top:12px;text-align:center"><button class="chk-btn" onclick="checkSort()">Cek ✓</button></div>`;
+  renderSortItems();
+}
+function renderSortItems(){
+  const w=document.getElementById('sortItems'); if(!w) return;
+  w.innerHTML=_sortState.order.map((v,i)=>`<div class="sort-item${i===_sortState.selected?' selected':''}" onclick="sortClick(${i})">${v}</div>`).join('');
+}
+function sortClick(idx){
+  if(S.answered) return; Audio.play('select');
+  if(_sortState.selected===null){_sortState.selected=idx;}
+  else if(_sortState.selected===idx){_sortState.selected=null;}
+  else{const tmp=_sortState.order[_sortState.selected];_sortState.order[_sortState.selected]=_sortState.order[idx];_sortState.order[idx]=tmp;_sortState.selected=null;}
+  renderSortItems();
+}
+function checkSort(){
+  if(S.answered) return; S.answered=true; stopTimer();
+  const q=CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct=JSON.stringify(_sortState.order)===JSON.stringify(q.ans);
+  document.querySelectorAll('.sort-item').forEach((el,i)=>{el.classList.add('disabled');el.classList.add(correct?'correct':(_sortState.order[i]===q.ans[i]?'correct':'wrong'));});
+  handleAnswer(correct,q.ans.join(' → '),_sortState.order.join(' → '),q.expl);
+}
+function renderCodeFill(q,area){
+  const lines=q.code.split('\n');
+  const html=lines.map(line=>{
+    if(line.includes('___')){
+      return line.replace('___',`<input type="text" id="codeBlank" class="code-blank" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="___" onkeydown="if(event.key==='Enter')checkCodeFill()">`);
+    }
+    return line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }).join('\n');
+  area.innerHTML=`<div class="code-fill-wrap"><div class="spellbook" style="white-space:pre-wrap">${html}</div><div class="spell-output" id="spellOut"><div class="spell-output-label">🎮 Hasil:</div><div id="spellOutText"></div></div><div style="margin-top:10px;text-align:center"><button class="chk-btn" onclick="checkCodeFill()">🕹️ Cek Kode!</button></div></div>`;
+  setTimeout(()=>{const inp=area.querySelector('.code-blank');if(inp)inp.focus();},80);
+}
+function checkCodeFill(){
+  if(S.answered) return;
+  const inp=document.getElementById('codeBlank'); if(!inp) return;
+  const val=inp.value.trim(); if(!val) return;
+  S.answered=true; stopTimer(); inp.disabled=true;
+  const q=CHAPTERS[S.chapter].questions[S.qIdx];
+  const normalize=s=>s.replace(/"/g,"'").replace(/\s+/g,' ').trim();
+  const correct=normalize(val)===normalize(q.ans);
+  inp.classList.add(correct?'ok':'bad');
+  if(correct){
+    const out=document.getElementById('spellOut'),outT=document.getElementById('spellOutText');
+    if(out&&outT){outT.textContent=q.output||'';out.classList.add('show');}
+  }
+  handleAnswer(correct,q.ans,val,q.expl);
+}
+
+/* ANSWER LOGIC */
+function handleAnswer(correct,correctAns,userAns,expl){
+  const ch=CHAPTERS[S.chapter];
+  if(correct){
+    S.score++; S.combo++; Audio.play('correct');
+    if(ch.isBoss){S.bossHP--;updateBossHP();document.getElementById('bossEnemy').classList.add('hit');setTimeout(()=>document.getElementById('bossEnemy').classList.remove('hit'),450);Audio.play('boss-hit');}
+  } else {
+    S.lives--; S.combo=0; Audio.play('wrong');
+    document.body.classList.add('shake'); setTimeout(()=>document.body.classList.remove('shake'),380);
+    updateHearts();
+  }
+  S.history.push({q:CHAPTERS[S.chapter].questions[S.qIdx].q,correct,correctAns,userAns});
+  updateCombo(); showToast(correct,correctAns,expl);
+  if(S.lives<=0) setTimeout(()=>{stopTimer();showComplete(true);},1200);
+}
+function showToast(correct,correctAns,expl){
+  const toast=document.getElementById('toast');
+  document.getElementById('toastIco').textContent=correct?'🎮':'❌';
+  document.getElementById('toastTitle').textContent=correct?'Level up! Keren sekali, Rayyan!':`Belum tepat. Jawaban: ${correctAns}`;
+  document.getElementById('toastExpl').textContent=expl||'';
+  toast.className=`toast show ${correct?'ok':'bad'}`;
+  document.getElementById('nxtBtn').className='nxt-btn show';
+}
+function nextQ(){
+  const ch=CHAPTERS[S.chapter]; S.qIdx++;
+  if(S.qIdx>=ch.questions.length) showComplete(false);
+  else renderQ();
+}
+
+/* TIMER */
+function startTimer(secs){
+  stopTimer(); S.timerVal=secs;
+  const circ=2*Math.PI*20;
+  const fg=document.getElementById('timerFg');
+  const num=document.getElementById('timerNum');
+  if(fg) fg.style.stroke='var(--game)';
+  S.timerInterval=setInterval(()=>{
+    S.timerVal--;
+    if(num) num.textContent=S.timerVal;
+    if(fg) fg.style.strokeDashoffset=circ*(1-S.timerVal/secs);
+    if(S.timerVal<=5){Audio.play('tick');if(fg)fg.style.stroke='var(--tomato)';}
+    if(S.timerVal<=0){
+      stopTimer();
+      if(!S.answered){S.answered=true;const q=CHAPTERS[S.chapter].questions[S.qIdx];handleAnswer(false,q.type==='mc'?q.opts[q.ans]:q.ans,'(waktu habis!)',q.expl);}
+    }
+  },1000);
+}
+function stopTimer(){if(S.timerInterval){clearInterval(S.timerInterval);S.timerInterval=null;}}
+
+/* HUD */
+function updateHearts(){const el=document.getElementById('heartsDisplay');if(el)el.innerHTML='❤️'.repeat(Math.max(0,S.lives))+'🖤'.repeat(Math.max(0,3-S.lives));}
+function updateCombo(){const badge=document.getElementById('comboBadge');if(!badge)return;if(S.combo>=2){badge.textContent=`🔥 ${S.combo}×`;badge.className='combo-badge show';}else{badge.className='combo-badge';}}
+function updateBossHP(){
+  const total=CHAPTERS[S.chapter].questions.length;
+  const pct=(S.bossHP/total)*100;
+  const bar=document.getElementById('bossHpBar'),lbl=document.getElementById('bossHpLabel');
+  if(bar) bar.style.width=`${pct}%`;
+  if(lbl) lbl.textContent=`HP Boss Alien: ${S.bossHP}/${total}`;
+  if(pct<=40&&bar) bar.style.background='var(--mango)';
+  if(pct<=15&&bar) bar.style.background='var(--forest)';
+}
+
+/* COMPLETE */
+function showComplete(ranOutOfLives){
+  stopTimer(); stopDemos();
+  const ch=CHAPTERS[S.chapter];
+  const total=ch.questions.length; const pct=S.score/total;
+  let stars=ranOutOfLives?1:(pct>=0.85?3:pct>=0.65?2:pct>=0.5?1:0);
+  if(stars===0) stars=1;
+  const prev=S.progress[ch.id]||{stars:0,bestScore:0};
+  const newStars=Math.max(prev.stars,stars);
+  const earned=newStars-prev.stars;
+  S.progress[ch.id]={stars:newStars,bestScore:Math.max(prev.bestScore||0,S.score)};
+  S.totalStars+=earned;
+  document.getElementById('starCount').textContent=S.totalStars;
+  saveState();
+  const badges=['😓','🎮','🏆'];
+  const titles=[ranOutOfLives?'Kehabisan nyawa! Coba lagi!':'Terus semangat!','Hebat! Hampir sempurna!',ch.isBoss?'👾 BOSS DIKALAHKAN! GAME DIRILIS! 🏆':'SEMPURNA! Game Developer sejati!'];
+  document.getElementById('doneBadge').textContent=badges[stars-1];
+  document.getElementById('doneTitle').textContent=titles[stars-1];
+  document.getElementById('doneStars').textContent='⭐'.repeat(stars)+'☆'.repeat(3-stars);
+  document.getElementById('doneScoreNum').textContent=`${S.score}/${total}`;
+  const elapsed=S.startTime?Date.now()-S.startTime:0;
+  document.getElementById('doneTime').textContent=fmtTime(elapsed);
+  document.getElementById('doneMsg').textContent=stars===3?`Semua ${total} tantangan diselesaikan! Luar biasa!`:`${S.score} dari ${total} benar. ${stars<2?'Latihan lagi, kamu pasti bisa!':'Hampir sempurna!'}`;
+  document.getElementById('reviewList').innerHTML=S.history.map(h=>`<div class="review-item"><div class="review-ico">${h.correct?'✅':'❌'}</div><div><div class="review-q">${h.q}</div><div class="review-a">${h.correct?`Benar: <strong>${h.correctAns}</strong>`:`Kamu: ${h.userAns} · Jawaban: <strong>${h.correctAns}</strong>`}</div></div></div>`).join('');
+  show('sComplete');
+  if(stars>=2) setTimeout(launchConfetti,300);
+  if(stars===3&&ch.isBoss){Audio.play('fanfare');setTimeout(launchConfetti,800);}
+  updateOverall();
+  const allDone=CHAPTERS.every(c=>(S.progress[c.id]||{}).stars>0);
+  if(allDone) setTimeout(showAllDone,3000);
+}
+function showAllDone(){
+  document.getElementById('allDoneStars').textContent=`${S.totalStars} / 18`;
+  document.getElementById('allDoneStarEmoji').textContent='⭐'.repeat(Math.min(S.totalStars,18));
+  show('sAllDone'); Audio.play('fanfare');
+  setTimeout(launchConfetti,300); setTimeout(launchConfetti,1100);
+}
+
+/* HOME */
+function renderHome(){
+  document.getElementById('chGrid').innerHTML=CHAPTERS.map((ch,i)=>{
+    const p=S.progress[ch.id]||{stars:0,bestScore:0};
+    const done=p.stars>0;
+    const prevDone=i===0||CHAPTERS.slice(0,i).every(c=>(S.progress[c.id]||{}).stars>0);
+    const locked=!done&&!prevDone;
+    const stars=[1,2,3].map(n=>`<span class="ch-star${n<=p.stars?' on':''}">⭐</span>`).join('');
+    const status=done?`✅ Terbaik: ${p.bestScore}/${ch.questions.length}`:locked?'🔒 Selesaikan level sebelumnya':'▶️ Belum dimulai';
+    return `<div class="ch-card${ch.isBoss?' boss':''}${locked?' locked':''}" onclick="${locked?'':` openChapter(${i})`}" role="button" tabindex="${locked?-1:0}">
+      <div class="ch-thumb" style="${ch.isBoss?'':` background:${ch.colorBg}`}">
+        <div class="ch-emoji">${ch.emoji}</div><div class="ch-stars-row">${stars}</div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-num">Level ${i+1}</div>
+        <div class="ch-depth">${ch.depth}</div>
+        <div class="ch-title">${ch.title}</div>
+        <div class="ch-desc">${ch.desc}</div>
+        <div class="ch-status">${status}</div>
+      </div>
+    </div>`;
+  }).join('');
+  updateOverall(); renderDepthTrack();
+}
+function renderDepthTrack(){
+  const track=document.getElementById('depthTrack'); if(!track) return;
+  let html='';
+  CHAPTERS.forEach((ch,i)=>{
+    const p=S.progress[ch.id]||{stars:0};
+    const done=p.stars>0;
+    const allPrev=i===0||CHAPTERS.slice(0,i).every(c=>(S.progress[c.id]||{}).stars>0);
+    const active=!done&&allPrev;
+    const cls=done?'done':active?'active':'';
+    if(i>0) html+=`<div class="depth-rail${done?' done':''}"></div>`;
+    html+=`<div class="depth-node"><div class="depth-dot ${cls}">${done?'✅':active?'🕹️':ch.emoji}</div><div class="depth-name ${cls}">${['Lv.1','Lv.2','Lv.3','Lv.4','Lv.5','BOSS'][i]}</div></div>`;
+  });
+  track.innerHTML=html;
+}
+function updateOverall(){
+  const total=CHAPTERS.length;
+  const done=Object.values(S.progress).filter(p=>p.stars>0).length;
+  const pct=(done/total)*100;
+  document.getElementById('ovBar').style.width=`${pct}%`;
+  document.getElementById('ovSub').textContent=`${done} dari ${total} level selesai`;
+  const el=document.getElementById('ovRingPath');
+  if(el) el.style.strokeDashoffset=151-(pct/100)*151;
+}
+
+/* CONFETTI */
+function launchConfetti(){
+  const c=document.getElementById('confetti');
+  const colors=['#FFC234','#FF5C39','#1F9D55','#1FA9C7','#E84BA0','#C084FC','#FFD700'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div'); p.className='cp';
+    const sz=6+Math.random()*10;
+    p.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${colors[~~(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.6}s;`;
+    c.appendChild(p); p.addEventListener('animationend',()=>p.remove());
+  }
+}
+
+/* PIXEL BG */
+function spawnPixels(){
+  const bg=document.getElementById('arcadeBg');
+  const colors=['#FFC234','#C084FC','#1FA9C7','#FF5C39','#1F9D55','#fff'];
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div'); s.className='pixel';
+    const sz=2+Math.random()*4;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${colors[~~(Math.random()*colors.length)]};border-radius:1px;animation-duration:${1.5+Math.random()*3}s;animation-delay:${Math.random()*3}s;`;
+    bg.appendChild(s);
+  }
+}
+function fmtTime(ms){const s=Math.floor(ms/1000),m=Math.floor(s/60);return m>0?`${m} mnt ${s%60} dtk`:`${s} dtk`;}
+
+/* INIT */
+loadState(); renderHome(); spawnPixels();
+
+/* BUG REPORT */
+function openBugReport(){document.getElementById('bugModal').classList.add('show');document.getElementById('bugDescription').focus();}
+function closeBugReport(){document.getElementById('bugModal').classList.remove('show');document.getElementById('bugForm').reset();}
+function submitBugReport(event){
+  event.preventDefault();
+  const desc=document.getElementById('bugDescription').value;
+  const email=document.getElementById('bugEmail').value||'tidak-ada@example.com';
+  const courseName='Buat Game-mu Sendiri — Studio Game Rayyan 🎮';
+  const formData=new FormData();
+  formData.append('_subject',`[Learn with Adhi Bug Report] ${courseName}`);
+  formData.append('message',`Course: ${courseName}\n\nBug:\n${desc}`);
+  formData.append('email',email); formData.append('_captcha','false');
+  fetch('https://formspree.io/f/mbjkzbag',{method:'POST',body:formData,headers:{'Accept':'application/json'}})
+    .then(r=>{if(r.ok){const btn=event.target.querySelector('[type="submit"]');btn.textContent='✅ Terima kasih!';btn.disabled=true;setTimeout(()=>{closeBugReport();btn.textContent='Kirim Laporan';btn.disabled=false;},1500);}else{alert('Gagal mengirim laporan.');}})
+    .catch(()=>alert('Gagal mengirim laporan.'));
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('bugModal').classList.contains('show'))closeBugReport();});
+</script>
+</body>
+</html>
