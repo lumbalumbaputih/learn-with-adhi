@@ -13,12 +13,12 @@ const SYNC = (() => {
 
   /* ── Firebase config — fill in after creating your project ── */
   const FIREBASE_CONFIG = {
-    apiKey:            "REPLACE_WITH_YOUR_API_KEY",
-    authDomain:        "REPLACE_WITH_YOUR_PROJECT_ID.firebaseapp.com",
-    projectId:         "REPLACE_WITH_YOUR_PROJECT_ID",
-    storageBucket:     "REPLACE_WITH_YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "REPLACE_WITH_SENDER_ID",
-    appId:             "REPLACE_WITH_APP_ID",
+    apiKey:            "AIzaSyAGJbGZi8ifWGtKCe9wXA1_CFlYcr3Kthc",
+    authDomain:        "learn-with-adhi.firebaseapp.com",
+    projectId:         "learn-with-adhi",
+    storageBucket:     "learn-with-adhi.firebasestorage.app",
+    messagingSenderId: "378533937502",
+    appId:             "1:378533937502:web:19db096311e7e7dc184fcf",
   };
 
   const PROGRESS_KEYS = [
