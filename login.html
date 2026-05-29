@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Orang Tua · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%232E3192"/><text y=".9em" font-size="80" x="10">👨‍👧‍👦</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --tomato: #FF5C39; --mango: #FFC234; --forest: #1F9D55;
+      --sea: #1FA9C7; --indigo: #2E3192; --ink: #1A1614;
+      --paper: #FBF4E6; --paper-2: #F4ECD8; --muted: #6B6259;
+      --line: rgba(26,22,20,.12);
+      --fd: 'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb: 'Inter',system-ui,sans-serif;
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { -webkit-font-smoothing:antialiased; }
+    body { font-family:var(--fb); background:var(--paper); color:var(--ink); min-height:100vh; display:flex; flex-direction:column; }
+
+    .nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 40px; border-bottom:2px solid var(--ink);
+    }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+    .brand-word { font-family:var(--fd); font-weight:800; font-size:22px; letter-spacing:-.03em; }
+    .nav-back {
+      font-size:14px; font-weight:700; background:var(--paper-2);
+      border:2px solid var(--ink); border-radius:999px; padding:8px 18px;
+      text-decoration:none; color:var(--ink); transition:background .18s;
+    }
+    .nav-back:hover { background:var(--mango); }
+
+    .page { flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px; }
+
+    .card {
+      background:#fff; border:2.5px solid var(--ink); border-radius:24px;
+      box-shadow:5px 5px 0 var(--ink); padding:40px 36px;
+      width:100%; max-width:420px;
+    }
+    .card-eyebrow {
+      font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+      color:var(--indigo); margin-bottom:10px;
+    }
+    .card-title { font-family:var(--fd); font-weight:800; font-size:32px; letter-spacing:-.03em; margin-bottom:6px; }
+    .card-sub { font-size:14px; color:var(--muted); margin-bottom:28px; }
+
+    /* Tabs */
+    .tabs { display:flex; gap:4px; background:var(--paper-2); border-radius:12px; padding:4px; margin-bottom:28px; }
+    .tab {
+      flex:1; padding:10px; border-radius:9px; border:none; background:transparent;
+      font-family:var(--fb); font-size:14px; font-weight:600; cursor:pointer;
+      transition:background .18s, box-shadow .18s; color:var(--muted);
+    }
+    .tab.active {
+      background:#fff; color:var(--ink);
+      box-shadow:0 1px 4px rgba(26,22,20,.12), 0 0 0 1.5px var(--line);
+    }
+
+    /* Form */
+    .form { display:none; flex-direction:column; gap:16px; }
+    .form.show { display:flex; }
+    label { font-size:13px; font-weight:600; display:flex; flex-direction:column; gap:6px; }
+    input[type="text"], input[type="email"], input[type="password"] {
+      padding:12px 14px; border:2px solid var(--line); border-radius:10px;
+      font-size:15px; font-family:var(--fb); background:#fff; outline:none;
+      transition:border-color .18s;
+    }
+    input:focus { border-color:var(--indigo); }
+
+    .btn-primary {
+      padding:14px; background:var(--indigo); color:#fff;
+      border:2px solid var(--ink); border-radius:12px;
+      font-family:var(--fd); font-size:17px; font-weight:800;
+      cursor:pointer; transition:background .18s, transform .1s;
+      margin-top:4px;
+    }
+    .btn-primary:hover { background:#23267a; }
+    .btn-primary:active { transform:translateY(1px); }
+    .btn-primary:disabled { opacity:.5; cursor:default; }
+
+    .error-msg {
+      background:#fff0ee; border:1.5px solid var(--tomato); border-radius:10px;
+      padding:10px 14px; font-size:13px; color:#c0392b; display:none;
+    }
+    .error-msg.show { display:block; }
+
+    .forgot { font-size:13px; color:var(--muted); text-align:right; margin-top:-8px; }
+    .forgot a { color:var(--indigo); text-decoration:none; font-weight:600; }
+    .forgot a:hover { text-decoration:underline; }
+
+    .divider { text-align:center; font-size:12px; color:var(--muted); margin:4px 0; }
+
+    .footer-note {
+      margin-top:24px; font-size:12px; color:var(--muted); text-align:center; line-height:1.6;
+      padding-top:20px; border-top:1px solid var(--line);
+    }
+    .footer-note a { color:var(--indigo); font-weight:600; text-decoration:none; }
+
+    @media (max-width:480px) { .nav { padding:16px 20px; } .card { padding:28px 24px; } }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/kids.html" class="brand">
+    <span style="font-size:26px">👨‍👧‍👦</span>
+    <div>
+      <div class="brand-word">adhi<span style="color:var(--indigo)">learn</span></div>
+    </div>
+  </a>
+  <a href="/kids.html" class="nav-back">← Halaman Anak</a>
+</nav>
+
+<div class="page">
+  <div class="card">
+    <div class="card-eyebrow">Portal Orang Tua</div>
+    <div class="card-title">Selamat datang 👋</div>
+    <div class="card-sub" id="cardSub">Masuk atau daftar untuk memantau progres anak.</div>
+
+    <div class="tabs">
+      <button class="tab active" id="tabSignIn" onclick="switchTab('signin')">Masuk</button>
+      <button class="tab" id="tabSignUp" onclick="switchTab('signup')">Daftar</button>
+    </div>
+
+    <div id="msgError" class="error-msg"></div>
+
+    <!-- Sign In -->
+    <form class="form show" id="formSignIn" onsubmit="handleSignIn(event)">
+      <label>Email
+        <input type="email" id="siEmail" placeholder="email@kamu.com" required autocomplete="email">
+      </label>
+      <label>Kata Sandi
+        <input type="password" id="siPassword" placeholder="••••••••" required autocomplete="current-password">
+      </label>
+      <div class="forgot"><a href="#" onclick="handleForgot(event)">Lupa kata sandi?</a></div>
+      <button class="btn-primary" type="submit" id="btnSignIn">Masuk →</button>
+    </form>
+
+    <!-- Sign Up -->
+    <form class="form" id="formSignUp" onsubmit="handleSignUp(event)">
+      <label>Nama lengkap
+        <input type="text" id="suName" placeholder="Nama Ayah / Bunda" required autocomplete="name">
+      </label>
+      <label>Email
+        <input type="email" id="suEmail" placeholder="email@kamu.com" required autocomplete="email">
+      </label>
+      <label>Kata Sandi <span style="font-weight:400;color:var(--muted)">(min. 6 karakter)</span>
+        <input type="password" id="suPassword" placeholder="••••••••" required minlength="6" autocomplete="new-password">
+      </label>
+      <button class="btn-primary" type="submit" id="btnSignUp">Buat Akun →</button>
+    </form>
+
+    <div class="footer-note">
+      Akun ini untuk <strong>orang tua</strong>. Anak tidak perlu login — cukup ketuk nama mereka di <a href="/kids.html">halaman anak</a>.
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="/assets/js/auth.js"></script>
+<script>
+  AUTH.init();
+
+  /* Redirect if already logged in */
+  AUTH.onAuthChange(user => {
+    if (user) window.location.href = '/dashboard.html';
+  });
+
+  function switchTab(tab) {
+    const isSignIn = tab === 'signin';
+    document.getElementById('tabSignIn').className = 'tab' + (isSignIn ? ' active' : '');
+    document.getElementById('tabSignUp').className = 'tab' + (!isSignIn ? ' active' : '');
+    document.getElementById('formSignIn').className = 'form' + (isSignIn ? ' show' : '');
+    document.getElementById('formSignUp').className = 'form' + (!isSignIn ? ' show' : '');
+    document.getElementById('cardSub').textContent = isSignIn
+      ? 'Masuk untuk memantau progres anak.'
+      : 'Buat akun baru — gratis, tanpa syarat.';
+    hideError();
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('msgError');
+    el.textContent = msg;
+    el.className = 'error-msg show';
+  }
+  function hideError() {
+    document.getElementById('msgError').className = 'error-msg';
+  }
+
+  function setLoading(btnId, loading) {
+    const btn = document.getElementById(btnId);
+    btn.disabled = loading;
+    btn.textContent = loading ? 'Memproses…' : (btnId === 'btnSignIn' ? 'Masuk →' : 'Buat Akun →');
+  }
+
+  async function handleSignIn(e) {
+    e.preventDefault();
+    hideError();
+    setLoading('btnSignIn', true);
+    try {
+      await AUTH.signIn(
+        document.getElementById('siEmail').value,
+        document.getElementById('siPassword').value,
+      );
+      window.location.href = '/dashboard.html';
+    } catch (err) {
+      showError(friendlyError(err.code));
+      setLoading('btnSignIn', false);
+    }
+  }
+
+  async function handleSignUp(e) {
+    e.preventDefault();
+    hideError();
+    setLoading('btnSignUp', true);
+    try {
+      await AUTH.signUp(
+        document.getElementById('suEmail').value,
+        document.getElementById('suPassword').value,
+        document.getElementById('suName').value,
+      );
+      window.location.href = '/dashboard.html';
+    } catch (err) {
+      showError(friendlyError(err.code));
+      setLoading('btnSignUp', false);
+    }
+  }
+
+  async function handleForgot(e) {
+    e.preventDefault();
+    const email = document.getElementById('siEmail').value;
+    if (!email) { showError('Isi email dulu, lalu klik "Lupa kata sandi?".'); return; }
+    try {
+      await AUTH.resetPassword(email);
+      showError(''); hideError();
+      alert(`Link reset kata sandi dikirim ke ${email}. Cek inbox-mu.`);
+    } catch (err) {
+      showError(friendlyError(err.code));
+    }
+  }
+
+  function friendlyError(code) {
+    const map = {
+      'auth/user-not-found':       'Email tidak ditemukan. Coba daftar dulu.',
+      'auth/wrong-password':       'Kata sandi salah. Coba lagi.',
+      'auth/invalid-credential':   'Email atau kata sandi salah.',
+      'auth/email-already-in-use': 'Email sudah terdaftar. Coba masuk.',
+      'auth/weak-password':        'Kata sandi terlalu pendek (min. 6 karakter).',
+      'auth/invalid-email':        'Format email tidak valid.',
+      'auth/too-many-requests':    'Terlalu banyak percobaan. Coba lagi nanti.',
+      'auth/network-request-failed': 'Tidak ada koneksi internet.',
+    };
+    return map[code] || 'Terjadi kesalahan. Coba lagi.';
+  }
+</script>
+
+</body>
+</html>

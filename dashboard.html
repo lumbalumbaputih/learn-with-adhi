@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Orang Tua · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%232E3192"/><text y=".9em" font-size="80" x="10">👨‍👧‍👦</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --tomato:#FF5C39; --mango:#FFC234; --forest:#1F9D55;
+      --sea:#1FA9C7; --indigo:#2E3192; --ink:#1A1614;
+      --paper:#FBF4E6; --paper-2:#F4ECD8; --muted:#6B6259;
+      --line:rgba(26,22,20,.12);
+      --fd:'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb:'Inter',system-ui,sans-serif;
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { -webkit-font-smoothing:antialiased; }
+    body { font-family:var(--fb); background:var(--paper); color:var(--ink); }
+
+    .shell { max-width:1100px; margin:0 auto; padding:0 40px; }
+    @media(max-width:860px) { .shell { padding:0 24px; } }
+    @media(max-width:560px) { .shell { padding:0 16px; } }
+
+    /* Nav */
+    .nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 0; border-bottom:2px solid var(--ink); gap:12px;
+    }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+    .brand-word { font-family:var(--fd); font-weight:800; font-size:22px; letter-spacing:-.03em; }
+    .nav-right { display:flex; align-items:center; gap:10px; }
+    .nav-name { font-size:14px; font-weight:600; color:var(--muted); }
+    .btn-ghost {
+      font-size:13px; font-weight:700; background:var(--paper-2);
+      border:2px solid var(--ink); border-radius:999px; padding:7px 16px;
+      cursor:pointer; transition:background .18s; text-decoration:none; color:var(--ink);
+    }
+    .btn-ghost:hover { background:var(--mango); }
+
+    /* Hero */
+    .hero { padding:48px 0 32px; }
+    .hero-eyebrow {
+      font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+      color:var(--indigo); margin-bottom:12px; display:flex; align-items:center; gap:8px;
+    }
+    .hero-eyebrow::before { content:''; display:block; width:28px; height:3px; background:var(--indigo); }
+    .hero-h1 {
+      font-family:var(--fd); font-weight:800;
+      font-size:clamp(36px,6vw,64px); line-height:.95; letter-spacing:-.04em; margin-bottom:16px;
+    }
+    .hero-sub { font-size:16px; color:var(--muted); max-width:480px; line-height:1.6; }
+
+    /* Section */
+    .section { margin-top:56px; }
+    .section-hdr {
+      display:flex; align-items:center; justify-content:space-between;
+      padding-bottom:16px; border-bottom:2px solid var(--ink); margin-bottom:32px;
+    }
+    .section-title { font-family:var(--fd); font-weight:800; font-size:clamp(22px,3vw,32px); letter-spacing:-.02em; }
+    .btn-add {
+      display:flex; align-items:center; gap:8px;
+      background:var(--indigo); color:#fff; border:2px solid var(--ink); border-radius:10px;
+      padding:10px 18px; font-family:var(--fd); font-weight:700; font-size:15px;
+      cursor:pointer; transition:background .18s;
+    }
+    .btn-add:hover { background:#23267a; }
+
+    /* Kid cards */
+    .kids-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px; }
+
+    .kid-card {
+      background:#fff; border:2.5px solid var(--ink); border-radius:20px;
+      box-shadow:4px 4px 0 var(--ink); overflow:hidden;
+      display:flex; flex-direction:column;
+    }
+    .kid-card-head {
+      padding:24px 24px 20px; display:flex; align-items:center; gap:16px;
+      border-bottom:1.5px solid var(--line);
+    }
+    .kid-avatar {
+      width:64px; height:64px; border-radius:50%;
+      border:2px solid var(--ink); background:var(--paper-2);
+      display:flex; align-items:center; justify-content:center; font-size:32px;
+      flex-shrink:0;
+    }
+    .kid-name { font-family:var(--fd); font-weight:800; font-size:22px; letter-spacing:-.02em; }
+    .kid-type { font-size:12px; color:var(--muted); font-weight:500; margin-top:2px; }
+    .kid-last { font-size:11px; color:var(--muted); margin-top:4px; }
+
+    .kid-stats { padding:20px 24px; display:flex; gap:16px; border-bottom:1.5px solid var(--line); }
+    .stat { flex:1; text-align:center; }
+    .stat-num { font-family:var(--fd); font-weight:800; font-size:28px; letter-spacing:-.02em; }
+    .stat-label { font-size:11px; color:var(--muted); font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+    .stat.stars .stat-num { color:var(--mango); }
+    .stat.done  .stat-num { color:var(--forest); }
+
+    .kid-courses { padding:20px 24px; flex:1; }
+    .courses-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
+    .course-rows { display:flex; flex-direction:column; gap:8px; }
+    .course-row { display:flex; align-items:center; gap:10px; }
+    .course-row-name { font-size:13px; font-weight:500; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .course-bar-wrap { width:80px; height:6px; background:var(--paper-2); border-radius:3px; flex-shrink:0; }
+    .course-bar { height:6px; border-radius:3px; background:var(--mango); transition:width .4s; }
+    .course-bar.done { background:var(--forest); }
+    .course-stars { font-size:12px; color:var(--muted); width:32px; text-align:right; flex-shrink:0; }
+
+    .kid-actions { padding:16px 24px; display:flex; gap:8px; border-top:1.5px solid var(--line); }
+    .btn-hub {
+      flex:1; padding:11px; background:var(--indigo); color:#fff;
+      border:2px solid var(--ink); border-radius:10px;
+      font-family:var(--fd); font-weight:700; font-size:14px;
+      text-decoration:none; text-align:center; transition:background .18s;
+    }
+    .btn-hub:hover { background:#23267a; }
+    .btn-delete {
+      padding:11px 14px; background:transparent; color:var(--muted);
+      border:2px solid var(--line); border-radius:10px; font-size:18px;
+      cursor:pointer; transition:background .18s, color .18s;
+    }
+    .btn-delete:hover { background:#fff0ee; color:var(--tomato); border-color:var(--tomato); }
+
+    .empty-state {
+      text-align:center; padding:60px 24px;
+      border:2.5px dashed var(--line); border-radius:20px;
+    }
+    .empty-icon { font-size:56px; margin-bottom:16px; }
+    .empty-title { font-family:var(--fd); font-weight:800; font-size:22px; margin-bottom:8px; }
+    .empty-sub { font-size:14px; color:var(--muted); margin-bottom:24px; }
+
+    /* Setup instructions */
+    .setup-box {
+      background:var(--paper-2); border:2px solid var(--line); border-radius:16px;
+      padding:24px; margin-top:32px;
+    }
+    .setup-title { font-weight:700; font-size:15px; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+    .setup-steps { display:flex; flex-direction:column; gap:8px; }
+    .setup-step { display:flex; gap:12px; align-items:flex-start; font-size:14px; line-height:1.55; }
+    .step-num {
+      width:24px; height:24px; border-radius:50%; background:var(--indigo); color:#fff;
+      font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; margin-top:1px;
+    }
+
+    /* Add Kid Modal */
+    .backdrop {
+      position:fixed; inset:0; background:rgba(26,22,20,.55); z-index:900;
+      display:flex; align-items:center; justify-content:center; padding:20px;
+    }
+    .modal {
+      background:var(--paper); border:2.5px solid var(--ink); border-radius:24px;
+      box-shadow:5px 5px 0 var(--ink); padding:36px 32px; max-width:440px; width:100%;
+    }
+    .modal h3 { font-family:var(--fd); font-weight:800; font-size:24px; letter-spacing:-.02em; margin-bottom:6px; }
+    .modal-sub { font-size:14px; color:var(--muted); margin-bottom:24px; }
+    .modal-form { display:flex; flex-direction:column; gap:16px; }
+    .field { display:flex; flex-direction:column; gap:6px; }
+    .field label { font-size:13px; font-weight:600; }
+    .field input, .field select {
+      padding:12px 14px; border:2px solid var(--line); border-radius:10px;
+      font-size:15px; font-family:var(--fb); background:#fff; outline:none;
+      transition:border-color .18s;
+    }
+    .field input:focus, .field select:focus { border-color:var(--indigo); }
+
+    .emoji-grid { display:flex; gap:8px; flex-wrap:wrap; margin-top:2px; }
+    .emoji-opt {
+      width:44px; height:44px; border-radius:10px; border:2px solid var(--line);
+      background:#fff; font-size:22px; cursor:pointer; display:flex;
+      align-items:center; justify-content:center; transition:border-color .18s, background .18s;
+    }
+    .emoji-opt.selected { border-color:var(--indigo); background:var(--paper-2); }
+
+    .modal-actions { display:flex; gap:10px; margin-top:4px; }
+    .btn-save {
+      flex:1; padding:13px; background:var(--forest); color:#fff;
+      border:2px solid var(--ink); border-radius:10px;
+      font-family:var(--fd); font-weight:700; font-size:16px; cursor:pointer;
+      transition:background .18s;
+    }
+    .btn-save:hover { background:#188042; }
+    .btn-save:disabled { opacity:.5; cursor:default; }
+    .btn-cancel {
+      padding:13px 20px; background:transparent; color:var(--muted);
+      border:2px solid var(--line); border-radius:10px; font-size:14px; cursor:pointer;
+    }
+
+    .footer {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-top:80px; padding:24px 0 48px; border-top:2px solid var(--ink);
+      font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+      color:var(--muted); flex-wrap:wrap; gap:12px;
+    }
+    .footer a { color:inherit; text-decoration:none; }
+    .footer a:hover { color:var(--indigo); }
+
+    @media(max-width:500px) { .hero { padding-top:32px; } }
+  </style>
+</head>
+<body>
+
+<div id="authGate" style="display:none"><!-- shown while checking auth --></div>
+
+<div class="shell" id="mainContent" style="display:none">
+
+  <nav class="nav">
+    <a href="/kids.html" class="brand">
+      <span style="font-size:24px">👨‍👧‍👦</span>
+      <div class="brand-word">adhi<span style="color:var(--indigo)">learn</span></div>
+    </a>
+    <div class="nav-right">
+      <span class="nav-name" id="parentName"></span>
+      <a href="/kids.html" class="btn-ghost">Halaman Anak</a>
+      <button class="btn-ghost" onclick="handleLogout()">Keluar</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">Dashboard Orang Tua</div>
+    <h1 class="hero-h1">Progres<br><em style="color:var(--indigo)">anak-anakmu</em></h1>
+    <p class="hero-sub">Pantau bintang, bab selesai, dan kursus yang sudah dijelajahi setiap anak.</p>
+  </section>
+
+  <!-- Kids section -->
+  <section class="section">
+    <div class="section-hdr">
+      <h2 class="section-title">👧🧒 Anak-anakmu</h2>
+      <button class="btn-add" onclick="openAddKid()">+ Tambah Anak</button>
+    </div>
+    <div id="kidsGrid" class="kids-grid">
+      <div style="padding:40px;text-align:center;color:var(--muted)">Memuat…</div>
+    </div>
+
+    <div class="setup-box" id="setupBox" style="display:none">
+      <div class="setup-title">📱 Cara pakai di perangkat anak</div>
+      <div class="setup-steps">
+        <div class="setup-step">
+          <div class="step-num">1</div>
+          <div>Buka <strong>learn-with-adhi.vercel.app/kids.html</strong> di perangkat anak</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">2</div>
+          <div>Tap <strong>"Login Orang Tua"</strong> → masuk dengan akun ini</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">3</div>
+          <div>Pilih nama anak → progres tersinkron otomatis ke dashboard ini</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>© 2026 Learn with Adhi</span>
+    <a href="/kids.html">← Halaman Anak</a>
+  </footer>
+
+</div>
+
+<!-- Add Kid Modal -->
+<div class="backdrop" id="addKidModal" style="display:none" onclick="if(event.target===this)closeAddKid()">
+  <div class="modal">
+    <h3>Tambah Profil Anak</h3>
+    <p class="modal-sub">Profil ini akan menyimpan progres dan bintang anak di cloud.</p>
+    <div class="modal-form">
+      <div class="field">
+        <label>Nama anak</label>
+        <input type="text" id="kidName" placeholder="Rayyan, Budi, Siti…" maxlength="30">
+      </div>
+      <div class="field">
+        <label>Pilih avatar</label>
+        <div class="emoji-grid" id="emojiGrid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+      <div class="field">
+        <label>Dunia belajar</label>
+        <select id="kidType">
+          <option value="rayyan">🚂 Dunia Rayyan — Matematika & Coding (usia 7+)</option>
+          <option value="raya">🌸 Dunia Raya — Visual & PAUD (usia 2–5)</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save" id="btnSaveKid" onclick="saveKid()">Simpan ✓</button>
+        <button class="btn-cancel" onclick="closeAddKid()">Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="/assets/js/auth.js"></script>
+<script>
+  const EMOJIS = ['🧒','👦','👧','🧑','👶','🦊','🐯','🐻','🦄','🐼','🐸','🦁'];
+  const COURSE_NAMES = {
+    rayyanMath:    { name:'Petualangan Angka',       total:6 },
+    rayyanMath3:   { name:'Petualangan KAI 🚂',      total:6 },
+    rayyanMath4:   { name:'Petualangan Antariksa 🚀', total:6 },
+    rayyanMath5:   { name:'Laut Dalam 🌊',            total:6 },
+    rayyanMath6:   { name:'Kota Masa Depan 🏙️',      total:6 },
+    rayyanMath7:   { name:'Lab Misteri X 🧪',         total:6 },
+    rayyanCoding:  { name:'Pabrik Robot KAI 🤖',     total:6 },
+    rayyanCoding2: { name:'Robot Antariksa 🛰️',      total:6 },
+    rayyanCoding3: { name:'Mantra Kode ✨',           total:6 },
+    rayyanCoding4: { name:'Studio Pelukis Kode 🎨',  total:6 },
+    rayyanCoding5: { name:'Buat Game-mu 🎮',         total:6 },
+    rayaMath:      { name:'Matematika Raya',          total:4 },
+    rayaVisual:    { name:'Belajar Visual',           total:4 },
+    rayaLearning:  { name:'Belajar Bersama Raya',     total:4 },
+  };
+
+  let selectedEmoji = '🧒';
+
+  /* Auth gate */
+  AUTH.init();
+  AUTH.onAuthChange(user => {
+    if (!user) { window.location.href = '/login.html'; return; }
+    document.getElementById('mainContent').style.display = '';
+    document.getElementById('parentName').textContent = 'Hai, ' + (user.displayName || user.email) + '!';
+    loadKids();
+  });
+
+  /* Load & render kids */
+  async function loadKids() {
+    const kids = await AUTH.getKids();
+    const grid = document.getElementById('kidsGrid');
+
+    if (kids.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column:1/-1">
+          <div class="empty-icon">👶</div>
+          <div class="empty-title">Belum ada profil anak</div>
+          <div class="empty-sub">Tambahkan profil untuk mulai memantau progres.</div>
+          <button class="btn-add" onclick="openAddKid()">+ Tambah Anak Pertama</button>
+        </div>`;
+      document.getElementById('setupBox').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('setupBox').style.display = '';
+    grid.innerHTML = kids.map(kid => renderKidCard(kid)).join('');
+  }
+
+  function renderKidCard(kid) {
+    const keys = AUTH.PROGRESS_KEYS_BY_TYPE[kid.progressType] || [];
+    const hub  = AUTH.HUB_BY_TYPE[kid.progressType] || '/kids.html';
+    const progress = kid.progress || {};
+
+    let totalStars  = 0;
+    let totalDone   = 0;
+    let courseRows  = '';
+
+    for (const key of keys) {
+      const p     = progress[key] || {};
+      const stars = p.totalStars || 0;
+      const chaps = Object.values(p.progress || {}).filter(c => c.stars > 0).length;
+      const total = COURSE_NAMES[key]?.total || 6;
+      const pct   = Math.round((chaps / total) * 100);
+      const done  = chaps >= total;
+      totalStars += stars;
+      totalDone  += (done ? 1 : 0);
+      if (stars > 0 || chaps > 0) {
+        courseRows += `
+          <div class="course-row">
+            <span class="course-row-name">${COURSE_NAMES[key]?.name || key}</span>
+            <div class="course-bar-wrap"><div class="course-bar ${done ? 'done' : ''}" style="width:${pct}%"></div></div>
+            <span class="course-stars">⭐${stars}</span>
+          </div>`;
+      }
+    }
+
+    if (!courseRows) {
+      courseRows = '<div style="font-size:13px;color:var(--muted)">Belum memulai petualangan.</div>';
+    }
+
+    const typeLabel = kid.progressType === 'raya' ? 'Dunia Raya 🌸' : 'Dunia Rayyan 🚂';
+    const lastActive = kid.lastActive
+      ? 'Terakhir aktif: ' + new Date(kid.lastActive).toLocaleDateString('id-ID', {day:'numeric',month:'short'})
+      : 'Belum pernah aktif';
+
+    return `
+      <div class="kid-card">
+        <div class="kid-card-head">
+          <div class="kid-avatar">${kid.emoji || '🧒'}</div>
+          <div>
+            <div class="kid-name">${kid.name}</div>
+            <div class="kid-type">${typeLabel}</div>
+            <div class="kid-last">${lastActive}</div>
+          </div>
+        </div>
+        <div class="kid-stats">
+          <div class="stat stars">
+            <div class="stat-num">${totalStars}</div>
+            <div class="stat-label">⭐ Bintang</div>
+          </div>
+          <div class="stat done">
+            <div class="stat-num">${totalDone}</div>
+            <div class="stat-label">✅ Selesai</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">${keys.length}</div>
+            <div class="stat-label">📚 Kursus</div>
+          </div>
+        </div>
+        <div class="kid-courses">
+          <div class="courses-label">Progres per Kursus</div>
+          <div class="course-rows">${courseRows}</div>
+        </div>
+        <div class="kid-actions">
+          <a href="${hub}" class="btn-hub" onclick="AUTH.setActiveKid('${kid.id}')">
+            Masuk sebagai ${kid.name} →
+          </a>
+          <button class="btn-delete" onclick="confirmDeleteKid('${kid.id}','${kid.name}')" title="Hapus profil">🗑️</button>
+        </div>
+      </div>`;
+  }
+
+  /* Add Kid Modal */
+  function openAddKid() {
+    const grid = document.getElementById('emojiGrid');
+    grid.innerHTML = EMOJIS.map(e =>
+      `<button type="button" class="emoji-opt${e === selectedEmoji ? ' selected' : ''}" onclick="selectEmoji('${e}',this)">${e}</button>`
+    ).join('');
+    document.getElementById('kidName').value = '';
+    document.getElementById('addKidModal').style.display = 'flex';
+    setTimeout(() => document.getElementById('kidName').focus(), 50);
+  }
+
+  function closeAddKid() {
+    document.getElementById('addKidModal').style.display = 'none';
+  }
+
+  function selectEmoji(emoji, el) {
+    selectedEmoji = emoji;
+    document.querySelectorAll('.emoji-opt').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  async function saveKid() {
+    const name = document.getElementById('kidName').value.trim();
+    if (!name) { document.getElementById('kidName').focus(); return; }
+    const type = document.getElementById('kidType').value;
+    const btn  = document.getElementById('btnSaveKid');
+    btn.disabled = true;
+    btn.textContent = 'Menyimpan…';
+    try {
+      await AUTH.addKid(name, selectedEmoji, type);
+      closeAddKid();
+      await loadKids();
+    } catch (e) {
+      alert('Gagal menyimpan. Coba lagi.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Simpan ✓';
+    }
+  }
+
+  async function confirmDeleteKid(kidId, name) {
+    if (!confirm(`Hapus profil "${name}"? Semua data progres di cloud akan hilang.`)) return;
+    try {
+      await AUTH.deleteKid(kidId);
+      loadKids();
+    } catch (e) {
+      alert('Gagal menghapus. Coba lagi.');
+    }
+  }
+
+  async function handleLogout() {
+    await AUTH.signOut();
+    window.location.href = '/login.html';
+  }
+</script>
+
+</body>
+</html>

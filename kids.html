@@ -121,6 +121,24 @@
     .chooser-card.rayyan .chooser-cta { color: var(--tomato); }
     .chooser-card.raya   .chooser-cta { color: var(--mawar); }
 
+    /* AUTH BAR */
+    .auth-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--indigo); color: #fff; padding: 10px 48px;
+      font-size: 13px; font-weight: 600; gap: 12px; flex-wrap: wrap;
+    }
+    @media (max-width: 860px) { .auth-bar { padding: 10px 28px; } }
+    @media (max-width: 560px) { .auth-bar { padding: 10px 18px; } }
+    .auth-bar a, .auth-bar button {
+      background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.3);
+      border-radius: 999px; padding: 5px 14px; color: #fff;
+      font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer;
+      font-family: var(--fb); transition: background .18s;
+    }
+    .auth-bar a:hover, .auth-bar button:hover { background: rgba(255,255,255,.3); }
+    .auth-bar-left { display: flex; align-items: center; gap: 10px; }
+    .auth-bar-right { display: flex; align-items: center; gap: 8px; }
+
     /* FOOTER */
     .footer {
       display: flex; align-items: center; justify-content: space-between;
@@ -134,6 +152,11 @@
   </style>
 </head>
 <body>
+
+<!-- Auth bar — hidden until Firebase loads -->
+<div id="authBar" style="display:none">
+  <!-- filled by JS -->
+</div>
 
 <div class="shell">
 
@@ -161,29 +184,8 @@
     <p class="hero-lead">Pilih namamu — lalu langsung masuk ke dunia petualanganmu sendiri!</p>
   </section>
 
-  <div class="chooser">
-    <a href="rayyan.html" class="chooser-card rayyan">
-      <div class="chooser-avatar">🧒</div>
-      <div class="chooser-name">Rayyan</div>
-      <div class="chooser-desc">Petualangan angka, robot kereta, dan game seru.</div>
-      <div class="chooser-stats">
-        <div class="chooser-pill">📚 11 petualangan</div>
-        <div class="chooser-pill">🎮 2 game</div>
-        <div class="chooser-pill">⭐ <span id="rayyanStars">0</span> bintang</div>
-      </div>
-      <div class="chooser-cta">Masuk Dunia Rayyan →</div>
-    </a>
-    <a href="raya.html" class="chooser-card raya">
-      <div class="chooser-avatar">👧</div>
-      <div class="chooser-name">Raya</div>
-      <div class="chooser-desc">Belajar visual, warna, bentuk, dan game cari-cari.</div>
-      <div class="chooser-stats">
-        <div class="chooser-pill">📚 2 kursus</div>
-        <div class="chooser-pill">🎮 1 game</div>
-        <div class="chooser-pill">⭐ <span id="rayaStars">0</span> bintang</div>
-      </div>
-      <div class="chooser-cta">Masuk Dunia Raya →</div>
-    </a>
+  <div class="chooser" id="chooser">
+    <!-- filled by JS — shows parent's kids when logged in, default cards otherwise -->
   </div>
 
   <footer class="footer">
@@ -193,6 +195,10 @@
 
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js" defer></script>
+<script src="/assets/js/auth.js" defer></script>
 <script>
   function sumStars(keys) {
     let t = 0;
@@ -201,10 +207,114 @@
     }
     return t;
   }
-  document.getElementById('rayyanStars').textContent =
-    sumStars(['rayyanMath','rayyanMath3','rayyanMath4','rayyanMath5','rayyanCoding','rayyanMath6','rayyanCoding2','rayyanMath7','rayyanCoding3','rayyanCoding4','rayyanCoding5']);
-  document.getElementById('rayaStars').textContent =
-    sumStars(['rayaMath','rayaVisual','rayaLearning']);
+
+  const DEFAULT_CARDS = [
+    {
+      href: 'rayyan.html', cls: 'rayyan', avatar: '🧒', name: 'Rayyan',
+      desc: 'Petualangan angka, robot kereta, dan game seru.',
+      pills: ['📚 11 petualangan','🎮 2 game'],
+      starsKeys: ['rayyanMath','rayyanMath3','rayyanMath4','rayyanMath5','rayyanCoding','rayyanMath6','rayyanCoding2','rayyanMath7','rayyanCoding3','rayyanCoding4','rayyanCoding5'],
+      cta: 'Masuk Dunia Rayyan →',
+    },
+    {
+      href: 'raya.html', cls: 'raya', avatar: '👧', name: 'Raya',
+      desc: 'Belajar visual, warna, bentuk, dan game cari-cari.',
+      pills: ['📚 2 kursus','🎮 1 game'],
+      starsKeys: ['rayaMath','rayaVisual','rayaLearning'],
+      cta: 'Masuk Dunia Raya →',
+    },
+  ];
+
+  function renderDefaultCards() {
+    document.getElementById('chooser').innerHTML = DEFAULT_CARDS.map(c => `
+      <a href="${c.href}" class="chooser-card ${c.cls}">
+        <div class="chooser-avatar">${c.avatar}</div>
+        <div class="chooser-name">${c.name}</div>
+        <div class="chooser-desc">${c.desc}</div>
+        <div class="chooser-stats">
+          ${c.pills.map(p => `<div class="chooser-pill">${p}</div>`).join('')}
+          <div class="chooser-pill">⭐ ${sumStars(c.starsKeys)} bintang</div>
+        </div>
+        <div class="chooser-cta">${c.cta}</div>
+      </a>`).join('');
+  }
+
+  function renderAuthCards(kids) {
+    if (!kids.length) {
+      document.getElementById('chooser').innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:48px 24px;border:2.5px dashed var(--line);border-radius:24px">
+          <div style="font-size:48px;margin-bottom:12px">👶</div>
+          <div style="font-family:var(--fd);font-weight:800;font-size:22px;margin-bottom:8px">Belum ada profil anak</div>
+          <div style="font-size:14px;color:var(--muted);margin-bottom:20px">Tambahkan dari dashboard orang tua.</div>
+          <a href="/dashboard.html" style="display:inline-block;padding:12px 24px;background:var(--indigo);color:#fff;border:2px solid var(--ink);border-radius:10px;font-family:var(--fd);font-weight:700;text-decoration:none">
+            Buka Dashboard →
+          </a>
+        </div>`;
+      return;
+    }
+    document.getElementById('chooser').innerHTML = kids.map(kid => {
+      const hub   = AUTH.HUB_BY_TYPE[kid.progressType] || '/rayyan.html';
+      const cls   = kid.progressType === 'raya' ? 'raya' : 'rayyan';
+      const keys  = AUTH.PROGRESS_KEYS_BY_TYPE[kid.progressType] || [];
+      const stars = sumStars(keys);
+      return `
+        <a href="${hub}" class="chooser-card ${cls}" onclick="AUTH.setActiveKid('${kid.id}')">
+          <div class="chooser-avatar">${kid.emoji || '🧒'}</div>
+          <div class="chooser-name">${kid.name}</div>
+          <div class="chooser-desc">Tap untuk masuk ke dunia petualanganmu!</div>
+          <div class="chooser-stats">
+            <div class="chooser-pill">⭐ ${stars} bintang</div>
+          </div>
+          <div class="chooser-cta">Masuk Dunia ${kid.name} →</div>
+        </a>`;
+    }).join('');
+  }
+
+  /* Start with default cards immediately (no flicker) */
+  renderDefaultCards();
+
+  /* Then upgrade to auth-aware cards once Firebase loads */
+  window.addEventListener('load', () => {
+    if (typeof AUTH === 'undefined') return;
+    AUTH.init();
+    AUTH.onAuthChange(async user => {
+      const bar = document.getElementById('authBar');
+      if (user) {
+        /* Auth bar — logged in */
+        bar.className = 'auth-bar';
+        bar.style.display = '';
+        bar.innerHTML = `
+          <div class="auth-bar-left">
+            👋 Hai, <strong>${user.displayName || user.email}</strong>!
+          </div>
+          <div class="auth-bar-right">
+            <a href="/dashboard.html">📊 Dashboard</a>
+            <button onclick="AUTH.signOut().then(()=>location.reload())">Keluar</button>
+          </div>`;
+        /* Show kids from Firestore */
+        const kids = await AUTH.getKids();
+        /* Pull latest progress before rendering */
+        for (const kid of kids) {
+          await AUTH.pullKidProgress(kid.id).catch(() => {});
+        }
+        /* Reload kid data with fresh progress embedded */
+        const freshKids = await AUTH.getKids();
+        renderAuthCards(freshKids);
+      } else {
+        /* Auth bar — logged out: show subtle login prompt */
+        bar.className = 'auth-bar';
+        bar.style.display = '';
+        bar.innerHTML = `
+          <div class="auth-bar-left" style="opacity:.8">
+            👨‍👧‍👦 Orang tua? Pantau progres anak dari dashboard.
+          </div>
+          <div class="auth-bar-right">
+            <a href="/login.html">Masuk sebagai Orang Tua</a>
+          </div>`;
+        renderDefaultCards();
+      }
+    });
+  });
 </script>
 
 </body>
