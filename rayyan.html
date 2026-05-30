@@ -640,7 +640,9 @@
 
 <!-- ── FIREBASE (loaded async, gracefully optional) ─────────────── -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js" defer></script>
+<script src="/assets/js/auth.js" defer></script>
 <script src="/assets/js/sync.js" defer></script>
 
 <script>
@@ -707,6 +709,18 @@
   }
 
   async function runSync() {
+    /* Prefer auth-based sync when a parent is logged in with an active kid */
+    if (typeof AUTH !== 'undefined') {
+      AUTH.init();
+      const user = AUTH.getUser();
+      const kidId = user && AUTH.getActiveKid();
+      if (user && kidId) {
+        const changed = await AUTH.syncActiveKid(setSyncStatus);
+        if (changed) buildMap();
+        return;
+      }
+    }
+    /* Fall back to family-code sync */
     if (typeof SYNC === 'undefined' || !SYNC.isConfigured()) {
       setSyncStatus('offline');
       return;
@@ -714,9 +728,7 @@
     SYNC.init();
     if (!SYNC.getFamilyCode()) { setSyncStatus('no-code'); return; }
     const changed = await SYNC.sync(setSyncStatus);
-    if (changed) {
-      buildMap();
-    }
+    if (changed) buildMap();
   }
 
   /* Run sync once Firebase scripts have loaded */
