@@ -1213,7 +1213,7 @@ function showToast(correct, correctAns, expl) {
   document.getElementById('toastIco').textContent = correct ? '🎉' : '❌';
   document.getElementById('toastTitle').textContent = correct
     ? 'Benar! Luar biasa, Kapten Rayyan!'
-    : `Belum tepat. Jawaban: ${correctAns}`;
+    : 'Belum tepat — yuk pikirkan lagi! 💡';
   document.getElementById('toastExpl').textContent = expl || '';
   toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
   document.getElementById('nxtBtn').className = 'nxt-btn show';
@@ -1340,7 +1340,7 @@ function showComplete(ranOutOfLives) {
       <div class="review-ico">${h.correct ? '✅' : '❌'}</div>
       <div>
         <div class="review-q">${h.q}</div>
-        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu: ${h.userAns} · Jawaban: <strong>${h.correctAns}</strong>`}</div>
+        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu jawab: ${h.userAns} — coba lagi ya! 🤔`}</div>
       </div>
     </div>`).join('');
 
