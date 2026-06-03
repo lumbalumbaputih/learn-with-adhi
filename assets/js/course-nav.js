@@ -34,20 +34,18 @@
     const prev = i > 0 ? peers[i - 1] : null;
     const next = i < peers.length - 1 ? peers[i + 1] : null;
 
+    if (!prev && !next) { el.style.display = 'none'; return; }
+
     function card(item, label, side) {
-      if (!item) {
-        return (
-          '<div class="pager-' + side + ' pager-disabled" aria-hidden="true">' +
-          '<div class="pager-label">' + label + '</div>' +
-          '<div class="pager-title">—</div></div>'
-        );
-      }
+      if (!item) return '';
       return (
         '<a class="pager-' + side + '" href="/' + item.path + '">' +
         '<div class="pager-label">' + label + '</div>' +
         '<div class="pager-title">' + item.title + '</div></a>'
       );
     }
+
+    if (!prev || !next) el.style.gridTemplateColumns = '1fr';
     el.innerHTML = card(prev, '← Previous', 'prev') + card(next, 'Next →', 'next');
   }
 
