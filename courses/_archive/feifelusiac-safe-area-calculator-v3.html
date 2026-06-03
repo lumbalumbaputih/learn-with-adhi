@@ -132,7 +132,7 @@
     <div class="stats-row"><span class="stats-label">Residential area</span><span class="stats-val" id="statResArea">0 km²</span></div>
     <div class="stats-row big"><span class="stats-label">Supported population</span><span class="stats-val" id="statPop">0</span></div>
     <div class="stats-row"><span class="stats-label">Target</span><span class="stats-val" id="statTarget">600,000</span></div>
-    <div class="status" id="statusBox">—</div>
+    <div class="status" id="statusBox">–</div>
 
     <h2 style="margin-top:18px">By zone</h2>
     <div class="zone-breakdown" id="zoneBreakdown"></div>
@@ -312,7 +312,7 @@ function updateStats(){
   document.getElementById('statTarget').textContent = target.toLocaleString();
   const box = document.getElementById('statusBox');
   if(target===0){
-    box.className='status'; box.textContent='—';
+    box.className='status'; box.textContent='–';
   } else if(pop>=target){
     box.className='status ok';
     box.textContent = `OK · surplus ${(pop-target).toLocaleString()}`;
@@ -418,7 +418,7 @@ function wire(){
   document.getElementById('btnClear').onclick = () => {
     state.active = 'unmarked';
     renderZoneList();
-    toast('Clear mode — click cells to erase');
+    toast('Clear mode – click cells to erase');
   };
   document.getElementById('btnResetZone').onclick = () => {
     const def = ZONE_BY_ID[state.active]?.density ?? 0;

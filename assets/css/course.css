@@ -1,4 +1,4 @@
-/* Learn with Adhi — course page shell.
+/* Learn with Adhi – course page shell.
    Shared layout for every course HTML: header bar, progress bar, sections,
    lesson markers, breadcrumb, prev/next footer. */
 
@@ -144,7 +144,7 @@
 .course-section ul,
 .course-section ol { padding-left: 24px; }
 
-/* Lesson markers — semantic icons for concept / read / do / warn */
+/* Lesson markers – semantic icons for concept / read / do / warn */
 .lesson-marker {
   display: inline-flex;
   align-items: center;

@@ -153,7 +153,7 @@
 </head>
 <body>
 
-<!-- Auth bar — hidden until Firebase loads -->
+<!-- Auth bar – hidden until Firebase loads -->
 <div id="authBar" style="display:none">
   <!-- filled by JS -->
 </div>
@@ -181,11 +181,11 @@
   <section class="hero">
     <div class="hero-eyebrow">Zona Belajar Khusus</div>
     <h1 class="hero-h1">Siapa<br>yang main<br>hari ini?</h1>
-    <p class="hero-lead">Pilih namamu — lalu langsung masuk ke dunia petualanganmu sendiri!</p>
+    <p class="hero-lead">Pilih namamu – lalu langsung masuk ke dunia petualanganmu sendiri!</p>
   </section>
 
   <div class="chooser" id="chooser">
-    <!-- filled by JS — shows parent's kids when logged in, default cards otherwise -->
+    <!-- filled by JS – shows parent's kids when logged in, default cards otherwise -->
   </div>
 
   <footer class="footer">
@@ -280,7 +280,7 @@
     AUTH.onAuthChange(async user => {
       const bar = document.getElementById('authBar');
       if (user) {
-        /* Auth bar — logged in */
+        /* Auth bar – logged in */
         bar.className = 'auth-bar';
         bar.style.display = '';
         bar.innerHTML = `
@@ -301,7 +301,7 @@
         const freshKids = await AUTH.getKids();
         renderAuthCards(freshKids);
       } else {
-        /* Auth bar — logged out: show subtle login prompt */
+        /* Auth bar – logged out: show subtle login prompt */
         bar.className = 'auth-bar';
         bar.style.display = '';
         bar.innerHTML = `

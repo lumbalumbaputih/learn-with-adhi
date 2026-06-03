@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Mantra Kode ✨ — Petualangan Mantra Rayyan</title>
+  <title>Mantra Kode ✨ – Petualangan Mantra Rayyan</title>
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23C084FC"/><text y=".9em" font-size="78" x="10">✨</text></svg>'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -505,7 +505,7 @@ const Audio = (() => {
 ════════════════════════════════════════ */
 function lsn1() { return `
 <div class="ls"><div class="ls-h">💬 Apa itu console.log?</div>
-<p>console.log() adalah mantra pertamamu — cara memberitahu komputer untuk BERTERIAK sesuatu ke layar!</p>
+<p>console.log() adalah mantra pertamamu – cara memberitahu komputer untuk BERTERIAK sesuatu ke layar!</p>
 <div class="spellbook"><span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Halo Rayyan!"</span>);</div>
 <div class="spell-output show"><div class="spell-output-label">📺 Output:</div>Halo Rayyan!</div></div>
 <div class="ls"><div class="ls-h">⚡ Aturan Mantra</div>
@@ -567,7 +567,7 @@ function lsn5() { return `
 <p><strong>return</strong> = kirimkan hasilnya kembali. Tanpa return, function tidak mengembalikan nilai.</p></div>`; }
 
 function lsn6() { return `
-<div class="ls"><div class="ls-h">🧙 Mantra Gabungan — BOSS!</div>
+<div class="ls"><div class="ls-h">🧙 Mantra Gabungan – BOSS!</div>
 <p>Saatnya gabungkan semua mantramu: <strong>variabel + if/else + loop + function</strong> = program nyata!</p>
 <div class="spellbook"><span class="kw">function</span> <span class="fn">cekNilai</span>(n) {
   <span class="kw">if</span> (n >= <span class="num">75</span>) {
@@ -588,11 +588,11 @@ const CHAPTERS = [
   {
     id:'console-log', title:'Mantra Pertama', depth:'📖 Halaman 1', emoji:'💬',
     color:'#C084FC', colorBg:'#F5F0FF',
-    desc:'console.log(), tanda kutip, dan titik koma — mantra paling dasar!',
+    desc:'console.log(), tanda kutip, dan titik koma – mantra paling dasar!',
     kapi:'console.log() adalah mantra untuk BERTERIAK ke layar! Tulis isi di dalam tanda kutip. Titik koma ; di akhir = selesai mengeja mantra!',
     lessonHTML: lsn1(), isBoss: false,
     questions:[
-      {type:'code-fill', q:'Lengkapi mantra untuk menampilkan "Salam Dunia!"', code:'console.log(___);', blankIdx:0, ans:'"Salam Dunia!"', output:'Salam Dunia!', expl:'console.log("Salam Dunia!") — tanda kutip untuk teks!'},
+      {type:'code-fill', q:'Lengkapi mantra untuk menampilkan "Salam Dunia!"', code:'console.log(___);', blankIdx:0, ans:'"Salam Dunia!"', output:'Salam Dunia!', expl:'console.log("Salam Dunia!") – tanda kutip untuk teks!'},
       {type:'mc', q:'Apa hasil dari: console.log(42) ?', opts:['42','console.log','undefined','"42"'], ans:0, expl:'console.log(42) mencetak angka 42!'},
       {type:'code-fill', q:'Lengkapi untuk mencetak nama Rayyan', code:'console.log("Aku ___!");', blankIdx:0, ans:'Rayyan', output:'Aku Rayyan!', expl:'Ganti ___ dengan Rayyan di dalam tanda kutip!'},
       {type:'mc', q:'Mana penulisan mantra yang BENAR?', opts:['console.log("halo")','console.log(halo)','consolelog("halo")','Console.Log("halo")'], ans:0, expl:'Harus ada tanda kutip untuk teks, dan console.log ditulis kecil semua!'},
@@ -603,13 +603,13 @@ const CHAPTERS = [
   {
     id:'variables', title:'Kotak Ajaib', depth:'📖 Halaman 2', emoji:'📦',
     color:'#FFC234', colorBg:'#FFF5D6',
-    desc:'let, variabel angka & teks — simpan nilai dalam kotak ajaib!',
+    desc:'let, variabel angka & teks – simpan nilai dalam kotak ajaib!',
     kapi:'let = membuat kotak ajaib baru! let nama = "Rayyan" (kotak isi teks). let umur = 8 (kotak isi angka). Ganti isinya kapan saja!',
     lessonHTML: lsn2(), isBoss: false,
     questions:[
-      {type:'code-fill', q:'Buat kotak ajaib bernama "umur" berisi angka 8', code:'let ___ = 8;', blankIdx:0, ans:'umur', output:'(kotak "umur" dibuat!)', expl:'let umur = 8; — kotak bernama "umur" berisi 8!'},
+      {type:'code-fill', q:'Buat kotak ajaib bernama "umur" berisi angka 8', code:'let ___ = 8;', blankIdx:0, ans:'umur', output:'(kotak "umur" dibuat!)', expl:'let umur = 8; – kotak bernama "umur" berisi 8!'},
       {type:'mc', q:'Apa isi variabel ini? let kota = "Jakarta"', opts:['"Jakarta"','kota','let','Jakarta'], ans:3, expl:'Isi variabel kota adalah Jakarta!'},
-      {type:'code-fill', q:'Lengkapi untuk mencetak isi variabel nama', code:'let nama = "Rayyan";\nconsole.log(___);', blankIdx:1, ans:'nama', output:'Rayyan', expl:'console.log(nama) — tidak pakai kutip untuk variabel!'},
+      {type:'code-fill', q:'Lengkapi untuk mencetak isi variabel nama', code:'let nama = "Rayyan";\nconsole.log(___);', blankIdx:1, ans:'nama', output:'Rayyan', expl:'console.log(nama) – tidak pakai kutip untuk variabel!'},
       {type:'mc', q:'Mana cara benar untuk variabel teks?', opts:["let x = 'halo'",'let x = halo',"let x == 'halo'",'var = halo'], ans:0, expl:"Teks harus dalam tanda kutip: let x = 'halo'!"},
       {type:'code-fill', q:'Lengkapi: cetak penjumlahan a + b', code:'let a = 10;\nlet b = 5;\nconsole.log(a + ___);', blankIdx:2, ans:'b', output:'15', expl:'a + b = 10 + 5 = 15!'},
       {type:'mc', q:'let x = 3; x = 7; Sekarang nilai x?', visual:'📦', opts:['3','7','10','undefined'], ans:1, expl:'Variabel bisa diubah! x pertama 3, lalu diganti 7!'},
@@ -618,8 +618,8 @@ const CHAPTERS = [
   {
     id:'if-else', title:'Mantra Bercabang', depth:'📖 Halaman 3', emoji:'🔀',
     color:'#FF5C39', colorBg:'#FFE8E3',
-    desc:'if, else, dan perbandingan — buat robot memilih jalan!',
-    kapi:'if = KALAU. else = KALAU TIDAK. if (umur > 7) { ... } else { ... } — Kalau umur lebih dari 7, jalankan yang pertama!',
+    desc:'if, else, dan perbandingan – buat robot memilih jalan!',
+    kapi:'if = KALAU. else = KALAU TIDAK. if (umur > 7) { ... } else { ... } – Kalau umur lebih dari 7, jalankan yang pertama!',
     lessonHTML: lsn3(), isBoss: false,
     questions:[
       {type:'mc', q:'let x = 10; if (x > 5) { console.log("besar"); } Apa yang dicetak?', opts:['besar','kecil','10','tidak ada'], ans:0, expl:'10 > 5 adalah BENAR → masuk if → cetak "besar"!'},
@@ -633,7 +633,7 @@ const CHAPTERS = [
   {
     id:'loops', title:'Mantra Berulang', depth:'📖 Halaman 4', emoji:'🔄',
     color:'#1F9D55', colorBg:'#E3F5EB',
-    desc:'for loop, while loop — ulangi mantra berkali-kali!',
+    desc:'for loop, while loop – ulangi mantra berkali-kali!',
     kapi:'for = ulang sejumlah tertentu! for (let i = 0; i < 5; i++) artinya: mulai dari 0, ulangi selama i kurang dari 5, tambah i tiap putaran!',
     lessonHTML: lsn4(), isBoss: false,
     questions:[
@@ -648,7 +648,7 @@ const CHAPTERS = [
   {
     id:'functions', title:'Resep Mantra', depth:'📖 Halaman 5', emoji:'📜',
     color:'#1FA9C7', colorBg:'#E3F4F8',
-    desc:'function, parameter, return — buat mantra yang bisa dipanggil ulang!',
+    desc:'function, parameter, return – buat mantra yang bisa dipanggil ulang!',
     kapi:'function = resep mantra yang bisa dipanggil berkali-kali! function sapa(nama) { return "Halo " + nama; } Panggil: sapa("Rayyan") → "Halo Rayyan"!',
     lessonHTML: lsn5(), isBoss: false,
     questions:[
@@ -657,13 +657,13 @@ const CHAPTERS = [
       {type:'mc', q:'Apa yang dilakukan kata return?', visual:'📤', opts:['Mengembalikan nilai','Mencetak ke layar','Membuat variabel','Mengulang kode'], ans:0, expl:'return = kirim kembali hasil dari fungsi!'},
       {type:'code-fill', q:'Panggil fungsi sapa dengan argumen "Mars"', code:'function sapa(planet) {\n  return "Halo " + planet;\n}\nconsole.log(sapa(___));', blankIdx:2, ans:'"Mars"', output:'Halo Mars', expl:'sapa("Mars") → return "Halo " + "Mars" = "Halo Mars"!'},
       {type:'mc', q:'function kuadrat(x) { return x * x; } kuadrat(5) = ?', opts:['10','25','55','5'], ans:1, expl:'5 × 5 = 25!'},
-      {type:'mc', q:'Fungsi bisa dipanggil berapa kali?', visual:'📜', opts:['Hanya 1x','Hanya 2x','Sebanyak yang dibutuhkan!','Maksimal 10x'], ans:2, expl:'Itulah kekuatan function — satu resep, dipakai berkali-kali!'},
+      {type:'mc', q:'Fungsi bisa dipanggil berapa kali?', visual:'📜', opts:['Hanya 1x','Hanya 2x','Sebanyak yang dibutuhkan!','Maksimal 10x'], ans:2, expl:'Itulah kekuatan function – satu resep, dipakai berkali-kali!'},
     ]
   },
   {
     id:'boss-program', title:'BOSS: Mantra Gabungan', depth:'🏆 Mantra Puncak', emoji:'🧙',
     color:'#C084FC', colorBg:'#F5F0FF',
-    desc:'Gabungkan semua mantra — kalahkan Penyihir Gelap!',
+    desc:'Gabungkan semua mantra – kalahkan Penyihir Gelap!',
     kapi:'BOSS BATTLE! Gabungkan variabel + if/else + loop + function = program nyata. Kalahkan penyihir gelap!',
     lessonHTML: lsn6(), isBoss: true,
     questions:[
@@ -973,7 +973,7 @@ function showToast(correct, correctAns, expl) {
   document.getElementById('toastIco').textContent = correct ? '✨' : '❌';
   document.getElementById('toastTitle').textContent = correct
     ? 'Mantap! Mantra berhasil, Penyihir Rayyan!'
-    : 'Belum tepat — yuk pikirkan lagi! 💡';
+    : 'Belum tepat – yuk pikirkan lagi! 💡';
   document.getElementById('toastExpl').textContent = expl || '';
   toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
   document.getElementById('nxtBtn').className = 'nxt-btn show';
@@ -1084,7 +1084,7 @@ function showComplete(ranOutOfLives) {
       <div class="review-ico">${h.correct ? '✅' : '❌'}</div>
       <div>
         <div class="review-q">${h.q}</div>
-        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu jawab: ${h.userAns} — coba lagi ya! 🤔`}</div>
+        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu jawab: ${h.userAns} – coba lagi ya! 🤔`}</div>
       </div>
     </div>`).join('');
 
@@ -1225,7 +1225,7 @@ function submitBugReport(event) {
   event.preventDefault();
   const desc = document.getElementById('bugDescription').value;
   const email = document.getElementById('bugEmail').value || 'tidak-ada@example.com';
-  const courseName = 'Mantra Kode — Petualangan Mantra Rayyan ✨';
+  const courseName = 'Mantra Kode – Petualangan Mantra Rayyan ✨';
   const formData = new FormData();
   formData.append('_subject', `[Learn with Adhi Bug Report] ${courseName}`);
   formData.append('message', `Course: ${courseName}\n\nBug Description:\n${desc}`);

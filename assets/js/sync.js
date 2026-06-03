@@ -11,7 +11,7 @@
 
 const SYNC = (() => {
 
-  /* ── Firebase config — fill in after creating your project ── */
+  /* ── Firebase config – fill in after creating your project ── */
   const FIREBASE_CONFIG = {
     apiKey:            "AIzaSyAGJbGZi8ifWGtKCe9wXA1_CFlYcr3Kthc",
     authDomain:        "learn-with-adhi.firebaseapp.com",
@@ -59,7 +59,7 @@ const SYNC = (() => {
     }
   }
 
-  /* ── Merge two progress objects — always keep the best stars ── */
+  /* ── Merge two progress objects – always keep the best stars ── */
   function mergeProgress(local, remote) {
     if (!remote) return local;
     const result = { ...local };

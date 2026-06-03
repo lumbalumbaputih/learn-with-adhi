@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wedding — Rizki &amp; Ayu</title>
+  <title>Wedding – Rizki &amp; Ayu</title>
   <link rel="icon" href="/assets/favicon-32.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -126,7 +126,7 @@
     }
 
     /* ══════════════════════════════════════════
-       HERO — yellow surface
+       HERO – yellow surface
     ══════════════════════════════════════════ */
     #hero {
       background: var(--yellow);
@@ -324,7 +324,7 @@
     }
 
     /* ══════════════════════════════════════════
-       OPENING / BISMILLAH  — cream, centered
+       OPENING / BISMILLAH  – cream, centered
     ══════════════════════════════════════════ */
     #opening { background: var(--cream); }
 
@@ -424,7 +424,7 @@
     }
 
     /* ══════════════════════════════════════════
-       EVENTS — yellow stripe
+       EVENTS – yellow stripe
     ══════════════════════════════════════════ */
     #events {
       background: var(--yellow);
@@ -508,7 +508,7 @@
     }
 
     /* ══════════════════════════════════════════
-       COUNTDOWN — navy
+       COUNTDOWN – navy
     ══════════════════════════════════════════ */
     #countdown {
       background: var(--navy);
@@ -1065,7 +1065,7 @@
     <div class="section-head reveal">
       <span class="eyebrow" style="color:var(--navy);"><span class="dot"></span> Save the Date</span>
       <h2 style="color:var(--navy);">The <em>Celebrations</em></h2>
-      <p style="color:#5a4200;">Join us for both moments of the day — the sacred Akad followed by the joyful reception.</p>
+      <p style="color:#5a4200;">Join us for both moments of the day – the sacred Akad followed by the joyful reception.</p>
     </div>
 
     <div class="event-grid">
@@ -1075,7 +1075,7 @@
         <div class="event-date-num">14</div>
         <div class="event-month">June 2025</div>
         <div class="event-meta">
-          <p class="time">08.00 — 10.00 WIB</p>
+          <p class="time">08.00 – 10.00 WIB</p>
           <p class="venue">Masjid Al-Ikhlas</p>
           <p class="address">Jl. Kebon Jeruk No. 12<br>Jakarta Barat, DKI Jakarta</p>
         </div>
@@ -1086,7 +1086,7 @@
         <div class="event-date-num">14</div>
         <div class="event-month">June 2025</div>
         <div class="event-meta">
-          <p class="time">11.00 — 15.00 WIB</p>
+          <p class="time">11.00 – 15.00 WIB</p>
           <p class="venue">The Grand Ballroom</p>
           <p class="address">Jl. Sudirman Kav. 25<br>Jakarta Selatan, DKI Jakarta</p>
         </div>
@@ -1169,12 +1169,12 @@
         <div class="loc-cell">
           <p class="lc-label">Akad Nikah</p>
           <h3>Masjid Al-Ikhlas</h3>
-          <p>Jl. Kebon Jeruk No. 12<br>Jakarta Barat, DKI Jakarta<br>08.00 — 10.00 WIB</p>
+          <p>Jl. Kebon Jeruk No. 12<br>Jakarta Barat, DKI Jakarta<br>08.00 – 10.00 WIB</p>
         </div>
         <div class="loc-cell">
           <p class="lc-label">Resepsi</p>
           <h3>Grand Ballroom</h3>
-          <p>Jl. Sudirman Kav. 25<br>Jakarta Selatan, DKI Jakarta<br>11.00 — 15.00 WIB</p>
+          <p>Jl. Sudirman Kav. 25<br>Jakarta Selatan, DKI Jakarta<br>11.00 – 15.00 WIB</p>
         </div>
       </div>
     </div>
@@ -1208,7 +1208,7 @@
           <div class="field">
             <label>Attendance</label>
             <select id="r-attend" required>
-              <option value="">— Select —</option>
+              <option value="">– Select –</option>
               <option value="yes">✓ Joyfully accept</option>
               <option value="no">✗ Regretfully decline</option>
             </select>
@@ -1254,15 +1254,15 @@
     <div class="wish-list reveal reveal-d1" id="wish-list">
       <div class="wish-card">
         <p class="wish-text">"Semoga menjadi keluarga yang sakinah, mawaddah, warahmah. Barakallahu lakuma wa baraka 'alaikuma."</p>
-        <p class="wish-author">— Keluarga Besar Ahmad</p>
+        <p class="wish-author">– Keluarga Besar Ahmad</p>
       </div>
       <div class="wish-card">
         <p class="wish-text">"Wishing you both a lifetime of love, laughter, and happiness. Selamat menempuh hidup baru!"</p>
-        <p class="wish-author">— Dian &amp; Reza</p>
+        <p class="wish-author">– Dian &amp; Reza</p>
       </div>
       <div class="wish-card">
-        <p class="wish-text">"May your home always be filled with warmth, joy, and the smell of good food — rasa rumah."</p>
-        <p class="wish-author">— Teman-teman Kampus</p>
+        <p class="wish-text">"May your home always be filled with warmth, joy, and the smell of good food – rasa rumah."</p>
+        <p class="wish-author">– Teman-teman Kampus</p>
       </div>
     </div>
   </div>
@@ -1336,7 +1336,7 @@
     if (wish) {
       const card = document.createElement('div');
       card.className = 'wish-card';
-      card.innerHTML = `<p class="wish-text">"${wish}"</p><p class="wish-author">— ${name || 'A Guest'}</p>`;
+      card.innerHTML = `<p class="wish-text">"${wish}"</p><p class="wish-author">– ${name || 'A Guest'}</p>`;
       document.getElementById('wish-list').prepend(card);
     }
     document.getElementById('rsvp-form').style.display = 'none';

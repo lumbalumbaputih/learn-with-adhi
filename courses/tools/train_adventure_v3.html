@@ -360,7 +360,7 @@ function drawItems(){
 }
 
 // ═══════════════════════════════════════════
-//  DRAW: OBSTACLES — perspective growth from distance
+//  DRAW: OBSTACLES – perspective growth from distance
 // ═══════════════════════════════════════════
 function drawObstacles(){
   G.obstacles.forEach(ob=>{
@@ -409,7 +409,7 @@ function drawParticles(){G.particles.forEach(p=>{cx.globalAlpha=p.a;cx.fillStyle
 function drawFloaties(){G.floaties.forEach(f=>{cx.globalAlpha=f.a;cx.font=`bold ${f.sz}px Comic Sans MS,cursive`;cx.strokeStyle='#000';cx.lineWidth=3;cx.strokeText(f.t,f.x,f.y);cx.fillStyle=f.c;cx.fillText(f.t,f.x,f.y);});cx.globalAlpha=1;}
 
 // ═══════════════════════════════════════════
-//  DRAW: HUD — 4 separated zones, nothing overlaps
+//  DRAW: HUD – 4 separated zones, nothing overlaps
 //
 //  ┌──────────────────────────────────────┐
 //  │  Zone name  │  ❤️❤️❤️  │  ⭐ Score  │  ← top bar
