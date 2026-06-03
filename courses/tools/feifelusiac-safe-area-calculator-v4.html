@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Safe-Area Calculator v4 — Custom Base Image · Learn with Adhi</title>
+<title>Safe-Area Calculator v4 – Custom Base Image · Learn with Adhi</title>
 <meta name="description" content="Quickly calculate safe area values with practical controls." />
 <meta name="author" content="Adhi" />
 <link rel="canonical" href="https://learnwithadhi.com/courses/tools/feifelusiac-safe-area-calculator-v4.html" />
@@ -162,7 +162,7 @@
   <div class="panel">
     <h2>Base image</h2>
     <div class="image-panel">
-      <div class="status-line">Current: <b id="imgLabel">Default — Feifelusiac aerial</b></div>
+      <div class="status-line">Current: <b id="imgLabel">Default – Feifelusiac aerial</b></div>
       <div class="actions" style="margin-top:0">
         <button id="btnUpload">Upload image</button>
         <button id="btnResetImg">Reset to default</button>
@@ -209,7 +209,7 @@
     <div class="stats-row"><span class="stats-label">Residential area</span><span class="stats-val" id="statResArea">0 km²</span></div>
     <div class="stats-row big"><span class="stats-label">Supported population</span><span class="stats-val" id="statPop">0</span></div>
     <div class="stats-row"><span class="stats-label">Target</span><span class="stats-val" id="statTarget">600,000</span></div>
-    <div class="status" id="statusBox">—</div>
+    <div class="status" id="statusBox">–</div>
 
     <h2 style="margin-top:18px">By zone</h2>
     <div class="zone-breakdown" id="zoneBreakdown"></div>
@@ -388,7 +388,7 @@ function updateStats(){
   document.getElementById('statTarget').textContent = target.toLocaleString();
   const box = document.getElementById('statusBox');
   if(target===0){
-    box.className='status'; box.textContent='—';
+    box.className='status'; box.textContent='–';
   } else if(pop>=target){
     box.className='status ok';
     box.textContent = `OK · surplus ${(pop-target).toLocaleString()}`;
@@ -489,14 +489,14 @@ function loadImageFile(file){
     document.getElementById('aerial').src = e.target.result;
     const sizeStr = file.size > 1e6 ? (file.size/1e6).toFixed(1)+' MB' : Math.round(file.size/1024)+' KB';
     document.getElementById('imgLabel').textContent = `${file.name} · ${sizeStr}`;
-    toast('Image loaded — grid stays in place');
+    toast('Image loaded – grid stays in place');
   };
   reader.onerror = () => toast('Failed to read file');
   reader.readAsDataURL(file);
 }
 function resetImage(){
   document.getElementById('aerial').src = DEFAULT_IMAGE;
-  document.getElementById('imgLabel').textContent = 'Default — Feifelusiac aerial';
+  document.getElementById('imgLabel').textContent = 'Default – Feifelusiac aerial';
   toast('Back to default image');
 }
 
@@ -514,7 +514,7 @@ function wire(){
   document.getElementById('btnClear').onclick = () => {
     state.active = 'unmarked';
     renderZoneList();
-    toast('Clear mode — click cells to erase');
+    toast('Clear mode – click cells to erase');
   };
   document.getElementById('btnResetZone').onclick = () => {
     const def = ZONE_BY_ID[state.active]?.density ?? 0;
@@ -563,7 +563,7 @@ function wire(){
   });
   document.getElementById('btnResetImg').onclick = resetImage;
 
-  // Drag and drop — wire to the whole grid container
+  // Drag and drop – wire to the whole grid container
   const container = document.getElementById('gridContainer');
   const overlay = document.getElementById('dropOverlay');
   let dragCounter = 0;

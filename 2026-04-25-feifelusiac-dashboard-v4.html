@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Feifelusiac City Dashboard v4 — Group 1 (SUST5005)</title>
+<title>Feifelusiac City Dashboard v4 – Group 1 (SUST5005)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -195,7 +195,7 @@
   body { font-family: var(--font-body); font-weight: 500; }
   h1, h2, h3, .serif { font-family: var(--font-body); font-weight: 900; letter-spacing: -0.02em; color: var(--navy); }
 
-  /* HERO — yellow block with hard navy shadow, per design system */
+  /* HERO – yellow block with hard navy shadow, per design system */
   .hero {
     background: var(--yellow);
     border: 2px solid var(--navy);
@@ -239,7 +239,7 @@
     letter-spacing: 0.1em; font-weight: 700; font-size: 10px;
   }
 
-  /* Scenario preset buttons — pill style */
+  /* Scenario preset buttons – pill style */
   .preset-btn {
     background: var(--cream); color: var(--navy);
     border: 2px solid var(--navy); border-radius: var(--r-pill);
@@ -256,7 +256,7 @@
     box-shadow: var(--shadow-hard-sm);
   }
 
-  /* Compact inputs row — cream surface with navy underline */
+  /* Compact inputs row – cream surface with navy underline */
   .compact-inputs {
     background: var(--cream); border-bottom: 2px solid var(--navy);
     margin: 16px 24px 0; border-radius: var(--r-md) var(--r-md) 0 0;
@@ -275,7 +275,7 @@
   /* Main grid */
   main.dashboard-main { padding: 0 24px 24px; gap: 20px; }
 
-  /* Panels — the fundamental card shape of the design system */
+  /* Panels – the fundamental card shape of the design system */
   .panel {
     background: #fff; border: 2px solid var(--navy);
     border-radius: var(--r-lg); padding: 20px;
@@ -288,10 +288,10 @@
     margin: 0 0 12px;
   }
 
-  /* Map panel — keep dark inner surface so the aerial reads */
+  /* Map panel – keep dark inner surface so the aerial reads */
   .panel.canvas-wrap { background: #0f1419; padding: 14px; border-color: var(--navy); }
 
-  /* Zone list tiles — each row is a proper design-system tile */
+  /* Zone list tiles – each row is a proper design-system tile */
   .zone {
     background: var(--cream); border: 1.5px solid var(--navy);
     border-radius: var(--r-sm); padding: 8px 10px;
@@ -326,7 +326,7 @@
   .image-panel .status-line { color: var(--navy); opacity: 0.8; }
   .image-panel .status-line b { color: var(--navy); font-weight: 800; opacity: 1; }
 
-  /* Buttons — pill-ish, hard shadow on hover */
+  /* Buttons – pill-ish, hard shadow on hover */
   button {
     background: #fff; color: var(--navy);
     border: 2px solid var(--navy); border-radius: var(--r-pill);
@@ -354,7 +354,7 @@
   .zb-val { color: var(--navy); font-weight: 800; font-family: var(--font-mono); }
   .zb-sw { border: 1.5px solid var(--navy); border-radius: 3px; }
 
-  /* Flow cards — the hero of the dashboard narrative */
+  /* Flow cards – the hero of the dashboard narrative */
   .flow-section { border-top: 2px dashed var(--navy); border-color: rgba(26,58,122,0.2); }
   .flow-section .section-title {
     font-family: var(--font-body); font-weight: 900;
@@ -388,7 +388,7 @@
   .fc-sub { color: var(--navy); opacity: 0.8; font-size: 11px; font-weight: 600; }
   .fc-sub .pair b { color: var(--navy); font-weight: 900; opacity: 1; }
 
-  /* Sankey container — light surface, navy border, yellow eyebrow */
+  /* Sankey container – light surface, navy border, yellow eyebrow */
   #sankey-wrap {
     background: #fff; border: 2px solid var(--navy);
     border-radius: var(--r-lg); margin: 0 24px 24px; padding: 24px 28px;
@@ -410,13 +410,13 @@
   .sk-node-label { fill: var(--yellow); font-family: var(--font-body); font-weight: 900; }
   .sk-loop-label { fill: var(--magenta); font-family: var(--font-body); font-weight: 900; }
 
-  /* Toast — pill on cream */
+  /* Toast – pill on cream */
   #toast {
     background: var(--navy); color: var(--yellow); border: 2px solid var(--navy);
     border-radius: var(--r-pill); font-weight: 800; box-shadow: var(--shadow-hard-sm);
   }
 
-  /* Tooltip — pill on dark */
+  /* Tooltip – pill on dark */
   .tooltip {
     background: var(--navy); color: var(--yellow); border: 2px solid var(--navy);
     border-radius: var(--r-sm); font-weight: 700;
@@ -539,7 +539,7 @@
   <div class="panel">
     <h2>Base image</h2>
     <div class="image-panel">
-      <div class="status-line">Current: <b id="imgLabel">Default — Feifelusiac aerial</b></div>
+      <div class="status-line">Current: <b id="imgLabel">Default – Feifelusiac aerial</b></div>
       <div class="actions" style="margin-top:0">
         <button id="btnUpload">Upload image</button>
         <button id="btnResetImg">Reset to default</button>
@@ -586,7 +586,7 @@
     <div class="stats-row"><span class="stats-label">Residential area</span><span class="stats-val" id="statResArea">0 km²</span></div>
     <div class="stats-row big"><span class="stats-label">Supported population</span><span class="stats-val" id="statPop">0</span></div>
     <div class="stats-row"><span class="stats-label">Target</span><span class="stats-val" id="statTarget">600,000</span></div>
-    <div class="status" id="statusBox">—</div>
+    <div class="status" id="statusBox">–</div>
 
     <h2 style="margin-top:18px">By zone</h2>
     <div class="zone-breakdown" id="zoneBreakdown"></div>
@@ -844,7 +844,7 @@ function updateStats(){
   if(typeof renderSankey==='function') renderSankey(pop);
   const box = document.getElementById('statusBox');
   if(target===0){
-    box.className='status'; box.textContent='—';
+    box.className='status'; box.textContent='–';
   } else if(pop>=target){
     box.className='status ok';
     box.textContent = `OK · surplus ${(pop-target).toLocaleString()}`;
@@ -945,14 +945,14 @@ function loadImageFile(file){
     document.getElementById('aerial').src = e.target.result;
     const sizeStr = file.size > 1e6 ? (file.size/1e6).toFixed(1)+' MB' : Math.round(file.size/1024)+' KB';
     document.getElementById('imgLabel').textContent = `${file.name} · ${sizeStr}`;
-    toast('Image loaded — grid stays in place');
+    toast('Image loaded – grid stays in place');
   };
   reader.onerror = () => toast('Failed to read file');
   reader.readAsDataURL(file);
 }
 function resetImage(){
   document.getElementById('aerial').src = DEFAULT_IMAGE;
-  document.getElementById('imgLabel').textContent = 'Default — Feifelusiac aerial';
+  document.getElementById('imgLabel').textContent = 'Default – Feifelusiac aerial';
   toast('Back to default image');
 }
 
@@ -970,7 +970,7 @@ function wire(){
   document.getElementById('btnClear').onclick = () => {
     state.active = 'unmarked';
     renderZoneList();
-    toast('Clear mode — click cells to erase');
+    toast('Clear mode – click cells to erase');
   };
   document.getElementById('btnResetZone').onclick = () => {
     const def = ZONE_BY_ID[state.active]?.density ?? 0;
@@ -1019,7 +1019,7 @@ function wire(){
   });
   document.getElementById('btnResetImg').onclick = resetImage;
 
-  // Drag and drop — wire to the whole grid container
+  // Drag and drop – wire to the whole grid container
   const container = document.getElementById('gridContainer');
   const overlay = document.getElementById('dropOverlay');
   let dragCounter = 0;
@@ -1047,15 +1047,15 @@ function wire(){
 }
 
 // ===================================================================
-// FLOWS — matches 2026-04-23-flows-calculations-v1.xlsx formulas
+// FLOWS – matches 2026-04-23-flows-calculations-v1.xlsx formulas
 // ===================================================================
 const FLOW_INPUTS = {
-  elec_per_cap_kwh: 1493,          // World Bank 2025 — Egypt per capita electricity
-  final_energy_ratio: 3,           // IEA 2024 — final energy / electricity
+  elec_per_cap_kwh: 1493,          // World Bank 2025 – Egypt per capita electricity
+  final_energy_ratio: 3,           // IEA 2024 – final energy / electricity
   pv_capacity_factor: 0.2,         // IRENA 2023
   pv_land_ha_per_mw: 1.9,          // NREL 2021
-  water_low_lpd: 150,              // CAPMAS 2022 — L/person/day lower
-  water_high_lpd: 200,             // CAPMAS 2022 — upper
+  water_low_lpd: 150,              // CAPMAS 2022 – L/person/day lower
+  water_high_lpd: 200,             // CAPMAS 2022 – upper
   water_footprint_m3cap: 1385,     // Mekonnen & Hoekstra 2020
   food_low_kgcap: 800,             // FAO 2023 / Willett et al 2019
   food_high_kgcap: 1000,
@@ -1069,7 +1069,7 @@ const FLOW_INPUTS = {
 
 function fmt(n, d=1){
   if(n===0) return '0';
-  if(!isFinite(n)) return '—';
+  if(!isFinite(n)) return '–';
   const abs = Math.abs(n);
   if(abs>=1000) return Math.round(n).toLocaleString();
   if(abs>=100) return n.toFixed(0);
@@ -1128,7 +1128,7 @@ function updateFlows(pop){
   if(sp) sp.textContent = pop.toLocaleString();
   // cache last values for sankey
   window._flows = {pop, elec_gwh, final_gwh, pv_mw, pv_km2, water_mid, water_total_mm3, food_mid, mat_mid, mat_constr, mat_other, recoverable, organic_mt, cdw_mt, msw_mt};
-  // V3 — fill the per-card "Show working" breakdowns
+  // V3 – fill the per-card "Show working" breakdowns
   updateWorking(pop, {
     elec_gwh, final_gwh, pv_mw, pv_km2,
     water_low_mm3, water_high_mm3, water_mid, water_total_mm3,
@@ -1139,7 +1139,7 @@ function updateFlows(pop){
 }
 
 // ===================================================================
-// V3 — "Show working" breakdowns (live, recompute on every paint)
+// V3 – "Show working" breakdowns (live, recompute on every paint)
 // ===================================================================
 function updateWorking(pop, c){
   const I = FLOW_INPUTS;
@@ -1260,14 +1260,14 @@ function wireWorkingToggles(){
 }
 
 // ===================================================================
-// SANKEY — hand-rolled SVG, 3 columns (Inputs → City → Outputs)
+// SANKEY – hand-rolled SVG, 3 columns (Inputs → City → Outputs)
 // Thickness = normalised intensity per flow
 // ===================================================================
 function renderSankey(pop){
   const svg = document.getElementById('sankey');
   if(!svg) return;
   const f = window._flows || {pop, elec_gwh:0, water_mid:0, food_mid:0, mat_mid:0, recoverable:0, organic_mt:0, cdw_mt:0};
-  // Layout — wider + taller viewBox for breathing room
+  // Layout – wider + taller viewBox for breathing room
   const W = 1400, H = 420;
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   const cityY = 100, cityH = 180;
@@ -1279,7 +1279,7 @@ function renderSankey(pop){
   const xOutRect = 960, xOutRectW = 10;        // output colour-bar x range
   const xOutTextL = xOutRect + xOutRectW + 8;  // output label start x
   const LABEL_H = 44;                          // min vertical spacing between label groups
-  // Data (Recovered removed from outputs — it is now ONLY the CE loop)
+  // Data (Recovered removed from outputs – it is now ONLY the CE loop)
   const inputs = [
     {id:'energy', label:'Energy',    v:f.elec_gwh,       unit:'GWh',  color:'#F3C23A', sub:`${fmt(f.pv_km2)} km² solar land`},
     {id:'water',  label:'Water',     v:f.water_mid,      unit:'Mm³',  color:'#18B4D9', sub:`${fmt(f.water_total_mm3)} Mm³ incl. virtual`},
@@ -1361,13 +1361,13 @@ function renderSankey(pop){
     html += `<text class="sk-val" x="${xOutTextL}" y="${lab.ly+5}">${fmt(b.v)} ${b.unit}</text>`;
     html += `<text class="sk-sub" x="${xOutTextL}" y="${lab.ly+20}">${b.sub}</text>`;
   });
-  // CE LOOP — clean U-curve from city bottom back UP into the Materials input
+  // CE LOOP – clean U-curve from city bottom back UP into the Materials input
   // Arrow now docks on the BOTTOM of the Materials rect (pointing up) so the curve never crosses the input labels on the left
   const matBand = inBands.find(b=>b.id==='mat');
   const targetY = matBand ? matBand.cy : (cityY+cityH-40);
-  const matCenterX = xInRect + xInRectW/2;          // 175 — horizontal centre of the Materials rect
+  const matCenterX = xInRect + xInRectW/2;          // 175 – horizontal centre of the Materials rect
   const matBottomY = matBand ? (matBand.y + matBand.h) : (cityY+cityH-20);
-  const loopStartX = (xCityL + xCityR) / 2;         // 700 — directly below city centre
+  const loopStartX = (xCityL + xCityR) / 2;         // 700 – directly below city centre
   const loopStartY = cityY + cityH + 6;             // just below city, not touching it
   // Arrow geometry: arrow points UP, tip at the bottom edge of the Materials rect
   const arrowLen   = 10;                             // arrow body length
@@ -1383,9 +1383,9 @@ function renderSankey(pop){
   html += `<path d="${loopPath}" stroke="#D6398A" stroke-width="3" stroke-dasharray="9,6" fill="none" opacity="0.95" stroke-linecap="round"/>`;
   // Small dot at the city end so the start is unambiguous
   html += `<circle cx="${loopStartX}" cy="${loopStartY}" r="4" fill="#D6398A"/>`;
-  // Arrow polygon — points UP into the rect from below
+  // Arrow polygon – points UP into the rect from below
   html += `<polygon points="${arrowTipX},${arrowTipY} ${arrowTipX-arrowHalf},${arrowBaseY} ${arrowTipX+arrowHalf},${arrowBaseY}" fill="#D6398A" stroke="#D6398A" stroke-width="0.5"/>`;
-  // Loop label — centred under the curve's lowest point
+  // Loop label – centred under the curve's lowest point
   const badgeX = (loopStartX + loopEndX) / 2;
   const badgeY = loopBottomY + 22;
   html += `<text class="sk-loop-label" x="${badgeX}" y="${badgeY}" text-anchor="middle">CIRCULAR LOOP</text>`;
@@ -1394,9 +1394,9 @@ function renderSankey(pop){
 }
 
 // ===================================================================
-// SCENARIO PRESETS — pre-painted layouts for the demo
+// SCENARIO PRESETS – pre-painted layouts for the demo
 // ===================================================================
-// Encoded layout saved by Ris — 630,000 pop: 29 CBD + 38 ResH + 37 ResM + 11 ResL (v4)
+// Encoded layout saved by Ris – 630,000 pop: 29 CBD + 38 ResH + 37 ResM + 11 ResL (v4)
 const PLAN_HASH = 'JeyJuIjoxNSwiemQiOnsidW5tYXJrZWQiOjAsImNiZCI6ODAwMCwicmVzSCI6NjAwMCwicmVzTSI6NDAwMCwicmVzTCI6MjAwMCwiY2l2aWMiOjAsImluZHVzdHJpYWwiOjAsInBhcmsiOjAsImFncmkiOjAsIndhdGVyIjowLCJ0cmFuc3BvcnQiOjAsInVuc2FmZSI6MH0sImMiOlsidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJIOjYwMDAiLCJIOjYwMDAiLCJ1IiwidSIsIkg6NjAwMCIsIkg6NjAwMCIsIkg6NjAwMCIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJIOjYwMDAiLCJIOjYwMDAiLCJ1IiwidSIsIkg6NjAwMCIsIkg6NjAwMCIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsIk06NDAwMCIsIk06NDAwMCIsIk06NDAwMCIsIk06NDAwMCIsIkg6NjAwMCIsInUiLCJ1IiwiSDo2MDAwIiwiSDo2MDAwIiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwiTTo0MDAwIiwiTTo0MDAwIiwiTTo0MDAwIiwiTTo0MDAwIiwiSDo2MDAwIiwidSIsInUiLCJIOjYwMDAiLCJIOjYwMDAiLCJIOjYwMDAiLCJ1IiwidSIsInUiLCJ1IiwiTTo0MDAwIiwiTTo0MDAwIiwiTTo0MDAwIiwiTTo0MDAwIiwiQzo4MDAwIiwiQzo4MDAwIiwidSIsInUiLCJDOjgwMDAiLCJDOjgwMDAiLCJDOjgwMDAiLCJIOjYwMDAiLCJIOjYwMDAiLCJ1IiwidSIsIk06NDAwMCIsIk06NDAwMCIsIk06NDAwMCIsIkM6ODAwMCIsIkM6ODAwMCIsInUiLCJ1IiwidSIsIkM6ODAwMCIsIkM6ODAwMCIsIkM6ODAwMCIsIkM6ODAwMCIsIkg6NjAwMCIsIkg6NjAwMCIsInUiLCJNOjQwMDAiLCJNOjQwMDAiLCJDOjgwMDAiLCJDOjgwMDAiLCJDOjgwMDAiLCJ1IiwidSIsIkM6ODAwMCIsIkM6ODAwMCIsIkM6ODAwMCIsIk06NDAwMCIsIk06NDAwMCIsIkg6NjAwMCIsIkg6NjAwMCIsIkg6NjAwMCIsIk06NDAwMCIsIk06NDAwMCIsIkM6ODAwMCIsIkM6ODAwMCIsInUiLCJ1IiwidSIsIkM6ODAwMCIsIkM6ODAwMCIsIk06NDAwMCIsIk06NDAwMCIsIkw6MjAwMCIsIkw6MjAwMCIsIkg6NjAwMCIsIkg6NjAwMCIsIk06NDAwMCIsIkM6ODAwMCIsIkM6ODAwMCIsInUiLCJ1IiwidSIsIkM6ODAwMCIsIkM6ODAwMCIsIk06NDAwMCIsIk06NDAwMCIsIkw6MjAwMCIsIkw6MjAwMCIsIkw6MjAwMCIsIkg6NjAwMCIsIkg6NjAwMCIsIk06NDAwMCIsIkM6ODAwMCIsIkM6ODAwMCIsInUiLCJ1IiwidSIsIkM6ODAwMCIsIkM6ODAwMCIsIk06NDAwMCIsIk06NDAwMCIsIkw6MjAwMCIsIkw6MjAwMCIsIkw6MjAwMCIsInUiLCJ1IiwiSDo2MDAwIiwiSDo2MDAwIiwidSIsInUiLCJ1IiwiSDo2MDAwIiwiSDo2MDAwIiwiSDo2MDAwIiwiSDo2MDAwIiwiTTo0MDAwIiwiTDoyMDAwIiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJIOjYwMDAiLCJIOjYwMDAiLCJNOjQwMDAiLCJIOjYwMDAiLCJIOjYwMDAiLCJNOjQwMDAiLCJMOjIwMDAiLCJ1IiwidSIsInUiLCJ1IiwidSIsInUiLCJ1IiwidSIsIkg6NjAwMCIsIk06NDAwMCIsIk06NDAwMCIsIk06NDAwMCIsIk06NDAwMCIsIk06NDAwMCIsIkw6MjAwMCIsInUiLCJ1IiwidSIsInUiXX0=';
 
 function applyPreset(name){

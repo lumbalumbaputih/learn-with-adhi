@@ -144,7 +144,7 @@
       text-decoration: none; color: inherit;
     }
 
-    /* space above circle — holds the loco emoji */
+    /* space above circle – holds the loco emoji */
     .stop-loco {
       height: 44px;
       display: flex; align-items: flex-end; justify-content: center;
@@ -320,7 +320,7 @@
       </div>
     </div>
 
-    <!-- Next adventure CTA — hidden if all done or none started -->
+    <!-- Next adventure CTA – hidden if all done or none started -->
     <a href="#" class="next-banner" id="nextBanner" style="display:none">
       <div>
         <div class="next-banner-label">Petualangan Berikutnya</div>
@@ -369,7 +369,7 @@
     {
       emoji: '🚀',
       title: 'Petualangan Antariksa',
-      blurb: 'Bilangan besar, pecahan, keliling & luas, KPK & FPB — keliling galaksi!',
+      blurb: 'Bilangan besar, pecahan, keliling & luas, KPK & FPB – keliling galaksi!',
       href: 'courses/math/rayyan-math-grade4.html',
       progressKey: 'rayyanMath4',
       totalChapters: 6,
@@ -385,7 +385,7 @@
     {
       emoji: '🤖',
       title: 'Pabrik Robot KAI',
-      blurb: 'Ajari robot kereta cara bekerja — perintah berurutan, kalau-maka, ulangi, memori.',
+      blurb: 'Ajari robot kereta cara bekerja – perintah berurutan, kalau-maka, ulangi, memori.',
       href: 'courses/coding/rayyan-coding-v1.html',
       progressKey: 'rayyanCoding',
       totalChapters: 6,
@@ -401,7 +401,7 @@
     {
       emoji: '🛰️',
       title: 'Robot Antariksa',
-      blurb: 'Ajari robotmu menaklukkan galaksi — sinyal, daftar muatan, logika, dan misi Mars!',
+      blurb: 'Ajari robotmu menaklukkan galaksi – sinyal, daftar muatan, logika, dan misi Mars!',
       href: 'courses/coding/rayyan-coding-v2.html',
       progressKey: 'rayyanCoding2',
       totalChapters: 6,
@@ -417,7 +417,7 @@
     {
       emoji: '✨',
       title: 'Mantra Kode',
-      blurb: 'Eja mantra-mantra ajaib! Belajar mengajari komputer lewat mantra pertamamu — kode nyata!',
+      blurb: 'Eja mantra-mantra ajaib! Belajar mengajari komputer lewat mantra pertamamu – kode nyata!',
       href: 'courses/coding/rayyan-coding-v3.html',
       progressKey: 'rayyanCoding3',
       totalChapters: 6,
@@ -425,7 +425,7 @@
     {
       emoji: '🎨',
       title: 'Studio Pelukis Kode',
-      blurb: 'Lukis dengan kode! Titik, garis, bentuk, pola, animasi — kuas digitalmu siap!',
+      blurb: 'Lukis dengan kode! Titik, garis, bentuk, pola, animasi – kuas digitalmu siap!',
       href: 'courses/coding/rayyan-coding-v4.html',
       progressKey: 'rayyanCoding4',
       totalChapters: 6,
@@ -433,7 +433,7 @@
     {
       emoji: '🎮',
       title: 'Buat Game-mu Sendiri',
-      blurb: 'Buat gamemu sendiri dari nol — game loop, pahlawan, rintangan, tabrakan, skor, lalu rilis!',
+      blurb: 'Buat gamemu sendiri dari nol – game loop, pahlawan, rintangan, tabrakan, skor, lalu rilis!',
       href: 'courses/coding/rayyan-coding-v5.html',
       progressKey: 'rayyanCoding5',
       totalChapters: 6,
@@ -452,7 +452,7 @@
       emoji: '🗺️',
       title: 'Petualangan Kereta',
       thumbBg: '#E3F5EB',
-      blurb: 'Pilih petualanganmu sendiri — 3 versi cerita kereta yang seru. Keputusanmu menentukan akhir cerita!',
+      blurb: 'Pilih petualanganmu sendiri – 3 versi cerita kereta yang seru. Keputusanmu menentukan akhir cerita!',
       href: 'courses/tools/train_adventure_v3.html',
     },
   ];
@@ -492,7 +492,7 @@
     const railPct = completedCount > 0
       ? Math.min(completedCount / (ADVENTURES.length - 1), 1) * 100
       : 0;
-    // Rail left is same as journey-rail (80px from each side) — replicate in JS
+    // Rail left is same as journey-rail (80px from each side) – replicate in JS
     // We'll use width as % of the rail div's parent; the rail itself is already offset
     // Use a data-done attribute and let the rail-done element span from left:80px
     const railEl = document.getElementById('railDone');
@@ -540,7 +540,7 @@
       const next = ADVENTURES[activeIdx];
       const banner = document.getElementById('nextBanner');
       const prog = getProgress(next.progressKey);
-      const label = prog.done > 0 ? `Lanjutkan — bab ${prog.done + 1}` : next.title;
+      const label = prog.done > 0 ? `Lanjutkan – bab ${prog.done + 1}` : next.title;
       document.getElementById('nextTitle').textContent = label;
       banner.href = next.href;
       banner.style.display = 'flex';

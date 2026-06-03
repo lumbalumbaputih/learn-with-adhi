@@ -317,7 +317,7 @@
   <div class="home-hero">
     <div class="palette-anim">🎨</div>
     <div class="home-title">Studio <em>Pelukis</em> Kode 🎨</div>
-    <div class="home-sub">Melukis dengan kode — buat gambar, pola, dan animasi ajaib!</div>
+    <div class="home-sub">Melukis dengan kode – buat gambar, pola, dan animasi ajaib!</div>
   </div>
 
   <div class="depth-wrap">
@@ -504,7 +504,7 @@ function lsn1() {
   return `
 <div class="ls">
   <div class="ls-h">📐 Canvas = Kertas Digitalmu!</div>
-  <p>Canvas adalah area gambar di browser. Koordinat (x, y) menentukan posisi — x ke kanan, y ke bawah. Pojok kiri atas = (0, 0)!</p>
+  <p>Canvas adalah area gambar di browser. Koordinat (x, y) menentukan posisi – x ke kanan, y ke bawah. Pojok kiri atas = (0, 0)!</p>
   <div class="spellbook"><span class="cmt">// Gambar kotak merah muda</span>
 <span class="fn">ctx</span>.fillStyle = <span class="str">'#E84BA0'</span>;
 <span class="fn">ctx</span>.fillRect(<span class="num">90</span>, <span class="num">65</span>, <span class="num">20</span>, <span class="num">20</span>); <span class="cmt">// x, y, lebar, tinggi</span>
@@ -525,8 +525,8 @@ function lsn1() {
   <div class="ls-h">🗺️ Sistem Koordinat</div>
   <p><strong>x</strong> = jarak dari kiri → semakin besar = semakin ke kanan<br>
   <strong>y</strong> = jarak dari atas ↓ semakin besar = semakin ke bawah<br>
-  <strong>fillRect(x, y, lebar, tinggi)</strong> — gambar kotak berisi!<br>
-  <strong>strokeRect(x, y, lebar, tinggi)</strong> — gambar garis tepi kotak!</p>
+  <strong>fillRect(x, y, lebar, tinggi)</strong> – gambar kotak berisi!<br>
+  <strong>strokeRect(x, y, lebar, tinggi)</strong> – gambar garis tepi kotak!</p>
 </div>`;
 }
 
@@ -678,7 +678,7 @@ requestAnimationFrame(<span class="fn">lukisKartu</span>);</div>
 </div>
 <div class="ls">
   <div class="ls-h">💪 Kamu Bisa Mengalahkan Pencuri Warna!</div>
-  <p>Gunakan semua mantra melukismu: <strong>koordinat, bentuk, warna, loop, random, animasi</strong> — jawab semua tantangan 🎭!</p>
+  <p>Gunakan semua mantra melukismu: <strong>koordinat, bentuk, warna, loop, random, animasi</strong> – jawab semua tantangan 🎭!</p>
 </div>`;
 }
 
@@ -795,14 +795,14 @@ function drawLesson6() {
 ════════════════════════════════════════ */
 const CHAPTERS = [
   {
-    id:'dots-lines', title:'Titik & Garis', depth:'✏️ Sketsa 1 — Titik Pertama', emoji:'✏️',
+    id:'dots-lines', title:'Titik & Garis', depth:'✏️ Sketsa 1 – Titik Pertama', emoji:'✏️',
     color:'#E84BA0', colorBg:'#FCE8F3',
-    desc:'fillRect, moveTo, lineTo — gambar titik dan garis pertamamu!',
+    desc:'fillRect, moveTo, lineTo – gambar titik dan garis pertamamu!',
     kapi:'Canvas = kertas digitalmu! ctx.fillRect(x, y, w, h) menggambar kotak. ctx.beginPath() + ctx.moveTo(x,y) + ctx.lineTo(x,y) + ctx.stroke() menggambar garis!',
     lessonFn: lsn1, drawFn: drawLesson1, isBoss: false,
     questions:[
-      {type:'mc', q:'ctx.fillRect(10, 20, 50, 30) — x,y posisinya?', opts:['x=10, y=20','x=20, y=10','x=50, y=30','x=0, y=0'], ans:0, expl:'fillRect(x, y, lebar, tinggi) → x=10, y=20!'},
-      {type:'mc', q:'Koordinat (0,0) pada canvas ada di mana?', visual:'🗺️', opts:['Pojok kiri atas','Pojok kanan atas','Tengah','Pojok kiri bawah'], ans:0, expl:'Canvas mulai dari pojok kiri atas — (0,0) = kiri atas!'},
+      {type:'mc', q:'ctx.fillRect(10, 20, 50, 30) – x,y posisinya?', opts:['x=10, y=20','x=20, y=10','x=50, y=30','x=0, y=0'], ans:0, expl:'fillRect(x, y, lebar, tinggi) → x=10, y=20!'},
+      {type:'mc', q:'Koordinat (0,0) pada canvas ada di mana?', visual:'🗺️', opts:['Pojok kiri atas','Pojok kanan atas','Tengah','Pojok kiri bawah'], ans:0, expl:'Canvas mulai dari pojok kiri atas – (0,0) = kiri atas!'},
       {type:'code-fill', q:'Lengkapi untuk menggambar kotak di posisi x=50, y=50, ukuran 40×40', code:'ctx.fillRect(___, 50, 40, 40);', blankIdx:0, ans:'50', output:'(kotak tergambar di 50,50!)', expl:'fillRect(x, y, w, h) → x=50!'},
       {type:'mc', q:'ctx.moveTo(0,0); ctx.lineTo(100,100); Garis dari mana ke mana?', opts:['Pojok kiri atas ke kanan bawah','Kanan ke kiri','Atas ke bawah','Tidak ada garis'], ans:0, expl:'moveTo(0,0)=mulai kiri atas, lineTo(100,100)=menuju kanan bawah!'},
       {type:'code-fill', q:'Lengkapi: ubah warna isi kotak jadi merah', code:"ctx.___ = 'red';\nctx.fillRect(10, 10, 80, 80);", blankIdx:0, ans:'fillStyle', output:'(kotak merah!)', expl:'fillStyle = properti untuk mengatur warna isi!'},
@@ -810,13 +810,13 @@ const CHAPTERS = [
     ]
   },
   {
-    id:'shapes-colors', title:'Bentuk & Warna', depth:'🔷 Sketsa 2 — Bentuk & Warna', emoji:'🔷',
+    id:'shapes-colors', title:'Bentuk & Warna', depth:'🔷 Sketsa 2 – Bentuk & Warna', emoji:'🔷',
     color:'#2E3192', colorBg:'#E8E9F8',
-    desc:'arc, fill, stroke — gambar lingkaran dan aneka warna!',
+    desc:'arc, fill, stroke – gambar lingkaran dan aneka warna!',
     kapi:'Warna dalam kode: \'red\', \'#FF5C39\', \'rgb(255,92,57)\'. Lingkaran: ctx.arc(x, y, radius, 0, Math.PI*2). Jangan lupa ctx.fill() untuk mengisi!',
     lessonFn: lsn2, drawFn: drawLesson2, isBoss: false,
     questions:[
-      {type:'mc', q:'ctx.arc(100, 75, 30, 0, Math.PI*2) — ini menggambar?', opts:['Lingkaran jari-jari 30','Persegi 100×75','Garis melengkung','Titik'], ans:0, expl:'arc(x, y, radius, startAngle, endAngle) dengan 2π = lingkaran penuh!'},
+      {type:'mc', q:'ctx.arc(100, 75, 30, 0, Math.PI*2) – ini menggambar?', opts:['Lingkaran jari-jari 30','Persegi 100×75','Garis melengkung','Titik'], ans:0, expl:'arc(x, y, radius, startAngle, endAngle) dengan 2π = lingkaran penuh!'},
       {type:'code-fill', q:'Lengkapi untuk membuat lingkaran biru', code:"ctx.fillStyle = '___';\nctx.beginPath();\nctx.arc(100, 75, 40, 0, Math.PI*2);\nctx.fill();", blankIdx:0, ans:'blue', output:'(lingkaran biru!)', expl:"fillStyle = 'blue' → warna biru!"},
       {type:'mc', q:'Apa fungsi ctx.fill()?', opts:['Mengisi bentuk dengan warna','Membuat garis tepi','Menghapus canvas','Memulai jalur baru'], ans:0, expl:'ctx.fill() = isi area bentuk dengan fillStyle!'},
       {type:'code-fill', q:'Lengkapi warna garis menjadi hijau', code:"ctx.___ = 'green';\nctx.lineWidth = 5;\nctx.strokeRect(20, 20, 80, 60);", blankIdx:0, ans:'strokeStyle', output:'(kotak garis hijau!)', expl:'strokeStyle = warna untuk garis/tepi!'},
@@ -825,9 +825,9 @@ const CHAPTERS = [
     ]
   },
   {
-    id:'patterns', title:'Pola Ajaib', depth:'🌀 Sketsa 3 — Pola Ajaib', emoji:'🌀',
+    id:'patterns', title:'Pola Ajaib', depth:'🌀 Sketsa 3 – Pola Ajaib', emoji:'🌀',
     color:'#1F9D55', colorBg:'#E3F5EB',
-    desc:'for loop di canvas — buat pola ribuan bentuk dengan kode singkat!',
+    desc:'for loop di canvas – buat pola ribuan bentuk dengan kode singkat!',
     kapi:'Loop + Canvas = pola tak terbatas! for (let i=0; i<10; i++) { gambar kotak di posisi i*20 } → 10 kotak berjajar otomatis!',
     lessonFn: lsn3, drawFn: drawLesson3, isBoss: false,
     questions:[
@@ -840,9 +840,9 @@ const CHAPTERS = [
     ]
   },
   {
-    id:'random', title:'Acak!', depth:'🎲 Sketsa 4 — Dunia Acak!', emoji:'🎲',
+    id:'random', title:'Acak!', depth:'🎲 Sketsa 4 – Dunia Acak!', emoji:'🎲',
     color:'#FFC234', colorBg:'#FFF5D6',
-    desc:'Math.random() — buat seni generatif yang selalu berbeda!',
+    desc:'Math.random() – buat seni generatif yang selalu berbeda!',
     kapi:'Math.random() menghasilkan angka acak antara 0 dan 1! Math.random()*200 = angka acak 0-200. Math.floor() untuk bulatkan ke bawah.',
     lessonFn: lsn4, drawFn: drawLesson4, isBoss: false,
     questions:[
@@ -855,10 +855,10 @@ const CHAPTERS = [
     ]
   },
   {
-    id:'animation', title:'Gerak!', depth:'🏃 Sketsa 5 — Gerak!', emoji:'🏃',
+    id:'animation', title:'Gerak!', depth:'🏃 Sketsa 5 – Gerak!', emoji:'🏃',
     color:'#FF5C39', colorBg:'#FFE8E3',
-    desc:'requestAnimationFrame — buat gambarmu bergerak seperti film kartun!',
-    kapi:'requestAnimationFrame = mantra gerak! Setiap frame: 1) hapus canvas 2) update posisi 3) gambar ulang. Seperti film kartun — banyak gambar cepat = terlihat bergerak!',
+    desc:'requestAnimationFrame – buat gambarmu bergerak seperti film kartun!',
+    kapi:'requestAnimationFrame = mantra gerak! Setiap frame: 1) hapus canvas 2) update posisi 3) gambar ulang. Seperti film kartun – banyak gambar cepat = terlihat bergerak!',
     lessonFn: lsn5, drawFn: drawLesson5, isBoss: false,
     questions:[
       {type:'mc', q:'requestAnimationFrame(draw) artinya?', opts:['Panggil draw() setiap frame (60x/detik)','Panggil draw() sekali','Hentikan animasi','Gambar 1 frame'], ans:0, expl:'requestAnimationFrame memanggil fungsi draw setiap frame ~60fps!'},
@@ -870,16 +870,16 @@ const CHAPTERS = [
     ]
   },
   {
-    id:'boss-animation', title:'BOSS: Kartu Animasi', depth:'🏆 Pameran — Selamatkan Warna!', emoji:'🎭',
+    id:'boss-animation', title:'BOSS: Kartu Animasi', depth:'🏆 Pameran – Selamatkan Warna!', emoji:'🎭',
     color:'#E84BA0', colorBg:'#FCE8F3',
-    desc:'Gabungkan semua ilmu — kalahkan 🎭 Pencuri Warna!',
-    kapi:'BOSS! Gabungkan semua ilmu melukismu — koordinat, bentuk, warna, loop, random, dan animasi — untuk mengalahkan 🎭 pencuri warna!',
+    desc:'Gabungkan semua ilmu – kalahkan 🎭 Pencuri Warna!',
+    kapi:'BOSS! Gabungkan semua ilmu melukismu – koordinat, bentuk, warna, loop, random, dan animasi – untuk mengalahkan 🎭 pencuri warna!',
     lessonFn: lsn6, drawFn: drawLesson6, isBoss: true,
     questions:[
       {type:'mc', q:'ctx.fillRect(0,0,canvas.width,canvas.height) artinya?', opts:['Isi seluruh canvas dengan warna','Gambar kotak kecil','Hapus canvas','Gambar garis tepi'], ans:0, expl:'fillRect dari (0,0) selebar+setinggi canvas = isi seluruh background!'},
       {type:'code-fill', q:'Lengkapi: gambar 5 bintang di posisi x acak 0-200', code:'for(let i=0;i<5;i++){\n  let x=Math.random()*___;\n  ctx.fillText("⭐",x,Math.random()*150);\n}', blankIdx:0, ans:'200', output:'(5 bintang acak!)', expl:'Math.random()*200 = x acak 0-200!'},
       {type:'mc', q:'Untuk animasi kereta berjalan, setiap frame kita lakukan?', visual:'🚂', opts:['clearRect → x+=speed → gambar kereta','gambar kereta → clearRect','x+=speed → gambar kereta','clearRect saja'], ans:0, expl:'Hapus → geser → gambar ulang = animasi mulus!'},
-      {type:'mc', q:'ctx.save() dan ctx.restore() berguna untuk?', visual:'📷', opts:['Simpan & pulihkan state ctx (warna, transformasi)','Simpan file gambar','Hapus canvas','Menyimpan variabel'], ans:0, expl:'save() simpan state, restore() pulihkan — berguna saat menggambar banyak objek berbeda!'},
+      {type:'mc', q:'ctx.save() dan ctx.restore() berguna untuk?', visual:'📷', opts:['Simpan & pulihkan state ctx (warna, transformasi)','Simpan file gambar','Hapus canvas','Menyimpan variabel'], ans:0, expl:'save() simpan state, restore() pulihkan – berguna saat menggambar banyak objek berbeda!'},
       {type:'code-fill', q:'Lengkapi: gambar lingkaran dengan warna acak dari array panjang 4', code:"const c=['red','blue','green','purple'];\nctx.fillStyle = c[Math.floor(Math.random()*___)];\nctx.beginPath();\nctx.arc(100,75,40,0,Math.PI*2);\nctx.fill();", blankIdx:0, ans:'4', output:'(lingkaran warna acak!)', expl:'Array c panjang 4 → random*4 → index 0-3!'},
       {type:'mc', q:'Mana kode yang menggambar animasi (bukan gambar statis)?', opts:["function draw(){ctx.clearRect(0,0,w,h);x++;requestAnimationFrame(draw);} draw()","ctx.fillRect(x,y,w,h)",'ctx.arc(x,y,r,0,Math.PI*2); ctx.fill()',"for(let i=0;i<5;i++){ctx.fillRect(i*10,0,8,8)}"], ans:0, expl:'Hanya kode yang memanggil requestAnimationFrame secara rekursif yang membuat animasi!'},
     ]
@@ -1162,7 +1162,7 @@ function showToast(correct, correctAns, expl) {
   document.getElementById('toastIco').textContent = correct ? '🎨' : '❌';
   document.getElementById('toastTitle').textContent = correct
     ? 'Keren! Lukisanmu berhasil, Pelukis Rayyan!'
-    : 'Belum tepat — yuk pikirkan lagi! 💡';
+    : 'Belum tepat – yuk pikirkan lagi! 💡';
   document.getElementById('toastExpl').textContent = expl || '';
   toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
   document.getElementById('nxtBtn').className = 'nxt-btn show';
@@ -1273,7 +1273,7 @@ function showComplete(ranOutOfLives) {
       <div class="review-ico">${h.correct ? '✅' : '❌'}</div>
       <div>
         <div class="review-q">${h.q}</div>
-        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu jawab: ${h.userAns} — coba lagi ya! 🤔`}</div>
+        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu jawab: ${h.userAns} – coba lagi ya! 🤔`}</div>
       </div>
     </div>`).join('');
 
@@ -1418,7 +1418,7 @@ function submitBugReport(event) {
   event.preventDefault();
   const desc = document.getElementById('bugDescription').value;
   const email = document.getElementById('bugEmail').value || 'tidak-ada@example.com';
-  const courseName = 'Studio Pelukis Kode — Melukis dengan Mantra 🎨';
+  const courseName = 'Studio Pelukis Kode – Melukis dengan Mantra 🎨';
   const formData = new FormData();
   formData.append('_subject', `[Learn with Adhi Bug Report] ${courseName}`);
   formData.append('message', `Course: ${courseName}\n\nBug Description:\n${desc}`);

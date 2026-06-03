@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Build Your AI Agent Bot — Kai Course · Learn with Adhi</title>
+<title>Build Your AI Agent Bot – Kai Course · Learn with Adhi</title>
 <meta name="description" content="Launch a Telegram AI bot on a VPS with OpenRouter, systemd, and production-ready workflows." />
 <meta name="author" content="Adhi" />
 <link rel="canonical" href="https://learnwithadhi.com/courses/ai/2026-05-24-ai-bot-vps-course-v1.html" />
@@ -215,7 +215,7 @@ p.body strong{font-weight:600}
 <section class="module active" id="mod-0">
   <div class="eyebrow">MODULE 01 / 08</div>
   <h1 class="mod-title">The <span class="accent">Restaurant</span> Analogy</h1>
-  <p class="lede">Before writing a single line of code, you need to understand what you're building. We'll use one analogy throughout this entire course — and it will make everything click.</p>
+  <p class="lede">Before writing a single line of code, you need to understand what you're building. We'll use one analogy throughout this entire course – and it will make everything click.</p>
 
   <div class="objectives">
     <h4>Learning Objectives</h4>
@@ -271,10 +271,10 @@ p.body strong{font-weight:600}
   </div>
 
   <h2 class="section-h">The Four Pieces</h2>
-  <p class="body"><strong>VPS (Virtual Private Server)</strong> — This is your kitchen. A small computer rented in a data centre that runs 24/7 even when your laptop is off. Your bot code lives here.</p>
-  <p class="body"><strong>OpenRouter</strong> — This is the menu of chefs you can hire. Instead of picking one AI company and sticking with it, OpenRouter lets you send requests to GPT-4o, Claude, Gemini, and hundreds more — all through one single address. You pay per meal (per token).</p>
-  <p class="body"><strong>Your Python Bot</strong> — This is the restaurant manager. It receives orders from customers (Telegram messages), sends them to the chosen chef (OpenRouter), and delivers the food back (AI reply).</p>
-  <p class="body"><strong>Telegram</strong> — This is your dining room. It's where your customers (users) sit and chat with your bot. Free, works everywhere, and has a dead-simple bot API.</p>
+  <p class="body"><strong>VPS (Virtual Private Server)</strong> – This is your kitchen. A small computer rented in a data centre that runs 24/7 even when your laptop is off. Your bot code lives here.</p>
+  <p class="body"><strong>OpenRouter</strong> – This is the menu of chefs you can hire. Instead of picking one AI company and sticking with it, OpenRouter lets you send requests to GPT-4o, Claude, Gemini, and hundreds more – all through one single address. You pay per meal (per token).</p>
+  <p class="body"><strong>Your Python Bot</strong> – This is the restaurant manager. It receives orders from customers (Telegram messages), sends them to the chosen chef (OpenRouter), and delivers the food back (AI reply).</p>
+  <p class="body"><strong>Telegram</strong> – This is your dining room. It's where your customers (users) sit and chat with your bot. Free, works everywhere, and has a dead-simple bot API.</p>
 
   <div class="callout mango">
     <div class="callout-label">Why Telegram and not WhatsApp?</div>
@@ -289,7 +289,7 @@ p.body strong{font-weight:600}
   <!-- QUIZ 0 -->
   <div class="quiz-wrap" id="quiz-0">
     <div class="quiz-header">Quick Check</div>
-    <div class="quiz-sub">3 questions — get all right to unlock the ✓</div>
+    <div class="quiz-sub">3 questions – get all right to unlock the ✓</div>
 
     <div class="q-block">
       <div class="q-text">1. In the restaurant analogy, what does OpenRouter represent?</div>
@@ -346,19 +346,19 @@ p.body strong{font-weight:600}
   </div>
 
   <div class="stat-row">
-    <div class="stat-card"><div class="stat-val">$6</div><div class="stat-label">per month — cheapest DigitalOcean Droplet (1 vCPU, 1GB RAM, 25GB SSD)</div></div>
-    <div class="stat-card"><div class="stat-val">24/7</div><div class="stat-label">uptime — your bot answers even at 3am while you sleep</div></div>
+    <div class="stat-card"><div class="stat-val">$6</div><div class="stat-label">per month – cheapest DigitalOcean Droplet (1 vCPU, 1GB RAM, 25GB SSD)</div></div>
+    <div class="stat-card"><div class="stat-val">24/7</div><div class="stat-label">uptime – your bot answers even at 3am while you sleep</div></div>
     <div class="stat-card"><div class="stat-val">~2 min</div><div class="stat-label">to spin up a new Droplet from scratch on DigitalOcean</div></div>
   </div>
 
   <h2 class="section-h">Step-by-Step: Create Your Droplet</h2>
   <ul class="steps">
-    <li><p>Go to <strong>cloud.digitalocean.com</strong> and create a free account. You'll get a $200 credit for 60 days — enough to run this entire project for free while learning.</p></li>
+    <li><p>Go to <strong>cloud.digitalocean.com</strong> and create a free account. You'll get a $200 credit for 60 days – enough to run this entire project for free while learning.</p></li>
     <li><p>Click <strong>Create → Droplets</strong> in the top menu.</p></li>
     <li><p>Choose <strong>Region</strong>: pick the one closest to your users. For Indonesia-facing bots, Singapore (SGP1) is ideal.</p></li>
     <li><p>Choose <strong>Image → Ubuntu 22.04 LTS</strong>. This is the most stable, widely documented Linux version for beginners.</p></li>
     <li><p>Choose <strong>Size → Basic → Regular → $6/mo</strong> (1 vCPU, 1 GB RAM). More than enough for a Telegram bot.</p></li>
-    <li><p>Under <strong>Authentication</strong>, choose <em>Password</em> for now (simpler). Set a strong password — you'll use it to log in.</p></li>
+    <li><p>Under <strong>Authentication</strong>, choose <em>Password</em> for now (simpler). Set a strong password – you'll use it to log in.</p></li>
     <li><p>Click <strong>Create Droplet</strong>. In about 60 seconds, you'll see a green IP address. That's your kitchen's address.</p></li>
   </ul>
 
@@ -460,7 +460,7 @@ p.body strong{font-weight:600}
     <pre>ssh root@YOUR_DROPLET_IP</pre>
   </div>
 
-  <p class="body">Replace <span class="inline-code">YOUR_DROPLET_IP</span> with the number DigitalOcean showed you. It'll ask for your password — type it (you won't see it appear, that's normal) and hit Enter.</p>
+  <p class="body">Replace <span class="inline-code">YOUR_DROPLET_IP</span> with the number DigitalOcean showed you. It'll ask for your password – type it (you won't see it appear, that's normal) and hit Enter.</p>
 
   <div class="callout forest">
     <div class="callout-label">You're in!</div>
@@ -501,7 +501,7 @@ p.body strong{font-weight:600}
       <text x="36" y="196" font-family="JetBrains Mono,monospace" font-size="11" fill="#6ee7a0">apt install -y python3 python3-pip</text>
       <text x="36" y="211" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(251,244,230,0.35)"># updates all software then installs Python</text>
     </svg>
-    <div class="diagram-caption">Run the update sequence immediately after first login — takes ~2 minutes</div>
+    <div class="diagram-caption">Run the update sequence immediately after first login – takes ~2 minutes</div>
   </div>
 
   <h2 class="section-h">Create Your Bot Folder</h2>
@@ -509,7 +509,7 @@ p.body strong{font-weight:600}
     <div class="code-label">inside your VPS</div>
     <pre>mkdir /root/mybot
 cd /root/mybot
-ls   # should show empty — that's fine</pre>
+ls   # should show empty – that's fine</pre>
   </div>
 
   <p class="body">This is your bot's home. Every file we create will go here.</p>
@@ -563,7 +563,7 @@ ls   # should show empty — that's fine</pre>
 <section class="module" id="mod-3">
   <div class="eyebrow">MODULE 04 / 08</div>
   <h1 class="mod-title">Hire the <span class="accent">Chef</span></h1>
-  <p class="lede">OpenRouter is where you get access to AI models. Think of it as a staffing agency — you call them, tell them what kind of chef you need, they connect you, and you pay per dish cooked.</p>
+  <p class="lede">OpenRouter is where you get access to AI models. Think of it as a staffing agency – you call them, tell them what kind of chef you need, they connect you, and you pay per dish cooked.</p>
 
   <div class="objectives">
     <h4>Learning Objectives</h4>
@@ -578,20 +578,20 @@ ls   # should show empty — that's fine</pre>
   <ul class="steps">
     <li><p>Go to <strong>openrouter.ai</strong> and sign up (free).</p></li>
     <li><p>Click your profile → <strong>Keys</strong> → <strong>Create Key</strong>. Name it "telegram-bot".</p></li>
-    <li><p>Copy the key immediately — it starts with <span class="inline-code">sk-or-v1-...</span> and you can't see it again after closing the window.</p></li>
-    <li><p>Add credit: go to <strong>Credits</strong> → add $5. That's roughly <strong>33 million tokens</strong> on GPT-4o-mini — enough for months of casual use.</p></li>
+    <li><p>Copy the key immediately – it starts with <span class="inline-code">sk-or-v1-...</span> and you can't see it again after closing the window.</p></li>
+    <li><p>Add credit: go to <strong>Credits</strong> → add $5. That's roughly <strong>33 million tokens</strong> on GPT-4o-mini – enough for months of casual use.</p></li>
   </ul>
 
   <div class="callout tomato">
     <div class="callout-label">Treat your API key like a password</div>
-    Never paste it into a public GitHub repo or share it in a chat. Anyone who has it can spend your credits. We'll store it safely as an environment variable — not hardcoded in your script.
+    Never paste it into a public GitHub repo or share it in a chat. Anyone who has it can spend your credits. We'll store it safely as an environment variable – not hardcoded in your script.
   </div>
 
   <h2 class="section-h">Choosing a Model</h2>
 
   <div class="diagram-wrap">
     <svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" width="100%" aria-hidden="true">
-      <text x="20" y="22" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">MODEL COMPARISON — via OpenRouter</text>
+      <text x="20" y="22" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">MODEL COMPARISON – via OpenRouter</text>
       <!-- headers -->
       <text x="20" y="42" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#6B6259">MODEL</text>
       <text x="260" y="42" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#6B6259">COST / 1M TOKENS</text>
@@ -616,9 +616,9 @@ ls   # should show empty — that's fine</pre>
 
       <text x="30" y="186" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">meta-llama/llama-3.1-8b</text>
       <text x="260" y="186" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">FREE (rate limited)</text>
-      <text x="420" y="186" font-family="Inter,sans-serif" font-size="10" fill="#6B6259">Testing only — slow & capped</text>
+      <text x="420" y="186" font-family="Inter,sans-serif" font-size="10" fill="#6B6259">Testing only – slow & capped</text>
       <line x1="20" y1="195" x2="620" y2="195" stroke="var(--line)" stroke-width="1"/>
-      <text x="30" y="212" font-family="Inter,sans-serif" font-size="9" fill="#6B6259">All prices approximate — check openrouter.ai/models for live rates</text>
+      <text x="30" y="212" font-family="Inter,sans-serif" font-size="9" fill="#6B6259">All prices approximate – check openrouter.ai/models for live rates</text>
     </svg>
     <div class="diagram-caption">Token = roughly one word. A typical chat message is ~50–200 tokens.</div>
   </div>
@@ -645,7 +645,7 @@ source ~/.bashrc</pre>
       <div class="q-text">1. What should you do immediately after generating your API key?</div>
       <div class="q-opts">
         <button class="q-opt" onclick="answer(this,3,0,false)">Share it with your team on Slack</button>
-        <button class="q-opt" onclick="answer(this,3,0,true)">Copy it immediately — you can't view it again after closing</button>
+        <button class="q-opt" onclick="answer(this,3,0,true)">Copy it immediately – you can't view it again after closing</button>
         <button class="q-opt" onclick="answer(this,3,0,false)">Paste it directly into your bot.py file</button>
       </div>
       <div class="q-feedback" id="qf-3-0"></div>
@@ -701,14 +701,14 @@ pip3 install openai python-telegram-bot --break-system-packages</pre>
 
   <div class="callout sea">
     <div class="callout-label">Why openai package for OpenRouter?</div>
-    OpenRouter is intentionally designed to be a drop-in replacement for the OpenAI API. You use the same <span class="inline-code">openai</span> Python library — you just change the <span class="inline-code">base_url</span>. This means switching models is one line of code.
+    OpenRouter is intentionally designed to be a drop-in replacement for the OpenAI API. You use the same <span class="inline-code">openai</span> Python library – you just change the <span class="inline-code">base_url</span>. This means switching models is one line of code.
   </div>
 
   <h2 class="section-h">The Full Bot Script</h2>
-  <p class="body">Create the file: <span class="inline-code">nano /root/mybot/bot.py</span> — then paste everything below.</p>
+  <p class="body">Create the file: <span class="inline-code">nano /root/mybot/bot.py</span> – then paste everything below.</p>
 
   <div class="code-block">
-    <div class="code-label">bot.py — full script</div>
+    <div class="code-label">bot.py – full script</div>
     <pre>import os
 from openai import AsyncOpenAI
 from telegram import Update
@@ -807,15 +807,15 @@ if __name__ == "__main__":
 
       <rect x="20" y="74" width="90" height="30" rx="6" fill="#1FA9C7"/>
       <text x="65" y="93" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff">2. PERSONA</text>
-      <text x="126" y="93" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Your bot's personality — edit this to create any character</text>
+      <text x="126" y="93" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Your bot's personality – edit this to create any character</text>
 
       <rect x="20" y="116" width="90" height="30" rx="6" fill="#E84BA0"/>
       <text x="65" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff">3. MEMORY</text>
-      <text x="126" y="135" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Stores chat history per user — this is what makes it "agentic"</text>
+      <text x="126" y="135" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Stores chat history per user – this is what makes it "agentic"</text>
 
       <rect x="20" y="158" width="90" height="30" rx="6" fill="#1F9D55"/>
       <text x="65" y="177" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff">4. AI CLIENT</text>
-      <text x="126" y="177" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Connection to OpenRouter — base_url is the magic line</text>
+      <text x="126" y="177" font-family="Inter,sans-serif" font-size="11" fill="#1A1614">Connection to OpenRouter – base_url is the magic line</text>
 
       <rect x="20" y="200" width="90" height="30" rx="6" fill="#FFC234"/>
       <text x="65" y="219" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#1A1614">5. HANDLERS</text>
@@ -825,7 +825,7 @@ if __name__ == "__main__":
       <text x="65" y="253" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#FBF4E6">6. MAIN</text>
       <text x="126" y="253" font-family="Inter,sans-serif" font-size="10" fill="#6B6259">Wires everything together and starts listening for messages</text>
     </svg>
-    <div class="diagram-caption">Memory (section 3) is what makes this a true agent — it remembers context across messages</div>
+    <div class="diagram-caption">Memory (section 3) is what makes this a true agent – it remembers context across messages</div>
   </div>
 
   <!-- QUIZ 4 -->
@@ -845,7 +845,7 @@ if __name__ == "__main__":
       <div class="q-text">2. Why do we trim the conversation history to 20 messages?</div>
       <div class="q-opts">
         <button class="q-opt" onclick="answer(this,4,1,false)">Telegram has a message limit</button>
-        <button class="q-opt" onclick="answer(this,4,1,true)">To save tokens — long histories cost more money to send to the AI</button>
+        <button class="q-opt" onclick="answer(this,4,1,true)">To save tokens – long histories cost more money to send to the AI</button>
         <button class="q-opt" onclick="answer(this,4,1,false)">Python can't handle more than 20 items in a list</button>
       </div>
       <div class="q-feedback" id="qf-4-1"></div>
@@ -872,7 +872,7 @@ if __name__ == "__main__":
 <section class="module" id="mod-5">
   <div class="eyebrow">MODULE 06 / 08</div>
   <h1 class="mod-title">Open the <span class="accent">Diner</span></h1>
-  <p class="lede">Your kitchen is ready, your manager is written. Now you open the dining room — connect your bot to Telegram so real people can walk in and start chatting.</p>
+  <p class="lede">Your kitchen is ready, your manager is written. Now you open the dining room – connect your bot to Telegram so real people can walk in and start chatting.</p>
 
   <div class="objectives">
     <h4>Learning Objectives</h4>
@@ -883,7 +883,7 @@ if __name__ == "__main__":
     </ul>
   </div>
 
-  <h2 class="section-h">Step 1 — Create Your Bot in Telegram</h2>
+  <h2 class="section-h">Step 1 – Create Your Bot in Telegram</h2>
 
   <div class="diagram-wrap">
     <svg viewBox="0 0 640 140" xmlns="http://www.w3.org/2000/svg" width="100%" aria-hidden="true">
@@ -914,7 +914,7 @@ if __name__ == "__main__":
     <div class="diagram-caption">The whole process takes about 60 seconds inside Telegram</div>
   </div>
 
-  <h2 class="section-h">Step 2 — Set the Token on Your VPS</h2>
+  <h2 class="section-h">Step 2 – Set the Token on Your VPS</h2>
   <div class="code-block">
     <div class="code-label">on your VPS</div>
     <pre>export TELEGRAM_TOKEN="1234567890:ABCdefGHIjklMNOpqrSTUvwxYZ"
@@ -923,7 +923,7 @@ echo 'export TELEGRAM_TOKEN="your-token-here"' >> ~/.bashrc
 source ~/.bashrc</pre>
   </div>
 
-  <h2 class="section-h">Step 3 — Run the Bot!</h2>
+  <h2 class="section-h">Step 3 – Run the Bot!</h2>
   <div class="code-block">
     <div class="code-label">on your VPS</div>
     <pre>cd /root/mybot
@@ -968,8 +968,8 @@ python3 bot.py</pre>
     <div class="q-block">
       <div class="q-text">3. What happens to the bot if you close your SSH terminal right now?</div>
       <div class="q-opts">
-        <button class="q-opt" onclick="answer(this,5,2,false)">It keeps running — it's already on the VPS</button>
-        <button class="q-opt" onclick="answer(this,5,2,true)">It stops — we haven't set up a background service yet</button>
+        <button class="q-opt" onclick="answer(this,5,2,false)">It keeps running – it's already on the VPS</button>
+        <button class="q-opt" onclick="answer(this,5,2,true)">It stops – we haven't set up a background service yet</button>
         <button class="q-opt" onclick="answer(this,5,2,false)">It pauses until you reconnect</button>
       </div>
       <div class="q-feedback" id="qf-5-2"></div>
@@ -987,7 +987,7 @@ python3 bot.py</pre>
 <section class="module" id="mod-6">
   <div class="eyebrow">MODULE 07 / 08</div>
   <h1 class="mod-title">Keep the <span class="accent">Lights</span> On</h1>
-  <p class="lede">Right now your bot dies the moment you close your laptop. We'll fix this with systemd — Linux's built-in process manager — so your bot runs forever and restarts automatically if it crashes.</p>
+  <p class="lede">Right now your bot dies the moment you close your laptop. We'll fix this with systemd – Linux's built-in process manager – so your bot runs forever and restarts automatically if it crashes.</p>
 
   <div class="objectives">
     <h4>Learning Objectives</h4>
@@ -1057,7 +1057,7 @@ systemctl status mybot</pre>
       <text x="20" y="22" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" letter-spacing="0.08em">SYSTEMD CHEAT SHEET</text>
       <rect x="20" y="32" width="600" height="24" rx="6" fill="#1e1c1a"/>
       <text x="32" y="48" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFC234">journalctl -u mybot -f</text>
-      <text x="260" y="48" font-family="Inter,sans-serif" font-size="10" fill="rgba(251,244,230,0.7)">Live logs — see every message in real time</text>
+      <text x="260" y="48" font-family="Inter,sans-serif" font-size="10" fill="rgba(251,244,230,0.7)">Live logs – see every message in real time</text>
 
       <rect x="20" y="62" width="600" height="24" rx="6" fill="#1e1c1a"/>
       <text x="32" y="78" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFC234">systemctl restart mybot</text>
@@ -1069,7 +1069,7 @@ systemctl status mybot</pre>
 
       <rect x="20" y="122" width="600" height="24" rx="6" fill="#1e1c1a"/>
       <text x="32" y="138" font-family="JetBrains Mono,monospace" font-size="10" fill="#FFC234">systemctl status mybot</text>
-      <text x="260" y="138" font-family="Inter,sans-serif" font-size="10" fill="rgba(251,244,230,0.7)">Quick health check — shows uptime and last log lines</text>
+      <text x="260" y="138" font-family="Inter,sans-serif" font-size="10" fill="rgba(251,244,230,0.7)">Quick health check – shows uptime and last log lines</text>
     </svg>
     <div class="diagram-caption">Whenever you edit bot.py, run systemctl restart mybot to apply changes</div>
   </div>
@@ -1135,9 +1135,9 @@ systemctl status mybot</pre>
   </div>
 
   <div class="stat-row">
-    <div class="stat-card"><div class="stat-val">$6</div><div class="stat-label">DigitalOcean Basic Droplet — fixed monthly cost</div></div>
+    <div class="stat-card"><div class="stat-val">$6</div><div class="stat-label">DigitalOcean Basic Droplet – fixed monthly cost</div></div>
     <div class="stat-card"><div class="stat-val">~$1–5</div><div class="stat-label">OpenRouter tokens for a personal bot with light-moderate usage</div></div>
-    <div class="stat-card"><div class="stat-val">$0</div><div class="stat-label">Telegram — completely free, no per-message fees ever</div></div>
+    <div class="stat-card"><div class="stat-val">$0</div><div class="stat-label">Telegram – completely free, no per-message fees ever</div></div>
   </div>
 
   <h2 class="section-h">Cost Calculator</h2>
@@ -1174,15 +1174,15 @@ systemctl status mybot</pre>
   <h2 class="section-h">Cost-Saving Tips</h2>
   <div class="callout forest">
     <div class="callout-label">Keep it cheap without losing quality</div>
-    <p style="margin-bottom:8px">• <strong>Short system prompt</strong> — every message sends the full system prompt. 50 words &gt; 500 words.</p>
-    <p style="margin-bottom:8px">• <strong>Trim history</strong> — our script already limits to 20 messages. Consider 10 for cheaper bots.</p>
-    <p style="margin-bottom:8px">• <strong>Gemini Flash</strong> — if GPT-4o-mini feels expensive, swap to google/gemini-flash-1.5 (half the price, still excellent).</p>
-    <p>• <strong>Set a monthly limit</strong> — in OpenRouter dashboard → Settings, set a hard spend cap so you never get surprised.</p>
+    <p style="margin-bottom:8px">• <strong>Short system prompt</strong> – every message sends the full system prompt. 50 words &gt; 500 words.</p>
+    <p style="margin-bottom:8px">• <strong>Trim history</strong> – our script already limits to 20 messages. Consider 10 for cheaper bots.</p>
+    <p style="margin-bottom:8px">• <strong>Gemini Flash</strong> – if GPT-4o-mini feels expensive, swap to google/gemini-flash-1.5 (half the price, still excellent).</p>
+    <p>• <strong>Set a monthly limit</strong> – in OpenRouter dashboard → Settings, set a hard spend cap so you never get surprised.</p>
   </div>
 
   <div class="callout mango">
     <div class="callout-label">Reality check for a personal project</div>
-    10 users × 5 messages × 150 tokens = 7,500 tokens/day. At $0.60/1M out tokens, that's about $0.0045/day in AI costs — less than half a cent. For most personal or small community bots, your VPS ($6/mo) will be your biggest expense by far.
+    10 users × 5 messages × 150 tokens = 7,500 tokens/day. At $0.60/1M out tokens, that's about $0.0045/day in AI costs – less than half a cent. For most personal or small community bots, your VPS ($6/mo) will be your biggest expense by far.
   </div>
 
   <!-- QUIZ 7 -->
@@ -1233,7 +1233,7 @@ systemctl status mybot</pre>
 
   <div class="ref-item tomato">
     <div class="ref-cite">OpenRouter. "Models." openrouter.ai/models. Accessed May 2026.</div>
-    <div class="ref-annotation">The authoritative live source for model pricing, rate limits, and availability across all supported providers. Prices change frequently — always check here for current rates rather than relying on figures in this course. Caveat: pricing shown is list price; actual billing may differ slightly due to rounding and provider-side changes.</div>
+    <div class="ref-annotation">The authoritative live source for model pricing, rate limits, and availability across all supported providers. Prices change frequently – always check here for current rates rather than relying on figures in this course. Caveat: pricing shown is list price; actual billing may differ slightly due to rounding and provider-side changes.</div>
     <a class="ref-link" href="https://openrouter.ai/models" target="_blank">→ openrouter.ai/models</a>
   </div>
 
@@ -1245,19 +1245,19 @@ systemctl status mybot</pre>
 
   <div class="ref-item forest">
     <div class="ref-cite">python-telegram-bot Contributors. "python-telegram-bot v20+ Documentation." docs.python-telegram-bot.org. Accessed May 2026.</div>
-    <div class="ref-annotation">Official library documentation for building Telegram bots in Python. The Application/handler pattern used in bot.py follows the v20+ async architecture. V13 (older, synchronous) has different syntax — ensure you install v20+. Caveat: the library is actively developed; API may evolve.</div>
+    <div class="ref-annotation">Official library documentation for building Telegram bots in Python. The Application/handler pattern used in bot.py follows the v20+ async architecture. V13 (older, synchronous) has different syntax – ensure you install v20+. Caveat: the library is actively developed; API may evolve.</div>
     <a class="ref-link" href="https://docs.python-telegram-bot.org/" target="_blank">→ docs.python-telegram-bot.org</a>
   </div>
 
   <div class="ref-item mango">
     <div class="ref-cite">Telegram. "Bot API Documentation." core.telegram.org/bots/api. Accessed May 2026.</div>
-    <div class="ref-annotation">Telegram's own official Bot API reference. Covers BotFather commands, polling vs webhooks, message types, and rate limits. The bot username requirement (must end in "bot") and BotFather /newbot flow described in Module 06 are sourced from this document. No significant caveats — this is the primary spec.</div>
+    <div class="ref-annotation">Telegram's own official Bot API reference. Covers BotFather commands, polling vs webhooks, message types, and rate limits. The bot username requirement (must end in "bot") and BotFather /newbot flow described in Module 06 are sourced from this document. No significant caveats – this is the primary spec.</div>
     <a class="ref-link" href="https://core.telegram.org/bots/api" target="_blank">→ core.telegram.org/bots/api</a>
   </div>
 
   <div class="ref-item sea">
     <div class="ref-cite">OpenAI. "openai Python Library." github.com/openai/openai-python. Accessed May 2026.</div>
-    <div class="ref-annotation">The official Python SDK for the OpenAI API, which OpenRouter is designed to be compatible with. The base_url override technique used in Module 05 is documented in OpenRouter's own quickstart guide. Caveat: library version pinning is recommended for production — always check the latest release notes before upgrading.</div>
+    <div class="ref-annotation">The official Python SDK for the OpenAI API, which OpenRouter is designed to be compatible with. The base_url override technique used in Module 05 is documented in OpenRouter's own quickstart guide. Caveat: library version pinning is recommended for production – always check the latest release notes before upgrading.</div>
     <a class="ref-link" href="https://github.com/openai/openai-python" target="_blank">→ github.com/openai/openai-python</a>
   </div>
 
@@ -1321,7 +1321,7 @@ function answer(btn, modIdx, qIdx, correct) {
   } else {
     btn.classList.add('wrong');
     const fb = document.getElementById('qf-' + modIdx + '-' + qIdx);
-    fb.textContent = '✗ Not quite — re-read the module section and try to spot the right answer above.';
+    fb.textContent = '✗ Not quite – re-read the module section and try to spot the right answer above.';
     fb.className = 'q-feedback bad show';
   }
 
@@ -1343,10 +1343,10 @@ function checkQuizComplete(modIdx) {
 
   const scoreEl = document.getElementById('qs-' + modIdx);
   scoreEl.textContent = correctCount === 3
-    ? '🎯 Perfect — 3/3! Module complete.'
+    ? '🎯 Perfect – 3/3! Module complete.'
     : correctCount === 2
-    ? '👍 2/3 — Good. Review the one you missed.'
-    : '📖 1/3 — Worth re-reading this module.';
+    ? '👍 2/3 – Good. Review the one you missed.'
+    : '📖 1/3 – Worth re-reading this module.';
   scoreEl.className = 'quiz-score show';
 
   // Mark done if at least 2/3

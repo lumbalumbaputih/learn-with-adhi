@@ -1,4 +1,4 @@
-/* Learn with Adhi — design tokens
+/* Learn with Adhi – design tokens
    Canonical color, type, and spacing variables shared by the hub and every course page.
    Course pages that opt into dark mode override these via [data-theme="dark"]. */
 
@@ -41,7 +41,7 @@
   --r-sm: 8px;  --r-md: 12px; --r-lg: 18px; --r-xl: 28px;
 }
 
-/* System B compat aliases — variables used by older course pages (DM Sans set).
+/* System B compat aliases – variables used by older course pages (DM Sans set).
    Mapped to canonical brand colors so any page that references them stays
    on-brand without redefining its own :root. */
 :root {
