@@ -121,6 +121,18 @@
     "duration": "~5 days"
   },
   {
+    "id": "perth-architecture",
+    "n": "11",
+    "title": "Reading Perth — Architecture by Rail",
+    "blurb": "Trace Perth's buildings from the 1829 Swan River Colony to today — a train-line field guide to spotting and understanding the city's architecture.",
+    "category": "Life",
+    "tags": ["Beginner", "Design", "Travel"],
+    "primitive": "arc",
+    "accent": "indigo",
+    "path": "courses/architecture/2026-06-03-perth-architecture-by-train-v1.html",
+    "duration": "~1 week"
+  },
+  {
     "id": "tool-safe-area",
     "n": "T1",
     "title": "Feifelusiac Safe Area Calculator",
