@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="design-principles">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Principles: Applied Aesthetics · Learn with Adhi</title>
+<meta name="description" content="Master the applied science of making things look good — contrast, composition, color, and typography with visual examples and exercises.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/design/design-principles-course-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Design Principles: Applied Aesthetics">
+<meta property="og:description" content="Master the applied science of making things look good.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Design Principles: Applied Aesthetics","description":"Master the applied science of making things look good.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:620px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout.gold{border-left-color:var(--gold);background:rgba(255,194,52,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout strong{font-weight:600}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-row{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:16px}
+.demo-row:last-child{margin-bottom:0}
+.demo-col{display:flex;flex-direction:column;align-items:center;gap:8px}
+.demo-col-label{font-size:11px;color:var(--muted);font-family:var(--fm);text-align:center}
+
+/* Gestalt dots */
+.dot-group{display:grid;grid-template-columns:repeat(3,12px)}
+.dot-group.close{gap:4px}
+.dot-group.spread{gap:16px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--acc)}
+.dot.alt{background:var(--gold)}
+.dot.empty{background:transparent;border:2px solid var(--acc)}
+
+/* Closure shape */
+.closure-shape{width:60px;height:60px;border:3px solid var(--acc);border-radius:50%;border-top-color:transparent;transform:rotate(135deg)}
+
+/* Contrast demos */
+.contrast-demo{display:flex;flex-direction:column;gap:8px}
+.contrast-row{padding:8px 14px;border-radius:6px;font-size:14px;font-weight:500}
+
+/* Hierarchy demo */
+.hierarchy-demo{border:1px solid var(--line-s);border-radius:8px;padding:16px;background:#fff}
+.hierarchy-demo .hd-h1{font-family:var(--fd);font-size:22px;font-weight:800;line-height:1.1;margin-bottom:4px}
+.hierarchy-demo .hd-h2{font-size:14px;font-weight:600;color:#555;margin-bottom:8px}
+.hierarchy-demo .hd-body{font-size:13px;color:#777;line-height:1.6}
+.hierarchy-demo .hd-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:#aaa;text-transform:uppercase;margin-bottom:12px}
+
+/* Color swatches */
+.swatch-row{display:flex;gap:6px;margin-bottom:10px;align-items:flex-end}
+.swatch{height:48px;border-radius:8px;flex:1;min-width:40px;position:relative;cursor:default}
+.swatch.tall{height:72px}
+.swatch-label{font-family:var(--fm);font-size:10px;color:var(--muted);margin-top:4px;text-align:center}
+.harmony-block{margin-bottom:20px}
+.harmony-name{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink)}
+.harmony-desc{font-size:12px;color:var(--muted);margin-bottom:8px}
+
+/* Type anatomy */
+.type-anatomy-wrap{position:relative;padding:20px 0 28px;border:1px solid var(--line-s);border-radius:8px;background:#fff;overflow:hidden}
+.type-specimen{font-family:Georgia,serif;font-size:80px;line-height:1;text-align:center;color:var(--ink);position:relative;z-index:2;letter-spacing:-.02em}
+.type-line{position:absolute;left:0;right:0;height:1px}
+.type-line.baseline{background:var(--acc);opacity:.6;bottom:28px}
+.type-line.xheight{background:var(--gold);opacity:.6}
+.type-line.capheight{background:var(--green);opacity:.5}
+.type-line-label{position:absolute;right:12px;font-family:var(--fm);font-size:9px;letter-spacing:.06em;text-transform:uppercase}
+
+/* Type category cards */
+.type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin:20px 0}
+.type-card{border:1px solid var(--line-s);border-radius:12px;padding:18px 16px;background:var(--paper-2)}
+.type-card .type-sample{font-size:28px;line-height:1.2;margin-bottom:10px;letter-spacing:-.01em}
+.type-card h4{font-size:13px;font-weight:700;margin-bottom:4px}
+.type-card p{font-size:12px;color:var(--muted);margin:0}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-visual{margin-bottom:16px}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES ── */
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:20px 0}
+.resource-card{border:1px solid var(--line-s);border-radius:12px;padding:16px 18px;background:var(--paper-2)}
+.resource-card .rc-type{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.resource-card h4{font-size:14px;font-weight:700;margin-bottom:4px;color:var(--ink)}
+.resource-card p{font-size:12px;color:var(--muted);margin:0}
+
+/* ── DONE BUTTON ── */
+.done-btn{margin-top:40px;padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#a855f7);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 6 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">The Science of Seeing</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Contrast — The Master Principle</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Composition & Space</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Color Theory & Harmony</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Typography as Design</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Building Your Design Eye</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">Design Principles</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 — THE SCIENCE OF SEEING
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 06</div>
+  <h1 class="mod-title">The <span class="acc">Science</span> of Seeing</h1>
+  <p class="mod-lede">You've seen thousands of well-designed things — and thousands of ugly ones. The difference usually isn't talent. It's knowledge of a handful of principles that work with the brain's hardwired visual system.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How the brain actively constructs what we "see"</li>
+      <li>The 6 Gestalt laws and how to apply each one</li>
+      <li>Why processing fluency makes things beautiful</li>
+      <li>The Wundt curve: the sweet spot between boring and chaotic</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Brain as a Visual Machine</h2>
+  <p>Vision isn't passive recording — it's active inference. The brain receives incomplete, ambiguous light signals and constructs a model of reality. It fills in gaps, makes predictions, and groups elements automatically, before conscious thought kicks in.</p>
+  <p>This is why design principles work: they aren't arbitrary rules. They're operating instructions for a specific piece of hardware — the human visual cortex. Learn how that hardware works and you can predict, with reasonable accuracy, how any viewer will respond to a composition.</p>
+  <ul class="bl">
+    <li>~30% of the brain's cortex is dedicated to visual processing</li>
+    <li>The brain processes images in ~13 milliseconds — before you're "aware" of having seen anything</li>
+    <li>90% of the information we absorb is visual</li>
+    <li>The brain processes visuals 60,000× faster than text</li>
+  </ul>
+
+  <h2 class="sh">Gestalt Psychology — The 6 Laws</h2>
+  <p>In the 1920s, German psychologists discovered the brain doesn't perceive individual elements — it perceives <em>relationships between elements</em>. "Gestalt" means "form" or "unified whole" in German. Their six laws describe exactly how this grouping happens.</p>
+
+  <h3 class="sub">1. Proximity</h3>
+  <p>Objects close together are perceived as a group, regardless of whether they look alike.</p>
+  <div class="demo-box">
+    <div class="demo-label">Demo — Proximity</div>
+    <div class="demo-row">
+      <div class="demo-col">
+        <div class="dot-group close">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+        <div class="demo-col-label">Close spacing → 1 group</div>
+      </div>
+      <div class="demo-col">
+        <div class="dot-group spread">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+        <div class="demo-col-label">Wide spacing → 9 individuals</div>
+      </div>
+    </div>
+    <div class="demo-caption">Same 9 dots. Only the spacing changed. Your brain does the rest.</div>
+  </div>
+  <p><strong>Design application:</strong> Group related items together (form fields, menu items, card contents). Separate unrelated items with space. Never use arbitrary margins.</p>
+
+  <h3 class="sub">2. Similarity</h3>
+  <p>Objects that share visual attributes — color, shape, size, texture — are perceived as related even when they're spatially apart.</p>
+  <div class="demo-box">
+    <div class="demo-label">Demo — Similarity</div>
+    <div class="demo-row" style="gap:6px;flex-wrap:wrap">
+      <div class="dot" style="width:14px;height:14px"></div>
+      <div class="dot alt" style="width:14px;height:14px;border-radius:3px"></div>
+      <div class="dot" style="width:14px;height:14px"></div>
+      <div class="dot alt" style="width:14px;height:14px;border-radius:3px"></div>
+      <div class="dot" style="width:14px;height:14px"></div>
+      <div class="dot alt" style="width:14px;height:14px;border-radius:3px"></div>
+      <div class="dot" style="width:14px;height:14px"></div>
+      <div class="dot alt" style="width:14px;height:14px;border-radius:3px"></div>
+    </div>
+    <div class="demo-caption">Two groups form — circles and squares — even though all are evenly spaced.</div>
+  </div>
+  <p><strong>Design application:</strong> Consistent button styles signal "all these are interactive." Consistent font weights signal hierarchy. Color-coding groups data even when mixed together.</p>
+
+  <h3 class="sub">3. Continuation</h3>
+  <p>The eye follows a path, curve, or line — even through interruptions. We prefer the path that requires the least deviation from a straight or smooth trajectory.</p>
+  <div class="demo-box">
+    <div class="demo-label">Demo — Continuation</div>
+    <div style="display:flex;align-items:center;gap:0;padding:8px 0">
+      <div style="flex:1;height:2px;background:var(--acc)"></div>
+      <div style="width:32px;height:32px;border-radius:50%;border:2px solid var(--line-s);background:var(--paper-2);z-index:1;display:flex;align-items:center;justify-content:center;font-size:18px">⬤</div>
+      <div style="flex:1;height:2px;background:var(--acc)"></div>
+    </div>
+    <div class="demo-caption">The line appears to continue through the circle — the brain prefers a continuous path.</div>
+  </div>
+  <p><strong>Design application:</strong> Reading flow, arrow direction, carousel indicators, progress bars. Use continuation to guide the eye through a layout deliberately.</p>
+
+  <h3 class="sub">4. Closure</h3>
+  <p>The brain completes incomplete shapes. If enough information is present, we "see" the whole form even when parts are missing.</p>
+  <div class="demo-box">
+    <div class="demo-label">Demo — Closure</div>
+    <div class="demo-row">
+      <div class="demo-col">
+        <div class="closure-shape"></div>
+        <div class="demo-col-label">You see a circle</div>
+      </div>
+      <div class="demo-col">
+        <div style="width:60px;height:60px;border:3px solid var(--acc);border-right-color:transparent;border-bottom-color:transparent"></div>
+        <div class="demo-col-label">You see a square</div>
+      </div>
+    </div>
+    <div class="demo-caption">Neither shape is complete — yet the brain fills in what's missing.</div>
+  </div>
+  <p><strong>Design application:</strong> Logo design (negative space logos), icon design. Partial shapes save space and create visual intrigue.</p>
+
+  <h3 class="sub">5. Figure / Ground</h3>
+  <p>The brain separates every visual field into a "figure" (the subject of attention) and a "ground" (the background). The same image can flip between the two.</p>
+  <div class="demo-box">
+    <div class="demo-label">Demo — Figure / Ground</div>
+    <div style="display:flex;justify-content:center">
+      <div style="width:140px;height:100px;background:var(--ink);border-radius:8px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
+        <div style="width:60px;height:80px;background:var(--paper);border-radius:30px 30px 0 0;position:absolute"></div>
+        <div style="width:30px;height:60px;background:var(--ink);position:absolute;border-radius:15px;transform:translateX(-25px)"></div>
+        <div style="width:30px;height:60px;background:var(--ink);position:absolute;border-radius:15px;transform:translateX(25px)"></div>
+      </div>
+    </div>
+    <div class="demo-caption">Is it a white vase on a dark background — or two dark faces looking at each other?</div>
+  </div>
+  <p><strong>Design application:</strong> Control which element reads as figure by adjusting contrast. Icons need a clear figure/ground relationship. Negative space logos deliberately play with ambiguity.</p>
+
+  <h3 class="sub">6. Common Fate</h3>
+  <p>Objects moving (or appearing to move) in the same direction are perceived as a group — even when they don't share other attributes.</p>
+  <p><strong>Design application:</strong> Animation and motion design. Elements that animate together appear related. This is why hover effects on a card group feel coherent, and why loading spinners signal "one system" even with multiple elements.</p>
+
+  <h2 class="sh">Processing Fluency</h2>
+  <p><strong>The hypothesis:</strong> We find beautiful what we can process easily.</p>
+  <p>When a design takes little mental effort to understand — clear hierarchy, familiar patterns, clean structure — the brain interprets that ease of processing as aesthetic pleasure. This isn't a conscious decision. It happens automatically.</p>
+  <ul class="bl">
+    <li><strong>First exposure effect:</strong> things become more familiar with repetition, and familiarity creates preference — which is why brand consistency works</li>
+    <li><strong>Symmetry:</strong> symmetrical forms are faster to process (mirror the left half to read the right) — hence the near-universal preference for symmetrical faces</li>
+    <li><strong>Clear hierarchy:</strong> when the structure of information is immediately obvious, viewers feel competent — and competence feels pleasant</li>
+  </ul>
+  <div class="callout">
+    <strong>But:</strong> pure fluency alone produces boring design. Too easy = too familiar = ignored. The brain needs some challenge to stay engaged. This leads us to…
+  </div>
+
+  <h2 class="sh">The Wundt Curve — Finding the Sweet Spot</h2>
+  <p>Named after Wilhelm Wundt (1874), this principle describes the relationship between complexity and preference as an inverted-U shape.</p>
+  <div class="demo-box">
+    <div class="demo-label">The Wundt Curve</div>
+    <div style="position:relative;height:100px;border-bottom:2px solid var(--line-s);border-left:2px solid var(--line-s);border-radius:0 0 0 4px;margin:0 20px 20px">
+      <svg width="100%" height="100%" viewBox="0 0 400 100" preserveAspectRatio="none" style="position:absolute;top:0;left:0">
+        <path d="M 0 95 Q 100 95 150 20 Q 200 2 250 20 Q 300 50 400 90" fill="none" stroke="var(--acc)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <div style="position:absolute;left:5%;bottom:-24px;font-family:var(--fm);font-size:10px;color:var(--muted)">Too simple</div>
+      <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:-24px;font-family:var(--fm);font-size:10px;color:var(--acc);font-weight:600">Sweet spot</div>
+      <div style="position:absolute;right:5%;bottom:-24px;font-family:var(--fm);font-size:10px;color:var(--muted)">Too complex</div>
+      <div style="position:absolute;right:100%;top:0;transform:translateX(-8px);font-family:var(--fm);font-size:10px;color:var(--muted);writing-mode:vertical-rl;white-space:nowrap">Preference</div>
+    </div>
+    <div class="demo-caption" style="margin-top:28px">Preference rises with complexity — up to a point. Beyond that, overwhelm sets in and preference drops.</div>
+  </div>
+  <p><strong>Design implication:</strong> Calibrate complexity to your audience. A child's app needs lower complexity than a professional tool. A luxury brand uses restraint — minimal complexity signals confidence. A game benefits from slightly higher complexity to maintain engagement.</p>
+  <div class="callout gold">
+    <strong>Rule of thumb:</strong> Show only what needs to be there. When in doubt, remove an element. The design that remains beautiful after you've removed everything unnecessary is the sweet spot.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check — Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">You're designing a form. Contact info fields (Name, Email, Phone) are grouped together, and address fields (Street, City, Postcode) are grouped separately with more space between the two groups. Which Gestalt law is this applying?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Similarity is about shared visual attributes (color, shape). The form example uses space to separate groups, not shared appearance.">Similarity</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Proximity: elements close together appear related. The extra space between groups tells the brain 'these belong to different categories.'">Proximity</button>
+        <button class="q-option" data-correct="false" data-explanation="Closure is about completing incomplete shapes — not relevant to form grouping.">Closure</button>
+        <button class="q-option" data-correct="false" data-explanation="Continuation describes the eye following a path or line — not the same as grouping by proximity.">Continuation</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A logo designer leaves a small gap in a circular icon so the shape isn't fully closed — but viewers still read it as a circle. Which Gestalt law explains this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Figure/Ground is about separating foreground from background — not about completing incomplete shapes.">Figure / Ground</button>
+        <button class="q-option" data-correct="false" data-explanation="Common Fate describes objects that move together being perceived as a group.">Common Fate</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Closure: the brain completes incomplete shapes when enough information is present. The partial circle still reads as a circle.">Closure</button>
+        <button class="q-option" data-correct="false" data-explanation="Proximity describes grouping by spatial closeness — not completion of shapes.">Proximity</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">According to the Wundt Curve, which design is most likely to be experienced as pleasant and engaging?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="A completely uniform page (all same size, color, spacing) scores low on complexity — too boring, preference is low.">A page where all text is the same size, weight, and color</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Moderate complexity — varied hierarchy, clear structure, a few distinct elements — sits at the peak of the Wundt curve.">A page with clear hierarchy, 2–3 type sizes, and intentional white space</button>
+        <button class="q-option" data-correct="false" data-explanation="Too much complexity (many fonts, colors, sizes competing) causes overwhelm — the right side of the Wundt curve.">A page with 8 different font styles, 6 colors, and dense packed content</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="1">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 — CONTRAST
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 06</div>
+  <h1 class="mod-title">Contrast — The <span class="acc">Master Principle</span></h1>
+  <p class="mod-lede">If you had to internalize one principle above all others, it's this: contrast creates meaning. Without contrast, everything looks the same. When everything looks the same, nothing communicates.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What contrast actually is (and isn't)</li>
+      <li>The 5 flavors of contrast and when to use each</li>
+      <li>How to build visual hierarchy using contrast alone</li>
+      <li>The "equal-weight trap" — the most common amateur mistake</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">What Is Contrast?</h2>
+  <p>Contrast is simply <strong>difference between two or more elements</strong>. The greater the difference, the stronger the contrast. No contrast = no communication.</p>
+  <p>Every design decision you make is a contrast decision: bigger or smaller, darker or lighter, more space or less, heavier font or lighter. These choices determine what the viewer sees first, second, and last — or whether they bother looking at all.</p>
+  <div class="callout">
+    <strong>The fundamental rule:</strong> If two elements are not the same, make them <em>very</em> different. Slight differences look like mistakes. Bold differences look intentional.
+  </div>
+
+  <h2 class="sh">The 5 Flavors of Contrast</h2>
+
+  <h3 class="sub">1. Value Contrast (Light vs. Dark)</h3>
+  <p>The most fundamental contrast. Black text on white paper has maximum value contrast — that's why it's the default for reading. Value contrast controls legibility first, then emphasis.</p>
+  <div class="demo-box">
+    <div class="demo-label">Value contrast — same text, three levels</div>
+    <div class="contrast-demo">
+      <div class="contrast-row" style="background:#fff;color:#ccc">Hard to read — low contrast (poor)</div>
+      <div class="contrast-row" style="background:#fff;color:#888">Acceptable — medium contrast</div>
+      <div class="contrast-row" style="background:#fff;color:#1A1614">Easy to read — high contrast (ideal for body text)</div>
+    </div>
+    <div class="demo-caption">WCAG accessibility requires a minimum 4.5:1 contrast ratio for body text.</div>
+  </div>
+
+  <h3 class="sub">2. Size Contrast</h3>
+  <p>The biggest element wins the most attention. Scale creates hierarchy — it signals to the viewer: "start reading here." Size contrast is the most direct way to express importance.</p>
+  <div class="demo-box">
+    <div class="demo-label">Size hierarchy</div>
+    <div class="hierarchy-demo">
+      <div class="hd-label">Article</div>
+      <div class="hd-h1">The headline at 40px</div>
+      <div class="hd-h2">Subheading at 16px, medium weight</div>
+      <div class="hd-body">Body text at 14px, regular weight — this is what you read once the headline has drawn you in. The size difference creates a clear reading order: title → subhead → body.</div>
+    </div>
+  </div>
+
+  <h3 class="sub">3. Weight Contrast (Bold vs. Light)</h3>
+  <p>Weight lets you create emphasis within a single font family without changing size. A bold word in a regular-weight sentence stops the eye immediately.</p>
+  <div class="demo-box">
+    <div class="demo-label">Weight emphasis</div>
+    <p style="font-size:15px;margin:0;max-width:none">The meeting is on <strong>Thursday at 3pm</strong> in the main conference room. Please bring your laptop.</p>
+    <div class="demo-caption">Your eye went to "Thursday at 3pm" first. That's weight contrast at work.</div>
+  </div>
+
+  <h3 class="sub">4. Color Contrast</h3>
+  <p>Warm vs. cool, saturated vs. muted, complementary colors placed side by side — all create contrast. A single highly saturated element on a muted background will immediately claim visual priority.</p>
+  <div class="demo-box">
+    <div class="demo-label">Color contrast — CTA button</div>
+    <div style="background:#e8f0fe;padding:20px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+      <p style="font-size:14px;color:#3c4043;margin:0;max-width:none">Sign up for early access to the new product.</p>
+      <button style="background:#FF5C39;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:default;white-space:nowrap">Get Access</button>
+    </div>
+    <div class="demo-caption">The orange button on the blue-tinted background creates strong color contrast — your eye goes there immediately.</div>
+  </div>
+
+  <h3 class="sub">5. Space Contrast (Dense vs. Sparse)</h3>
+  <p>An element surrounded by whitespace becomes important — the space itself creates contrast. Dense, packed content reads as background; isolated elements read as figure.</p>
+  <div class="demo-box">
+    <div class="demo-label">Space creates emphasis</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div style="background:var(--paper);border:1px solid var(--line-s);border-radius:8px;padding:12px;font-size:13px;color:var(--muted)">
+        Company Name · Product A · Feature 1 · Feature 2 · About Us · Blog · Contact · Pricing · FAQ · Login · Sign Up · Terms · Privacy
+      </div>
+      <div style="background:var(--paper);border:1px solid var(--line-s);border-radius:8px;padding:24px;display:flex;align-items:center;justify-content:center">
+        <div style="font-family:var(--fd);font-size:18px;font-weight:800">Company Name</div>
+      </div>
+    </div>
+    <div class="demo-caption">Same words. The right card feels premium and important because the space makes the name the focal point.</div>
+  </div>
+
+  <h2 class="sh">Visual Hierarchy</h2>
+  <p>Hierarchy is the order in which the eye moves through a design. You <strong>direct that order with contrast</strong>. Every well-designed layout has at least 3 levels:</p>
+  <ul class="bl">
+    <li><strong>Level 1 (highest contrast):</strong> what they see first — main headline, hero image, primary CTA</li>
+    <li><strong>Level 2 (medium contrast):</strong> what they see next — subheadings, key stats, secondary actions</li>
+    <li><strong>Level 3 (lowest contrast):</strong> what they read after — body text, captions, labels</li>
+  </ul>
+  <div class="callout gold">
+    <strong>The equal-weight trap:</strong> A designer who makes everything large, bold, and colorful has designed a wall of noise. If everything is level 1, nothing is level 1. Hierarchy requires sacrifice — make some things less prominent so others can be more prominent.
+  </div>
+
+  <h2 class="sh">Creating Focal Points</h2>
+  <p>Every design needs <strong>one clear entry point</strong> — the first place the eye lands. Create it with your highest-contrast element: the biggest, darkest, most saturated, or most isolated element in the composition.</p>
+  <p>Multiple competing focal points create confusion. If your design has two elements of equal visual weight, the viewer doesn't know where to look first — and often doesn't look at all.</p>
+  <div class="callout">
+    <strong>Test:</strong> Squint at your design until it blurs. The blurry version reveals your true focal point hierarchy — only the highest-contrast elements remain visible. Is that what you intended?
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check — Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A designer creates a web page where the headline, subheading, body text, and navigation links are all in the same font size and weight. What problem does this create?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Accessibility issues relate to contrast ratios and color — not font uniformity per se.">Accessibility issues with color contrast</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is the equal-weight trap. No visual hierarchy means no reading order — the eye has no entry point and doesn't know where to start.">No visual hierarchy — the viewer has no reading order</button>
+        <button class="q-option" data-correct="false" data-explanation="Consistent font size doesn't cause loading performance issues.">Poor page loading performance</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Which contrast type would be most effective for highlighting one specific word in a paragraph of body text?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Size contrast (making one word bigger) would disrupt the line height and reading flow of the paragraph.">Size contrast — make the word bigger</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Weight contrast (bold) creates strong emphasis within a paragraph without disrupting the line height or layout.">Weight contrast — make the word bold</button>
+        <button class="q-option" data-correct="false" data-explanation="Space contrast works for blocks of content, not individual words within a paragraph.">Space contrast — surround it with whitespace</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">You squint at a design and notice two elements of equal visual weight competing for attention. What should you do?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Adding more competing elements increases the noise — it doesn't resolve the hierarchy problem.">Add a third prominent element to balance the composition</button>
+        <button class="q-option" data-correct="false" data-explanation="Reducing both elements makes them both recede — you'd lose emphasis entirely.">Reduce the contrast of both elements</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Pick which element is more important, increase its contrast, and reduce the other. One clear focal point beats two competing ones every time.">Decide which is more important — increase one, reduce the other</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="2">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 — COMPOSITION & SPACE
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 06</div>
+  <h1 class="mod-title">Composition <span class="acc">&amp; Space</span></h1>
+  <p class="mod-lede">Before you pick a font or a color, you're arranging shapes in space. Composition is the skeleton of design — get it wrong and nothing else can save it.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why grids exist and how to use them invisibly</li>
+      <li>The rule of thirds and golden ratio — what they are and what they're not</li>
+      <li>How to use white space as an active design element</li>
+      <li>Balance, visual weight, and how eyes scan a layout</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Invisible Grid</h2>
+  <p>A grid is a set of invisible lines that organizes elements into a coherent structure. The viewer never sees the grid — they only feel its absence when it's missing.</p>
+  <p>Column grids (typically 12 columns for web) give you a system to align elements consistently. Every element snaps to the grid's columns and gutters. This creates implicit rhythm: even without reading the content, the viewer senses structure and order.</p>
+  <ul class="bl">
+    <li><strong>Columns:</strong> vertical divisions of the space</li>
+    <li><strong>Gutters:</strong> the consistent space between columns</li>
+    <li><strong>Margins:</strong> the outer frame, equal on both sides</li>
+    <li><strong>Baseline grid:</strong> horizontal lines for aligning text across columns</li>
+  </ul>
+  <div class="callout">
+    Even "rule-breaking" designs usually have a grid underneath — they just break it deliberately and knowingly. You need to know the rule to break it well.
+  </div>
+
+  <h2 class="sh">Alignment</h2>
+  <p>Every element should be visually connected to something else on the page. Random placement — even if it "looks fine" — creates subconscious unease in the viewer.</p>
+  <ul class="bl">
+    <li><strong>Left-aligned:</strong> most readable, clear natural flow for LTR languages</li>
+    <li><strong>Centered:</strong> formal and balanced, but hard to maintain in long passages</li>
+    <li><strong>Right-aligned:</strong> dynamic, works well for captions and labels on the right side</li>
+    <li><strong>Justified:</strong> avoid on screen — creates uneven "rivers" of white space</li>
+  </ul>
+  <div class="callout gold">
+    <strong>The alignment test:</strong> If you can draw a strong vertical line through one edge of every element in a group, your alignment is working.
+  </div>
+
+  <h2 class="sh">Rule of Thirds</h2>
+  <p>Divide your composition into a 3×3 grid (9 equal rectangles). The four intersection points of those grid lines are called <strong>power points</strong> — the natural resting places for the human eye.</p>
+  <div class="demo-box">
+    <div class="demo-label">Rule of Thirds — power points</div>
+    <div style="position:relative;width:100%;max-width:400px;height:200px;background:linear-gradient(135deg,#c8e6c9,#e3f2fd);border-radius:8px;overflow:hidden">
+      <div style="position:absolute;left:33.3%;top:0;bottom:0;width:1px;background:rgba(255,255,255,.5)"></div>
+      <div style="position:absolute;left:66.6%;top:0;bottom:0;width:1px;background:rgba(255,255,255,.5)"></div>
+      <div style="position:absolute;top:33.3%;left:0;right:0;height:1px;background:rgba(255,255,255,.5)"></div>
+      <div style="position:absolute;top:66.6%;left:0;right:0;height:1px;background:rgba(255,255,255,.5)"></div>
+      <div style="position:absolute;left:33.3%;top:33.3%;width:10px;height:10px;background:#fff;border-radius:50%;transform:translate(-50%,-50%)"></div>
+      <div style="position:absolute;left:66.6%;top:33.3%;width:10px;height:10px;background:#fff;border-radius:50%;transform:translate(-50%,-50%)"></div>
+      <div style="position:absolute;left:33.3%;top:66.6%;width:10px;height:10px;background:#fff;border-radius:50%;transform:translate(-50%,-50%)"></div>
+      <div style="position:absolute;left:66.6%;top:66.6%;width:10px;height:10px;background:#fff;border-radius:50%;transform:translate(-50%,-50%)"></div>
+      <div style="position:absolute;left:33.3%;top:33.3%;width:20px;height:20px;border-radius:50%;background:var(--red);transform:translate(-50%,-50%);border:2px solid #fff"></div>
+    </div>
+    <div class="demo-caption">Placing the subject (red dot) at a power point creates dynamic tension. Dead center feels static; off-center feels alive.</div>
+  </div>
+  <p>The rule of thirds applies equally to photography, web layouts, slide design, and poster composition. It works because off-center placement creates tension — and tension creates visual interest.</p>
+
+  <h2 class="sh">The Golden Ratio (φ = 1.618)</h2>
+  <p>The golden ratio is a mathematical proportion where the ratio of the whole to the larger part equals the ratio of the larger part to the smaller part. It appears throughout nature: nautilus shells, sunflower spirals, leaf arrangements, even proportions in the human face.</p>
+  <div class="demo-box">
+    <div class="demo-label">Golden ratio — 38% / 62% split</div>
+    <div style="display:flex;height:40px;border-radius:8px;overflow:hidden;border:1px solid var(--line-s)">
+      <div style="width:38.2%;background:var(--acc);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--fm);font-size:11px">38.2%</div>
+      <div style="flex:1;background:var(--paper-2);display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--fm);font-size:11px">61.8%</div>
+    </div>
+    <div class="demo-caption">Dividing a space at ~62%/38% feels naturally harmonious — not arbitrary, not exactly equal.</div>
+  </div>
+  <p>In practice: use the golden ratio to decide column widths, size relationships between elements, and where to place primary focal points. A sidebar at ~38% of total width and main content at ~62% is a classically proportioned layout.</p>
+  <div class="callout">
+    <strong>Honest note:</strong> The golden ratio is a useful tool, not a magic formula. Many beautiful designs don't use it explicitly. Use it as a starting point, not a constraint.
+  </div>
+
+  <h2 class="sh">White Space — Not Empty, Active</h2>
+  <p>White space (also called negative space) is not the absence of design — it's a design element. It has weight, direction, and meaning. Removing it doesn't make a design more informative; it makes it harder to read.</p>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🫁</div>
+      <h4>Breathing Room</h4>
+      <p>Space prevents cognitive overload. Crowded layouts cause the brain to work harder to separate elements.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">👑</div>
+      <h4>Emphasis</h4>
+      <p>Isolating an element gives it importance. Luxury brands use more space than budget brands — space signals value.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">📦</div>
+      <h4>Grouping</h4>
+      <p>Space separates groups (Gestalt proximity). Consistent internal spacing unites; consistent external spacing separates.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🎵</div>
+      <h4>Rhythm</h4>
+      <p>Regular spacing creates visual rhythm — the same way silence between notes creates music.</p>
+    </div>
+  </div>
+  <p><strong>Micro vs. macro whitespace:</strong> Micro is the spacing between letters, lines, and labels. Macro is the space between sections, around images, and in margins. Both matter equally.</p>
+
+  <h2 class="sh">Balance</h2>
+  <p>Visual weight is how "heavy" an element feels: larger elements, darker elements, and more complex elements all carry more weight. Balance means distributing visual weight so the composition doesn't feel like it's tipping.</p>
+  <ul class="bl">
+    <li><strong>Symmetric balance:</strong> mirror image across a central axis. Feels stable, formal, calm. Classic use: logos, badges, formal layouts.</li>
+    <li><strong>Asymmetric balance:</strong> different elements balance each other through contrast. Feels dynamic, modern, interesting. A large light object can balance a small dark one.</li>
+    <li><strong>Radial balance:</strong> elements radiate from a center point. Circular, organic. Useful for icons, mandalas, hub-spoke diagrams.</li>
+  </ul>
+
+  <h2 class="sh">How Eyes Scan — Z and F Patterns</h2>
+  <p>Eye-tracking research shows predictable scanning patterns depending on content type:</p>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">Z</div>
+      <h4>Z-Pattern</h4>
+      <p>For content with visual elements and breaks: top-left → top-right → diagonal → bottom-left → bottom-right. Use for landing pages, ads, and posters.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">F</div>
+      <h4>F-Pattern</h4>
+      <p>For text-heavy pages: read the first lines fully, then skim the left edge. Use for articles, emails, documentation.</p>
+    </div>
+  </div>
+  <div class="callout gold">
+    <strong>Design implication:</strong> Put your most important information where the eye arrives first: top-left for Western viewers (LTR languages). The bottom-right of a layout is the least-viewed area — don't put critical content there.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check — Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">An Apple product page has one product image centered on a white background with generous margins on all sides. What design principle is this primarily demonstrating?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Rule of thirds involves off-center placement at power points — a centered element is not using rule of thirds.">Rule of Thirds — placing the subject at a power point</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Space creates emphasis. By isolating the product in whitespace, Apple makes it feel premium and important — the space itself communicates value.">White space creates emphasis — the space makes the product feel premium</button>
+        <button class="q-option" data-correct="false" data-explanation="Symmetric balance is about equal visual weight on both sides — that's secondary here. The primary effect is the space creating emphasis.">Symmetric balance — equal weight on left and right</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">You're designing a blog article page. Based on eye-tracking research, which pattern do readers most likely use on text-heavy pages?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The Z-pattern applies to content with visual elements and visual breaks — landing pages, ads, posters — not text-heavy articles.">Z-pattern — diagonal scan from top-left to bottom-right</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! The F-pattern: readers fully read the first couple of lines, then scan down the left edge — which is why left-aligned headings and the first few words of each paragraph are critical.">F-pattern — read top lines, then skim the left edge</button>
+        <button class="q-option" data-correct="false" data-explanation="Radial scanning (from center outward) is not a documented natural reading pattern.">Radial pattern — from center outward</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="3">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 — COLOR THEORY & HARMONY
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 06</div>
+  <h1 class="mod-title">Color Theory <span class="acc">&amp; Harmony</span></h1>
+  <p class="mod-lede">Color is the most emotional element of design. It creates mood before a single word is read, signals meaning before logic engages, and can make a trustworthy brand feel dangerous — or a dangerous product feel safe.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The HSL model — the designer's way of thinking about color</li>
+      <li>Color temperature and why it creates emotional response</li>
+      <li>The 6 color harmonies and when to use each</li>
+      <li>The 60-30-10 rule for building balanced palettes</li>
+      <li>Color psychology and accessible color</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Color Wheel — HSL Demystified</h2>
+  <p>Forget RGB (red/green/blue numbers). Designers think in <strong>HSL: Hue, Saturation, Lightness</strong>. This model maps directly to what you see and what you want to control.</p>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🎨</div>
+      <h4>Hue</h4>
+      <p>The pure color — its position on the color wheel. Red, orange, yellow, green, blue, purple. Expressed in degrees: 0°=red, 120°=green, 240°=blue.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">💧</div>
+      <h4>Saturation</h4>
+      <p>The intensity or purity of the color. 0% = gray (no color). 100% = pure vivid color. Lowering saturation makes colors more subtle and sophisticated.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">☀️</div>
+      <h4>Lightness</h4>
+      <p>How light or dark. 0% = black. 50% = the pure hue. 100% = white. Adjusting lightness creates tints (lighter) and shades (darker).</p>
+    </div>
+  </div>
+  <div class="demo-box">
+    <div class="demo-label">Same hue (purple, 270°) — varying saturation and lightness</div>
+    <div class="swatch-row">
+      <div>
+        <div class="swatch" style="background:hsl(270,80%,60%)"></div>
+        <div class="swatch-label">S:80 L:60</div>
+      </div>
+      <div>
+        <div class="swatch" style="background:hsl(270,50%,60%)"></div>
+        <div class="swatch-label">S:50 L:60</div>
+      </div>
+      <div>
+        <div class="swatch" style="background:hsl(270,20%,60%)"></div>
+        <div class="swatch-label">S:20 L:60</div>
+      </div>
+      <div>
+        <div class="swatch" style="background:hsl(270,80%,30%)"></div>
+        <div class="swatch-label">S:80 L:30</div>
+      </div>
+      <div>
+        <div class="swatch" style="background:hsl(270,80%,80%)"></div>
+        <div class="swatch-label">S:80 L:80</div>
+      </div>
+      <div>
+        <div class="swatch" style="background:hsl(270,80%,95%)"></div>
+        <div class="swatch-label">S:80 L:95</div>
+      </div>
+    </div>
+    <div class="demo-caption">One hue generates an entire palette through HSL variation. This is how design systems create light/dark mode and component states from a single brand color.</div>
+  </div>
+
+  <h2 class="sh">Color Temperature</h2>
+  <p>Colors have psychological temperature — even though no actual heat is involved. This is deeply ingrained from evolutionary associations: fire (warm/orange) meant warmth and food; sky and water (cool/blue) meant distance and calm.</p>
+  <div class="demo-box">
+    <div class="demo-label">Warm vs. Cool</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div>
+        <div style="height:60px;border-radius:8px;background:linear-gradient(to right,hsl(0,80%,55%),hsl(45,90%,55%));margin-bottom:8px"></div>
+        <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px">Warm — Red, Orange, Yellow</div>
+        <div style="font-size:12px;color:var(--muted)">Energetic · Urgent · Close · Advancing · Passionate</div>
+      </div>
+      <div>
+        <div style="height:60px;border-radius:8px;background:linear-gradient(to right,hsl(200,70%,50%),hsl(250,70%,55%));margin-bottom:8px"></div>
+        <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px">Cool — Blue, Green, Purple</div>
+        <div style="font-size:12px;color:var(--muted)">Calm · Trustworthy · Distant · Receding · Professional</div>
+      </div>
+    </div>
+    <div class="demo-caption">Temperature is relative — a muted orange next to a vivid red looks "cool." Always judge temperature in context.</div>
+  </div>
+
+  <h2 class="sh">The 6 Color Harmonies</h2>
+  <p>Harmonies are color combinations derived from the color wheel's geometry. They're not rules — they're starting points that reliably produce coherent palettes.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Color harmonies — swatches</div>
+
+    <div class="harmony-block">
+      <div class="harmony-name">1. Monochromatic</div>
+      <div class="harmony-desc">One hue, varied in saturation and lightness. Highly unified, elegant, sophisticated. Can feel limited.</div>
+      <div class="swatch-row">
+        <div class="swatch" style="background:hsl(220,80%,25%)"></div>
+        <div class="swatch" style="background:hsl(220,80%,40%)"></div>
+        <div class="swatch" style="background:hsl(220,80%,55%)"></div>
+        <div class="swatch" style="background:hsl(220,50%,70%)"></div>
+        <div class="swatch" style="background:hsl(220,30%,88%)"></div>
+      </div>
+    </div>
+
+    <div class="harmony-block">
+      <div class="harmony-name">2. Analogous</div>
+      <div class="harmony-desc">Adjacent hues on the wheel (~30° apart). Natural, harmonious, like a sunset. Comfortable and approachable.</div>
+      <div class="swatch-row">
+        <div class="swatch" style="background:hsl(30,85%,55%)"></div>
+        <div class="swatch" style="background:hsl(50,85%,55%)"></div>
+        <div class="swatch" style="background:hsl(70,70%,50%)"></div>
+        <div class="swatch" style="background:hsl(90,65%,45%)"></div>
+      </div>
+    </div>
+
+    <div class="harmony-block">
+      <div class="harmony-name">3. Complementary</div>
+      <div class="harmony-desc">Opposite hues on the wheel (180° apart). Maximum contrast. Bold and vibrant. One color must dominate — equal use creates visual vibration.</div>
+      <div class="swatch-row">
+        <div class="swatch tall" style="background:hsl(220,80%,50%)"></div>
+        <div class="swatch tall" style="background:hsl(220,40%,75%)"></div>
+        <div class="swatch tall" style="background:hsl(220,20%,92%)"></div>
+        <div style="width:2px;background:var(--line-s);border-radius:1px;height:72px"></div>
+        <div class="swatch tall" style="background:hsl(40,90%,60%)"></div>
+        <div class="swatch tall" style="background:hsl(40,70%,80%)"></div>
+      </div>
+      <div class="demo-caption" style="margin-top:4px">Blue dominates (3 swatches), orange is the accent (2 swatches). This ratio prevents visual clashing.</div>
+    </div>
+
+    <div class="harmony-block">
+      <div class="harmony-name">4. Split-Complementary</div>
+      <div class="harmony-desc">A color + the two hues adjacent to its complement. High contrast, less tension than pure complementary. More versatile.</div>
+      <div class="swatch-row">
+        <div class="swatch" style="background:hsl(220,80%,50%)"></div>
+        <div class="swatch" style="background:hsl(20,80%,55%)"></div>
+        <div class="swatch" style="background:hsl(60,75%,50%)"></div>
+      </div>
+    </div>
+
+    <div class="harmony-block">
+      <div class="harmony-name">5. Triadic</div>
+      <div class="harmony-desc">Three hues evenly spaced (120° apart). Vibrant and playful. Works well for children's brands and energetic UIs.</div>
+      <div class="swatch-row">
+        <div class="swatch" style="background:hsl(0,80%,55%)"></div>
+        <div class="swatch" style="background:hsl(120,70%,42%)"></div>
+        <div class="swatch" style="background:hsl(240,80%,55%)"></div>
+      </div>
+    </div>
+
+    <div class="harmony-block" style="margin-bottom:0">
+      <div class="harmony-name">6. Tetradic (Square)</div>
+      <div class="harmony-desc">Four hues evenly spaced (90° apart). Rich and complex — hard to balance. Use one as dominant, others as accents at reduced saturation.</div>
+      <div class="swatch-row">
+        <div class="swatch" style="background:hsl(0,75%,55%)"></div>
+        <div class="swatch" style="background:hsl(90,65%,42%)"></div>
+        <div class="swatch" style="background:hsl(180,70%,44%)"></div>
+        <div class="swatch" style="background:hsl(270,70%,55%)"></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sh">The 60-30-10 Rule</h2>
+  <p>A practical formula for building a balanced color palette that doesn't overwhelm:</p>
+  <div class="demo-box">
+    <div class="demo-label">60-30-10 distribution</div>
+    <div style="display:flex;height:56px;border-radius:10px;overflow:hidden;border:1px solid var(--line-s)">
+      <div style="width:60%;background:hsl(220,15%,92%);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:11px;color:#555">60% — Dominant (neutral)</div>
+      <div style="width:30%;background:hsl(220,60%,45%);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:11px;color:#fff">30% — Secondary</div>
+      <div style="width:10%;background:hsl(40,90%,55%);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:11px;color:#1a1614">10%</div>
+    </div>
+    <div class="demo-caption">The 10% accent (yellow-orange) is where the brand energy lives. CTA buttons, highlights, key icons.</div>
+  </div>
+  <ul class="bl">
+    <li><strong>60% dominant:</strong> backgrounds, primary surfaces — usually neutral (white, light gray, cream)</li>
+    <li><strong>30% secondary:</strong> sidebar, headers, cards — a branded color, muted</li>
+    <li><strong>10% accent:</strong> buttons, links, highlights — your most vibrant color</li>
+  </ul>
+
+  <h2 class="sh">Color Psychology</h2>
+  <p>Color associations are partly universal (evolutionary) and partly cultural. These are Western/global defaults — always consider your audience.</p>
+  <div class="concept-grid">
+    <div class="concept-card"><div class="icon" style="color:#e53935">●</div><h4>Red</h4><p>Urgency, passion, danger, energy. CTAs, sales banners, error states.</p></div>
+    <div class="concept-card"><div class="icon" style="color:#ef6c00">●</div><h4>Orange</h4><p>Warmth, friendliness, enthusiasm. Budget-friendly, approachable brands.</p></div>
+    <div class="concept-card"><div class="icon" style="color:#f9a825">●</div><h4>Yellow</h4><p>Optimism, attention, caution. Warning states, highlights, creative brands.</p></div>
+    <div class="concept-card"><div class="icon" style="color:#2e7d32">●</div><h4>Green</h4><p>Nature, growth, health, safety. Eco brands, finance, success states.</p></div>
+    <div class="concept-card"><div class="icon" style="color:#1565c0">●</div><h4>Blue</h4><p>Trust, calm, professionalism. Banks, tech, healthcare, government.</p></div>
+    <div class="concept-card"><div class="icon" style="color:#6a1b9a">●</div><h4>Purple</h4><p>Luxury, creativity, mystery. Beauty brands, premium, spiritual.</p></div>
+    <div class="concept-card"><div class="icon" style="color:#ad1457">●</div><h4>Pink</h4><p>Playful, romantic, modern. Fashion, beauty, lifestyle, Gen Z brands.</p></div>
+    <div class="concept-card"><div class="icon" style="color:#37474f">●</div><h4>Black</h4><p>Sophistication, power, elegance, weight. Luxury, fashion, tech.</p></div>
+  </div>
+
+  <h2 class="sh">Accessible Color — WCAG Contrast Ratios</h2>
+  <p>~8% of men and ~0.5% of women have some form of color vision deficiency. Accessible design doesn't just benefit them — it improves readability for everyone.</p>
+  <ul class="bl">
+    <li><strong>Normal text (under 18pt):</strong> minimum 4.5:1 contrast ratio (WCAG AA)</li>
+    <li><strong>Large text (18pt+ or 14pt+ bold):</strong> minimum 3:1</li>
+    <li><strong>UI components (buttons, icons, form borders):</strong> minimum 3:1</li>
+    <li><strong>Never rely on color alone</strong> to convey information — add icons, labels, or patterns</li>
+  </ul>
+  <div class="callout green">
+    <strong>Free tools:</strong> WebAIM Contrast Checker (webaim.org/resources/contrastchecker) and the Coolors Contrast Checker. Build accessibility in from the start — it's much harder to retrofit.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check — Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A designer uses three evenly-spaced hues on the color wheel — red, yellow, and blue — at equal saturation for a children's brand. Which harmony type is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Analogous harmonies use adjacent hues (close together on the wheel), not evenly spaced ones.">Analogous</button>
+        <button class="q-option" data-correct="false" data-explanation="Complementary uses two opposite hues — this palette has three hues.">Complementary</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Triadic: three hues equally spaced at 120° apart (red=0°, yellow≈60°/green=120°, blue=240°). Vibrant and playful — well-suited to children's brands.">Triadic</button>
+        <button class="q-option" data-correct="false" data-explanation="Tetradic uses four hues (two complementary pairs), not three.">Tetradic</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A website has a light gray background (95% lightness), blue-tinted components (50% lightness), and bright orange CTA buttons (60% lightness, 90% saturation). How does this map to the 60-30-10 rule?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Gray background = 60% dominant (neutral). Blue components = 30% secondary (branded color). Orange CTAs = 10% accent (most vibrant, used sparingly).">Gray=60% dominant, Blue=30% secondary, Orange=10% accent</button>
+        <button class="q-option" data-correct="false" data-explanation="Orange buttons should be the 10% accent, not the dominant color — they'd overwhelm the layout if used at 60%.">Orange=60% dominant, Gray=30% secondary, Blue=10% accent</button>
+        <button class="q-option" data-correct="false" data-explanation="This reverses the natural distribution — the most vibrant color (orange) should be the smallest portion, not the secondary.">Blue=60% dominant, Orange=30% secondary, Gray=10% accent</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">You have light gray text (#aaaaaa) on a white background. A user reports it's hard to read. Why?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Gray is a neutral — it has no hue temperature issue. The problem is a different dimension of color.">The color temperature is wrong — gray is too cool</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! #aaaaaa on white (#ffffff) has approximately a 2.3:1 contrast ratio — far below the WCAG AA minimum of 4.5:1 for normal text. The value contrast is insufficient.">The value contrast is too low — it fails WCAG minimum contrast</button>
+        <button class="q-option" data-correct="false" data-explanation="Monochromatic isn't inherently hard to read — the issue is specifically the lightness difference between the two shades.">Monochromatic palettes always cause readability problems</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="4">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 — TYPOGRAPHY AS DESIGN
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 06</div>
+  <h1 class="mod-title">Typography <span class="acc">as Design</span></h1>
+  <p class="mod-lede">Type is the voice of design. The same words whispered vs. shouted communicate completely differently — typography does that for text. And since most design is mostly type, getting it right is non-negotiable.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Anatomy of type — the terms that let you talk about it precisely</li>
+      <li>The 4 type categories and what each one communicates</li>
+      <li>How to choose and pair typefaces purposefully</li>
+      <li>Typographic hierarchy and the modular scale</li>
+      <li>Micro-typography: line-height, measure, spacing</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Why Type Is 95% of Design</h2>
+  <p>Most designed things — websites, apps, posters, packaging, reports — are predominantly text. Even image-heavy designs like Instagram feeds are framed by type (captions, usernames, buttons). Type isn't decoration added on top of design; type <em>is</em> the design in most cases.</p>
+  <p>Web designer Oliver Reichenstein said it in 2006: "Web design is 95% typography." That number hasn't changed. If your type is wrong, your design is wrong.</p>
+
+  <h2 class="sh">Anatomy of Type</h2>
+  <p>Learning type anatomy gives you vocabulary to describe what you see — and to understand why some typefaces work at small sizes while others only work large.</p>
+  <div class="demo-box">
+    <div class="demo-label">Type anatomy — key terms</div>
+    <div style="position:relative;padding:32px 20px 24px;background:#fff;border-radius:8px;overflow:hidden">
+      <div style="font-family:Georgia,serif;font-size:72px;line-height:1;text-align:center;position:relative;z-index:2;letter-spacing:-.01em;color:#1A1614">Hdpx</div>
+      <!-- baseline -->
+      <div style="position:absolute;left:0;right:0;height:1px;background:rgba(124,58,237,.5);bottom:24px;z-index:3"></div>
+      <div style="position:absolute;right:12px;bottom:28px;font-family:var(--fm);font-size:9px;color:rgba(124,58,237,.8);letter-spacing:.06em">BASELINE</div>
+    </div>
+    <div class="demo-caption" style="margin-top:16px">The baseline is the invisible line that letters sit on. Ascenders rise above the x-height (h, d); descenders fall below the baseline (p, y).</div>
+  </div>
+  <div class="concept-grid">
+    <div class="concept-card"><h4>Baseline</h4><p>The line all letters sit on. Descenders hang below it.</p></div>
+    <div class="concept-card"><h4>x-height</h4><p>Height of lowercase letters (like 'x'). High x-height = better readability at small sizes.</p></div>
+    <div class="concept-card"><h4>Ascender</h4><p>The part of letters that rises above x-height: b, d, f, h, k, l, t.</p></div>
+    <div class="concept-card"><h4>Descender</h4><p>The part that drops below the baseline: g, j, p, q, y.</p></div>
+    <div class="concept-card"><h4>Serif</h4><p>Decorative strokes at the ends of letter stems. Their presence/absence defines type category.</p></div>
+    <div class="concept-card"><h4>Leading</h4><p>Vertical space between lines of text (CSS: line-height). Named after the lead strips used in metal type.</p></div>
+    <div class="concept-card"><h4>Tracking</h4><p>Overall letter-spacing of a block of text. Add tracking to ALL CAPS; never to body text.</p></div>
+    <div class="concept-card"><h4>Kerning</h4><p>Spacing adjustment between specific letter pairs (e.g., AV, WA). Built into good typefaces.</p></div>
+  </div>
+
+  <h2 class="sh">The 4 Type Categories</h2>
+  <div class="type-grid">
+    <div class="type-card">
+      <div class="type-sample" style="font-family:Georgia,serif">Serif</div>
+      <h4>Serif</h4>
+      <p>Traditional, authoritative, reliable. Best for long-form reading in print. Garamond, Times, Merriweather.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-sample" style="font-family:'Inter',sans-serif;font-weight:500">Sans</div>
+      <h4>Sans-Serif</h4>
+      <p>Modern, clean, digital-native. Best for screens and UI. Inter, Helvetica, Futura.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-sample" style="font-family:cursive">Script</div>
+      <h4>Script</h4>
+      <p>Personal, elegant, human. Headlines and logos only — never body text. Pacifico, Great Vibes.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-sample" style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800">Display</div>
+      <h4>Display</h4>
+      <p>Expressive, stylized for large sizes. Posters, headlines, logos. Not for body text.</p>
+    </div>
+  </div>
+  <div class="callout gold">
+    <strong>Script fonts and body text:</strong> Script typefaces are designed for headings and decorative use at large sizes. They become illegible in small body text and should never be used there — this is the single most common mistake by non-designers.
+  </div>
+
+  <h2 class="sh">Choosing a Typeface</h2>
+  <p>Use this three-question framework:</p>
+  <ol class="nl">
+    <li><strong>What personality does this design need?</strong> Traditional/trustworthy → serif. Modern/digital → sans-serif. Energetic/creative → display. Personal/elegant → script (heading only).</li>
+    <li><strong>How will it be used?</strong> Long body text → prioritize x-height and readability at 15–16px. Short headlines → can be more expressive and stylized.</li>
+    <li><strong>What's the context?</strong> Screen: sans-serifs generally render more cleanly at small sizes. Print: serifs guide the eye across longer lines. Both: test at the actual size and output medium.</li>
+  </ol>
+  <div class="callout">
+    <strong>The trap:</strong> Choosing a font because you "like it" rather than because it fits the content. The right typeface for a legal document is different from the right typeface for a birthday invitation — even if you personally prefer the birthday font.
+  </div>
+
+  <h2 class="sh">Pairing Typefaces</h2>
+  <p><strong>The golden rule: contrast in style, harmony in feeling.</strong></p>
+  <p>A pair works when the two typefaces are clearly different (so the viewer knows they're distinct) but feel like they belong in the same room (no personality clash). The classic pairing formula: one serif + one sans-serif.</p>
+  <ul class="bl">
+    <li><strong>Keep it to 2 typefaces.</strong> 3 is acceptable if one is used only for accent (e.g., code). More than 3 is always a mistake.</li>
+    <li><strong>Ensure similar x-heights</strong> — fonts with very different x-heights feel wrong at the same size</li>
+    <li><strong>Avoid pairing two serifs</strong> or two geometric sans-serifs — they compete without clear differentiation</li>
+    <li><strong>Bad pair signal:</strong> both fonts feel like they're trying to be the star</li>
+    <li><strong>Good pair signal:</strong> one leads, one supports</li>
+  </ul>
+  <div class="demo-box">
+    <div class="demo-label">Classic pairings</div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="border:1px solid var(--line-s);border-radius:8px;padding:14px 18px;background:#fff">
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px">Bricolage Grotesque</div>
+        <div style="font-family:'Inter',sans-serif;font-size:14px;color:#555;line-height:1.6">Paired with Inter for body text — this is the font combination used on this very site. Display heading with clean humanist body.</div>
+      </div>
+      <div style="border:1px solid var(--line-s);border-radius:8px;padding:14px 18px;background:#fff">
+        <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;margin-bottom:4px">Georgia Heading</div>
+        <div style="font-family:'Inter',sans-serif;font-size:14px;color:#555;line-height:1.6">Paired with Inter body — transitional serif heading with modern sans body. Editorial and trustworthy.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sh">Typographic Hierarchy</h2>
+  <p>Type hierarchy is contrast applied to text. Use these tools to create clearly distinct levels:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h4>Size</h4><p>Biggest = most important. Use at least 3 clearly different sizes. Subtle size differences read as mistakes.</p></div>
+    <div class="concept-card"><h4>Weight</h4><p>Bold vs. regular vs. light. Weight creates emphasis without changing size.</p></div>
+    <div class="concept-card"><h4>Color</h4><p>Colored text draws the eye before black. Use sparingly — reserve for the highest-level accents.</p></div>
+    <div class="concept-card"><h4>Case</h4><p>ALL CAPS for labels/overlines (with added tracking). Title Case for headings. Sentence case for body.</p></div>
+  </div>
+  <p><strong>The modular scale:</strong> choose a base size (16px) and a ratio (1.25 = "Major Third"), then multiply repeatedly: 16 → 20 → 25 → 31 → 39 → 49px. Each step feels meaningfully different from the last. Tools like typescale.com generate these automatically.</p>
+
+  <h2 class="sh">Micro-Typography — Spacing and Rhythm</h2>
+  <ul class="bl">
+    <li><strong>Line-height (leading):</strong> 1.4–1.6 for body text. 1.1–1.3 for headings. Too tight = cramped and hard to scan back. Too loose = text feels disconnected.</li>
+    <li><strong>Measure (line length):</strong> 45–75 characters per line is the sweet spot. Shorter = choppy. Longer = eyes lose their place returning to the next line.</li>
+    <li><strong>Letter-spacing (tracking):</strong> Add 0.05–0.15em tracking to ALL CAPS labels. Never add tracking to body text — it breaks the natural word rhythm.</li>
+    <li><strong>Paragraph spacing:</strong> Use 0.75em–1em space between paragraphs (either via bottom margin or line spacing). Empty line = section break. Half-line = paragraph break.</li>
+  </ul>
+
+  <h2 class="sh">5 Common Typography Mistakes</h2>
+  <ol class="nl">
+    <li><strong>Too many fonts</strong> — 2 is the target. Every additional font adds visual noise and requires justification.</li>
+    <li><strong>Justified text on screen</strong> — creates uneven "rivers" of white space between words. Use left-aligned for screen.</li>
+    <li><strong>Insufficient line-height</strong> — lines packed too closely reduce legibility and feel claustrophobic.</li>
+    <li><strong>Script fonts for body text</strong> — illegible at paragraph scale. Script = headings only, at large sizes.</li>
+    <li><strong>Oversized body text</strong> — 15–17px on screen is sufficient. Going larger out of insecurity just shortens the measure.</li>
+  </ol>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check — Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">A designer is building a news website and needs a typeface for long-form article body text that users will read for 10+ minutes at a time. Which type category is the best starting point?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Display typefaces are optimized for large sizes and headlines — they become harder to read in long passages of small body text.">Display — highly stylized and distinctive</button>
+        <button class="q-option" data-correct="false" data-explanation="Script typefaces are for headings and decorative use only — they are illegible at body text sizes in long-form reading.">Script — personal and elegant</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Serif typefaces — particularly humanist or transitional serifs — are designed for extended reading. The serifs guide the eye horizontally along the line, which helps in long-form text.">Serif — traditional and optimized for extended reading</button>
+        <button class="q-option" data-correct="false" data-explanation="Sans-serif works for body text (especially on screen), but for long-form reading — especially in a news context — a well-chosen serif is typically the better starting point.">Sans-serif — cleanest and most readable</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">You're reviewing a design with three paragraph blocks. The line length in each block is 120 characters per line. What problem does this create?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Font size doesn't change because the line is long — it's a fixed value in the CSS.">The font size appears smaller than intended</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! At 120 characters per line (well above the 45–75 sweet spot), readers lose their place when their eye has to travel back across to find the next line. This causes re-reading and fatigue.">Lines are too long — readers lose their place returning to the next line</button>
+        <button class="q-option" data-correct="false" data-explanation="Long lines don't cause kerning problems — kerning is about spacing between specific letter pairs.">Kerning errors become visible at long line lengths</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Which of these font pairings follows the "contrast in style, harmony in feeling" rule?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Two different serif fonts don't have enough contrast in style — they'll look like a mistake rather than a deliberate pairing.">Garamond (old-style serif) + Times New Roman (transitional serif)</button>
+        <button class="q-option" data-correct="false" data-explanation="Two geometric sans-serifs are too similar in style — the viewer can't clearly distinguish the hierarchy, and the pairing feels redundant.">Futura (geometric sans) + Gill Sans (humanist sans)</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! A serif heading with a sans-serif body is the classic pairing formula: clear stylistic contrast (serif vs. sans) with harmonic feeling (both are professional and readable).">Playfair Display (editorial serif) + Inter (humanist sans-serif)</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="5">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 — BUILDING YOUR DESIGN EYE
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 06</div>
+  <h1 class="mod-title">Building Your <span class="acc">Design Eye</span></h1>
+  <p class="mod-lede">Knowing principles is necessary but not sufficient. The second stage is training your eye — building the habit of seeing design not as a consumer, but as an analyst. This is a skill built through practice.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The CRAP+CT framework — a complete critique checklist</li>
+      <li>A step-by-step process for analyzing any design</li>
+      <li>The daily exercise for building a design eye in 30 days</li>
+      <li>Recommended books, tools, and resources</li>
+      <li>Your personal design checklist</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The CRAP+CT Framework</h2>
+  <p>CRAP is a memorable acronym for the four core layout principles, coined by Robin Williams. I've extended it with Color and Type — the two remaining pillars — to give you a complete checklist for critiquing any design.</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon" style="font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc)">C</div>
+      <h4>Contrast</h4>
+      <p>Is there a clear visual hierarchy? Can you find the focal point in 3 seconds? Is the most important element the most prominent?</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon" style="font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc)">R</div>
+      <h4>Repetition</h4>
+      <p>Are fonts, colors, and sizes used consistently? Do repeated elements build a visual language the viewer can learn?</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon" style="font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc)">A</div>
+      <h4>Alignment</h4>
+      <p>Is every element aligned to something else? Are margins and gutters consistent? Does nothing feel arbitrarily placed?</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon" style="font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc)">P</div>
+      <h4>Proximity</h4>
+      <p>Are related items grouped together? Are unrelated items clearly separated? Does spatial grouping match semantic grouping?</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon" style="font-family:var(--fd);font-size:28px;font-weight:800;color:#1FA9C7">C</div>
+      <h4>Color</h4>
+      <p>Is the palette harmonious? Does it follow 60-30-10? Do all text/background combinations meet WCAG contrast?</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon" style="font-family:var(--fd);font-size:28px;font-weight:800;color:#1FA9C7">T</div>
+      <h4>Typography</h4>
+      <p>Is type hierarchy readable in 3 seconds? Are no more than 2 typefaces used? Are line-height, measure, and spacing comfortable?</p>
+    </div>
+  </div>
+
+  <h2 class="sh">How to Critique a Design</h2>
+  <p>Use this 5-step process on any design — yours or someone else's:</p>
+  <ol class="nl">
+    <li><strong>Look first, don't analyze.</strong> Give yourself 5 seconds of pure looking. What do you notice? What draws your eye? What doesn't?</li>
+    <li><strong>Find the focal point.</strong> Where does your eye land first? Is that where it should land given the design's purpose?</li>
+    <li><strong>Trace the reading path.</strong> Where does your eye go next? Can you follow a logical sequence through the content?</li>
+    <li><strong>Apply CRAP+CT systematically.</strong> Go through each letter. For each, ask: is this working? If not, what specifically is broken?</li>
+    <li><strong>Identify the one biggest fix.</strong> Don't try to fix everything. Find the single change that would provide the most improvement — usually a contrast or hierarchy issue.</li>
+  </ol>
+  <div class="callout gold">
+    <strong>The squint test:</strong> Squint your eyes until the design blurs. The blurry version reveals your true contrast hierarchy — only the highest-contrast elements remain visible. Does what remains match your intentions?
+  </div>
+
+  <h2 class="sh">The Daily Design Exercise</h2>
+  <p>One observation per day. Pick any designed thing — a product label, an app screen, a billboard, a book cover — and apply one principle from this course to analyze it. Write a single sentence. Do this for 30 days.</p>
+  <div class="demo-box">
+    <div class="demo-label">30-day observation prompts</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+      <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid var(--line-s);font-size:13px"><strong>Days 1–5:</strong> Hierarchy. Find 5 designs with a clear focal point and 5 without. Note what makes the difference.</div>
+      <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid var(--line-s);font-size:13px"><strong>Days 6–10:</strong> Color. On every website you visit, identify the harmony type being used (complementary, analogous, etc.).</div>
+      <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid var(--line-s);font-size:13px"><strong>Days 11–15:</strong> Typography. In every app you use, identify the typeface category and whether the pairing rule is being followed.</div>
+      <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid var(--line-s);font-size:13px"><strong>Days 16–20:</strong> White space. Find examples of designs that use space well (premium) and designs that pack everything in (budget). Note the emotional difference.</div>
+      <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid var(--line-s);font-size:13px"><strong>Days 21–25:</strong> Gestalt. Find logos or icons that use closure, figure/ground, or similarity. Analyze how the principle serves the brand.</div>
+      <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid var(--line-s);font-size:13px"><strong>Days 26–30:</strong> Full CRAP+CT audit. Pick one design per day and run all 6 checks. Find the worst offender in each.</div>
+    </div>
+  </div>
+
+  <h2 class="sh">Recommended Resources</h2>
+  <div class="resource-grid">
+    <div class="resource-card">
+      <div class="rc-type">📚 Book — Start Here</div>
+      <h4>The Non-Designer's Design Book</h4>
+      <p>Robin Williams. The original CRAP principles. Accessible, practical, essential first read.</p>
+    </div>
+    <div class="resource-card">
+      <div class="rc-type">📚 Book — Typography</div>
+      <h4>Thinking with Type</h4>
+      <p>Ellen Lupton. The typography bible. Covers anatomy, hierarchy, grids, and expressive type.</p>
+    </div>
+    <div class="resource-card">
+      <div class="rc-type">📚 Book — Color</div>
+      <h4>Color and Light</h4>
+      <p>James Gurney. Color theory through painting. Practical and visually rich.</p>
+    </div>
+    <div class="resource-card">
+      <div class="rc-type">📚 Book — Deep Reference</div>
+      <h4>The Elements of Typographic Style</h4>
+      <p>Robert Bringhurst. The definitive typography reference. Dense but definitive.</p>
+    </div>
+    <div class="resource-card">
+      <div class="rc-type">📚 Book — Applied UI</div>
+      <h4>Refactoring UI</h4>
+      <p>Adam Wathan & Steve Schoger. Practical before/after transformations for digital interfaces.</p>
+    </div>
+    <div class="resource-card">
+      <div class="rc-type">🛠 Tool — Color</div>
+      <h4>Coolors.co</h4>
+      <p>Color palette generator. Hit space to generate, lock colors you like, export in any format.</p>
+    </div>
+    <div class="resource-card">
+      <div class="rc-type">🛠 Tool — Typography</div>
+      <h4>typescale.com</h4>
+      <p>Modular type scale calculator. Enter your base size and ratio — it outputs a harmonious scale.</p>
+    </div>
+    <div class="resource-card">
+      <div class="rc-type">🛠 Tool — Accessibility</div>
+      <h4>WebAIM Contrast Checker</h4>
+      <p>Enter foreground and background colors — instantly see if you pass WCAG AA and AAA.</p>
+    </div>
+  </div>
+
+  <h2 class="sh">Your Design Checklist</h2>
+  <p>Use this before considering any design "done." Tick each item off — if you can't, address it first.</p>
+  <div class="checklist" id="design-checklist">
+    <div class="check-item"><input type="checkbox" id="c1"><label for="c1">One clear focal point — I can find it in under 3 seconds</label></div>
+    <div class="check-item"><input type="checkbox" id="c2"><label for="c2">Three levels of visual hierarchy are clearly distinguishable</label></div>
+    <div class="check-item"><input type="checkbox" id="c3"><label for="c3">Every element is aligned to something else (no arbitrary placement)</label></div>
+    <div class="check-item"><input type="checkbox" id="c4"><label for="c4">Related items are grouped together; unrelated items are separated</label></div>
+    <div class="check-item"><input type="checkbox" id="c5"><label for="c5">Fonts, colors, and sizes are used consistently throughout</label></div>
+    <div class="check-item"><input type="checkbox" id="c6"><label for="c6">I'm using 2 typefaces maximum (3 only if one is for code/accent)</label></div>
+    <div class="check-item"><input type="checkbox" id="c7"><label for="c7">Body text line-height is between 1.4–1.6</label></div>
+    <div class="check-item"><input type="checkbox" id="c8"><label for="c8">Line length is between 45–75 characters per line</label></div>
+    <div class="check-item"><input type="checkbox" id="c9"><label for="c9">No script fonts used in body text</label></div>
+    <div class="check-item"><input type="checkbox" id="c10"><label for="c10">Color palette follows approximately 60-30-10 distribution</label></div>
+    <div class="check-item"><input type="checkbox" id="c11"><label for="c11">All text/background combinations pass WCAG 4.5:1 contrast ratio</label></div>
+    <div class="check-item"><input type="checkbox" id="c12"><label for="c12">Color is not the only way information is conveyed (also using shape, text, or pattern)</label></div>
+    <div class="check-item"><input type="checkbox" id="c13"><label for="c13">White space is intentional — not filling up every gap</label></div>
+    <div class="check-item"><input type="checkbox" id="c14"><label for="c14">Squint test passed — the right elements remain visible when blurred</label></div>
+    <div class="check-item"><input type="checkbox" id="c15"><label for="c15">The design communicates its core message within 5 seconds</label></div>
+  </div>
+
+  <div id="completion-banner">
+    <h2>Course Complete! 🎉</h2>
+    <p>You've covered the full applied aesthetics toolkit — from visual perception through contrast, composition, color, and type. Now comes the practice.</p>
+  </div>
+
+  <button class="done-btn" data-module="6">Mark as Complete</button>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'design-principles';
+const TOTAL = 6;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+function goto(m) {
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  // close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      // auto-advance to next module
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

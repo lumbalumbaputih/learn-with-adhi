@@ -109,6 +109,18 @@
     "duration": "~4 days"
   },
   {
+    "id": "design-principles",
+    "n": "10",
+    "title": "Design Principles: Applied Aesthetics",
+    "blurb": "Master the science of making things look good — contrast, composition, color, and typography with visual examples and exercises.",
+    "category": "Practice",
+    "tags": ["Intermediate", "Design"],
+    "primitive": "eye",
+    "accent": "mawar",
+    "path": "courses/design/design-principles-course-v1.html",
+    "duration": "~5 days"
+  },
+  {
     "id": "tool-safe-area",
     "n": "T1",
     "title": "Feifelusiac Safe Area Calculator",
