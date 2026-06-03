@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="perth-architecture">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Perth — Architecture by Rail · Learn with Adhi</title>
+<meta name="description" content="Trace Perth's buildings from the 1829 Swan River Colony to today — a train-line field guide to spotting and understanding the city's architecture." />
+<meta name="author" content="Adhi" />
+<link rel="canonical" href="https://learnwithadhi.com/courses/architecture/2026-06-03-perth-architecture-by-train-v1.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Reading Perth — Architecture by Rail" />
+<meta property="og:description" content="Trace Perth's buildings from the 1829 Swan River Colony to today — a train-line field guide to reading the city." />
+<meta property="og:url" content="https://learnwithadhi.com/courses/architecture/2026-06-03-perth-architecture-by-train-v1.html" />
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Reading Perth — Architecture by Rail",
+  "description": "Trace Perth's buildings from the 1829 Swan River Colony to today — a train-line field guide to spotting and understanding the city's architecture.",
+  "provider": { "@type": "Person", "name": "Adhi", "url": "https://learnwithadhi.com" }
+}
+</script>
+
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --hidup-tomato:#FF5C39; --hidup-mango:#FFC234; --hidup-forest:#1F9D55;
+  --hidup-sea:#1FA9C7; --hidup-mawar:#E84BA0; --hidup-indigo:#2E3192;
+  --accent:#2E3192; --accent-2:#FFC234; --accent-3:#1FA9C7;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8; --muted:#6B6259;
+  --line:rgba(26,22,20,0.12); --line-strong:rgba(26,22,20,0.14);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --radius-8:8px; --radius-12:12px; --radius-14:14px; --radius-20:20px; --radius-pill:999px;
+  --shadow-md:0 12px 32px rgba(0,0,0,0.18); --ease:cubic-bezier(0.16,1,0.3,1);
+  /* Stylised Transperth line colours used through the field guide */
+  --ln-frem:#1F9D55; --ln-mid:#FF5C39; --ln-mand:#FFC234; --ln-yan:#1FA9C7; --ln-arm:#8B7FF0; --ln-air:#E84BA0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:14px;line-height:1.5;display:flex;min-height:100vh}
+
+/* SIDEBAR */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100;padding:0}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sidebar-logo .mark{display:flex;align-items:center;gap:10px}
+.sidebar-logo svg{width:28px;height:28px;flex-shrink:0}
+.sidebar-logo .wordmark{font-family:var(--fd);font-size:14px;font-weight:700;letter-spacing:-0.02em;color:var(--paper);line-height:1.2}
+.sidebar-logo .wordmark span{display:block;font-size:10px;font-family:var(--fm);letter-spacing:0.1em;font-weight:400;color:rgba(251,244,230,0.45);margin-top:2px}
+.progress-area{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.progress-label{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:rgba(251,244,230,0.45);margin-bottom:8px}
+.progress-bar-wrap{background:rgba(255,255,255,0.1);border-radius:var(--radius-pill);height:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--hidup-mango);border-radius:var(--radius-pill);transition:width 0.5s var(--ease);width:0%}
+.progress-pct{font-family:var(--fm);font-size:11px;color:var(--hidup-mango);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-module{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;transition:background 200ms;border-left:3px solid transparent;user-select:none}
+.nav-module:hover{background:rgba(255,255,255,0.06)}
+.nav-module.active{background:rgba(255,255,255,0.1);border-left-color:var(--hidup-mango)}
+.nav-module.done{border-left-color:var(--hidup-forest)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:rgba(251,244,230,0.4);min-width:20px}
+.nav-module.active .nav-num{color:var(--hidup-mango)}
+.nav-module.done .nav-num{color:var(--hidup-forest)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,0.8);line-height:1.3}
+.nav-module.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;color:var(--hidup-forest);font-size:14px;opacity:0}
+.nav-module.done .nav-check{opacity:1}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.1);font-family:var(--fm);font-size:10px;color:rgba(251,244,230,0.3);letter-spacing:0.06em}
+.sidebar-footer .back-link{color:rgba(251,244,230,0.6);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.sidebar-footer .back-link:hover{color:var(--paper)}
+
+/* MAIN */
+#main{margin-left:268px;flex:1;min-height:100vh}
+.module-section{display:none;padding:48px 56px;max-width:920px}
+.module-section.active{display:block}
+
+/* HERO BAND */
+.module-hero{margin-bottom:40px}
+.module-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:0.14em;color:var(--muted);margin-bottom:12px;text-transform:uppercase}
+.module-title{font-family:var(--fd);font-size:36px;font-weight:800;letter-spacing:-0.03em;line-height:1.05;margin-bottom:12px}
+.module-title .accent{color:var(--accent)}
+.module-title .accent-gold{color:var(--hidup-mango)}
+.module-title .accent-sea{color:var(--hidup-sea)}
+.module-lede{font-size:15px;color:var(--muted);line-height:1.6;max-width:640px;margin-bottom:20px}
+.module-objectives{background:var(--paper-2);border-radius:var(--radius-14);padding:20px 24px;border:1px solid var(--line-strong)}
+.module-objectives .obj-label{font-family:var(--fm);font-size:10px;letter-spacing:0.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0;padding-left:16px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:12px}
+
+/* CONTENT */
+h2.section-heading{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-0.02em;margin:36px 0 12px;padding-top:36px;border-top:1px solid var(--line)}
+h2.section-heading:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub-heading{font-family:var(--fd);font-size:16px;font-weight:600;margin:24px 0 8px}
+p{margin-bottom:14px;line-height:1.6;font-size:14px}
+ul.body-list{margin:0 0 16px 0;padding-left:0;list-style:none}
+ul.body-list li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.55}
+ul.body-list li::before{content:'•';position:absolute;left:0;color:var(--accent)}
+
+.callout{background:var(--paper-2);border-left:3px solid var(--accent);border-radius:0 var(--radius-8) var(--radius-8) 0;padding:14px 18px;margin:20px 0;font-size:13px;line-height:1.6}
+.callout.gold{border-left-color:var(--hidup-mango)}
+.callout.blue{border-left-color:var(--hidup-sea)}
+.callout.red{border-left-color:var(--hidup-tomato)}
+.callout.indigo{border-left-color:var(--hidup-indigo)}
+.callout strong{font-weight:600}
+
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.stat-row-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:24px 0}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:var(--radius-14);padding:20px;text-align:center}
+.stat-card .stat-val{font-family:var(--fd);font-size:28px;font-weight:800;letter-spacing:-0.03em;color:var(--hidup-mango);display:block;margin-bottom:4px}
+.stat-card .stat-val.green{color:var(--hidup-forest)}
+.stat-card .stat-val.sea{color:var(--hidup-sea)}
+.stat-card .stat-desc{font-size:11px;color:rgba(251,244,230,0.6);line-height:1.4}
+
+.key-term{display:inline;background:rgba(46,49,146,0.12);border-radius:4px;padding:1px 6px;font-weight:500;color:var(--hidup-indigo)}
+.key-term-gold{display:inline;background:rgba(255,194,52,0.22);border-radius:4px;padding:1px 6px;font-weight:500}
+.key-term-sea{display:inline;background:rgba(31,169,199,0.16);border-radius:4px;padding:1px 6px;font-weight:500;color:#127a90}
+
+/* SVG DIAGRAMS */
+.diagram-wrap{margin:28px 0;background:var(--paper-2);border-radius:var(--radius-14);padding:24px;border:1px solid var(--line)}
+.diagram-label{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.diagram-wrap svg{width:100%;display:block}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px}
+th{background:var(--ink);color:var(--paper);padding:10px 14px;text-align:left;font-weight:600;font-family:var(--fd)}
+td{padding:9px 14px;border-bottom:1px solid var(--line)}
+tr:nth-child(even) td{background:var(--paper-2)}
+
+/* PRINCIPLE CARDS */
+.principle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.principle-card{border:1.5px solid var(--line-strong);border-radius:var(--radius-14);padding:18px;background:#fff}
+.principle-card .p-icon{font-size:22px;margin-bottom:10px}
+.principle-card .p-title{font-family:var(--fd);font-size:14px;font-weight:700;margin-bottom:6px}
+.principle-card .p-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* SPOTTER (landmark) CARDS */
+.spot-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:24px 0}
+.spot-card{border:1.5px solid var(--line-strong);border-radius:var(--radius-14);padding:18px 20px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.spot-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.spot-name{font-family:var(--fd);font-size:16px;font-weight:700;line-height:1.15}
+.spot-year{font-family:var(--fm);font-size:12px;color:var(--accent);font-weight:500;flex-shrink:0}
+.spot-meta{font-family:var(--fm);font-size:10px;letter-spacing:0.04em;color:var(--muted);text-transform:uppercase}
+.spot-desc{font-size:12.5px;color:var(--ink);line-height:1.5}
+.spot-foot{margin-top:auto;padding-top:4px}
+
+/* STATION TAG */
+.station-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:10px;letter-spacing:0.05em;padding:4px 10px;border-radius:var(--radius-pill);background:var(--ink);color:var(--paper);text-transform:uppercase;font-weight:500}
+.station-tag .ln{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 1px rgba(255,255,255,0.25)}
+
+/* LINE LEGEND */
+.line-legend{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.line-chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:11px;padding:6px 12px;border-radius:var(--radius-pill);border:1.5px solid var(--line-strong);background:#fff}
+.line-chip .dot{width:12px;height:12px;border-radius:50%}
+
+/* ROUTE / ITINERARY */
+.route{border:2px solid var(--ink);border-radius:var(--radius-20);overflow:hidden;margin:24px 0}
+.route-head{padding:14px 20px;color:var(--paper);font-family:var(--fd);font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.route-head .route-sub{font-family:var(--fm);font-size:10px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;opacity:0.85;margin-left:auto}
+.route-body{padding:14px 20px 16px;background:#fff}
+.stop{padding:9px 0 9px 24px;position:relative;font-size:13px;line-height:1.5;border-bottom:1px dashed var(--line)}
+.stop:last-child{border-bottom:none}
+.stop::before{content:'';position:absolute;left:5px;top:14px;width:9px;height:9px;border-radius:50%;background:#fff;border:2.5px solid var(--accent)}
+.stop strong{font-weight:700}
+.stop .s-station{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+
+/* CHECKLIST */
+.checklist{list-style:none;margin:16px 0}
+.checklist li{font-size:13px;padding:6px 0 6px 24px;position:relative;border-bottom:1px solid var(--line);line-height:1.5}
+.checklist li:last-child{border-bottom:none}
+.checklist li::before{content:'☐';position:absolute;left:0;font-size:14px;color:var(--accent)}
+
+/* QUIZ */
+.quiz-section{margin:40px 0 0;padding:28px;background:var(--ink);border-radius:var(--radius-20);color:var(--paper)}
+.quiz-header{font-family:var(--fd);font-size:18px;font-weight:700;margin-bottom:4px}
+.quiz-sub{font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:rgba(251,244,230,0.4);margin-bottom:24px}
+.quiz-q{margin-bottom:22px}
+.quiz-q-text{font-size:13px;font-weight:500;margin-bottom:10px;color:var(--paper);line-height:1.5}
+.quiz-options{display:flex;flex-direction:column;gap:7px}
+.quiz-opt{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-8);padding:9px 14px;cursor:pointer;font-size:13px;color:rgba(251,244,230,0.85);transition:all 200ms;text-align:left;display:flex;align-items:center;gap:10px}
+.quiz-opt:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2)}
+.quiz-opt.correct{background:rgba(31,157,85,0.25);border-color:var(--hidup-forest);color:var(--paper)}
+.quiz-opt.wrong{background:rgba(255,92,57,0.2);border-color:var(--hidup-tomato);color:var(--paper)}
+.quiz-opt.disabled{cursor:default;pointer-events:none}
+.opt-letter{font-family:var(--fm);font-size:10px;letter-spacing:0.08em;min-width:18px;color:rgba(251,244,230,0.4)}
+.quiz-feedback{font-size:12px;margin-top:8px;padding:8px 12px;border-radius:var(--radius-8);display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:rgba(31,157,85,0.2);color:#7CDE9B}
+.quiz-feedback.no{background:rgba(255,92,57,0.15);color:#FF8C78}
+.quiz-result{text-align:center;padding:20px;display:none}
+.quiz-result.show{display:block}
+.quiz-result .score{font-family:var(--fd);font-size:42px;font-weight:800;color:var(--hidup-mango)}
+.quiz-result .score-label{font-size:12px;color:rgba(251,244,230,0.5);margin-top:4px}
+.quiz-submit{margin-top:20px;background:var(--accent);color:var(--paper);border:none;border-radius:var(--radius-pill);padding:11px 28px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;transition:opacity 200ms}
+.quiz-submit:hover{opacity:0.85}
+
+/* NAV BUTTONS */
+.module-nav-btns{display:flex;gap:12px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line)}
+.btn-next{background:var(--ink);color:var(--paper);border:none;border-radius:var(--radius-pill);padding:11px 28px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;transition:all 200ms var(--ease)}
+.btn-next:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.btn-prev{background:transparent;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:var(--radius-pill);padding:11px 24px;font-family:var(--fb);font-size:13px;font-weight:500;cursor:pointer;transition:all 200ms}
+.btn-prev:hover{background:var(--paper-2)}
+.btn-next:disabled,.btn-prev:disabled{opacity:0.3;cursor:default;pointer-events:none}
+
+@media(max-width:900px){
+  #sidebar{width:220px}
+  #main{margin-left:220px}
+  .module-section{padding:32px 28px}
+  .principle-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .spot-grid{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  #sidebar{display:none}
+  #main{margin-left:0}
+  .module-section{padding:24px 18px}
+  .principle-grid{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:1fr}
+  .route-head .route-sub{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sidebar-logo">
+    <div class="mark">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="38" cy="50" r="22" fill="none" stroke="#FBF4E6" stroke-width="14"/>
+        <rect x="54" y="28" width="14" height="44" fill="#FBF4E6"/>
+        <circle cx="78" cy="22" r="8" fill="#FFC234"/>
+      </svg>
+      <div class="wordmark">Reading Perth<span>ARCHITECTURE × RAIL</span></div>
+    </div>
+  </div>
+  <div class="progress-area">
+    <div class="progress-label">OVERALL PROGRESS</div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-pct" id="progressPct">0 of 8 modules</div>
+  </div>
+  <nav id="moduleNav">
+    <div class="nav-module active" data-mod="1" onclick="goModule(1)">
+      <span class="nav-num">01</span><span class="nav-title">How to Read a City</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="2" onclick="goModule(2)">
+      <span class="nav-num">02</span><span class="nav-title">Convict Stone &amp; Colonial Gothic</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="3" onclick="goModule(3)">
+      <span class="nav-num">03</span><span class="nav-title">Gold! The Boom Years</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="4" onclick="goModule(4)">
+      <span class="nav-num">04</span><span class="nav-title">Tudor Fantasy &amp; Art Deco</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="5" onclick="goModule(5)">
+      <span class="nav-num">05</span><span class="nav-title">Concrete &amp; Optimism</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="6" onclick="goModule(6)">
+      <span class="nav-num">06</span><span class="nav-title">Glass, Water &amp; the New City</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="7" onclick="goModule(7)">
+      <span class="nav-num">07</span><span class="nav-title">Reading Country</span><span class="nav-check">✓</span>
+    </div>
+    <div class="nav-module" data-mod="8" onclick="goModule(8)">
+      <span class="nav-num">08</span><span class="nav-title">Your Train-Line Field Guide</span><span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../../index.html" class="back-link">← Back to all courses</a>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+<!-- ═══════════════════════════════════════════════ MODULE 1 ══ -->
+<section class="module-section active" id="mod-1">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 01 · The Lens</div>
+    <h1 class="module-title">How to <span class="accent">Read</span> a City</h1>
+    <p class="module-lede">Perth is one of the most isolated cities on Earth, and you can read that story in its buildings. Before we walk the platforms, let us learn the lens — why Perth looks the way it does, and how to date a building at a glance.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>The four forces that shaped every Perth building: isolation, climate, boom-and-bust, and Country</li>
+        <li>A quick visual vocabulary — how to date a building from the footpath</li>
+        <li>The six eras this course follows, on one timeline</li>
+        <li>Why the train network is the perfect way to read the city</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Why Perth Looks the Way It Does</h2>
+  <p>Every city is an argument between its people and its place, frozen in stone, brick, and concrete. To read Perth, hold four forces in mind. Once you can name them, you will see them in almost every building.</p>
+
+  <div class="principle-grid">
+    <div class="principle-card">
+      <div class="p-icon">🌏</div>
+      <div class="p-title">Isolation</div>
+      <div class="p-desc">Perth is closer to Jakarta and Singapore than to Sydney. Materials, styles, and skilled labour arrived late and by ship. Local stone — limestone, jarrah, brick — did the heavy lifting, giving early Perth a homemade, hand-built character.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">☀️</div>
+      <div class="p-title">Climate</div>
+      <div class="p-desc">A hot, dry Mediterranean climate with fierce summer sun off the Indian Ocean. Deep verandahs, shaded arcades, thick walls, and (later) sun-hoods and louvres are climate machines, not just decoration.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">💰</div>
+      <div class="p-title">Boom &amp; Bust</div>
+      <div class="p-desc">Perth grows in violent surges — the 1890s gold rush, the 1960s–70s mineral boom, the 2000s resources boom. Each leaves a layer of ambitious buildings. Quiet decades leave almost nothing. The skyline is a graph of commodity prices.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">〰️</div>
+      <div class="p-title">Country</div>
+      <div class="p-desc">The city sits on Whadjuk Noongar Country, beside the Derbarl Yerrigan (Swan River). For 65,000+ years this was a living cultural landscape. Today's best buildings are learning to design <em>with</em> that Country, not over it.</div>
+    </div>
+  </div>
+
+  <div class="callout"><strong>A useful myth to drop:</strong> Perth was <em>not</em> founded as a convict settlement. The Swan River Colony of 1829 was a <span class="key-term">free</span> settlement of British migrants. Convicts only arrived in 1850 — invited later, to supply the labour the struggling colony desperately lacked. That 21-year gap explains a lot about what got built, and when.</div>
+
+  <h2 class="section-heading">Dating a Building From the Footpath</h2>
+  <p>You do not need to be an architect to date a building. You need three habits: look <strong>up</strong> (above the shopfronts, where the original facade survives), look at the <strong>material</strong>, and look at the <strong>ornament</strong>. Here is the cheat sheet we will fill in over the next six modules.</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">Six Eras of Perth — One Timeline</div>
+    <svg viewBox="0 0 600 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- baseline -->
+      <line x1="20" y1="150" x2="580" y2="150" stroke="#1A1614" stroke-width="2"/>
+      <!-- era bands -->
+      <rect x="20" y="120" width="120" height="30" rx="4" fill="#6B6259"/>
+      <rect x="140" y="120" width="95" height="30" rx="4" fill="#FFC234"/>
+      <rect x="235" y="120" width="80" height="30" rx="4" fill="#E84BA0"/>
+      <rect x="315" y="120" width="105" height="30" rx="4" fill="#8B7FF0"/>
+      <rect x="420" y="120" width="160" height="30" rx="4" fill="#1FA9C7"/>
+      <!-- labels under -->
+      <text x="80" y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">1829–90</text>
+      <text x="187" y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">1890–1914</text>
+      <text x="275" y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">1918–39</text>
+      <text x="367" y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">1945–80</text>
+      <text x="500" y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">1990–now</text>
+      <!-- era names above -->
+      <text x="80" y="112" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614">Colonial Gothic</text>
+      <text x="187" y="112" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614">Gold Boom</text>
+      <text x="275" y="112" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614">Deco / Tudor</text>
+      <text x="367" y="112" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614">Modern</text>
+      <text x="500" y="112" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614">Contemporary</text>
+      <!-- tell-tale icons -->
+      <text x="80" y="95" text-anchor="middle" font-size="15">🏰</text>
+      <text x="187" y="95" text-anchor="middle" font-size="15">🏛️</text>
+      <text x="275" y="95" text-anchor="middle" font-size="15">📐</text>
+      <text x="367" y="95" text-anchor="middle" font-size="15">🧱</text>
+      <text x="500" y="95" text-anchor="middle" font-size="15">🏙️</text>
+      <!-- title -->
+      <text x="300" y="40" text-anchor="middle" font-family="'Bricolage Grotesque',sans-serif" font-size="16" font-weight="800" fill="#1A1614">From Swan River Colony to the contemporary city</text>
+      <text x="300" y="60" text-anchor="middle" font-family="'Inter',sans-serif" font-size="11" fill="#6B6259">Each band is one module — and one layer of the city you can still walk to.</text>
+    </svg>
+  </div>
+
+  <table>
+    <tr><th>Era</th><th>Look up &amp; you'll see…</th><th>Material tell</th></tr>
+    <tr><td><strong>Colonial Gothic</strong> (1829–90)</td><td>Pointed arches, crenellations, steep gables, small windows</td><td>Local limestone, hand-made brick, jarrah</td></tr>
+    <tr><td><strong>Gold Boom</strong> (1890–1914)</td><td>Grand parapets, columns, domes, iron-lace verandahs, exuberant ornament</td><td>Rendered masonry, pressed brick, cast iron</td></tr>
+    <tr><td><strong>Inter-war</strong> (1918–39)</td><td>Either mock-Tudor cosiness or sleek Deco zigzags, speed-lines, portholes</td><td>Render, terracotta, black glass, chrome</td></tr>
+    <tr><td><strong>Post-war Modern</strong> (1945–80)</td><td>Flat roofs, grids, sun-hoods, raw off-form concrete, no ornament</td><td>Reinforced concrete, glass curtain wall</td></tr>
+    <tr><td><strong>Contemporary</strong> (1990–now)</td><td>Glass towers, folded metal, old facades kept with towers behind</td><td>Steel, glass, aluminium, anodised bronze</td></tr>
+  </table>
+
+  <h2 class="section-heading">Why Read Perth by Rail</h2>
+  <p>Here is the lovely accident: Perth's railway is itself a heritage object, and its lines thread through exactly the places where the city's history piled up. The <span class="key-term-sea">Fremantle line</span> — opened in stages from <strong>1881</strong>, when the Fremantle–Guildford railway became the colony's first public railway — still runs past the gold-boom port, the colonial gaol towns, and the beach suburbs. The newer underground lines drop you under the contemporary waterfront.</p>
+  <p>So this course has two halves. Modules 2–7 build your eye, era by era, tagging every landmark with its nearest station. Module 8 turns that knowledge into actual train itineraries you can do on a weekend with a SmartRider and a flat white. By the end, a station platform becomes a doorway into a particular decade.</p>
+  <div class="callout blue"><strong>Field habit:</strong> every landmark in this course carries a <span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>STATION</span> tag showing the nearest train stop and its line colour. Collect them as you go — Module 8 reassembles them into routes.</div>
+
+  <div class="quiz-section" id="quiz-1">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q1-1">
+      <div class="quiz-q-text">1. How did the Swan River Colony begin in 1829?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q1-1',false,'A')"><span class="opt-letter">A</span>As a convict penal settlement from day one</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-1',true,'B')"><span class="opt-letter">B</span>As a free settlement of British migrants — convicts only arrived later, in 1850</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-1',false,'C')"><span class="opt-letter">C</span>As a gold-mining boom town</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-1',false,'D')"><span class="opt-letter">D</span>As a military fort with no civilians</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q1-1"></div>
+    </div>
+    <div class="quiz-q" id="q1-2">
+      <div class="quiz-q-text">2. The course says Perth's skyline is "a graph of commodity prices." Which force does that describe?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q1-2',false,'A')"><span class="opt-letter">A</span>Isolation</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-2',false,'B')"><span class="opt-letter">B</span>Climate</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-2',true,'C')"><span class="opt-letter">C</span>Boom and bust</button>
+        <button class="quiz-opt" onclick="answer(this,'q1-2',false,'D')"><span class="opt-letter">D</span>Country</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q1-2"></div>
+    </div>
+    <div class="quiz-result" id="result-1"></div>
+    <button class="quiz-submit" onclick="submitQuiz(1,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" disabled onclick="goModule(0)">← Previous</button>
+    <button class="btn-next" onclick="goModule(2)">Next: Convict Stone →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 2 ══ -->
+<section class="module-section" id="mod-2">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 02 · 1829–1890</div>
+    <h1 class="module-title">Convict Stone &amp; <span class="accent">Colonial Gothic</span></h1>
+    <p class="module-lede">Perth's oldest buildings are small, tough, and hand-made — limestone and brick raised by a struggling colony and, after 1850, by convict labour. This is the bedrock layer, and almost all of it is a short walk from a station.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>The two men who built early Perth: Reveley and Jewell</li>
+        <li>Why so many early buildings are Gothic — and how to spot it</li>
+        <li>The convict story written into Fremantle Prison and the Town Hall</li>
+        <li>The five oldest buildings you can still visit, and their stations</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">A Colony Built by Hand</h2>
+  <p>For its first 20 years the Swan River Colony was poor, under-populated, and chronically short of skilled labour. Buildings were small and practical, made from what was underfoot: soft coastal <span class="key-term">limestone</span>, locally fired brick, and the magnificent local hardwood, <span class="key-term">jarrah</span>. The dominant style was <span class="key-term">Gothic Revival</span> — the fashionable "Christian" and institutional look back in Britain — scaled down to colonial means: pointed arches, steep gables, and battlemented parapets that made a modest stone box look like a little fortress.</p>
+  <p>Two figures shaped this era. <span class="key-term-gold">Henry Willey Reveley</span>, the colony's first civil engineer, designed its very first public buildings. Then <span class="key-term-gold">Richard Roach Jewell</span> arrived and, as the government's go-to architect for decades, gave Perth most of its surviving colonial landmarks — the Town Hall, Government House, the Cloisters, the Old Perth Boys School.</p>
+
+  <div class="callout red"><strong>The convict turn (1850–1868):</strong> Desperate for labour, the colony asked Britain to send convicts. Around 9,700 arrived. They quarried stone and built the roads, bridges, the Fremantle Prison, and — uniquely — much of the Perth Town Hall. It is often described as the only town hall in Australia built by convicts.</div>
+
+  <h2 class="section-heading">How to Spot Colonial Gothic</h2>
+  <p>The Round House gives us the era's purest diagram. Built in 1830–31 as the colony's first gaol, it is a 12-sided <span class="key-term">panopticon</span> — cells arranged around a central yard so a single guard at the centre could watch every door. The form <em>is</em> the idea: surveillance made architecture.</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">The Round House, Fremantle (1831) — Panopticon Plan</div>
+    <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- 12-sided polygon -->
+      <polygon points="300,40 352,54 390,92 404,144 390,196 352,234 300,248 248,234 210,196 196,144 210,92 248,54"
+               transform="translate(0,-24)" fill="#F4ECD8" stroke="#1A1614" stroke-width="2.5"/>
+      <!-- inner yard -->
+      <circle cx="300" cy="120" r="34" fill="#fff" stroke="#1A1614" stroke-width="1.5"/>
+      <!-- guard point -->
+      <circle cx="300" cy="120" r="6" fill="#FF5C39"/>
+      <text x="300" y="123" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#fff" font-weight="700"> </text>
+      <!-- sightlines -->
+      <g stroke="#FF5C39" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.7">
+        <line x1="300" y1="120" x2="300" y2="20"/>
+        <line x1="300" y1="120" x2="378" y2="44"/>
+        <line x1="300" y1="120" x2="404" y2="120"/>
+        <line x1="300" y1="120" x2="378" y2="196"/>
+        <line x1="300" y1="120" x2="300" y2="220"/>
+        <line x1="300" y1="120" x2="222" y2="196"/>
+        <line x1="300" y1="120" x2="196" y2="120"/>
+        <line x1="300" y1="120" x2="222" y2="44"/>
+      </g>
+      <!-- cell ticks -->
+      <text x="300" y="14" text-anchor="middle" font-family="'Inter',sans-serif" font-size="9" fill="#6B6259">8 cells radiate from a central yard</text>
+      <!-- annotations -->
+      <line x1="334" y1="120" x2="470" y2="120" stroke="#6B6259" stroke-width="1"/>
+      <text x="478" y="116" font-family="'Inter',sans-serif" font-size="11" font-weight="600" fill="#1A1614">Central yard</text>
+      <text x="478" y="131" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">one guard sees every door</text>
+      <line x1="404" y1="120" x2="470" y2="170" stroke="#6B6259" stroke-width="1"/>
+      <text x="478" y="168" font-family="'Inter',sans-serif" font-size="11" font-weight="600" fill="#1A1614">Limestone walls</text>
+      <text x="478" y="183" font-family="'Inter',sans-serif" font-size="10" fill="#6B6259">cut from the cliff it stands on</text>
+      <text x="120" y="220" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">Designed by H.W. Reveley · WA's oldest surviving building</text>
+    </svg>
+  </div>
+
+  <h2 class="section-heading">The Five Oldest You Can Still Visit</h2>
+  <div class="spot-grid">
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Round House</span><span class="spot-year">1831</span></div>
+      <div class="spot-meta">H.W. Reveley · Georgian / panopticon gaol</div>
+      <div class="spot-desc">WA's oldest surviving building. Twelve-sided, perched on the limestone cliff above Bathers Beach. Free to enter; daily 1pm time-gun and tunnel below.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Fremantle · 8 min walk</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Old Court House</span><span class="spot-year">1836</span></div>
+      <div class="spot-meta">H.W. Reveley · Greek-Revival / Georgian</div>
+      <div class="spot-desc">The oldest surviving building in central Perth, a tiny temple-fronted box in Stirling Gardens. Now the Francis Burt Law Museum.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-mand)"></span>Elizabeth Quay · 5 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Old Perth Boys School</span><span class="spot-year">1854</span></div>
+      <div class="spot-meta">Gothic Revival · oldest govt school in WA</div>
+      <div class="spot-desc">A storybook Gothic schoolhouse with a steep gable and pointed windows, marooned among the towers of St Georges Terrace. Now a café and shop.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 6 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">The Cloisters</span><span class="spot-year">1858</span></div>
+      <div class="spot-meta">R.R. Jewell · Victorian Tudor brickwork</div>
+      <div class="spot-desc">WA's first purpose-built secondary school. Famous for its <em>diapered</em> (diamond-patterned) brickwork and crenellations — a brick textbook on the Terrace.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 7 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Perth Town Hall</span><span class="spot-year">1870</span></div>
+      <div class="spot-meta">Jewell &amp; Manning · Victorian Free Gothic</div>
+      <div class="spot-desc">Built by convicts and free men. Look for the windows shaped like broad-arrows and the hangman's-rope motif — convict in-jokes carved into a civic monument.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 4 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Government House</span><span class="spot-year">1864</span></div>
+      <div class="spot-meta">R.R. Jewell · Victorian Tudor / Jacobean</div>
+      <div class="spot-desc">The Governor's residence, with Gothic arcading said to echo the Tower of London. Glimpse it through the gates on St Georges Terrace; gardens open on select days.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-mand)"></span>Elizabeth Quay · 6 min</span></div>
+    </div>
+  </div>
+
+  <div class="callout"><strong>The big one (Fremantle):</strong> <span class="key-term">Fremantle Prison</span> (convict-built 1851–59) is Western Australia's only UNESCO World Heritage site, listed in 2010 as one of the Australian Convict Sites. Its towering limestone walls and ranges are the most complete convict landscape in the country. <span class="station-tag" style="margin-top:6px"><span class="ln" style="background:var(--ln-frem)"></span>Fremantle · 12 min walk uphill</span></div>
+
+  <div class="quiz-section" id="quiz-2">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q2-1">
+      <div class="quiz-q-text">1. What makes the Round House a "panopticon"?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q2-1',false,'A')"><span class="opt-letter">A</span>It is perfectly circular</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-1',true,'B')"><span class="opt-letter">B</span>Cells radiate from a central point so one guard can watch every door</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-1',false,'C')"><span class="opt-letter">C</span>It has panoramic windows over the ocean</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-1',false,'D')"><span class="opt-letter">D</span>It was painted in many colours</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q2-1"></div>
+    </div>
+    <div class="quiz-q" id="q2-2">
+      <div class="quiz-q-text">2. Which Perth building is most associated with convict labour and is called the only convict-built town hall in Australia?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q2-2',false,'A')"><span class="opt-letter">A</span>The Cloisters</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-2',true,'B')"><span class="opt-letter">B</span>Perth Town Hall</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-2',false,'C')"><span class="opt-letter">C</span>Old Court House</button>
+        <button class="quiz-opt" onclick="answer(this,'q2-2',false,'D')"><span class="opt-letter">D</span>His Majesty's Theatre</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q2-2"></div>
+    </div>
+    <div class="quiz-result" id="result-2"></div>
+    <button class="quiz-submit" onclick="submitQuiz(2,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(1)">← How to Read a City</button>
+    <button class="btn-next" onclick="goModule(3)">Next: Gold! →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 3 ══ -->
+<section class="module-section" id="mod-3">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 03 · 1890–1914</div>
+    <h1 class="module-title">Gold! <span class="accent-gold">The Boom Years</span></h1>
+    <p class="module-lede">In the 1890s, gold was found in the eastern goldfields and Perth exploded. The wealth poured into grand, confident buildings — domes, columns, iron-lace verandahs — that still give the city centre and Fremantle their richest streetscapes.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>How gold turned a sleepy colony into a building site</li>
+        <li>The Federation styles — and how to read a boom-era facade</li>
+        <li>George Temple Poole, the architect of public Perth</li>
+        <li>Fremantle's West End: the best gold-boom precinct in Australia</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">The City That Gold Built</h2>
+  <p>Gold strikes at Coolgardie (1892) and Kalgoorlie (1893) detonated a population boom. Perth's people, port, and tax base multiplied, and a frenzy of construction ran right up to the outbreak of war in 1914. Where the colonial era whispered in limestone, the gold era <em>shouted</em> in render and pressed brick: tall parapets to hide the roof and carry the building's name, classical columns and pediments borrowed from banks and palaces, and across the suburbs, the deep <span class="key-term">filigree</span> verandahs dripping with cast-iron lace.</p>
+  <p>This is the moment Perth grew up. It coincides with <span class="key-term-gold">Federation</span> (1901), and the architecture of the period takes that name. You will hear sub-styles — <em>Federation Free Classical</em> for grand public and commercial buildings, <em>Federation Filigree</em> for the iron-lace verandahs, <em>Federation Queen Anne</em> for the red-brick-and-terracotta houses with their turrets and tall chimneys.</p>
+
+  <h2 class="section-heading">Reading a Boom-Era Facade</h2>
+  <p>Boom buildings are designed to be read from the street as a stack of three. Train your eye to separate them and you can date almost any commercial building from this era at a glance.</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">Anatomy of a Gold-Boom Commercial Facade</div>
+    <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- building block -->
+      <rect x="170" y="20" width="190" height="240" fill="#fff" stroke="#1A1614" stroke-width="2"/>
+      <!-- parapet -->
+      <rect x="160" y="20" width="210" height="38" fill="#F4ECD8" stroke="#1A1614" stroke-width="1.5"/>
+      <path d="M255 20 q10 -16 20 0" fill="#F4ECD8" stroke="#1A1614" stroke-width="1.5"/>
+      <text x="265" y="44" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">EST. 1901</text>
+      <!-- upper floor windows (arched) -->
+      <path d="M188 92 a16 16 0 0 1 32 0 v40 h-32 z" fill="#cfe3ea" stroke="#1A1614" stroke-width="1.2"/>
+      <path d="M249 92 a16 16 0 0 1 32 0 v40 h-32 z" fill="#cfe3ea" stroke="#1A1614" stroke-width="1.2"/>
+      <path d="M310 92 a16 16 0 0 1 32 0 v40 h-32 z" fill="#cfe3ea" stroke="#1A1614" stroke-width="1.2"/>
+      <!-- string course -->
+      <line x1="170" y1="150" x2="360" y2="150" stroke="#1A1614" stroke-width="1.5"/>
+      <!-- verandah / awning -->
+      <line x1="150" y1="178" x2="380" y2="178" stroke="#1A1614" stroke-width="2.5"/>
+      <!-- iron lace -->
+      <g stroke="#8B7FF0" stroke-width="1">
+        <path d="M170 178 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0 q8 8 16 0"/>
+      </g>
+      <!-- shopfront -->
+      <rect x="175" y="186" width="180" height="74" fill="#eee" stroke="#1A1614" stroke-width="1.2"/>
+      <rect x="255" y="220" width="22" height="40" fill="#1A1614"/>
+      <!-- labels -->
+      <line x1="370" y1="39" x2="470" y2="39" stroke="#6B6259" stroke-width="1"/>
+      <text x="476" y="36" font-family="'Inter',sans-serif" font-size="11" font-weight="700" fill="#1A1614">1 · PARAPET</text>
+      <text x="476" y="50" font-family="'Inter',sans-serif" font-size="9.5" fill="#6B6259">hides roof; carries name + date</text>
+      <line x1="345" y1="112" x2="470" y2="112" stroke="#6B6259" stroke-width="1"/>
+      <text x="476" y="109" font-family="'Inter',sans-serif" font-size="11" font-weight="700" fill="#1A1614">2 · PIANO NOBILE</text>
+      <text x="476" y="123" font-family="'Inter',sans-serif" font-size="9.5" fill="#6B6259">tall arched "best" windows</text>
+      <line x1="380" y1="178" x2="470" y2="178" stroke="#6B6259" stroke-width="1"/>
+      <text x="476" y="175" font-family="'Inter',sans-serif" font-size="11" font-weight="700" fill="#1A1614">3 · VERANDAH</text>
+      <text x="476" y="189" font-family="'Inter',sans-serif" font-size="9.5" fill="#6B6259">iron lace; shades the footpath</text>
+      <line x1="355" y1="225" x2="470" y2="225" stroke="#6B6259" stroke-width="1"/>
+      <text x="476" y="222" font-family="'Inter',sans-serif" font-size="11" font-weight="700" fill="#1A1614">4 · SHOPFRONT</text>
+      <text x="476" y="236" font-family="'Inter',sans-serif" font-size="9.5" fill="#6B6259">rebuilt often — look UP instead</text>
+    </svg>
+  </div>
+  <div class="callout gold"><strong>The golden rule of street-reading:</strong> the ground floor lies. Shopfronts are remodelled every generation, so a 1900 building can wear a 2025 café below. The <em>real</em> age lives in the upper floors and the parapet. Always look up.</div>
+
+  <h2 class="section-heading">George Temple Poole, Architect of Public Perth</h2>
+  <p><span class="key-term-gold">George Temple Poole</span> ran the colony's Public Works Department through the boom and gave Perth a suite of dignified public buildings in brick and stone. His work bridges the refined end of the colonial era and the swagger of the gold years, and much of it still anchors the cultural heart of the city around the old Museum and Art Gallery precinct in Northbridge.</p>
+  <p>The era's showpiece, though, is a theatre. <span class="key-term-gold">His Majesty's Theatre</span> (1904), designed by William G. Wolf, is a lavish <em>Edwardian Baroque</em> pile — Perth's last grand Edwardian theatre still working, all curved pediments and exuberant plasterwork. Locals just call it "The Maj."</p>
+
+  <div class="spot-grid">
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">His Majesty's Theatre</span><span class="spot-year">1904</span></div>
+      <div class="spot-meta">William G. Wolf · Edwardian Baroque</div>
+      <div class="spot-desc">"The Maj." A working 1904 theatre with a sumptuous interior. Even from the corner of Hay &amp; King Streets the curved facade is pure boom-era confidence.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth / City West · 8 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Fremantle West End</span><span class="spot-year">1890s–1910s</span></div>
+      <div class="spot-meta">250+ buildings · whole-precinct heritage listing</div>
+      <div class="spot-desc">The largest single place on WA's heritage register — block after block of intact gold-boom commercial streetscape. Walk it slowly; it doubles as a film set for period dramas.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Fremantle · at the door</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Fremantle Markets</span><span class="spot-year">1897</span></div>
+      <div class="spot-meta">Federation · landmark corner tower</div>
+      <div class="spot-desc">A grand brick market hall still trading. The corner tower and the rhythm of arched openings are textbook Federation public architecture.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Fremantle · 9 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Cultural Centre precinct</span><span class="spot-year">1890s on</span></div>
+      <div class="spot-meta">G.T. Poole &amp; others · Federation public</div>
+      <div class="spot-desc">The old Museum, Library and Art Gallery buildings in Northbridge — Temple Poole-era civic architecture that now frames the WA Museum (Module 6).</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 6 min via Yagan Sq</span></div>
+    </div>
+  </div>
+
+  <div class="quiz-section" id="quiz-3">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q3-1">
+      <div class="quiz-q-text">1. When reading a gold-boom commercial building, where should you look to judge its real age?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q3-1',false,'A')"><span class="opt-letter">A</span>The ground-floor shopfront</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-1',true,'B')"><span class="opt-letter">B</span>The upper floors and the parapet</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-1',false,'C')"><span class="opt-letter">C</span>The footpath paving</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-1',false,'D')"><span class="opt-letter">D</span>The colour of the awning</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q3-1"></div>
+    </div>
+    <div class="quiz-q" id="q3-2">
+      <div class="quiz-q-text">2. What triggered Perth's great building boom of 1890–1914?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q3-2',false,'A')"><span class="opt-letter">A</span>The arrival of the first convicts</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-2',true,'B')"><span class="opt-letter">B</span>Gold strikes at Coolgardie and Kalgoorlie</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-2',false,'C')"><span class="opt-letter">C</span>The 1962 Commonwealth Games</button>
+        <button class="quiz-opt" onclick="answer(this,'q3-2',false,'D')"><span class="opt-letter">D</span>The opening of Elizabeth Quay</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q3-2"></div>
+    </div>
+    <div class="quiz-result" id="result-3"></div>
+    <button class="quiz-submit" onclick="submitQuiz(3,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(2)">← Convict Stone</button>
+    <button class="btn-next" onclick="goModule(4)">Next: Tudor &amp; Deco →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 4 ══ -->
+<section class="module-section" id="mod-4">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 04 · 1918–1939</div>
+    <h1 class="module-title">Tudor Fantasy &amp; <span class="accent-sea">Art Deco</span></h1>
+    <p class="module-lede">Between the wars Perth split in two moods: a nostalgic, mock-Tudor cosiness, and a sleek, machine-age Art Deco optimism. They sit a block apart in the city — and learning to tell them apart is one of the most satisfying tricks in the whole course.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>London Court — Perth's beloved mock-Tudor arcade and its gold-baron backstory</li>
+        <li>How Art Deco arrived in 1934 and what it borrowed from ships, machines, and Egypt</li>
+        <li>The Deco motif kit: zigzags, sunbursts, speed-lines, portholes</li>
+        <li>Where to find the best inter-war buildings, by station</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">London Court — A Tudor Daydream</h2>
+  <p>In 1937, the flamboyant gold financier <span class="key-term">Claude de Bernales</span> built a shopping arcade between Hay Street and St Georges Terrace and dressed it head-to-toe as Tudor-and-Elizabethan England: timber-look gables, leadlight oriel windows, a St George-and-the-dragon clock at one end and Big Ben at the other. <span class="key-term">London Court</span> is not "real" history at all — it is 1930s fantasy, built four centuries after the style it imitates. But it is gloriously done, and it tells you something true about inter-war taste: between two world wars and a Depression, people craved cosy, story-book nostalgia.</p>
+  <div class="callout indigo"><strong>Reading tip:</strong> revival styles are honest about being copies once you know the dates. If a "medieval" building has shop windows, electric lighting and a 1937 plaque, it is <em>Revival</em> — a deliberate costume, not a survivor. London Court and Government House both wear Tudor, but a century apart and for opposite reasons.</div>
+
+  <h2 class="section-heading">Art Deco Arrives, 1934</h2>
+  <p>The other inter-war mood looked forward, not back. <span class="key-term-sea">Art Deco</span> reached Western Australia around 1934 and swept through cinemas, hotels, shops and apartment blocks in a post-Depression surge of optimism. Where Tudor revival was hand-made and fussy, Deco was streamlined and modern, borrowing its glamour from ocean liners, aeroplanes, cars, and the recently opened tomb of Tutankhamun. Local architects like Marshall Clifton, William Leighton and Harold Krantz worked it in black glass, chrome, and coloured render.</p>
+  <p>Deco has an unmistakable kit of motifs. Once you can name them you will spot Deco from across the street — often hiding in plain sight above a suburban shopfront or a 1930s block of flats.</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">The Art Deco Motif Kit</div>
+    <svg viewBox="0 0 600 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- zigzag -->
+      <g transform="translate(20,30)">
+        <rect x="0" y="0" width="120" height="100" rx="6" fill="#fff" stroke="#1A1614" stroke-width="1.5"/>
+        <polyline points="15,70 35,40 55,70 75,40 95,70 105,55" fill="none" stroke="#E84BA0" stroke-width="3"/>
+        <text x="60" y="95" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614">Zigzag</text>
+      </g>
+      <!-- sunburst -->
+      <g transform="translate(160,30)">
+        <rect x="0" y="0" width="120" height="100" rx="6" fill="#fff" stroke="#1A1614" stroke-width="1.5"/>
+        <g stroke="#FFC234" stroke-width="2.5">
+          <line x1="60" y1="58" x2="60" y2="22"/>
+          <line x1="60" y1="58" x2="35" y2="30"/>
+          <line x1="60" y1="58" x2="85" y2="30"/>
+          <line x1="60" y1="58" x2="22" y2="50"/>
+          <line x1="60" y1="58" x2="98" y2="50"/>
+        </g>
+        <text x="60" y="95" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614">Sunburst</text>
+      </g>
+      <!-- speed lines -->
+      <g transform="translate(300,30)">
+        <rect x="0" y="0" width="120" height="100" rx="6" fill="#fff" stroke="#1A1614" stroke-width="1.5"/>
+        <g stroke="#1FA9C7" stroke-width="3">
+          <line x1="20" y1="40" x2="100" y2="40"/>
+          <line x1="20" y1="52" x2="100" y2="52"/>
+          <line x1="20" y1="64" x2="100" y2="64"/>
+        </g>
+        <text x="60" y="95" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614">Speed-lines</text>
+      </g>
+      <!-- porthole -->
+      <g transform="translate(440,30)">
+        <rect x="0" y="0" width="120" height="100" rx="6" fill="#fff" stroke="#1A1614" stroke-width="1.5"/>
+        <circle cx="60" cy="48" r="22" fill="#F4ECD8" stroke="#1A1614" stroke-width="2.5"/>
+        <circle cx="60" cy="48" r="22" fill="none" stroke="#8B7FF0" stroke-width="1.5" stroke-dasharray="3,4"/>
+        <text x="60" y="95" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614">Porthole</text>
+      </g>
+      <text x="300" y="20" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">Spot any one of these on a 1930s building and you have found Art Deco.</text>
+    </svg>
+  </div>
+
+  <div class="spot-grid">
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">London Court</span><span class="spot-year">1937</span></div>
+      <div class="spot-meta">for C. de Bernales · Tudor / Jacobean Revival</div>
+      <div class="spot-desc">A covered arcade dressed as Tudor London, with mechanical clocks at each end. The most photographed lane in the city — and free to wander through.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 4 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Perth GPO</span><span class="spot-year">1923</span></div>
+      <div class="spot-meta">Inter-war academic classical</div>
+      <div class="spot-desc">The grand post office anchoring Forrest Place — a dignified columned slab marking the moment civic Perth swapped Gothic for classical restraint.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 2 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Raffles Hotel</span><span class="spot-year">1937</span></div>
+      <div class="spot-meta">Inter-war Functionalist / Streamline Deco</div>
+      <div class="spot-desc">A curved, ocean-liner-style hotel on the river at Canning Bridge — pure Streamline Moderne, best seen with the water behind it.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-mand)"></span>Canning Bridge · 9 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Piccadilly Theatre &amp; Arcade</span><span class="spot-year">1938</span></div>
+      <div class="spot-meta">William Leighton · Art Deco cinema</div>
+      <div class="spot-desc">One of the last 1930s picture palaces in the CBD, tucked off Hay Street — a Deco arcade leading to a surviving cinema facade.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 5 min</span></div>
+    </div>
+  </div>
+
+  <div class="quiz-section" id="quiz-4">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q4-1">
+      <div class="quiz-q-text">1. London Court is built in a Tudor style. What does its 1937 date tell you?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q4-1',false,'A')"><span class="opt-letter">A</span>It is a genuine medieval building</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-1',true,'B')"><span class="opt-letter">B</span>It is a Revival — a deliberate 20th-century costume, not a survivor</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-1',false,'C')"><span class="opt-letter">C</span>It was built by convicts</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-1',false,'D')"><span class="opt-letter">D</span>It is an example of Brutalism</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q4-1"></div>
+    </div>
+    <div class="quiz-q" id="q4-2">
+      <div class="quiz-q-text">2. Which set of motifs signals Art Deco?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q4-2',false,'A')"><span class="opt-letter">A</span>Pointed arches and crenellations</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-2',true,'B')"><span class="opt-letter">B</span>Zigzags, sunbursts, speed-lines and portholes</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-2',false,'C')"><span class="opt-letter">C</span>Iron-lace verandahs and tall parapets</button>
+        <button class="quiz-opt" onclick="answer(this,'q4-2',false,'D')"><span class="opt-letter">D</span>Raw off-form concrete and flat roofs</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q4-2"></div>
+    </div>
+    <div class="quiz-result" id="result-4"></div>
+    <button class="quiz-submit" onclick="submitQuiz(4,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(3)">← Gold!</button>
+    <button class="btn-next" onclick="goModule(5)">Next: Concrete →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 5 ══ -->
+<section class="module-section" id="mod-5">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 05 · 1945–1980</div>
+    <h1 class="module-title">Concrete &amp; <span class="accent">Optimism</span></h1>
+    <p class="module-lede">After the war, Perth threw off ornament entirely. A hosting of the 1962 Commonwealth Games and a 1960s–70s mineral boom gave the city its first modern towers, its boldest Brutalist landmarks, and a homegrown master of the concrete block.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>What Modernism rejected — and why buildings suddenly went plain</li>
+        <li>Council House: Perth's best Modernist building and its sun-hood facade</li>
+        <li>Perth Concert Hall and the white-concrete drama of Brutalism</li>
+        <li>Iwan Iwanoff, the émigré who made concrete blocks sing</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Less, But Sunnier</h2>
+  <p>Post-war <span class="key-term">Modernism</span> made a clean break: no parapets pretending to be palaces, no Tudor gables, no iron lace. The new buildings were honest grids of concrete, steel and glass, their beauty coming from proportion, structure, and the play of light — not applied decoration. In Perth's harsh sun, Modernism found a local accent: the <span class="key-term">sun-hood</span>, a projecting concrete shade over every window, turning a climate problem into the whole look of a building.</p>
+  <p>The catalyst was civic pride. Perth hosted the <span class="key-term">1962 British Empire and Commonwealth Games</span>, and the city dressed up for the world. The young firm <span class="key-term-gold">Howlett &amp; Bailey</span> won the commissions that would define Perth Modernism — first Council House, then, a decade later, the Concert Hall.</p>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">Council House (1963) — The Sun-Hood Facade</div>
+    <svg viewBox="0 0 600 230" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- tower outline -->
+      <rect x="200" y="20" width="200" height="190" fill="#fff" stroke="#1A1614" stroke-width="2"/>
+      <!-- T-shaped sun hoods grid -->
+      <g stroke="#1A1614" stroke-width="1.2" fill="#cfe3ea">
+        <!-- create a 4x6 grid of windows each with a T hood -->
+      </g>
+      <!-- draw repeating module -->
+      <g>
+        <!-- columns at x=215,260,305,350 ; rows y=35.. -->
+        <!-- We'll just draw a representative grid -->
+      </g>
+      <!-- generated grid -->
+      <g font-family="'Inter',sans-serif">
+        <!-- row of T modules -->
+        <g fill="#dfeef3" stroke="#1A1614" stroke-width="1">
+          <rect x="215" y="40" width="36" height="22"/><rect x="261" y="40" width="36" height="22"/><rect x="307" y="40" width="36" height="22"/><rect x="353" y="40" width="34" height="22"/>
+          <rect x="215" y="70" width="36" height="22"/><rect x="261" y="70" width="36" height="22"/><rect x="307" y="70" width="36" height="22"/><rect x="353" y="70" width="34" height="22"/>
+          <rect x="215" y="100" width="36" height="22"/><rect x="261" y="100" width="36" height="22"/><rect x="307" y="100" width="36" height="22"/><rect x="353" y="100" width="34" height="22"/>
+          <rect x="215" y="130" width="36" height="22"/><rect x="261" y="130" width="36" height="22"/><rect x="307" y="130" width="36" height="22"/><rect x="353" y="130" width="34" height="22"/>
+          <rect x="215" y="160" width="36" height="22"/><rect x="261" y="160" width="36" height="22"/><rect x="307" y="160" width="36" height="22"/><rect x="353" y="160" width="34" height="22"/>
+        </g>
+        <!-- T hoods (horizontal caps) -->
+        <g fill="#1A1614">
+          <rect x="211" y="36" width="44" height="5"/><rect x="257" y="36" width="44" height="5"/><rect x="303" y="36" width="44" height="5"/><rect x="349" y="36" width="42" height="5"/>
+        </g>
+      </g>
+      <!-- callout: one module enlarged -->
+      <g transform="translate(450,60)">
+        <rect x="0" y="0" width="90" height="90" fill="#fff" stroke="#6B6259" stroke-width="1"/>
+        <rect x="20" y="22" width="50" height="46" fill="#dfeef3" stroke="#1A1614" stroke-width="1.5"/>
+        <rect x="10" y="14" width="70" height="8" fill="#1A1614"/>
+        <line x1="45" y1="14" x2="45" y2="2" stroke="#1A1614" stroke-width="3"/>
+        <text x="45" y="84" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#6B6259">one "T" module</text>
+      </g>
+      <line x1="387" y1="100" x2="450" y2="100" stroke="#6B6259" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="115" y="120" text-anchor="middle" font-family="'Inter',sans-serif" font-size="10" font-weight="600" fill="#1A1614" transform="rotate(-90 115 120)">repeated 4 × 5 across the facade</text>
+      <text x="300" y="225" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#6B6259">Each window wears a concrete sun-hood — climate control becomes the architecture</text>
+    </svg>
+  </div>
+
+  <h2 class="section-heading">Brutalism: Honest, Heavy, White</h2>
+  <p>By the 1970s Modernism had grown muscular. <span class="key-term">Brutalism</span> — from the French <em>béton brut</em>, "raw concrete" — celebrated mass, structure, and the texture of bare concrete straight from the timber moulds. Perth's masterpiece is the <span class="key-term-gold">Perth Concert Hall</span> (1973), again by Howlett &amp; Bailey: the first concert hall built in Australia after the war, poured in crisp white off-form concrete, and still rated among the country's finest rooms for sound. People love or loathe its "wedding-cake" bulk — but everyone agrees the acoustics are sublime.</p>
+  <p>Brutalism's reputation has swung from despised to adored. Many of Perth's best examples now carry heritage protection precisely because a younger generation reads their boldness as beautiful, not brutal.</p>
+
+  <h2 class="section-heading">Iwan Iwanoff, Sculptor in Concrete Block</h2>
+  <p>No Perth modern story is complete without <span class="key-term-gold">Iwan Iwanoff</span> (1919–1986), a Bulgarian-born architect who settled here in 1950 and turned the humblest material in the builder's yard — the grey concrete block — into sculpture. His suburban houses, especially the dazzling <em>Marsala House</em> in Dianella, are covered in bold geometric block patterns: a one-man fusion of Modernism, Brutalism, and pure imagination.</p>
+  <div class="callout blue"><strong>Train honesty:</strong> Iwanoff's best houses are scattered through the northern and north-eastern suburbs — wonderful, but not next to a station. Treat them as a "graduation field trip" by car or bus once your eye is trained. The two buildings you <em>can</em> reach on foot from a platform — Council House and the Concert Hall — are both in the city, near <span class="station-tag"><span class="ln" style="background:var(--ln-mand)"></span>Elizabeth Quay</span>.</div>
+
+  <div class="spot-grid">
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Council House</span><span class="spot-year">1963</span></div>
+      <div class="spot-meta">Howlett &amp; Bailey · Modernist (curtain wall + sun-hoods)</div>
+      <div class="spot-desc">A 13-storey glass slab wrapped in T-shaped concrete sun-hoods. Lit in colour at night. Opened by the Queen after the 1962 Games; saved from demolition after a fierce heritage fight.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-mand)"></span>Elizabeth Quay · 4 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Perth Concert Hall</span><span class="spot-year">1973</span></div>
+      <div class="spot-meta">Howlett &amp; Bailey · Brutalist</div>
+      <div class="spot-desc">White off-form concrete, raised on a podium above the river end of St Georges Terrace. Australia's first post-war concert hall; world-class acoustics inside the heavy shell.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-mand)"></span>Elizabeth Quay · 5 min</span></div>
+    </div>
+  </div>
+
+  <div class="quiz-section" id="quiz-5">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q5-1">
+      <div class="quiz-q-text">1. What is the distinctive Perth-climate feature of Council House's facade?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q5-1',false,'A')"><span class="opt-letter">A</span>Iron-lace verandahs</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-1',true,'B')"><span class="opt-letter">B</span>A grid of projecting concrete sun-hoods over every window</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-1',false,'C')"><span class="opt-letter">C</span>Tudor timber gables</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-1',false,'D')"><span class="opt-letter">D</span>A gold dome</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q5-1"></div>
+    </div>
+    <div class="quiz-q" id="q5-2">
+      <div class="quiz-q-text">2. The word "Brutalism" comes from <em>béton brut</em>. What does that describe?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q5-2',false,'A')"><span class="opt-letter">A</span>Brutal prison conditions</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-2',true,'B')"><span class="opt-letter">B</span>Raw concrete, left bare and honest</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-2',false,'C')"><span class="opt-letter">C</span>Brightly painted steel</button>
+        <button class="quiz-opt" onclick="answer(this,'q5-2',false,'D')"><span class="opt-letter">D</span>Polished marble cladding</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q5-2"></div>
+    </div>
+    <div class="quiz-result" id="result-5"></div>
+    <button class="quiz-submit" onclick="submitQuiz(5,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(4)">← Tudor &amp; Deco</button>
+    <button class="btn-next" onclick="goModule(6)">Next: The New City →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 6 ══ -->
+<section class="module-section" id="mod-6">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 06 · 1990–now</div>
+    <h1 class="module-title">Glass, Water &amp; <span class="accent-sea">the New City</span></h1>
+    <p class="module-lede">The 2000s resources boom and a wave of public projects rebuilt Perth's edges: a reconnected waterfront, a sunken railway turned into a square, a museum that wraps its own history, and a stadium you reach by train. This is the layer you walk through today.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>The contemporary moves: glass towers, adaptive reuse, and reconnecting the city to its river</li>
+        <li>Elizabeth Quay, Yagan Square, the WA Museum and Optus Stadium — who built them and when</li>
+        <li>"Façadism" vs. genuine adaptive reuse — and how to tell</li>
+        <li>How the new lines drop you right into this layer</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Three Contemporary Moves</h2>
+  <p>Read today's Perth and you will see the same three strategies again and again:</p>
+  <div class="principle-grid">
+    <div class="principle-card">
+      <div class="p-icon">🏙️</div>
+      <div class="p-title">The Glass Tower</div>
+      <div class="p-desc">Resources money built the skyline. Central Park (1992) has stayed the tallest for decades; later towers like the Brookfield Place tower (2012) cluster at the river end of St Georges Terrace.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">♻️</div>
+      <div class="p-title">Adaptive Reuse</div>
+      <div class="p-desc">Instead of demolishing heritage, the best new projects keep and repurpose it — the State Buildings reborn as COMO The Treasury (2015), or old facades stitched into new towers.</div>
+    </div>
+    <div class="principle-card">
+      <div class="p-icon">〰️</div>
+      <div class="p-title">Back to the Water</div>
+      <div class="p-desc">A generation of public works has reconnected the CBD to the Swan River and across the rail line — Elizabeth Quay, Yagan Square, the Matagarup Bridge to the stadium.</div>
+    </div>
+  </div>
+
+  <div class="callout"><strong>Façadism vs. adaptive reuse:</strong> when only a heritage <em>skin</em> is propped up with a tower jammed behind it, critics call it "façadism" — keeping the costume, losing the body. Genuine <span class="key-term">adaptive reuse</span> keeps real rooms and gives the old building a real new life. The State Buildings are the gold standard; watch the towers around them and decide for yourself which is which.</div>
+
+  <h2 class="section-heading">The Headline Projects</h2>
+  <div class="spot-grid">
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Central Park</span><span class="spot-year">1992</span></div>
+      <div class="spot-meta">Forbes &amp; Fitzhardinge / Cox · late-Modern tower</div>
+      <div class="spot-desc">At 249 m, still Perth's (and WA's) tallest building after three decades — the high-water mark of the early-90s skyline on St Georges Terrace.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 7 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">RAC Arena (Perth Arena)</span><span class="spot-year">2012</span></div>
+      <div class="spot-meta">ARM + CCN · deconstructivist</div>
+      <div class="spot-desc">A folded, faceted puzzle of a building — angular metal planes that look like a half-finished Tetris game. Loud, divisive, and unmistakably 2010s.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-yan)"></span>Perth Underground · 6 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Elizabeth Quay</span><span class="spot-year">2016</span></div>
+      <div class="spot-meta">ARM masterplan (2006) · waterfront inlet</div>
+      <div class="spot-desc">A man-made inlet that finally pulled the city back to the river, ringed by promenades, the BHP Water Park, and a growing crown of towers. Built on Whadjuk Country.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-mand)"></span>Elizabeth Quay · at the door</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Yagan Square</span><span class="spot-year">2018</span></div>
+      <div class="spot-meta">Lyons + iredale pedersen hook + ASPECT</div>
+      <div class="spot-desc">Built over the rail line to re-stitch the CBD to Northbridge, with the digital tower and the 9 m <em>Wirin</em> sculpture. Designed with the Whadjuk community (Module 7).</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 2 min</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">WA Museum Boola Bardip</span><span class="spot-year">2020</span></div>
+      <div class="spot-meta">Hassell + OMA · new-wraps-old</div>
+      <div class="spot-desc">A bold new museum threaded around and over its own 1890s–1900s heritage buildings. "Boola Bardip" means "many stories" in Whadjuk Noongar.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-frem)"></span>Perth · 8 min via Yagan Sq</span></div>
+    </div>
+    <div class="spot-card">
+      <div class="spot-head"><span class="spot-name">Optus Stadium</span><span class="spot-year">2018</span></div>
+      <div class="spot-meta">Hassell + Cox + HKS · anodised-bronze bowl</div>
+      <div class="spot-desc">A 60,000-seat bowl clad in bronze-coloured metal, its design woven with Whadjuk story and the six Noongar seasons. Reach it on foot from its own station or over the Matagarup Bridge.</div>
+      <div class="spot-foot"><span class="station-tag"><span class="ln" style="background:var(--ln-arm)"></span>Stadium · at the door</span></div>
+    </div>
+  </div>
+
+  <div class="callout gold"><strong>Best free view of the new city:</strong> ride to <span class="station-tag"><span class="ln" style="background:var(--ln-mand)"></span>Elizabeth Quay</span> and walk the inlet at dusk. In one slow turn you can see Council House (1963), the Bell Tower (2000), the Concert Hall (1973), Elizabeth Quay's towers (2016+) and the river — five decades of Perth in a single panorama.</div>
+
+  <div class="quiz-section" id="quiz-6">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q6-1">
+      <div class="quiz-q-text">1. What is the difference between "façadism" and genuine adaptive reuse?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q6-1',true,'A')"><span class="opt-letter">A</span>Façadism keeps only a heritage skin; adaptive reuse keeps real rooms and gives the old building new life</button>
+        <button class="quiz-opt" onclick="answer(this,'q6-1',false,'B')"><span class="opt-letter">B</span>They mean exactly the same thing</button>
+        <button class="quiz-opt" onclick="answer(this,'q6-1',false,'C')"><span class="opt-letter">C</span>Façadism is a type of Brutalism</button>
+        <button class="quiz-opt" onclick="answer(this,'q6-1',false,'D')"><span class="opt-letter">D</span>Adaptive reuse means demolishing and rebuilding identically</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q6-1"></div>
+    </div>
+    <div class="quiz-q" id="q6-2">
+      <div class="quiz-q-text">2. "Boola Bardip", the name of the WA Museum, means what in Whadjuk Noongar?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q6-2',false,'A')"><span class="opt-letter">A</span>Glass house</button>
+        <button class="quiz-opt" onclick="answer(this,'q6-2',true,'B')"><span class="opt-letter">B</span>Many stories</button>
+        <button class="quiz-opt" onclick="answer(this,'q6-2',false,'C')"><span class="opt-letter">C</span>By the river</button>
+        <button class="quiz-opt" onclick="answer(this,'q6-2',false,'D')"><span class="opt-letter">D</span>Place of gold</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q6-2"></div>
+    </div>
+    <div class="quiz-result" id="result-6"></div>
+    <button class="quiz-submit" onclick="submitQuiz(6,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(5)">← Concrete &amp; Optimism</button>
+    <button class="btn-next" onclick="goModule(7)">Next: Reading Country →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 7 ══ -->
+<section class="module-section" id="mod-7">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 07 · The Deepest Layer</div>
+    <h1 class="module-title">Reading <span class="accent">Country</span></h1>
+    <p class="module-lede">Long before 1829, this place was Boorloo, on Whadjuk Noongar Country, beside the Derbarl Yerrigan. That story is the oldest architectural layer of all — and the newest buildings are finally learning to design with it. Learn to read it and the whole city changes.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll learn</div>
+      <ul class="obj-list">
+        <li>Whose Country Perth sits on, and the names that carry it</li>
+        <li>What "designing with Country" means in practice</li>
+        <li>The six Noongar seasons — and where they shaped a building</li>
+        <li>How to "see" Country in the contemporary city</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Boorloo, on Whadjuk Country</h2>
+  <p>The land Perth occupies is <span class="key-term">Boorloo</span>, part of the territory of the <span class="key-term">Whadjuk</span> people, one of fourteen groups of the <span class="key-term">Noongar</span> nation of Australia's south-west. The Swan River is <span class="key-term">Derbarl Yerrigan</span>; Kings Park is <span class="key-term">Kaarta Gar-up</span>; Heirisson Island, beside the stadium, is <span class="key-term">Matagarup</span>. These are not just translations — they record a cultural landscape of seasons, songlines, and gathering places that is tens of thousands of years old, and that the colonial grid was laid straight over the top of.</p>
+  <p>For most of Perth's built history this layer was ignored or erased. The shift in the last decade — visible in Yagan Square, the WA Museum, Optus Stadium and Elizabeth Quay — is one of the most important things happening in the city's architecture, and it gives you a richer way to read every site.</p>
+
+  <h2 class="section-heading">Designing With Country</h2>
+  <p><span class="key-term-gold">Designing with Country</span> means starting from the land and its First People's knowledge rather than treating a site as a blank rectangle. In practice, recent Perth projects have done this through genuine collaboration with Whadjuk elders and artists, and it shows up in four readable ways:</p>
+  <ul class="body-list">
+    <li><strong>Story &amp; naming</strong> — buildings carry Noongar names and meanings (Boola Bardip, "many stories"; Yagan Square, for the Noongar resistance leader Yagan).</li>
+    <li><strong>Water &amp; sightlines</strong> — plans that re-open views and movement to the river, the way the land always pulled people toward Derbarl Yerrigan.</li>
+    <li><strong>Material &amp; colour</strong> — earthy, local palettes and artwork that reference Country rather than imported imagery.</li>
+    <li><strong>Seasons &amp; cycles</strong> — design organised around the six Noongar seasons rather than the European four.</li>
+  </ul>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">The Six Noongar Seasons — woven into Optus Stadium's design</div>
+    <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="300" cy="130" r="96" fill="#fff" stroke="#1A1614" stroke-width="2"/>
+      <circle cx="300" cy="130" r="30" fill="#1A1614"/>
+      <text x="300" y="127" text-anchor="middle" font-family="'Bricolage Grotesque',sans-serif" font-size="11" font-weight="700" fill="#FBF4E6">SIX</text>
+      <text x="300" y="140" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#FFC234">SEASONS</text>
+      <!-- 6 segments markers -->
+      <g font-family="'Inter',sans-serif" font-size="10" font-weight="600">
+        <!-- top -->
+        <circle cx="300" cy="48" r="6" fill="#FF5C39"/>
+        <text x="300" y="32" text-anchor="middle" fill="#1A1614">Birak</text>
+        <text x="300" y="22" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#6B6259">Dec–Jan · dry, fire</text>
+        <!-- upper right -->
+        <circle cx="371" cy="89" r="6" fill="#FFC234"/>
+        <text x="408" y="86" text-anchor="middle" fill="#1A1614">Bunuru</text>
+        <text x="408" y="98" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#6B6259">Feb–Mar · hottest</text>
+        <!-- lower right -->
+        <circle cx="371" cy="171" r="6" fill="#1F9D55"/>
+        <text x="408" y="170" text-anchor="middle" fill="#1A1614">Djeran</text>
+        <text x="408" y="182" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#6B6259">Apr–May · cooler</text>
+        <!-- bottom -->
+        <circle cx="300" cy="212" r="6" fill="#1FA9C7"/>
+        <text x="300" y="232" text-anchor="middle" fill="#1A1614">Makuru</text>
+        <text x="300" y="244" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#6B6259">Jun–Jul · wettest</text>
+        <!-- lower left -->
+        <circle cx="229" cy="171" r="6" fill="#2E3192"/>
+        <text x="190" y="170" text-anchor="middle" fill="#1A1614">Djilba</text>
+        <text x="190" y="182" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#6B6259">Aug–Sep · first warmth</text>
+        <!-- upper left -->
+        <circle cx="229" cy="89" r="6" fill="#E84BA0"/>
+        <text x="190" y="86" text-anchor="middle" fill="#1A1614">Kambarang</text>
+        <text x="190" y="98" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#6B6259">Oct–Nov · wildflowers</text>
+      </g>
+    </svg>
+  </div>
+  <div class="callout indigo"><strong>Why it matters for reading:</strong> the European calendar gives four seasons; the Noongar year has six, tied to wind, heat, rain and flowering. When Optus Stadium's designers organised parts of the project around these seasons, they were letting the building keep <em>local</em> time. Notice it and a stadium stops being generic — it becomes <em>of this place</em>.</div>
+
+  <h2 class="section-heading">How to See Country in the City</h2>
+  <p>You do not need special access to read this layer. Stand at Elizabeth Quay and notice how the design pulls you toward the water. Read the Noongar names on plaques and station signage. Look for artwork and material that references the wetlands, the river, the six seasons. Visit Kings Park / Kaarta Gar-up, the great escarpment over the city, and feel why this high ground above the river mattered for thousands of years. The colonial city is only the top 0.3% of the timeline — Country is the other 99.7%.</p>
+
+  <div class="quiz-section" id="quiz-7">
+    <div class="quiz-header">Module Check</div>
+    <div class="quiz-sub">QUICK COMPREHENSION — 2 QUESTIONS</div>
+    <div class="quiz-q" id="q7-1">
+      <div class="quiz-q-text">1. Whose Country does Perth sit on?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q7-1',true,'A')"><span class="opt-letter">A</span>The Whadjuk people of the Noongar nation</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-1',false,'B')"><span class="opt-letter">B</span>The Gadigal people</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-1',false,'C')"><span class="opt-letter">C</span>The Wurundjeri people</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-1',false,'D')"><span class="opt-letter">D</span>No traditional owners — it was empty land</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q7-1"></div>
+    </div>
+    <div class="quiz-q" id="q7-2">
+      <div class="quiz-q-text">2. How many seasons are in the Noongar year, and what shaped them?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q7-2',false,'A')"><span class="opt-letter">A</span>Four, copied from Europe</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-2',true,'B')"><span class="opt-letter">B</span>Six, tied to wind, heat, rain and flowering</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-2',false,'C')"><span class="opt-letter">C</span>Two — wet and dry only</button>
+        <button class="quiz-opt" onclick="answer(this,'q7-2',false,'D')"><span class="opt-letter">D</span>Twelve, one per month</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q7-2"></div>
+    </div>
+    <div class="quiz-result" id="result-7"></div>
+    <button class="quiz-submit" onclick="submitQuiz(7,2)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(6)">← The New City</button>
+    <button class="btn-next" onclick="goModule(8)">Next: Field Guide →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MODULE 8 ══ -->
+<section class="module-section" id="mod-8">
+  <div class="module-hero">
+    <div class="module-eyebrow">Module 08 · The Payoff</div>
+    <h1 class="module-title">Your <span class="accent">Train-Line</span> Field Guide</h1>
+    <p class="module-lede">Now we reassemble everything into routes. Each line below is a curated day out: alight here, walk there, look up at that. Tap on your SmartRider, grab a window seat, and let the network carry you through 190 years of architecture.</p>
+    <div class="module-objectives">
+      <div class="obj-label">What you'll do</div>
+      <ul class="obj-list">
+        <li>Run four ready-made architecture routes off the Transperth network</li>
+        <li>Use the era cheat-sheet to date anything you pass</li>
+        <li>Know which line to take for which century</li>
+        <li>Earn your "course complete" badge with a final quiz</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">The Network as a Time Machine</h2>
+  <p>Perth's railway runs eight lines from the CBD hub of <strong>Perth</strong>, <strong>Perth Underground</strong> and <strong>Elizabeth Quay</strong> stations. For architecture, four matter most. Here is the mental map.</p>
+
+  <div class="line-legend">
+    <span class="line-chip"><span class="dot" style="background:var(--ln-frem)"></span>Fremantle — heritage &amp; the port</span>
+    <span class="line-chip"><span class="dot" style="background:var(--ln-mid)"></span>Midland — colonial river towns</span>
+    <span class="line-chip"><span class="dot" style="background:var(--ln-mand)"></span>Mandurah — waterfront &amp; Deco</span>
+    <span class="line-chip"><span class="dot" style="background:var(--ln-arm)"></span>Armadale — the stadium</span>
+  </div>
+
+  <div class="diagram-wrap">
+    <div class="diagram-label">Architecture Hub &amp; Spokes — the four routes from the CBD</div>
+    <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- hub -->
+      <circle cx="300" cy="160" r="20" fill="#1A1614"/>
+      <text x="300" y="158" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="#FBF4E6">CBD</text>
+      <text x="300" y="168" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="6.5" fill="#FFC234">HUB</text>
+
+      <!-- Fremantle spoke (left) -->
+      <line x1="282" y1="160" x2="70" y2="100" stroke="#1F9D55" stroke-width="4"/>
+      <circle cx="170" cy="132" r="6" fill="#fff" stroke="#1F9D55" stroke-width="3"/>
+      <circle cx="70" cy="100" r="7" fill="#1F9D55"/>
+      <text x="170" y="124" text-anchor="middle" font-family="'Inter',sans-serif" font-size="9" fill="#1A1614">Cottesloe</text>
+      <text x="64" y="92" text-anchor="end" font-family="'Inter',sans-serif" font-size="11" font-weight="700" fill="#1A1614">Fremantle ★</text>
+      <text x="64" y="105" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="#6B6259">Round House · Prison · West End</text>
+
+      <!-- Midland spoke (upper right) -->
+      <line x1="318" y1="155" x2="540" y2="70" stroke="#FF5C39" stroke-width="4"/>
+      <circle cx="540" cy="70" r="7" fill="#FF5C39"/>
+      <text x="548" y="66" font-family="'Inter',sans-serif" font-size="11" font-weight="700" fill="#1A1614">Guildford ★</text>
+      <text x="548" y="79" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="#6B6259">colonial gaol town · Swan Valley</text>
+
+      <!-- Armadale spoke (lower right) -->
+      <line x1="316" y1="170" x2="520" y2="250" stroke="#8B7FF0" stroke-width="4"/>
+      <circle cx="420" cy="210" r="6" fill="#fff" stroke="#8B7FF0" stroke-width="3"/>
+      <text x="424" y="206" font-family="'Inter',sans-serif" font-size="9" fill="#1A1614">Burswood</text>
+      <circle cx="520" cy="250" r="7" fill="#8B7FF0"/>
+      <text x="528" y="248" font-family="'Inter',sans-serif" font-size="11" font-weight="700" fill="#1A1614">Stadium ★</text>
+      <text x="528" y="261" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="#6B6259">Optus Stadium (2018)</text>
+
+      <!-- Mandurah spoke (down) -->
+      <line x1="300" y1="180" x2="300" y2="300" stroke="#FFC234" stroke-width="4"/>
+      <circle cx="300" cy="240" r="6" fill="#fff" stroke="#FFC234" stroke-width="3"/>
+      <text x="310" y="244" font-family="'Inter',sans-serif" font-size="9" fill="#1A1614">Elizabeth Quay</text>
+      <circle cx="300" cy="300" r="7" fill="#FFC234"/>
+      <text x="300" y="316" text-anchor="middle" font-family="'Inter',sans-serif" font-size="11" font-weight="700" fill="#1A1614">Canning Bridge ★</text>
+
+      <!-- CBD label -->
+      <text x="246" y="150" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="#6B6259">Perth ·</text>
+      <text x="246" y="160" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="#6B6259">Perth Underground ·</text>
+      <text x="246" y="170" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="#6B6259">Elizabeth Quay</text>
+      <text x="300" y="24" text-anchor="middle" font-family="'Inter',sans-serif" font-size="9" fill="#6B6259">★ = must-see anchor · ○ = worthwhile stop on the way</text>
+    </svg>
+  </div>
+
+  <h2 class="section-heading">Route A · The CBD Time-Walk</h2>
+  <p>Start in the city centre. You can see <strong>every era</strong> in this course inside a 1.5&nbsp;km stroll along St Georges Terrace and Hay Street — no second train needed. This is the best first outing.</p>
+  <div class="route">
+    <div class="route-head" style="background:var(--ink)">🚶 On foot from the CBD hub <span class="route-sub">~2 hrs · all eras</span></div>
+    <div class="route-body">
+      <div class="stop"><span class="s-station">Start · Perth station / Forrest Place</span><strong>Perth GPO (1923)</strong> + <strong>Yagan Square (2018)</strong> — inter-war classical meets contemporary, side by side.</div>
+      <div class="stop"><span class="s-station">Hay Street Mall</span><strong>London Court (1937)</strong> Tudor arcade, then duck through to St Georges Terrace.</div>
+      <div class="stop"><span class="s-station">St Georges Terrace</span><strong>The Cloisters (1858)</strong>, <strong>Old Perth Boys School (1854)</strong> &amp; <strong>Central Park (1992)</strong> — colonial Gothic dwarfed by the tallest tower.</div>
+      <div class="stop"><span class="s-station">Cathedral &amp; Stirling Gardens</span><strong>Town Hall (1870)</strong>, <strong>State Buildings / COMO (1870s, reborn 2015)</strong>, <strong>Old Court House (1836)</strong>.</div>
+      <div class="stop"><span class="s-station">Finish · Elizabeth Quay station</span><strong>Council House (1963)</strong>, <strong>Concert Hall (1973)</strong>, the <strong>Bell Tower (2000)</strong> &amp; <strong>Elizabeth Quay (2016)</strong> on the river.</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Route B · The Heritage Line to Fremantle</h2>
+  <p>The classic. Ride the Fremantle line west — optionally hop off at Cottesloe for the beach — and spend the afternoon in the best-preserved port town in the country.</p>
+  <div class="route">
+    <div class="route-head" style="background:var(--ln-frem);color:#08230f">🚆 Fremantle Line — westbound <span class="route-sub" style="color:#08230f">~½ day · 1830s–1900s</span></div>
+    <div class="route-body">
+      <div class="stop"><span class="s-station">Optional · Cottesloe</span><strong>Cottesloe Beach &amp; pavilion</strong> — a 10-min downhill walk for an Indian Ocean break.</div>
+      <div class="stop"><span class="s-station">Fremantle · 8 min walk</span><strong>Round House (1831)</strong> — WA's oldest building, on the cliff above Bathers Beach.</div>
+      <div class="stop"><span class="s-station">Fremantle · West End</span><strong>West End precinct (1890s–1910s)</strong> — 250+ gold-boom buildings; just wander and look up.</div>
+      <div class="stop"><span class="s-station">Fremantle · 9 min walk</span><strong>Fremantle Markets (1897)</strong> &amp; <strong>Town Hall (1887)</strong> — Federation civic grandeur.</div>
+      <div class="stop"><span class="s-station">Fremantle · 12 min uphill</span><strong>Fremantle Prison (1850s)</strong> — WA's only World Heritage site. Book the tunnels tour.</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Route C · Colonial River Towns (Midland Line)</h2>
+  <p>For the deepest colonial layer outside the CBD, ride the Midland line to <strong>Guildford</strong> — one of the three original 1829 towns and the colony's only inland port, now a near-intact heritage town on the edge of the Swan Valley.</p>
+  <div class="route">
+    <div class="route-head" style="background:var(--ln-mid)">🚆 Midland Line — to Guildford <span class="route-sub">~½ day · 1830s–1900s</span></div>
+    <div class="route-body">
+      <div class="stop"><span class="s-station">Guildford · at the station</span><strong>Guildford Historic Town</strong> — 200+ heritage-listed sites; the only metro town nationally classified by the National Trust.</div>
+      <div class="stop"><span class="s-station">Guildford · short walk</span><strong>Old Courthouse (1866)</strong> &amp; <strong>Colonial Gaol (1841–67)</strong> — the colonial justice precinct, now a museum.</div>
+      <div class="stop"><span class="s-station">Guildford · Swan Valley edge</span><strong>Taylor's Cottage</strong> &amp; colonial cottages — and WA's oldest wine region a short stroll over the bridge.</div>
+      <div class="stop"><span class="s-station">Bonus · Midland</span><strong>Midland Railway Workshops (1904)</strong> — the industrial heritage site that eclipsed Guildford as a rail town.</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Route D · Waterfront &amp; Stadium (Mandurah + Armadale)</h2>
+  <p>A contemporary pairing. Drop under the city to the waterfront, then ride out to the stadium — the two big public-architecture moments of recent Perth.</p>
+  <div class="route">
+    <div class="route-head" style="background:var(--ln-mand);color:#5a4500">🚆 Mandurah Line — Elizabeth Quay &amp; Canning Bridge <span class="route-sub" style="color:#5a4500">contemporary + Deco</span></div>
+    <div class="route-body">
+      <div class="stop"><span class="s-station">Elizabeth Quay · at the door</span><strong>Elizabeth Quay (2016)</strong> + the five-decade river panorama from Module 6.</div>
+      <div class="stop"><span class="s-station">Canning Bridge · 9 min</span><strong>Raffles Hotel (1937)</strong> — Streamline Deco curving above the river.</div>
+    </div>
+  </div>
+  <div class="route">
+    <div class="route-head" style="background:var(--ln-arm)">🚆 Armadale Line — Stadium <span class="route-sub">contemporary</span></div>
+    <div class="route-body">
+      <div class="stop"><span class="s-station">Stadium · at the door</span><strong>Optus Stadium (2018)</strong> — walk the bronze bowl and the riverside park; cross the <strong>Matagarup Bridge</strong> for the skyline shot.</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">The Spotter's Cheat-Sheet</h2>
+  <p>Screenshot this. It is the whole course on one card — point it at anything you pass.</p>
+  <table>
+    <tr><th>If you see…</th><th>It's probably…</th><th>Go look at</th></tr>
+    <tr><td>Limestone, pointed arches, crenellations</td><td>Colonial Gothic (1829–90)</td><td>Round House · Town Hall</td></tr>
+    <tr><td>Tall parapet, columns, iron-lace verandah</td><td>Gold Boom / Federation (1890–1914)</td><td>Fremantle West End</td></tr>
+    <tr><td>Tudor timber gables (but modern windows)</td><td>Inter-war Revival (1918–39)</td><td>London Court</td></tr>
+    <tr><td>Zigzags, sunbursts, portholes, chrome</td><td>Art Deco (1934–39)</td><td>Raffles Hotel</td></tr>
+    <tr><td>Concrete sun-hoods, glass grid, no ornament</td><td>Modernism (1945–70)</td><td>Council House</td></tr>
+    <tr><td>Raw white off-form concrete, heavy mass</td><td>Brutalism (1965–80)</td><td>Perth Concert Hall</td></tr>
+    <tr><td>Glass tower, folded metal, old facade + tower</td><td>Contemporary (1990–now)</td><td>Elizabeth Quay · RAC Arena</td></tr>
+    <tr><td>Noongar name, river sightlines, six-season story</td><td>Designing with Country (2010s–now)</td><td>Yagan Square · Boola Bardip</td></tr>
+  </table>
+
+  <h2 class="section-heading">Keep Going</h2>
+  <ul class="checklist">
+    <li>Walk Route A (the CBD Time-Walk) first — it contains every era in 1.5&nbsp;km</li>
+    <li>Do Route B to Fremantle on a clear afternoon; book the Prison tunnels tour ahead</li>
+    <li>Always look UP — the real building lives above the shopfronts</li>
+    <li>Photograph one building per era and build your own field album</li>
+    <li>Visit during <strong>Open House Perth</strong> (usually November) to get inside the landmarks</li>
+    <li>Learn three Noongar place-names — Boorloo, Derbarl Yerrigan, Kaarta Gar-up — and use them</li>
+  </ul>
+
+  <div class="stat-row">
+    <div class="stat-card"><span class="stat-val green">190+</span><span class="stat-desc">years of architecture, from 1831 to today, all reachable by train</span></div>
+    <div class="stat-card"><span class="stat-val">8</span><span class="stat-desc">eras you can now name and date from the footpath</span></div>
+    <div class="stat-card"><span class="stat-val sea">4</span><span class="stat-desc">ready-made train routes to walk this weekend</span></div>
+  </div>
+
+  <div class="quiz-section" id="quiz-8">
+    <div class="quiz-header">Final Module Check</div>
+    <div class="quiz-sub">COURSE COMPLETION — 3 QUESTIONS</div>
+    <div class="quiz-q" id="q8-1">
+      <div class="quiz-q-text">1. Which single outing lets you see every era in this course without changing trains?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q8-1',false,'A')"><span class="opt-letter">A</span>The Midland line to Guildford</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-1',true,'B')"><span class="opt-letter">B</span>Route A — the CBD Time-Walk along St Georges Terrace and Hay Street</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-1',false,'C')"><span class="opt-letter">C</span>The Armadale line to the Stadium</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-1',false,'D')"><span class="opt-letter">D</span>The Mandurah line to Mandurah</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q8-1"></div>
+    </div>
+    <div class="quiz-q" id="q8-2">
+      <div class="quiz-q-text">2. You pass a building with a tall decorative parapet hiding the roof and an iron-lace verandah. Which era?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q8-2',false,'A')"><span class="opt-letter">A</span>Colonial Gothic (1829–90)</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-2',true,'B')"><span class="opt-letter">B</span>Gold Boom / Federation (1890–1914)</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-2',false,'C')"><span class="opt-letter">C</span>Brutalism (1965–80)</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-2',false,'D')"><span class="opt-letter">D</span>Contemporary (1990–now)</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q8-2"></div>
+    </div>
+    <div class="quiz-q" id="q8-3">
+      <div class="quiz-q-text">3. Which line and station would you take to reach WA's only World Heritage building?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this,'q8-3',false,'A')"><span class="opt-letter">A</span>Mandurah line to Canning Bridge</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-3',false,'B')"><span class="opt-letter">B</span>Armadale line to Stadium</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-3',true,'C')"><span class="opt-letter">C</span>Fremantle line to Fremantle — for Fremantle Prison</button>
+        <button class="quiz-opt" onclick="answer(this,'q8-3',false,'D')"><span class="opt-letter">D</span>Midland line to Midland</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q8-3"></div>
+    </div>
+    <div class="quiz-result" id="result-8"></div>
+    <button class="quiz-submit" onclick="submitQuiz(8,3)">Check Answers</button>
+  </div>
+
+  <div class="module-nav-btns">
+    <button class="btn-prev" onclick="goModule(7)">← Reading Country</button>
+    <button class="btn-next" disabled>Course Complete ✓</button>
+  </div>
+</section>
+
+</div><!-- /main -->
+
+<script>
+const TOTAL = 8;
+const done = new Set();
+let current = 1;
+
+function goModule(n) {
+  if (n < 1 || n > TOTAL) return;
+  document.getElementById('mod-' + current).classList.remove('active');
+  document.querySelectorAll('.nav-module').forEach(el => el.classList.remove('active'));
+  current = n;
+  document.getElementById('mod-' + n).classList.add('active');
+  document.querySelector('[data-mod="' + n + '"]').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function markDone(mod) {
+  done.add(mod);
+  const el = document.querySelector('[data-mod="' + mod + '"]');
+  if (el) el.classList.add('done');
+  const fill = document.getElementById('progressFill');
+  const pct = document.getElementById('progressPct');
+  const p = Math.round((done.size / TOTAL) * 100);
+  fill.style.width = p + '%';
+  pct.textContent = done.size + ' of ' + TOTAL + ' modules';
+  if (done.size === TOTAL) {
+    try {
+      const set = new Set(JSON.parse(localStorage.getItem('lwa:completed') || '[]'));
+      set.add('perth-architecture');
+      localStorage.setItem('lwa:completed', JSON.stringify([...set]));
+    } catch (_) {}
+  }
+}
+
+const answers = {};
+function answer(btn, qid, correct, letter) {
+  if (answers[qid]) return;
+  answers[qid] = { correct, btn };
+  const opts = btn.closest('.quiz-options').querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.classList.add('disabled'));
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  const fb = document.getElementById('fb-' + qid);
+  fb.className = 'quiz-feedback show ' + (correct ? 'ok' : 'no');
+  fb.textContent = correct ? '✓ Correct!' : '✗ Not quite — review the section above.';
+}
+
+function submitQuiz(mod, total) {
+  const prefix = 'q' + mod + '-';
+  let score = 0;
+  for (let i = 1; i <= total; i++) {
+    const qid = prefix + i;
+    if (answers[qid] && answers[qid].correct) score++;
+  }
+  const result = document.getElementById('result-' + mod);
+  result.className = 'quiz-result show';
+  result.innerHTML = '<div class="score">' + score + '/' + total + '</div><div class="score-label">' +
+    (score === total ? 'Perfect! Module complete.' : 'Good effort — review any missed sections.') + '</div>';
+  if (score === total) markDone(mod);
+}
+</script>
+
+<nav class="lwa-breadcrumb" aria-label="Breadcrumb" data-course-breadcrumb style="max-width:760px;margin:32px auto 0;padding:0 24px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim,#6B6259)"></nav>
+<nav class="lwa-pager" aria-label="Course pagination" data-course-pager style="max-width:760px;margin:32px auto 0;padding:32px 24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:1px solid var(--border,rgba(26,22,20,.14));font-family:'JetBrains Mono',ui-monospace,monospace"></nav>
+<style>
+  .lwa-breadcrumb a:hover{color:var(--accent,#FF5C39)}
+  .lwa-breadcrumb span[aria-hidden]{padding:0 8px;opacity:.5}
+  .lwa-pager a,.lwa-pager>div{display:block;padding:16px;border:1px solid var(--border,rgba(26,22,20,.14));border-radius:12px;transition:border-color .2s,transform .2s;text-decoration:none;color:inherit}
+  .lwa-pager a:hover{border-color:var(--accent,#FF5C39);transform:translateY(-2px)}
+  .lwa-pager .pager-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim,#6B6259);margin-bottom:6px}
+  .lwa-pager .pager-title{font-family:'Bricolage Grotesque','Arial Black',sans-serif;font-weight:700;font-size:17px;color:var(--text,#1A1614)}
+  .lwa-pager .pager-next{text-align:right}
+  .lwa-pager .pager-disabled{opacity:.4;pointer-events:none}
+  @media (max-width:640px){.lwa-pager{grid-template-columns:1fr}.lwa-pager .pager-next{text-align:left}}
+</style>
+<script defer src="/assets/js/course-nav.js"></script>
+
+</body>
+</html>
