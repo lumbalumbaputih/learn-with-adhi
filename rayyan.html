@@ -302,6 +302,20 @@
       .cert-actions { display:none !important; }
       .cert { border-color:#000; }
     }
+    /* ── DAILY QUEST ── */
+    .quest-card { border:2px solid var(--ink); border-radius:18px; padding:24px; background:var(--paper-2); }
+    .quest-q { font-family:var(--fd); font-weight:800; font-size:clamp(22px,4vw,30px); margin-bottom:16px; text-align:center; }
+    .quest-opts { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .quest-opt { border:2px solid var(--ink); border-radius:12px; padding:14px; background:var(--paper); font-family:var(--fd); font-weight:800; font-size:18px; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, background .2s; }
+    .quest-opt:hover:not(:disabled) { transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); }
+    .quest-opt:disabled { cursor:default; }
+    .quest-opt.correct { background:var(--forest); color:#fff; }
+    .quest-opt.wrong { background:var(--tomato); color:#fff; }
+    .quest-msg { text-align:center; font-weight:700; margin-top:14px; min-height:20px; }
+    .quest-done { text-align:center; padding:18px; }
+    .quest-done-emoji { font-size:48px; line-height:1; }
+    .quest-done-text { font-family:var(--fd); font-weight:800; font-size:22px; margin-top:8px; }
+    .quest-done-sub { font-size:14px; color:var(--muted); margin-top:4px; }
   </style>
 </head>
 <body>
@@ -364,6 +378,15 @@
       </div>
       <div class="next-banner-cta">Mulai Sekarang →</div>
     </a>
+  </section>
+
+  <!-- DAILY QUEST -->
+  <section class="section">
+    <div class="section-hdr">
+      <h2 class="section-title">⚡ Misi Harian</h2>
+      <div class="section-sub">Tantangan kilat hari ini</div>
+    </div>
+    <div class="quest-card" id="questCard"></div>
   </section>
 
   <!-- GAMES -->
@@ -691,10 +714,70 @@
   }
   function closeCert() { document.getElementById('certOverlay').classList.remove('show'); }
 
+  /* ── Daily quest (Misi Harian) – quick spaced-repetition challenge ── */
+  const QUESTS = [
+    { q:'7 × 8 = ?',            opts:['54','56','48','64'], ans:1 },
+    { q:'9 × 6 = ?',            opts:['54','56','63','45'], ans:0 },
+    { q:'45 + 38 = ?',          opts:['73','83','81','93'], ans:1 },
+    { q:'100 − 64 = ?',         opts:['36','46','34','44'], ans:0 },
+    { q:'½ dari 18 = ?',        opts:['8','9','6','12'],    ans:1 },
+    { q:'Pola: 3, 6, 9, 12, __',opts:['14','15','16','18'], ans:1 },
+    { q:'6 × 7 = ?',            opts:['42','48','36','49'], ans:0 },
+    { q:'8 × 4 = ?',            opts:['28','32','24','36'], ans:1 },
+    { q:'¼ dari 20 = ?',        opts:['4','5','6','10'],    ans:1 },
+    { q:'25 × 3 = ?',           opts:['65','75','50','85'], ans:1 },
+    { q:'12 × 3 = ?',           opts:['36','32','24','39'], ans:0 },
+    { q:'Pola: 2, 4, 8, 16, __',opts:['18','24','32','20'], ans:2 },
+    { q:'63 ÷ 9 = ?',           opts:['6','7','8','9'],     ans:1 },
+    { q:'½ + ½ = ?',            opts:['1','½','¼','2'],     ans:0 },
+    { q:'5 × 5 × 2 = ?',        opts:['25','50','55','40'], ans:1 },
+    { q:'90 − 45 = ?',          opts:['35','45','55','40'], ans:1 },
+  ];
+  function questDateStr() {
+    const d = new Date();
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  function todaysQuest() {
+    const t = new Date(); t.setHours(0,0,0,0);
+    return QUESTS[Math.floor(t.getTime()/86400000) % QUESTS.length];
+  }
+  function buildQuest() {
+    const card = document.getElementById('questCard');
+    if (!card) return;
+    let data; try { data = JSON.parse(localStorage.getItem('rayyanDailyQuest')||'{}'); } catch(e){ data = {}; }
+    if (data.date === questDateStr() && data.done) {
+      card.innerHTML = '<div class="quest-done"><div class="quest-done-emoji">✅</div>' +
+        '<div class="quest-done-text">Misi hari ini selesai!</div>' +
+        '<div class="quest-done-sub">Datang lagi besok untuk misi baru 🔥</div></div>';
+      return;
+    }
+    const q = todaysQuest();
+    card.innerHTML = `<div class="quest-q">${q.q}</div><div class="quest-opts">` +
+      q.opts.map((o,i)=>`<button class="quest-opt" onclick="answerQuest(${i})">${o}</button>`).join('') +
+      `</div><div class="quest-msg" id="questMsg"></div>`;
+  }
+  function answerQuest(idx) {
+    const q = todaysQuest();
+    const btns = document.querySelectorAll('.quest-opt');
+    const msg = document.getElementById('questMsg');
+    if (idx === q.ans) {
+      btns[idx].classList.add('correct');
+      btns.forEach(b => b.disabled = true);
+      if (msg) msg.textContent = '🎉 Hebat! Misi selesai!';
+      try { localStorage.setItem('rayyanDailyQuest', JSON.stringify({ date: questDateStr(), done: true })); } catch(e){}
+      setTimeout(buildQuest, 1300);
+    } else {
+      btns[idx].classList.add('wrong');
+      btns[idx].disabled = true;
+      if (msg) msg.textContent = 'Coba lagi! 💪';
+    }
+  }
+
   buildMap();
   buildGames();
   updateStreak();
   buildBadges();
+  buildQuest();
 </script>
 
 <!-- ── FIREBASE (loaded async, gracefully optional) ─────────────── -->
