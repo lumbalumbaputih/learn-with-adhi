@@ -267,6 +267,16 @@
     .sync-pill.syncing { opacity: .6; }
     .sync-pill.synced  { border-color: var(--forest); color: var(--forest); }
     .sync-pill.error   { border-color: var(--tomato);  color: var(--tomato); }
+    /* ── MEDAL CABINET ── */
+    .badge-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:16px; }
+    .badge { border:2px solid var(--ink); border-radius:16px; padding:18px 14px; text-align:center; background:var(--paper); transition:transform .18s ease, box-shadow .18s ease; }
+    .badge.earned { background:var(--mango); }
+    .badge.earned:hover { transform:translate(-3px,-3px); box-shadow:5px 5px 0 var(--ink); }
+    .badge.locked { opacity:.5; filter:grayscale(1); }
+    .badge-emoji { font-size:40px; line-height:1; }
+    .badge-title { font-family:var(--fd); font-weight:800; font-size:14px; margin-top:8px; line-height:1.15; }
+    .badge-desc { font-size:11px; color:var(--muted); margin-top:4px; line-height:1.3; }
+    .badge.earned .badge-desc { color:var(--ink); }
   </style>
 </head>
 <body>
@@ -338,6 +348,15 @@
       <div class="section-sub">2 game tersedia</div>
     </div>
     <div class="grid-2" id="gameGrid"></div>
+  </section>
+
+  <!-- MEDAL CABINET -->
+  <section class="section">
+    <div class="section-hdr">
+      <h2 class="section-title">🏅 Lemari Medali</h2>
+      <div class="section-sub" id="badgeStatus"></div>
+    </div>
+    <div class="badge-grid" id="badgeGrid"></div>
   </section>
 
   <footer class="footer">
@@ -584,9 +603,38 @@
     if (el) el.textContent = data.count || 1;
   }
 
+  /* ── Medal cabinet (badges earned from real progress) ── */
+  const BADGES = [
+    { emoji:'🌟', title:'Bintang Pertama', desc:'Dapat 1 bintang',        test:s=>s.stars>=1 },
+    { emoji:'⭐', title:'Kolektor Bintang', desc:'Kumpulkan 25 bintang',   test:s=>s.stars>=25 },
+    { emoji:'🏆', title:'Raja Bintang',     desc:'Kumpulkan 50 bintang',   test:s=>s.stars>=50 },
+    { emoji:'🎒', title:'Petualang',        desc:'Selesai 1 petualangan',  test:s=>s.done>=1 },
+    { emoji:'🧭', title:'Penjelajah',       desc:'Selesai 5 petualangan',  test:s=>s.done>=5 },
+    { emoji:'👑', title:'Sang Master',      desc:'Selesai semua!',         test:s=>s.done>=s.total },
+    { emoji:'🔥', title:'Semangat 3 Hari',  desc:'Main 3 hari beruntun',   test:s=>s.streak>=3 },
+    { emoji:'⚡', title:'Semangat 7 Hari',  desc:'Main 7 hari beruntun',   test:s=>s.streak>=7 },
+  ];
+  function buildBadges() {
+    const stars = ADVENTURES.reduce((sum,a)=>sum+getProgress(a.progressKey).stars,0);
+    const done  = ADVENTURES.filter(isCompleted).length;
+    let streak = 0; try { streak = JSON.parse(localStorage.getItem('rayyanStreak')||'{}').count || 0; } catch(e){}
+    const s = { stars, done, total: ADVENTURES.length, streak };
+    let earned = 0;
+    document.getElementById('badgeGrid').innerHTML = BADGES.map(b => {
+      const has = b.test(s); if (has) earned++;
+      return `<div class="badge ${has?'earned':'locked'}">
+          <div class="badge-emoji">${has ? b.emoji : '🔒'}</div>
+          <div class="badge-title">${b.title}</div>
+          <div class="badge-desc">${b.desc}</div>
+        </div>`;
+    }).join('');
+    document.getElementById('badgeStatus').textContent = `${earned} / ${BADGES.length} medali`;
+  }
+
   buildMap();
   buildGames();
   updateStreak();
+  buildBadges();
 </script>
 
 <!-- ── FIREBASE (loaded async, gracefully optional) ─────────────── -->
@@ -627,7 +675,7 @@
       const kidId = user && AUTH.getActiveKid();
       if (user && kidId) {
         const changed = await AUTH.syncActiveKid(setSyncStatus);
-        if (changed) buildMap();
+        if (changed) { buildMap(); buildBadges(); }
         return;
       }
     }
