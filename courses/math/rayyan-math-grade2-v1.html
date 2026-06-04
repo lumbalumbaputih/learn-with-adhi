@@ -1797,7 +1797,30 @@ function checkInp() {
   showToast(correct, q.ans, q.expl);
 }
 
+/* ── Sound effects (procedural Web Audio – no asset files) ── */
+const SFX = {
+  ctx: null,
+  init() { if (this.ctx) return; try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {} },
+  tone(freq, dur, vol = 0.2, type = 'sine') {
+    if (!this.ctx) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(); o.stop(this.ctx.currentTime + dur);
+  },
+  play(type) {
+    this.init(); if (!this.ctx) return;
+    if (type === 'correct')      { this.tone(523,.15,.15); setTimeout(()=>this.tone(659,.15,.15),120); setTimeout(()=>this.tone(784,.3,.15),240); }
+    else if (type === 'wrong')   { this.tone(220,.15,.15); setTimeout(()=>this.tone(196,.25,.12),130); }
+    else if (type === 'select')  { this.tone(440,.08,.1,'square'); }
+    else if (type === 'fanfare') { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>this.tone(f,.3,.18), i*110)); }
+  }
+};
+
 function showToast(correct, correctAns, expl) {
+  SFX.play(correct ? 'correct' : 'wrong');
   const toast = document.getElementById('toast');
   document.getElementById('toastIco').textContent   = correct ? '🎉' : '❌';
   document.getElementById('toastTitle').textContent  = correct
@@ -1874,6 +1897,7 @@ function showComplete() {
   document.getElementById('doneTime').textContent = fmtTime(elapsed);
 
   show('sComplete');
+  SFX.play('fanfare');
   if (stars >= 2) setTimeout(launchConfetti, 350);
   updateOverall();
 }
