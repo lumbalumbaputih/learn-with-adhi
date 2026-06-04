@@ -5,6 +5,27 @@ Adhi (adhiazure@gmail.com) – building this for his kids, Rayyan and Raya.
 
 ---
 
+## ⚙️ Operating Procedure (SOP) – READ FIRST, follow every session
+
+This project is built in **small, fully-shippable steps**. The #1 rule: **never end a session with half-finished work in the tree, and never let this doc go stale.** Both have bitten us before.
+
+**The loop for EVERY change (no exceptions):**
+1. **One small step at a time.** A "step" = one self-contained, working increment (e.g. *one* course gets the boss engine; *one* Track-D feature). Don't batch unrelated work into a giant commit.
+2. **Verify it works** before moving on: grep your change, sanity-check the JS, confirm the disguise rules + wiring are intact (open it mentally / check the obvious failure modes).
+3. **Update the docs in the SAME step** (non-negotiable – this is why the doc went stale before):
+   - Move shipped items into **"What's Already Built"** and update their **Status** column.
+   - Append a dated entry to **`PROGRESS.md`** (what changed, files touched, what's next).
+4. **Commit + push** the step. Small, descriptive message. Every commit must leave the tree in a *working* state so a dropped session never loses or half-bakes anything.
+5. Only then start the next step.
+
+**Definition of Done** for any course/feature = it works **+** disguise intact **+** wired in all required places (see the wiring checklist below) **+** docs updated **+** committed & pushed. "Done" is never just "code written."
+
+**Sources of truth:** this CLAUDE.md "What's Already Built" + Status = the current high-level state. `PROGRESS.md` = the chronological build log (newest on top). Keep BOTH current, every step.
+
+**Branch/PR:** work on the assigned feature branch; open a **draft PR** early so each pushed step is saved & preview-deployed; keep the disguise + single-file rules below.
+
+---
+
 ## The Core Mission: Rayyan's Accelerated Learning
 
 **The goal:** Make Rayyan genuinely love and excel at both math and coding – learning 3–5 years ahead of his actual grade level.
