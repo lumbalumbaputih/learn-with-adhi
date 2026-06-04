@@ -51,15 +51,15 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 ### Math Ladder (`rayyan.html` hub)
 | Course (what Rayyan sees) | Theme | Hidden Level | File | Key | Status |
 |---|---|---|---|---|---|
-| Petualangan Angka | Basic (no special theme) | Gr2 | `courses/math/rayyan-math-grade2-v1.html` | `rayyanMath` | ✅ Done (basic engine – no boss) |
-| Petualangan KAI 🚂 | KAI Train Adventure | Gr3 | `courses/math/rayyan-math-grade3.html` | `rayyanMath3` | ✅ Done (basic engine – no boss) |
-| Petualangan Antariksa 🚀 | Space/Rocket Adventure | Gr4 | `courses/math/rayyan-math-grade4.html` | `rayyanMath4` | ✅ Done (basic engine – no boss) |
+| Petualangan Angka | Basic (no special theme) | Gr2 | `courses/math/rayyan-math-grade2-v1.html` | `rayyanMath` | ✅ Done (basic engine + sound; boss pending) |
+| Petualangan KAI 🚂 | KAI Train Adventure | Gr3 | `courses/math/rayyan-math-grade3.html` | `rayyanMath3` | ✅ Done (basic engine + sound; boss pending) |
+| Petualangan Antariksa 🚀 | Space/Rocket Adventure | Gr4 | `courses/math/rayyan-math-grade4.html` | `rayyanMath4` | ✅ Done (basic engine + sound; boss pending) |
 | Laut Dalam 🌊 | Deep Ocean Adventure | Gr5 | `courses/math/rayyan-math-grade5.html` | `rayyanMath5` | ✅ Done (full boss + sound + rich interactions) |
 | Kota Masa Depan 🏙️ | Future City builder | Gr6 | `courses/math/rayyan-math-grade6.html` | `rayyanMath6` | ✅ Done (full boss) |
 | Lab Misteri X 🧪 | Mystery Lab (find the unknown X) | Gr7 | `courses/math/rayyan-math-grade7.html` | `rayyanMath7` | ✅ Done – **5-yrs-ahead algebra capstone** |
 
 → Math ladder now reaches **Gr7 = ~5 years ahead** (real algebra), fully disguised. **Math content target MET.**
-→ ⚠️ Note (2026-06-04 audit): Gr2–4 use the *old basic engine* (MC/input only, no boss/sound) while Gr5–7 have the rich boss-battle engine. The courses he plays **first** are the least engaging – back-port the boss engine to Gr2–4.
+→ ⚠️ Note (2026-06-04 audit): Gr2–4 use the *old basic engine* while Gr5–7 have the rich boss-battle engine. **Phase 1a (done): added procedural Web-Audio sound (correct/wrong/fanfare) to Gr2–4** via the shared `SFX` module, hooked at the `showToast()` choke-point. **Phase 1b (pending): boss battle on chapter 6** for Gr2–4 + coding v1.
 
 ### Coding Ladder (`rayyan.html` hub)
 | Course (what Rayyan sees) | Theme | Hidden Concepts | File | Key | Status |
