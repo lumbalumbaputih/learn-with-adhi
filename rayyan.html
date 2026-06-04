@@ -169,6 +169,7 @@
     }
     .stop.completed .stop-circle { background: var(--mango); }
     .stop.active    .stop-circle { background: var(--tomato); }
+    .stop.next      .stop-circle { background: var(--biome, var(--paper)); }
 
     /* Checkmark badge for completed */
     .stop.completed .stop-circle::after {
@@ -564,6 +565,12 @@
 
   /* ─── JOURNEY MAP ──────────────────────────────────────── */
 
+  /* Biome tint per world – upcoming stops preview their region's colour (one connected world) */
+  const BIOME = {
+    rayyanMath:'#FFE0D6', rayyanMath3:'#E3F5EB', rayyanMath4:'#E6E7FA', rayyanMath5:'#D6F0F7',
+    rayyanCoding:'#FCE8C8', rayyanMath6:'#ECECF2', rayyanCoding2:'#E6E7FA', rayyanMath7:'#EFE0F7',
+    rayyanCoding3:'#F7E0EC', rayyanCoding4:'#FFF3C4', rayyanCoding5:'#D9F0FF',
+  };
   function buildMap() {
     // Determine status of each stop
     let foundActive = false;
@@ -604,7 +611,7 @@
           : `${prog.done}/${adv.totalChapters} bab`;
 
       return `
-        <a href="${adv.href}" class="stop ${s}" title="${adv.title}">
+        <a href="${adv.href}" class="stop ${s}" title="${adv.title}" style="--biome:${BIOME[adv.progressKey]||''}">
           <div class="stop-loco">🚂</div>
           <div class="stop-circle">${adv.emoji}</div>
           <div class="stop-name">${adv.title}</div>

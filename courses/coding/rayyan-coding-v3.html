@@ -272,6 +272,13 @@
 
     @keyframes screenShake{0%,100%{transform:translate(0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(3px,-3px)}}
     .shake{animation:screenShake .35s ease}
+    /* ── FREE CODE SANDBOX ── */
+    .sandbox-wrap{max-width:600px;margin:0 auto;padding:8px 0 40px}
+    .sandbox-code{width:100%;min-height:170px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;line-height:1.5;padding:14px;border:2px solid var(--ink);border-radius:12px;background:#1e1e2e;color:#cdd6f4;resize:vertical}
+    .sandbox-out-label{font-family:var(--fd);font-weight:800;font-size:13px;margin:16px 0 6px}
+    .sandbox-out{white-space:pre-wrap;word-break:break-word;min-height:60px;padding:14px;border:2px solid var(--ink);border-radius:12px;background:var(--paper-2);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;color:var(--ink)}
+    .sandbox-out.ok{border-color:#1F9D55}
+    .sandbox-out.err{border-color:#FF5C39;color:#FF5C39}
   </style>
 </head>
 <body>
@@ -343,6 +350,10 @@
 
   <div class="sec-title">📖 Pilih Mantramu</div>
   <div class="chapters-grid" id="chGrid"></div>
+
+  <div style="margin-top:18px;text-align:center">
+    <button class="act-btn primary" style="max-width:340px;margin:0 auto;display:block" onclick="show('sSandbox')">✨ Lab Mantra Bebas — Tulis Kodemu!</button>
+  </div>
 
   <div style="margin-top:20px;text-align:center">
     <button onclick="resetProgress()" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;padding:8px">🔄 Reset Progress</button>
@@ -458,6 +469,24 @@
     </div>
     <div style="font-size:36px;margin:16px 0;letter-spacing:3px" id="allDoneStarEmoji"></div>
     <button class="act-btn primary" style="max-width:320px;margin:0 auto;display:block" onclick="goHome()">🔮 Lihat Semua Mantra</button>
+  </div>
+</div>
+
+<!-- ═══ FREE SANDBOX ═══ -->
+<div class="screen" id="sSandbox">
+  <button class="back-btn" onclick="goHome()">← Kembali ke Buku Mantra</button>
+  <div class="sandbox-wrap">
+    <div class="sec-title">✨ Lab Mantra Bebas</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:14px;line-height:1.5">Tulis mantra kodemu sendiri, lalu tekan <strong>Jalankan</strong>! Pakai <code>console.log(...)</code> untuk menampilkan sesuatu. Ini kode JavaScript sungguhan!</p>
+    <textarea id="sandboxCode" class="sandbox-code" spellcheck="false" autocapitalize="off" autocorrect="off">console.log("Halo, aku Rayyan!");
+let umur = 8;
+console.log("Umurku " + umur + " tahun");
+for (let i = 1; i <= 3; i++) {
+  console.log("Roket " + i + " 🚀");
+}</textarea>
+    <button class="act-btn primary" onclick="runSandbox()" style="margin-top:12px">▶ Jalankan Mantra</button>
+    <div class="sandbox-out-label">🔮 Hasil:</div>
+    <pre id="sandboxOut" class="sandbox-out">(tekan Jalankan untuk melihat hasil)</pre>
   </div>
 </div>
 
@@ -712,6 +741,21 @@ function show(id) {
   const isHome = id === 'sHome';
   document.getElementById('magicBg').classList.toggle('hidden', !isHome);
   document.getElementById('mainHdr').classList.toggle('light', !isHome);
+}
+
+function runSandbox() {
+  const code = document.getElementById('sandboxCode').value;
+  const out = document.getElementById('sandboxOut');
+  const logs = [];
+  const fakeConsole = { log: (...a) => logs.push(a.map(v => (typeof v === 'object' && v !== null) ? JSON.stringify(v) : String(v)).join(' ')) };
+  try {
+    new Function('console', code)(fakeConsole);
+    out.textContent = logs.length ? logs.join('\n') : '(tidak ada output — pakai console.log untuk menampilkan)';
+    out.className = 'sandbox-out ok';
+  } catch (e) {
+    out.textContent = '⚠️ ' + ((e && e.message) ? e.message : e);
+    out.className = 'sandbox-out err';
+  }
 }
 
 function goHome() {

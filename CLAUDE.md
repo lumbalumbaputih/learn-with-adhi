@@ -64,11 +64,11 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 ### Coding Ladder (`rayyan.html` hub)
 | Course (what Rayyan sees) | Theme | Hidden Concepts | File | Key | Status |
 |---|---|---|---|---|---|
-| Pabrik Robot KAI 🤖 | Train Robot Factory | Sequencing → Conditionals → Loops → Variables → Functions → Integration | `courses/coding/rayyan-coding-v1.html` | `rayyanCoding` | ✅ Done (drag-blocks; boss is label-only, no battle engine) |
+| Pabrik Robot KAI 🤖 | Train Robot Factory | Sequencing → Conditionals → Loops → Variables → Functions → Integration | `courses/coding/rayyan-coding-v1.html` | `rayyanCoding` | ✅ Done (drag-blocks + `AX` sound; ch6 is a **full themed multi-step boss mission** — route stations that light up, signal/passenger state, 5 unlocking steps, confetti victory) |
 | Robot Antariksa 🛰️ | Space Robots | Events, lists/arrays, nested loops, boolean logic, integration | `courses/coding/rayyan-coding-v2.html` | `rayyanCoding2` | ✅ Done (blocks + full boss) |
-| Mantra Kode ✨ | Code Spells | `console.log`, variables, if/else, loops, functions | `courses/coding/rayyan-coding-v3.html` | `rayyanCoding3` | ⚠️ Shipped as **fill-in-the-blank** – output is pre-canned, code is NOT executed |
+| Mantra Kode ✨ | Code Spells | `console.log`, variables, if/else, loops, functions | `courses/coding/rayyan-coding-v3.html` | `rayyanCoding3` | ✅ Lessons are fill-in-the-blank, **PLUS a real "Lab Mantra Bebas" JS sandbox** (type & run real JavaScript, live `console.log` output + real errors, sandboxed via `new Function`) — the "type real code" payoff is now real |
 | Studio Pelukis Kode 🎨 | Code Painter (Canvas) | Coordinates, shapes, loops/patterns, randomness, animation | `courses/coding/rayyan-coding-v4.html` | `rayyanCoding4` | ⚠️ Shipped – real demo canvases, but exercises are fill-in-the-blank (kid doesn't draw his own) |
-| Buat Game-mu Sendiri 🎮 | Make Your Own Game | Game loop, sprite/input, spawning, collision, score/state | `courses/coding/rayyan-coding-v5.html` | `rayyanCoding5` | ⚠️ Shipped – teaches game-loop via fill-in-the-blank; **kid does NOT end with a playable game he keeps** |
+| Buat Game-mu Sendiri 🎮 | Make Your Own Game | Game loop, sprite/input, spawning, collision, score/state | `courses/coding/rayyan-coding-v5.html` | `rayyanCoding5` | ✅ Lessons fill-in-the-blank, **PLUS a real playable "Kereta Lari" game** (🎮 Mainkan Game-mu! — canvas, jump, spawning obstacles, collision, score, game-over/restart) the kid plays & replays — the "build a game" payoff is now real |
 
 → All 5 coding rungs shipped & wired. **Caveat (2026-06-04 audit):** v3/v4/v5 teach via fill-in-the-blank with pre-canned output, so the headline payoffs – "type real code" (B2) and "publish your own game" (B4) – are **simulated, not real**. See Track B notes + gap analysis.
 
@@ -91,9 +91,9 @@ loving + excelling at **both** math and coding, ~5 years ahead, with the disguis
 
 ### Gap analysis – where he is vs. the target *(updated 2026-06-04 audit)*
 - **Math:** ✅ ladder now reaches **Gr7** (real algebra, ≈5 yrs ahead). Content target **MET**. Remaining: back-port the boss/sound/rich-interaction engine into Gr2–4 (the earliest courses are the most bare – bad first impression).
-- **Coding:** ⚠️ all 5 rungs shipped *structurally*, but v3 ("type real code") and v5 ("build your game") are **faked with fill-in-the-blank** – no live code execution, no playable game the kid keeps. The two headline payoffs aren't real yet.
+- **Coding:** ✅ all 5 rungs shipped, and the two headline payoffs are now **real**: v3 has a live JS sandbox ("Lab Mantra Bebas") and v5 has a real playable game ("Kereta Lari"). (The chapter *lessons* in v3/v4/v5 are still fill-in-the-blank, but the real-code / real-game experiences now exist alongside them.) v1's ch6 turned out to be a full multi-step boss mission already (the old "label-only" note was wrong) — so all coding rungs now have real boss/payoff experiences.
 - **Bridge:** not started. The math×coding crossover that proves he can *use* code to *do* math.
-- **"Love it" layer (Track D):** 🟡 in progress. Confetti + per-course boss battles + **a daily streak (🔥 `rayyanStreak`) + a medal cabinet (🏅 8 badges) + a printable certificate (🏆 `window.print`, real-world reward) + a **daily quest (⚡ Misi Harian — date-seeded quick mental-math, also serves as the Track-E Flash Drill)** now live on `rayyan.html` (Phase 2)**. Still missing: themed/unified world map. This is the biggest gap and the thing that actually decides whether he reaches 5-years-ahead.
+- **"Love it" layer (Track D):** ✅ **functionally complete**. Confetti + per-course boss battles + a daily streak (🔥 `rayyanStreak`) + a medal cabinet (🏅 8 badges) + a printable certificate (🏆 `window.print`) + a daily quest (⚡ Misi Harian, also the Track-E Flash Drill) + a **biome-tinted world map** (upcoming stops preview their region's colour) — all live on `rayyan.html` (Phase 2). Remaining big-ticket gaps are now in coding: the v1 boss and the Phase 3 "real code / real game" payoffs.
 
 The content rungs are ~done; the job is now (1) make the *start* as fun as the rest, (2) make the "real code / real game" promises real, and (3) build the retention layer. A kid only gets 5 years ahead if he keeps showing up, so Track D is a first-class deliverable, not polish.
 
@@ -212,8 +212,8 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 
 ### Suggested build order (phases) – *status updated 2026-06-04*
 1. ✅ **Phase 1 – finish the in-progress ladders:** A1 (Gr6 City) · B1 (Robot Antariksa). **DONE.**
-2. ⚠️ **Phase 2 – the two big leaps:** A2 (Gr7 algebra) **DONE & solid** · B2 (Mantra Kode) **shipped but faked** – still needs a real (safe) JS sandbox so he actually types & runs code.
-3. ⚠️ **Phase 3 – make it real & joyful:** B3 ✅ shipped · B4 (build a game) **shipped but no kept playable game** · C (the Bridge) **not started**.
+2. ✅ **Phase 2 – the two big leaps:** A2 (Gr7 algebra) **DONE & solid** · B2 (Mantra Kode) now has a **real JS sandbox** ("Lab Mantra Bebas") so he actually types & runs code. **DONE.**
+3. ✅ **Phase 3 – make it real & joyful:** B3 ✅ shipped · B4 now ends with a **real playable game** ("Kereta Lari") · v3 has a **real JS sandbox**. (Track C "the Bridge" still not started — optional.)
 4. ❌ **Phase 4 – love/retention layer (THE priority now):** unified/themed map, daily quest/streak, badges + printable certificate, Flash Drills. Barely started.
 5. **Phase 5 – stretch:** B5 (Python) · Gr8 math.
 
