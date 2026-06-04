@@ -19,6 +19,20 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-04
 
+### Raya – new course "Belajar Huruf Bersama Raya 📖" (literacy) ✅  [closes Raya's biggest peer-gap]
+- **Where Raya was:** 2 courses (`rayaMath` count/compare/add; `rayaVisual` colors/shapes/animals/matching) + 1 game. Solid on early numeracy + colors/shapes/animals, but **zero literacy** — the highest-leverage "ahead of peers" skill for a 3–4 yr old.
+- **Built:** `courses/learning/raya-literacy-v1.html` (key `rayaLiteracy`), 5 chapters on the same proven Raya engine (parent read-aloud, stars, confetti, timer, tap + drag-and-drop, bug-report):
+  1. **Kenali Huruf** 🔤 – letter recognition (tap the right letter)
+  2. **Bunyi Awal** 🔊 – beginning sounds (🍎 Apel → A)
+  3. **Besar & Kecil** 🅰️ – upper/lowercase matching via drag-and-drop (a→A; ch4 spells RAYA)
+  4. **Kata Pertama** 📖 – first words → picture (IBU→👩, API→🔥, BOLA→⚽…)
+  5. **Petualangan Huruf** 🏆 – mixed review (recognition + sounds + words)
+- **Engine note:** added a generic `'pick'` question type (renders letter OR emoji options, optional `visual`), reusing the existing index-based `pickNum()` handler; `drag-match` reused as-is for case-matching. No new handlers needed.
+- **Wired (all 4 places):** `raya.html` (COURSES card + 3-kursus pills), `kids.html` (starsKeys + pill), `assets/js/auth.js` (`PROGRESS_KEYS_BY_TYPE.raya`), `dashboard.html` (`COURSE_NAMES`).
+- **Verified:** inline engine passes `node --check`; all 25 answer keys logic-checked (every `pick` `ans` index → correct option, every drag chip has a matching target) → 0 issues; no leftover `rayaMath`/math content; `auth.js` `node --check` clean.
+- 🔜 Next candidate Raya courses (not built): **Logika & Pola** (patterns/sorting — early reasoning) · **Lawan Kata & Dunia** (opposites, body, food — world knowledge).
+- Files: `courses/learning/raya-literacy-v1.html`, `raya.html`, `kids.html`, `assets/js/auth.js`, `dashboard.html`, `CLAUDE.md`, `PROGRESS.md`.
+
 ### Phase 4 (polish) – pause animations off-screen + v1 boss clarification ✅ / 🟡
 - **Off-screen animation pause** ✅: added a safe, uniform snippet to math Gr5/6/7 — `body.anim-paused *{animation-play-state:paused}` CSS + a `visibilitychange` listener that toggles the class when the tab is hidden. Stops the perpetual bubble/light animations from burning battery when backgrounded. `node --check` clean.
 - **Coding v1 boss** ✅ (clarified, no code change needed): inspected v1's ch6 — it's already a **full themed multi-step boss mission** (route stations JKT→SBY that progress, signal/passenger state, 5 unlocking steps, confetti victory), richer than the math HP-bar bosses. The old CLAUDE.md "label-only" note was inaccurate and has been corrected. Phase 1b is therefore complete across all early courses.

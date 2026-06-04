@@ -75,6 +75,10 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 ### Raya's Content (younger sibling, ~3–4 years old)
 - **Matematika Raya** (`courses/math/raya-math-v1.html`, key `rayaMath`) – visual, tap-to-count.
 - **Belajar Bersama Raya** (`courses/learning/raya-learning-visual-v1.html`, key `rayaVisual`) – colors, shapes, animals, matching.
+- **Belajar Huruf Bersama Raya 📖** (`courses/learning/raya-literacy-v1.html`, key `rayaLiteracy`) – ✅ **literacy / pre-reading** (the big peer-gap closer): Kenali Huruf (letter recognition) → Bunyi Awal (beginning sounds, 🍎→A) → Besar & Kecil (upper/lowercase drag-match) → Kata Pertama (first words, IBU→👩) → Petualangan Huruf (mixed review). 5 chapters, same Raya engine (parent read-aloud, stars, confetti, tap/drag). Wired in all 4 places (`raya.html`, `kids.html`, `auth.js`, `dashboard.html`).
+
+> **Raya gap analysis (2026-06-04):** she was solid on early numeracy + colors/shapes/animals but had **zero literacy** — the single highest-leverage "ahead of peers" skill for a 3–4 yr old. `rayaLiteracy` closes that. Next candidate Raya courses (not built): **Logika & Pola** (patterns/sorting / what-comes-next — early reasoning) and **Lawan Kata & Dunia** (opposites, body parts, food, transport — world knowledge).
+
 - ⚠️ `courses/learning/raya-learning-paud-v1.html` (key `rayaLearning`) is a **near-duplicate** of the visual course (same title, 4/5 same chapters) and was **never wired into `raya.html`**. The phantom `rayaLearning` key was removed from the star lists (`kids.html` / `auth.js` / `dashboard.html`) on 2026-06-04 so the data model matches Raya's 2 live courses. The paud file stays on disk – if you prefer it, swap the `rayaVisual` href in `raya.html` rather than surfacing both.
 
 ### Games
