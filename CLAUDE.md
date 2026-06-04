@@ -93,7 +93,7 @@ loving + excelling at **both** math and coding, ~5 years ahead, with the disguis
 - **Math:** ✅ ladder now reaches **Gr7** (real algebra, ≈5 yrs ahead). Content target **MET**. Remaining: back-port the boss/sound/rich-interaction engine into Gr2–4 (the earliest courses are the most bare – bad first impression).
 - **Coding:** ⚠️ all 5 rungs shipped *structurally*, but v3 ("type real code") and v5 ("build your game") are **faked with fill-in-the-blank** – no live code execution, no playable game the kid keeps. The two headline payoffs aren't real yet.
 - **Bridge:** not started. The math×coding crossover that proves he can *use* code to *do* math.
-- **"Love it" layer (Track D):** ❌ ~10–15% built. Confetti + per-course boss battles exist; **no streak, no daily quest, no badges/certificate, no Flash Drills, no themed world map.** This is the biggest gap and the thing that actually decides whether he reaches 5-years-ahead.
+- **"Love it" layer (Track D):** 🟡 in progress. Confetti + per-course boss battles + **a daily streak counter (🔥, `rayyanStreak` localStorage, on `rayyan.html`) now live (Phase 2 start)**. Still missing: daily quest, badges/certificate, Flash Drills, themed world map. This is the biggest gap and the thing that actually decides whether he reaches 5-years-ahead.
 
 The content rungs are ~done; the job is now (1) make the *start* as fun as the rest, (2) make the "real code / real game" promises real, and (3) build the retention layer. A kid only gets 5 years ahead if he keeps showing up, so Track D is a first-class deliverable, not polish.
 

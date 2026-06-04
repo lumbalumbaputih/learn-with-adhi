@@ -298,6 +298,7 @@
     <p class="hero-lead">Peta petualanganmu ada di bawah. Pilih stasiun berikutnya dan lanjutkan perjalanan!</p>
     <div class="hero-stats">
       <div class="stat-pill">⭐ <span id="totalStars">0</span> bintang terkumpul</div>
+      <div class="stat-pill" id="streakPill">🔥 <span id="streakCount">0</span> hari beruntun</div>
       <div class="stat-pill">🗺️ <span id="doneCount">0</span> / 11 petualangan selesai</div>
       <div class="sync-pill" id="syncPill" title="Status sinkronisasi">
         <span id="syncIcon">☁️</span> <span id="syncLabel">Sinkron</span>
@@ -566,8 +567,26 @@
       </a>`).join('');
   }
 
+  /* ── Daily streak (🔥 consecutive days the adventure was opened) ── */
+  function updateStreak() {
+    const KEY = 'rayyanStreak';
+    const fmt = d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    const today = new Date(); today.setHours(0,0,0,0);
+    const todayStr = fmt(today);
+    let data; try { data = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { data = {}; }
+    if (data.lastDate !== todayStr) {
+      const yest = new Date(today); yest.setDate(yest.getDate() - 1);
+      data.count = (data.lastDate === fmt(yest)) ? (data.count || 0) + 1 : 1;
+      data.lastDate = todayStr;
+      try { localStorage.setItem(KEY, JSON.stringify(data)); } catch(e) {}
+    }
+    const el = document.getElementById('streakCount');
+    if (el) el.textContent = data.count || 1;
+  }
+
   buildMap();
   buildGames();
+  updateStreak();
 </script>
 
 <!-- ── FIREBASE (loaded async, gracefully optional) ─────────────── -->
