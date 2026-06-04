@@ -19,6 +19,12 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-04
 
+### Phase 3a – real JS sandbox in v3 "Mantra Kode" ✅  (makes "type real code" real)
+- Added a "✨ Lab Mantra Bebas" free-play screen (reachable from v3's home) with a real code editor: a `<textarea>` of JavaScript + a "Jalankan" button → `runSandbox()` captures `console.log` and executes the kid's code via `new Function('console', code)` inside a `try/catch`, showing live output or the real error message. Sandboxed (the kid's own code on their own page; no remote/untrusted input). Verified: `node --check` clean + simulated run produces correct output (vars, loops, log capture).
+- This is additive — the existing fill-in-the-blank lessons are untouched; the sandbox is the new "real typing" payoff.
+- Files: `courses/coding/rayyan-coding-v3.html`.
+- 🔜 Next: v5 keepable game (Phase 3b); coding v1 boss (Phase 1b); Phase 4 polish.
+
 ### Phase 2 – themed world map ✅  → **Phase 2 / Track D complete**
 - Added biome tints to the journey map: each upcoming ("next") stop circle previews its world's colour via a `BIOME` lookup + `--biome` CSS var. Status colours (completed = mango, active = tomato) are untouched — the rule only targets `.stop.next`, so it's fully additive. `node --check` clean.
 - With this, the retention layer is functionally complete: streak + badges + certificate + daily quest/flash drill + themed map.

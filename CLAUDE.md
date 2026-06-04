@@ -66,7 +66,7 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 |---|---|---|---|---|---|
 | Pabrik Robot KAI 🤖 | Train Robot Factory | Sequencing → Conditionals → Loops → Variables → Functions → Integration | `courses/coding/rayyan-coding-v1.html` | `rayyanCoding` | ✅ Done (drag-blocks; boss is label-only, no battle engine) |
 | Robot Antariksa 🛰️ | Space Robots | Events, lists/arrays, nested loops, boolean logic, integration | `courses/coding/rayyan-coding-v2.html` | `rayyanCoding2` | ✅ Done (blocks + full boss) |
-| Mantra Kode ✨ | Code Spells | `console.log`, variables, if/else, loops, functions | `courses/coding/rayyan-coding-v3.html` | `rayyanCoding3` | ⚠️ Shipped as **fill-in-the-blank** – output is pre-canned, code is NOT executed |
+| Mantra Kode ✨ | Code Spells | `console.log`, variables, if/else, loops, functions | `courses/coding/rayyan-coding-v3.html` | `rayyanCoding3` | ✅ Lessons are fill-in-the-blank, **PLUS a real "Lab Mantra Bebas" JS sandbox** (type & run real JavaScript, live `console.log` output + real errors, sandboxed via `new Function`) — the "type real code" payoff is now real |
 | Studio Pelukis Kode 🎨 | Code Painter (Canvas) | Coordinates, shapes, loops/patterns, randomness, animation | `courses/coding/rayyan-coding-v4.html` | `rayyanCoding4` | ⚠️ Shipped – real demo canvases, but exercises are fill-in-the-blank (kid doesn't draw his own) |
 | Buat Game-mu Sendiri 🎮 | Make Your Own Game | Game loop, sprite/input, spawning, collision, score/state | `courses/coding/rayyan-coding-v5.html` | `rayyanCoding5` | ⚠️ Shipped – teaches game-loop via fill-in-the-blank; **kid does NOT end with a playable game he keeps** |
 
@@ -212,7 +212,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 
 ### Suggested build order (phases) – *status updated 2026-06-04*
 1. ✅ **Phase 1 – finish the in-progress ladders:** A1 (Gr6 City) · B1 (Robot Antariksa). **DONE.**
-2. ⚠️ **Phase 2 – the two big leaps:** A2 (Gr7 algebra) **DONE & solid** · B2 (Mantra Kode) **shipped but faked** – still needs a real (safe) JS sandbox so he actually types & runs code.
+2. ✅ **Phase 2 – the two big leaps:** A2 (Gr7 algebra) **DONE & solid** · B2 (Mantra Kode) now has a **real JS sandbox** ("Lab Mantra Bebas") so he actually types & runs code. **DONE.**
 3. ⚠️ **Phase 3 – make it real & joyful:** B3 ✅ shipped · B4 (build a game) **shipped but no kept playable game** · C (the Bridge) **not started**.
 4. ❌ **Phase 4 – love/retention layer (THE priority now):** unified/themed map, daily quest/streak, badges + printable certificate, Flash Drills. Barely started.
 5. **Phase 5 – stretch:** B5 (Python) · Gr8 math.
