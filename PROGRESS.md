@@ -19,6 +19,12 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-04
 
+### Phase 2 – themed world map ✅  → **Phase 2 / Track D complete**
+- Added biome tints to the journey map: each upcoming ("next") stop circle previews its world's colour via a `BIOME` lookup + `--biome` CSS var. Status colours (completed = mango, active = tomato) are untouched — the rule only targets `.stop.next`, so it's fully additive. `node --check` clean.
+- With this, the retention layer is functionally complete: streak + badges + certificate + daily quest/flash drill + themed map.
+- Files: `rayyan.html`.
+- 🔜 Remaining overall: Phase 1b coding v1 boss; Phase 3 (v3 real sandbox, v5 keepable game); Phase 4 polish.
+
 ### Phase 2 – daily quest (Misi Harian) ✅  [also covers Track E Flash Drills]
 - Added a "⚡ Misi Harian" section to `rayyan.html`: a date-seeded daily challenge from a self-contained 16-question bank (quick mental math — times tables, +/−, simple fractions, patterns). Same quest all day (seeded by local date), MC with instant feedback, retry on wrong, marks done-for-today in `rayyanDailyQuest` localStorage and shows a "come back tomorrow" state. All 16 answers verified consistent; inline scripts pass `node --check`.
 - This doubles as the **Track E "Latihan Kilat" Flash Drill** (60-second mixed mini-quiz) the roadmap called for.
