@@ -19,6 +19,12 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-04
 
+### Phase 4 (polish) – pause animations off-screen + v1 boss clarification ✅ / 🟡
+- **Off-screen animation pause** ✅: added a safe, uniform snippet to math Gr5/6/7 — `body.anim-paused *{animation-play-state:paused}` CSS + a `visibilitychange` listener that toggles the class when the tab is hidden. Stops the perpetual bubble/light animations from burning battery when backgrounded. `node --check` clean.
+- **Coding v1 boss** ✅ (clarified, no code change needed): inspected v1's ch6 — it's already a **full themed multi-step boss mission** (route stations JKT→SBY that progress, signal/passenger state, 5 unlocking steps, confetti victory), richer than the math HP-bar bosses. The old CLAUDE.md "label-only" note was inaccurate and has been corrected. Phase 1b is therefore complete across all early courses.
+- 🟡 **Deferred (low-value, find/replace risk):** tutor-name unification (Kai/Kapi/Detektif Kapi). "Kai" (tutor) collides with "KAI" (the train brand) in many spots, so a blind global replace is unsafe — needs careful per-file review. Logged for a future focused pass.
+- Files: `courses/math/rayyan-math-grade5.html`, `grade6.html`, `grade7.html`.
+
 ### Phase 3b – real playable game in v5 "Buat Game-mu" ✅  (makes "build a game" real)
 - Added a "🎮 Mainkan Game-mu!" screen (reachable from v5's home) with a real **Kereta Lari** endless-runner: canvas + `requestAnimationFrame` loop, a 🚂 player, SPACE/tap to jump (gravity physics), spawning obstacles that speed up with score, AABB collision → game-over + restart, live score. Self-contained `Game` module; loop self-stops when the screen isn't active (no off-screen CPU). Verified: `node --check` clean + headless logic sim (spawn/collision/jump) works.
 - The kid now ends with an actual playable, replayable game — the "publish your own game" payoff is real.

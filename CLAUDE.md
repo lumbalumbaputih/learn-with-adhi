@@ -64,7 +64,7 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 ### Coding Ladder (`rayyan.html` hub)
 | Course (what Rayyan sees) | Theme | Hidden Concepts | File | Key | Status |
 |---|---|---|---|---|---|
-| Pabrik Robot KAI 🤖 | Train Robot Factory | Sequencing → Conditionals → Loops → Variables → Functions → Integration | `courses/coding/rayyan-coding-v1.html` | `rayyanCoding` | ✅ Done (drag-blocks; boss is label-only, no battle engine) |
+| Pabrik Robot KAI 🤖 | Train Robot Factory | Sequencing → Conditionals → Loops → Variables → Functions → Integration | `courses/coding/rayyan-coding-v1.html` | `rayyanCoding` | ✅ Done (drag-blocks + `AX` sound; ch6 is a **full themed multi-step boss mission** — route stations that light up, signal/passenger state, 5 unlocking steps, confetti victory) |
 | Robot Antariksa 🛰️ | Space Robots | Events, lists/arrays, nested loops, boolean logic, integration | `courses/coding/rayyan-coding-v2.html` | `rayyanCoding2` | ✅ Done (blocks + full boss) |
 | Mantra Kode ✨ | Code Spells | `console.log`, variables, if/else, loops, functions | `courses/coding/rayyan-coding-v3.html` | `rayyanCoding3` | ✅ Lessons are fill-in-the-blank, **PLUS a real "Lab Mantra Bebas" JS sandbox** (type & run real JavaScript, live `console.log` output + real errors, sandboxed via `new Function`) — the "type real code" payoff is now real |
 | Studio Pelukis Kode 🎨 | Code Painter (Canvas) | Coordinates, shapes, loops/patterns, randomness, animation | `courses/coding/rayyan-coding-v4.html` | `rayyanCoding4` | ⚠️ Shipped – real demo canvases, but exercises are fill-in-the-blank (kid doesn't draw his own) |
@@ -91,7 +91,7 @@ loving + excelling at **both** math and coding, ~5 years ahead, with the disguis
 
 ### Gap analysis – where he is vs. the target *(updated 2026-06-04 audit)*
 - **Math:** ✅ ladder now reaches **Gr7** (real algebra, ≈5 yrs ahead). Content target **MET**. Remaining: back-port the boss/sound/rich-interaction engine into Gr2–4 (the earliest courses are the most bare – bad first impression).
-- **Coding:** ✅ all 5 rungs shipped, and the two headline payoffs are now **real**: v3 has a live JS sandbox ("Lab Mantra Bebas") and v5 has a real playable game ("Kereta Lari"). (The chapter *lessons* in v3/v4/v5 are still fill-in-the-blank, but the real-code / real-game experiences now exist alongside them.) Remaining coding gap: v1's boss is still label-only (no battle engine).
+- **Coding:** ✅ all 5 rungs shipped, and the two headline payoffs are now **real**: v3 has a live JS sandbox ("Lab Mantra Bebas") and v5 has a real playable game ("Kereta Lari"). (The chapter *lessons* in v3/v4/v5 are still fill-in-the-blank, but the real-code / real-game experiences now exist alongside them.) v1's ch6 turned out to be a full multi-step boss mission already (the old "label-only" note was wrong) — so all coding rungs now have real boss/payoff experiences.
 - **Bridge:** not started. The math×coding crossover that proves he can *use* code to *do* math.
 - **"Love it" layer (Track D):** ✅ **functionally complete**. Confetti + per-course boss battles + a daily streak (🔥 `rayyanStreak`) + a medal cabinet (🏅 8 badges) + a printable certificate (🏆 `window.print`) + a daily quest (⚡ Misi Harian, also the Track-E Flash Drill) + a **biome-tinted world map** (upcoming stops preview their region's colour) — all live on `rayyan.html` (Phase 2). Remaining big-ticket gaps are now in coding: the v1 boss and the Phase 3 "real code / real game" payoffs.
 
