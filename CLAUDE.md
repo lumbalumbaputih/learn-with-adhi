@@ -69,8 +69,9 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 | Mantra Kode ✨ | Code Spells | `console.log`, variables, if/else, loops, functions | `courses/coding/rayyan-coding-v3.html` | `rayyanCoding3` | ✅ Lessons are fill-in-the-blank, **PLUS a real "Lab Mantra Bebas" JS sandbox** (type & run real JavaScript, live `console.log` output + real errors, sandboxed via `new Function`) — the "type real code" payoff is now real |
 | Studio Pelukis Kode 🎨 | Code Painter (Canvas) | Coordinates, shapes, loops/patterns, randomness, animation | `courses/coding/rayyan-coding-v4.html` | `rayyanCoding4` | ⚠️ Shipped – real demo canvases, but exercises are fill-in-the-blank (kid doesn't draw his own) |
 | Buat Game-mu Sendiri 🎮 | Make Your Own Game | Game loop, sprite/input, spawning, collision, score/state | `courses/coding/rayyan-coding-v5.html` | `rayyanCoding5` | ✅ Lessons fill-in-the-blank, **PLUS a real playable "Kereta Lari" game** (🎮 Mainkan Game-mu! — canvas, jump, spawning obstacles, collision, score, game-over/restart) the kid plays & replays — the "build a game" payoff is now real |
+| Robot Ahli Matematika 🤖 (Track C Bridge) | Use code to DO math | Shapes & angles, number patterns, order-of-ops, coordinates + `y=2x`, solve-for-X | `courses/coding/rayyan-bridge-v1.html` | `rayyanBridge` | ✅ Done (4 interactive canvases + Gr7-style boss + celebration animation; MC de-biased) |
 
-→ All 5 coding rungs shipped & wired. **Caveat (2026-06-04 audit):** v3/v4/v5 teach via fill-in-the-blank with pre-canned output, so the headline payoffs – "type real code" (B2) and "publish your own game" (B4) – are **simulated, not real**. See Track B notes + gap analysis.
+→ All 5 coding rungs **+ the Track C "Bridge"** shipped & wired — **Rayyan now has 12 adventures.** v3/v5 lessons are still fill-in-the-blank but now have the **real** JS sandbox + playable game alongside them; the Bridge proves he can use code to *do* math.
 
 ### Raya's Content (younger sibling, ~3–4 years old)
 - **Matematika Raya** (`courses/math/raya-math-v1.html`, key `rayaMath`) – visual, tap-to-count.
@@ -92,7 +93,7 @@ loving + excelling at **both** math and coding, ~5 years ahead, with the disguis
 ### Gap analysis – where he is vs. the target *(updated 2026-06-04 audit)*
 - **Math:** ✅ ladder now reaches **Gr7** (real algebra, ≈5 yrs ahead). Content target **MET**. Remaining: back-port the boss/sound/rich-interaction engine into Gr2–4 (the earliest courses are the most bare – bad first impression).
 - **Coding:** ✅ all 5 rungs shipped, and the two headline payoffs are now **real**: v3 has a live JS sandbox ("Lab Mantra Bebas") and v5 has a real playable game ("Kereta Lari"). (The chapter *lessons* in v3/v4/v5 are still fill-in-the-blank, but the real-code / real-game experiences now exist alongside them.) v1's ch6 turned out to be a full multi-step boss mission already (the old "label-only" note was wrong) — so all coding rungs now have real boss/payoff experiences.
-- **Bridge:** not started. The math×coding crossover that proves he can *use* code to *do* math.
+- **Bridge:** ✅ **shipped** — Track C "Robot Ahli Matematika" (key `rayyanBridge`): the math×coding crossover where he uses code to draw shapes/angles, generate number patterns, evaluate order-of-operations, plot coordinates (incl. `y=2x`), and solve for X — capped by a boss + celebration canvas.
 - **"Love it" layer (Track D):** ✅ **functionally complete**. Confetti + per-course boss battles + a daily streak (🔥 `rayyanStreak`) + a medal cabinet (🏅 8 badges) + a printable certificate (🏆 `window.print`) + a daily quest (⚡ Misi Harian, also the Track-E Flash Drill) + a **biome-tinted world map** (upcoming stops preview their region's colour) — all live on `rayyan.html` (Phase 2). Remaining big-ticket gaps are now in coding: the v1 boss and the Phase 3 "real code / real game" payoffs.
 
 The content rungs are ~done; the job is now (1) make the *start* as fun as the rest, (2) make the "real code / real game" promises real, and (3) build the retention layer. A kid only gets 5 years ahead if he keeps showing up, so Track D is a first-class deliverable, not polish.
@@ -182,7 +183,7 @@ disguise: "mengajari robot", "membuat petualangan" – never "coding/programming
 
 ---
 
-### TRACK C – The Bridge: "Robot Ahli Matematika" 🤖➗
+### TRACK C – The Bridge: "Robot Ahli Matematika" 🤖➗ — ✅ SHIPPED (`courses/coding/rayyan-bridge-v1.html`, key `rayyanBridge`)
 *key `rayyanBridge`. Build **after B3 (needs drawing) + Gr6 (coordinates/geometry)**. Proves he can use code to DO math – cements both ladders into one skill.*
 | Ch | What Rayyan sees | Links to |
 |---|---|---|
@@ -213,7 +214,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 ### Suggested build order (phases) – *status updated 2026-06-04*
 1. ✅ **Phase 1 – finish the in-progress ladders:** A1 (Gr6 City) · B1 (Robot Antariksa). **DONE.**
 2. ✅ **Phase 2 – the two big leaps:** A2 (Gr7 algebra) **DONE & solid** · B2 (Mantra Kode) now has a **real JS sandbox** ("Lab Mantra Bebas") so he actually types & runs code. **DONE.**
-3. ✅ **Phase 3 – make it real & joyful:** B3 ✅ shipped · B4 now ends with a **real playable game** ("Kereta Lari") · v3 has a **real JS sandbox**. (Track C "the Bridge" still not started — optional.)
+3. ✅ **Phase 3 – make it real & joyful:** B3 ✅ shipped · B4 now ends with a **real playable game** ("Kereta Lari") · v3 has a **real JS sandbox**. Track C "the Bridge" ✅ **now shipped too**.
 4. ❌ **Phase 4 – love/retention layer (THE priority now):** unified/themed map, daily quest/streak, badges + printable certificate, Flash Drills. Barely started.
 5. **Phase 5 – stretch:** B5 (Python) · Gr8 math.
 
@@ -265,6 +266,6 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 - The math and coding ladder should feel like ONE continuous adventure world, not separate subjects
 - Raya is younger (PAUD) – her content is visual-only, minimal reading, tap/drag interactions
 - **Wiring a new Rayyan (kids) course:** update the `ADVENTURES`/`GAMES` array in `rayyan.html`, add its key to `sumStars([...])` in `kids.html` AND to `PROGRESS_KEYS_BY_TYPE` in `assets/js/auth.js` (for cloud sync) AND to `COURSE_NAMES` in `dashboard.html` (for the parent view), and bump the count pills. (For *adult* courses instead, update `index.html` / `assets/courses.json`.)
-- **2026-06-04 audit:** all 11 Rayyan adventures + 2 Raya courses are shipped & wired (this doc previously under-counted them). Math answers spot-checked correct. Fixed disguise leaks: the Gr2–5 `<title>` and bug-report `courseName` no longer show "Kelas N" (theme names only). Biggest remaining gaps: the Track D retention layer, and the faked "real code"/"real game" payoffs in coding v3/v5.
+- **2026-06-04 audit:** all 12 Rayyan adventures (incl. the Track C Bridge) + 2 Raya courses are shipped & wired (this doc previously under-counted them). Math answers spot-checked correct. Fixed disguise leaks: the Gr2–5 `<title>` and bug-report `courseName` no longer show "Kelas N" (theme names only). Biggest remaining gaps: the Track D retention layer, and the faked "real code"/"real game" payoffs in coding v3/v5.
 - **Dead code:** `assets/js/sync.js` (family-code sync) duplicates `assets/js/auth.js` (the live per-kid Firestore sync) and is never initialized – safe to delete; kept for now to avoid churn.
 - **Tutor name:** ✅ unified to **"Kapi"** across all math courses (Gr2–4 were "Kai"/"Nova" → now Kapi; Gr5–7 already Kapi; Gr7 keeps the "Detektif Kapi" themed variant). The internal CSS classes/ids (`kai-name`, `nova-msg`, etc.) were left as-is (not visible to Rayyan).

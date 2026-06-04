@@ -1,0 +1,1629 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Robot Ahli Matematika 🤖 — Petualangan Rayyan</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%232E3192"/><text y=".9em" font-size="74" x="12">🤖</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bot:#2E3192; --bot-d:#1f2170; --bot-bg:#E8E9F8;
+      --tomato:#FF5C39; --mango:#FFC234; --forest:#1F9D55;
+      --mawar:#E84BA0; --indigo:#2E3192; --sea:#1FA9C7;
+      --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+      --line:rgba(26,22,20,0.14); --muted:#6B6259;
+      --tomato-bg:#FFE8E3; --mango-bg:#FFF5D6; --forest-bg:#E3F5EB;
+      --mawar-bg:#FCE8F3; --indigo-bg:#E8E9F8; --sea-bg:#E0F4F9;
+      --lab-deep:#0a1030; --lab-mid:#141a52; --lab-light:#0e1444;
+      --fd:'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb:'Nunito',system-ui,sans-serif;
+      --r:16px; --r-sm:10px; --r-lg:24px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased}
+    body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden}
+    button{font-family:inherit;cursor:pointer;border:none;background:none}
+    input,textarea{font-family:inherit}
+
+    /* WORKSHOP BG */
+    #labBg{position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,var(--lab-deep) 0%,var(--lab-mid) 50%,var(--lab-light) 100%);pointer-events:none;overflow:hidden}
+    #labBg.hidden{opacity:0;transition:opacity .4s}
+    .gear{position:absolute;animation:gearSpin linear infinite;pointer-events:none;opacity:.10}
+    @keyframes gearSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+    /* HEADER */
+    .hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(10,16,48,.88);backdrop-filter:blur(8px);border-bottom:2px solid rgba(46,49,146,.35);position:sticky;top:0;z-index:200;transition:background .4s}
+    .hdr.light{background:var(--paper);border-bottom-color:var(--ink)}
+    .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:rgba(255,255,255,.9)}
+    .hdr.light .hdr-brand{color:var(--ink)}
+    .hdr-brand-word{font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-.03em}
+    .hdr-right{display:flex;align-items:center;gap:12px}
+    .hdr-stars{display:flex;align-items:center;gap:5px;background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:5px 12px;font-family:var(--fd);font-weight:800;font-size:15px;color:var(--ink)}
+    .bug-btn{width:44px;height:44px;border:2px solid var(--ink);border-radius:999px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-size:20px;transition:background .18s}
+    .bug-btn:hover{background:var(--tomato)}
+
+    /* BUG MODAL */
+    .bug-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(26,22,20,.6);z-index:1000;align-items:center;justify-content:center;padding:20px}
+    .bug-modal.show{display:flex}
+    .bug-modal-box{background:var(--paper);border:3px solid var(--ink);border-radius:20px;padding:28px;max-width:500px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.2);animation:slideUp .3s ease}
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .bug-modal-title{font-family:var(--fd);font-weight:800;font-size:24px;margin-bottom:12px}
+    .bug-modal-desc{font-size:14px;color:var(--muted);margin-bottom:20px}
+    .bug-form-group{margin-bottom:16px}
+    .bug-form-label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+    .bug-form-input,.bug-form-textarea{width:100%;border:2px solid var(--ink);border-radius:8px;padding:10px 12px;font-size:14px;background:var(--paper-2)}
+    .bug-form-textarea{resize:vertical;min-height:100px}
+    .bug-form-input:focus,.bug-form-textarea:focus{outline:none;background:var(--mango)}
+    .bug-modal-actions{display:flex;gap:12px;margin-top:24px}
+    .bug-btn-submit,.bug-btn-cancel{flex:1;padding:12px;border:2px solid var(--ink);border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;transition:all .18s}
+    .bug-btn-submit{background:var(--tomato);color:var(--paper)}
+    .bug-btn-submit:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+    .bug-btn-cancel{background:var(--paper-2)}
+    .bug-btn-cancel:hover{background:var(--line)}
+
+    /* SCREENS */
+    .screen{display:none;max-width:820px;margin:0 auto;padding:24px 18px 80px;animation:fadeUp .28s ease}
+    .screen.active{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    /* HOME */
+    .home-hero{text-align:center;padding:28px 0 20px}
+    .bot-anim{width:90px;height:90px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:56px;animation:botFloat 3s ease-in-out infinite}
+    @keyframes botFloat{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-12px) rotate(4deg)}}
+    .home-title{font-family:var(--fd);font-weight:800;font-size:clamp(25px,6vw,40px);letter-spacing:-.03em;line-height:1.05;color:var(--paper);margin-bottom:8px}
+    .home-title em{font-style:normal;background:var(--mango);padding:1px 10px;border-radius:8px;color:var(--ink)}
+    .home-sub{font-size:15px;color:rgba(255,255,255,.65);margin-bottom:24px}
+
+    /* TRACK */
+    .depth-wrap{background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);border-radius:var(--r);padding:16px;margin-bottom:24px}
+    .depth-label{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mango);margin-bottom:12px}
+    .depth-track{display:flex;gap:0;align-items:center;overflow-x:auto;padding-bottom:4px;min-width:0}
+    .depth-node{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;min-width:52px}
+    .depth-dot{width:42px;height:42px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .3s}
+    .depth-dot.done{background:var(--forest);border-color:var(--forest)}
+    .depth-dot.active{background:var(--sea);border-color:var(--sea);animation:botPulse 1.5s ease-in-out infinite}
+    @keyframes botPulse{0%,100%{box-shadow:0 0 0 0 rgba(31,169,199,.5)}50%{box-shadow:0 0 0 10px rgba(31,169,199,0)}}
+    .depth-name{font-size:9px;font-family:var(--fd);font-weight:700;color:rgba(255,255,255,.5);text-align:center;white-space:nowrap}
+    .depth-name.done{color:#7ee8a2}.depth-name.active{color:var(--sea)}
+    .depth-rail{flex:1;height:3px;background:rgba(255,255,255,.15);min-width:16px;position:relative;top:-14px;background-image:linear-gradient(to right,rgba(255,255,255,.4) 50%,transparent 50%);background-size:8px 3px}
+    .depth-rail.done{background:var(--forest);background-image:none}
+
+    .overall-box{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);border-radius:var(--r);padding:16px;margin-bottom:24px}
+    .ov-ring{width:60px;height:60px;flex-shrink:0}
+    .ov-info{flex:1}
+    .ov-label{font-family:var(--fd);font-weight:700;font-size:14px;color:var(--paper);margin-bottom:6px}
+    .ov-bar-wrap{height:8px;background:rgba(255,255,255,.15);border-radius:999px;overflow:hidden}
+    .ov-bar{height:100%;background:var(--sea);border-radius:999px;transition:width .8s ease}
+    .ov-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+
+    .sec-title{font-family:var(--fd);font-weight:800;font-size:18px;color:var(--paper);margin-bottom:12px}
+    .chapters-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:500px){.chapters-grid{grid-template-columns:1fr}}
+
+    .ch-card{border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--paper);transition:transform .17s,box-shadow .17s;text-align:left}
+    .ch-card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .ch-card.locked{opacity:.5;cursor:not-allowed}
+    .ch-card.locked:hover{transform:none;box-shadow:none}
+    .ch-thumb{padding:16px 16px 12px;border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between}
+    .ch-emoji{font-size:34px;line-height:1}
+    .ch-stars-row{display:flex;gap:2px}
+    .ch-star{font-size:16px;opacity:.2}.ch-star.on{opacity:1}
+    .ch-body{padding:12px}
+    .ch-num{font-family:var(--fd);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .ch-depth{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--bot-d);letter-spacing:.04em;margin-bottom:2px}
+    .ch-title{font-family:var(--fd);font-weight:800;font-size:17px;letter-spacing:-.02em;margin-bottom:3px}
+    .ch-desc{font-size:12px;color:var(--muted);line-height:1.4}
+    .ch-status{margin-top:6px;font-family:var(--fd);font-weight:600;font-size:12px}
+    .ch-card.boss .ch-thumb{background:linear-gradient(135deg,#0a1030,#141a52)}
+    .ch-card.boss .ch-depth{color:var(--sea)}
+    .ch-card.boss{border-color:var(--sea)}
+
+    /* LESSON */
+    .back-btn{display:flex;align-items:center;gap:5px;font-family:var(--fd);font-weight:600;font-size:13px;color:var(--muted);margin-bottom:20px}
+    .back-btn:hover{color:var(--ink)}
+    .lesson-hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+    .lesson-icon{font-size:48px;background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:10px 14px;flex-shrink:0;line-height:1}
+    .lesson-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,5vw,34px);letter-spacing:-.03em;line-height:1.05}
+    .lesson-depth{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--bot-d);margin-bottom:3px}
+    .lesson-body{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:22px;margin-bottom:20px}
+    .ls{margin-bottom:20px}.ls:last-child{margin-bottom:0}
+    .ls-h{font-family:var(--fd);font-weight:700;font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .ls p{font-size:14.5px;line-height:1.65;color:var(--ink)}
+    .ex-box{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r-sm);padding:16px;margin-top:10px;text-align:center}
+    .tip-box{background:var(--bot);color:#fff;border-radius:var(--r);border:2.5px dashed rgba(255,255,255,.4);padding:16px;margin-bottom:18px;display:flex;gap:10px;align-items:flex-start}
+    .tip-ico{font-size:26px;flex-shrink:0;line-height:1}
+    .tip-name{font-family:var(--fd);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:2px}
+    .tip-msg{font-size:14px;line-height:1.55}
+    .start-btn{width:100%;background:var(--bot);color:#fff;border:3px solid var(--ink);border-radius:var(--r);padding:17px;font-family:var(--fd);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .17s,box-shadow .17s}
+    .start-btn:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+    .start-btn.boss-btn{background:linear-gradient(135deg,#0a1030,#141a52);border-color:var(--sea)}
+
+    /* CODE / RESEP PANEL */
+    .spellbook{background:#1e1e2e;border:3px solid var(--bot);border-radius:14px;padding:18px;font-family:'Courier New',monospace;font-size:14px;color:#cdd6f4;line-height:2;margin-bottom:12px;overflow-x:auto;white-space:pre-wrap}
+    .spellbook .kw{color:#cba6f7}
+    .spellbook .fn{color:#89dceb}
+    .spellbook .str{color:#a6e3a1}
+    .spellbook .num{color:#fab387}
+    .spellbook .cmt{color:#6c7086;font-style:italic}
+    .spell-output{background:#11111b;border:2px solid #45475a;border-radius:8px;padding:12px 16px;font-family:'Courier New',monospace;color:#a6e3a1;font-size:14px;margin-top:8px;display:none}
+    .spell-output.show{display:block;animation:fadeUp .25s ease}
+    .spell-output-label{font-size:10px;color:#6c7086;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;font-family:var(--fb)}
+
+    /* Canvas preview / robot stage */
+    .canvas-preview{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r-sm);padding:12px;margin-top:12px;text-align:center}
+    .canvas-preview-label{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--bot-d);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+    .canvas-preview canvas{border:2px solid var(--ink);border-radius:8px;max-width:100%;background:#fff;display:block;margin:0 auto}
+
+    /* Robot command chips (interactive widget) */
+    .robo-stage{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r-sm);padding:14px;margin-top:12px}
+    .robo-stage-label{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--bot-d);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;text-align:center}
+    .robo-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:10px}
+    .robo-chip{background:var(--bot-bg);border:2.5px solid var(--ink);border-radius:999px;padding:8px 14px;font-family:var(--fd);font-weight:800;font-size:14px;color:var(--bot-d);transition:transform .12s,box-shadow .12s}
+    .robo-chip:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .robo-chip.on{background:var(--bot);color:#fff;border-color:var(--bot-d)}
+    .robo-stage canvas{border:2px solid var(--ink);border-radius:8px;max-width:100%;background:#fff;display:block;margin:0 auto}
+    .robo-readout{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--ink);text-align:center;margin-top:10px;min-height:18px}
+
+    /* EXERCISE */
+    .ex-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+    .ex-back-btn{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-sm);padding:7px 11px;font-family:var(--fd);font-weight:700;font-size:13px;flex-shrink:0}
+    .ex-meta{flex:1;min-width:0}
+    .ex-ch-name{font-family:var(--fd);font-weight:700;font-size:13px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ex-bar-wrap{height:6px;background:var(--line);border-radius:999px;overflow:hidden}
+    .ex-bar{height:100%;background:var(--bot);border-radius:999px;transition:width .4s ease}
+    .ex-qnum{font-family:var(--fd);font-weight:700;font-size:12px;color:var(--muted);flex-shrink:0}
+
+    .hud{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .hearts{display:flex;gap:4px;font-size:22px}
+    .combo-badge{background:var(--mango);border:2px solid var(--ink);border-radius:999px;padding:4px 12px;font-family:var(--fd);font-weight:800;font-size:13px;display:none}
+    .combo-badge.show{display:block;animation:comboPop .25s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes comboPop{0%{transform:scale(.7)}100%{transform:scale(1)}}
+
+    .timer-wrap{display:flex;justify-content:flex-end;margin-bottom:10px}
+    .timer-ring-svg{transform:rotate(-90deg)}
+    .timer-bg{fill:none;stroke:var(--line);stroke-width:4}
+    .timer-fg{fill:none;stroke:var(--bot);stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .95s linear,stroke .3s}
+    .timer-num{font-family:var(--fd);font-weight:800;font-size:13px;fill:var(--ink)}
+
+    .q-card{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-lg);padding:24px 20px;margin-bottom:16px}
+    .q-label{font-family:var(--fd);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    .q-text{font-family:var(--fd);font-weight:800;font-size:clamp(16px,3.8vw,23px);letter-spacing:-.02em;line-height:1.25;margin-bottom:12px}
+    .q-visual{font-size:24px;line-height:1.6;margin-bottom:12px;text-align:center}
+    .q-canvas-wrap{text-align:center;margin-bottom:12px}
+    .q-canvas-wrap canvas{border:2px solid var(--ink);border-radius:8px;max-width:100%;background:#fff;display:block;margin:0 auto}
+
+    /* MC */
+    .opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .opt-btn{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:13px 10px;font-family:var(--fd);font-weight:700;font-size:clamp(11px,3vw,16px);text-align:center;display:flex;align-items:center;justify-content:center;transition:transform .14s,box-shadow .14s;line-height:1.3;word-break:break-word}
+    .opt-btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .opt-btn.correct{background:var(--forest);color:#fff;border-color:var(--forest);animation:pulse .45s ease}
+    .opt-btn.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato);animation:shake .38s ease}
+    .opt-btn:disabled{cursor:not-allowed}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+    /* INPUT (typed number) */
+    .inp-row{display:flex;gap:9px;align-items:center}
+    .num-inp{flex:1;border:3px solid var(--ink);border-radius:var(--r);padding:13px 14px;font-family:var(--fd);font-weight:800;font-size:24px;text-align:center;background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s}
+    .num-inp:focus{border-color:var(--bot)}
+    .num-inp.ok{border-color:var(--forest);background:var(--forest-bg)}
+    .num-inp.bad{border-color:var(--tomato);background:var(--tomato-bg)}
+    .chk-btn{background:var(--mango);color:var(--ink);border:2.5px solid var(--ink);border-radius:var(--r);padding:13px 18px;font-family:var(--fd);font-weight:800;font-size:15px;flex-shrink:0;transition:transform .14s,box-shadow .14s}
+    .chk-btn:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+
+    /* DRAG-SORT */
+    .sort-label{font-size:12px;color:var(--muted);margin-bottom:10px;text-align:center}
+    .sort-items{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+    .sort-item{background:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r-sm);padding:10px 14px;font-family:var(--fd);font-weight:800;font-size:15px;cursor:pointer;transition:all .15s;user-select:none;min-width:50px;text-align:center;word-break:break-word}
+    .sort-item:hover:not(.disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .sort-item.selected{background:var(--bot);color:#fff;border-color:var(--bot);transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .sort-item.correct{background:var(--forest);color:#fff;border-color:var(--forest)}
+    .sort-item.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato)}
+    .sort-item.disabled{cursor:not-allowed}
+
+    /* CODE-FILL */
+    .code-fill-wrap{margin-bottom:12px}
+    .code-blank{background:#313244;border:2.5px solid var(--bot);border-radius:6px;color:#a6e3a1;font-family:'Courier New',monospace;font-size:16px;font-weight:bold;text-align:center;min-width:80px;max-width:170px;padding:4px 8px;outline:none;display:inline-block;vertical-align:middle;-webkit-appearance:none}
+    .code-blank:focus{border-color:var(--sea);background:#45475a}
+    .code-blank.ok{border-color:var(--forest);background:#1e3a2a;color:#a6e3a1}
+    .code-blank.bad{border-color:var(--tomato);background:#3a1a1a;color:#f38ba8}
+
+    /* BOSS */
+    .boss-hdr{text-align:center;margin-bottom:16px}
+    .boss-enemy{font-size:72px;display:inline-block;line-height:1;transition:transform .3s}
+    .boss-enemy.hit{animation:bossHit .4s ease}
+    @keyframes bossHit{0%{transform:scale(1) rotate(0)}30%{transform:scale(1.15) rotate(-10deg)}60%{transform:scale(.9) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+    .boss-hp{width:100%;height:14px;background:var(--line);border-radius:999px;overflow:hidden;border:2px solid var(--ink);margin:10px 0}
+    .boss-hp-bar{height:100%;background:var(--tomato);border-radius:999px;transition:width .5s ease}
+    .boss-hp-label{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:8px}
+    .boss-q-wrap{background:linear-gradient(135deg,#0a1030,#141a52);border:2px solid var(--sea);border-radius:var(--r-lg);padding:24px 20px;margin-bottom:16px}
+    .boss-q-wrap .q-label{color:rgba(255,255,255,.5)}
+    .boss-q-wrap .q-text{color:#fff}
+    .boss-q-wrap .num-inp{background:#0a1030;color:#fff;border-color:var(--sea)}
+
+    /* TOAST */
+    .toast{border-radius:var(--r);padding:12px 16px;margin-top:12px;font-family:var(--fd);font-weight:700;font-size:14px;display:none;align-items:flex-start;gap:9px;animation:toastIn .22s ease}
+    .toast.show{display:flex}
+    .toast.ok{background:var(--forest-bg);border:2px solid var(--forest);color:#0e6032}
+    .toast.bad{background:var(--tomato-bg);border:2px solid var(--tomato);color:#c73013}
+    .toast-expl{font-weight:400;font-size:12.5px;margin-top:2px}
+    @keyframes toastIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+    .nxt-btn{width:100%;margin-top:12px;background:var(--ink);color:var(--paper);border:2.5px solid var(--ink);border-radius:var(--r);padding:15px;font-family:var(--fd);font-weight:800;font-size:15px;display:none;transition:opacity .15s}
+    .nxt-btn.show{display:block}
+    .nxt-btn:hover{opacity:.82}
+
+    /* COMPLETE */
+    .done-hero{text-align:center;padding:32px 0 20px}
+    .done-badge{font-size:72px;line-height:1;margin-bottom:14px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+    @keyframes pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+    .done-title{font-family:var(--fd);font-weight:800;font-size:clamp(22px,5vw,36px);letter-spacing:-.03em;margin-bottom:8px}
+    .done-stars{font-size:40px;margin:12px 0;animation:starsIn .5s ease .2s both}
+    @keyframes starsIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+    .score-box{background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r);padding:18px;margin:16px 0;text-align:center}
+    .score-num{font-family:var(--fd);font-weight:800;font-size:48px;letter-spacing:-.04em}
+    .score-lbl{font-size:13px;color:var(--muted)}
+    .done-msg{font-size:14px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.6}
+    .boss-cv-wrap{text-align:center;margin:8px 0 18px;display:none}
+    .boss-cv-wrap.show{display:block}
+    .boss-cv-wrap canvas{border:2px solid var(--ink);border-radius:12px;max-width:100%;background:#0a1030}
+    .done-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .act-btn{border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;font-family:var(--fd);font-weight:800;font-size:14px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s}
+    .act-btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--ink)}
+    .act-btn.primary{background:var(--bot);color:#fff}
+    .act-btn.secondary{background:var(--paper-2);color:var(--ink)}
+    .review-panel{margin-top:18px}
+    .review-title{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:8px}
+    .review-item{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border:1.5px solid var(--line);border-radius:var(--r-sm);margin-bottom:7px;font-size:12.5px}
+    .review-ico{font-size:15px;flex-shrink:0;margin-top:1px}
+    .review-q{font-weight:600;margin-bottom:1px}
+    .review-a{color:var(--muted)}
+
+    /* ALL DONE */
+    .all-done-wrap{text-align:center;padding:32px 0}
+    .all-done-anim{font-size:60px;display:inline-block;animation:botFloat 2s ease-in-out infinite;margin-bottom:12px}
+    .all-done-title{font-family:var(--fd);font-weight:800;font-size:clamp(24px,6vw,40px);letter-spacing:-.03em;margin-bottom:10px}
+
+    /* CONFETTI */
+    #confetti{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden}
+    .cp{position:absolute;top:-16px;border-radius:2px;animation:fall linear forwards}
+    @keyframes fall{from{top:-20px;opacity:1}to{top:110vh;opacity:0}}
+
+    @keyframes screenShake{0%,100%{transform:translate(0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(3px,-3px)}}
+    .shake{animation:screenShake .35s ease}
+  </style>
+</head>
+<body>
+
+<div id="labBg"></div>
+<div id="confetti"></div>
+
+<header class="hdr" id="mainHdr">
+  <a href="/kids.html" class="hdr-brand">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
+      <rect x="26" y="34" width="48" height="40" rx="8" fill="none" stroke="currentColor" stroke-width="9"/>
+      <circle cx="42" cy="54" r="5" fill="currentColor"/>
+      <circle cx="58" cy="54" r="5" fill="currentColor"/>
+      <line x1="50" y1="20" x2="50" y2="34" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="50" cy="16" r="6" fill="currentColor"/>
+    </svg>
+    <span class="hdr-brand-word">Robot Ahli</span>
+  </a>
+  <div class="hdr-right">
+    <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+    <button class="bug-btn" onclick="openBugReport()" title="Laporkan masalah">🐛</button>
+  </div>
+</header>
+
+<!-- BUG REPORT MODAL -->
+<div class="bug-modal" id="bugModal">
+  <div class="bug-modal-box">
+    <div class="bug-modal-title">🐛 Laporan Masalah</div>
+    <div class="bug-modal-desc">Temukan sesuatu yang aneh atau salah? Beritahu kami!</div>
+    <form id="bugForm" onsubmit="submitBugReport(event)">
+      <div class="bug-form-group">
+        <label class="bug-form-label">Apa masalahnya?</label>
+        <textarea class="bug-form-textarea" id="bugDescription" placeholder="Ceritakan masalahnya di sini..." required></textarea>
+      </div>
+      <div class="bug-form-group">
+        <label class="bug-form-label">Email (opsional)</label>
+        <input type="email" class="bug-form-input" id="bugEmail" placeholder="email@contoh.com">
+      </div>
+      <div class="bug-modal-actions">
+        <button type="button" class="bug-btn-cancel" onclick="closeBugReport()">Batal</button>
+        <button type="submit" class="bug-btn-submit">Kirim Laporan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="bot-anim">🤖</div>
+    <div class="home-title">Robot Ahli <em>Matematika</em> 🤖➗</div>
+    <div class="home-sub">Ajari robot pintarmu mengerjakan matematika — gambar, pola, hitung, dan pecahkan misteri!</div>
+  </div>
+
+  <div class="depth-wrap">
+    <div class="depth-label">⚙️ Bengkel Robotmu</div>
+    <div class="depth-track" id="depthTrack"></div>
+  </div>
+
+  <div class="overall-box">
+    <svg class="ov-ring" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="6"/>
+      <circle cx="30" cy="30" r="24" fill="none" stroke="var(--sea)" stroke-width="6" stroke-linecap="round"
+        stroke-dasharray="151" id="ovRingPath" stroke-dashoffset="151" transform="rotate(-90 30 30)"/>
+    </svg>
+    <div class="ov-info">
+      <div class="ov-label">🤖 Robotmu Makin Pintar</div>
+      <div class="ov-bar-wrap"><div class="ov-bar" id="ovBar" style="width:0%"></div></div>
+      <div class="ov-sub" id="ovSub">0 dari 6 misi selesai</div>
+    </div>
+  </div>
+
+  <div class="sec-title">⚙️ Pilih Misi Bengkel</div>
+  <div class="chapters-grid" id="chGrid"></div>
+
+  <div style="margin-top:20px;text-align:center">
+    <button onclick="resetProgress()" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;padding:8px">🔄 Reset Progress</button>
+  </div>
+</div>
+
+<!-- ═══ LESSON ═══ -->
+<div class="screen" id="sLesson">
+  <button class="back-btn" onclick="goHome()">← Kembali ke Bengkel</button>
+  <div id="lessonHdr"></div>
+  <div class="lesson-body" id="lessonBody"></div>
+  <div class="tip-box">
+    <div class="tip-ico">🤖</div>
+    <div>
+      <div class="tip-name">Robi sang Robot</div>
+      <div class="tip-msg" id="kapiMsg">Baca dulu, lalu beri perintah pada robotmu!</div>
+    </div>
+  </div>
+  <button class="start-btn" id="startBtn" onclick="startExercise()">⚙️ Mulai Misi!</button>
+</div>
+
+<!-- ═══ EXERCISE ═══ -->
+<div class="screen" id="sExercise">
+  <div class="ex-hdr">
+    <button class="ex-back-btn" onclick="goHome()">←</button>
+    <div class="ex-meta">
+      <div class="ex-ch-name" id="exChName"></div>
+      <div class="ex-bar-wrap"><div class="ex-bar" id="exBar" style="width:0%"></div></div>
+    </div>
+    <div class="ex-qnum" id="exQNum">1/6</div>
+  </div>
+
+  <div class="hud">
+    <div class="hearts" id="heartsDisplay">❤️❤️❤️</div>
+    <div class="combo-badge" id="comboBadge">🔥 2×</div>
+  </div>
+
+  <div class="timer-wrap">
+    <svg width="48" height="48" class="timer-ring-svg" id="timerRing">
+      <circle class="timer-bg" cx="24" cy="24" r="20"/>
+      <circle class="timer-fg" id="timerFg" cx="24" cy="24" r="20" stroke-dasharray="126" stroke-dashoffset="0"/>
+      <text x="24" y="24" class="timer-num" text-anchor="middle" dominant-baseline="central" id="timerNum" transform="rotate(90 24 24)">30</text>
+    </svg>
+  </div>
+
+  <div id="bossHdr" style="display:none" class="boss-hdr">
+    <div class="boss-enemy" id="bossEnemy">🦾</div>
+    <div class="boss-hp-label" id="bossHpLabel">HP 🦾 Robot Kacau: 6/6</div>
+    <div class="boss-hp"><div class="boss-hp-bar" id="bossHpBar" style="width:100%"></div></div>
+  </div>
+
+  <div id="qCardWrap">
+    <div class="q-card" id="qCard">
+      <div class="q-label" id="qLabel">Perintah Robot</div>
+      <div class="q-text" id="qText"></div>
+      <div class="q-visual" id="qVisual" style="display:none"></div>
+      <div id="answerArea"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span id="toastIco"></span>
+    <div>
+      <div id="toastTitle"></div>
+      <div class="toast-expl" id="toastExpl"></div>
+    </div>
+  </div>
+  <button class="nxt-btn" id="nxtBtn" onclick="nextQ()">Lanjut →</button>
+</div>
+
+<!-- ═══ COMPLETE ═══ -->
+<div class="screen" id="sComplete">
+  <div class="done-hero">
+    <div class="done-badge" id="doneBadge">🎉</div>
+    <div class="done-title" id="doneTitle">Misi Selesai!</div>
+    <div class="done-stars" id="doneStars">⭐⭐⭐</div>
+  </div>
+  <div class="boss-cv-wrap" id="bossCvWrap">
+    <canvas id="bossCelebrate" width="320" height="180"></canvas>
+  </div>
+  <div class="score-box">
+    <div class="score-num" id="doneScoreNum">6/6</div>
+    <div class="score-lbl">jawaban benar</div>
+  </div>
+  <div class="score-box" style="background:var(--bot-bg)">
+    <div class="score-num" id="doneTime" style="font-size:32px">--</div>
+    <div class="score-lbl">⏱️ total waktu</div>
+  </div>
+  <div class="done-msg" id="doneMsg"></div>
+  <div class="done-actions">
+    <button class="act-btn primary" onclick="retryChapter()">🔁 Coba Lagi</button>
+    <button class="act-btn secondary" onclick="goHome()">⚙️ Bengkel Robot</button>
+  </div>
+  <div class="review-panel">
+    <div class="review-title">📋 Ringkasan Jawaban</div>
+    <div id="reviewList"></div>
+  </div>
+</div>
+
+<!-- ═══ ALL DONE ═══ -->
+<div class="screen" id="sAllDone">
+  <div class="all-done-wrap">
+    <div class="all-done-anim">🤖🏆🤖</div>
+    <div style="font-size:64px;margin-bottom:14px;animation:pop .6s cubic-bezier(.175,.885,.32,1.275)">🏆</div>
+    <div class="all-done-title">
+      Selamat, Rayyan!<br>
+      Robotmu Kini <em style="font-style:normal;background:var(--mango);color:var(--ink);padding:2px 10px;border-radius:8px">Ahli Matematika!</em>
+    </div>
+    <p style="font-size:15px;color:var(--muted);margin:14px 0 22px;line-height:1.6">
+      Kamu menyelesaikan semua 6 misi bengkel!<br>
+      Robotmu bisa menggambar, membuat pola, menghitung, memetakan koordinat, dan memecahkan misteri X! 🌟
+    </p>
+    <div class="score-box">
+      <div class="score-num" id="allDoneStars"></div>
+      <div class="score-lbl">total bintang dikumpulkan dari 18</div>
+    </div>
+    <div style="font-size:36px;margin:16px 0;letter-spacing:3px" id="allDoneStarEmoji"></div>
+    <button class="act-btn primary" style="max-width:320px;margin:0 auto;display:block" onclick="goHome()">⚙️ Lihat Semua Misi</button>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+const S = {
+  chapter: 0, qIdx: 0, score: 0, lives: 3, combo: 0,
+  startTime: 0, answered: false, bossHP: 0, history: [],
+  progress: {}, totalStars: 0, timerVal: 0, timerInterval: null
+};
+
+/* ════════════════════════════════════════
+   AUDIO (procedural Web Audio)
+════════════════════════════════════════ */
+const SoundFX = (() => {
+  const ctx = (() => { try { return new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { return null; } })();
+  function beep(freq, dur, type='sine', vol=0.18) {
+    if (!ctx) return;
+    try {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type = type; o.frequency.value = freq;
+      g.gain.setValueAtTime(vol, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+      o.start(); o.stop(ctx.currentTime + dur);
+    } catch(e) {}
+  }
+  return {
+    play(type) {
+      if (type==='correct') { beep(523,.1); setTimeout(()=>beep(659,.1),110); setTimeout(()=>beep(784,.18),220); }
+      else if (type==='wrong') { beep(220,.18,'sawtooth',.12); setTimeout(()=>beep(180,.25,'sawtooth',.1),200); }
+      else if (type==='select') { beep(440,.06,'sine',.08); }
+      else if (type==='boop') { beep(660,.05,'square',.06); }
+      else if (type==='boss-hit') { beep(880,.08,'square',.1); }
+      else if (type==='fanfare') { [523,659,784,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.15),i*130)); }
+      else if (type==='tick') { beep(800,.05,'square',.06); }
+    }
+  };
+})();
+
+/* ════════════════════════════════════════
+   LESSON HTML BUILDERS
+════════════════════════════════════════ */
+function lsn1() {
+  return `
+<div class="ls">
+  <div class="ls-h">📐 Robot Penggambar Bentuk</div>
+  <p>Robotmu menggambar bentuk dengan mengikuti perintah! Sebuah <strong>segi banyak (poligon)</strong> punya sisi yang sama panjang. Makin banyak sisinya, makin bulat bentuknya. Beri perintah <strong>gambar(sisi)</strong> dan lihat robotmu bekerja!</p>
+  <div class="spellbook"><span class="cmt">// Robot menggambar bentuk bersisi banyak</span>
+<span class="kw">function</span> <span class="fn">gambarBentuk</span>(sisi) {
+  <span class="kw">let</span> sudutPutar = <span class="num">360</span> / sisi; <span class="cmt">// sudut luar</span>
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; sisi; i++) {
+    robot.<span class="fn">maju</span>(<span class="num">50</span>);          <span class="cmt">// tarik 1 sisi</span>
+    robot.<span class="fn">belok</span>(sudutPutar);  <span class="cmt">// putar</span>
+  }
+}
+<span class="fn">gambarBentuk</span>(<span class="num">3</span>); <span class="cmt">// segitiga!</span></div>
+  <div class="robo-stage">
+    <div class="robo-stage-label">🤖 Beri perintah — robot menggambar langsung!</div>
+    <div class="robo-chips" id="shapeChips"></div>
+    <canvas id="shapeCanvas" width="260" height="200"></canvas>
+    <div class="robo-readout" id="shapeReadout">Pilih jumlah sisi di atas 👆</div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">📏 Sudut Setiap Putaran</div>
+  <p>Setiap kali robot menyelesaikan satu bentuk penuh, ia berputar total <strong>360°</strong>. Jadi setiap belokan = <strong>360 ÷ jumlah sisi</strong>.<br>
+  Segitiga (3 sisi) → 360 ÷ 3 = <strong>120°</strong> tiap belok.<br>
+  Persegi (4 sisi) → 360 ÷ 4 = <strong>90°</strong> tiap belok.</p>
+</div>`;
+}
+
+function lsn2() {
+  return `
+<div class="ls">
+  <div class="ls-h">🔢 Mesin Pola Bilangan</div>
+  <p>Robotmu bisa membuat <strong>pola angka</strong> memakai loop! Beri robot angka <strong>awal</strong> dan sebuah <strong>aturan</strong> (tambah n atau kali n), lalu ia membuat barisan angkanya sendiri.</p>
+  <div class="spellbook"><span class="cmt">// Aturan: mulai 2, lalu +3 setiap langkah</span>
+<span class="kw">let</span> angka = <span class="num">2</span>;
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+  robot.<span class="fn">tampilkan</span>(angka);
+  angka = angka + <span class="num">3</span>;   <span class="cmt">// +3</span>
+}
+<span class="cmt">// Hasil: 2, 5, 8, 11, 14</span></div>
+  <div class="robo-stage">
+    <div class="robo-stage-label">🤖 Pilih aturan — robot membuat barisannya!</div>
+    <div class="robo-chips" id="patternChips"></div>
+    <div class="robo-readout" id="patternReadout" style="font-family:'Courier New',monospace;font-size:18px;min-height:24px">Pilih aturan di atas 👆</div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">✖️ Tambah vs Kali</div>
+  <p><strong>Pola +3:</strong> 2, 5, 8, 11... (lompatannya tetap sama).<br>
+  <strong>Pola ×2:</strong> 2, 4, 8, 16... (angkanya menggandakan, cepat membesar!).<br>
+  Untuk menebak angka berikutnya: cari dulu <strong>aturannya</strong>, lalu terapkan ke angka terakhir.</p>
+</div>`;
+}
+
+function lsn3() {
+  return `
+<div class="ls">
+  <div class="ls-h">🧮 Kalkulator Buatan Sendiri</div>
+  <p>Robot kalkulatormu mengikuti aturan penting: <strong>kali (×) dan bagi (÷) dikerjakan lebih dulu</strong>, baru tambah (+) dan kurang (−). Di sekolah disebut <strong>KABATAKU</strong> (Kali-Bagi-Tambah-Kurang).</p>
+  <div class="spellbook"><span class="cmt">// Robot menghitung dengan urutan benar</span>
+<span class="kw">let</span> hasil = <span class="num">2</span> + <span class="num">3</span> * <span class="num">4</span>;
+<span class="cmt">// Kali dulu: 3 * 4 = 12</span>
+<span class="cmt">// Lalu tambah: 2 + 12 = 14</span>
+robot.<span class="fn">tampilkan</span>(hasil); <span class="cmt">// 14, bukan 20!</span></div>
+  <div class="robo-stage">
+    <div class="robo-stage-label">🤖 Tekan tombol — robot menghitung urut benar!</div>
+    <div class="robo-chips" id="calcChips"></div>
+    <div class="robo-readout" id="calcReadout" style="font-family:'Courier New',monospace;font-size:17px;min-height:24px">Pilih soal di atas 👆</div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🛡️ Tanda Kurung Mengubah Urutan</div>
+  <p>Apa pun di dalam <strong>( )</strong> dikerjakan paling awal!<br>
+  <strong>2 + 3 × 4 = 14</strong> (kali dulu).<br>
+  <strong>(2 + 3) × 4 = 20</strong> (kurung dulu).<br>
+  Robot selalu mengintip tanda kurung lebih dahulu.</p>
+</div>`;
+}
+
+function lsn4() {
+  return `
+<div class="ls">
+  <div class="ls-h">🗺️ Plot Peta Koordinat</div>
+  <p>Robotmu memetakan dunia dengan dua angka: <strong>(x, y)</strong>. <strong>x</strong> = berapa langkah ke kanan, <strong>y</strong> = berapa langkah ke atas. Titik tengah <strong>(0, 0)</strong> disebut titik asal.</p>
+  <div class="spellbook"><span class="cmt">// Robot menaruh titik di peta</span>
+robot.<span class="fn">plot</span>(<span class="num">3</span>, <span class="num">2</span>);  <span class="cmt">// 3 kanan, 2 atas</span>
+robot.<span class="fn">plot</span>(-<span class="num">2</span>, <span class="num">1</span>); <span class="cmt">// 2 kiri, 1 atas</span>
+
+<span class="cmt">// Garis ajaib y = 2 * x</span>
+<span class="kw">for</span> (<span class="kw">let</span> x = -<span class="num">3</span>; x &lt;= <span class="num">3</span>; x++) {
+  robot.<span class="fn">plot</span>(x, <span class="num">2</span> * x); <span class="cmt">// (1,2)(2,4)...</span>
+}</div>
+  <div class="robo-stage">
+    <div class="robo-stage-label">🤖 Pilih titik / garis — robot memetakan di grid!</div>
+    <div class="robo-chips" id="plotChips"></div>
+    <canvas id="plotCanvas" width="260" height="260"></canvas>
+    <div class="robo-readout" id="plotReadout">Pilih titik di atas 👆</div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">🧭 Empat Wilayah Peta</div>
+  <p>Garis x dan y membagi peta jadi 4 wilayah (kuadran):<br>
+  <strong>Kanan-atas</strong> (x+, y+) · <strong>Kiri-atas</strong> (x−, y+) · <strong>Kiri-bawah</strong> (x−, y−) · <strong>Kanan-bawah</strong> (x+, y−).<br>
+  Garis <strong>y = 2x</strong> selalu naik 2 untuk tiap 1 langkah ke kanan!</p>
+</div>`;
+}
+
+function lsn5() {
+  return `
+<div class="ls">
+  <div class="ls-h">🔍 Detektif X — Temukan Angka Rahasia!</div>
+  <p>Kadang sebuah angka disembunyikan dan diberi nama <strong>x</strong>. Tugas robot detektifmu: cari berapa nilai x yang membuat persamaan benar. Caranya: <strong>lakukan kebalikannya</strong> di kedua sisi agar x sendirian.</p>
+  <div class="spellbook"><span class="cmt">// Kasus: x + 5 = 12. Berapa x?</span>
+<span class="cmt">// Kebalikan dari +5 adalah −5</span>
+<span class="kw">let</span> x = <span class="num">12</span> - <span class="num">5</span>;   <span class="cmt">// pindah 5 ke seberang</span>
+robot.<span class="fn">tampilkan</span>(x); <span class="cmt">// x = 7</span>
+<span class="cmt">// Cek: 7 + 5 = 12 ✓</span>
+
+<span class="cmt">// Kasus: 3 * x = 12. Berapa x?</span>
+<span class="kw">let</span> y = <span class="num">12</span> / <span class="num">3</span>;   <span class="cmt">// kebalikan ×3 adalah ÷3</span>
+<span class="cmt">// y = 4. Cek: 3 × 4 = 12 ✓</span></div>
+  <div class="robo-stage">
+    <div class="robo-stage-label">🤖 Pilih kasus — robot detektif memecahkannya!</div>
+    <div class="robo-chips" id="detChips"></div>
+    <div class="robo-readout" id="detReadout" style="font-family:'Courier New',monospace;font-size:16px;min-height:40px">Pilih kasus di atas 👆</div>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">⚖️ Aturan Keseimbangan</div>
+  <p>Persamaan seperti <strong>timbangan</strong> — kedua sisi harus tetap seimbang!<br>
+  Kalau ada <strong>+</strong>, batalkan dengan <strong>−</strong>.<br>
+  Kalau ada <strong>×</strong>, batalkan dengan <strong>÷</strong>.<br>
+  Lakukan ke <strong>kedua</strong> sisi, dan x akan muncul sendiri!</p>
+</div>`;
+}
+
+function lsn6() {
+  return `
+<div class="ls">
+  <div class="ls-h">🦾 BOSS: Visual Matematika</div>
+  <p>🦾 Robot Kacau membuat semua mesin di bengkel jadi error! Gabungkan SEMUA keahlianmu — bentuk &amp; sudut, pola, kalkulator, koordinat, dan misteri X — untuk memperbaikinya. Setiap jawaban benar membuat HP-nya berkurang!</p>
+  <div class="spellbook"><span class="cmt">// Robotmu kini menguasai semuanya:</span>
+robot.<span class="fn">gambarBentuk</span>(<span class="num">5</span>);   <span class="cmt">// bentuk &amp; sudut</span>
+robot.<span class="fn">buatPola</span>(<span class="num">2</span>, <span class="str">'+3'</span>); <span class="cmt">// pola bilangan</span>
+robot.<span class="fn">hitung</span>(<span class="str">'2+3*4'</span>);  <span class="cmt">// urutan operasi</span>
+robot.<span class="fn">plot</span>(<span class="num">2</span>, <span class="num">4</span>);       <span class="cmt">// koordinat</span>
+robot.<span class="fn">cariX</span>(<span class="str">'x+5=12'</span>);  <span class="cmt">// temukan X</span></div>
+  <div class="canvas-preview">
+    <div class="canvas-preview-label">🏆 Robotmu yang sudah ahli</div>
+    <canvas id="cvLesson6" width="240" height="160"></canvas>
+  </div>
+</div>
+<div class="ls">
+  <div class="ls-h">💪 Kamu Bisa Memperbaiki Robot Kacau!</div>
+  <p>Gunakan semua ilmu bengkelmu untuk menjawab tantangan 🦾 dan menyelamatkan bengkel robot. Kalahkan dia untuk menamatkan perjalanan!</p>
+</div>`;
+}
+
+/* ════════════════════════════════════════
+   INTERACTIVE LESSON WIDGETS
+════════════════════════════════════════ */
+function polygonInfo(sides) {
+  // interior angle sum = (n-2)*180 ; each interior angle = sum/n
+  const sum = (sides - 2) * 180;
+  const each = sum / sides;
+  const names = {3:'Segitiga',4:'Persegi',5:'Segilima',6:'Segienam',8:'Segidelapan'};
+  return { sum, each, name: names[sides] || (sides + ' sisi') };
+}
+function drawPolygon(canvasId, sides) {
+  const cv = document.getElementById(canvasId);
+  if (!cv) return;
+  const cx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  cx.clearRect(0,0,W,H);
+  // soft grid
+  cx.strokeStyle = 'rgba(46,49,146,0.10)'; cx.lineWidth = 1;
+  for (let i=0;i<=W;i+=26){ cx.beginPath(); cx.moveTo(i,0); cx.lineTo(i,H); cx.stroke(); }
+  for (let j=0;j<=H;j+=26){ cx.beginPath(); cx.moveTo(0,j); cx.lineTo(W,j); cx.stroke(); }
+  const ccx = W/2, ccy = H/2, r = 72;
+  cx.beginPath();
+  for (let i=0;i<sides;i++){
+    const ang = -Math.PI/2 + i * (2*Math.PI/sides);
+    const x = ccx + r*Math.cos(ang), y = ccy + r*Math.sin(ang);
+    if (i===0) cx.moveTo(x,y); else cx.lineTo(x,y);
+  }
+  cx.closePath();
+  cx.fillStyle = 'rgba(31,169,199,0.25)'; cx.fill();
+  cx.strokeStyle = '#2E3192'; cx.lineWidth = 3.5; cx.stroke();
+  // vertices
+  for (let i=0;i<sides;i++){
+    const ang = -Math.PI/2 + i * (2*Math.PI/sides);
+    const x = ccx + r*Math.cos(ang), y = ccy + r*Math.sin(ang);
+    cx.fillStyle = '#FF5C39'; cx.beginPath(); cx.arc(x,y,4,0,Math.PI*2); cx.fill();
+  }
+  cx.fillStyle = '#FFC234'; cx.font = '20px serif'; cx.textAlign='center'; cx.textBaseline='middle';
+  cx.fillText('🤖', ccx, ccy);
+}
+function initShapeWidget() {
+  const chipsEl = document.getElementById('shapeChips');
+  if (!chipsEl) return;
+  const opts = [3,4,5,6,8];
+  chipsEl.innerHTML = opts.map(n => `<button class="robo-chip" data-s="${n}" onclick="pickShape(${n})">${n} sisi</button>`).join('');
+  pickShape(4);
+}
+function pickShape(sides) {
+  SoundFX.play('boop');
+  document.querySelectorAll('#shapeChips .robo-chip').forEach(b => b.classList.toggle('on', +b.dataset.s === sides));
+  drawPolygon('shapeCanvas', sides);
+  const info = polygonInfo(sides);
+  const ro = document.getElementById('shapeReadout');
+  if (ro) ro.innerHTML = `<strong>${info.name}</strong> · ${sides} sisi · belok tiap sudut ${360/sides}° · jumlah sudut dalam ${info.sum}°`;
+}
+
+function sequenceFor(start, op, n, count) {
+  const arr = []; let v = start;
+  for (let i=0;i<count;i++){ arr.push(v); v = op === 'mul' ? v*n : v+n; }
+  return arr;
+}
+function initPatternWidget() {
+  const chipsEl = document.getElementById('patternChips');
+  if (!chipsEl) return;
+  const rules = [
+    {label:'+2', start:1, op:'add', n:2},
+    {label:'+5', start:5, op:'add', n:5},
+    {label:'+10', start:0, op:'add', n:10},
+    {label:'×2', start:1, op:'mul', n:2},
+    {label:'×3', start:1, op:'mul', n:3},
+  ];
+  window._patternRules = rules;
+  chipsEl.innerHTML = rules.map((r,i)=>`<button class="robo-chip" data-i="${i}" onclick="pickPattern(${i})">${r.label}</button>`).join('');
+  pickPattern(0);
+}
+function pickPattern(idx) {
+  SoundFX.play('boop');
+  const r = window._patternRules[idx];
+  document.querySelectorAll('#patternChips .robo-chip').forEach(b => b.classList.toggle('on', +b.dataset.i === idx));
+  const seq = sequenceFor(r.start, r.op, r.n, 6);
+  const ro = document.getElementById('patternReadout');
+  if (ro) ro.textContent = seq.join(', ') + ', …';
+}
+
+function initCalcWidget() {
+  const chipsEl = document.getElementById('calcChips');
+  if (!chipsEl) return;
+  const exprs = ['2 + 3 × 4', '10 − 2 × 3', '6 + 8 ÷ 2', '(2 + 3) × 4', '20 ÷ 4 + 1'];
+  window._calcExprs = exprs;
+  chipsEl.innerHTML = exprs.map((e,i)=>`<button class="robo-chip" data-i="${i}" onclick="pickCalc(${i})">${e}</button>`).join('');
+  pickCalc(0);
+}
+function evalExpr(e) {
+  // convert pretty symbols to JS, evaluate safely on a known numeric/operator string
+  const js = e.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-');
+  if (!/^[0-9+\-*/(). ]+$/.test(js)) return NaN;
+  try { return Function('"use strict";return (' + js + ')')(); } catch(err) { return NaN; }
+}
+function pickCalc(idx) {
+  SoundFX.play('boop');
+  const e = window._calcExprs[idx];
+  document.querySelectorAll('#calcChips .robo-chip').forEach(b => b.classList.toggle('on', +b.dataset.i === idx));
+  const ro = document.getElementById('calcReadout');
+  if (ro) ro.textContent = e + ' = ' + evalExpr(e);
+}
+
+let _plotState = { points: [] };
+function drawGrid(canvasId, points, line2x) {
+  const cv = document.getElementById(canvasId);
+  if (!cv) return;
+  const cx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const cellsHalf = 5;             // grid from -5..5
+  const unit = (W/2) / cellsHalf;  // px per unit
+  const ox = W/2, oy = H/2;
+  cx.clearRect(0,0,W,H);
+  cx.fillStyle = '#fff'; cx.fillRect(0,0,W,H);
+  // minor grid
+  cx.strokeStyle = 'rgba(46,49,146,0.12)'; cx.lineWidth = 1;
+  for (let i=-cellsHalf;i<=cellsHalf;i++){
+    cx.beginPath(); cx.moveTo(ox+i*unit,0); cx.lineTo(ox+i*unit,H); cx.stroke();
+    cx.beginPath(); cx.moveTo(0,oy+i*unit); cx.lineTo(W,oy+i*unit); cx.stroke();
+  }
+  // axes
+  cx.strokeStyle = '#1A1614'; cx.lineWidth = 2.5;
+  cx.beginPath(); cx.moveTo(0,oy); cx.lineTo(W,oy); cx.stroke();
+  cx.beginPath(); cx.moveTo(ox,0); cx.lineTo(ox,H); cx.stroke();
+  cx.fillStyle = '#6B6259'; cx.font = '11px Nunito'; cx.textAlign='center';
+  cx.fillText('x', W-8, oy-6); cx.fillText('y', ox+10, 10);
+  // line y = 2x
+  if (line2x) {
+    cx.strokeStyle = '#1FA9C7'; cx.lineWidth = 3;
+    const x1 = -2.4, x2 = 2.4;
+    cx.beginPath();
+    cx.moveTo(ox + x1*unit, oy - (2*x1)*unit);
+    cx.lineTo(ox + x2*unit, oy - (2*x2)*unit);
+    cx.stroke();
+  }
+  // points
+  (points||[]).forEach(p => {
+    const px = ox + p.x*unit, py = oy - p.y*unit;
+    cx.fillStyle = p.color || '#FF5C39';
+    cx.beginPath(); cx.arc(px,py,6,0,Math.PI*2); cx.fill();
+    cx.fillStyle = '#1A1614'; cx.font = 'bold 11px Nunito'; cx.textAlign='left';
+    cx.fillText(`(${p.x},${p.y})`, px+7, py-6);
+  });
+}
+function initPlotWidget() {
+  const chipsEl = document.getElementById('plotChips');
+  if (!chipsEl) return;
+  const opts = [
+    {label:'(3, 2)', x:3, y:2},
+    {label:'(-2, 1)', x:-2, y:1},
+    {label:'(-3, -2)', x:-3, y:-2},
+    {label:'(2, -3)', x:2, y:-3},
+    {label:'Garis y = 2x', line:true},
+  ];
+  window._plotOpts = opts;
+  chipsEl.innerHTML = opts.map((o,i)=>`<button class="robo-chip" data-i="${i}" onclick="pickPlot(${i})">${o.label}</button>`).join('');
+  drawGrid('plotCanvas', [], false);
+  pickPlot(0);
+}
+function pickPlot(idx) {
+  SoundFX.play('boop');
+  const o = window._plotOpts[idx];
+  document.querySelectorAll('#plotChips .robo-chip').forEach(b => b.classList.toggle('on', +b.dataset.i === idx));
+  const ro = document.getElementById('plotReadout');
+  if (o.line) {
+    const pts = [];
+    for (let x=-2;x<=2;x++) pts.push({x, y:2*x, color:'#2E3192'});
+    drawGrid('plotCanvas', pts, true);
+    if (ro) ro.innerHTML = `Garis <strong>y = 2x</strong> · (1,2) (2,4) (-1,-2) … naik 2 tiap 1 ke kanan!`;
+  } else {
+    drawGrid('plotCanvas', [{x:o.x, y:o.y}], false);
+    const quad = o.x>0&&o.y>0 ? 'kanan-atas' : o.x<0&&o.y>0 ? 'kiri-atas' : o.x<0&&o.y<0 ? 'kiri-bawah' : 'kanan-bawah';
+    if (ro) ro.innerHTML = `Titik <strong>(${o.x}, ${o.y})</strong> ada di wilayah <strong>${quad}</strong>`;
+  }
+}
+
+function initDetWidget() {
+  const chipsEl = document.getElementById('detChips');
+  if (!chipsEl) return;
+  const cases = [
+    {label:'x + 5 = 12', steps:'x + 5 = 12\nx = 12 − 5\nx = 7   ✓ (7+5=12)'},
+    {label:'x − 4 = 6', steps:'x − 4 = 6\nx = 6 + 4\nx = 10  ✓ (10−4=6)'},
+    {label:'3x = 12', steps:'3 × x = 12\nx = 12 ÷ 3\nx = 4   ✓ (3×4=12)'},
+    {label:'2x = 14', steps:'2 × x = 14\nx = 14 ÷ 2\nx = 7   ✓ (2×7=14)'},
+  ];
+  window._detCases = cases;
+  chipsEl.innerHTML = cases.map((c,i)=>`<button class="robo-chip" data-i="${i}" onclick="pickDet(${i})">${c.label}</button>`).join('');
+  pickDet(0);
+}
+function pickDet(idx) {
+  SoundFX.play('boop');
+  const c = window._detCases[idx];
+  document.querySelectorAll('#detChips .robo-chip').forEach(b => b.classList.toggle('on', +b.dataset.i === idx));
+  const ro = document.getElementById('detReadout');
+  if (ro) ro.textContent = c.steps;
+}
+
+function drawLesson6() {
+  const cv = document.getElementById('cvLesson6');
+  if (!cv) return;
+  const cx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  cx.clearRect(0,0,W,H);
+  cx.fillStyle = '#0a1030'; cx.fillRect(0,0,W,H);
+  // stars
+  for (let i=0;i<26;i++){ cx.fillStyle='rgba(255,255,255,0.7)'; cx.fillRect(Math.random()*W, Math.random()*H, 2, 2); }
+  // mini polygon
+  const ccx=60, ccy=70, r=26;
+  cx.beginPath();
+  for (let i=0;i<5;i++){ const a=-Math.PI/2+i*(2*Math.PI/5); const x=ccx+r*Math.cos(a), y=ccy+r*Math.sin(a); i?cx.lineTo(x,y):cx.moveTo(x,y); }
+  cx.closePath(); cx.strokeStyle='#1FA9C7'; cx.lineWidth=2.5; cx.stroke();
+  // mini grid line
+  cx.strokeStyle='#FFC234'; cx.lineWidth=2; cx.beginPath(); cx.moveTo(120,130); cx.lineTo(200,40); cx.stroke();
+  cx.fillStyle='#FF5C39'; cx.beginPath(); cx.arc(160,85,5,0,Math.PI*2); cx.fill();
+  // robot face
+  cx.fillStyle='#fff'; cx.font='34px serif'; cx.textAlign='center'; cx.textBaseline='middle';
+  cx.fillText('🤖', W/2, H-30);
+  cx.fillStyle='#FFC234'; cx.font='bold 12px Nunito';
+  cx.fillText('x = 7', 175, 130);
+}
+
+/* boss celebration animation (on victory) */
+let _bossCelebrateRAF = null;
+function runBossCelebrate() {
+  const cv = document.getElementById('bossCelebrate');
+  if (!cv) return;
+  const cx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  if (_bossCelebrateRAF) cancelAnimationFrame(_bossCelebrateRAF);
+  const parts = [];
+  const colors = ['#FFC234','#FF5C39','#1F9D55','#1FA9C7','#E84BA0','#2E3192'];
+  for (let i=0;i<40;i++){
+    parts.push({ x:W/2, y:H/2, vx:(Math.random()-0.5)*6, vy:(Math.random()-0.5)*6-1.5,
+      c:colors[~~(Math.random()*colors.length)], s:3+Math.random()*4 });
+  }
+  let t = 0;
+  function frame() {
+    t++;
+    cx.fillStyle = '#0a1030'; cx.fillRect(0,0,W,H);
+    parts.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.12;
+      cx.fillStyle = p.c; cx.fillRect(p.x, p.y, p.s, p.s);
+    });
+    const sc = 1 + 0.15*Math.sin(t/8);
+    cx.save(); cx.translate(W/2, H/2); cx.scale(sc, sc);
+    cx.font = '46px serif'; cx.textAlign='center'; cx.textBaseline='middle';
+    cx.fillText('🤖', 0, -6);
+    cx.restore();
+    cx.fillStyle = '#FFC234'; cx.font = 'bold 16px Nunito'; cx.textAlign='center';
+    cx.fillText('ROBOT AHLI MATEMATIKA!', W/2, H-18);
+    if (t < 180) _bossCelebrateRAF = requestAnimationFrame(frame);
+  }
+  frame();
+}
+function stopBossCelebrate() {
+  if (_bossCelebrateRAF) { cancelAnimationFrame(_bossCelebrateRAF); _bossCelebrateRAF = null; }
+}
+
+/* ════════════════════════════════════════
+   CHAPTERS DATA
+════════════════════════════════════════ */
+const CHAPTERS = [
+  {
+    id:'ch1', title:'Robot Penggambar Bentuk', depth:'📐 Misi 1 – Bengkel Bentuk', emoji:'📐',
+    color:'#2E3192', colorBg:'#E8E9F8',
+    desc:'Ajari robot menggambar segi banyak – pelajari sisi & sudut!',
+    kapi:'Robot menggambar bentuk dengan loop! Sisi sama panjang, dan setiap belok = 360 ÷ jumlah sisi. Segitiga = belok 120°, persegi = belok 90°!',
+    lessonFn: lsn1, initWidget: initShapeWidget, isBoss: false,
+    questions:[
+      {type:'mc', q:'Robot menggambar bentuk dengan 4 sisi sama panjang. Bentuk apa itu?', visual:'⬜', opts:['Segitiga','Persegi','Segilima','Lingkaran'], ans:1, expl:'4 sisi sama panjang = persegi!'},
+      {type:'input', q:'Segitiga punya berapa sisi?', ans:'3', expl:'Segitiga = 3 sisi!'},
+      {type:'mc', q:'Robot menggambar segilima (5 sisi). Tiap belokan = 360 ÷ 5 = ?', opts:['90°','60°','72°','120°'], ans:2, expl:'360 ÷ 5 = 72° tiap belok!'},
+      {type:'input', q:'Robot menggambar persegi. Berapa derajat tiap belokannya? (360 ÷ 4)', ans:'90', expl:'360 ÷ 4 = 90°! Sudut siku-siku!'},
+      {type:'mc', q:'Bentuk mana yang punya sisi PALING banyak?', visual:'🔷', opts:['Segitiga','Persegi','Segilima','Segienam'], ans:3, expl:'Segienam = 6 sisi, paling banyak di antara pilihan!'},
+      {type:'mc', q:'Makin BANYAK sisi sebuah bentuk, ia makin terlihat seperti?', opts:['Segitiga','Lingkaran','Garis lurus','Titik'], ans:1, expl:'Makin banyak sisi → makin bulat → mendekati lingkaran!'},
+    ]
+  },
+  {
+    id:'ch2', title:'Mesin Pola Bilangan', depth:'🔢 Misi 2 – Mesin Pola', emoji:'🔢',
+    color:'#1FA9C7', colorBg:'#E0F4F9',
+    desc:'Robot membuat barisan angka dengan loop – tebak angka berikutnya!',
+    kapi:'Loop membuat pola! Beri robot angka awal + aturan (+n atau ×n). Pola +3: 2,5,8,11. Pola ×2: 2,4,8,16. Cari aturannya untuk menebak angka berikutnya!',
+    lessonFn: lsn2, initWidget: initPatternWidget, isBoss: false,
+    questions:[
+      {type:'mc', q:'Robot membuat pola: 2, 4, 6, 8, … Angka berikutnya?', visual:'🔢', opts:['9','10','12','11'], ans:1, expl:'Aturannya +2 → 8 + 2 = 10!'},
+      {type:'input', q:'Pola +5: 5, 10, 15, 20, … Berapa angka berikutnya?', ans:'25', expl:'Aturan +5 → 20 + 5 = 25!'},
+      {type:'mc', q:'Pola: 3, 6, 12, 24, … Aturannya apa?', opts:['Tambah 3 (+3)','Tambah 6 (+6)','Kali 2 (×2)','Kali 3 (×3)'], ans:2, expl:'3→6→12→24 setiap kali digandakan = ×2!'},
+      {type:'input', q:'Pola ×2: 1, 2, 4, 8, … Berapa angka berikutnya?', ans:'16', expl:'×2 → 8 × 2 = 16!'},
+      {type:'mc', q:'Pola: 100, 90, 80, 70, … Angka berikutnya?', visual:'⬇️', opts:['75','65','80','60'], ans:3, expl:'Aturannya −10 → 70 − 10 = 60!'},
+      {type:'mc', q:'Robot mulai dari 0, aturan +4. Barisan yang benar?', opts:['0, 4, 8, 16','0, 4, 8, 12','4, 8, 12, 16','0, 2, 4, 6'], ans:1, expl:'Mulai 0, tambah 4 tiap langkah: 0, 4, 8, 12!'},
+    ]
+  },
+  {
+    id:'ch3', title:'Kalkulator Buatan Sendiri', depth:'🧮 Misi 3 – Bengkel Hitung', emoji:'🧮',
+    color:'#1F9D55', colorBg:'#E3F5EB',
+    desc:'Robot menghitung dengan urutan benar – kali & bagi dulu!',
+    kapi:'KABATAKU! Robot mengerjakan Kali & Bagi DULU, baru Tambah & Kurang. 2 + 3 × 4 = 14 (bukan 20!). Tanda kurung ( ) selalu dikerjakan paling awal!',
+    lessonFn: lsn3, initWidget: initCalcWidget, isBoss: false,
+    questions:[
+      {type:'mc', q:'2 + 3 × 4 = ? (ingat: kali dulu!)', visual:'🧮', opts:['20','14','24','9'], ans:1, expl:'Kali dulu: 3×4=12. Lalu 2+12 = 14!'},
+      {type:'input', q:'10 − 2 × 3 = ?', ans:'4', expl:'Kali dulu: 2×3=6. Lalu 10−6 = 4!'},
+      {type:'mc', q:'(2 + 3) × 4 = ? (ada tanda kurung!)', opts:['14','9','20','24'], ans:2, expl:'Kurung dulu: 2+3=5. Lalu 5×4 = 20!'},
+      {type:'input', q:'6 + 8 ÷ 2 = ?', ans:'10', expl:'Bagi dulu: 8÷2=4. Lalu 6+4 = 10!'},
+      {type:'mc', q:'Mana yang dikerjakan PALING awal di 5 + 6 ÷ 2?', visual:'❓', opts:['5 + 6','6 ÷ 2','5 + 3','Tidak ada urutan'], ans:1, expl:'Bagi (÷) dikerjakan sebelum tambah → 6÷2 dulu!'},
+      {type:'mc', q:'20 ÷ 4 + 1 = ?', opts:['4','21','6','5'], ans:2, expl:'Bagi dulu: 20÷4=5. Lalu 5+1 = 6!'},
+    ]
+  },
+  {
+    id:'ch4', title:'Plot Peta Koordinat', depth:'🗺️ Misi 4 – Peta Robot', emoji:'🗺️',
+    color:'#FFC234', colorBg:'#FFF5D6',
+    desc:'Robot memetakan titik (x, y) dan garis y = 2x di grid!',
+    kapi:'Koordinat (x, y): x = ke kanan, y = ke atas. Titik (0,0) = tengah. Garis y = 2x naik 2 setiap 1 langkah ke kanan: (1,2), (2,4)…',
+    lessonFn: lsn4, initWidget: initPlotWidget, isBoss: false,
+    questions:[
+      {type:'mc', q:'Pada titik (x, y), angka pertama (x) menunjukkan?', visual:'🗺️', opts:['Berapa ke atas','Berapa ke kanan','Warna titik','Ukuran titik'], ans:1, expl:'x = posisi mendatar (kanan/kiri), y = posisi tegak (atas/bawah)!'},
+      {type:'input', q:'Robot ada di titik (0,0). Jika berjalan ke titik (4,0), berapa langkah ke kanan?', ans:'4', expl:'Dari x=0 ke x=4 = 4 langkah ke kanan!'},
+      {type:'mc', q:'Titik (3, 2) ada di wilayah (kuadran) mana?', visual:'🧭', opts:['Kiri-atas','Kiri-bawah','Kanan-atas','Kanan-bawah'], ans:2, expl:'x positif & y positif = wilayah kanan-atas!'},
+      {type:'mc', q:'Garis y = 2x. Jika x = 3, maka y = ?', opts:['5','3','6','9'], ans:2, expl:'y = 2 × 3 = 6 → titik (3, 6)!'},
+      {type:'input', q:'Garis y = 2x. Jika x = 5, berapa nilai y?', ans:'10', expl:'y = 2 × 5 = 10!'},
+      {type:'mc', q:'Titik mana yang ada di garis y = 2x?', visual:'📈', opts:['(2, 2)','(4, 2)','(3, 5)','(2, 4)'], ans:3, expl:'(2,4): 4 = 2×2 ✓. Yang lain tidak cocok!'},
+    ]
+  },
+  {
+    id:'ch5', title:'Detektif X', depth:'🔍 Misi 5 – Detektif Robot', emoji:'🔍',
+    color:'#FF5C39', colorBg:'#FFE8E3',
+    desc:'Robot detektif mencari angka rahasia X dalam persamaan!',
+    kapi:'Temukan X! Lakukan kebalikannya: x+5=12 → x=12−5=7. 3x=12 → x=12÷3=4. Persamaan seperti timbangan – seimbangkan kedua sisi!',
+    lessonFn: lsn5, initWidget: initDetWidget, isBoss: false,
+    questions:[
+      {type:'mc', q:'x + 4 = 10. Berapa nilai x?', visual:'🔍', opts:['14','6','4','7'], ans:1, expl:'x = 10 − 4 = 6! Cek: 6+4=10 ✓'},
+      {type:'input', q:'x + 5 = 12. Berapa nilai x?', ans:'7', expl:'x = 12 − 5 = 7! Cek: 7+5=12 ✓'},
+      {type:'mc', q:'3x = 12 (artinya 3 × x = 12). Berapa x?', visual:'⚖️', opts:['9','15','4','36'], ans:2, expl:'x = 12 ÷ 3 = 4! Cek: 3×4=12 ✓'},
+      {type:'input', q:'x − 3 = 6. Berapa nilai x?', ans:'9', expl:'x = 6 + 3 = 9! Cek: 9−3=6 ✓'},
+      {type:'input', q:'2x = 14 (artinya 2 × x = 14). Berapa nilai x?', ans:'7', expl:'x = 14 ÷ 2 = 7! Cek: 2×7=14 ✓'},
+      {type:'mc', q:'Untuk x + 8 = 15, robot harus melakukan apa pada kedua sisi?', opts:['Tambah 8','Kali 8','Bagi 8','Kurangi 8'], ans:3, expl:'Kebalikan dari +8 adalah −8 → x = 15−8 = 7!'},
+    ]
+  },
+  {
+    id:'ch6', title:'BOSS: Visual Matematika', depth:'🏆 BOSS – Robot Kacau!', emoji:'🦾',
+    color:'#2E3192', colorBg:'#E8E9F8',
+    desc:'Gabungkan semua ilmu bengkel – perbaiki 🦾 Robot Kacau!',
+    kapi:'BOSS TERAKHIR! Gabungkan semuanya: bentuk & sudut, pola, kalkulator, koordinat, dan misteri X. Setiap jawaban benar memperbaiki 🦾 Robot Kacau!',
+    lessonFn: lsn6, drawFn: drawLesson6, isBoss: true,
+    questions:[
+      {type:'mc', q:'🦾 Bentuk: robot menggambar segienam (6 sisi). Tiap belok = 360 ÷ 6 = ?', visual:'⬡', opts:['90°','60°','45°','72°'], ans:1, expl:'360 ÷ 6 = 60° tiap belok!'},
+      {type:'input', q:'🦾 Pola ×3: 1, 3, 9, … Berapa angka berikutnya?', ans:'27', expl:'×3 → 9 × 3 = 27!'},
+      {type:'mc', q:'🦾 Kalkulator: 4 + 6 × 2 = ? (kali dulu!)', visual:'🧮', opts:['20','14','16','12'], ans:2, expl:'Kali dulu: 6×2=12. Lalu 4+12 = 16!'},
+      {type:'input', q:'🦾 Koordinat garis y = 2x: jika x = 4, berapa y?', ans:'8', expl:'y = 2 × 4 = 8 → titik (4, 8)!'},
+      {type:'mc', q:'🦾 Detektif X: 5x = 20. Berapa nilai x?', visual:'🔍', opts:['15','25','4','100'], ans:2, expl:'x = 20 ÷ 5 = 4! Cek: 5×4=20 ✓'},
+      {type:'input', q:'🦾 Serangan terakhir! x + 9 = 16. Berapa nilai x?', ans:'7', expl:'x = 16 − 9 = 7! Robot Kacau diperbaiki! ✓'},
+    ]
+  },
+];
+
+/* De-bias multiple-choice: shuffle each MC question's options once at load
+   so the correct answer isn't always the first button (kids notice patterns!). */
+CHAPTERS.forEach(ch => (ch.questions || []).forEach(q => {
+  if (q.type === 'mc' && Array.isArray(q.opts) && typeof q.ans === 'number') {
+    const correct = q.opts[q.ans];
+    for (let i = q.opts.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [q.opts[i], q.opts[j]] = [q.opts[j], q.opts[i]];
+    }
+    q.ans = q.opts.indexOf(correct);
+  }
+}));
+
+/* ════════════════════════════════════════
+   PERSISTENCE  (key: rayyanBridge)
+════════════════════════════════════════ */
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem('rayyanBridge') || '{}');
+    S.progress = d.progress || {};
+    S.totalStars = d.totalStars || 0;
+    document.getElementById('starCount').textContent = S.totalStars;
+  } catch(e) {}
+}
+function saveState() {
+  try {
+    localStorage.setItem('rayyanBridge', JSON.stringify({ progress: S.progress, totalStars: S.totalStars }));
+  } catch(e) {}
+}
+function resetProgress() {
+  const pw = prompt('Masukkan kata sandi untuk reset:');
+  if (pw === null) return;
+  if (pw !== 'bogor123') { alert('Kata sandi salah!'); return; }
+  S.progress = {}; S.totalStars = 0;
+  document.getElementById('starCount').textContent = 0;
+  saveState(); renderHome();
+}
+
+/* ════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  const isHome = id === 'sHome';
+  document.getElementById('labBg').classList.toggle('hidden', !isHome);
+  document.getElementById('mainHdr').classList.toggle('light', !isHome);
+}
+
+function goHome() {
+  stopTimer();
+  stopBossCelebrate();
+  show('sHome');
+  renderHome();
+}
+
+function openChapter(idx) {
+  const prev = CHAPTERS.slice(0, idx);
+  const prevDone = prev.every(c => (S.progress[c.id] || {}).stars > 0);
+  if (idx > 0 && !prevDone) { SoundFX.play('wrong'); return; }
+  S.chapter = idx;
+  const ch = CHAPTERS[idx];
+  document.getElementById('lessonHdr').innerHTML = `
+    <div class="lesson-hdr">
+      <div class="lesson-icon">${ch.emoji}</div>
+      <div>
+        <div class="lesson-depth">${ch.depth}</div>
+        <div class="lesson-title">${ch.title}</div>
+      </div>
+    </div>`;
+  document.getElementById('lessonBody').innerHTML = ch.lessonFn();
+  document.getElementById('kapiMsg').textContent = ch.kapi;
+  const btn = document.getElementById('startBtn');
+  btn.className = `start-btn${ch.isBoss ? ' boss-btn' : ''}`;
+  btn.textContent = ch.isBoss ? '🦾 Perbaiki Robot Kacau!' : '⚙️ Mulai Misi!';
+  show('sLesson');
+  // Initialise interactive widget / lesson canvas after DOM update
+  setTimeout(() => {
+    if (typeof ch.initWidget === 'function') ch.initWidget();
+    if (typeof ch.drawFn === 'function') ch.drawFn();
+  }, 80);
+}
+
+/* ════════════════════════════════════════
+   EXERCISE
+════════════════════════════════════════ */
+function startExercise() {
+  S.qIdx = 0; S.score = 0; S.answered = false;
+  S.lives = 3; S.combo = 0; S.history = [];
+  S.startTime = Date.now();
+  const ch = CHAPTERS[S.chapter];
+  S.bossHP = ch.questions.length;
+  document.getElementById('bossHdr').style.display = ch.isBoss ? 'block' : 'none';
+  document.getElementById('qCard').className = ch.isBoss ? 'boss-q-wrap' : 'q-card';
+  document.getElementById('qLabel').textContent = ch.isBoss ? '⚔️ Serangan Robot Kacau' : 'Perintah Robot';
+  updateHearts();
+  renderQ();
+  show('sExercise');
+}
+
+function retryChapter() { startExercise(); }
+
+function renderQ() {
+  const ch = CHAPTERS[S.chapter];
+  const q = ch.questions[S.qIdx];
+  const total = ch.questions.length;
+
+  document.getElementById('exChName').textContent = `${ch.emoji} ${ch.title}`;
+  document.getElementById('exQNum').textContent = `${S.qIdx + 1}/${total}`;
+  document.getElementById('exBar').style.width = `${(S.qIdx / total) * 100}%`;
+  document.getElementById('qText').textContent = q.q;
+
+  const vis = document.getElementById('qVisual');
+  if (q.visual) { vis.innerHTML = q.visual; vis.style.display = ''; }
+  else { vis.style.display = 'none'; }
+
+  const area = document.getElementById('answerArea');
+  if (q.type === 'mc') renderMC(q, area);
+  else if (q.type === 'input') renderInput(area);
+  else if (q.type === 'drag-sort') renderDragSort(q, area);
+  else if (q.type === 'code-fill') renderCodeFill(q, area);
+
+  document.getElementById('toast').className = 'toast';
+  document.getElementById('nxtBtn').className = 'nxt-btn';
+  updateCombo();
+  S.answered = false;
+
+  if (ch.isBoss) updateBossHP();
+  const isSlow = q.type === 'drag-sort' || q.type === 'code-fill';
+  startTimer(isSlow ? 45 : 35);
+}
+
+/* ─── MC ─── */
+function renderMC(q, area) {
+  area.innerHTML = `<div class="opts-grid">${q.opts.map((o, i) =>
+    `<button class="opt-btn" onclick="pickOpt(${i})">${o}</button>`
+  ).join('')}</div>`;
+}
+function pickOpt(idx) {
+  if (S.answered) return;
+  S.answered = true; stopTimer();
+  SoundFX.play('select');
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = idx === q.ans;
+  document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+  document.querySelectorAll('.opt-btn')[idx].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) document.querySelectorAll('.opt-btn')[q.ans].classList.add('correct');
+  handleAnswer(correct, q.opts[q.ans], q.opts[idx], q.expl);
+}
+
+/* ─── INPUT (typed number) ─── */
+function renderInput(area) {
+  area.innerHTML = `<div class="inp-row"><input type="text" inputmode="numeric" class="num-inp" id="numInp" placeholder="Jawaban…" onkeydown="if(event.key==='Enter')checkInp()" autocapitalize="off" autocorrect="off"><button class="chk-btn" onclick="checkInp()">Cek ✓</button></div>`;
+  setTimeout(() => { const el = document.getElementById('numInp'); if (el) el.focus(); }, 80);
+}
+function checkInp() {
+  if (S.answered) return;
+  const inp = document.getElementById('numInp');
+  const val = (inp.value || '').trim();
+  if (!val) return;
+  S.answered = true; stopTimer(); inp.disabled = true;
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = val === q.ans;
+  inp.classList.add(correct ? 'ok' : 'bad');
+  handleAnswer(correct, q.ans, val, q.expl);
+}
+
+/* ─── DRAG-SORT ─── */
+let _sortState = { order: [], selected: null };
+function renderDragSort(q, area) {
+  _sortState.order = [...q.items];
+  _sortState.selected = null;
+  area.innerHTML = `
+    <div class="sort-label">Klik dua item untuk menukar posisi!</div>
+    <div class="sort-items" id="sortItems"></div>
+    <div style="margin-top:12px;text-align:center">
+      <button class="chk-btn" onclick="checkSort()">Cek Urutan ✓</button>
+    </div>`;
+  renderSortItems();
+}
+function renderSortItems() {
+  const wrap = document.getElementById('sortItems');
+  if (!wrap) return;
+  wrap.innerHTML = _sortState.order.map((v, i) =>
+    `<div class="sort-item${i === _sortState.selected ? ' selected' : ''}" onclick="sortClick(${i})">${v}</div>`
+  ).join('');
+}
+function sortClick(idx) {
+  if (S.answered) return;
+  SoundFX.play('select');
+  if (_sortState.selected === null) { _sortState.selected = idx; }
+  else if (_sortState.selected === idx) { _sortState.selected = null; }
+  else {
+    const tmp = _sortState.order[_sortState.selected];
+    _sortState.order[_sortState.selected] = _sortState.order[idx];
+    _sortState.order[idx] = tmp;
+    _sortState.selected = null;
+  }
+  renderSortItems();
+}
+function checkSort() {
+  if (S.answered) return;
+  S.answered = true; stopTimer();
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = JSON.stringify(_sortState.order) === JSON.stringify(q.ans);
+  document.querySelectorAll('.sort-item').forEach((el, i) => {
+    el.classList.add('disabled');
+    el.classList.add(correct ? 'correct' : (_sortState.order[i] === q.ans[i] ? 'correct' : 'wrong'));
+  });
+  handleAnswer(correct, q.ans.join(' → '), _sortState.order.join(' → '), q.expl);
+}
+
+/* ─── CODE FILL ─── */
+function renderCodeFill(q, area) {
+  const lines = q.code.split('\n');
+  const html = lines.map(line => {
+    if (line.includes('___')) {
+      return line.replace('___', `<input type="text" id="codeBlank" class="code-blank" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="___" onkeydown="if(event.key==='Enter')checkCodeFill()">`);
+    }
+    return escapeHtml(line);
+  }).join('\n');
+
+  area.innerHTML = `
+    <div class="code-fill-wrap">
+      <div class="spellbook" style="white-space:pre-wrap">${html}</div>
+      <div class="spell-output" id="spellOut">
+        <div class="spell-output-label">🤖 Robot menjawab:</div>
+        <div id="spellOutText"></div>
+      </div>
+      <div style="margin-top:10px;text-align:center">
+        <button class="chk-btn" onclick="checkCodeFill()">⚙️ Jalankan!</button>
+      </div>
+    </div>`;
+
+  setTimeout(() => { const inp = area.querySelector('.code-blank'); if (inp) inp.focus(); }, 80);
+}
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function checkCodeFill() {
+  if (S.answered) return;
+  const inp = document.querySelector('.code-blank');
+  if (!inp) return;
+  const val = inp.value.trim();
+  if (!val) return;
+  S.answered = true; stopTimer(); inp.disabled = true;
+  const q = CHAPTERS[S.chapter].questions[S.qIdx];
+  const correct = val === q.ans || val.replace(/"/g,"'") === q.ans.replace(/"/g,"'");
+  inp.classList.add(correct ? 'ok' : 'bad');
+  if (correct) {
+    const outEl = document.getElementById('spellOut');
+    const outText = document.getElementById('spellOutText');
+    if (outEl && outText) { outText.textContent = q.output || ''; outEl.classList.add('show'); }
+  }
+  handleAnswer(correct, q.ans, val, q.expl);
+}
+
+/* ════════════════════════════════════════
+   ANSWER LOGIC
+════════════════════════════════════════ */
+function handleAnswer(correct, correctAns, userAns, expl) {
+  const ch = CHAPTERS[S.chapter];
+  if (correct) {
+    S.score++;
+    S.combo++;
+    SoundFX.play('correct');
+    if (ch.isBoss) {
+      S.bossHP--;
+      updateBossHP();
+      const be = document.getElementById('bossEnemy');
+      be.classList.add('hit');
+      setTimeout(() => be.classList.remove('hit'), 450);
+      SoundFX.play('boss-hit');
+    }
+  } else {
+    S.lives--;
+    S.combo = 0;
+    SoundFX.play('wrong');
+    document.body.classList.add('shake');
+    setTimeout(() => document.body.classList.remove('shake'), 380);
+    updateHearts();
+  }
+  S.history.push({ q: CHAPTERS[S.chapter].questions[S.qIdx].q, correct, correctAns, userAns });
+  updateCombo();
+  showToast(correct, correctAns, expl);
+
+  if (S.lives <= 0) {
+    setTimeout(() => { stopTimer(); showComplete(true); }, 1200);
+  }
+}
+
+function showToast(correct, correctAns, expl) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastIco').textContent = correct ? '🤖' : '❌';
+  document.getElementById('toastTitle').textContent = correct
+    ? 'Robotmu benar! Hebat, Rayyan!'
+    : 'Belum tepat – yuk pikirkan lagi! 💡';
+  document.getElementById('toastExpl').textContent = expl || '';
+  toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
+  document.getElementById('nxtBtn').className = 'nxt-btn show';
+}
+
+function nextQ() {
+  const ch = CHAPTERS[S.chapter];
+  S.qIdx++;
+  if (S.qIdx >= ch.questions.length) {
+    showComplete(false);
+  } else {
+    renderQ();
+  }
+}
+
+/* ════════════════════════════════════════
+   TIMER
+════════════════════════════════════════ */
+function startTimer(secs) {
+  stopTimer();
+  S.timerVal = secs;
+  const circ = 2 * Math.PI * 20;
+  const fg = document.getElementById('timerFg');
+  const num = document.getElementById('timerNum');
+  if (fg) fg.style.stroke = 'var(--bot)';
+  S.timerInterval = setInterval(() => {
+    S.timerVal--;
+    if (num) num.textContent = S.timerVal;
+    if (fg) fg.style.strokeDashoffset = circ * (1 - S.timerVal / secs);
+    if (S.timerVal <= 5) {
+      SoundFX.play('tick');
+      if (fg) fg.style.stroke = 'var(--tomato)';
+    }
+    if (S.timerVal <= 0) {
+      stopTimer();
+      if (!S.answered) {
+        S.answered = true;
+        const q = CHAPTERS[S.chapter].questions[S.qIdx];
+        handleAnswer(false, q.type === 'mc' ? q.opts[q.ans] : (q.type === 'drag-sort' ? q.ans.join(' → ') : q.ans), '(waktu habis!)', q.expl);
+      }
+    }
+  }, 1000);
+}
+function stopTimer() {
+  if (S.timerInterval) { clearInterval(S.timerInterval); S.timerInterval = null; }
+}
+
+/* ════════════════════════════════════════
+   HUD
+════════════════════════════════════════ */
+function updateHearts() {
+  const el = document.getElementById('heartsDisplay');
+  if (el) el.innerHTML = '❤️'.repeat(Math.max(0, S.lives)) + '🖤'.repeat(Math.max(0, 3 - S.lives));
+}
+function updateCombo() {
+  const badge = document.getElementById('comboBadge');
+  if (!badge) return;
+  if (S.combo >= 2) { badge.textContent = `🔥 ${S.combo}×`; badge.className = 'combo-badge show'; }
+  else { badge.className = 'combo-badge'; }
+}
+function updateBossHP() {
+  const total = CHAPTERS[S.chapter].questions.length;
+  const pct = (S.bossHP / total) * 100;
+  const bar = document.getElementById('bossHpBar');
+  const lbl = document.getElementById('bossHpLabel');
+  if (bar) bar.style.width = `${pct}%`;
+  if (lbl) lbl.textContent = `HP 🦾 Robot Kacau: ${S.bossHP}/${total}`;
+  if (bar) bar.style.background = pct <= 15 ? 'var(--forest)' : pct <= 40 ? 'var(--mango)' : 'var(--tomato)';
+}
+
+/* ════════════════════════════════════════
+   COMPLETE
+════════════════════════════════════════ */
+function showComplete(ranOutOfLives) {
+  stopTimer();
+  const ch = CHAPTERS[S.chapter];
+  const total = ch.questions.length;
+  const pct = S.score / total;
+  let stars = ranOutOfLives ? 1 : (pct >= 0.85 ? 3 : pct >= 0.65 ? 2 : pct >= 0.5 ? 1 : 0);
+  if (stars === 0) stars = 1;
+  const prev = S.progress[ch.id] || { stars: 0, bestScore: 0 };
+  const newStars = Math.max(prev.stars, stars);
+  const earned = newStars - prev.stars;
+  S.progress[ch.id] = { stars: newStars, bestScore: Math.max(prev.bestScore || 0, S.score) };
+  S.totalStars += earned;
+  document.getElementById('starCount').textContent = S.totalStars;
+  saveState();
+
+  const badges = ['😓', '🤖', '🏆'];
+  const titles = [
+    ranOutOfLives ? 'Kehabisan nyawa! Coba lagi ya!' : 'Terus semangat, ahli robot!',
+    'Hebat! Robotmu hampir sempurna!',
+    ch.isBoss ? '🦾 ROBOT KACAU DIPERBAIKI! 🏆' : 'SEMPURNA! Robotmu makin pintar!'
+  ];
+  document.getElementById('doneBadge').textContent = badges[stars - 1];
+  document.getElementById('doneTitle').textContent = titles[stars - 1];
+  document.getElementById('doneStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+  document.getElementById('doneScoreNum').textContent = `${S.score}/${total}`;
+  const elapsed = S.startTime ? Date.now() - S.startTime : 0;
+  document.getElementById('doneTime').textContent = fmtTime(elapsed);
+  document.getElementById('doneMsg').textContent = stars === 3
+    ? `Semua ${total} tantangan beres! Robotmu luar biasa, Rayyan!`
+    : `${S.score} dari ${total} benar. ${stars < 2 ? 'Latihan lagi, kamu pasti bisa!' : 'Hampir sempurna!'}`;
+
+  document.getElementById('reviewList').innerHTML = S.history.map(h => `
+    <div class="review-item">
+      <div class="review-ico">${h.correct ? '✅' : '❌'}</div>
+      <div>
+        <div class="review-q">${h.q}</div>
+        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu jawab: ${h.userAns} – coba lagi ya! 🤔`}</div>
+      </div>
+    </div>`).join('');
+
+  // Boss victory: celebratory canvas animation
+  const bossWrap = document.getElementById('bossCvWrap');
+  stopBossCelebrate();
+  if (ch.isBoss && !ranOutOfLives && stars >= 2) {
+    bossWrap.classList.add('show');
+    setTimeout(runBossCelebrate, 120);
+  } else {
+    bossWrap.classList.remove('show');
+  }
+
+  show('sComplete');
+  if (stars >= 2) setTimeout(launchConfetti, 300);
+  if (stars === 3 && ch.isBoss) { SoundFX.play('fanfare'); setTimeout(launchConfetti, 800); }
+  updateOverall();
+
+  const allDone = CHAPTERS.every(c => (S.progress[c.id] || {}).stars > 0);
+  if (allDone) setTimeout(showAllDone, 3200);
+}
+
+function showAllDone() {
+  document.getElementById('allDoneStars').textContent = `${S.totalStars} / 18`;
+  document.getElementById('allDoneStarEmoji').textContent = '⭐'.repeat(Math.min(S.totalStars, 18));
+  show('sAllDone');
+  SoundFX.play('fanfare');
+  setTimeout(launchConfetti, 300);
+  setTimeout(launchConfetti, 1100);
+}
+
+/* ════════════════════════════════════════
+   HOME RENDER
+════════════════════════════════════════ */
+function renderHome() {
+  document.getElementById('chGrid').innerHTML = CHAPTERS.map((ch, i) => {
+    const p = S.progress[ch.id] || { stars: 0, bestScore: 0 };
+    const done = p.stars > 0;
+    const prevDone = i === 0 || CHAPTERS.slice(0, i).every(c => (S.progress[c.id] || {}).stars > 0);
+    const locked = !done && !prevDone;
+    const stars = [1,2,3].map(n => `<span class="ch-star${n <= p.stars ? ' on' : ''}">⭐</span>`).join('');
+    const status = done ? `✅ Terbaik: ${p.bestScore}/${ch.questions.length}` : locked ? '🔒 Selesaikan misi sebelumnya' : '▶️ Belum dimulai';
+    return `<div class="ch-card${ch.isBoss ? ' boss' : ''}${locked ? ' locked' : ''}" onclick="${locked ? '' : `openChapter(${i})`}" role="button" tabindex="${locked ? -1 : 0}">
+      <div class="ch-thumb" style="${ch.isBoss ? '' : `background:${ch.colorBg}`}">
+        <div class="ch-emoji">${ch.emoji}</div>
+        <div class="ch-stars-row">${stars}</div>
+      </div>
+      <div class="ch-body">
+        <div class="ch-num">${i + 1 < 6 ? 'Misi ' + (i + 1) : 'BOSS'}</div>
+        <div class="ch-depth">${ch.depth}</div>
+        <div class="ch-title">${ch.title}</div>
+        <div class="ch-desc">${ch.desc}</div>
+        <div class="ch-status">${status}</div>
+      </div>
+    </div>`;
+  }).join('');
+  updateOverall();
+  renderDepthTrack();
+}
+
+function renderDepthTrack() {
+  const track = document.getElementById('depthTrack');
+  if (!track) return;
+  const names = ['Misi 1','Misi 2','Misi 3','Misi 4','Misi 5','BOSS'];
+  let html = '';
+  CHAPTERS.forEach((ch, i) => {
+    const p = S.progress[ch.id] || { stars: 0 };
+    const done = p.stars > 0;
+    const allPrev = i === 0 || CHAPTERS.slice(0, i).every(c => (S.progress[c.id] || {}).stars > 0);
+    const active = !done && allPrev;
+    const cls = done ? 'done' : active ? 'active' : '';
+    if (i > 0) html += `<div class="depth-rail${done ? ' done' : ''}"></div>`;
+    html += `<div class="depth-node">
+      <div class="depth-dot ${cls}">${done ? '✅' : active ? '⚙️' : ch.emoji}</div>
+      <div class="depth-name ${cls}">${names[i]}</div>
+    </div>`;
+  });
+  track.innerHTML = html;
+}
+
+function updateOverall() {
+  const total = CHAPTERS.length;
+  const done = Object.values(S.progress).filter(p => p.stars > 0).length;
+  const pct = (done / total) * 100;
+  document.getElementById('ovBar').style.width = `${pct}%`;
+  document.getElementById('ovSub').textContent = `${done} dari ${total} misi selesai`;
+  const el = document.getElementById('ovRingPath');
+  if (el) el.style.strokeDashoffset = 151 - (pct / 100) * 151;
+}
+
+/* ════════════════════════════════════════
+   CONFETTI
+════════════════════════════════════════ */
+function launchConfetti() {
+  const c = document.getElementById('confetti');
+  const colors = ['#2E3192','#FFC234','#1F9D55','#1FA9C7','#FF5C39','#E84BA0','#1f2170'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'cp';
+    const sz = 6 + Math.random() * 10;
+    p.style.cssText = `left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${colors[~~(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.6}s;`;
+    c.appendChild(p);
+    p.addEventListener('animationend', () => p.remove());
+  }
+}
+
+/* ════════════════════════════════════════
+   GEARS ANIMATION (home BG)
+════════════════════════════════════════ */
+function spawnGears() {
+  const bg = document.getElementById('labBg');
+  const glyphs = ['⚙️','🔩','🔧','➗','✖️','➕'];
+  for (let i = 0; i < 16; i++) {
+    const d = document.createElement('div');
+    d.className = 'gear';
+    const sz = 16 + Math.random() * 28;
+    d.textContent = glyphs[~~(Math.random()*glyphs.length)];
+    d.style.cssText = `font-size:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${8+Math.random()*14}s;animation-direction:${Math.random()>.5?'normal':'reverse'};`;
+    bg.appendChild(d);
+  }
+}
+
+/* ════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════ */
+function fmtTime(ms) {
+  const s = Math.floor(ms / 1000), m = Math.floor(s / 60);
+  return m > 0 ? `${m} mnt ${s % 60} dtk` : `${s} dtk`;
+}
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+loadState();
+renderHome();
+spawnGears();
+
+/* ════════════════════════════════════════
+   BUG REPORT
+════════════════════════════════════════ */
+function openBugReport() {
+  document.getElementById('bugModal').classList.add('show');
+  document.getElementById('bugDescription').focus();
+}
+function closeBugReport() {
+  document.getElementById('bugModal').classList.remove('show');
+  document.getElementById('bugForm').reset();
+}
+function submitBugReport(event) {
+  event.preventDefault();
+  const desc = document.getElementById('bugDescription').value;
+  const email = document.getElementById('bugEmail').value || 'tidak-ada@example.com';
+  const courseName = 'Robot Ahli Matematika 🤖 – Petualangan Rayyan';
+  const formData = new FormData();
+  formData.append('_subject', `[Learn with Adhi Bug Report] ${courseName}`);
+  formData.append('message', `Course: ${courseName}\n\nBug Description:\n${desc}`);
+  formData.append('email', email);
+  formData.append('_captcha', 'false');
+  fetch('https://formspree.io/f/mbjkzbag', { method:'POST', body:formData, headers:{'Accept':'application/json'} })
+    .then(r => {
+      if (r.ok) {
+        const btn = event.target.querySelector('[type="submit"]');
+        btn.textContent = '✅ Terima kasih!'; btn.disabled = true;
+        setTimeout(() => { closeBugReport(); btn.textContent = 'Kirim Laporan'; btn.disabled = false; }, 1500);
+      } else { alert('Gagal mengirim laporan. Coba lagi.'); }
+    })
+    .catch(() => alert('Gagal mengirim laporan. Periksa koneksi Anda.'));
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('bugModal').classList.contains('show')) closeBugReport();
+});
+</script>
+</body>
+</html>

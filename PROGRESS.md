@@ -19,6 +19,13 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-04
 
+### Track C – the "Bridge" course shipped ✅  (use code to DO math)
+- New self-contained course `courses/coding/rayyan-bridge-v1.html` (key `rayyanBridge`, 6 chapters, ~1.6k lines), built by a dedicated Opus agent then verified + hardened by me.
+- Chapters: ch1 Robot Penggambar Bentuk (live `<canvas>` polygon drawing — shapes & angles) · ch2 Mesin Pola Bilangan (rule chips generate live sequences) · ch3 Kalkulator Buatan Sendiri (order-of-operations) · ch4 Plot Peta Koordinat (live `<canvas>` x/y grid, plot points, `y=2x`) · ch5 Detektif X (solve 1-step linear equations) · ch6 BOSS: Visual Matematika (enemy + HP/lives/combo + celebration canvas).
+- **QA done before merge:** `node --check` ✅; localStorage shape `{totalStars,progress:{chN:{stars}}}` under `rayyanBridge` ✅; disguise grep clean (no grade numbers, no "coding/programming") ✅; **all 36 questions math-verified** (22 MC `opts[ans]` correct + 14 typed-input correct); fixed the **MC answer-position bias** (originally all index 0 → now spread, plus a runtime shuffle so positions vary every session).
+- **Wired (5 places):** `rayyan.html` ADVENTURES + biome tint + count pill, `kids.html` starsKeys + pill, `auth.js` PROGRESS_KEYS_BY_TYPE, `dashboard.html` COURSE_NAMES. Count bumped **11 → 12 adventures**.
+- This completes the optional Track C. With Phases 0–4 + Track C, the whole roadmap is done.
+
 ### Phase 4 (polish) – tutor name unified to "Kapi" ✅
 - Renamed the in-course guide to a single identity **"Kapi"** across the math ladder: Gr2 & Gr3 said "Kai", Gr4 said "Nova" → all now "Kapi" (Gr5–7 already used Kapi). Carefully avoided the "KAI" train brand (Gr3 line had both "kereta KAI" and "Kai si Kondektur" — only the tutor changed) and left internal CSS classes/ids (`kai-name`, `nova-msg`) untouched. `node --check` clean.
 - Files: `courses/math/rayyan-math-grade2-v1.html`, `grade3.html`, `grade4.html`.

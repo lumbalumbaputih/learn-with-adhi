@@ -21,7 +21,7 @@ const AUTH = (() => {
     rayyan: [
       'rayyanMath','rayyanMath3','rayyanMath4','rayyanMath5',
       'rayyanMath6','rayyanMath7','rayyanCoding','rayyanCoding2',
-      'rayyanCoding3','rayyanCoding4','rayyanCoding5',
+      'rayyanCoding3','rayyanCoding4','rayyanCoding5','rayyanBridge',
     ],
     raya: ['rayaMath','rayaVisual'],
   };
