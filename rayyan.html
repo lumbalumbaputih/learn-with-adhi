@@ -267,6 +267,41 @@
     .sync-pill.syncing { opacity: .6; }
     .sync-pill.synced  { border-color: var(--forest); color: var(--forest); }
     .sync-pill.error   { border-color: var(--tomato);  color: var(--tomato); }
+    /* ── MEDAL CABINET ── */
+    .badge-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:16px; }
+    .badge { border:2px solid var(--ink); border-radius:16px; padding:18px 14px; text-align:center; background:var(--paper); transition:transform .18s ease, box-shadow .18s ease; }
+    .badge.earned { background:var(--mango); }
+    .badge.earned:hover { transform:translate(-3px,-3px); box-shadow:5px 5px 0 var(--ink); }
+    .badge.locked { opacity:.5; filter:grayscale(1); }
+    .badge-emoji { font-size:40px; line-height:1; }
+    .badge-title { font-family:var(--fd); font-weight:800; font-size:14px; margin-top:8px; line-height:1.15; }
+    .badge-desc { font-size:11px; color:var(--muted); margin-top:4px; line-height:1.3; }
+    .badge.earned .badge-desc { color:var(--ink); }
+    /* ── CERTIFICATE (printable) ── */
+    .cert-btn { display:inline-flex; align-items:center; gap:8px; margin-top:20px; background:var(--indigo); color:#fff; border:2px solid var(--ink); border-radius:999px; padding:12px 24px; font-family:var(--fd); font-weight:800; font-size:15px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease; }
+    .cert-btn:hover { transform:translate(-3px,-3px); box-shadow:5px 5px 0 var(--ink); }
+    .cert-overlay { position:fixed; inset:0; background:rgba(26,22,20,.7); display:none; align-items:center; justify-content:center; padding:20px; z-index:9998; overflow:auto; }
+    .cert-overlay.show { display:flex; }
+    .cert { background:var(--paper); border:5px double var(--ink); border-radius:14px; padding:40px 32px; max-width:560px; width:100%; text-align:center; }
+    .cert-seal { font-size:56px; line-height:1; }
+    .cert-eyebrow { font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-top:6px; }
+    .cert-name { font-family:var(--fd); font-weight:800; font-size:clamp(34px,8vw,52px); color:var(--tomato); margin:8px 0; line-height:1; }
+    .cert-line { font-size:16px; color:var(--ink); margin:6px 0; }
+    .cert-stats { display:flex; justify-content:center; gap:24px; margin:20px 0; flex-wrap:wrap; }
+    .cert-stat b { display:block; font-family:var(--fd); font-weight:800; font-size:26px; }
+    .cert-stat span { display:block; font-family:var(--fb); font-weight:600; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-top:2px; }
+    .cert-date { font-size:13px; color:var(--muted); margin-top:14px; }
+    .cert-actions { margin-top:24px; display:flex; gap:12px; justify-content:center; }
+    .cert-actions button { border:2px solid var(--ink); border-radius:999px; padding:10px 22px; font-family:var(--fd); font-weight:800; font-size:14px; cursor:pointer; }
+    .cert-print { background:var(--mango); }
+    .cert-close { background:var(--paper-2); }
+    @media print {
+      body * { visibility:hidden !important; }
+      #certOverlay, #certOverlay * { visibility:visible !important; }
+      #certOverlay { position:absolute; inset:0; background:#fff; display:flex !important; padding:0; }
+      .cert-actions { display:none !important; }
+      .cert { border-color:#000; }
+    }
   </style>
 </head>
 <body>
@@ -298,6 +333,7 @@
     <p class="hero-lead">Peta petualanganmu ada di bawah. Pilih stasiun berikutnya dan lanjutkan perjalanan!</p>
     <div class="hero-stats">
       <div class="stat-pill">⭐ <span id="totalStars">0</span> bintang terkumpul</div>
+      <div class="stat-pill" id="streakPill">🔥 <span id="streakCount">0</span> hari beruntun</div>
       <div class="stat-pill">🗺️ <span id="doneCount">0</span> / 11 petualangan selesai</div>
       <div class="sync-pill" id="syncPill" title="Status sinkronisasi">
         <span id="syncIcon">☁️</span> <span id="syncLabel">Sinkron</span>
@@ -338,6 +374,36 @@
     </div>
     <div class="grid-2" id="gameGrid"></div>
   </section>
+
+  <!-- MEDAL CABINET -->
+  <section class="section">
+    <div class="section-hdr">
+      <h2 class="section-title">🏅 Lemari Medali</h2>
+      <div class="section-sub" id="badgeStatus"></div>
+    </div>
+    <div class="badge-grid" id="badgeGrid"></div>
+    <div style="text-align:center"><button class="cert-btn" onclick="openCert()">🏆 Lihat Sertifikatku</button></div>
+  </section>
+
+  <!-- CERTIFICATE (printable) -->
+  <div class="cert-overlay" id="certOverlay">
+    <div class="cert">
+      <div class="cert-seal">🏆</div>
+      <div class="cert-eyebrow">Sertifikat Petualang</div>
+      <div class="cert-name" id="certName">Rayyan</div>
+      <div class="cert-line">telah menjadi <strong>Petualang Hebat</strong> di Dunia Belajar Adhi!</div>
+      <div class="cert-stats">
+        <div class="cert-stat"><b id="certStars">0</b><span>Bintang</span></div>
+        <div class="cert-stat"><b id="certDone">0</b><span>Petualangan</span></div>
+        <div class="cert-stat"><b id="certStreak">0</b><span>Hari Beruntun</span></div>
+      </div>
+      <div class="cert-date" id="certDate"></div>
+      <div class="cert-actions">
+        <button class="cert-print" onclick="window.print()">🖨️ Cetak</button>
+        <button class="cert-close" onclick="closeCert()">Tutup</button>
+      </div>
+    </div>
+  </div>
 
   <footer class="footer">
     <span>© 2026 Learn with Adhi · Dibuat dengan ❤️ untuk Rayyan</span>
@@ -566,8 +632,69 @@
       </a>`).join('');
   }
 
+  /* ── Daily streak (🔥 consecutive days the adventure was opened) ── */
+  function updateStreak() {
+    const KEY = 'rayyanStreak';
+    const fmt = d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    const today = new Date(); today.setHours(0,0,0,0);
+    const todayStr = fmt(today);
+    let data; try { data = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { data = {}; }
+    if (data.lastDate !== todayStr) {
+      const yest = new Date(today); yest.setDate(yest.getDate() - 1);
+      data.count = (data.lastDate === fmt(yest)) ? (data.count || 0) + 1 : 1;
+      data.lastDate = todayStr;
+      try { localStorage.setItem(KEY, JSON.stringify(data)); } catch(e) {}
+    }
+    const el = document.getElementById('streakCount');
+    if (el) el.textContent = data.count || 1;
+  }
+
+  /* ── Medal cabinet (badges earned from real progress) ── */
+  const BADGES = [
+    { emoji:'🌟', title:'Bintang Pertama', desc:'Dapat 1 bintang',        test:s=>s.stars>=1 },
+    { emoji:'⭐', title:'Kolektor Bintang', desc:'Kumpulkan 25 bintang',   test:s=>s.stars>=25 },
+    { emoji:'🏆', title:'Raja Bintang',     desc:'Kumpulkan 50 bintang',   test:s=>s.stars>=50 },
+    { emoji:'🎒', title:'Petualang',        desc:'Selesai 1 petualangan',  test:s=>s.done>=1 },
+    { emoji:'🧭', title:'Penjelajah',       desc:'Selesai 5 petualangan',  test:s=>s.done>=5 },
+    { emoji:'👑', title:'Sang Master',      desc:'Selesai semua!',         test:s=>s.done>=s.total },
+    { emoji:'🔥', title:'Semangat 3 Hari',  desc:'Main 3 hari beruntun',   test:s=>s.streak>=3 },
+    { emoji:'⚡', title:'Semangat 7 Hari',  desc:'Main 7 hari beruntun',   test:s=>s.streak>=7 },
+  ];
+  function buildBadges() {
+    const stars = ADVENTURES.reduce((sum,a)=>sum+getProgress(a.progressKey).stars,0);
+    const done  = ADVENTURES.filter(isCompleted).length;
+    let streak = 0; try { streak = JSON.parse(localStorage.getItem('rayyanStreak')||'{}').count || 0; } catch(e){}
+    const s = { stars, done, total: ADVENTURES.length, streak };
+    let earned = 0;
+    document.getElementById('badgeGrid').innerHTML = BADGES.map(b => {
+      const has = b.test(s); if (has) earned++;
+      return `<div class="badge ${has?'earned':'locked'}">
+          <div class="badge-emoji">${has ? b.emoji : '🔒'}</div>
+          <div class="badge-title">${b.title}</div>
+          <div class="badge-desc">${b.desc}</div>
+        </div>`;
+    }).join('');
+    document.getElementById('badgeStatus').textContent = `${earned} / ${BADGES.length} medali`;
+  }
+
+  /* ── Printable certificate ── */
+  function openCert() {
+    const stars = ADVENTURES.reduce((sum,a)=>sum+getProgress(a.progressKey).stars,0);
+    const done  = ADVENTURES.filter(isCompleted).length;
+    let streak = 0; try { streak = JSON.parse(localStorage.getItem('rayyanStreak')||'{}').count || 0; } catch(e){}
+    document.getElementById('certStars').textContent  = stars;
+    document.getElementById('certDone').textContent   = done + '/' + ADVENTURES.length;
+    document.getElementById('certStreak').textContent = streak;
+    document.getElementById('certDate').textContent   =
+      'Diberikan pada ' + new Date().toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+    document.getElementById('certOverlay').classList.add('show');
+  }
+  function closeCert() { document.getElementById('certOverlay').classList.remove('show'); }
+
   buildMap();
   buildGames();
+  updateStreak();
+  buildBadges();
 </script>
 
 <!-- ── FIREBASE (loaded async, gracefully optional) ─────────────── -->
@@ -608,7 +735,7 @@
       const kidId = user && AUTH.getActiveKid();
       if (user && kidId) {
         const changed = await AUTH.syncActiveKid(setSyncStatus);
-        if (changed) buildMap();
+        if (changed) { buildMap(); buildBadges(); }
         return;
       }
     }

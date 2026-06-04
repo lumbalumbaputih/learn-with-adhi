@@ -19,6 +19,23 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-04
 
+### Phase 2 – printable certificate ✅
+- Added a "🏆 Lihat Sertifikatku" button (in the medal section) that opens a print-styled **Sertifikat Petualang** overlay showing Rayyan's name, total stars, adventures completed, streak, and the date (Indonesian format). `@media print` isolates the certificate so `window.print()` produces a clean printable page — the real-world reward Adhi can hand over. Inline scripts pass `node --check`.
+- Files: `rayyan.html`.
+- 🔜 Next Track D: daily quest, themed world map; plus coding v1 boss (Phase 1b).
+
+### Phase 2 – medal cabinet (badges) ✅
+- Added a "🏅 Lemari Medali" section to `rayyan.html` with **8 badges computed from real progress** (total stars, adventures completed, streak): earned = coloured (mango), locked = greyed with a 🔒. Recomputed on load and after each cloud-sync pull. All inline scripts pass `node --check`.
+- Badges: Bintang Pertama (1⭐), Kolektor (25⭐), Raja (50⭐), Petualang (1 done), Penjelajah (5 done), Sang Master (all done), Semangat 3/7 Hari (streak).
+- Files: `rayyan.html`.
+- 🔜 Next Track D: daily quest, printable certificate, themed world map; plus coding v1 boss (Phase 1b).
+
+### Phase 2 – daily streak counter ✅ (first Track D / retention feature)
+- Added a 🔥 streak pill to `rayyan.html`'s hero + a self-contained `updateStreak()`: tracks `rayyanStreak` in localStorage (`{count, lastDate}`). On load: same day → unchanged; yesterday → +1; gap/first → reset to 1. Local date math (no UTC drift), no global name collisions, all inline scripts pass `node --check`.
+- Semantics: a "day" = the kid opened his adventure hub that day (showing up keeps the streak). Local-only (not cloud-synced — it's a per-device motivator).
+- Files: `rayyan.html`.
+- 🔜 Next Track D: daily quest (pull a review question from a completed topic), badges + printable certificate, themed world map. Also still pending: coding v1 boss (Phase 1b).
+
 ### Phase 1b – boss battle on chapter 6: math Gr3 + Gr4 ✅
 - Replicated the proven Gr2 lite-boss pattern to Gr3 (👹 "Bos Pecahan", ch6 = fractions) and Gr4 (👽 "Bos Bilangan", ch6 = KPK/FPB). Anchors matched Gr2 (Gr4 is minified – matched its exact strings). Both pass `node --check`; boss DOM ids + helper fns present.
 - math Gr2–4 boss battles now all live. Coding v1 boss still pending (different block engine; already has sound).
