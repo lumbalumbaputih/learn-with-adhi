@@ -19,6 +19,12 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-04
 
+### Phase 1b – boss battle on chapter 6: math Gr3 + Gr4 ✅
+- Replicated the proven Gr2 lite-boss pattern to Gr3 (👹 "Bos Pecahan", ch6 = fractions) and Gr4 (👽 "Bos Bilangan", ch6 = KPK/FPB). Anchors matched Gr2 (Gr4 is minified – matched its exact strings). Both pass `node --check`; boss DOM ids + helper fns present.
+- math Gr2–4 boss battles now all live. Coding v1 boss still pending (different block engine; already has sound).
+- Files: `courses/math/rayyan-math-grade3.html`, `rayyan-math-grade4.html`.
+- 🔜 Next: coding v1 boss, then Phase 2 (retention layer).
+
 ### Phase 1b – boss battle on chapter 6: math Gr2 ✅
 - Added a **safe, additive lite-boss** to Gr2 chapter 6 ("Pola & Urutan"): an enemy (👾 "Bos Pola") with an HP bar that drains as the kid answers correctly (HP = total − score), a hit animation + `boss-hit` sound on each correct answer, and the existing fanfare/confetti as the victory. The boss only activates on the final chapter (`BOSS_IDX`); every other chapter and the core quiz flow are **untouched** (lowest blast radius). Passes `node --check`.
 - "Lite" = HP + hit + victory; **no lives/timer/game-over yet** (those are the riskier parts — deferred so this ships safely without browser testing).

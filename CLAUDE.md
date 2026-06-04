@@ -52,14 +52,14 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 | Course (what Rayyan sees) | Theme | Hidden Level | File | Key | Status |
 |---|---|---|---|---|---|
 | Petualangan Angka | Basic (no special theme) | Gr2 | `courses/math/rayyan-math-grade2-v1.html` | `rayyanMath` | ✅ Done (sound + boss battle 👾) |
-| Petualangan KAI 🚂 | KAI Train Adventure | Gr3 | `courses/math/rayyan-math-grade3.html` | `rayyanMath3` | ✅ Done (basic engine + sound; boss pending) |
-| Petualangan Antariksa 🚀 | Space/Rocket Adventure | Gr4 | `courses/math/rayyan-math-grade4.html` | `rayyanMath4` | ✅ Done (basic engine + sound; boss pending) |
+| Petualangan KAI 🚂 | KAI Train Adventure | Gr3 | `courses/math/rayyan-math-grade3.html` | `rayyanMath3` | ✅ Done (sound + boss battle) |
+| Petualangan Antariksa 🚀 | Space/Rocket Adventure | Gr4 | `courses/math/rayyan-math-grade4.html` | `rayyanMath4` | ✅ Done (sound + boss battle) |
 | Laut Dalam 🌊 | Deep Ocean Adventure | Gr5 | `courses/math/rayyan-math-grade5.html` | `rayyanMath5` | ✅ Done (full boss + sound + rich interactions) |
 | Kota Masa Depan 🏙️ | Future City builder | Gr6 | `courses/math/rayyan-math-grade6.html` | `rayyanMath6` | ✅ Done (full boss) |
 | Lab Misteri X 🧪 | Mystery Lab (find the unknown X) | Gr7 | `courses/math/rayyan-math-grade7.html` | `rayyanMath7` | ✅ Done – **5-yrs-ahead algebra capstone** |
 
 → Math ladder now reaches **Gr7 = ~5 years ahead** (real algebra), fully disguised. **Math content target MET.**
-→ ⚠️ Note (2026-06-04 audit + Phase 1 build): Gr2–4 used the *old basic engine*; Gr5–7 have the rich one. **Phase 1a ✅** added the `SFX` module (procedural Web Audio, hooked at `showToast()`) to Gr2–4 (coding v1 already had its own `AX` sound system). **Phase 1b (in progress):** a lite boss battle on chapter 6 (enemy + HP bar that drains with correct answers + hit anim + victory; no lives/timer yet) — **Gr2 ✅ done**, Gr3/Gr4/coding-v1 pending.
+→ ⚠️ Note (2026-06-04 audit + Phase 1 build): Gr2–4 used the *old basic engine*; Gr5–7 have the rich one. **Phase 1a ✅** added the `SFX` module (procedural Web Audio, hooked at `showToast()`) to Gr2–4 (coding v1 already had its own `AX` sound system). **Phase 1b (in progress):** a lite boss battle on chapter 6 (enemy + HP bar that drains with correct answers + hit anim + victory; no lives/timer yet) — **math Gr2–4 ✅ done** (enemies 👾/👹/👽), coding-v1 boss pending.
 
 ### Coding Ladder (`rayyan.html` hub)
 | Course (what Rayyan sees) | Theme | Hidden Concepts | File | Key | Status |

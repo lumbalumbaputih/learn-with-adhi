@@ -311,6 +311,14 @@
     .review-ico{font-size:16px;flex-shrink:0;margin-top:1px}
     .review-q{font-weight:600;margin-bottom:2px}
     .review-a{color:var(--muted)}
+    /* BOSS BATTLE (chapter 6) */
+    .boss-hdr{text-align:center;margin:0 0 14px;padding:14px;background:linear-gradient(135deg,#2a0a3a,#5a1060);border:2px solid var(--ink);border-radius:16px}
+    .boss-enemy{font-size:56px;line-height:1;display:inline-block;transition:transform .3s}
+    .boss-enemy.hit{animation:bossHit .45s ease}
+    @keyframes bossHit{0%{transform:scale(1) rotate(0)}30%{transform:scale(1.15) rotate(-10deg)}60%{transform:scale(.9) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+    .boss-hp-label{font-family:var(--fd);font-weight:800;font-size:13px;color:#fff;margin:8px 0 6px}
+    .boss-hp{width:100%;height:14px;background:rgba(255,255,255,.2);border:2px solid var(--ink);border-radius:999px;overflow:hidden}
+    .boss-hp-bar{height:100%;background:var(--tomato);border-radius:999px;transition:width .5s ease}
   </style>
 </head>
 <body>
@@ -424,6 +432,12 @@
       <div class="ex-bar-wrap"><div class="ex-bar" id="exBar" style="width:0%"></div></div>
     </div>
     <div class="ex-qnum" id="exQNum">1/6</div>
+  </div>
+
+  <div id="bossHdr" class="boss-hdr" style="display:none">
+    <div class="boss-enemy" id="bossEnemy">👽</div>
+    <div class="boss-hp-label" id="bossHpLabel">Bos Bilangan</div>
+    <div class="boss-hp"><div class="boss-hp-bar" id="bossHpBar" style="width:100%"></div></div>
   </div>
 
   <div class="q-card">
@@ -734,11 +748,32 @@ function fmtTime(ms){const s=Math.floor(ms/1000);const m=Math.floor(s/60);return
 function startExercise(){_timerStart=Date.now();state.qIdx=0;state.score=0;state.answered=false;state.history=[];renderQ();show('sExercise');}
 function retryChapter(){startExercise();}
 
+/* ── Boss battle (only on the final chapter) ── */
+const BOSS_IDX = CHAPTERS.length - 1;
+function refreshBoss(){
+  const isBoss = state.chapter === BOSS_IDX;
+  const hdr = document.getElementById('bossHdr');
+  if (hdr) hdr.style.display = isBoss ? 'block' : 'none';
+  if (!isBoss) return;
+  const total = CHAPTERS[state.chapter].questions.length;
+  const hp = Math.max(0, total - state.score);
+  document.getElementById('bossHpBar').style.width = (hp / total * 100) + '%';
+  document.getElementById('bossHpLabel').textContent = `Bos Bilangan: ${hp}/${total} HP`;
+}
+function bossHit(){
+  const en = document.getElementById('bossEnemy');
+  if (!en) return;
+  en.classList.add('hit');
+  setTimeout(() => en.classList.remove('hit'), 450);
+  SFX.play('boss-hit');
+}
+
 function renderQ(){
   const ch=CHAPTERS[state.chapter];const q=ch.questions[state.qIdx];const total=ch.questions.length;
   document.getElementById('exChName').textContent=`${ch.emoji} ${ch.title}`;
   document.getElementById('exQNum').textContent=`${state.qIdx+1}/${total}`;
   document.getElementById('exBar').style.width=`${(state.qIdx/total)*100}%`;
+  refreshBoss();
   document.getElementById('qText').textContent=q.q;
   const vis=document.getElementById('qVisual');
   if(q.visual){vis.innerHTML=q.visual;vis.style.display='';}else{vis.style.display='none';}
@@ -789,11 +824,13 @@ const SFX = {
     else if (type === 'wrong')   { this.tone(220,.15,.15); setTimeout(()=>this.tone(196,.25,.12),130); }
     else if (type === 'select')  { this.tone(440,.08,.1,'square'); }
     else if (type === 'fanfare') { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>this.tone(f,.3,.18), i*110)); }
+    else if (type === 'boss-hit'){ this.tone(150,.2,.25,'sawtooth'); }
   }
 };
 
 function showToast(correct,correctAns,expl){
   SFX.play(correct?'correct':'wrong');
+  if (correct && state.chapter === BOSS_IDX) { bossHit(); refreshBoss(); }
   const toast=document.getElementById('toast');
   document.getElementById('toastIco').textContent=correct?'🚀':'❌';
   document.getElementById('toastTitle').textContent=correct?'Benar! Hebat, Astronaut Rayyan!':'Belum tepat – yuk pikirkan lagi! 💡';
