@@ -24,41 +24,41 @@ The full interactive reference is at [`design-system/adhi-design-system.html`](d
 
 ```
 learn-with-adhi/
-├── index.html                        — Home page (course listing, dark/light theme)
-├── assets/                           — Shared static assets
+├── index.html                        – Home page (course listing, dark/light theme)
+├── assets/                           – Shared static assets
 ├── design-system/
-│   ├── adhi-design-system.html       — Adhi Design System reference (primary)
-│   └── tca-design-system.html        — Previous design reference (archived)
+│   ├── adhi-design-system.html       – Adhi Design System reference (primary)
+│   └── tca-design-system.html        – Previous design reference (archived)
 ├── README.md
 └── courses/
     ├── ai/
-    │   ├── ai-capability-course.html — Bridging the AI Gap (live)
-    │   ├── 2026-04-18-claude-efficiency-course-v1.html — Claude Without Burning Tokens (live)
-    │   └── ai-capability-v2.html     — v2 in progress
+    │   ├── ai-capability-course.html – Bridging the AI Gap (live)
+    │   ├── 2026-04-18-claude-efficiency-course-v1.html – Claude Without Burning Tokens (live)
+    │   └── ai-capability-v2.html     – v2 in progress
     ├── carbon-accounting/
-    │   ├── carbon-accounting-course.html — Carbon Accounting (live)
-    │   └── carbon-accounting-v2.html     — v2 in progress
+    │   ├── carbon-accounting-course.html – Carbon Accounting (live)
+    │   └── carbon-accounting-v2.html     – v2 in progress
     ├── lca/
-    │   └── life-cycle-assessment-course-v1.html — Life Cycle Assessment (live)
+    │   └── life-cycle-assessment-course-v1.html – Life Cycle Assessment (live)
     ├── disaster-management/
-    │   └── 2026-05-08-disaster-management-course-v1.html — Disaster Management Fundamentals (live)
+    │   └── 2026-05-08-disaster-management-course-v1.html – Disaster Management Fundamentals (live)
     ├── coding/
-    │   ├── code-ecosystem-guide-complete-v1.html — How to Code for Non-Coders (live)
-    │   └── code-for-non-coders-v2.html           — v2 in progress
+    │   ├── code-ecosystem-guide-complete-v1.html – How to Code for Non-Coders (live)
+    │   └── code-for-non-coders-v2.html           – v2 in progress
     ├── clothing-textiles/
-    │   └── 2026-05-08-clothing-textiles-course-v2.html — Clothing, Textiles & Our World (live)
+    │   └── 2026-05-08-clothing-textiles-course-v2.html – Clothing, Textiles & Our World (live)
     ├── ielts/
-    │   ├── ielts-bahasa-hacking.html      — Bahasa Hacking IELTS (live)
-    │   ├── ielts-bahasa-hacking-v2.html   — v2 in progress
-    │   ├── ielts-band7-precision.html     — Band 7 Precision Lab (live)
-    │   └── ielts-band7-precision-v2.html  — v2 in progress
+    │   ├── ielts-bahasa-hacking.html      – Bahasa Hacking IELTS (live)
+    │   ├── ielts-bahasa-hacking-v2.html   – v2 in progress
+    │   ├── ielts-band7-precision.html     – Band 7 Precision Lab (live)
+    │   └── ielts-band7-precision-v2.html  – v2 in progress
     └── tools/
-        ├── feifelusiac-safe-area-calculator-v3.html — Safe-area calculator v3
-        ├── feifelusiac-safe-area-calculator-v4.html — Safe-area calculator v4 (live)
-        ├── train_adventure.html — Rayyan & Raya's Train Adventure v1
-        ├── train_adventure_v2.html — Rayyan & Raya's Train Adventure v2
-        ├── train_adventure_v3.html — Rayyan & Raya's Train Adventure v3
-        └── train_adventure_hub.html — Train Adventure hub (version picker)
+        ├── feifelusiac-safe-area-calculator-v3.html – Safe-area calculator v3
+        ├── feifelusiac-safe-area-calculator-v4.html – Safe-area calculator v4 (live)
+        ├── train_adventure.html – Rayyan & Raya's Train Adventure v1
+        ├── train_adventure_v2.html – Rayyan & Raya's Train Adventure v2
+        ├── train_adventure_v3.html – Rayyan & Raya's Train Adventure v3
+        └── train_adventure_hub.html – Train Adventure hub (version picker)
 ```
 
 ## How to run locally

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Buat Game-mu Sendiri 🎮 — Studio Game Rayyan</title>
+  <title>Buat Game-mu Sendiri 🎮 – Studio Game Rayyan</title>
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FFC234"/><text y=".9em" font-size="78" x="10">🎮</text></svg>'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -306,7 +306,7 @@
   <div class="home-hero">
     <div class="ctrl-anim">🎮</div>
     <div class="home-title">Buat <em>Game-mu</em> Sendiri 🎮</div>
-    <div class="home-sub">Dari game loop sampai boss — buat game nyata langkah demi langkah!</div>
+    <div class="home-sub">Dari game loop sampai boss – buat game nyata langkah demi langkah!</div>
   </div>
   <div class="depth-wrap">
     <div class="depth-label">🕹️ Level Studio Game</div>
@@ -481,7 +481,7 @@ function lsn1() {
 }
 <span style="color:#89dceb">gameLoop</span>(); <span style="color:#6c7086">// mulai!</span></div></div>
 <div class="ls"><div class="ls-h">🖥️ Demo Game Loop</div>
-<div class="game-demo-label">🎬 Game loop berjalan — kotak bergerak!</div>
+<div class="game-demo-label">🎬 Game loop berjalan – kotak bergerak!</div>
 <canvas id="demoLoop" class="game-demo" width="250" height="140"></canvas></div>`;
 }
 function lsn2() {
@@ -533,7 +533,7 @@ function lsn5() {
 <span style="color:#6c7086">// Tampilkan skor:</span>
 ctx.<span style="color:#89dceb">fillText</span>(<span style="color:#a6e3a1">'Skor: '</span> + score, <span style="color:#fab387">10</span>, <span style="color:#fab387">25</span>);</div></div>
 <div class="ls"><div class="ls-h">🎮 Demo Game Lengkap</div>
-<div class="game-demo-label">🎮 Game mini dengan skor & nyawa — coba hindari merah!</div>
+<div class="game-demo-label">🎮 Game mini dengan skor & nyawa – coba hindari merah!</div>
 <canvas id="demoScore" class="game-demo" width="250" height="140" tabindex="0"></canvas></div>`;
 }
 function lsn6() {
@@ -553,7 +553,7 @@ const CHAPTERS = [
   {
     id:'game-loop', title:'Panggung Game', depth:'🎬 Level 1', emoji:'🎬',
     color:'#FFC234', colorBg:'#FFF5D6',
-    desc:'Game loop, canvas setup, requestAnimationFrame — jantung setiap game!',
+    desc:'Game loop, canvas setup, requestAnimationFrame – jantung setiap game!',
     kapi:'Game loop = jantung game! Setiap frame: 1) Update posisi 2) Gambar ulang. requestAnimationFrame melakukan ini 60× per detik!',
     lessonHTML:lsn1(), isBoss:false,
     questions:[
@@ -591,7 +591,7 @@ const CHAPTERS = [
       {type:'code-fill', q:'Lengkapi: spawn rintangan di tepi kanan canvas', code:'obstacles.push({\n  x: canvas.___,\n  y: 50, w:25, h:25, speed:3\n});', blankIdx:1, ans:'width', output:'(rintangan muncul di kanan!)', expl:'x = canvas.width → mulai dari tepi kanan!'},
       {type:'mc', q:'Cara menggerakkan SEMUA rintangan ke kiri?', opts:['obstacles.forEach(o => o.x -= o.speed)','obstacles.x -= speed','obstacles.move()','obstacles[0].x--'], ans:0, expl:'forEach loop semua rintangan, kurangi x masing-masing!'},
       {type:'code-fill', q:'Lengkapi: hapus rintangan yang sudah keluar layar', code:'obstacles = obstacles.filter(o => o.x > -___);', blankIdx:0, ans:'50', output:'(rintangan hilang saat keluar!)', expl:'o.x > -50 = hapus saat sudah 50px di luar kiri layar!'},
-      {type:'mc', q:'Berapa sering spawn rintangan baru?', visual:'⏰', opts:['Setiap beberapa frame/detik','Setiap frame','Hanya sekali','Tidak pernah'], ans:0, expl:'Spawn terlalu sering = terlalu sulit — pakai frame counter!'},
+      {type:'mc', q:'Berapa sering spawn rintangan baru?', visual:'⏰', opts:['Setiap beberapa frame/detik','Setiap frame','Hanya sekali','Tidak pernah'], ans:0, expl:'Spawn terlalu sering = terlalu sulit – pakai frame counter!'},
       {type:'mc', q:'obstacles.length memberikan?', opts:['Jumlah rintangan saat ini','Kecepatan rintangan','Posisi rintangan','Ukuran rintangan'], ans:0, expl:'array.length = jumlah elemen dalam array!'},
     ]
   },
@@ -602,9 +602,9 @@ const CHAPTERS = [
     kapi:'AABB collision = cek 4 kondisi tumpang tindih kotak. Jika tabrakan: kurangi nyawa!',
     lessonHTML:lsn4(), isBoss:false,
     questions:[
-      {type:'mc', q:'AABB collision detection untuk?', opts:['Cek apakah dua kotak bertabrakan','Menghitung skor','Menggerakkan karakter','Menggambar kotak'], ans:0, expl:'AABB = Axis-Aligned Bounding Box — cek tumpang tindih!'},
+      {type:'mc', q:'AABB collision detection untuk?', opts:['Cek apakah dua kotak bertabrakan','Menghitung skor','Menggerakkan karakter','Menggambar kotak'], ans:0, expl:'AABB = Axis-Aligned Bounding Box – cek tumpang tindih!'},
       {type:'mc', q:'Pahlawan x=50,w=30. Rintangan x=70,w=30. Tabrakan?', visual:'💥', opts:['Ya (50<100 dan 80>70)','Tidak','Tergantung y','Tidak bisa dihitung'], ans:0, expl:'px(50)<ox+ow(100)✓ dan px+pw(80)>ox(70)✓ → tabrakan!'},
-      {type:'code-fill', q:'Lengkapi fungsi collision — cek batas kanan pahlawan vs kiri rintangan', code:'function collide(p, o) {\n  return p.x < o.x+o.w &&\n         p.x+p.w > ___ &&\n         p.y < o.y+o.h &&\n         p.y+p.h > o.y;\n}', blankIdx:1, ans:'o.x', output:'(deteksi tabrakan aktif!)', expl:'p.x+p.w > o.x → sisi kanan pahlawan melewati sisi kiri rintangan!'},
+      {type:'code-fill', q:'Lengkapi fungsi collision – cek batas kanan pahlawan vs kiri rintangan', code:'function collide(p, o) {\n  return p.x < o.x+o.w &&\n         p.x+p.w > ___ &&\n         p.y < o.y+o.h &&\n         p.y+p.h > o.y;\n}', blankIdx:1, ans:'o.x', output:'(deteksi tabrakan aktif!)', expl:'p.x+p.w > o.x → sisi kanan pahlawan melewati sisi kiri rintangan!'},
       {type:'mc', q:'Saat tabrakan terdeteksi, biasanya kita?', opts:['Kurangi nyawa','Tambah rintangan','Percepat game','Tidak perlu dilakukan'], ans:0, expl:'Tabrakan = event penting! Kurangi nyawa atau game over!'},
       {type:'mc', q:'obstacles.some(o => collide(player, o)) artinya?', visual:'🔍', opts:['Cek apakah ADA rintangan yang tabrakan','Cek semua rintangan sekaligus','Hapus rintangan yang tabrakan','Hitung jumlah tabrakan'], ans:0, expl:'Array.some() = true jika minimal satu elemen memenuhi kondisi!'},
       {type:'code-fill', q:'Lengkapi: kurangi nyawa saat tabrakan', code:'if(obstacles.some(o => collide(player,o))){\n  ___--;\n}', blankIdx:0, ans:'lives', output:'(nyawa berkurang!)', expl:'lives-- → kurangi nyawa saat terdeteksi tabrakan!'},
@@ -613,7 +613,7 @@ const CHAPTERS = [
   {
     id:'score-state', title:'Skor & Bintang', depth:'🏆 Level 5', emoji:'🏆',
     color:'#1F9D55', colorBg:'#E3F5EB',
-    desc:'Game state, sistem skor, menang/kalah — akhirnya game terasa nyata!',
+    desc:'Game state, sistem skor, menang/kalah – akhirnya game terasa nyata!',
     kapi:"Game state = kondisi game: 'playing', 'gameover', 'win'. Skor bertambah tiap rintangan dilewati. Menang jika skor >= target!",
     lessonHTML:lsn5(), isBoss:false,
     questions:[
@@ -628,7 +628,7 @@ const CHAPTERS = [
   {
     id:'boss-release', title:'BOSS: Rilis Game-mu!', depth:'🚀 FINAL BOSS', emoji:'🚀',
     color:'#FFC234', colorBg:'#FFF5D6',
-    desc:'Gabungkan segalanya — kalahkan Boss Alien dan rilis gamemu!',
+    desc:'Gabungkan segalanya – kalahkan Boss Alien dan rilis gamemu!',
     kapi:'BOSS TERAKHIR! Game loop + pahlawan + rintangan + tabrakan + skor = game lengkap. Kalahkan 👾 untuk merilis game pertamamu!',
     lessonHTML:lsn6(), isBoss:true,
     questions:[
@@ -637,7 +637,7 @@ const CHAPTERS = [
       {type:'mc', q:'Game lengkap minimal harus punya?', visual:'🎮', opts:['Player, rintangan, collision, score','Hanya player','Hanya score','Hanya rintangan'], ans:0, expl:'Game minimal: sesuatu yang dikendalikan, tantangan, collision, dan score!'},
       {type:'mc', q:'Cara restart game setelah gameover?', opts:['Reset semua variabel lalu panggil gameLoop()','Reload halaman','Buat canvas baru','Tidak bisa restart'], ans:0, expl:'Reset score=0, lives=3, obstacles=[], gameState="playing" → mulai ulang!'},
       {type:'code-fill', q:"Lengkapi: set state 'win' jika skor >= 10", code:"if(score >= 10) {\n  gameState = '___';\n}", blankIdx:0, ans:'win', output:"(state win aktif!)", expl:"score>=10 → gameState='win' → tampilkan layar menang!"},
-      {type:'mc', q:'Setelah jadi, bagaimana Rayyan bisa berbagi gamenya?', visual:'🌐', opts:['Bagikan file HTML — buka di browser mana saja!','Perlu server mahal','Tidak bisa dibagi','Hanya bisa di komputer sendiri'], ans:0, expl:'Game HTML bisa dibuka di browser siapa saja — share file HTML-nya!'},
+      {type:'mc', q:'Setelah jadi, bagaimana Rayyan bisa berbagi gamenya?', visual:'🌐', opts:['Bagikan file HTML – buka di browser mana saja!','Perlu server mahal','Tidak bisa dibagi','Hanya bisa di komputer sendiri'], ans:0, expl:'Game HTML bisa dibuka di browser siapa saja – share file HTML-nya!'},
     ]
   },
 ];
@@ -953,7 +953,7 @@ function handleAnswer(correct,correctAns,userAns,expl){
 function showToast(correct,correctAns,expl){
   const toast=document.getElementById('toast');
   document.getElementById('toastIco').textContent=correct?'🎮':'❌';
-  document.getElementById('toastTitle').textContent=correct?'Level up! Keren sekali, Rayyan!':'Belum tepat — yuk pikirkan lagi! 💡';
+  document.getElementById('toastTitle').textContent=correct?'Level up! Keren sekali, Rayyan!':'Belum tepat – yuk pikirkan lagi! 💡';
   document.getElementById('toastExpl').textContent=expl||'';
   toast.className=`toast show ${correct?'ok':'bad'}`;
   document.getElementById('nxtBtn').className='nxt-btn show';
@@ -1020,7 +1020,7 @@ function showComplete(ranOutOfLives){
   const elapsed=S.startTime?Date.now()-S.startTime:0;
   document.getElementById('doneTime').textContent=fmtTime(elapsed);
   document.getElementById('doneMsg').textContent=stars===3?`Semua ${total} tantangan diselesaikan! Luar biasa!`:`${S.score} dari ${total} benar. ${stars<2?'Latihan lagi, kamu pasti bisa!':'Hampir sempurna!'}`;
-  document.getElementById('reviewList').innerHTML=S.history.map(h=>`<div class="review-item"><div class="review-ico">${h.correct?'✅':'❌'}</div><div><div class="review-q">${h.q}</div><div class="review-a">${h.correct?`Benar: <strong>${h.correctAns}</strong>`:`Kamu jawab: ${h.userAns} — coba lagi ya! 🤔`}</div></div></div>`).join('');
+  document.getElementById('reviewList').innerHTML=S.history.map(h=>`<div class="review-item"><div class="review-ico">${h.correct?'✅':'❌'}</div><div><div class="review-q">${h.q}</div><div class="review-a">${h.correct?`Benar: <strong>${h.correctAns}</strong>`:`Kamu jawab: ${h.userAns} – coba lagi ya! 🤔`}</div></div></div>`).join('');
   show('sComplete');
   if(stars>=2) setTimeout(launchConfetti,300);
   if(stars===3&&ch.isBoss){Audio.play('fanfare');setTimeout(launchConfetti,800);}
@@ -1118,7 +1118,7 @@ function submitBugReport(event){
   event.preventDefault();
   const desc=document.getElementById('bugDescription').value;
   const email=document.getElementById('bugEmail').value||'tidak-ada@example.com';
-  const courseName='Buat Game-mu Sendiri — Studio Game Rayyan 🎮';
+  const courseName='Buat Game-mu Sendiri – Studio Game Rayyan 🎮';
   const formData=new FormData();
   formData.append('_subject',`[Learn with Adhi Bug Report] ${courseName}`);
   formData.append('message',`Course: ${courseName}\n\nBug:\n${desc}`);

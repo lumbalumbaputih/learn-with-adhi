@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Matematika Rayyan — Laut Dalam 🌊</title>
+  <title>Matematika Rayyan – Laut Dalam 🌊</title>
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%231FA9C7"/><text y=".9em" font-size="78" x="10">🤿</text></svg>'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -703,7 +703,7 @@ Waktu = Jarak ÷ Kecepatan
 
 function lsn3() { return `
 <div class="ls"><div class="ls-h">✖️ Perkalian Pecahan</div>
-<p>Kalikan pembilang dengan pembilang, penyebut dengan penyebut — lalu sederhanakan!</p>
+<p>Kalikan pembilang dengan pembilang, penyebut dengan penyebut – lalu sederhanakan!</p>
 <div class="ex-box"><div style="font-size:15px;line-height:2.2">
 <strong>2/3 × 3/4</strong><br>
 = (2×3) / (3×4)<br>
@@ -794,12 +794,12 @@ const CHAPTERS = [
   {
     id:'int-numbers', title:'Bilangan Bulat', depth:'🌊 Zona Dangkal (0–10 m)', emoji:'🌡️',
     color:'#1FA9C7', colorBg:'#E3F4F8',
-    desc:'Angka positif, nol & negatif — garis bilangan!',
+    desc:'Angka positif, nol & negatif – garis bilangan!',
     kapi:'Bayangkan kedalaman laut! Permukaan = 0, menyelam = angka negatif, timbul = positif. Semakin ke kiri di garis bilangan = semakin kecil nilainya.',
     lessonHTML: lsn1(), isBoss: false,
     questions:[
       {type:'number-line', q:'Tandai posisi −3 pada garis bilangan berikut.', nlMin:-5, nlMax:5, ans:-3, expl:'−3 ada di kiri 0, tiga langkah dari 0!'},
-      {type:'drag-sort', q:'Urutkan bilangan berikut dari terkecil ke terbesar!', items:[3,-5,0,-2,4], ans:[-5,-2,0,3,4], expl:'−5 < −2 < 0 < 3 < 4 — semakin kiri semakin kecil!'},
+      {type:'drag-sort', q:'Urutkan bilangan berikut dari terkecil ke terbesar!', items:[3,-5,0,-2,4], ans:[-5,-2,0,3,4], expl:'−5 < −2 < 0 < 3 < 4 – semakin kiri semakin kecil!'},
       {type:'mc', q:'−8 ○ −3. Tanda yang tepat adalah…', opts:['<','=','>','±'], ans:0, expl:'−8 lebih kiri dari −3 di garis bilangan → −8 < −3!'},
       {type:'input', q:'5 + (−8) = ?', ans:'-3', expl:'5 + (−8) = 5 − 8 = −3. Seperti naik 5 lalu turun 8 tangga!'},
       {type:'mc', q:'Suhu kutub −15°C, suhu kota 22°C. Selisih suhunya?', visual:'🧊🌤️', opts:['7°C','37°C','−7°C','27°C'], ans:1, expl:'22 − (−15) = 22 + 15 = 37°C. Ingat: kurang negatif = tambah!'},
@@ -869,14 +869,14 @@ const CHAPTERS = [
   {
     id:'statistika', title:'BOSS: Statistika', depth:'💀 Zona Hadal (4000–11.000 m)', emoji:'🐙',
     color:'#7B3FA8', colorBg:'#EFE3F8',
-    desc:'Mean, median, modus & rentang — BOSS BATTLE!',
+    desc:'Mean, median, modus & rentang – BOSS BATTLE!',
     kapi:'Boss battle! Kalahkan Gurita Matematika! Mean = rata-rata, Median = nilai tengah (urutkan dulu!), Modus = yang paling sering, Rentang = terbesar − terkecil.',
     lessonHTML: lsn6(), isBoss: true,
     questions:[
       {type:'mc', q:'Nilai ulangan Rayyan: 80, 70, 90, 85, 75. Rata-ratanya?', opts:['75','80','82','85'], ans:1, expl:'(80+70+90+85+75) = 400. 400÷5 = 80!'},
       {type:'drag-sort', q:'Urutkan data ini agar mudah cari median: 5, 2, 8, 1, 6', items:[5,2,8,1,6], ans:[1,2,5,6,8], expl:'Urutan: 1, 2, 5, 6, 8 → Median = 5!'},
       {type:'mc', q:'Data terurut: 1, 2, 5, 6, 8. Mediannya = ?', opts:['2','5','6','3,5'], ans:1, expl:'Data ada 5, yang tengah adalah ke-3 = 5!'},
-      {type:'mc', q:'Data: 4, 7, 7, 8, 9, 7, 5. Modusnya = ?', opts:['4','5','7','9'], ans:2, expl:'7 muncul 3 kali — paling sering!'},
+      {type:'mc', q:'Data: 4, 7, 7, 8, 9, 7, 5. Modusnya = ?', opts:['4','5','7','9'], ans:2, expl:'7 muncul 3 kali – paling sering!'},
       {type:'input', q:'Data: 12, 18, 15, 7, 20. Rentangnya = ?', ans:'13', expl:'Rentang = 20 − 7 = 13!'},
       {type:'mc', q:'Rata-rata 5 anak = 40 kg. Jika 1 anak pergi (berat 30 kg), rata-rata 4 anak sisanya?', visual:'👦👦👦👦', opts:['42,5 kg','44 kg','40 kg','45 kg'], ans:0, expl:'Total = 5×40 = 200. Sisa = 200−30 = 170. Rata-rata = 170÷4 = 42,5 kg!'},
     ]
@@ -1213,7 +1213,7 @@ function showToast(correct, correctAns, expl) {
   document.getElementById('toastIco').textContent = correct ? '🎉' : '❌';
   document.getElementById('toastTitle').textContent = correct
     ? 'Benar! Luar biasa, Kapten Rayyan!'
-    : 'Belum tepat — yuk pikirkan lagi! 💡';
+    : 'Belum tepat – yuk pikirkan lagi! 💡';
   document.getElementById('toastExpl').textContent = expl || '';
   toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
   document.getElementById('nxtBtn').className = 'nxt-btn show';
@@ -1340,7 +1340,7 @@ function showComplete(ranOutOfLives) {
       <div class="review-ico">${h.correct ? '✅' : '❌'}</div>
       <div>
         <div class="review-q">${h.q}</div>
-        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu jawab: ${h.userAns} — coba lagi ya! 🤔`}</div>
+        <div class="review-a">${h.correct ? `Benar: <strong>${h.correctAns}</strong>` : `Kamu jawab: ${h.userAns} – coba lagi ya! 🤔`}</div>
       </div>
     </div>`).join('');
 
@@ -1480,7 +1480,7 @@ function submitBugReport(event) {
   const modal = document.getElementById('bugModal');
   const desc = document.getElementById('bugDescription').value;
   const email = document.getElementById('bugEmail').value || 'tidak-ada@example.com';
-  const courseName = 'Matematika Rayyan — Laut Dalam';
+  const courseName = 'Matematika Rayyan – Laut Dalam';
 
   const formData = new FormData();
   formData.append('_subject', `[Learn with Adhi Bug Report] ${courseName}`);

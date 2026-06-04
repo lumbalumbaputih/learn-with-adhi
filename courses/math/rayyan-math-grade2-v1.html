@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Matematika Rayyan — Petualangan Angka 🔢</title>
+  <title>Matematika Rayyan – Petualangan Angka 🔢</title>
   <link rel="icon" href="/assets/favicon-32.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1537,7 +1537,7 @@ const CHAPTERS = [
         visual: '🚪',
         opts: ['Persegi', 'Persegi Panjang', 'Segitiga', 'Lingkaran'],
         ans: 1,
-        expl: 'Pintu berbentuk persegi panjang — 4 sisi, tapi 2 sisi lebih panjang!'
+        expl: 'Pintu berbentuk persegi panjang – 4 sisi, tapi 2 sisi lebih panjang!'
       },
       {
         type: 'mc',
@@ -1553,7 +1553,7 @@ const CHAPTERS = [
         visual: '🚲',
         opts: ['Persegi', 'Segitiga', 'Lingkaran', 'Persegi Panjang'],
         ans: 2,
-        expl: 'Roda berbentuk lingkaran — bulat sempurna supaya bisa berputar!'
+        expl: 'Roda berbentuk lingkaran – bulat sempurna supaya bisa berputar!'
       }
     ]
   },
@@ -1802,7 +1802,7 @@ function showToast(correct, correctAns, expl) {
   document.getElementById('toastIco').textContent   = correct ? '🎉' : '❌';
   document.getElementById('toastTitle').textContent  = correct
     ? 'Benar! Keren sekali!'
-    : 'Belum tepat — yuk pikirkan lagi! 💡';
+    : 'Belum tepat – yuk pikirkan lagi! 💡';
   document.getElementById('toastExpl').textContent  = expl || '';
   toast.className = `toast show ${correct ? 'ok' : 'bad'}`;
   document.getElementById('nxtBtn').className = 'nxt-btn show';
@@ -1864,7 +1864,7 @@ function showComplete() {
         <div class="review-a">
           ${h.correct
             ? `Benar: <strong>${h.correctAns}</strong>`
-            : `Kamu jawab: ${h.userAns} — coba lagi ya! 🤔`}
+            : `Kamu jawab: ${h.userAns} – coba lagi ya! 🤔`}
         </div>
       </div>
     </div>`).join('');
@@ -1964,7 +1964,7 @@ function submitBugReport(event) {
   const modal = document.getElementById('bugModal');
   const desc = document.getElementById('bugDescription').value;
   const email = document.getElementById('bugEmail').value || 'tidak-ada@example.com';
-  const courseName = 'Matematika Rayyan — Petualangan Angka';
+  const courseName = 'Matematika Rayyan – Petualangan Angka';
 
   const formData = new FormData();
   formData.append('_subject', `[Learn with Adhi Bug Report] ${courseName}`);

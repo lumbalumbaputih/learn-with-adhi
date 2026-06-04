@@ -2,8 +2,8 @@
    Firebase Auth (email/password) + Firestore kid profiles.
 
    Firestore structure:
-     /accounts/{uid}              — parent profile
-     /accounts/{uid}/kids/{kidId} — kid profile + progress
+     /accounts/{uid}              – parent profile
+     /accounts/{uid}/kids/{kidId} – kid profile + progress
    ────────────────────────────────────────────────────────────────────────── */
 
 const AUTH = (() => {

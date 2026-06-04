@@ -28,7 +28,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     /* ═══════════════════════════════════════════════
-       ADHI DESIGN SYSTEM — TOKENS
+       ADHI DESIGN SYSTEM – TOKENS
     ═══════════════════════════════════════════════ */
     :root {
       --hidup-tomato:  #FF5C39;
@@ -454,7 +454,7 @@
       transition: opacity 200ms;
     }
 
-    /* checkbox bubble — inline in flex row, not absolute */
+    /* checkbox bubble – inline in flex row, not absolute */
     .card-check {
       flex-shrink: 0;
       align-self: flex-start;
@@ -684,7 +684,7 @@
   <div class="factors-section">
     <div class="section-label">Select all that apply to you</div>
     <div class="section-title">Risk Factors</div>
-    <p class="section-desc">Click any card to add it to your profile. Multiple factors interact — combined impact uses diminishing returns to reflect biological overlap. Mutually exclusive factors (e.g. different BMI ranges) should only be selected one at a time.</p>
+    <p class="section-desc">Click any card to add it to your profile. Multiple factors interact – combined impact uses diminishing returns to reflect biological overlap. Mutually exclusive factors (e.g. different BMI ranges) should only be selected one at a time.</p>
 
     <!-- LIFESTYLE -->
     <div class="category-block">
@@ -730,13 +730,13 @@
     <div class="breakdown-panel">
       <h3>Selected factors breakdown</h3>
       <div class="breakdown-tags" id="breakdownTags">
-        <div class="empty-msg">No factors selected yet — click any card above to begin.</div>
+        <div class="empty-msg">No factors selected yet – click any card above to begin.</div>
       </div>
     </div>
 
     <!-- Disclaimer -->
     <div class="disclaimer">
-      <strong>For educational purposes only.</strong> Years-lost figures are population-level estimates from epidemiological research; your individual risk depends on genetics, healthcare access, and management quality. Risk factors are <strong>not simply additive</strong> — they share overlapping mechanisms. The "diminishing returns" method better reflects this. This tool is <strong>not a medical device</strong> and does not replace professional health advice.
+      <strong>For educational purposes only.</strong> Years-lost figures are population-level estimates from epidemiological research; your individual risk depends on genetics, healthcare access, and management quality. Risk factors are <strong>not simply additive</strong> – they share overlapping mechanisms. The "diminishing returns" method better reflects this. This tool is <strong>not a medical device</strong> and does not replace professional health advice.
     </div>
   </div>
 
@@ -1115,7 +1115,7 @@ function renderBreakdown() {
   container.innerHTML = '';
 
   if (selected.size === 0) {
-    container.innerHTML = '<div class="empty-msg">No factors selected yet — click any card above to begin.</div>';
+    container.innerHTML = '<div class="empty-msg">No factors selected yet – click any card above to begin.</div>';
     return;
   }
 

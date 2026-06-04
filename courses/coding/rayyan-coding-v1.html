@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Pabrik Robot KAI — Petualangan Rayyan 🚂🤖</title>
+<title>Pabrik Robot KAI – Petualangan Rayyan 🚂🤖</title>
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FF5C39"/><text y=".9em" font-size="78" x="12">🤖</text></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -346,7 +346,7 @@
   .blk.c-fn{background:#e08a14;color:var(--ink);box-shadow:0 3px 0 var(--ink)}
   .blk.c-fn .blk-tip,.blk.c-fn .blk-id{color:rgba(26,22,20,.65)}
 
-  /* program slot — vertical stack of selected blocks */
+  /* program slot – vertical stack of selected blocks */
   .program{background:var(--ink);border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;margin-bottom:14px;min-height:120px;position:relative}
   .program-label{font-family:var(--fd);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mango);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
   .program-count{background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:2px 9px;font-size:11px;letter-spacing:.04em}
@@ -789,7 +789,7 @@ const CHAPTERS = [
     learn:'Loops',
     desc:'Membersihkan 10 gerbong dengan satu perintah ajaib, bukan 10 perintah!',
     color:'#1F9D55',
-    mentor:'Menulis perintah yang sama 10 kali itu lelah. Pakai <code>repeat()</code> — robot akan ulangi sendiri!'
+    mentor:'Menulis perintah yang sama 10 kali itu lelah. Pakai <code>repeat()</code> – robot akan ulangi sendiri!'
   },
   {
     id:'c4', emoji:'📦', tag:'RUANG 4',
@@ -805,7 +805,7 @@ const CHAPTERS = [
     title:'Resep Rahasia',
     concept:'Membuat perintah baru',
     learn:'Functions',
-    desc:'Ajari robot resep "berhenti di stasiun" — sekali ajar, terus pakai.',
+    desc:'Ajari robot resep "berhenti di stasiun" – sekali ajar, terus pakai.',
     color:'#e08a14',
     mentor:'Daripada ulang 6 perintah tiap stasiun, kita ajari robot satu "resep". Lalu cukup panggil <code>stop_at_station()</code>!'
   },
@@ -830,7 +830,7 @@ const CHAPTER_STORIES = {
        <p>Setiap misi punya situasi berbeda. Pilih kondisi dan aksi yang tepat!</p>
        <span class="learn-pill">Belajar: membuat aturan</span>`,
   c3: `<p>Robot harus membersihkan <strong>10 gerbong</strong> sebelum kereta jalan! Kalau kamu tulis <code>clean()</code> sepuluh kali, jari kamu pegal!</p>
-       <p>Ada cara cerdas: gunakan <code>repeat(10) { clean() }</code> — artinya "ulangi <code>clean()</code> sebanyak 10 kali".</p>
+       <p>Ada cara cerdas: gunakan <code>repeat(10) { clean() }</code> – artinya "ulangi <code>clean()</code> sebanyak 10 kali".</p>
        <p>Robot juga bisa mengulang sampai sesuatu selesai dengan <code>repeat_until(...)</code>. Kita coba!</p>
        <span class="learn-pill">Belajar: mengulang otomatis</span>`,
   c4: `<p>Robot perlu <strong>ingat</strong> banyak hal: ada berapa penumpang? Kecepatannya berapa? Mau ke stasiun mana?</p>
@@ -838,7 +838,7 @@ const CHAPTER_STORIES = {
        <p>Kotak bisa diubah: <code>passengers = passengers + 1</code> artinya "tambah 1 penumpang".</p>
        <span class="learn-pill">Belajar: menyimpan data</span>`,
   c5: `<p>Setiap berhenti di stasiun, robot harus melakukan 6 perintah: pelan, berhenti, buka pintu, tunggu, tutup pintu, jalan lagi. Lelah!</p>
-       <p>Kita buat <strong>resep rahasia</strong> bernama <code>stop_at_station()</code> yang berisi semua perintah itu. Sekali ajar — selamanya pakai!</p>
+       <p>Kita buat <strong>resep rahasia</strong> bernama <code>stop_at_station()</code> yang berisi semua perintah itu. Sekali ajar – selamanya pakai!</p>
        <p>Setelah resepnya jadi, kamu cukup panggil namanya. Robot tahu apa yang harus dilakukan.</p>
        <span class="learn-pill">Belajar: membuat perintah baru</span>`,
   c6: `<p><strong>Tugas akhir!</strong> Program robot untuk perjalanan Jakarta → Surabaya, melewati 5 stasiun.</p>
@@ -942,7 +942,7 @@ const PUZZLES = {
     },
     {
       mission: 'Panggil penumpang sampai semua duduk!',
-      sub: 'Pakai repeat_until() — ulang sampai kondisi tercapai.',
+      sub: 'Pakai repeat_until() – ulang sampai kondisi tercapai.',
       mode: 'repeat_until',
       conditionOptions: ['all_passengers_seated','train_empty','door_open'],
       actionOptions: ['call_next_passenger()','close_door()','stop()'],
@@ -984,7 +984,7 @@ const PUZZLES = {
   // Chapter 5: functions
   c5: [
     {
-      mission: 'Susun resep stop_at_station() — urutan benar!',
+      mission: 'Susun resep stop_at_station() – urutan benar!',
       sub: 'Tap blok perintah dalam urutan yang masuk akal.',
       mode: 'define',
       fnName: 'stop_at_station',
@@ -1171,7 +1171,7 @@ function renderPuzzle(){
   const p = puzzles[S.puzIdx];
   S.current = p;
   S.totalRetries = 0;
-  // reset addBlock to default — per-chapter renderers may override it
+  // reset addBlock to default – per-chapter renderers may override it
   window.addBlock = defaultAddBlock;
   document.getElementById('missionText').textContent = p.mission;
   document.getElementById('missionSub').textContent = p.sub || '';
@@ -1242,7 +1242,7 @@ function renderC1(body, p){
       <div class="track-svg-wrap">${svg}</div>
     </div>
     <div class="palette">
-      <div class="palette-label">🧰 Blok Perintah — Tap untuk Tambah</div>
+      <div class="palette-label">🧰 Blok Perintah – Tap untuk Tambah</div>
       <div class="palette-blocks">${palette}</div>
     </div>
     <div class="program">
@@ -1423,7 +1423,7 @@ async function runC1(){
     S.totalRetries++; S.perfectChapter = false;
     document.getElementById('runBtn').disabled = false;
   } else {
-    showToast(true, 'Berhasil! Robot sampai di B! 🎉', exactMatch ? 'Urutan sempurna!' : 'Robotmu sampai tujuan — kerja bagus.');
+    showToast(true, 'Berhasil! Robot sampai di B! 🎉', exactMatch ? 'Urutan sempurna!' : 'Robotmu sampai tujuan – kerja bagus.');
     AX.play('chime');
     showNext();
   }
@@ -1643,7 +1643,7 @@ async function runC3Repeat(){
     await sleep(180);
   }
   if(S.pickedN === p.correctN){
-    showToast(true, `Semua ${p.correctN} gerbong bersih! 🚿✨`, `repeat(${p.correctN}) menjalankan ${p.action} sebanyak ${p.correctN} kali — sangat efisien!`);
+    showToast(true, `Semua ${p.correctN} gerbong bersih! 🚿✨`, `repeat(${p.correctN}) menjalankan ${p.action} sebanyak ${p.correctN} kali – sangat efisien!`);
     AX.play('chime');
     showNext();
   } else {
@@ -1689,7 +1689,7 @@ async function runC3Until(){
     await sleep(180);
   }
   if(S.ruCond === p.correctCond && S.ruAct === p.correctAction){
-    showToast(true, 'Semua penumpang duduk! 🪑✨', `repeat_until(${p.correctCond}) — robot ulang ${p.correctAction} sampai kondisi tercapai!`);
+    showToast(true, 'Semua penumpang duduk! 🪑✨', `repeat_until(${p.correctCond}) – robot ulang ${p.correctAction} sampai kondisi tercapai!`);
     AX.play('chime');
     showNext();
   } else {
@@ -1850,7 +1850,7 @@ function renderC5(body, p){
           <span class="fn-name">${p.fnName}()</span>
           <span style="font-family:var(--fc);font-weight:700">{</span>
         </div>
-        <div class="fn-body" id="fnBody"><div class="fn-body-empty">Belum ada perintah — tap blok untuk menyusun resep…</div></div>
+        <div class="fn-body" id="fnBody"><div class="fn-body-empty">Belum ada perintah – tap blok untuk menyusun resep…</div></div>
         <div style="font-family:var(--fc);font-weight:700;margin-top:6px">}</div>
       </div>
       <div class="palette">
@@ -1952,7 +1952,7 @@ function updateFnBody(){
   const fb = document.getElementById('fnBody');
   if(!fb) return;
   if(S.fnSeq.length === 0){
-    fb.innerHTML = '<div class="fn-body-empty">Belum ada perintah — tap blok untuk menyusun resep…</div>';
+    fb.innerHTML = '<div class="fn-body-empty">Belum ada perintah – tap blok untuk menyusun resep…</div>';
   } else {
     fb.innerHTML = S.fnSeq.map((k,i)=>{
       const m = BLOCK_META[k] || {text:k};
@@ -2000,7 +2000,7 @@ async function runC5Call(){
     await sleep(450);
     if(el) el.textContent = '✅';
   }
-  showToast(true, `${p.timesNeeded} stasiun ditangani! 🚉✨`, `Cukup 1 baris untuk 6 perintah — itulah kekuatan resep!`);
+  showToast(true, `${p.timesNeeded} stasiun ditangani! 🚉✨`, `Cukup 1 baris untuk 6 perintah – itulah kekuatan resep!`);
   AX.play('chime');
   showNext();
 }
@@ -2244,7 +2244,7 @@ function bossPickN(n){
 function bossCheckStep2(){
   if(S.bossN === 5){
     AX.play('chime');
-    showToast(true, 'repeat(5) — pas! 🔁', 'Lanjut atur sinyal.');
+    showToast(true, 'repeat(5) – pas! 🔁', 'Lanjut atur sinyal.');
     setTimeout(()=>{
       document.getElementById('bossStep3').style.display = 'block';
       document.getElementById('bossStep2').style.opacity = '0.55';
@@ -2378,7 +2378,7 @@ function finishChapter(){
   document.getElementById('starCount').textContent = S.totalStars;
 
   document.getElementById('doneBadge').textContent = ch.boss ? '🏆' : ['🎉','✨','🎯','⭐','🚂','🤖'][S.chapterIdx % 6];
-  document.getElementById('doneTitle').textContent = ch.boss ? 'INSINYUR KAI SEJATI!' : `${ch.title} — Selesai!`;
+  document.getElementById('doneTitle').textContent = ch.boss ? 'INSINYUR KAI SEJATI!' : `${ch.title} – Selesai!`;
   document.getElementById('doneStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3-stars);
   document.getElementById('doneStarsNum').textContent = stars;
   document.getElementById('doneRetries').textContent = retries;

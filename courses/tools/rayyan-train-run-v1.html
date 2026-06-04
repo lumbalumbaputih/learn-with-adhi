@@ -382,7 +382,7 @@
       ctx.fillRect(x, GROUND_Y, 16, 30);
     }
 
-    // particles (behind train when smoke, in front otherwise — simple: all behind)
+    // particles (behind train when smoke, in front otherwise – simple: all behind)
     for (const p of particles) {
       ctx.globalAlpha = Math.max(0, p.life/30);
       ctx.fillStyle = p.color;
@@ -419,7 +419,7 @@
     ctx.strokeStyle = '#1A1614';
     ctx.lineWidth = 4;
     if (o.type === 'rock') {
-      // bright magenta boulder — pops against green hills + brown ground
+      // bright magenta boulder – pops against green hills + brown ground
       ctx.fillStyle = '#E84BA0';
       ctx.beginPath();
       ctx.ellipse(o.x+o.w/2, o.y - o.h/2, o.w/2, o.h/2, 0, 0, Math.PI*2);
@@ -429,7 +429,7 @@
       ctx.ellipse(o.x+o.w/2-5, o.y - o.h/2-5, o.w/3, o.h/4.5, 0, 0, Math.PI*2);
       ctx.fill();
     } else if (o.type === 'cactus') {
-      // bright orange spiky obstacle — distinct from green trees
+      // bright orange spiky obstacle – distinct from green trees
       ctx.fillStyle = '#FF5C39';
       roundRect(o.x+12, o.y - o.h,        16, o.h,    4, true, true);
       roundRect(o.x,    o.y - o.h + 14,   14, 22,     4, true, true);
