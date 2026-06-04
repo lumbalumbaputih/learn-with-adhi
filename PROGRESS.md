@@ -19,6 +19,11 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-04
 
+### Phase 4 (polish) – tutor name unified to "Kapi" ✅
+- Renamed the in-course guide to a single identity **"Kapi"** across the math ladder: Gr2 & Gr3 said "Kai", Gr4 said "Nova" → all now "Kapi" (Gr5–7 already used Kapi). Carefully avoided the "KAI" train brand (Gr3 line had both "kereta KAI" and "Kai si Kondektur" — only the tutor changed) and left internal CSS classes/ids (`kai-name`, `nova-msg`) untouched. `node --check` clean.
+- Files: `courses/math/rayyan-math-grade2-v1.html`, `grade3.html`, `grade4.html`.
+- This clears the last deferred Phase-4 item. Next: Track C "the Bridge" course (in progress — being built by a dedicated agent).
+
 ### Phase 4 (polish) – pause animations off-screen + v1 boss clarification ✅ / 🟡
 - **Off-screen animation pause** ✅: added a safe, uniform snippet to math Gr5/6/7 — `body.anim-paused *{animation-play-state:paused}` CSS + a `visibilitychange` listener that toggles the class when the tab is hidden. Stops the perpetual bubble/light animations from burning battery when backgrounded. `node --check` clean.
 - **Coding v1 boss** ✅ (clarified, no code change needed): inspected v1's ch6 — it's already a **full themed multi-step boss mission** (route stations JKT→SBY that progress, signal/passenger state, 5 unlocking steps, confetti victory), richer than the math HP-bar bosses. The old CLAUDE.md "label-only" note was inaccurate and has been corrected. Phase 1b is therefore complete across all early courses.
