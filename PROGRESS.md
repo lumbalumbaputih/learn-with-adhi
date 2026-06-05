@@ -17,6 +17,15 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-06-05
+
+### Raya – literacy course expanded to the full 26-letter alphabet (9 chapters) ✅
+- Adhi's feedback on the first cut (5 ch, ~6 letters): "there is 26 alphabet, please do better." Rebuilt `rayaLiteracy` into a complete alphabet ladder.
+- **9 chapters, 66 questions:** (1) Vokal A-I-U-E-O · (2) Konsonan B-C-D-F-G · (3) H-J-K-L-M · (4) N-P-R-S-T · (5) Q-V-W-X-Y-Z — every letter introduced with an example word (A=Apel … Z=Zebra). Then (6) Bunyi Awal / beginning sounds (12q), (7) Besar & Kecil upper/lowercase drag-match across all 26 (8q), (8) Kata Pertama first words→picture (10q), (9) BOSS: Petualangan Huruf mixed review (10q).
+- Same proven Raya engine (`'pick'` letter/emoji type + `drag-match`). Verified: inline engine `node --check` clean; all 66 answer keys logic-checked (every `pick` `ans`→correct option, every drag chip has a matching target) → 0 issues.
+- Bumped `totalChapters` 5→9 in `raya.html` + `dashboard.html`. Updated CLAUDE.md.
+- Files: `courses/learning/raya-literacy-v1.html`, `raya.html`, `dashboard.html`, `CLAUDE.md`, `PROGRESS.md`.
+
 ## 2026-06-04
 
 ### Raya – new course "Belajar Huruf Bersama Raya 📖" (literacy) ✅  [closes Raya's biggest peer-gap]
