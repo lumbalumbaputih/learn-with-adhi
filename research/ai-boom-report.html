@@ -210,6 +210,7 @@ footer a{color:var(--indigo)}
     <a href="#web" class="toc-a">Money Web</a>
     <a href="#charts" class="toc-a">Charts</a>
     <a href="#deepdive" class="toc-a">Deep Dives</a>
+    <a href="#investments" class="toc-a">Who Invests in Whom</a>
     <a href="#hunt" class="toc-a">Multibagger</a>
     <a href="#scorecard" class="toc-a">Scorecard</a>
     <a href="#bullbear" class="toc-a">Bull vs Bear</a>
@@ -359,6 +360,8 @@ footer a{color:var(--indigo)}
           <li>Google Cloud <b>$20B, +63%;</b> backlog ~<b>$460B</b>.</li>
           <li>Builds <b>TPU (Ironwood)</b> with <b>Broadcom</b> — now <em>selling</em> TPUs to Meta &amp; Anthropic.</li>
           <li>Gemini at <b>750M+ users.</b></li>
+          <li>Anthropic: <b>~14% stake</b> + up to <b>$40B new investment</b> (Apr 2026) at a $380B Anthropic valuation.</li>
+          <li>Waymo: <b>~75% ownership,</b> $126B valuation (Series D, Feb 2026).</li>
           <li>Capex <b>~$175–185B.</b></li>
         </ul>
       </div>
@@ -406,7 +409,7 @@ footer a{color:var(--indigo)}
       <div class="wt">The ~$800B loop</div>
       <div class="ws">Lines show equity stakes (dashed) and revenue/spend commitments (solid). Node size ≈ relative market cap.</div>
       <canvas id="moneyCanvas" height="420"></canvas>
-      <div class="web-note">⚠️ <b>Why it matters:</b> these loops inflate everyone's reported demand. If one node stumbles — OpenAI is projected to <b>lose ~$14B in 2026</b> — the loop can reverse. Nvidia's once-touted $100B OpenAI investment was already reported "on ice." Bulls say it's how you pre-build supply for real demand; bears call it vendor-financed revenue.</div>
+      <div class="web-note">⚠️ <b>Why it matters:</b> these loops inflate everyone's reported demand. If one node stumbles — OpenAI is projected to <b>lose ~$14B in 2026</b> — the loop can reverse. Nvidia's original $100B OpenAI deal was renegotiated to $30B. Meanwhile Google's Anthropic commitment escalated to <b>up to $40B more</b> in April 2026 — and Nvidia alone has crossed <b>$40B in total equity bets</b> in 2026, almost all in companies that buy its GPUs. The loop is bigger than any prior estimate.</div>
     </div>
   </div>
 </section>
@@ -471,6 +474,42 @@ footer a{color:var(--indigo)}
         </ul>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- INVESTMENT PORTFOLIOS -->
+<section id="investments">
+  <div class="wrap">
+    <div class="kicker">Who's investing in whom</div>
+    <h2>The big-tech investment portfolios</h2>
+    <p class="sub">Beyond capex, the hyperscalers and Nvidia have become aggressive equity investors — funding the same AI labs and clouds that buy their products. This creates the $800B+ loop shown above.</p>
+    <div class="deep-grid">
+      <div class="dcard">
+        <h3>⚡ Nvidia's $40B+ Portfolio</h3>
+        <div class="dsub">Nvidia crossed $40B in equity commitments in 2026 alone. Almost every investment is in a company that buys its GPUs — a self-reinforcing flywheel.</div>
+        <ul>
+          <li><b>AI Labs:</b> OpenAI up to $30B · Anthropic up to $10B · xAI $2B · Mistral AI · Cohere · Perplexity · Scale AI · Cursor/Anysphere</li>
+          <li><b>Neoclouds:</b> CoreWeave $2B (new, ~7% stake worth ~$4.4B) · Nebius $2B + 5GW commitment · IREN up to $2.1B warrants · Lambda Labs · Nscale · Crusoe</li>
+          <li><b>Optics supply chain:</b> Coherent $2B + purchase commitment · Lumentum $2B + US fab build · Corning up to $3.2B warrants (goal: 10× US optical capacity)</li>
+          <li><b>Robotics / AV:</b> Figure AI (humanoid, $39B val) · Wayve (AV, part of $1.05B)</li>
+          <li><b>Frontier tech:</b> Commonwealth Fusion (nuclear) · QuEra / Quantinuum / PsiQuantum (quantum) via NVentures · Recursion Pharma (AI drug discovery, $50M)</li>
+          <li><b>Pattern:</b> Optics investments come with purchase commitments attached — Nvidia is <em>funding its own supply chain</em> while locking in preferred pricing.</li>
+        </ul>
+      </div>
+      <div class="dcard">
+        <h3>🔍 Google &amp; Apple — Different Playbooks</h3>
+        <div class="dsub">Google goes big on external AI bets; Apple acquires quietly and builds internally.</div>
+        <ul>
+          <li><b>Google → Anthropic:</b> ~14% stake + up to <b>$40B new</b> (April 2026) at a $380B Anthropic valuation. $10B upfront, $30B contingent. No voting rights or board seats.</li>
+          <li><b>Google → Waymo:</b> ~75% ownership, $126B valuation after $16B Series D (Feb 2026, Alphabet contributed ~$13B of it). 450K+ paid rides/week.</li>
+          <li><b>GV (Google Ventures):</b> Most active CVC in 2024 (46 rounds). AI picks: Harvey (legal AI, $5B val), Lightmatter (photonic computing), Sierra, Synthesia.</li>
+          <li><b>Google AI Futures Fund</b> (May 2025): early Gemini model access + Google researcher support alongside equity.</li>
+          <li><b>Apple — the quiet accumulator:</b> 32 AI startups acquired in 2023 (most of any Big Tech); DarwinAI acquired 2024 (neural-net compression). Never takes minority equity stakes in frontier labs.</li>
+          <li><b>Apple strategy:</b> On-device AI (Apple Silicon) + Private Cloud Compute (own servers, not Azure/AWS) + "Project ACDC" custom AI server chips. $500B US investment plan over 4 years.</li>
+          <li><b>Apple × OpenAI deteriorating:</b> ChatGPT integrated in iOS 18 (no cash/equity exchanged) but Apple reportedly signing <b>~$1B/year deal with Google</b> to use Gemini for Siri instead.</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -708,7 +747,7 @@ const DB={
    note:"Sole maker of EUV lithography — upstream of every leading-edge chip. FY26 guide raised to €36–40B. China export-control overhang (fell to 19% of sales)."},
  NVDA:{name:"NVIDIA",layer:"Compute / GPU",v:"blue",vlabel:"QUALITY CORE",
    cap:"~$4.97T",pe:"~33 (fwd ~22)",rev:"$81.6B (Q1 FY27)",growth:"+85% YoY",gm:"~75%",
-   note:"~70% of AI accelerators. Data-centre $75.25B (+92%). CUDA + NVLink + networking moat. Fwd P/E ~22 isn't absurd for the growth, but ASICs are nibbling share."},
+   note:"~70% of AI accelerators. Data-centre $75.25B (+92%). CUDA + NVLink + networking moat. Fwd P/E ~22 isn't absurd for the growth, but ASICs are nibbling share. Also now one of the biggest AI investors: $40B+ equity commitments in 2026 alone — OpenAI ($30B), Anthropic ($10B), xAI ($2B), CoreWeave ($2B), Nebius ($2B), Coherent ($2B), Lumentum ($2B), Corning ($3.2B). The investments are almost all in customers who buy its GPUs — a self-reinforcing flywheel."},
  AMD:{name:"Advanced Micro Devices",layer:"Compute / GPU",v:"yellow",vlabel:"#2 CHALLENGER",
    cap:"~$853B",pe:"~174 (fwd ~60)",rev:"$10.3B (Q1'26)",growth:"+38% YoY",gm:"53% / 55% adj",
    note:"Instinct MI350/MI400 + ROCm. Big Meta (up to 6GW) & OpenAI commitments. Data-centre +57%. The Nvidia alternative — but priced for big execution."},
@@ -775,6 +814,9 @@ const DB={
  CIEN:{name:"Ciena",layer:"Optical / DCI",v:"white",vlabel:"2ND-DERIVATIVE / CHEAPER",
    cap:"~$20B+",pe:"moderate",rev:"$1.57B (Q2 FY26)",growth:"+40% YoY",gm:"—",
    note:"Optical transport connecting data centres over distance. Cloud = 46% of revenue, +70%. Cheaper, less-hyped way to play the buildout (DCI demand follows it). TD Cowen at Buy."},
+ NOK:{name:"Nokia",layer:"Optical + IP + DC Switching",v:"blue",vlabel:"DILUTED COMPOUNDER",
+   cap:"~$50B+",pe:"reasonable",rev:"AI/Cloud €1B orders Q1'26",growth:"+49% AI/Cloud YoY",gm:"—",
+   note:"End-to-end AI networking: 7220 IXR DC switches (SR Linux), 800G ZR/ZR+ optical (Infinera acq. Feb '25), DCI amplifiers. AI/Cloud = 8% of group in Q1'26, but up 49% YoY; €1B orders in a single quarter. Up ~73% YTD (2026). Stock at 16-year high after Q1 beat. Bull: breadth + catch-up momentum at a lower multiple than pure-plays. Bear: Mobile Networks is still ~50% of group revenue — far less pure-play than Ciena (optical) or Arista (switching)."},
  DELL:{name:"Dell Technologies",layer:"AI Servers",v:"orange",vlabel:"REAL REV, THIN MARGIN",
    cap:"~$90B+",pe:"~20s",rev:"AI servers $8.95B (Q4 FY26)",growth:"+342% YoY",gm:"thin",
    note:"AI-server backlog $51.3B; ~$64B orders guided FY26. Real scale — but thin server margins dilute the AI mix. Moderate upside vs the silicon it ships."},
@@ -801,7 +843,7 @@ const DB={
    note:"AWS $37.6B (+28%, fastest in 15 qtrs). Custom Trainium chip biz crossed $20B run-rate. Anthropic anchor. ~$200B capex 2026 — but FCF reportedly squeezed by the buildout."},
  GOOGL:{name:"Alphabet",layer:"Hyperscaler",v:"blue",vlabel:"QUALITY MEGA-CAP",
    cap:"~$4.54T",pe:"~29.4",rev:"$109.9B (Q1'26)",growth:"+22% YoY",gm:"—",
-   note:"Cloud $20B (+63%); backlog ~$460B. Owns the TPU (with Broadcom) and now SELLS it to Meta/Anthropic — the strongest in-house silicon story. Gemini at 750M+ users."},
+   note:"Cloud $20B (+63%); backlog ~$460B. Owns the TPU (with Broadcom) and now SELLS it to Meta/Anthropic — the strongest in-house silicon story. Gemini at 750M+ users. Anthropic: ~14% stake, up to $40B new investment announced April 2026 ($10B upfront, $30B contingent) at a $380B valuation. Waymo: ~75% stake, $126B valuation after $16B Series D (Feb 2026). GV is the most active CVC in AI — Harvey ($5B val), Lightmatter, Sierra, Synthesia. NOTE: Fortune analysis argues ~half of Q1 reported 'AI profit' was paper gains on Anthropic stake."},
  META:{name:"Meta Platforms",layer:"Hyperscaler",v:"blue",vlabel:"QUALITY MEGA-CAP",
    cap:"~$1.50T",pe:"~21–23",rev:"$56.31B (Q1'26)",growth:"+33% YoY",gm:"—",
    note:"Ad engine funds a $125–145B capex plan. Builds MTIA; buys Nvidia+AMD; renting Google TPUs. NOTE: Q1 net income inflated by ~$8B one-time tax benefit — use operating growth."},
@@ -839,7 +881,7 @@ const LAYERS={
  compute:["NVDA","AMD","AVGO","MRVL","ARM","INTC"],
  memory:["MU","SNDK","WDC","STX","PSTG"],
  power:["VRT","GEV","ETN","CEG","VST","PWR"],
- network:["ANET","CRDO","ALAB","COHR","LITE","CIEN"],
+ network:["ANET","CRDO","ALAB","COHR","LITE","CIEN","NOK"],
  servers:["DELL","SMCI"],
  cloud:["CRWV","NBIS","DLR","EQIX","ORCL"],
  apps:["PLTR","NOW","CRM","SNOW","DDOG","MDB","CRWD","TSLA"],
@@ -860,6 +902,7 @@ const VLINE={
  CEG:"P/E ~22 leveraged bet on AI electricity demand + nuclear scarcity.",
  VST:"Meta nuclear PPAs not yet in guidance = hidden upside.",
  CIEN:"Cheaper 2nd-derivative optical play; cloud +70%.",
+ NOK:"End-to-end (optical + IP + DC switching); AI/Cloud +49%, but telecom = ~50% of group.",
  COHR:"Nvidia-backed optics turnaround; mid-cap re-rating potential.",
  ANET:"#1 AI networking, 40%+ margins — quality compounder, full price.",
  GEV:"Supply side of the power shortage with real pricing power.",
