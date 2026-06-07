@@ -3,439 +3,518 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The AI Boom, Mapped — US Stocks, the Hyperscaler Stack & the Multibagger Hunt</title>
+<title>The AI Boom, Mapped — US Stocks, Hyperscalers &amp; the Multibagger Hunt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  :root{
-    --bg:#0a0e17; --bg2:#0f1626; --card:#131c2e; --card2:#18233a;
-    --ink:#e9eef7; --mut:#93a1bd; --line:#243149;
-    --grn:#34d399; --blu:#60a5fa; --yel:#fbbf24; --org:#fb923c; --red:#f87171; --gry:#94a3b8;
-    --pur:#a78bfa; --cyan:#22d3ee; --pink:#f472b6;
-    --glow:0 0 0 1px rgba(255,255,255,.04), 0 10px 30px -12px rgba(0,0,0,.6);
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;background:radial-gradient(1200px 700px at 80% -10%, #15233f 0%, transparent 55%),
-               radial-gradient(900px 600px at 0% 0%, #1a1530 0%, transparent 50%), var(--bg);
-    color:var(--ink);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    line-height:1.55;-webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-  h1,h2,h3{line-height:1.15;letter-spacing:-.02em}
-  a{color:var(--blu);text-decoration:none}
-  a:hover{text-decoration:underline}
+:root{
+  --tomato:#FF5C39;--mango:#FFC234;--forest:#1F9D55;
+  --sea:#1FA9C7;--mawar:#E84BA0;--indigo:#2E3192;
+  --ink:#1A1614;--paper:#FBF4E6;--paper-2:#F4ECD8;
+  --line:rgba(26,22,20,.14);--muted:#6B6259;
+  --fd:'Bricolage Grotesque',sans-serif;
+  --fb:'Inter',system-ui,sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);line-height:1.6}
+a{color:var(--indigo);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3,h4{font-family:var(--fd);line-height:1.1;letter-spacing:-.02em}
 
-  /* HERO */
-  header.hero{padding:72px 0 40px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
-  .eyebrow{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);
-    border:1px solid rgba(34,211,238,.3);padding:5px 12px;border-radius:999px;background:rgba(34,211,238,.06)}
-  header.hero h1{font-size:clamp(30px,5.2vw,56px);margin:18px 0 10px;font-weight:800;
-    background:linear-gradient(120deg,#fff 10%,#9fd0ff 45%,#c4b5fd 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
-  header.hero p.lede{font-size:clamp(16px,2.1vw,20px);color:var(--mut);max-width:760px}
-  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;font-size:13px;color:var(--mut)}
-  .meta-row span{background:var(--card);border:1px solid var(--line);padding:6px 12px;border-radius:8px}
+/* NAV */
+.topnav{position:sticky;top:0;z-index:50;background:rgba(251,244,230,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topnav .inner{display:flex;align-items:center;gap:4px;overflow-x:auto;padding:10px 24px;max-width:1160px;margin:0 auto;scrollbar-width:none}
+.topnav .inner::-webkit-scrollbar{display:none}
+.back-link{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);padding:5px 10px;border-radius:7px;border:1px solid var(--line);margin-right:8px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.back-link:hover{background:var(--paper-2);color:var(--ink);text-decoration:none}
+.toc-a{font-size:13px;color:var(--muted);padding:5px 10px;border-radius:7px;white-space:nowrap;transition:.15s;flex-shrink:0}
+.toc-a:hover{background:var(--paper-2);color:var(--ink);text-decoration:none}
 
-  /* NAV */
-  nav.toc{position:sticky;top:0;z-index:40;background:rgba(10,14,23,.82);backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);padding:10px 0}
-  nav.toc .wrap{display:flex;gap:6px;flex-wrap:wrap;overflow-x:auto}
-  nav.toc a{font-size:13px;color:var(--mut);padding:6px 11px;border-radius:7px;white-space:nowrap}
-  nav.toc a:hover{background:var(--card);color:var(--ink);text-decoration:none}
+/* HERO */
+.hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;font-family:var(--fm);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);background:var(--paper-2);border:1px solid var(--line);padding:4px 12px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:clamp(32px,5.5vw,60px);font-weight:800;margin-bottom:16px}
+.hero h1 em{color:var(--indigo);font-style:normal}
+.hero .lede{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:740px;margin-bottom:24px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px}
+.hero-meta span{font-size:13px;color:var(--muted);background:var(--paper-2);border:1px solid var(--line);padding:5px 12px;border-radius:8px}
+.live-badge{display:none;align-items:center;gap:6px;background:#eef9f3;border:1px solid var(--forest);color:var(--forest);padding:5px 12px;border-radius:8px;font-size:13px;font-weight:600}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--forest);animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-  section{padding:54px 0;border-bottom:1px solid var(--line)}
-  section h2{font-size:clamp(24px,3.4vw,36px);margin:0 0 6px;font-weight:800}
-  section .sub{color:var(--mut);font-size:16px;margin:0 0 28px;max-width:820px}
-  .kicker{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--pur);font-weight:700;margin-bottom:6px}
+/* SECTIONS */
+section{padding:56px 0;border-bottom:1px solid var(--line)}
+section h2{font-size:clamp(24px,3.2vw,38px);font-weight:800;margin-bottom:8px}
+section .sub{color:var(--muted);font-size:16px;max-width:820px;margin-bottom:32px;line-height:1.65}
+.kicker{font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 
-  /* TL;DR */
-  .tldr{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-  .tldr .box{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);
-    border-radius:14px;padding:18px;box-shadow:var(--glow)}
-  .tldr .box b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--cyan);margin-bottom:6px}
-  .tldr .box p{margin:0;font-size:14.5px;color:#cdd7ea}
+/* STAT BOXES */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.stat-box{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:20px;transition:.18s}
+.stat-box:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+.stat-box .slabel{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.stat-box .sval{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--ink);margin-bottom:6px}
+.stat-box .sdesc{font-size:13.5px;color:var(--muted);line-height:1.5}
 
-  /* STACK */
-  .stack{display:flex;flex-direction:column;gap:12px}
-  .layer{background:linear-gradient(90deg,var(--card2),var(--card));border:1px solid var(--line);
-    border-radius:14px;padding:16px 18px;position:relative;overflow:hidden}
-  .layer::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent,#60a5fa)}
-  .layer .lh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
-  .layer .lh h3{margin:0;font-size:18px}
-  .layer .lh .tag{font-size:11px;color:var(--bg);background:var(--accent,#60a5fa);padding:2px 9px;border-radius:999px;font-weight:800;letter-spacing:.04em}
-  .layer .desc{color:var(--mut);font-size:13.5px;margin:2px 0 12px;max-width:780px}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
+/* CHART PANELS */
+.chart-panel{background:var(--paper-2);border:2px solid var(--line);border-radius:16px;padding:24px}
+.chart-panel h3{font-size:19px;margin-bottom:4px}
+.chart-panel .csub{font-size:13px;color:var(--muted);margin-bottom:20px}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 
-  /* TICKER CHIP */
-  .tk{display:inline-flex;align-items:center;gap:7px;cursor:help;border:1px solid var(--line);
-    background:var(--bg2);border-radius:9px;padding:6px 10px 6px 8px;font-size:13.5px;transition:.15s;position:relative}
-  .tk:hover{transform:translateY(-2px);border-color:var(--vc);box-shadow:0 8px 18px -10px rgba(0,0,0,.7);background:var(--card2)}
-  .tk .sym{font-weight:800;font-family:"SF Mono",ui-monospace,Menlo,monospace;letter-spacing:.02em}
-  .tk .nm{color:var(--mut);font-size:12px;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .tk .dot{width:8px;height:8px;border-radius:50%;flex:none}
-  .v-green{--vc:var(--grn)} .v-blue{--vc:var(--blu)} .v-yellow{--vc:var(--yel)}
-  .v-orange{--vc:var(--org)} .v-white{--vc:var(--gry)} .v-red{--vc:var(--red)} .v-pur{--vc:var(--pur)}
-  .tk .dot{background:var(--vc)}
-  .tk::after{content:"";position:absolute;inset:0;border-radius:9px;box-shadow:inset 0 0 0 1px transparent;pointer-events:none}
+/* THE STACK */
+.stack{display:flex;flex-direction:column;gap:12px}
+.layer{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:18px 20px;position:relative;border-left:5px solid var(--accent,var(--indigo))}
+.layer .lh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.layer .lh h3{font-size:17px}
+.layer .lh .tag{font-size:11px;color:#fff;background:var(--accent,var(--indigo));padding:2px 10px;border-radius:999px;font-weight:700;letter-spacing:.04em;font-family:var(--fm)}
+.layer .desc{color:var(--muted);font-size:13.5px;margin-bottom:14px;max-width:800px;line-height:1.55}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
 
-  /* LEGEND */
-  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 26px;font-size:13px;color:var(--mut)}
-  .legend .li{display:flex;align-items:center;gap:7px}
-  .legend .dot{width:10px;height:10px;border-radius:50%}
+/* TICKER CHIP */
+.tk{display:inline-flex;align-items:center;gap:6px;cursor:help;border:1.5px solid var(--line);background:var(--paper-2);border-radius:8px;padding:5px 10px 5px 7px;font-size:13px;transition:.15s;position:relative;font-family:var(--fm)}
+.tk:hover{transform:translateY(-2px);border-color:var(--vc);box-shadow:0 4px 10px rgba(26,22,20,.1);background:#fff}
+.tk .sym{font-weight:700}
+.tk .nm{color:var(--muted);font-size:11.5px;font-family:var(--fb)}
+.tk .dot{width:8px;height:8px;border-radius:50%;background:var(--vc,var(--muted));flex-shrink:0}
+.v-green{--vc:var(--forest)} .v-blue{--vc:var(--indigo)} .v-yellow{--vc:var(--mango)}
+.v-orange{--vc:var(--tomato)} .v-white{--vc:var(--muted)} .v-red{--vc:var(--mawar)}
 
-  /* TOOLTIP */
-  #tip{position:fixed;z-index:100;max-width:330px;background:#0c1424;border:1px solid #2c3b58;
-    border-radius:13px;padding:14px 15px;box-shadow:0 20px 50px -12px rgba(0,0,0,.85);pointer-events:none;
-    opacity:0;transform:translateY(6px);transition:opacity .12s, transform .12s;font-size:13px}
-  #tip.show{opacity:1;transform:translateY(0)}
-  #tip .t-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
-  #tip .t-sym{font-family:ui-monospace,monospace;font-weight:800;font-size:16px}
-  #tip .t-badge{font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:999px;letter-spacing:.03em;white-space:nowrap}
-  #tip .t-name{color:var(--mut);font-size:12px;margin-bottom:9px}
-  #tip .t-grid{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin-bottom:8px}
-  #tip .t-grid .k{color:var(--mut);font-size:12px}
-  #tip .t-grid .val{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;font-size:12.5px}
-  #tip .t-note{font-size:12px;color:#bcd0f0;border-top:1px solid var(--line);padding-top:8px;line-height:1.45}
-  #tip .pos{color:var(--grn)} #tip .neg{color:var(--red)}
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:26px;font-size:13px;color:var(--muted)}
+.legend .li{display:flex;align-items:center;gap:7px}
+.legend .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 
-  /* CARDS / GRID */
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);
-    border-radius:16px;padding:20px;box-shadow:var(--glow)}
-  .card h3{margin:0 0 4px;font-size:18px}
-  .card .role{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--cyan);margin-bottom:10px}
-  .card ul{margin:8px 0 0;padding-left:18px;color:#cdd7ea;font-size:13.5px}
-  .card ul li{margin:5px 0}
+/* HYPERSCALER CARDS */
+.hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.hcard{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:20px;transition:.18s}
+.hcard:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+.hcard h3{font-size:17px;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.hcard .role{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px}
+.hcard ul{padding-left:18px;font-size:13.5px;color:var(--muted)}
+.hcard ul li{margin:6px 0}
+.hcard ul b{color:var(--ink)}
+.hcard.dark{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.hcard.dark h3,.hcard.dark .role{color:rgba(255,255,255,.6)}
+.hcard.dark ul{color:rgba(255,255,255,.85)}
+.hcard.dark ul b{color:#fff}
 
-  /* CONNECTION WEB */
-  .web-note{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.3);border-radius:12px;
-    padding:14px 16px;color:#ffd9d4;font-size:14px;margin-bottom:22px}
-  .flow{display:grid;gap:10px}
-  .flow .row{display:grid;grid-template-columns:170px 1fr;gap:14px;align-items:start;
-    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-  .flow .row .from{font-weight:800;font-size:14px;display:flex;align-items:center;gap:8px}
-  .flow .row .deals{font-size:13.5px;color:#cdd7ea}
-  .flow .row .deals b{color:#fff}
+/* CANVAS WEB PANEL */
+.web-panel{background:#0e1425;border:2px solid rgba(255,255,255,.08);border-radius:20px;padding:28px}
+.web-panel .wt{font-family:var(--fd);font-size:20px;color:#e9eef7;margin-bottom:4px}
+.web-panel .ws{font-size:13px;color:#7a92b4;margin-bottom:16px}
+#moneyCanvas{width:100%;display:block}
+.web-note{margin-top:16px;background:rgba(255,92,57,.08);border:1px solid rgba(255,92,57,.3);border-radius:10px;padding:12px 16px;color:#ffd4cb;font-size:13.5px;line-height:1.55}
 
-  /* SCORECARD TABLE */
-  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
-  table{border-collapse:collapse;width:100%;min-width:760px;font-size:13.5px}
-  thead th{background:var(--card2);text-align:left;padding:12px 14px;font-size:12px;text-transform:uppercase;
-    letter-spacing:.06em;color:var(--mut);position:sticky;top:0;border-bottom:1px solid var(--line)}
-  tbody td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-  tbody tr:hover{background:rgba(255,255,255,.02)}
-  td .sym{font-family:ui-monospace,monospace;font-weight:800}
-  .pill{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap}
+/* DEEP DIVES */
+.deep-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.dcard{background:var(--paper-2);border:2px solid var(--line);border-radius:16px;padding:24px}
+.dcard h3{font-size:20px;margin-bottom:6px}
+.dcard .dsub{font-size:13.5px;color:var(--muted);margin-bottom:16px;line-height:1.55}
+.dcard ul{padding-left:18px;color:var(--muted);font-size:14px}
+.dcard ul li{margin:9px 0;line-height:1.55}
+.dcard ul b{color:var(--ink)}
+.timeline{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.tlrow{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:start}
+.tlrow .yr{font-family:var(--fm);font-size:12px;font-weight:700;color:var(--muted);padding-top:2px}
+.tlrow .tl{font-size:13.5px;color:var(--muted);line-height:1.5}
+.tlrow .tl b{color:var(--ink)}
 
-  /* BULL / BEAR */
-  .bb{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  .bb .col{border-radius:16px;padding:20px;border:1px solid var(--line)}
-  .bb .bull{background:linear-gradient(180deg,rgba(52,211,153,.08),var(--card))}
-  .bb .bear{background:linear-gradient(180deg,rgba(248,113,113,.08),var(--card))}
-  .bb h3{display:flex;align-items:center;gap:8px;margin-top:0}
-  .bb ul{padding-left:18px;font-size:14px;color:#cdd7ea}
-  .bb ul li{margin:9px 0}
+/* CALLOUT */
+.callout{background:var(--paper-2);border:2px solid var(--line);border-radius:16px;padding:24px;margin:24px 0}
+.callout h3{font-size:20px;margin-bottom:12px}
+.callout p{color:var(--muted);font-size:14.5px;line-height:1.65}
 
-  /* PICKS */
-  .picks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
-  .pick{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);
-    border-radius:16px;padding:18px;position:relative;overflow:hidden}
-  .pick .rank{position:absolute;top:-8px;right:6px;font-size:60px;font-weight:900;color:rgba(255,255,255,.04)}
-  .pick h4{margin:0 0 2px;font-size:16px;display:flex;gap:8px;align-items:center}
-  .pick .why{font-size:13px;color:#cdd7ea;margin:8px 0 0}
-  .pick .tag2{font-size:11px;font-weight:800;color:var(--bg);padding:2px 8px;border-radius:999px}
+/* GRID2 */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.mcard{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:20px}
+.mcard h3{font-size:16px;margin-bottom:10px}
+.mcard ul{padding-left:18px;color:var(--muted);font-size:13.5px}
+.mcard ul li{margin:7px 0;line-height:1.5}
+.mcard ul b{color:var(--ink)}
+.mcard.warn{border-color:rgba(255,92,57,.3);background:#fff9f7}
 
-  .callout{background:linear-gradient(135deg,rgba(167,139,250,.12),rgba(34,211,238,.08));
-    border:1px solid rgba(167,139,250,.3);border-radius:16px;padding:22px;margin:24px 0}
-  .callout h3{margin-top:0}
-  .num{font-family:ui-monospace,monospace}
+/* SCORECARD */
+.tablewrap{overflow-x:auto;border:2px solid var(--line);border-radius:14px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13.5px}
+thead th{background:var(--paper-2);text-align:left;padding:12px 14px;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:2px solid var(--line);font-family:var(--fm)}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:hover td{background:var(--paper-2)}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;font-family:var(--fm)}
 
-  footer{padding:40px 0 80px;color:var(--mut);font-size:13px}
-  details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:10px}
-  details summary{cursor:pointer;font-weight:700;color:var(--ink)}
-  details ul{font-size:12.5px;color:var(--mut);columns:2;column-gap:30px}
-  details a{word-break:break-all}
+/* BULL BEAR */
+.bb{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.bbcol{border-radius:16px;padding:22px;border:2px solid var(--line)}
+.bbcol.bull{background:#f0faf5;border-color:rgba(31,157,85,.2)}
+.bbcol.bear{background:#fff5f9;border-color:rgba(232,75,160,.2)}
+.bbcol h3{font-size:20px;margin-bottom:12px}
+.bbcol ul{padding-left:18px;font-size:14px;color:var(--muted)}
+.bbcol ul li{margin:9px 0;line-height:1.55}
+.bbcol ul b{color:var(--ink)}
 
-  .disclaim{font-size:12.5px;color:var(--mut);background:var(--card);border:1px dashed var(--line);
-    border-radius:12px;padding:14px 16px}
+/* PICKS */
+.picks{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.pick{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:20px;position:relative;overflow:hidden;transition:.18s}
+.pick:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink)}
+.pick .rank{position:absolute;top:-10px;right:8px;font-family:var(--fd);font-size:52px;font-weight:900;color:rgba(26,22,20,.05)}
+.pick h4{font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.pick .why{font-size:13.5px;color:var(--muted);line-height:1.55}
+.pick .why b{color:var(--ink)}
+.tag2{font-family:var(--fm);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;color:#fff}
 
-  @media(max-width:860px){
-    .grid2,.grid3,.bb{grid-template-columns:1fr}
-    .flow .row{grid-template-columns:1fr}
-    details ul{columns:1}
-  }
+/* SOURCES */
+.disclaim{font-size:13px;color:var(--muted);background:var(--paper-2);border:1.5px dashed var(--line);border-radius:12px;padding:14px 18px}
+details{background:var(--paper-2);border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:10px}
+details summary{cursor:pointer;font-weight:700;color:var(--ink);font-size:14.5px}
+details ul{font-size:12.5px;color:var(--muted);columns:2;column-gap:30px;margin-top:10px}
+details ul a{color:var(--indigo);word-break:break-all}
+
+/* TOOLTIP */
+#tip{position:fixed;z-index:200;max-width:330px;background:var(--ink);color:var(--paper);border:1.5px solid rgba(255,255,255,.1);border-left:3px solid var(--vc,rgba(255,255,255,.3));border-radius:14px;padding:14px 16px;box-shadow:8px 8px 0 rgba(26,22,20,.25);pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .12s,transform .12s;font-size:13px;font-family:var(--fb)}
+#tip.show{opacity:1;transform:translateY(0)}
+#tip .tt{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+#tip .tsym{font-family:var(--fm);font-weight:800;font-size:17px}
+#tip .tbadge{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;letter-spacing:.03em;white-space:nowrap;font-family:var(--fm)}
+#tip .tname{color:rgba(251,244,230,.5);font-size:12px;margin-bottom:10px}
+#tip .tlive{font-size:11px;color:#34d399;margin-bottom:8px;display:none}
+#tip .tgrid{display:grid;grid-template-columns:auto 1fr;gap:3px 14px;margin-bottom:10px}
+#tip .tgrid .k{color:rgba(251,244,230,.5);font-size:12px}
+#tip .tgrid .val{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;font-size:12.5px}
+#tip .tnote{font-size:12px;color:rgba(251,244,230,.75);border-top:1px solid rgba(255,255,255,.1);padding-top:9px;line-height:1.5}
+#tip .pos{color:#34d399} #tip .neg{color:var(--mawar)}
+
+footer{padding:48px 0 80px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+footer .fi{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center}
+footer a{color:var(--indigo)}
+
+@media(max-width:800px){
+  .deep-grid,.bb,.grid2,.chart-row{grid-template-columns:1fr}
+  details ul{columns:1}
+}
 </style>
 </head>
 <body>
 
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="inner">
+    <a href="../index.html" class="back-link">← Learn with Adhi</a>
+    <a href="#tldr" class="toc-a">TL;DR</a>
+    <a href="#stack" class="toc-a">The Stack</a>
+    <a href="#hyper" class="toc-a">Hyperscalers</a>
+    <a href="#web" class="toc-a">Money Web</a>
+    <a href="#charts" class="toc-a">Charts</a>
+    <a href="#deepdive" class="toc-a">Deep Dives</a>
+    <a href="#hunt" class="toc-a">Multibagger</a>
+    <a href="#scorecard" class="toc-a">Scorecard</a>
+    <a href="#bullbear" class="toc-a">Bull vs Bear</a>
+    <a href="#picks" class="toc-a">Picks</a>
+  </div>
+</nav>
+
+<!-- HERO -->
 <header class="hero">
   <div class="wrap">
-    <span class="eyebrow">Deep Research · Equity Map · June 2026</span>
-    <h1>The AI Boom, Mapped</h1>
-    <p class="lede">Who's actually building the AI economy, how they're wired into the hyperscalers, and where the next <em>Micron-style multibagger</em> might still be hiding. <strong>Hover over any ticker</strong> to see its key financials.</p>
-    <div class="meta-row">
-      <span>📊 ~45 companies across 8 layers</span>
-      <span>🔗 The hyperscaler connection web</span>
+    <div class="eyebrow">Deep Research · Equity Map · June 2026</div>
+    <h1>The AI Boom, <em>Mapped</em></h1>
+    <p class="lede">Who's actually building the AI economy, how they're wired into the hyperscalers, and where the next <strong>Micron-style multibagger</strong> might still be hiding. Hover any ticker for key financials.</p>
+    <div class="hero-meta">
+      <span>📊 44 companies across 8 layers</span>
+      <span>🔗 The hyperscaler money web</span>
       <span>💎 Multibagger scorecard</span>
-      <span>⚖️ Bull vs. bear, honestly</span>
+      <span>⚖️ Bull vs bear, honestly</span>
+      <span id="liveBadge" class="live-badge"><span class="pulse"></span> Live data</span>
     </div>
   </div>
 </header>
 
-<nav class="toc">
-  <div class="wrap">
-    <a href="#tldr">TL;DR</a>
-    <a href="#stack">The AI Stack</a>
-    <a href="#hyper">Hyperscalers</a>
-    <a href="#web">The Money Web</a>
-    <a href="#hunt">Multibagger Hunt</a>
-    <a href="#scorecard">Scorecard</a>
-    <a href="#bullbear">Bull vs Bear</a>
-    <a href="#picks">Where to Look</a>
-    <a href="#sources">Sources</a>
-  </div>
-</nav>
-
-<!-- ================= TL;DR ================= -->
+<!-- TL;DR -->
 <section id="tldr">
   <div class="wrap">
     <div class="kicker">The 60-second version</div>
     <h2>The whole boom on one page</h2>
-    <p class="sub">The AI trade is a layered supply chain. A handful of <strong>hyperscalers</strong> (Microsoft, Amazon, Google, Meta, Oracle) are spending <strong>~$650B+ in 2026</strong> on data centers. That capex flows <em>down</em> the stack into chips, memory, networking, power and cooling — and the model labs (OpenAI, Anthropic) sit on top, often funded by the very chip & cloud vendors they buy from.</p>
-    <div class="tldr">
-      <div class="box"><b>The fuel</b><p>~$650–690B of hyperscaler capex in 2026 (Gartner sees ~$2.5T total AI spend, +44% YoY). This is the single biggest number in the whole story.</p></div>
-      <div class="box"><b>The kingpin</b><p><span class="num">NVDA</span> still ~70% of AI accelerators, doing a <span class="num">$75B</span> data-center quarter. But custom ASICs (Broadcom/Marvell-built) are the fastest-growing threat.</p></div>
-      <div class="box"><b>The squeeze</b><p>Memory (HBM) and power are <em>sold out</em>. That scarcity is what minted the Micron / Sandisk / SK Hynix multibaggers — and it's the heart of the "is it sustainable?" debate.</p></div>
-      <div class="box"><b>The catch</b><p>Much of it is <strong>circular</strong>: Nvidia funds OpenAI/CoreWeave who buy Nvidia chips; OpenAI commits $250B to Azure + $300B to Oracle. ~$800B+ of such loops. Bulls call it a virtuous cycle; bears call it a bubble.</p></div>
+    <p class="sub">The AI trade is a layered supply chain. A handful of <strong>hyperscalers</strong> (Microsoft, Amazon, Google, Meta, Oracle) are spending <strong>~$650B+ in 2026</strong> on data centres. That capex flows <em>down</em> the stack into chips, memory, networking, power — and the model labs sit on top, often funded by the very chip &amp; cloud vendors they buy from.</p>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="slabel">The fuel</div>
+        <div class="sval">$650B+</div>
+        <div class="sdesc">Hyperscaler capex in 2026. Gartner sees ~$2.5T total AI spend, +44% YoY. This number drives everything below it.</div>
+      </div>
+      <div class="stat-box">
+        <div class="slabel">The kingpin</div>
+        <div class="sval">~70%</div>
+        <div class="sdesc">Nvidia's share of AI accelerators. NVDA did a $75B data-centre quarter. Custom ASICs (Broadcom/Marvell) are the fastest-growing threat.</div>
+      </div>
+      <div class="stat-box">
+        <div class="slabel">The squeeze</div>
+        <div class="sval">Sold out</div>
+        <div class="sdesc">HBM memory and power capacity are fully allocated through 2026–27. That scarcity minted the memory multibaggers — and is the heart of the sustainability debate.</div>
+      </div>
+      <div class="stat-box">
+        <div class="slabel">The catch</div>
+        <div class="sval">$800B+</div>
+        <div class="sdesc">Estimated circular financing loops: the same dollars bounce between chipmakers, labs and clouds. Bulls call it virtuous; bears call it vendor-financed revenue.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ================= THE STACK ================= -->
+<!-- THE STACK -->
 <section id="stack">
   <div class="wrap">
     <div class="kicker">The value chain</div>
     <h2>The AI stack, layer by layer</h2>
-    <p class="sub">Money enters at the top (demand) and at the bottom is the physical reality that makes it possible. Each layer is a place to invest — with very different risk. <strong>Hover any ticker for financials & a verdict.</strong></p>
+    <p class="sub">Money enters at the top (demand) and at the bottom is the physical reality. Each layer is a place to invest — with very different risk profiles. <strong>Hover any ticker for financials &amp; a verdict.</strong></p>
 
     <div class="legend">
-      <div class="li"><span class="dot" style="background:var(--grn)"></span> Early / high-torque (multibagger candidate)</div>
-      <div class="li"><span class="dot" style="background:var(--blu)"></span> Quality compounder</div>
-      <div class="li"><span class="dot" style="background:var(--yel)"></span> Priced for perfection</div>
-      <div class="li"><span class="dot" style="background:var(--org)"></span> Late-cycle / already ran</div>
-      <div class="li"><span class="dot" style="background:var(--gry)"></span> Cheaper / lower-beta way to play</div>
-      <div class="li"><span class="dot" style="background:var(--red)"></span> High risk / low-quality earnings</div>
+      <div class="li"><span class="dot" style="background:var(--forest)"></span> Early / high-torque (multibagger candidate)</div>
+      <div class="li"><span class="dot" style="background:var(--indigo)"></span> Quality compounder</div>
+      <div class="li"><span class="dot" style="background:var(--mango)"></span> Priced for perfection</div>
+      <div class="li"><span class="dot" style="background:var(--tomato)"></span> Late-cycle / already ran</div>
+      <div class="li"><span class="dot" style="background:var(--muted)"></span> Cheaper / lower-beta way to play</div>
+      <div class="li"><span class="dot" style="background:var(--mawar)"></span> High risk / low-quality earnings</div>
     </div>
 
     <div class="stack">
-
-      <div class="layer" style="--accent:var(--pink)">
-        <div class="lh"><h3>8 · Applications & Models</h3><span class="tag">Highest reward / highest risk</span></div>
-        <div class="desc">The software people actually use, and the frontier labs that build the brains. Margins & ROI still unproven; valuations extreme; commoditization risk as model makers move into apps.</div>
+      <div class="layer" style="--accent:var(--mawar)">
+        <div class="lh"><h3>8 · Applications &amp; Models</h3><span class="tag">Highest reward / highest risk</span></div>
+        <div class="desc">The software people actually use, and the frontier labs that build the brains. Margins &amp; ROI still unproven; valuations extreme; commoditisation risk as model makers move into apps.</div>
         <div class="chips" data-layer="apps"></div>
       </div>
-
-      <div class="layer" style="--accent:var(--pur)">
-        <div class="lh"><h3>7 · Cloud & Neoclouds</h3><span class="tag">Landlords of compute</span></div>
-        <div class="desc">Rent GPUs by the hour. The hyperscalers do this at huge scale & profit; the "neoclouds" are pure-play, fast-growing, and heavily debt-financed.</div>
+      <div class="layer" style="--accent:var(--indigo)">
+        <div class="lh"><h3>7 · Cloud &amp; Neoclouds</h3><span class="tag">Landlords of compute</span></div>
+        <div class="desc">Rent GPUs by the hour. The hyperscalers do this at huge scale &amp; profit; the "neoclouds" are pure-play, fast-growing, and heavily debt-financed.</div>
         <div class="chips" data-layer="cloud"></div>
       </div>
-
-      <div class="layer" style="--accent:var(--cyan)">
-        <div class="lh"><h3>6 · Servers & Systems</h3><span class="tag">Integration</span></div>
-        <div class="desc">Bolt GPUs, memory & networking into racks. Real AI revenue at scale — but thin margins mean the dollars don't convert like the silicon does.</div>
+      <div class="layer" style="--accent:var(--muted)">
+        <div class="lh"><h3>6 · Servers &amp; Systems</h3><span class="tag">Integration layer</span></div>
+        <div class="desc">Bolt GPUs, memory &amp; networking into racks. Real AI revenue at scale — but thin margins mean the dollars don't convert like the silicon does.</div>
         <div class="chips" data-layer="servers"></div>
       </div>
-
-      <div class="layer" style="--accent:var(--blu)">
-        <div class="lh"><h3>5 · Networking & Optical Interconnect</h3><span class="tag">The data-movement bottleneck</span></div>
-        <div class="desc">Once a model spans thousands of GPUs, moving data <em>between</em> them is the limit. Copper breaks down past 200Gb/s → smart cables, 1.6T optics, retimers & fabric switches. Several genuine small-cap rockets here.</div>
+      <div class="layer" style="--accent:var(--sea)">
+        <div class="lh"><h3>5 · Networking &amp; Optical Interconnect</h3><span class="tag">The data-movement bottleneck</span></div>
+        <div class="desc">Once a model spans thousands of GPUs, moving data <em>between</em> them is the limit. Copper breaks down past 200Gb/s → smart cables, 1.6T optics, retimers &amp; fabric switches. Several genuine small-cap rockets here.</div>
         <div class="chips" data-layer="network"></div>
       </div>
-
-      <div class="layer" style="--accent:var(--org)">
-        <div class="lh"><h3>4 · Power, Cooling & Grid</h3><span class="tag">The binding constraint</span></div>
-        <div class="desc">The scarcest resource in AI is now <strong>electricity</strong>. US data-center load may double to ~150GW by 2028 with 5-year grid queues. Generation, electrical gear and liquid cooling all show 40–240% order growth.</div>
+      <div class="layer" style="--accent:var(--forest)">
+        <div class="lh"><h3>4 · Power, Cooling &amp; Grid</h3><span class="tag">The binding constraint</span></div>
+        <div class="desc">The scarcest resource in AI is now <strong>electricity</strong>. US data-centre load may double to ~150GW by 2028 with 5-year grid queues. Generation, electrical gear and liquid cooling all show 40–240% order growth.</div>
         <div class="chips" data-layer="power"></div>
       </div>
-
-      <div class="layer" style="--accent:var(--grn)">
-        <div class="lh"><h3>3 · Memory & Storage</h3><span class="tag">The Micron zone 💎</span></div>
+      <div class="layer" style="--accent:var(--mango)">
+        <div class="lh"><h3>3 · Memory &amp; Storage</h3><span class="tag">The Micron zone 💎</span></div>
         <div class="desc">Each GPU needs stacks of HBM, which eats ~3× the wafer capacity of normal DRAM — so AI is starving the <em>entire</em> memory market. This is exactly the cyclical + secular squeeze that made the multibaggers. Also the most "late in the move."</div>
         <div class="chips" data-layer="memory"></div>
       </div>
-
-      <div class="layer" style="--accent:var(--yel)">
-        <div class="lh"><h3>2 · Compute — GPUs & Custom Silicon</h3><span class="tag">The kingpin layer</span></div>
+      <div class="layer" style="--accent:var(--tomato)">
+        <div class="lh"><h3>2 · Compute — GPUs &amp; Custom Silicon</h3><span class="tag">The kingpin layer</span></div>
         <div class="desc">The chips that do the math. Nvidia's merchant GPUs dominate; hyperscalers increasingly design their own ASICs (with Broadcom/Marvell) to escape Nvidia's pricing. AMD is the #2 challenger.</div>
         <div class="chips" data-layer="compute"></div>
       </div>
-
-      <div class="layer" style="--accent:#7c8db5">
-        <div class="lh"><h3>1 · Foundry & Equipment</h3><span class="tag">The chokepoint</span></div>
+      <div class="layer" style="--accent:var(--indigo)">
+        <div class="lh"><h3>1 · Foundry &amp; Equipment</h3><span class="tag">The chokepoint</span></div>
         <div class="desc">Everyone's chips — Nvidia, AMD, every ASIC — are made by TSMC on ASML's machines. The narrowest, lowest-substitution part of the entire boom. If you believe in AI but distrust any single chip designer, this is the hedge.</div>
         <div class="chips" data-layer="foundry"></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ================= HYPERSCALERS ================= -->
+<!-- HYPERSCALERS -->
 <section id="hyper">
   <div class="wrap">
     <div class="kicker">The demand engine</div>
     <h2>The five hyperscalers</h2>
     <p class="sub">These are the customers whose spending drives everything below them. Each is building its <strong>own AI stack</strong> — partly buying Nvidia, partly designing custom chips — and each is tethered to a frontier lab. Hover any ticker for financials.</p>
-
-    <div class="grid3">
-      <div class="card">
+    <div class="hgrid">
+      <div class="hcard">
         <h3><span class="tk-inline" data-sym="MSFT"></span> Microsoft</h3>
         <div class="role">Azure · Copilot · OpenAI</div>
         <ul>
-          <li><b>AI run-rate $37B, +123% YoY</b>; Azure +39%.</li>
-          <li>Builds <b>Maia</b> accelerator + <b>Cobalt</b> Arm CPU; also licensed OpenAI's chip designs.</li>
-          <li>Owns <b>~27% of OpenAI</b> (~$135B); OpenAI committed <b>+$250B Azure</b>.</li>
+          <li><b>AI run-rate $37B, +123% YoY;</b> Azure +39%.</li>
+          <li>Builds <b>Maia</b> accelerator + <b>Cobalt</b> Arm CPU.</li>
+          <li>Owns <b>~27% of OpenAI</b>; OpenAI committed <b>+$250B Azure</b> through 2032.</li>
           <li>Capex <b>~$190B</b> through 2026.</li>
         </ul>
       </div>
-      <div class="card">
+      <div class="hcard">
         <h3><span class="tk-inline" data-sym="AMZN"></span> Amazon</h3>
         <div class="role">AWS · Bedrock · Anthropic</div>
         <ul>
           <li>AWS <b>$37.6B, +28%</b> (fastest in 15 quarters).</li>
-          <li>Custom <b>Trainium / Inferentia / Graviton</b> (Annapurna) — chip biz crossed <b>$20B run-rate</b>.</li>
-          <li>Up to <b>$25B into Anthropic</b>; Anthropic committed <b>&gt;$100B AWS spend</b>.</li>
+          <li>Custom <b>Trainium / Inferentia / Graviton</b> — chip run-rate <b>&gt;$20B</b>.</li>
+          <li>Up to <b>$25B into Anthropic;</b> Anthropic committed <b>&gt;$100B AWS spend</b>.</li>
           <li>Capex <b>~$200B</b> in 2026.</li>
         </ul>
       </div>
-      <div class="card">
+      <div class="hcard">
         <h3><span class="tk-inline" data-sym="GOOGL"></span> Alphabet</h3>
         <div class="role">GCP · Gemini · TPU</div>
         <ul>
-          <li>Google Cloud <b>$20B, +63%</b>; backlog ~<b>$460B</b>.</li>
-          <li>Builds <b>TPU (Ironwood/v7)</b> with <b>Broadcom</b> — now <em>selling</em> TPUs to others (Meta, Anthropic).</li>
-          <li>Anthropic: up to <b>1M TPUs / &gt;1GW</b> in 2026.</li>
-          <li>Capex <b>~$175–185B</b>.</li>
+          <li>Google Cloud <b>$20B, +63%;</b> backlog ~<b>$460B</b>.</li>
+          <li>Builds <b>TPU (Ironwood)</b> with <b>Broadcom</b> — now <em>selling</em> TPUs to Meta &amp; Anthropic.</li>
+          <li>Gemini at <b>750M+ users.</b></li>
+          <li>Capex <b>~$175–185B.</b></li>
         </ul>
       </div>
-      <div class="card">
+      <div class="hcard">
         <h3><span class="tk-inline" data-sym="META"></span> Meta</h3>
         <div class="role">Llama · MTIA · Superintelligence</div>
         <ul>
-          <li>Revenue <b>+33%</b>; ad engine funds the buildout.</li>
-          <li>Builds <b>MTIA</b> chips (RISC-V, TSMC); buying Nvidia + AMD + renting Google TPUs.</li>
+          <li>Revenue <b>+33%;</b> ad engine funds the entire buildout.</li>
+          <li>Builds <b>MTIA</b> chips (RISC-V, TSMC); also buys Nvidia + AMD + rents Google TPUs.</li>
           <li>Megaprojects: <b>Hyperion</b> (5GW), <b>Prometheus</b> (1GW).</li>
-          <li>Capex raised to <b>$125–145B</b>.</li>
+          <li>Capex raised to <b>$125–145B.</b></li>
         </ul>
       </div>
-      <div class="card">
+      <div class="hcard">
         <h3><span class="tk-inline" data-sym="ORCL"></span> Oracle</h3>
         <div class="role">OCI · Stargate landlord</div>
         <ul>
-          <li><b>RPO $553B (+325%)</b>; OCI +84% — but ~54% of backlog is <b>one customer (OpenAI)</b>.</li>
+          <li><b>RPO $553B (+325%);</b> OCI +84% — but ~54% of backlog is <b>one customer (OpenAI).</b></li>
           <li><b>No custom silicon</b> — pure GPU landlord (Nvidia + AMD).</li>
-          <li>GPU-rental gross margins reportedly thin (<b>~14–16%</b>).</li>
+          <li>GPU-rental gross margins reportedly <b>~14–16%.</b></li>
           <li>Stargate: <b>4.5GW / ~$300B</b> OpenAI contract.</li>
         </ul>
       </div>
-      <div class="card" style="background:linear-gradient(180deg,rgba(96,165,250,.08),var(--card))">
+      <div class="hcard dark">
         <h3>📌 The pattern</h3>
         <div class="role">Buy + Build + Bankroll</div>
         <ul>
-          <li>Every hyperscaler now <b>buys Nvidia</b>, <b>builds its own chip</b>, and <b>bankrolls a lab</b>.</li>
+          <li>Every hyperscaler now <b>buys Nvidia,</b> <b>builds its own chip,</b> and <b>bankrolls a lab.</b></li>
           <li>Custom silicon is the strategic hedge against Nvidia's pricing.</li>
-          <li>The lab investments create the circular financing on the next panel ↓</li>
+          <li>The lab investments create the circular financing shown below ↓</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= THE WEB ================= -->
+<!-- MONEY WEB -->
 <section id="web">
   <div class="wrap">
     <div class="kicker">Follow the money</div>
     <h2>The circular financing web</h2>
-    <p class="sub">This is the single most important thing to understand about bubble risk. The same dollars loop among a few firms: a chipmaker invests in a lab, the lab buys cloud capacity, the cloud buys the chipmaker's chips. Estimated at <strong>$800B+</strong> of interlocking deals.</p>
+    <p class="sub">The same dollars loop among a small number of firms: a chipmaker invests in a lab, the lab buys cloud capacity, the cloud buys the chipmaker's chips. Estimated at <strong>$800B+</strong> of interlocking deals.</p>
 
-    <div class="web-note">⚠️ <b>Why it matters:</b> these loops inflate everyone's reported demand. If one node stumbles (e.g. OpenAI is projected to <b>lose ~$14B in 2026</b>), the loop can reverse. Nvidia's once-touted $100B OpenAI investment was already reported "on ice." Bulls say it's how you pre-position supply for real demand; bears say it's vendor-financed revenue.</div>
+    <div class="web-panel">
+      <div class="wt">The ~$800B loop</div>
+      <div class="ws">Lines show equity stakes (dashed) and revenue/spend commitments (solid). Node size ≈ relative market cap.</div>
+      <canvas id="moneyCanvas" height="420"></canvas>
+      <div class="web-note">⚠️ <b>Why it matters:</b> these loops inflate everyone's reported demand. If one node stumbles — OpenAI is projected to <b>lose ~$14B in 2026</b> — the loop can reverse. Nvidia's once-touted $100B OpenAI investment was already reported "on ice." Bulls say it's how you pre-build supply for real demand; bears call it vendor-financed revenue.</div>
+    </div>
+  </div>
+</section>
 
-    <div class="flow">
-      <div class="row">
-        <div class="from"><span class="tk-inline" data-sym="NVDA"></span></div>
-        <div class="deals">Sells GB200/GB300 to <b>all five</b> hyperscalers + neoclouds. <em>Also invests in its own customers:</em> ~<b>$10B</b> into Anthropic, stakes in OpenAI & CoreWeave (~5%), <b>$2B each</b> into optics makers Coherent & Lumentum. The flywheel's hub.</div>
+<!-- CHARTS -->
+<section id="charts">
+  <div class="wrap">
+    <div class="kicker">By the numbers</div>
+    <h2>Capex &amp; valuation charts</h2>
+    <p class="sub">Two views: where the money is going, and how each company is priced against its growth. Bubble size = approximate market cap.</p>
+    <div class="chart-row">
+      <div class="chart-panel">
+        <h3>2026 Hyperscaler Capex ($B)</h3>
+        <div class="csub">Committed infrastructure spend driving every layer below. AMZN &amp; MSFT alone represent ~$390B.</div>
+        <canvas id="capexChart" height="260"></canvas>
       </div>
-      <div class="row">
-        <div class="from"><span class="tk-inline" data-sym="MSFT"></span> → OpenAI</div>
-        <div class="deals"><b>27% equity</b> (~$135B). OpenAI commits <b>+$250B</b> of Azure through 2032. Microsoft + Nvidia also put <b>$5B + $10B</b> into Anthropic.</div>
-      </div>
-      <div class="row">
-        <div class="from"><span class="tk-inline" data-sym="AMZN"></span> → Anthropic</div>
-        <div class="deals">Up to <b>$25B</b> invested; Anthropic commits <b>&gt;$100B</b> AWS spend + 5GW of Trainium. Separately a <b>$38B</b> AWS deal with OpenAI for Nvidia capacity.</div>
-      </div>
-      <div class="row">
-        <div class="from"><span class="tk-inline" data-sym="GOOGL"></span> → Anthropic</div>
-        <div class="deals">~14% equity; Anthropic takes up to <b>1M TPUs</b> (built by <span class="tk-inline" data-sym="AVGO"></span>). A Fortune analysis argued ~half of Google's & Amazon's reported "AI profit" was paper gains on their Anthropic stakes.</div>
-      </div>
-      <div class="row">
-        <div class="from"><span class="tk-inline" data-sym="ORCL"></span> → OpenAI</div>
-        <div class="deals"><b>~$300B / 4.5GW</b> compute contract (Stargate, with SoftBank & MGX). Oracle buys Nvidia chips to fulfill it → money flows back to Nvidia, an OpenAI backer.</div>
-      </div>
-      <div class="row">
-        <div class="from"><span class="tk-inline" data-sym="CRWV"></span> (neocloud)</div>
-        <div class="deals">Nvidia owns ~5% and sells it GPUs; OpenAI holds a stake <em>and</em> is a customer; <b>$21B Meta</b> commitment. A leveraged proxy for the whole loop staying tight.</div>
+      <div class="chart-panel">
+        <h3>Growth vs. Valuation</h3>
+        <div class="csub">X = revenue growth %. Y = forward P/E. Bubble size ≈ market cap. Note MU: low fwd P/E signals the market expects a cycle turn.</div>
+        <canvas id="scatterChart" height="260"></canvas>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= MULTIBAGGER HUNT ================= -->
+<!-- DEEP DIVES -->
+<section id="deepdive">
+  <div class="wrap">
+    <div class="kicker">Under the hood</div>
+    <h2>Two deep dives</h2>
+    <p class="sub">The memory super-cycle and the ASIC-vs-Nvidia battle are the two themes that matter most for finding the next multibagger — and both are frequently misunderstood.</p>
+    <div class="deep-grid">
+
+      <div class="dcard">
+        <h3>💾 The Memory Super-Cycle</h3>
+        <div class="dsub">Why Micron 3×'d, why the market is now pricing in a roll-over, and what comes next with HBM4.</div>
+        <ul>
+          <li><b>What HBM is:</b> High Bandwidth Memory — DRAM dies stacked in 3D on the same package as the GPU. Each H100 needs 6 stacks (~80GB). Each Blackwell GB200 needs 8. HBM3e eats ~3× the DRAM wafer capacity of standard memory.</li>
+          <li><b>Why it squeezed:</b> Three suppliers (SK Hynix, Micron, Samsung) all converted DRAM capacity to HBM simultaneously — starving the regular DRAM market and creating a multi-year demand surplus for HBM.</li>
+          <li><b>The Micron template:</b> Cyclical trough (DRAM was loss-making in 2023) + secular AI layer on top (HBM) + earnings inflection (GM guided from ~20% → ~81%) + starting valuation that didn't price it in = multibagger math.</li>
+          <li><b>Where we are now:</b> HBM supply is contracted through 2026; TAM forecast ~$100B by 2028. BUT Micron crossed $1T market cap in May 2026. Fwd P/E of ~8–9 is the market screaming "cyclical peak incoming."</li>
+          <li><b>HBM4 / Vera Rubin:</b> Jensen Huang confirmed all three suppliers shipping HBM4 in Q3 2026. New cycle extending the runway — but much is already priced.</li>
+        </ul>
+        <div class="timeline">
+          <div class="tlrow"><span class="yr">2023</span><span class="tl"><b>Trough.</b> Micron loses money; NAND prices collapse. MU trades at ~$50.</span></div>
+          <div class="tlrow"><span class="yr">2024</span><span class="tl"><b>Recovery.</b> AI drives HBM demand; SK Hynix sells out. MU re-rates to $150+.</span></div>
+          <div class="tlrow"><span class="yr">May '26</span><span class="tl"><b>Micron crosses $1T.</b> Sandisk +3,300%. The multibagger has already happened.</span></div>
+          <div class="tlrow"><span class="yr">2026–27</span><span class="tl"><b>Transition.</b> HBM4 ramp for Vera Rubin; question is whether cycle extends or rolls.</span></div>
+        </div>
+      </div>
+
+      <div class="dcard">
+        <h3>⚔️ ASIC vs. Nvidia — Who Wins?</h3>
+        <div class="dsub">Hyperscalers are designing their own chips to escape Nvidia's pricing. Here's what's real vs. hype.</div>
+        <ul>
+          <li><b>Why hyperscalers build ASICs:</b> Nvidia's GB200 costs ~$30–40K per chip with ~70% gross margins. A custom ASIC — tuned for inference, not training — can be 3–5× cheaper per token at scale. For Meta running Llama on 600K+ GPUs, the maths forces it.</li>
+          <li><b>The ASIC duopoly:</b> Broadcom (<span class="tk-inline" data-sym="AVGO"></span>) and Marvell (<span class="tk-inline" data-sym="MRVL"></span>) design ~80% of merchant custom silicon. AVGO builds Google's TPU (Ironwood), Meta's MTIA, OpenAI's chip. MRVL anchors AWS Trainium and Microsoft's Maia.</li>
+          <li><b>Broadcom's bet:</b> ~$100B AI revenue target by 2027. Its AI revenue was $10.8B in Q2 FY26, +143% YoY. Google now <em>sells</em> its AVGO-built TPU to others (Anthropic, Meta) — a stunning reversal.</li>
+          <li><b>The honest limit:</b> ASICs are excellent at <em>inference</em> (running a fixed model at scale) but struggle with <em>training</em> (where Nvidia's CUDA ecosystem is an almost-unassailable moat). As training jobs dwarf inference today, Nvidia's share stays high.</li>
+          <li><b>The 2027 risk for Nvidia:</b> If inference spend eclipses training spend — and model architectures stabilise — ASIC economics become devastating for Nvidia's margins. That's the long-term bear case that Michael Burry is betting on.</li>
+          <li><b>Net verdict:</b> ASIC share grows, but Nvidia doesn't lose training dominance for years. AVGO is the cleanest play on the trend; MRVL is richer and faces more share pressure.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MULTIBAGGER HUNT -->
 <section id="hunt">
   <div class="wrap">
     <div class="kicker">The main event</div>
     <h2>Hunting the next Micron</h2>
-    <p class="sub">You asked specifically about multibaggers like <span class="num">MU</span>. Here's <em>why</em> Micron worked — and the framework for spotting the next one before it runs.</p>
-
+    <p class="sub">You asked specifically about multibaggers like <strong>MU</strong>. Here's <em>why</em> Micron worked — and the framework for spotting the next one before it runs.</p>
     <div class="callout">
       <h3>🧬 The multibagger DNA</h3>
-      <p style="margin:0 0 10px">Micron didn't 3× because of a great story. It worked because of a precise setup that you can screen for:</p>
-      <div class="grid2" style="gap:14px">
-        <div>
-          <ol style="margin:0;padding-left:18px;color:#cdd7ea;font-size:14px">
-            <li style="margin:6px 0"><b>Cyclical trough → peak</b> swing (memory was loss-making in 2023).</li>
-            <li style="margin:6px 0"><b>+ a secular AI layer</b> on top (HBM demand) so the up-cycle runs hotter and longer.</li>
-            <li style="margin:6px 0"><b>Earnings inflection</b>: Micron's forward gross margin guided from ~20% to <b>~81%</b>. EPS went vertical.</li>
-          </ol>
-        </div>
-        <div>
-          <ol start="4" style="margin:0;padding-left:18px;color:#cdd7ea;font-size:14px">
-            <li style="margin:6px 0"><b>A starting valuation that didn't price it in</b> — the magic ingredient.</li>
-            <li style="margin:6px 0"><b>A chokepoint position</b>: sold-out capacity, contracted years out.</li>
-            <li style="margin:6px 0"><b>Visible, immediate demand</b> — not a 2030 promise.</li>
-          </ol>
-        </div>
+      <p>Micron didn't 3× because of a great story. It worked because of a precise setup you can screen for:</p>
+      <div class="grid2" style="margin-top:14px;gap:14px">
+        <ol style="padding-left:18px;color:var(--muted);font-size:14px">
+          <li style="margin:7px 0"><b>Cyclical trough → peak swing</b> (memory was loss-making in 2023).</li>
+          <li style="margin:7px 0"><b>A secular AI layer on top</b> so the up-cycle runs hotter and longer.</li>
+          <li style="margin:7px 0"><b>Earnings inflection:</b> Micron's fwd gross margin guided from ~20% → <b>~81%</b>. EPS went vertical.</li>
+        </ol>
+        <ol start="4" style="padding-left:18px;color:var(--muted);font-size:14px">
+          <li style="margin:7px 0"><b>A starting valuation that didn't price it in</b> — the magic ingredient.</li>
+          <li style="margin:7px 0"><b>A chokepoint position:</b> sold-out capacity, contracted years out.</li>
+          <li style="margin:7px 0"><b>Visible, immediate demand</b> — not a 2030 promise.</li>
+        </ol>
       </div>
     </div>
-
     <div class="grid2">
-      <div class="card">
+      <div class="mcard">
         <h3>✅ Metrics that flag the next one</h3>
         <ul>
           <li><b>Revenue acceleration</b> — growth getting <em>faster</em>, not just high.</li>
           <li><b>Margin inflection</b> — gross margin stepping up = pricing power kicking in.</li>
           <li><b>Backlog / RPO growth</b> — contracted future revenue (Vertiv +109%, Oracle +325%, GE Vernova $163B).</li>
-          <li><b>Rule of 40</b> rising (growth% + margin% &gt; 40, trend &gt; level).</li>
+          <li><b>Rule of 40 rising</b> (growth% + margin% &gt; 40, trend matters more than level).</li>
           <li><b>Reasonable forward P/E</b> vs. that growth — the part everyone forgets.</li>
-          <li><b>Chokepoint / sold-out</b> — pricing power you can verify.</li>
+          <li><b>Chokepoint / sold-out</b> — pricing power you can verify today, not in theory.</li>
         </ul>
       </div>
-      <div class="card" style="background:linear-gradient(180deg,rgba(251,191,36,.07),var(--card))">
+      <div class="mcard warn">
         <h3>⚠️ The honest catch on memory</h3>
         <ul>
-          <li>The biggest gains in this exact theme <b>already happened</b>: Sandisk <b>+~3,300%</b>, Micron to <b>$1T+</b>, WDC/Seagate <b>+100%+</b> — all in the last ~12 months.</li>
+          <li>The biggest gains in this theme <b>already happened:</b> Sandisk <b>+~3,300%,</b> Micron to <b>$1T+,</b> WDC/Seagate <b>+100%+</b> — all in the last ~12 months.</li>
           <li>Micron's <b>forward P/E of ~8–9×</b> is the market <em>screaming</em> "these earnings won't last." Low forward P/E in a cyclical = late, not cheap.</li>
-          <li>From here it's a bet on cycle <b>duration</b> (does the super-cycle run into 2027+?), not <b>discovery</b>.</li>
+          <li>From here it's a bet on cycle <b>duration</b> (does the super-cycle run into 2027+?), not <b>discovery.</b></li>
           <li>Memory always over-builds and crashes. HBM being contract-sold makes <em>this</em> cycle sturdier — but doesn't repeal physics.</li>
         </ul>
       </div>
@@ -443,196 +522,160 @@
   </div>
 </section>
 
-<!-- ================= SCORECARD ================= -->
+<!-- SCORECARD -->
 <section id="scorecard">
   <div class="wrap">
     <div class="kicker">The full board</div>
     <h2>Multibagger scorecard</h2>
-    <p class="sub">Every name, sorted by <strong>where it sits in the move</strong>. "Verdict" reflects risk/upside profile as of June 2026 — not a recommendation. Hover the ticker for full financials.</p>
+    <p class="sub">Every name, sorted by <strong>where it sits in the move.</strong> "Verdict" reflects risk/upside profile as of June 2026 — not a recommendation. Hover the ticker for full financials.</p>
     <div class="tablewrap">
       <table id="scoreTable">
-        <thead>
-          <tr><th>Ticker</th><th>Company</th><th>Layer</th><th>The one-line read</th><th>Verdict</th></tr>
-        </thead>
+        <thead><tr><th>Ticker</th><th>Company</th><th>Layer</th><th>One-line read</th><th>Verdict</th></tr></thead>
         <tbody id="scoreBody"></tbody>
       </table>
     </div>
-    <p style="font-size:12.5px;color:var(--mut);margin-top:12px">Sort logic: 🟢 still-early/high-torque names first, then 🔵 quality compounders, 🟡 expensive, ⚪ value/lower-beta, 🟠 late-cycle, 🔴 high-risk.</p>
+    <p style="font-size:12.5px;color:var(--muted);margin-top:12px">Sort: 🟢 early/high-torque → 🔵 quality compounders → 🟡 expensive → ⚪ value/lower-beta → 🟠 late-cycle → 🔴 high-risk.</p>
   </div>
 </section>
 
-<!-- ================= BULL/BEAR ================= -->
+<!-- BULL vs BEAR -->
 <section id="bullbear">
   <div class="wrap">
     <div class="kicker">Both sides, honestly</div>
     <h2>Is it a super-cycle or a bubble?</h2>
     <p class="sub">The single biggest question for your money. The honest answer is "we don't know yet" — so here's the strongest version of each case.</p>
     <div class="bb">
-      <div class="col bull">
+      <div class="bbcol bull">
         <h3>🟢 The super-cycle case</h3>
         <ul>
-          <li><b>Real cash, not 1999 vapor.</b> The rally leaders are the most cash-generative companies in history, trading at ~half the multiple of 2000's leaders. Ex-Oracle, the big four can fund 2026 capex from operating cash flow.</li>
+          <li><b>Real cash, not 1999 vapor.</b> The rally leaders are the most cash-generative companies in history, trading at ~half the multiple of 2000's leaders. Ex-Oracle, the Big Four can fund 2026 capex from operating cash flow.</li>
           <li><b>Demand is contracted, not hoped-for.</b> HBM sold out through 2026; Seagate/WDC nearline allocated through 2027; Oracle RPO $553B; GE Vernova backlog $163B. That's signed revenue.</li>
           <li><b>The bottleneck is physical.</b> Power and memory shortages are real and slow to fix (5-yr grid queues), which sustains pricing power for the pick-and-shovel layers.</li>
           <li><b>"Circular" can be virtuous</b> — it's how you pre-build supply for genuinely exploding compute demand.</li>
+          <li><b>Enterprise AI is inflecting.</b> Palantir's Rule of 40 = 145%; ServiceNow cRPO +22.5%; Snowflake NRR 126%. The revenue is beginning to arrive.</li>
         </ul>
       </div>
-      <div class="col bear">
+      <div class="bbcol bear">
         <h3>🔴 The bubble case</h3>
         <ul>
           <li><b>Circular financing fragility.</b> $800B+ of interlocking deals; OpenAI losing ~$14B in 2026. One stumble can unwind the loop. Nvidia's $100B OpenAI deal already got shelved.</li>
           <li><b>ROI is unproven.</b> A 2026 NBER study found ~90% of firms saw no productivity impact from AI yet. If revenue doesn't catch capex by ~2027, "patience runs out."</li>
           <li><b>Hidden depreciation.</b> Michael Burry (now short SOXX/PLTR/NVDA) argues AI hardware's real useful life is ~2.5 years, so Big Tech is understating depreciation and overstating earnings.</li>
           <li><b>Cash flow is turning.</b> Buildout is shifting from self-funded to <b>debt</b> (&gt;$400B hyperscaler issuance expected); Amazon's FCF reportedly fell ~95%.</li>
-          <li><b>Extreme valuations</b> in spots: Palantir (fwd P/E ~82), Tesla, the neoclouds. Priced for perfection.</li>
+          <li><b>Extreme valuations</b> in spots: Palantir (fwd P/E ~82), Tesla, the neoclouds. Priced for perfection with no margin of safety.</li>
         </ul>
       </div>
     </div>
     <div class="disclaim" style="margin-top:20px">
-      <b>Balanced bottom line:</b> Fundamentals are materially stronger than the dot-com era, which supports a "super-cycle, not bubble" <em>base case</em>. But extreme valuations in the application layer, circular financing, aggressive depreciation assumptions, and unproven enterprise ROI mean the <b>downside is real if revenue fails to catch capex by ~2027</b>. The picks-and-shovels layers (foundry, power, memory, networking) are where demand is most visible and contracted — and historically where the cleanest multibaggers live.
+      <b>Balanced bottom line:</b> Fundamentals are materially stronger than the dot-com era, which supports a "super-cycle, not bubble" <em>base case.</em> But extreme valuations in the application layer, circular financing, aggressive depreciation assumptions, and unproven enterprise ROI mean the <b>downside is real if revenue fails to catch capex by ~2027.</b> The picks-and-shovels layers (foundry, power, memory, networking) are where demand is most visible and contracted.
     </div>
   </div>
 </section>
 
-<!-- ================= PICKS / WHERE TO LOOK ================= -->
+<!-- PICKS -->
 <section id="picks">
   <div class="wrap">
     <div class="kicker">Synthesis</div>
     <h2>Where a "next Micron" could still hide</h2>
-    <p class="sub">Not advice — a map of <em>where the asymmetry looks most interesting</em> by profile, given everything above. Do your own diligence; verify every number live before acting.</p>
-
+    <p class="sub">Not advice — a map of <em>where the asymmetry looks most interesting</em> by profile. Do your own diligence; verify every number live before acting.</p>
     <div class="picks">
-      <div class="pick" style="border-color:rgba(52,211,153,.4)">
+      <div class="pick" style="border-color:rgba(31,157,85,.3)">
         <span class="rank">01</span>
-        <h4><span class="tag2" style="background:var(--grn)">EARLY / HIGH-TORQUE</span></h4>
-        <p class="why"><b>The interconnect rockets.</b> Smaller caps growing triple digits as data-movement becomes the bottleneck: <span class="tk-inline" data-sym="CRDO"></span> <span class="tk-inline" data-sym="ALAB"></span> — both profitable with high margins, expanding TAM. Higher beta neoclouds <span class="tk-inline" data-sym="NBIS"></span> if you can stomach the risk. <em>This is the layer most analogous to "early Micron" — small base, secular demand, not yet fully discovered.</em></p>
+        <h4><span class="tag2" style="background:var(--forest)">EARLY / HIGH-TORQUE</span></h4>
+        <p class="why"><b>The interconnect rockets.</b> Smaller caps growing triple digits as data-movement becomes the bottleneck: <span class="tk-inline" data-sym="CRDO"></span> <span class="tk-inline" data-sym="ALAB"></span> — both profitable with high margins, expanding TAM. Higher-beta neocloud <span class="tk-inline" data-sym="NBIS"></span> if you can stomach the risk. <em>This is the layer most analogous to "early Micron" — small base, secular demand, not yet fully discovered.</em></p>
       </div>
-      <div class="pick" style="border-color:rgba(124,141,181,.5)">
+      <div class="pick" style="border-color:rgba(46,49,146,.3)">
         <span class="rank">02</span>
-        <h4><span class="tag2" style="background:#7c8db5">THE CHOKEPOINT HEDGE</span></h4>
+        <h4><span class="tag2" style="background:var(--indigo)">THE CHOKEPOINT HEDGE</span></h4>
         <p class="why"><b>If you believe in AI but distrust picking the winning chip:</b> <span class="tk-inline" data-sym="TSM"></span> (makes everyone's chips, fwd P/E ~24 — cheapest AI-leverage mega-cap) and <span class="tk-inline" data-sym="ASML"></span> (EUV monopoly). They win regardless of whether Nvidia or the ASICs take share. Lower torque, far lower single-company risk.</p>
       </div>
-      <div class="pick" style="border-color:rgba(251,146,60,.4)">
+      <div class="pick" style="border-color:rgba(255,92,57,.3)">
         <span class="rank">03</span>
-        <h4><span class="tag2" style="background:var(--org)">THE POWER SQUEEZE</span></h4>
+        <h4><span class="tag2" style="background:var(--tomato)">THE POWER SQUEEZE</span></h4>
         <p class="why"><b>Electricity is the new bottleneck.</b> Equipment names ran hard (<span class="tk-inline" data-sym="VRT"></span> <span class="tk-inline" data-sym="GEV"></span> <span class="tk-inline" data-sym="ETN"></span>) but the <em>cheaper</em> way in is the power producers on long hyperscaler PPAs: <span class="tk-inline" data-sym="CEG"></span> <span class="tk-inline" data-sym="VST"></span> (P/E ~22, far below the equipment names).</p>
       </div>
-      <div class="pick" style="border-color:rgba(96,165,250,.4)">
+      <div class="pick" style="border-color:rgba(46,49,146,.3)">
         <span class="rank">04</span>
-        <h4><span class="tag2" style="background:var(--blu)">THE ASIC DUOPOLY</span></h4>
-        <p class="why"><b>The bet against Nvidia's monopoly.</b> <span class="tk-inline" data-sym="AVGO"></span> (AI revenue +143%, targeting $100B by 2027) and <span class="tk-inline" data-sym="MRVL"></span> build the custom chips hyperscalers use to escape Nvidia. Quality, but a lot is already priced in (Marvell fwd P/E &gt;90).</p>
+        <h4><span class="tag2" style="background:var(--indigo)">THE ASIC DUOPOLY</span></h4>
+        <p class="why"><b>The bet against Nvidia's monopoly.</b> <span class="tk-inline" data-sym="AVGO"></span> (AI revenue +143%, targeting $100B by 2027) and <span class="tk-inline" data-sym="MRVL"></span> build the custom chips hyperscalers use to escape Nvidia's pricing. Quality, but a lot is already priced in (Marvell fwd P/E &gt;90).</p>
       </div>
-      <div class="pick" style="border-color:rgba(251,191,36,.4)">
+      <div class="pick" style="border-color:rgba(255,194,52,.4)">
         <span class="rank">05</span>
-        <h4><span class="tag2" style="background:var(--yel)">YOUR MODEL — LATE INNINGS</span></h4>
+        <h4><span class="tag2" style="background:var(--mango);color:var(--ink)">YOUR MODEL — LATE INNINGS</span></h4>
         <p class="why"><b>The memory super-cycle (where Micron lives).</b> <span class="tk-inline" data-sym="MU"></span> <span class="tk-inline" data-sym="SNDK"></span> still have low forward P/Es and sold-out capacity — but the big move already happened and the low multiple signals the market expects a roll-over. <span class="tk-inline" data-sym="PSTG"></span> is the lower-beta, less-cyclical way to play AI storage.</p>
       </div>
-      <div class="pick" style="border-color:rgba(167,139,250,.4)">
+      <div class="pick" style="border-color:rgba(46,49,146,.3)">
         <span class="rank">06</span>
-        <h4><span class="tag2" style="background:var(--pur)">QUALITY AT THE CORE</span></h4>
+        <h4><span class="tag2" style="background:var(--indigo)">QUALITY AT THE CORE</span></h4>
         <p class="why"><b>The compounders you hold through cycles:</b> <span class="tk-inline" data-sym="NVDA"></span> (still 70% share, fwd P/E ~22 is not absurd for +85% growth), <span class="tk-inline" data-sym="ANET"></span> in networking. Not "10×-from-here" candidates, but the lowest-drama way to own the boom.</p>
       </div>
     </div>
-
     <div class="callout" style="margin-top:26px">
       <h3>🎯 The one mental model to keep</h3>
-      <p style="margin:0">Multibaggers come from <b>asymmetry the market hasn't priced</b> — a small base + accelerating, contracted demand + a valuation that doesn't yet believe it. By that test, the <b>memory names are late</b> (huge gains already banked, low forward multiples flashing "peak"), while the <b>interconnect, power-producer and chokepoint layers</b> are where that asymmetry looks freshest in mid-2026. The richest <em>application-layer</em> names (Palantir, neoclouds) offer the biggest dreams but the thinnest safety margin. Match the layer to your risk tolerance — and respect that the whole edifice rests on capex eventually being justified by real revenue.</p>
+      <p>Multibaggers come from <b>asymmetry the market hasn't priced</b> — a small base + accelerating, contracted demand + a valuation that doesn't yet believe it. By that test, the <b>memory names are late</b> (huge gains already banked, low forward multiples flashing "peak"), while the <b>interconnect, power-producer and chokepoint layers</b> are where that asymmetry looks freshest in mid-2026. The richest <em>application-layer</em> names (Palantir, neoclouds) offer the biggest dreams but the thinnest safety margin. Match the layer to your risk tolerance — and respect that the whole edifice rests on capex eventually being justified by real revenue.</p>
     </div>
   </div>
 </section>
 
-<!-- ================= SOURCES ================= -->
+<!-- SOURCES -->
 <section id="sources">
   <div class="wrap">
     <div class="kicker">Show your work</div>
-    <h2>Sources & method</h2>
-    <p class="sub">Compiled June 2026 from company filings/press releases (SEC 8-Ks, IR sites), earnings transcripts, and financial press, cross-checked across multiple sources per claim. Figures are point-in-time and move daily.</p>
-
+    <h2>Sources &amp; method</h2>
+    <p class="sub">Compiled June 2026 from company filings/press releases (SEC 8-Ks, IR sites), earnings transcripts, and financial press, cross-checked across multiple sources per claim.</p>
     <div class="disclaim" style="margin-bottom:14px">
-      <b>⚠️ Not investment advice.</b> This is an educational research map, not a recommendation to buy or sell anything. Market caps, P/E ratios and stock prices are <b>snapshots as of ~June 2026 and change constantly</b> — several were sourced from aggregators and should be re-verified live before any decision. Private-company valuations (OpenAI, Anthropic) are pre-IPO marks, not market prices. "Verdicts" are the author's risk-profile framing, not price targets. Do your own diligence.
+      <b>⚠️ Not investment advice.</b> This is an educational research map, not a recommendation to buy or sell anything. Market caps, P/E ratios and stock prices are <b>snapshots as of ~June 2026 and change constantly.</b> Private-company valuations (OpenAI, Anthropic) are pre-IPO marks. "Verdicts" are risk-profile framing, not price targets. Do your own diligence.
     </div>
-
     <details>
-      <summary>Hyperscalers & connections — sources</summary>
+      <summary>Hyperscalers &amp; connections</summary>
       <ul>
         <li><a href="https://www.cnbc.com/2026/04/29/microsoft-msft-q3-earnings-report-2026.html">MSFT Q3 FY26 (CNBC)</a></li>
-        <li><a href="https://www.geekwire.com/2025/microsoft-secures-27-stake-in-openai-in-new-deal-with-commitment-for-250b-in-azure-usage/">MSFT 27% OpenAI stake (GeekWire)</a></li>
+        <li><a href="https://www.geekwire.com/2025/microsoft-secures-27-stake-in-openai-in-new-deal-with-commitment-for-250b-in-azure-usage/">MSFT 27% OpenAI stake</a></li>
         <li><a href="https://qz.com/amazon-q1-2026-earnings-aws-cloud-growth-042926">AMZN Q1'26 / AWS (Quartz)</a></li>
         <li><a href="https://www.anthropic.com/news/anthropic-amazon-compute">Anthropic–Amazon compute deal</a></li>
-        <li><a href="https://www.cnbc.com/2025/11/03/open-ai-amazon-aws-cloud-deal.html">OpenAI–AWS $38B (CNBC)</a></li>
         <li><a href="https://finance.yahoo.com/markets/stocks/articles/alphabet-q1-2026-earnings-google-202101883.html">GOOGL Q1'26 (Yahoo)</a></li>
-        <li><a href="https://www.datacenterknowledge.com/data-center-chips/anthropic-secures-multi-gigawatt-tpu-deal-with-google-broadcom">Anthropic–Google–Broadcom TPU deal</a></li>
         <li><a href="https://www.stocktitan.net/sec-filings/META/8-k-meta-platforms-inc-reports-material-event-a1f8567f3401.html">META Q1'26 8-K</a></li>
         <li><a href="https://www.datacenterfrontier.com/machine-learning/article/55316610/openai-and-oracles-300b-stargate-deal-building-ais-national-scale-infrastructure">Oracle–OpenAI Stargate $300B</a></li>
-        <li><a href="https://www.cnbc.com/2025/10/07/oracle-stock-nvidia-chip-margins.html">Oracle thin GPU margins (CNBC)</a></li>
         <li><a href="https://www.bloomberg.com/graphics/2026-ai-circular-deals/">AI circular deals (Bloomberg)</a></li>
-        <li><a href="https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/">MSFT+Nvidia+Anthropic</a></li>
       </ul>
     </details>
     <details>
-      <summary>Compute / semiconductors — sources</summary>
+      <summary>Compute / semiconductors</summary>
       <ul>
         <li><a href="https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000051/q1fy27pr.htm">NVDA Q1 FY27 (SEC)</a></li>
         <li><a href="https://www.stocktitan.net/news/AMD/amd-reports-first-quarter-2026-financial-bu7e2cbxpd14.html">AMD Q1'26</a></li>
         <li><a href="https://www.stocktitan.net/news/AVGO/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial-if4yrbje8hq6.html">AVGO Q2 FY26</a></li>
         <li><a href="https://investor.marvell.com/news-events/press-releases/detail/1023/">MRVL Q1 FY27</a></li>
         <li><a href="https://investor.tsmc.com/english/quarterly-results/2026/q1">TSMC Q1'26 (IR)</a></li>
-        <li><a href="https://en.macromicro.me/blog/tsmc-q1-earnings-call-rare-capacity-expansion-as-the-ai-megatrend-takes-shape">TSMC CoWoS sold out</a></li>
         <li><a href="https://www.cnbc.com/2026/04/15/asml-q1-2026-earnings-report.html">ASML Q1'26 (CNBC)</a></li>
         <li><a href="https://www.cnbc.com/2026/04/23/intel-intc-q1-2026-earnings-report.html">INTC Q1'26 (CNBC)</a></li>
         <li><a href="https://newsroom.arm.com/news/arm-q4-fye26-results">ARM Q4 FYE26</a></li>
-        <li><a href="https://www.cnbc.com/2025/11/21/nvidia-gpus-google-tpus-aws-trainium-comparing-the-top-ai-chips.html">Custom ASIC vs Nvidia (CNBC)</a></li>
         <li><a href="https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia">ASIC landscape (Tom's HW)</a></li>
       </ul>
     </details>
     <details>
-      <summary>Memory & storage — sources</summary>
+      <summary>Memory, storage &amp; networking</summary>
       <ul>
         <li><a href="https://tech-insider.org/micron-q2-2026-earnings-ai-memory-market/">Micron FQ2'26</a></li>
         <li><a href="https://www.cnbc.com/2026/05/26/micron-stock-trillion-market-cap.html">Micron $1T (CNBC)</a></li>
         <li><a href="https://seekingalpha.com/news/4532757-micron-forecasts-100b-hbm-market-by-2028-as-supply-tightness-persists-through-2026">HBM $100B by 2028</a></li>
-        <li><a href="https://www.cnbc.com/2026/04/23/sk-hynix-earnings-ai-memory-shortage-hbm-demand.html">SK Hynix Q1'26 (CNBC)</a></li>
-        <li><a href="https://www.techtimes.com/articles/317855/20260605/nvidia-vera-rubin-hbm4-jensen-huang-confirms-all-three-suppliers-production-q3-ship.htm">HBM4 / Vera Rubin (3 suppliers)</a></li>
-        <li><a href="https://finance.biggo.com/news/US_WDC_2026-04-30">Western Digital FQ3'26</a></li>
-        <li><a href="https://tickeron.com/earnings/STX/">Seagate FQ3'26</a></li>
         <li><a href="https://www.sandisk.com/company/newsroom/press-releases/2026/2026-04-30-sandisk-reports-fiscal-third-quarter-2026-financial-results">Sandisk FQ3'26</a></li>
-        <li><a href="https://finance.yahoo.com/news/pure-storage-inc-pstg-q4-050226157.html">Pure Storage FQ4 FY26</a></li>
-        <li><a href="https://www.tomshardware.com/pc-components/ram/hbm-is-eating-your-ram">HBM eats DRAM capacity</a></li>
-      </ul>
-    </details>
-    <details>
-      <summary>Power, cooling, networking, neoclouds — sources</summary>
-      <ul>
         <li><a href="https://www.arista.com/en/company/news/press-release/24017-pr-20260505">Arista Q1'26</a></li>
         <li><a href="https://investors.credosemi.com/news-events/news/news-details/2026/Credo-Technology-Group-Holding-Ltd-Reports-Fourth-Quarter-and-Fiscal-Year-2026-Financial-Results/default.aspx">Credo FY26</a></li>
-        <li><a href="https://futurumgroup.com/insights/coherent-q3-fy-2026-ai-data-center-demand-accelerates-optical-growth/">Coherent FQ3'26 + Nvidia $2B</a></li>
         <li><a href="https://ir.asteralabs.com/news-releases/news-release-details/astera-labs-reports-first-quarter-2026-financial-results">Astera Labs Q1'26</a></li>
-        <li><a href="https://www.sec.gov/Archives/edgar/data/0001633978/000162828026030530/lite_ex991xq3fy26.htm">Lumentum FQ3'26 (SEC)</a></li>
-        <li><a href="https://www.sec.gov/Archives/edgar/data/0000936395/000162828026040614/ex9912026q2earningspressre.htm">Ciena Q2 FY26 (SEC)</a></li>
-        <li><a href="https://www.tikr.com/blog/vertiv-stock-has-tripled-in-a-year-does-the-15-billion-backlog-justify-the-price">Vertiv backlog</a></li>
-        <li><a href="https://news.alphastreet.com/eaton-etn-posts-record-q1-revenue-as-electrical-backlog-surges-48-on-data-center-demand/">Eaton Q1'26</a></li>
-        <li><a href="https://www.sec.gov/Archives/edgar/data/0001996810/000199681026000063/gevpressrelease1q26.htm">GE Vernova Q1'26 (SEC)</a></li>
-        <li><a href="https://www.heygotrade.com/en/blog/ceg-vs-vst-ai-utility-stocks/">Constellation vs Vistra</a></li>
-        <li><a href="https://investors.quantaservices.com/news-events/press-releases/detail/396/quanta-services-reports-first-quarter-2026-results">Quanta Q1'26</a></li>
-        <li><a href="https://www.stocktitan.net/sec-filings/CRWV/8-k-core-weave-inc-reports-material-event-b15570312e6c.html">CoreWeave Q1'26 (SEC)</a></li>
-        <li><a href="https://finance.yahoo.com/markets/stocks/articles/nebius-targeting-540-data-center-121600450.html">Nebius FY26 targets</a></li>
-        <li><a href="https://www.datacenterfrontier.com/energy/article/55363740/the-gigawatt-bottleneck-power-constraints-define-ai-data-center-growth">The gigawatt bottleneck</a></li>
+        <li><a href="https://www.techtimes.com/articles/317855/20260605/nvidia-vera-rubin-hbm4-jensen-huang-confirms-all-three-suppliers-production-q3-ship.htm">HBM4 / Vera Rubin</a></li>
       </ul>
     </details>
     <details>
-      <summary>Software & valuation / bubble framework — sources</summary>
+      <summary>Power, neoclouds &amp; software</summary>
       <ul>
-        <li><a href="https://www.investing.com/news/company-news/palantir-q1-2026-slides-us-revenue-tops-100-growth-rule-of-40-hits-145-93CH-4657648">Palantir Q1'26 / Rule of 40</a></li>
-        <li><a href="https://www.cnbc.com/2026/03/31/openai-funding-round-ipo.html">OpenAI $852B raise (CNBC)</a></li>
-        <li><a href="https://www.cnbc.com/2026/05/28/anthropic-open-ai-startup-value.html">Anthropic valuation (CNBC)</a></li>
-        <li><a href="https://www.sec.gov/Archives/edgar/data/0001373715/000137371526000054/erq1fy26.htm">ServiceNow Q1'26 (SEC)</a></li>
-        <li><a href="https://www.sec.gov/Archives/edgar/data/0001108524/000110852426000125/crm-q1fy27xexhibit991.htm">Salesforce Q1 FY27 (SEC)</a></li>
-        <li><a href="https://www.sec.gov/Archives/edgar/data/0001640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY27 (SEC)</a></li>
-        <li><a href="https://www.sec.gov/Archives/edgar/data/0001561550/000162828026031677/ex-991x20260331x8k.htm">Datadog Q1'26 (SEC)</a></li>
-        <li><a href="https://ir.crowdstrike.com/news-releases/news-release-details/crowdstrike-reports-fourth-quarter-and-fiscal-year-2026/">CrowdStrike FY26</a></li>
-        <li><a href="https://en.wikipedia.org/wiki/AI_bubble">AI bubble overview (Wikipedia)</a></li>
+        <li><a href="https://www.tikr.com/blog/vertiv-stock-has-tripled-in-a-year-does-the-15-billion-backlog-justify-the-price">Vertiv backlog</a></li>
+        <li><a href="https://www.sec.gov/Archives/edgar/data/0001996810/000199681026000063/gevpressrelease1q26.htm">GE Vernova Q1'26 (SEC)</a></li>
+        <li><a href="https://www.heygotrade.com/en/blog/ceg-vs-vst-ai-utility-stocks/">Constellation vs Vistra</a></li>
+        <li><a href="https://www.stocktitan.net/sec-filings/CRWV/8-k-core-weave-inc-reports-material-event-b15570312e6c.html">CoreWeave Q1'26 (SEC)</a></li>
+        <li><a href="https://finance.yahoo.com/markets/stocks/articles/nebius-targeting-540-data-center-121600450.html">Nebius FY26 targets</a></li>
+        <li><a href="https://www.investing.com/news/company-news/palantir-q1-2026-slides-us-revenue-tops-100-growth-rule-of-40-hits-145-93CH-4657648">Palantir Q1'26</a></li>
         <li><a href="https://coinedition.com/michael-burry-expands-ai-short-as-2026-ipo-wave-tests-bubble-warning/">Burry AI short</a></li>
-        <li><a href="https://www.guinnessgi.com/insights/are-we-in-an-ai-bubble">Bull "virtuous circle" case</a></li>
         <li><a href="https://fortune.com/2026/04/30/google-amazon-ai-profits-anthropic-stake-bubble-earnings-2026/">AI profit from stakes (Fortune)</a></li>
       </ul>
     </details>
@@ -641,73 +684,67 @@
 
 <footer>
   <div class="wrap">
-    Built as a deep-research map of the US AI-stock boom · June 2026 · Educational use only, not investment advice ·
-    Hover any <span class="num">TICKER</span> for financials.
+    <div class="fi">
+      <span>Built as a deep-research map of the US AI-stock boom · June 2026 · Educational only, not investment advice</span>
+      <a href="../index.html">← Learn with Adhi</a>
+    </div>
   </div>
 </footer>
 
-<!-- TOOLTIP ELEMENT -->
 <div id="tip" role="tooltip" aria-hidden="true"></div>
 
 <script>
-/* =========================================================
-   FINANCIAL DATABASE  (as of ~June 2026, cross-checked; verify live)
-   verdict codes: green=early/high-torque, blue=quality compounder,
-   yellow=priced-for-perfection, orange=late-cycle, white=value/lower-beta, red=high-risk
-   ========================================================= */
-const DB = {
- /* ---- FOUNDRY ---- */
- TSM:{name:"TaiwanSemiconductor(TSMC)",layer:"Foundry",v:"white",vlabel:"VALUE / CHOKEPOINT",
+/* ============================================================
+   FINANCIAL DATABASE  (~June 2026; verify live before acting)
+   v: green=early/high-torque, blue=quality, yellow=priced-for-perfection,
+      orange=late-cycle, white=value/lower-beta, red=high-risk
+   ============================================================ */
+const DB={
+ TSM:{name:"Taiwan Semiconductor (TSMC)",layer:"Foundry",v:"white",vlabel:"VALUE / CHOKEPOINT",
    cap:"~$2.2–2.3T",pe:"~24 fwd",rev:"$35.9B (Q1'26)",growth:"+35% YoY",gm:"66.2%",
-   note:"Makes essentially every advanced AI chip. CoWoS packaging sold out through 2027; HPC = 61% of revenue. Cheapest mega-cap AI leverage with the lowest single-company risk."},
+   note:"Makes essentially every advanced AI chip. CoWoS packaging sold out through 2027; HPC = 61% of revenue. Cheapest mega-cap AI leverage with lowest single-company risk."},
  ASML:{name:"ASML Holding",layer:"Equipment",v:"blue",vlabel:"QUALITY MONOPOLY",
    cap:"~€300B+",pe:"~30",rev:"€8.8B (Q1'26)",growth:"+13% YoY",gm:"53%",
-   note:"Sole maker of EUV lithography — upstream of literally every leading-edge chip. FY26 guide raised to €36–40B. China export-control overhang (fell to 19% of sales)."},
-
- /* ---- COMPUTE ---- */
+   note:"Sole maker of EUV lithography — upstream of every leading-edge chip. FY26 guide raised to €36–40B. China export-control overhang (fell to 19% of sales)."},
  NVDA:{name:"NVIDIA",layer:"Compute / GPU",v:"blue",vlabel:"QUALITY CORE",
    cap:"~$4.97T",pe:"~33 (fwd ~22)",rev:"$81.6B (Q1 FY27)",growth:"+85% YoY",gm:"~75%",
-   note:"~70% of AI accelerators. Data-center $75.25B (+92%). CUDA + NVLink + networking moat. Fwd P/E ~22 isn't absurd for the growth, but ASICs are nibbling share."},
+   note:"~70% of AI accelerators. Data-centre $75.25B (+92%). CUDA + NVLink + networking moat. Fwd P/E ~22 isn't absurd for the growth, but ASICs are nibbling share."},
  AMD:{name:"Advanced Micro Devices",layer:"Compute / GPU",v:"yellow",vlabel:"#2 CHALLENGER",
    cap:"~$853B",pe:"~174 (fwd ~60)",rev:"$10.3B (Q1'26)",growth:"+38% YoY",gm:"53% / 55% adj",
-   note:"Instinct MI350/MI400 + ROCm. Big Meta (up to 6GW) & OpenAI commitments. Data-center +57%. The Nvidia alternative — but priced for big execution."},
+   note:"Instinct MI350/MI400 + ROCm. Big Meta (up to 6GW) & OpenAI commitments. Data-centre +57%. The Nvidia alternative — but priced for big execution."},
  AVGO:{name:"Broadcom",layer:"Custom ASIC + Networking",v:"blue",vlabel:"ASIC DUOPOLY",
    cap:"~$1.9T",pe:"~37–43 fwd",rev:"$22.2B (Q2 FY26)",growth:"+48% YoY",gm:"~69% EBITDA",
    note:"#1 custom-ASIC designer (Google TPU, Meta MTIA, OpenAI). AI revenue $10.8B, +143%. Targets >$100B AI chip revenue by 2027. The main 'bet against Nvidia's monopoly.'"},
  MRVL:{name:"Marvell Technology",layer:"Custom ASIC + Optical",v:"yellow",vlabel:"ASIC #2 / RICH",
    cap:"~$240B",pe:">90 fwd",rev:"$2.42B (Q1 FY27)",growth:"+28% YoY",gm:"52% / 59% adj",
-   note:"#2 custom silicon (AWS Trainium anchor) + optical DSPs. Data-center = 76% of revenue. Richest multiple in the chip group; Trainium-3 share is shrinking vs Annapurna/Alchip."},
+   note:"#2 custom silicon (AWS Trainium anchor) + optical DSPs. Data-centre = 76% of revenue. Richest multiple in the chip group; Trainium-3 share shrinking vs Annapurna/Alchip."},
  INTC:{name:"Intel",layer:"Compute / Foundry",v:"red",vlabel:"LAGGARD / TURNAROUND",
    cap:"~$100B",pe:"n/m (loss)",rev:"$13.6B (Q1'26)",growth:"+7% YoY",gm:"39.4%",
-   note:"Net LOSS -$3.7B (Mobileye impairment). Gaudi 3 is niche; DCAI $5.1B is dwarfed by Nvidia's ~$75B. Bull case is 18A foundry — which still lacks marquee external customers."},
+   note:"Net LOSS -$3.7B (Mobileye impairment). Gaudi 3 is niche; DCAI $5.1B is dwarfed by Nvidia's ~$75B. Bull case is 18A foundry — still lacks marquee external customers."},
  ARM:{name:"Arm Holdings",layer:"CPU IP",v:"yellow",vlabel:"IP TOLLBOOTH",
    cap:"~$150B+",pe:"very high",rev:"$4.92B (FY26)",growth:"+23% YoY",gm:"~95% (IP)",
-   note:"CPU IP inside Graviton, Axion, Cobalt, Grace. Data-center royalties doubled YoY; new 'Arm AGI' server CPU has >$2B demand. High royalty margins, very high valuation."},
-
- /* ---- MEMORY ---- */
+   note:"CPU IP inside Graviton, Axion, Cobalt, Grace. Data-centre royalties doubled YoY; new 'Arm AGI' server CPU has >$2B demand. High royalty margins, very high valuation."},
  MU:{name:"Micron Technology",layer:"Memory / HBM",v:"orange",vlabel:"YOUR MODEL — LATE INNINGS",
    cap:">$1T (crossed May'26)",pe:"~40 (fwd ~8–9)",rev:"$23.86B (FQ2'26, record)",growth:"record",gm:"~81% guided (FQ3)",
    note:"HBM >$1B (+50% QoQ), 2026 supply sold out, HBM4 ramping for Vera Rubin. TAM $100B by 2028. BUT: already at $1T, fwd P/E ~8–9 signals the market expects a cyclical roll-over. The move is largely banked."},
  SNDK:{name:"Sandisk",layer:"NAND / Flash",v:"orange",vlabel:"ALREADY RAN +3,300%",
    cap:"~$261B",pe:"low (cyclical peak)",rev:"$5.95B (FQ3'26)",growth:"+251% YoY",gm:"78.4% (vs 22.5% yr-ago)",
-   note:"The clearest 'Micron-style multibagger that already happened' — up ~3,300% in 12 months post-spinoff. NAND prices +60% then +70–75%. Data-center +645%. Spectacular — and maximally exposed if NAND turns."},
+   note:"The clearest 'Micron-style multibagger that already happened' — up ~3,300% in 12 months post-spinoff. NAND prices +60% then +70–75%. Data-centre +645%. Spectacular — and maximally exposed if NAND turns."},
  WDC:{name:"Western Digital",layer:"Storage / HDD",v:"orange",vlabel:"NEARLINE BOOM",
    cap:"~$176B",pe:"moderate",rev:"$3.3B (FQ3'26)",growth:"+45% YoY",gm:"50.5% (first >50%)",
-   note:"Cloud nearline = 89% of sales; entire 2026 HDD output committed to data centers. Up ~115–150% YTD. HAMR/40TB ramps. AI-data tailwind is real but stock has already run hard."},
+   note:"Cloud nearline = 89% of sales; entire 2026 HDD output committed to data centres. Up ~115–150% YTD. HAMR/40TB ramps. AI-data tailwind is real but stock has already run hard."},
  STX:{name:"Seagate Technology",layer:"Storage / HDD",v:"orange",vlabel:"NEARLINE BOOM",
    cap:"~$192B",pe:"moderate",rev:"$3.11B (FQ3'26)",growth:"+44% YoY",gm:"~47%",
-   note:"Data center ~80% of sales; nearline allocated through 2027. HAMR/Mozaic leader; raised long-term growth target to ≥20%. Same 'already ran' caveat as WDC."},
+   note:"Data centre ~80% of sales; nearline allocated through 2027. HAMR/Mozaic leader; raised long-term growth target to ≥20%. Same 'already ran' caveat as WDC."},
  PSTG:{name:"Pure Storage",layer:"Enterprise Flash",v:"blue",vlabel:"LOWER-BETA AI STORAGE",
    cap:"~$27.6B",pe:"high (software-like)",rev:"$3.7B (FY26)",growth:"+16% YoY",gm:"72.9%",
-   note:"Sells software-rich flash SYSTEMS (recurring revenue), not raw bits — so far steadier than the cyclical memory makers. Primary storage for Meta's AI. No 200% pop, but no crash risk either."},
-
- /* ---- POWER ---- */
+   note:"Sells software-rich flash SYSTEMS (recurring revenue), not raw bits — far steadier than the cyclical memory makers. Primary storage for Meta's AI. No 200% pop, but no crash risk either."},
  VRT:{name:"Vertiv Holdings",layer:"Power & Cooling",v:"orange",vlabel:"MARQUEE / RAN HARD",
    cap:"~$121B",pe:"~81 (fwd ~54)",rev:"$2.65B (Q1'26)",growth:"~30% organic",gm:"—",
    note:"Cleanest power+thermal pure-play (UPS + liquid cooling). Backlog $15B, +109% YoY (book-to-bill ~2.9x). Stock tripled in a year — quality, but a lot is priced in."},
  ETN:{name:"Eaton",layer:"Electrical Power",v:"blue",vlabel:"DIVERSIFIED COMPOUNDER",
    cap:"~$152B",pe:"~30s",rev:"$7.45B (Q1'26)",growth:"+17% YoY",gm:"—",
-   note:"Switchgear/transformers/UPS + cooling. Data-center orders +240%, electrical backlog +48%. Mega-cap, so total growth is mid-teens — lower beta, lower ceiling."},
+   note:"Switchgear/transformers/UPS + cooling. Data-centre orders +240%, electrical backlog +48%. Mega-cap, so total growth is mid-teens — lower beta, lower ceiling."},
  GEV:{name:"GE Vernova",layer:"Power Generation",v:"blue",vlabel:"GIGAWATT SHORTAGE",
    cap:"~$250B",pe:"high",rev:"$9.3B (Q1'26)",growth:"+16% YoY",gm:"—",
    note:"Gas turbines + grid gear — the SUPPLY side of the power bottleneck. Orders $18.3B (+71%); gas backlog 100GW; pricing +10–20%/kW. Real pricing power; already strongly re-rated."},
@@ -719,51 +756,43 @@ const DB = {
    note:"2nd-largest US nuclear fleet. Signed 20-yr ~2,600MW Meta nuclear PPAs (Jan'26) NOT yet in guidance = upside. More merchant-power upside and volatility than CEG."},
  PWR:{name:"Quanta Services",layer:"Grid Construction",v:"blue",vlabel:"GRID PICKS-&-SHOVELS",
    cap:"~$50B+",pe:"~30s",rev:"$7.87B (Q1'26)",growth:"+26%",gm:"—",
-   note:"Builds the transmission/substations data centers need. Record backlog $48.5B. Solid grid compounder — but one analyst argues 'the grid story may already be priced in.'"},
-
- /* ---- NETWORKING / OPTICAL ---- */
+   note:"Builds the transmission/substations data centres need. Record backlog $48.5B. Solid grid compounder — but one analyst argues 'the grid story may already be priced in.'"},
  ANET:{name:"Arista Networks",layer:"AI Networking",v:"blue",vlabel:"QUALITY COMPOUNDER",
    cap:"~$185B",pe:"~54",rev:"$2.71B (Q1'26)",growth:"+35% YoY",gm:"62.4%",
    note:"#1 in >10GbE switching; AI back-end fabric target raised to $3.5B. Anchor customers Meta & Microsoft. Highly profitable (40%+ net margin) — quality, richly valued."},
  CRDO:{name:"Credo Technology",layer:"Interconnect (AEC)",v:"green",vlabel:"HIGH-TORQUE 💎",
-   cap:"~$25–35B",pe:"high (growth)",rev:"$1.34B (FY26)",growth:"+>200% YoY",gm:"high",
+   cap:"~$25–35B",pe:"high (growth)",rev:"$1.34B (FY26)",growth:">+200% YoY",gm:"high",
    note:"Active Electrical Cables for AI racks — among the fastest-growing names anywhere. Q4 +157%. Now expanding into optics (>$600M FY27 target). Small base + secular demand = the 'early Micron' profile (with concentration risk)."},
  ALAB:{name:"Astera Labs",layer:"Interconnect (PCIe/CXL)",v:"green",vlabel:"HIGH-TORQUE 💎",
    cap:"~$18–20B",pe:"very high",rev:"$308M (Q1'26)",growth:"+93% YoY",gm:"76.3%",
    note:"Retimers + Scorpio fabric switches for inside the AI server. Best-in-group 76% gross margin. Expanding TAM (retimer→fabric). Credible multibagger if scale-up switching ramps — but expensive."},
  COHR:{name:"Coherent",layer:"Optical Transceivers",v:"blue",vlabel:"OPTICS TURNAROUND",
    cap:"~$20B+",pe:"moderate",rev:"$1.81B (Q3 FY26)",growth:"+21% YoY",gm:"improving",
-   note:"800G/1.6T transceivers + lasers. Data-center +37%. NVIDIA investing $2B for optics capacity. Mid-cap re-rating story; carries legacy non-AI segments + debt to delever."},
+   note:"800G/1.6T transceivers + lasers. Data-centre +37%. NVIDIA investing $2B for optics capacity. Mid-cap re-rating story; carries legacy non-AI segments + debt to delever."},
  LITE:{name:"Lumentum",layer:"Optical Components",v:"yellow",vlabel:"RICH MULTIPLE",
    cap:"~$15B+",pe:"~159",rev:"$808M (Q3 FY26)",growth:"+58% YoY (Q1)",gm:"improving",
-   note:"Cloud transceivers + OCS + co-packaged optics; NVIDIA investing $2B in a US fab. Strong acceleration but P/E ~159 — earnings still catching up. Less margin of safety than COHR; TD Cowen at Hold."},
+   note:"Cloud transceivers + OCS + co-packaged optics; NVIDIA investing $2B in a US fab. Strong acceleration but P/E ~159 — earnings still catching up. Less margin of safety than COHR."},
  CIEN:{name:"Ciena",layer:"Optical / DCI",v:"white",vlabel:"2ND-DERIVATIVE / CHEAPER",
    cap:"~$20B+",pe:"moderate",rev:"$1.57B (Q2 FY26)",growth:"+40% YoY",gm:"—",
-   note:"Optical transport connecting data centers over distance. Cloud = 46% of revenue, +70%. Cheaper, less-hyped way to play the buildout (DCI demand follows it). TD Cowen at Buy."},
-
- /* ---- SERVERS ---- */
+   note:"Optical transport connecting data centres over distance. Cloud = 46% of revenue, +70%. Cheaper, less-hyped way to play the buildout (DCI demand follows it). TD Cowen at Buy."},
  DELL:{name:"Dell Technologies",layer:"AI Servers",v:"orange",vlabel:"REAL REV, THIN MARGIN",
    cap:"~$90B+",pe:"~20s",rev:"AI servers $8.95B (Q4 FY26)",growth:"+342% YoY",gm:"thin",
    note:"AI-server backlog $51.3B; ~$64B orders guided FY26. Real scale — but thin server margins dilute the AI mix. Moderate upside vs the silicon it ships."},
  SMCI:{name:"Super Micro Computer",layer:"AI Servers",v:"red",vlabel:"LOW-QUALITY EARNINGS",
    cap:"~$25B",pe:"volatile",rev:"$12.7B (Q2 FY26)",growth:"high",gm:"6.3% (from 11.8%)",
-   note:"Leader in liquid-cooled racks, but gross margin collapsed to 6.3% on hyperscaler mix + tariffs, plus prior accounting/governance overhang. Big top-line, low-quality, very volatile."},
-
- /* ---- CLOUD / NEOCLOUD ---- */
+   note:"Leader in liquid-cooled racks, but gross margin collapsed to 6.3% on hyperscaler mix + tariffs, plus prior accounting/governance overhang. Big top-line, low-quality earnings, very volatile."},
  CRWV:{name:"CoreWeave",layer:"Neocloud (GPU)",v:"red",vlabel:"HIGHEST RISK / REWARD",
    cap:"~$58.9B",pe:"n/m (loss)",rev:"$2.08B (Q1'26)",growth:"~2× YoY",gm:"—",
    note:"GPU neocloud; backlog ~$99.4B (incl. $21B Meta). BUT net loss $740M, interest expense $536M, capex $7.7B — deeply unprofitable, debt-financed, customer-concentrated. A leveraged bet on GPU demand staying tight."},
  NBIS:{name:"Nebius Group",layer:"Neocloud (GPU)",v:"green",vlabel:"SPECULATIVE HIGH-TORQUE",
    cap:"~$20B+",pe:"n/m",rev:"$399M (Q1'26)",growth:"+684% YoY",gm:"—",
    note:">$46B contracted (Microsoft, Meta). FY26 targets $3–3.4B rev, $7–9B ARR (~540% growth). Cleaner balance sheet than CoreWeave (raised equity). Speculative multibagger candidate; up ~223% YTD."},
- DLR:{name:"Digital Realty",layer:"Data-Center REIT",v:"white",vlabel:"INCOME + OPTIONALITY",
+ DLR:{name:"Digital Realty",layer:"Data-Centre REIT",v:"white",vlabel:"INCOME + OPTIONALITY",
    cap:"~$60B+",pe:"REIT (FFO)",rev:"$1.635B (Q1'26)",growth:"+16% YoY",gm:"—",
    note:"Hyperscale/colo REIT; record bookings >$700M. Core FFO ~$7.90–8.00/sh (~8% growth). Owns the real estate the buildout needs — steady income, AI optionality, not a multibagger."},
- EQIX:{name:"Equinix",layer:"Data-Center REIT",v:"white",vlabel:"INTERCONNECTION MOAT",
+ EQIX:{name:"Equinix",layer:"Data-Centre REIT",v:"white",vlabel:"INTERCONNECTION MOAT",
    cap:"~$80B+",pe:"REIT (AFFO)",rev:"$2.44B (Q1'26)",growth:"+10% YoY",gm:"—",
    note:"Interconnection-dense REIT; 60% of largest deals AI-related, Fabric bookings +70%. Quality moat + inference-demand beneficiary, but REIT growth profile."},
-
- /* ---- HYPERSCALERS (also referenced as customers) ---- */
  MSFT:{name:"Microsoft",layer:"Hyperscaler",v:"blue",vlabel:"QUALITY MEGA-CAP",
    cap:"~$3.11T",pe:"~24.8",rev:"$82.9B (Q3 FY26)",growth:"+18% YoY",gm:"~68.8%",
    note:"AI run-rate $37B (+123%); Azure +39%. Builds Maia/Cobalt; owns ~27% of OpenAI. ~$190B capex through 2026. The bluest of blue-chip AI exposure."},
@@ -779,8 +808,6 @@ const DB = {
  ORCL:{name:"Oracle",layer:"Hyperscaler",v:"yellow",vlabel:"BACKLOG vs CONCENTRATION",
    cap:"~$680B",pe:"~34.5",rev:"$17.2B (Q3 FY26)",growth:"+22% YoY",gm:"~65% corp / ~15% GPU",
    note:"RPO $553B (+325%), OCI +84% — but ~54% of backlog is ONE customer (OpenAI), and GPU-rental margins are thin (~14–16%). The highest-beta, highest-concentration hyperscaler."},
-
- /* ---- APPS / SOFTWARE ---- */
  PLTR:{name:"Palantir",layer:"AI Software",v:"yellow",vlabel:"PRICED FOR PERFECTION",
    cap:"~$350B",pe:"~146–234 (fwd ~82)",rev:"+85% YoY (Q1'26)",growth:"+85% YoY",gm:"~82%",
    note:"US commercial +133%; Rule of 40 = 145% (matched only by Nvidia/Micron/SK Hynix). GAAP profitable. Fundamentals are stellar — the entire bear case is the extreme valuation."},
@@ -792,7 +819,7 @@ const DB = {
    note:"Agentforce >$1B ARR; $3.4B combined AI+Data ARR. Slower-growth, cheaper way to own enterprise AI agents vs ServiceNow."},
  SNOW:{name:"Snowflake",layer:"Data / AI",v:"blue",vlabel:"DATA BACKBONE",
    cap:"~$70B+",pe:"high",rev:"$1.39B (Q1 FY27)",growth:"+33% YoY",gm:"high",
-   note:"Product +34%, NRR 126%, RPO $9.21B (+38%). A software-sector 'blowout' amid otherwise sluggish software. Data is the fuel AI runs on."},
+   note:"Product +34%, NRR 126%, RPO $9.21B (+38%). A software-sector blowout amid otherwise sluggish software. Data is the fuel AI runs on."},
  DDOG:{name:"Datadog",layer:"Observability",v:"blue",vlabel:"AI MONITORING",
    cap:"~$50B+",pe:"high",rev:"$1.006B (Q1'26)",growth:"+32% YoY",gm:"high",
    note:"First $1B+ quarter; 22% non-GAAP op margin; $289M FCF. Observability = core AI-monitoring infra. Strong growth + real margins."},
@@ -807,11 +834,7 @@ const DB = {
    note:"Valuation now rests on robotaxi/Optimus/Dojo, not EVs. Capex stepped to ~$25B (mostly AI). Bull (Ives) $2T; bears call robotaxi value speculative. Pure AI-optionality bet."},
 };
 
-/* alias for class names (CSS uses v-<color>) */
-function vClass(v){return "v-"+(v==="white"?"white":v);}
-
-/* ---- layer → ticker assignment for the stack chips ---- */
-const LAYERS = {
+const LAYERS={
  foundry:["TSM","ASML"],
  compute:["NVDA","AMD","AVGO","MRVL","ARM","INTC"],
  memory:["MU","SNDK","WDC","STX","PSTG"],
@@ -822,8 +845,11 @@ const LAYERS = {
  apps:["PLTR","NOW","CRM","SNOW","DDOG","MDB","CRWD","TSLA"],
 };
 
-/* ---- scorecard order: green, blue, yellow, white, orange, red ---- */
 const VORDER={green:0,blue:1,yellow:2,white:3,orange:4,red:5};
+const VEMOJI={green:"🟢",blue:"🔵",yellow:"🟡",white:"⚪",orange:"🟠",red:"🔴"};
+const VPILLBG={green:"#eef9f3",blue:"#eaebf5",yellow:"#fff9e6",orange:"#fff0ec",white:"#f0ede9",red:"#fde8f3"};
+const VPILLFG={green:"#1F9D55",blue:"#2E3192",yellow:"#7a5c00",orange:"#FF5C39",white:"#6B6259",red:"#E84BA0"};
+
 const VLINE={
  NVDA:"Still 70% share; fwd P/E ~22 reasonable for the growth — the lowest-drama core holding.",
  AVGO:"The cleanest 'bet against Nvidia's monopoly' — custom ASICs +143%.",
@@ -869,105 +895,319 @@ const VLINE={
  EQIX:"Interconnection moat; REIT growth profile.",
 };
 
-/* ===================== RENDER ===================== */
+/* === RENDER CHIPS === */
 function chipHTML(sym){
   const d=DB[sym]; if(!d) return "";
-  return `<span class="tk ${vClass(d.v)}" data-sym="${sym}" tabindex="0">
+  return `<span class="tk v-${d.v}" data-sym="${sym}" tabindex="0">
     <span class="dot"></span><span class="sym">${sym}</span><span class="nm">${d.name.replace(/\(.*?\)/,'').trim()}</span></span>`;
 }
-// inline chips (no name) for cards/flows
-function inlineChip(el){
+function initInline(el){
   const sym=el.getAttribute('data-sym'); const d=DB[sym]; if(!d)return;
-  el.classList.add('tk',vClass(d.v)); el.setAttribute('tabindex','0');
+  el.classList.add('tk','v-'+d.v); el.setAttribute('tabindex','0');
   el.innerHTML=`<span class="dot"></span><span class="sym">${sym}</span>`;
 }
 document.querySelectorAll('.chips[data-layer]').forEach(c=>{
   c.innerHTML=(LAYERS[c.getAttribute('data-layer')]||[]).map(chipHTML).join('');
 });
-document.querySelectorAll('.tk-inline').forEach(inlineChip);
+document.querySelectorAll('.tk-inline').forEach(initInline);
 
-/* scorecard */
+/* === SCORECARD === */
 const allSyms=Object.keys(DB).sort((a,b)=>{
-  const va=VORDER[DB[a].v], vb=VORDER[DB[b].v];
-  if(va!==vb)return va-vb;
-  return a.localeCompare(b);
+  const va=VORDER[DB[a].v],vb=VORDER[DB[b].v];
+  return va!==vb ? va-vb : a.localeCompare(b);
 });
-const VEMOJI={green:"🟢",blue:"🔵",yellow:"🟡",white:"⚪",orange:"🟠",red:"🔴"};
-const VPILLBG={green:"#0f3b2e",blue:"#102a4d",yellow:"#3d3410",white:"#2a3245",orange:"#3d2410",red:"#3d1414"};
-const VPILLFG={green:"#34d399",blue:"#60a5fa",yellow:"#fbbf24",white:"#cbd5e1",orange:"#fb923c",red:"#f87171"};
 document.getElementById('scoreBody').innerHTML=allSyms.map(s=>{
   const d=DB[s];
   return `<tr>
-    <td><span class="tk ${vClass(d.v)}" data-sym="${s}" tabindex="0" style="padding:4px 8px"><span class="dot"></span><span class="sym">${s}</span></span></td>
+    <td><span class="tk v-${d.v}" data-sym="${s}" tabindex="0" style="padding:4px 8px"><span class="dot"></span><span class="sym">${s}</span></span></td>
     <td>${d.name.replace(/\(.*?\)/,'').trim()}</td>
-    <td style="color:var(--mut)">${d.layer}</td>
+    <td style="color:var(--muted)">${d.layer}</td>
     <td>${VLINE[s]||d.vlabel}</td>
     <td><span class="pill" style="background:${VPILLBG[d.v]};color:${VPILLFG[d.v]}">${VEMOJI[d.v]} ${d.vlabel}</span></td>
   </tr>`;
 }).join('');
 
-/* ===================== TOOLTIP ENGINE ===================== */
+/* === TOOLTIP ENGINE === */
 const tip=document.getElementById('tip');
-function fmtGrowth(g){
-  if(/^\+/.test(g)) return `<span class="pos">${g}</span>`;
-  if(/^-/.test(g)) return `<span class="neg">${g}</span>`;
-  return g;
+const liveData={};
+
+function fmt$change(pct){
+  if(pct==null) return null;
+  const sign=pct>=0?'+':'';
+  return `<span class="${pct>=0?'pos':'neg'}">${sign}${pct.toFixed(2)}%</span>`;
 }
+function fmtCap(v){
+  if(!v) return null;
+  if(v>=1e12) return `$${(v/1e12).toFixed(2)}T`;
+  if(v>=1e9) return `$${(v/1e9).toFixed(0)}B`;
+  return `$${v}`;
+}
+
 function showTip(sym,x,y){
   const d=DB[sym]; if(!d)return;
+  const live=liveData[sym];
+  const style=`background:${VPILLBG[d.v]};color:${VPILLFG[d.v]}`;
+  const liveRow=live?`<div class="tlive">● Live · $${live.price?.toFixed(2)} <span>${fmt$change(live.change)||''}</span></div>`:'';
+  const cap = live?.cap ? fmtCap(live.cap) : d.cap;
+  const pe  = live?.pe  ? `${live.pe.toFixed(1)}× (live)` : d.pe;
+
+  tip.style.setProperty('--vc', `var(--${d.v==='green'?'forest':d.v==='blue'?'indigo':d.v==='yellow'?'mango':d.v==='orange'?'tomato':d.v==='red'?'mawar':'muted'})`);
   tip.innerHTML=`
-    <div class="t-top">
-      <span class="t-sym">${sym}</span>
-      <span class="t-badge" style="background:${VPILLBG[d.v]};color:${VPILLFG[d.v]}">${VEMOJI[d.v]} ${d.vlabel}</span>
+    <div class="tt">
+      <span class="tsym">${sym}</span>
+      <span class="tbadge" style="${style}">${VEMOJI[d.v]} ${d.vlabel}</span>
     </div>
-    <div class="t-name">${d.name} · <span style="color:var(--cyan)">${d.layer}</span></div>
-    <div class="t-grid">
-      <span class="k">Market cap</span><span class="val">${d.cap}</span>
-      <span class="k">P/E</span><span class="val">${d.pe}</span>
+    <div class="tname">${d.name} · <span style="color:var(--sea)">${d.layer}</span></div>
+    ${liveRow}
+    <div class="tgrid">
+      <span class="k">Market cap</span><span class="val">${cap}</span>
+      <span class="k">P/E</span><span class="val">${pe}</span>
       <span class="k">Revenue</span><span class="val">${d.rev}</span>
-      <span class="k">Growth</span><span class="val">${fmtGrowth(d.growth)}</span>
+      <span class="k">Growth</span><span class="val">${d.growth.startsWith('+')?'<span class="pos">'+d.growth+'</span>':d.growth}</span>
       <span class="k">Gross margin</span><span class="val">${d.gm}</span>
     </div>
-    <div class="t-note">${d.note}</div>`;
+    <div class="tnote">${d.note}</div>`;
+  if(live) tip.querySelector('.tlive').style.display='block';
   tip.classList.add('show'); tip.setAttribute('aria-hidden','false');
-  positionTip(x,y);
+  posTip(x,y);
 }
-function positionTip(x,y){
-  const pad=14, w=tip.offsetWidth, h=tip.offsetHeight;
-  let left=x+16, top=y+16;
-  if(left+w+pad>window.innerWidth) left=x-w-16;
-  if(left<pad) left=pad;
-  if(top+h+pad>window.innerHeight) top=y-h-16;
-  if(top<pad) top=pad;
-  tip.style.left=left+'px'; tip.style.top=top+'px';
+function posTip(x,y){
+  const pad=12, w=tip.offsetWidth, h=tip.offsetHeight;
+  let l=x+18,t=y+18;
+  if(l+w+pad>window.innerWidth) l=x-w-18;
+  if(l<pad) l=pad;
+  if(t+h+pad>window.innerHeight) t=y-h-18;
+  if(t<pad) t=pad;
+  tip.style.left=l+'px'; tip.style.top=t+'px';
 }
 function hideTip(){tip.classList.remove('show');tip.setAttribute('aria-hidden','true');}
 
 document.addEventListener('mouseover',e=>{
-  const t=e.target.closest('.tk,.tk-inline'); if(!t)return;
-  showTip(t.getAttribute('data-sym'),e.clientX,e.clientY);
+  const t=e.target.closest('.tk,.tk-inline'); if(t) showTip(t.dataset.sym,e.clientX,e.clientY);
 });
 document.addEventListener('mousemove',e=>{
-  if(tip.classList.contains('show')){
-    const t=e.target.closest('.tk,.tk-inline');
-    if(t) positionTip(e.clientX,e.clientY);
-  }
+  if(tip.classList.contains('show')){const t=e.target.closest('.tk,.tk-inline');if(t) posTip(e.clientX,e.clientY);}
 });
 document.addEventListener('mouseout',e=>{
-  const t=e.target.closest('.tk,.tk-inline'); if(t) hideTip();
+  if(e.target.closest('.tk,.tk-inline')) hideTip();
 });
-/* keyboard + touch */
 document.addEventListener('focusin',e=>{
   const t=e.target.closest('.tk,.tk-inline'); if(!t)return;
-  const r=t.getBoundingClientRect(); showTip(t.getAttribute('data-sym'),r.left,r.bottom);
+  const r=t.getBoundingClientRect(); showTip(t.dataset.sym,r.left,r.bottom+4);
 });
 document.addEventListener('focusout',hideTip);
 document.addEventListener('click',e=>{
   const t=e.target.closest('.tk,.tk-inline');
   if(!t){hideTip();return;}
-  const r=t.getBoundingClientRect(); showTip(t.getAttribute('data-sym'),r.left,r.bottom);
-  e.stopPropagation();
+  const r=t.getBoundingClientRect(); showTip(t.dataset.sym,r.left,r.bottom+4); e.stopPropagation();
 });
+
+/* === LIVE DATA === */
+async function loadLive(){
+  try{
+    const res=await fetch('/api/quotes');
+    const data=await res.json();
+    const results=data?.quoteResponse?.result;
+    if(!results?.length) return;
+    results.forEach(q=>{
+      if(!DB[q.symbol]) return;
+      liveData[q.symbol]={
+        price:q.regularMarketPrice,
+        change:q.regularMarketChangePercent,
+        cap:q.marketCap,
+        pe:q.forwardPE||q.trailingPE,
+        hi52:q.fiftyTwoWeekHigh,
+        lo52:q.fiftyTwoWeekLow,
+      };
+    });
+    const badge=document.getElementById('liveBadge');
+    badge.style.display='inline-flex';
+    updateScatter();
+  }catch(e){/* graceful fallback to static data */}
+}
+loadLive();
+
+/* === CANVAS MONEY WEB === */
+(function drawWeb(){
+  const canvas=document.getElementById('moneyCanvas');
+  const dpr=window.devicePixelRatio||1;
+  const CW=860, CH=420;
+  canvas.width=CW*dpr; canvas.height=CH*dpr;
+  canvas.style.width=CW+'px'; canvas.style.height=CH+'px';
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+
+  const nodes={
+    NVDA:     {x:430,y:200,r:38,label:'NVDA',  sub:'GPU hub',  bg:'#FFC234',fg:'#1a1614'},
+    MSFT:     {x:95, y:130,r:26,label:'MSFT',  sub:'$190B cap',bg:'#2E3192',fg:'#fff'},
+    AMZN:     {x:110,y:310,r:26,label:'AMZN',  sub:'$200B cap',bg:'#FF5C39',fg:'#fff'},
+    GOOGL:    {x:320,y:48, r:26,label:'GOOGL', sub:'$180B cap',bg:'#1F9D55',fg:'#fff'},
+    META:     {x:720,y:310,r:26,label:'META',  sub:'$135B cap',bg:'#1FA9C7',fg:'#fff'},
+    ORCL:     {x:765,y:130,r:26,label:'ORCL',  sub:'$50B cap', bg:'#E84BA0',fg:'#fff'},
+    OpenAI:   {x:270,y:240,r:22,label:'OpenAI',sub:'$852B val',bg:'#a78bfa',fg:'#fff',lab:true},
+    Anthropic:{x:590,y:240,r:22,label:'Anth.', sub:'$120B val',bg:'#67e8f9',fg:'#1a1614',lab:true},
+    CoreWeave:{x:430,y:350,r:20,label:'CRWV',  sub:'neocloud', bg:'#fb923c',fg:'#fff',lab:true},
+  };
+
+  function arrow(x1,y1,x2,y2,r1,r2,color,dash,bend,lbl){
+    const dx=x2-x1,dy=y2-y1,dist=Math.hypot(dx,dy);
+    if(dist<1) return;
+    const ux=dx/dist,uy=dy/dist,px=-uy,py=ux;
+    const sx=x1+r1*ux,sy=y1+r1*uy;
+    const ex=x2-r2*ux,ey=y2-r2*uy;
+    const cpx=(sx+ex)/2+bend*px,cpy=(sy+ey)/2+bend*py;
+    ctx.beginPath();
+    ctx.strokeStyle=color; ctx.lineWidth=1.5;
+    ctx.setLineDash(dash?[5,4]:[]);
+    ctx.moveTo(sx,sy); ctx.quadraticCurveTo(cpx,cpy,ex,ey); ctx.stroke();
+    ctx.setLineDash([]);
+    const ta=Math.atan2(ey-cpy,ex-cpx);
+    const hs=8;
+    ctx.beginPath(); ctx.fillStyle=color;
+    ctx.moveTo(ex,ey);
+    ctx.lineTo(ex-hs*Math.cos(ta-.45),ey-hs*Math.sin(ta-.45));
+    ctx.lineTo(ex-hs*Math.cos(ta+.45),ey-hs*Math.sin(ta+.45));
+    ctx.closePath(); ctx.fill();
+    if(lbl){
+      const lx=(sx+ex)/2+bend*px*1.3,ly=(sy+ey)/2+bend*py*1.3;
+      ctx.fillStyle='rgba(255,255,255,.72)';
+      ctx.font='500 10px Inter,sans-serif';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(lbl,lx,ly);
+    }
+  }
+
+  function node(n){
+    ctx.beginPath();
+    ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.fillStyle=n.bg; ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.fillStyle=n.fg; ctx.font=`700 ${n.r>26?13:11}px JetBrains Mono,monospace`;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(n.label,n.x,n.y-(n.r>20?4:3));
+    ctx.fillStyle=n.fg==='#fff'?'rgba(255,255,255,.6)':'rgba(26,22,20,.55)';
+    ctx.font='500 9px Inter,sans-serif';
+    ctx.fillText(n.sub,n.x,n.y+(n.r>20?6:5));
+  }
+
+  const N=nodes;
+  /* draw connections (behind nodes) */
+  arrow(N.MSFT.x,N.MSFT.y,N.OpenAI.x,N.OpenAI.y,N.MSFT.r,N.OpenAI.r,'#a78bfa',true,30,'27% equity');
+  arrow(N.OpenAI.x,N.OpenAI.y,N.MSFT.x,N.MSFT.y,N.OpenAI.r,N.MSFT.r,'#34d399',false,-30,'$250B Azure');
+  arrow(N.AMZN.x,N.AMZN.y,N.Anthropic.x,N.Anthropic.y,N.AMZN.r,N.Anthropic.r,'#67e8f9',true,40,'$25B invest');
+  arrow(N.Anthropic.x,N.Anthropic.y,N.AMZN.x,N.AMZN.y,N.Anthropic.r,N.AMZN.r,'#34d399',false,-40,'$100B AWS');
+  arrow(N.GOOGL.x,N.GOOGL.y,N.Anthropic.x,N.Anthropic.y,N.GOOGL.r,N.Anthropic.r,'#67e8f9',true,-20,'14% equity');
+  arrow(N.ORCL.x,N.ORCL.y,N.OpenAI.x,N.OpenAI.y,N.ORCL.r,N.OpenAI.r,'#FF5C39',false,0,'$300B Stargate');
+  arrow(N.ORCL.x,N.ORCL.y,N.NVDA.x,N.NVDA.y,N.ORCL.r,N.NVDA.r,'#6b6259',true,20,'buys GPUs');
+  arrow(N.NVDA.x,N.NVDA.y,N.OpenAI.x,N.OpenAI.y,N.NVDA.r,N.OpenAI.r,'#a78bfa',true,30,'investor');
+  arrow(N.NVDA.x,N.NVDA.y,N.CoreWeave.x,N.CoreWeave.y,N.NVDA.r,N.CoreWeave.r,'#fb923c',false,0,'~5%+GPUs');
+  arrow(N.CoreWeave.x,N.CoreWeave.y,N.OpenAI.x,N.OpenAI.y,N.CoreWeave.r,N.OpenAI.r,'#fb923c',true,25,'GPU rental');
+  arrow(N.META.x,N.META.y,N.CoreWeave.x,N.CoreWeave.y,N.META.r,N.CoreWeave.r,'#1FA9C7',false,-20,'$21B deal');
+  arrow(N.META.x,N.META.y,N.NVDA.x,N.NVDA.y,N.META.r,N.NVDA.r,'#6b6259',true,-30,'buys GPUs');
+
+  /* draw nodes on top */
+  Object.values(nodes).forEach(node);
+
+  /* legend */
+  const legItems=[['#a78bfa','━━ equity stake'],['#34d399','━━ revenue/spend'],['#FF5C39','━━ Stargate contract'],['#6b6259','- - buys GPUs']];
+  legItems.forEach(([c,t],i)=>{
+    ctx.fillStyle=c; ctx.font='500 10px Inter,sans-serif'; ctx.textAlign='left';
+    ctx.fillText(t, 20, 390-i*16);
+  });
+})();
+
+/* === CHART.JS — CAPEX BAR === */
+new Chart(document.getElementById('capexChart'),{
+  type:'bar',
+  data:{
+    labels:['Amazon (~$200B)','Microsoft (~$190B)','Alphabet (~$180B)','Meta (~$135B)','Oracle (~$50B)'],
+    datasets:[{
+      label:'2026 Capex ($B)',
+      data:[200,190,180,135,50],
+      backgroundColor:['#FF5C39','#2E3192','#1F9D55','#1FA9C7','#E84BA0'],
+      borderWidth:0,
+      borderRadius:6,
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`$${ctx.raw}B`}}},
+    scales:{
+      x:{grid:{color:'rgba(26,22,20,.08)'},ticks:{color:'#6B6259',callback:v=>`$${v}B`},border:{display:false}},
+      y:{grid:{display:false},ticks:{color:'#1A1614',font:{size:12}}},
+    },
+    animation:{duration:600},
+  }
+});
+
+/* === CHART.JS — GROWTH vs VALUATION SCATTER === */
+const bubbleRaw=[
+  {s:'CRDO',  x:200,y:70,  cap:30 },
+  {s:'NBIS',  x:684,y:35,  cap:20 },
+  {s:'SNDK',  x:251,y:15,  cap:261},
+  {s:'ALAB',  x:93, y:85,  cap:19 },
+  {s:'NVDA',  x:85, y:22,  cap:4970},
+  {s:'PLTR',  x:85, y:82,  cap:350},
+  {s:'AVGO',  x:48, y:40,  cap:1900},
+  {s:'AMD',   x:38, y:60,  cap:853},
+  {s:'ANET',  x:35, y:54,  cap:185},
+  {s:'TSM',   x:35, y:24,  cap:2200},
+  {s:'META',  x:33, y:22,  cap:1500},
+  {s:'SNOW',  x:33, y:65,  cap:70 },
+  {s:'DDOG',  x:32, y:60,  cap:50 },
+  {s:'MU',    x:30, y:9,   cap:1000},
+  {s:'VRT',   x:30, y:54,  cap:121},
+  {s:'MRVL',  x:28, y:90,  cap:240},
+  {s:'MDB',   x:25, y:70,  cap:25 },
+  {s:'GOOGL', x:22, y:29,  cap:4540},
+  {s:'ORCL',  x:22, y:35,  cap:680},
+  {s:'NOW',   x:22, y:55,  cap:132},
+  {s:'AMZN',  x:17, y:33,  cap:2730},
+  {s:'ETN',   x:17, y:32,  cap:152},
+  {s:'MSFT',  x:18, y:25,  cap:3110},
+  {s:'COHR',  x:21, y:28,  cap:20 },
+  {s:'CEG',   x:10, y:24,  cap:90 },
+];
+
+function capToR(c){return Math.max(5,Math.min(28,Math.sqrt(c)*0.72));}
+function vColor(sym){
+  const d=DB[sym]; if(!d) return '#aaa';
+  const m={green:'#1F9D55',blue:'#2E3192',yellow:'#FFC234',orange:'#FF5C39',white:'#6B6259',red:'#E84BA0'};
+  return m[d.v]||'#aaa';
+}
+
+const scatterDatasets=bubbleRaw.map(b=>({
+  label:b.s,
+  data:[{x:b.x,y:b.y,r:capToR(b.cap)}],
+  backgroundColor:vColor(b.s)+'bb',
+  borderColor:vColor(b.s),
+  borderWidth:1.5,
+}));
+
+const scatterInst=new Chart(document.getElementById('scatterChart'),{
+  type:'bubble',
+  data:{datasets:scatterDatasets},
+  options:{
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{
+        label:ctx=>{
+          const b=bubbleRaw[ctx.datasetIndex];
+          return `${b.s}: growth ${b.x}%, fwd P/E ${b.y}x`;
+        }
+      }}
+    },
+    scales:{
+      x:{title:{display:true,text:'Revenue Growth %',color:'#6B6259'},grid:{color:'rgba(26,22,20,.08)'},ticks:{color:'#6B6259'},border:{display:false},min:0,max:720},
+      y:{title:{display:true,text:'Fwd P/E (×)',color:'#6B6259'},grid:{color:'rgba(26,22,20,.08)'},ticks:{color:'#6B6259'},border:{display:false},min:0,max:100},
+    },
+    animation:{duration:600},
+  }
+});
+
+function updateScatter(){
+  /* could update bubble radii from live market cap data — placeholder */
+}
 </script>
 </body>
 </html>

@@ -1,5 +1,17 @@
 [
   {
+    "id": "ai-boom-report",
+    "n": "R1",
+    "title": "The AI Boom, Mapped",
+    "blurb": "Deep-research map of the US AI-stock boom: 44 companies across 8 layers, the hyperscaler money web, live stock data, and where the next multibagger might hide.",
+    "category": "Research",
+    "tags": ["Research", "Finance", "AI"],
+    "primitive": "dot",
+    "accent": "indigo",
+    "path": "research/ai-boom-report.html",
+    "duration": "Report"
+  },
+  {
     "id": "code-for-non-coders",
     "n": "01",
     "title": "How to Code for Non-Coders",
