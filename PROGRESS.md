@@ -19,6 +19,11 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-09
 
+### Hotfix — 🔊 Dengarkan button was silent on the real device ✅
+- Adhi reported the read-aloud button did nothing. Root cause: two well-known Web Speech API pitfalls — Chrome/Android silently drops a `speechSynthesis.speak()` issued **in the same tick** as `cancel()`, and an utterance held in no variable can be garbage-collected before/while speaking.
+- Fix in `Suara.speak()` (all 4 Raya courses): keep a reference (`this.u = u`) and defer `speak()` by 80 ms after `cancel()`, with `speechSynthesis.resume()` first to un-stick Chrome's paused engine state. Still fully `try/catch`-guarded (graceful no-op if unsupported).
+- Files: `courses/math/raya-math-v1.html`, `courses/learning/raya-literacy-v1.html`, `courses/learning/raya-learning-visual-v1.html`, `courses/learning/raya-logic-v1.html`. 🧪 Needs a confirm on the actual tablet (X1 device pass still pending — id-ID voice availability varies by OS).
+
 ### Plan v2 · Y3 — Adaptive Misi Harian ✅ (Track E "revisit weak spots" promise, finally real)
 - **Logging side:** all 6 math courses (Gr2–7) now record every wrong answer into localStorage `rayyanWeakSpots` as `{"<courseKey>:<chapterId>": {miss, last}}` — a tiny `logWeakSpot()` added to `showToast()` (Gr2–4 old engine) and `handleAnswer()`'s wrong branch (Gr5–7 rich engine). Fail-safe (`try/catch`), no behavior change in the courses.
 - **Drill side (`rayyan.html`):** the 16 Misi-Harian QUESTS are now topic-tagged (`kali`/`bagi`/`tambah`/`kurang`/`pecahan`/`pola`); `WEAK_TOPIC_MAP` maps 18 known chapter ids → those topics; the daily question is picked with weight `1 + min(misses_on_topic, 8)` using a deterministic per-day seed (same quest all day, adapts day to day). Answering the quest correctly **heals one miss** on that topic — a real (if small) spaced-repetition loop.
