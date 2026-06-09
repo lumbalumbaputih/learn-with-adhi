@@ -27,6 +27,12 @@ Each course/feature ships as its own commit. Update this file as each lands.
   - Coding v4 remains the last ⚠️ course (kid never draws his own art); Misi Harian is random, not adaptive (misses are never recorded).
 - **The queue (one SOP step each):** R1 Raya read-aloud+SFX (literacy → visual → math) → Y2 v4 "Kanvas Bebas" free-draw sandbox → Y1 rich-interaction back-port Gr2/3/4 → R2 new Raya "Logika & Pola" → Y3 adaptive Misi Harian (weak-spot logging + weighting) → R3 "Dunia Raya" → Y4 "Karya-mu" shelf → R4 cleanup (delete paud duplicate + sync.js) / X1 real-device pass → stretch (Gr8 · Python).
 - **Decisions noted for Adhi (recs picked, not blocking):** Web Speech API for R1; delete `raya-learning-paud-v1.html`; Indonesian helper API (`kotak`/`lingkaran`) for Y2.
+- Files: `CLAUDE.md`, `PROGRESS.md`. *(Merged as PR #113.)*
+
+### Plan amendment: external images/APIs now allowed ✅ (Adhi's green light, same day)
+- Adhi: "you are also welcome to add any api or any image from the internet to make all the courses richer."
+- Updated the **Technical Stack** rules in `CLAUDE.md`: internet assets allowed with guardrails — **download CC0/free-license assets into `assets/`** (Pixabay/Pexels photos, Kenney.nl game sprites, OpenMoji) rather than hotlinking, browser-native APIs (speechSynthesis/Web Audio/Canvas) freely, runtime third-party APIs only with a full offline fallback, pre-vet every image, log sources here.
+- Plan v2 updated: **R3 "Dunia Raya"** will use real photos (a real elephant beats 🐘 for a 3–4 yr old), and new cross-cutting item **X2 "Asset richness pass"** — real game sprites for Kereta Lari / bosses / v5, real photos in Raya's visual & literacy courses.
 - Files: `CLAUDE.md`, `PROGRESS.md`.
 
 ## 2026-06-05
