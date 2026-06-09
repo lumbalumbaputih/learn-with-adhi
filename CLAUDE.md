@@ -250,6 +250,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 
 **R3 · New course: "Dunia Raya" 🌍** (key `rayaWorld`)
 - World knowledge: opposites (besar/kecil), body parts, food, transport, weather. Same recipe as R2.
+- **Use real photos here** (CC0 from Pixabay/Pexels, downloaded into `assets/img/raya-world/`): a real 🐘 photo teaches "gajah" far better than an emoji for a 3–4 yr old. First course to use the new external-assets green light (see Technical Stack guardrails).
 
 **R4 · Raya housekeeping**
 - Delete the never-wired duplicate `courses/learning/raya-learning-paud-v1.html` (recommended; confirm with Adhi in the PR, don't block) and the dead `assets/js/sync.js`.
@@ -271,6 +272,11 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 
 ### Cross-cutting
 **X1 · Real-device pass 📱** — one session on the actual tablet/phone: tap-target sizes, speech-synthesis voice availability on the real device (id-ID voices vary by OS), Web-Audio-after-gesture, load time. Log findings in PROGRESS.md and fix the top 3.
+
+**X2 · Asset richness pass 🖼️** *(unlocked by Adhi 2026-06-09: internet images/APIs allowed)* — upgrade visuals where it adds real learning/joy value, one course per step:
+- **Raya visual & literacy:** real CC0 photos for animals/objects (emoji → photo where recognition matters).
+- **Rayyan games & bosses:** Kenney.nl CC0 sprite packs (trains, space, characters) for the runner game (`Kereta Lari`), boss enemies, and v5's game — real game art instead of emoji sprites.
+- Follow the Technical Stack guardrails: download into `assets/`, license-check, never let a lesson depend on live network.
 
 ### Recommended order
 `R1a (literacy audio)` → `R1b/R1c (other 2 Raya courses)` → `Y2 (v4 canvas)` → `Y1 (Gr2→3→4, one per step)` → `R2 (Logika & Pola)` → `Y3 (adaptive drill)` → `R3` → `Y4` → `R4/X1` → stretch.
@@ -306,7 +312,12 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 
 ## Technical Stack
 - Pure HTML + CSS + Vanilla JS, single-file per course
-- No build tools, no frameworks, no external dependencies beyond Google Fonts
+- No build tools, no frameworks
+- **External resources (Adhi's green light, 2026-06-09):** internet images/APIs ARE allowed to make courses richer. Guardrails:
+  - **Prefer downloaded assets over hotlinks:** fetch free-license images/sprites/sounds (CC0/free: Pixabay, Pexels, Kenney.nl game assets, OpenMoji/Twemoji SVGs) into `assets/img/` / `assets/audio/` and reference locally — richness without runtime network risk (kid on a tablet, lesson must never break on flaky wifi). Hotlinking a stable CDN (jsDelivr) is acceptable as a fallback.
+  - **Browser-native APIs freely:** `speechSynthesis` (read-aloud), Web Audio, Canvas — no network needed.
+  - **Runtime third-party APIs only with a graceful offline fallback** (course must still be fully playable without it). Pre-vet every image — nothing dynamically fetched and unreviewed should ever render in front of the kids.
+  - License-check everything (CC0 / explicit free license); note the source in PROGRESS.md when adding assets.
 - Hosted on Vercel (learn-with-adhi project)
 - Progress stored in localStorage (per-course keys: `rayyanMath`, `rayyanMath3`, etc.)
 - Hub page: `kids.html`
