@@ -19,6 +19,47 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-09
 
+### Plan v2 · Y3 — Adaptive Misi Harian ✅ (Track E "revisit weak spots" promise, finally real)
+- **Logging side:** all 6 math courses (Gr2–7) now record every wrong answer into localStorage `rayyanWeakSpots` as `{"<courseKey>:<chapterId>": {miss, last}}` — a tiny `logWeakSpot()` added to `showToast()` (Gr2–4 old engine) and `handleAnswer()`'s wrong branch (Gr5–7 rich engine). Fail-safe (`try/catch`), no behavior change in the courses.
+- **Drill side (`rayyan.html`):** the 16 Misi-Harian QUESTS are now topic-tagged (`kali`/`bagi`/`tambah`/`kurang`/`pecahan`/`pola`); `WEAK_TOPIC_MAP` maps 18 known chapter ids → those topics; the daily question is picked with weight `1 + min(misses_on_topic, 8)` using a deterministic per-day seed (same quest all day, adapts day to day). Answering the quest correctly **heals one miss** on that topic — a real (if small) spaced-repetition loop.
+- Files: `rayyan.html`, `courses/math/rayyan-math-grade{2-v1,3,4,5,6,7}.html`, `CLAUDE.md`, `PROGRESS.md`.
+
+### Plan v2 · R2 — New Raya course: "Logika & Pola" 🧩 ✅ (early reasoning, her 4th course)
+- New `courses/learning/raya-logic-v1.html` (key `rayaLogic`), built on the proven Raya engine (visual-only answers, `pick`, stars, parent guides) **with the R1 audio baked in from day one** (SFX + Suara read-aloud + 🔊 Dengarkan + auto-read).
+- 6 chapters × 5 questions (30 q, answer positions varied):
+  1. **Pola Apa Selanjutnya?** — AB / AAB / ABB what-comes-next patterns
+  2. **Besar & Kecil** — compare size, length, height, weight
+  3. **Mana yang Beda?** — odd-one-out by category + a color-dot round
+  4. **Kelompokkan!** — which is edible / rain gear / lives in water / flies / vehicle
+  5. **Urutan Cerita** — 2-step sequencing (😴→🪥, 🥚→🐣, 🐛→🦋, 🌱→🌳, 😋→🍚)
+  6. **Petualangan Logika** — mixed review (pattern, compare, odd-one-out, sequence, counting 1-2-3-4)
+- Wired in **all 4 places**: `raya.html` COURSES card (+pills 3→4 kursus), `kids.html` starsKeys + pill, `assets/js/auth.js` PROGRESS_KEYS_BY_TYPE.raya, `dashboard.html` COURSE_NAMES.
+- Why: the 2026-06-04 gap analysis flagged early reasoning (patterns/sorting) as the next highest-leverage Raya skill after literacy.
+- Files: `courses/learning/raya-logic-v1.html` (new), `raya.html`, `kids.html`, `assets/js/auth.js`, `dashboard.html`, `CLAUDE.md`, `PROGRESS.md`.
+
+### Plan v2 · Y1 — Rich question types back-ported into math Gr2/Gr3/Gr4 ✅ (first-impression fix, complete)
+- Ported Gr5's `drag-sort`, `number-line`, and `bar-fill` renderers into the three early math courses, adapted to their older engine (`S.`→`state.`, `Audio.play`→`SFX.play`, `handleAnswer`→inline score+history+`showToast`; no timer/lives). CSS block + `renderQ` dispatch extended in each file.
+- Question conversions (answer keys hand-verified):
+  - **Gr2** (patterns ch): drag-sort *urutkan 15,5,25,10,20 → 5…25* · number-line *pola ganjil → 9* (🚂 marker).
+  - **Gr3:** drag-sort nilai-tempat *7.001 → 7.010 → 7.100* · bar-fill *1/2 dari 6 kotak = 3* · drag-sort pecahan *1/4 → 1/3 → 1/2* (🚂 marker).
+  - **Gr4:** number-line pembulatan *67 → 70* (🚀 marker) · drag-sort bilangan besar *89.998 → 89.999 → 98.000 → 100.000* · bar-fill *3/4 dari 8 kotak = 6* (reinforces pecahan senilai).
+- Gr2–4 are no longer MC/input-only — the courses Rayyan touches first now have the same tactile interactions as Gr5+.
+- Files: `courses/math/rayyan-math-grade2-v1.html`, `courses/math/rayyan-math-grade3.html`, `courses/math/rayyan-math-grade4.html`, `CLAUDE.md`, `PROGRESS.md`.
+
+### Plan v2 · Y2 — "Kanvas Bebas" free-draw sandbox in coding v4 ✅ (clears the last ⚠️ course)
+- New `sKanvas` screen in `rayyan-coding-v4.html` (home button "🎨 Kanvas Bebas — Lukis Sendiri!"): a code `<textarea>` + white `<canvas>` + "🖌️ Lukis!" → `runKanvas()` executes the kid's real JS via `new Function` against an Indonesian helper API (`kotak`, `lingkaran`, `garis`, `tulis`, `acak`, `bersihkan`; 10 named colors), with a 5000-shape runaway-loop guard, success/error messages (real JS errors shown kid-friendly), a command cheat-sheet, and starter art including a `for`-loop. SoundFX 'correct' jingle on success.
+- The kid now paints **his own** art with typed code — v4's "creative coding" promise is real. (localStorage art gallery → Y4.)
+- Files: `courses/coding/rayyan-coding-v4.html`, `CLAUDE.md`, `PROGRESS.md`.
+
+### Plan v2 · R1 — Suara untuk Raya: read-aloud + SFX in ALL 3 Raya courses ✅ (the audio gap, closed)
+- Added to `raya-literacy-v1.html`, `raya-learning-visual-v1.html`, `raya-math-v1.html` (all additive, no engine rewrite):
+  - **`SFX` module** (procedural Web Audio, ported from math Gr2–4): correct/wrong jingles on every answer + completion fanfare.
+  - **`Suara` read-aloud module** (Web Speech API): picks an `id-ID` voice (graceful no-op if unsupported), question auto-read on render, **🔊 Dengarkan** button in the read-aloud bar, and spoken feedback after answering — in literacy this speaks the letter + example word ("Hebat! Huruf A! Contoh: Apel") = letter **sounds**, not just shapes.
+  - `cleanSay()` strips emoji/symbols so TTS reads only words; `speechSynthesis.cancel()` before each utterance prevents queue pileup; parent notices updated ("Raya juga bisa bermain sendiri!").
+- Why first: audit showed Raya's courses had **zero audio** — a pre-reader needed a parent narrator for every question. This unlocks her whole catalog for solo play.
+- 🧪 Needs a real-device check (id-ID voice availability varies by OS — X1).
+- Files: `courses/learning/raya-literacy-v1.html`, `courses/learning/raya-learning-visual-v1.html`, `courses/math/raya-math-v1.html`, `CLAUDE.md`, `PROGRESS.md`.
+
 ### Improvement Plan v2 written — the new build queue for both kids ✅ (planning step, no course code changed)
 - Audited all 17 course files with greps (not just the docs) and wrote **"Improvement Plan v2"** into `CLAUDE.md` (supersedes the old "Next-up recommendation"; original Tracks A–E are ~done).
 - **Key verified findings driving the plan:**

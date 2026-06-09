@@ -59,7 +59,7 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 | Lab Misteri X 🧪 | Mystery Lab (find the unknown X) | Gr7 | `courses/math/rayyan-math-grade7.html` | `rayyanMath7` | ✅ Done – **5-yrs-ahead algebra capstone** |
 
 → Math ladder now reaches **Gr7 = ~5 years ahead** (real algebra), fully disguised. **Math content target MET.**
-→ ⚠️ Note (2026-06-04 audit + Phase 1 build): Gr2–4 used the *old basic engine*; Gr5–7 have the rich one. **Phase 1a ✅** added the `SFX` module (procedural Web Audio, hooked at `showToast()`) to Gr2–4 (coding v1 already had its own `AX` sound system). **Phase 1b (in progress):** a lite boss battle on chapter 6 (enemy + HP bar that drains with correct answers + hit anim + victory; no lives/timer yet) — **math Gr2–4 ✅ done** (enemies 👾/👹/👽), coding-v1 boss pending.
+→ ⚠️ Note (2026-06-04 audit + Phase 1 build): Gr2–4 used the *old basic engine*; Gr5–7 have the rich one. **Phase 1a ✅** added the `SFX` module (procedural Web Audio, hooked at `showToast()`) to Gr2–4 (coding v1 already had its own `AX` sound system). **Phase 1b (in progress):** a lite boss battle on chapter 6 (enemy + HP bar that drains with correct answers + hit anim + victory; no lives/timer yet) — **math Gr2–4 ✅ done** (enemies 👾/👹/👽), coding-v1 boss pending. **Plan-v2 Y1 ✅ (2026-06-09):** Gr2–4 also got Gr5's rich question types (`drag-sort`/`number-line`/`bar-fill`) back-ported, so the early courses are no longer MC/input-only.
 
 ### Coding Ladder (`rayyan.html` hub)
 | Course (what Rayyan sees) | Theme | Hidden Concepts | File | Key | Status |
@@ -67,7 +67,7 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 | Pabrik Robot KAI 🤖 | Train Robot Factory | Sequencing → Conditionals → Loops → Variables → Functions → Integration | `courses/coding/rayyan-coding-v1.html` | `rayyanCoding` | ✅ Done (drag-blocks + `AX` sound; ch6 is a **full themed multi-step boss mission** — route stations that light up, signal/passenger state, 5 unlocking steps, confetti victory) |
 | Robot Antariksa 🛰️ | Space Robots | Events, lists/arrays, nested loops, boolean logic, integration | `courses/coding/rayyan-coding-v2.html` | `rayyanCoding2` | ✅ Done (blocks + full boss) |
 | Mantra Kode ✨ | Code Spells | `console.log`, variables, if/else, loops, functions | `courses/coding/rayyan-coding-v3.html` | `rayyanCoding3` | ✅ Lessons are fill-in-the-blank, **PLUS a real "Lab Mantra Bebas" JS sandbox** (type & run real JavaScript, live `console.log` output + real errors, sandboxed via `new Function`) — the "type real code" payoff is now real |
-| Studio Pelukis Kode 🎨 | Code Painter (Canvas) | Coordinates, shapes, loops/patterns, randomness, animation | `courses/coding/rayyan-coding-v4.html` | `rayyanCoding4` | ⚠️ Shipped – real demo canvases, but exercises are fill-in-the-blank (kid doesn't draw his own) |
+| Studio Pelukis Kode 🎨 | Code Painter (Canvas) | Coordinates, shapes, loops/patterns, randomness, animation | `courses/coding/rayyan-coding-v4.html` | `rayyanCoding4` | ✅ Lessons fill-in-the-blank, **PLUS a real "Kanvas Bebas" free-draw sandbox** (type `kotak`/`lingkaran`/`garis`/`tulis` commands → live canvas, real errors) — he paints his own art now |
 | Buat Game-mu Sendiri 🎮 | Make Your Own Game | Game loop, sprite/input, spawning, collision, score/state | `courses/coding/rayyan-coding-v5.html` | `rayyanCoding5` | ✅ Lessons fill-in-the-blank, **PLUS a real playable "Kereta Lari" game** (🎮 Mainkan Game-mu! — canvas, jump, spawning obstacles, collision, score, game-over/restart) the kid plays & replays — the "build a game" payoff is now real |
 | Robot Ahli Matematika 🤖 (Track C Bridge) | Use code to DO math | Shapes & angles, number patterns, order-of-ops, coordinates + `y=2x`, solve-for-X | `courses/coding/rayyan-bridge-v1.html` | `rayyanBridge` | ✅ Done (4 interactive canvases + Gr7-style boss + celebration animation; MC de-biased) |
 
@@ -76,9 +76,11 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 ### Raya's Content (younger sibling, ~3–4 years old)
 - **Matematika Raya** (`courses/math/raya-math-v1.html`, key `rayaMath`) – visual, tap-to-count.
 - **Belajar Bersama Raya** (`courses/learning/raya-learning-visual-v1.html`, key `rayaVisual`) – colors, shapes, animals, matching.
+- **Logika & Pola Raya 🧩** (`courses/learning/raya-logic-v1.html`, key `rayaLogic`) – ✅ **early reasoning** (2026-06-09): 6 chapters × 5 q — patterns (what-comes-next) → size compare → odd-one-out → categories → 2-step sequencing → mixed review. Audio built-in from day one.
+- 🔊 **All 4 Raya courses have sound (2026-06-09):** SFX jingles + Web-Speech read-aloud (`id-ID`) with a "🔊 Dengarkan" button, auto-read questions, and spoken answer feedback — Raya can now play without a parent narrating.
 - **Belajar Huruf Bersama Raya 📖** (`courses/learning/raya-literacy-v1.html`, key `rayaLiteracy`) – ✅ **literacy / pre-reading** (the big peer-gap closer): **9 chapters covering all 26 letters** — Vokal A-I-U-E-O → Konsonan B-G → H-M → N-T → Q-Z (recognition, each with an example word) → Bunyi Awal (beginning sounds, 🍎→A, 12q) → Besar & Kecil (upper/lowercase drag-match, all 26) → Kata Pertama (first words, IBU→👩, 10q) → BOSS Petualangan Huruf (mixed review). 66 questions, same Raya engine (parent read-aloud, stars, confetti, tap/drag). Wired in all 4 places (`raya.html`, `kids.html`, `auth.js`, `dashboard.html`).
 
-> **Raya gap analysis (2026-06-04):** she was solid on early numeracy + colors/shapes/animals but had **zero literacy** — the single highest-leverage "ahead of peers" skill for a 3–4 yr old. `rayaLiteracy` closes that. Next candidate Raya courses (not built): **Logika & Pola** (patterns/sorting / what-comes-next — early reasoning) and **Lawan Kata & Dunia** (opposites, body parts, food, transport — world knowledge).
+> **Raya gap analysis (2026-06-04):** she was solid on early numeracy + colors/shapes/animals but had **zero literacy** — the single highest-leverage "ahead of peers" skill for a 3–4 yr old. `rayaLiteracy` closes that. ✅ **Logika & Pola** shipped 2026-06-09 (`rayaLogic`). Remaining candidate: **Dunia Raya / Lawan Kata & Dunia** (opposites, body parts, food, transport — world knowledge; = plan-v2 R3, with real CC0 photos).
 
 - ⚠️ `courses/learning/raya-learning-paud-v1.html` (key `rayaLearning`) is a **near-duplicate** of the visual course (same title, 4/5 same chapters) and was **never wired into `raya.html`**. The phantom `rayaLearning` key was removed from the star lists (`kids.html` / `auth.js` / `dashboard.html`) on 2026-06-04 so the data model matches Raya's 2 live courses. The paud file stays on disk – if you prefer it, swap the `rayaVisual` href in `raya.html` rather than surfacing both.
 
@@ -240,13 +242,11 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 - **Misi Harian is random, not adaptive:** Track E promised "revisit weak spots" — wrong answers are never recorded anywhere.
 
 ### RAYA queue (bigger gaps, and she can't work around them herself)
-**R1 · Suara untuk Raya 🔊 — read-aloud + SFX in all 3 Raya courses** *(highest leverage in the repo)*
-- Add a tap-to-hear 🔊 button per question using **Web Speech API** (`speechSynthesis`, `lang:'id-ID'`, graceful hide if unsupported) + port the existing `SFX` module (from math Gr2–4) for correct/wrong/star jingles.
-- In `rayaLiteracy`, auto-speak the letter/word on answer ("A… Apel!") — letter **sounds**, not just shapes. This converts her courses from parent-required to self-serve.
-- One step per course: literacy → visual → math. No engine rewrite; additive buttons + hooks.
+**R1 · Suara untuk Raya 🔊 — read-aloud + SFX in all 3 Raya courses** — ✅ **DONE (2026-06-09)**
+- All 3 Raya courses (`rayaLiteracy`, `rayaVisual`, `rayaMath`) now have: the `SFX` module (correct/wrong jingles + completion fanfare), a `Suara` read-aloud module (Web Speech API, `id-ID` voice, graceful no-op if unsupported), a **🔊 Dengarkan** button on every question, auto-read on question render, and spoken feedback (the `ok` line — e.g. "Hebat! Huruf A! Contoh: Apel" — letter *sounds*, not just shapes). Parent notices updated. Emoji are stripped from TTS via `cleanSay()`.
 
-**R2 · New course: "Logika & Pola" 🧩** (key `rayaLogic`, `courses/learning/raya-logic-v1.html`)
-- Early reasoning: what-comes-next patterns (🔴🔵🔴🔵…?), sort by size/color, odd-one-out, simple 2-step sequencing (wake up → ?). Same Raya engine (`pick` + `drag-match`), ~6 chapters, R1 audio from day one. Wire all 4 places.
+**R2 · New course: "Logika & Pola" 🧩** (key `rayaLogic`, `courses/learning/raya-logic-v1.html`) — ✅ **DONE (2026-06-09)**
+- Shipped with 6 chapters × 5 questions (30 q): Pola Apa Selanjutnya? (AB/AAB/ABB patterns) → Besar & Kecil (size/length/height/weight compare) → Mana yang Beda? (odd-one-out incl. a color-dot round) → Kelompokkan! (categories) → Urutan Cerita (2-step sequencing: 🥚→🐣, 🐛→🦋) → Petualangan Logika (mixed review). Same Raya `pick` engine, R1 audio (SFX + Suara read-aloud + 🔊 Dengarkan) from day one, answer positions varied. Wired in all 4 places + count pills bumped (Raya now 4 courses).
 
 **R3 · New course: "Dunia Raya" 🌍** (key `rayaWorld`)
 - World knowledge: opposites (besar/kecil), body parts, food, transport, weather. Same recipe as R2.
@@ -256,14 +256,17 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 - Delete the never-wired duplicate `courses/learning/raya-learning-paud-v1.html` (recommended; confirm with Adhi in the PR, don't block) and the dead `assets/js/sync.js`.
 
 ### RAYYAN queue
-**Y1 · Rich interactions back-ported to Gr2–4** *(finish the first-impression fix properly)*
-- Port Gr5's `drag-sort` / `number-line` / `bar-fill` question types into Gr2, Gr3, Gr4 and convert ~6–8 fitting questions per course (e.g. Gr2 number-line hops, Gr3 drag-sort train cars by size, Gr4 bar-fill fractions). One grade per step. Keep answer keys verified like the Bridge QA.
+**Y1 · Rich interactions back-ported to Gr2–4** *(finish the first-impression fix properly)* — ✅ **DONE (2026-06-09)**
+- Gr5's rich question types now live in all three early courses (renderers adapted to the old `state`/`showToast` engine, CSS ported, dispatch extended):
+  - **Gr2:** `drag-sort` (urutkan 5,10,15,20,25) + `number-line` (🚂 marker, odd-number pattern → 9) in the *patterns* chapter.
+  - **Gr3:** all 3 types — place-value `drag-sort` (7.001/7.010/7.100), pecahan `bar-fill` (1/2 of 6 kotak), pecahan `drag-sort` (1/4 → 1/3 → 1/2). 🚂 marker.
+  - **Gr4:** all 3 types — rounding `number-line` (🚀 marker, 67 → 70), big-number `drag-sort` (89.998 → 100.000), tangki-roket `bar-fill` (3/4 of 8 = 6, sneaks in pecahan senilai).
 
-**Y2 · v4 "Studio Pelukis Kode": let him paint 🎨** *(clears the last ⚠️ status)*
-- Add a **"Kanvas Bebas"** free-play screen mirroring v3's sandbox: type drawing commands (real JS against a tiny helper API — `kotak(x,y,w,h,'merah')`, `lingkaran(…)`, `ulang(n, …)`) → live canvas render + real errors. Stretch: save his artwork to localStorage as a mini gallery.
+**Y2 · v4 "Studio Pelukis Kode": let him paint 🎨** — ✅ **DONE (2026-06-09)**
+- Added the **"Kanvas Bebas"** free-play screen (home button → `sKanvas`): type real JS drawing commands against an Indonesian helper API — `kotak(x,y,w,h,'merah')`, `lingkaran`, `garis`, `tulis`, `acak`, `bersihkan` — run via `new Function` with a 5000-shape guard, live `<canvas>` render, real error messages, command cheat-sheet, starter art (incl. a `for`-loop). Stretch (localStorage gallery) deferred to Y4.
 
-**Y3 · Adaptive Misi Harian (finish Track E)**
-- Record misses per topic key (`rayyanWeakSpots` in localStorage) in the course engines' wrong-answer path; Misi Harian weights its question pool toward weak/stale topics (simple spaced-repetition: weight = misses + days-since-seen). Two steps: (a) logging hook in courses, (b) drill-side weighting.
+**Y3 · Adaptive Misi Harian (finish Track E)** — ✅ **DONE (2026-06-09)**
+- (a) All 6 math courses (Gr2–7) log wrong answers into localStorage `rayyanWeakSpots` (`{"<courseKey>:<chapterId>": {miss,last}}`) via a `logWeakSpot()` hook in `showToast` (old engine) / `handleAnswer` (rich engine). (b) `rayyan.html` Misi Harian: QUESTS are topic-tagged (kali/bagi/tambah/kurang/pecahan/pola), `WEAK_TOPIC_MAP` maps chapter ids → topics, daily pick is weighted `1 + min(misses,8)` (deterministic per day), and a correct review **heals** one miss on that topic.
 
 **Y4 · "Karya-mu" shelf on `rayyan.html`**
 - Surface his creations: v4 saved art, v5 Kereta-Lari high score, v3 last sandbox program. Ownership → return visits. (After Y2.)

@@ -729,32 +729,80 @@
   }
   function closeCert() { document.getElementById('certOverlay').classList.remove('show'); }
 
-  /* ── Daily quest (Misi Harian) – quick spaced-repetition challenge ── */
+  /* ── Daily quest (Misi Harian) – adaptive spaced-repetition challenge.
+        Courses log wrong answers into localStorage `rayyanWeakSpots`
+        ({ "<courseKey>:<chapterId>": {miss,last} }); the quest pool is
+        weighted toward the topics he missed most. ── */
   const QUESTS = [
-    { q:'7 × 8 = ?',            opts:['54','56','48','64'], ans:1 },
-    { q:'9 × 6 = ?',            opts:['54','56','63','45'], ans:0 },
-    { q:'45 + 38 = ?',          opts:['73','83','81','93'], ans:1 },
-    { q:'100 − 64 = ?',         opts:['36','46','34','44'], ans:0 },
-    { q:'½ dari 18 = ?',        opts:['8','9','6','12'],    ans:1 },
-    { q:'Pola: 3, 6, 9, 12, __',opts:['14','15','16','18'], ans:1 },
-    { q:'6 × 7 = ?',            opts:['42','48','36','49'], ans:0 },
-    { q:'8 × 4 = ?',            opts:['28','32','24','36'], ans:1 },
-    { q:'¼ dari 20 = ?',        opts:['4','5','6','10'],    ans:1 },
-    { q:'25 × 3 = ?',           opts:['65','75','50','85'], ans:1 },
-    { q:'12 × 3 = ?',           opts:['36','32','24','39'], ans:0 },
-    { q:'Pola: 2, 4, 8, 16, __',opts:['18','24','32','20'], ans:2 },
-    { q:'63 ÷ 9 = ?',           opts:['6','7','8','9'],     ans:1 },
-    { q:'½ + ½ = ?',            opts:['1','½','¼','2'],     ans:0 },
-    { q:'5 × 5 × 2 = ?',        opts:['25','50','55','40'], ans:1 },
-    { q:'90 − 45 = ?',          opts:['35','45','55','40'], ans:1 },
+    { t:'kali',    q:'7 × 8 = ?',            opts:['54','56','48','64'], ans:1 },
+    { t:'kali',    q:'9 × 6 = ?',            opts:['54','56','63','45'], ans:0 },
+    { t:'tambah',  q:'45 + 38 = ?',          opts:['73','83','81','93'], ans:1 },
+    { t:'kurang',  q:'100 − 64 = ?',         opts:['36','46','34','44'], ans:0 },
+    { t:'pecahan', q:'½ dari 18 = ?',        opts:['8','9','6','12'],    ans:1 },
+    { t:'pola',    q:'Pola: 3, 6, 9, 12, __',opts:['14','15','16','18'], ans:1 },
+    { t:'kali',    q:'6 × 7 = ?',            opts:['42','48','36','49'], ans:0 },
+    { t:'kali',    q:'8 × 4 = ?',            opts:['28','32','24','36'], ans:1 },
+    { t:'pecahan', q:'¼ dari 20 = ?',        opts:['4','5','6','10'],    ans:1 },
+    { t:'kali',    q:'25 × 3 = ?',           opts:['65','75','50','85'], ans:1 },
+    { t:'kali',    q:'12 × 3 = ?',           opts:['36','32','24','39'], ans:0 },
+    { t:'pola',    q:'Pola: 2, 4, 8, 16, __',opts:['18','24','32','20'], ans:2 },
+    { t:'bagi',    q:'63 ÷ 9 = ?',           opts:['6','7','8','9'],     ans:1 },
+    { t:'pecahan', q:'½ + ½ = ?',            opts:['1','½','¼','2'],     ans:0 },
+    { t:'kali',    q:'5 × 5 × 2 = ?',        opts:['25','50','55','40'], ans:1 },
+    { t:'kurang',  q:'90 − 45 = ?',          opts:['35','45','55','40'], ans:1 },
   ];
+  /* Which course chapters feed which drill topic */
+  const WEAK_TOPIC_MAP = {
+    'rayyanMath:addition':'tambah',          'rayyanMath:subtraction':'kurang',
+    'rayyanMath:multiplication':'kali',      'rayyanMath:patterns':'pola',
+    'rayyanMath3:multiplication-2d':'kali',  'rayyanMath3:division':'bagi',
+    'rayyanMath3:fractions':'pecahan',
+    'rayyanMath4:multi-big':'kali',          'rayyanMath4:div-big':'bagi',
+    'rayyanMath4:fraction-ops':'pecahan',    'rayyanMath4:kpk-fpb':'pola',
+    'rayyanMath5:frac-ops':'pecahan',        'rayyanMath5:persen-desimal':'pecahan',
+    'rayyanMath5:int-numbers':'kurang',
+    'rayyanMath6:integers':'kurang',         'rayyanMath6:ratio-prop':'pecahan',
+    'rayyanMath7:number-ops':'pecahan',      'rayyanMath7:equations':'pola',
+  };
+  function weakTopicWeights() {
+    const w = {};
+    try {
+      const d = JSON.parse(localStorage.getItem('rayyanWeakSpots') || '{}');
+      for (const k in d) {
+        const topic = WEAK_TOPIC_MAP[k];
+        if (topic && d[k] && d[k].miss > 0) w[topic] = (w[topic] || 0) + d[k].miss;
+      }
+    } catch(e) {}
+    return w;
+  }
   function questDateStr() {
     const d = new Date();
     return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   }
   function todaysQuest() {
     const t = new Date(); t.setHours(0,0,0,0);
-    return QUESTS[Math.floor(t.getTime()/86400000) % QUESTS.length];
+    const day = Math.floor(t.getTime()/86400000);
+    const weights = weakTopicWeights();
+    /* weight = 1 + misses on this topic (capped so one bad day doesn't take over) */
+    const ws = QUESTS.map(q => 1 + Math.min(weights[q.t] || 0, 8));
+    const total = ws.reduce((a,b) => a+b, 0);
+    /* deterministic per-day pick so the quest doesn't change on reload */
+    let r = ((day * 9301 + 49297) % 233280) / 233280 * total;
+    for (let i = 0; i < QUESTS.length; i++) { r -= ws[i]; if (r < 0) return QUESTS[i]; }
+    return QUESTS[day % QUESTS.length];
+  }
+  /* A correct review "heals" one miss on that topic (spaced repetition) */
+  function healWeakSpot(topic) {
+    try {
+      const d = JSON.parse(localStorage.getItem('rayyanWeakSpots') || '{}');
+      for (const k in d) {
+        if (WEAK_TOPIC_MAP[k] === topic && d[k] && d[k].miss > 0) {
+          d[k].miss--; if (d[k].miss <= 0) delete d[k];
+          break;
+        }
+      }
+      localStorage.setItem('rayyanWeakSpots', JSON.stringify(d));
+    } catch(e) {}
   }
   function buildQuest() {
     const card = document.getElementById('questCard');
@@ -779,6 +827,7 @@
       btns[idx].classList.add('correct');
       btns.forEach(b => b.disabled = true);
       if (msg) msg.textContent = '🎉 Hebat! Misi selesai!';
+      healWeakSpot(q.t);
       try { localStorage.setItem('rayyanDailyQuest', JSON.stringify({ date: questDateStr(), done: true })); } catch(e){}
       setTimeout(buildQuest, 1300);
     } else {

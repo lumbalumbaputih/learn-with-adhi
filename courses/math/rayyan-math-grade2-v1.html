@@ -903,6 +903,22 @@
     .boss-hp-label{font-family:var(--fd);font-weight:800;font-size:13px;color:#fff;margin:8px 0 6px}
     .boss-hp{width:100%;height:14px;background:rgba(255,255,255,.2);border:2px solid var(--ink);border-radius:999px;overflow:hidden}
     .boss-hp-bar{height:100%;background:var(--tomato);border-radius:999px;transition:width .5s ease}
+    /* ── Rich question types (ported from the Gr5 engine) ── */
+    .sort-label{font-size:12px;color:var(--muted);margin-bottom:10px;text-align:center}
+    .sort-items{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+    .sort-item{background:var(--paper);border:2.5px solid var(--ink);border-radius:10px;padding:12px 16px;font-family:var(--fd);font-weight:800;font-size:20px;cursor:pointer;transition:all .15s;user-select:none;min-width:58px;text-align:center}
+    .sort-item:hover:not(.disabled){transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .sort-item.selected{background:var(--sea);color:#fff;border-color:var(--sea);transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+    .sort-item.correct{background:var(--forest);color:#fff;border-color:var(--forest)}
+    .sort-item.wrong{background:var(--tomato);color:#fff;border-color:var(--tomato)}
+    .sort-item.disabled{cursor:not-allowed}
+    .sort-direction{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+    .nline-wrap{overflow-x:auto;padding:10px 0}
+    .nline-svg{display:block;margin:0 auto;cursor:pointer}
+    .nline-tick{font-family:var(--fd);font-weight:700;font-size:11px;fill:var(--ink)}
+    .nline-zone{cursor:pointer;opacity:0}
+    .nline-zone:hover{opacity:.15;fill:var(--sea)}
+    .nline-marker{font-size:20px;transition:all .2s}
   </style>
 </head>
 <body>
@@ -1590,11 +1606,11 @@ const CHAPTERS = [
         expl: 'Polanya +2 setiap langkah! 8 + 2 = 10!'
       },
       {
-        type: 'mc',
-        q: 'Lanjutkan pola: 5, 10, 15, 20, __',
-        opts: ['22', '23', '24', '25'],
-        ans: 3,
-        expl: 'Polanya +5 setiap langkah! 20 + 5 = 25!'
+        type: 'drag-sort',
+        q: 'Susun angka-angka ini jadi pola +5 (terkecil ke terbesar)!',
+        items: [15, 5, 25, 10, 20],
+        ans: [5, 10, 15, 20, 25],
+        expl: 'Polanya +5 setiap langkah: 5, 10, 15, 20, 25!'
       },
       {
         type: 'mc',
@@ -1611,10 +1627,10 @@ const CHAPTERS = [
         expl: 'Polanya +3 setiap langkah (tabel perkalian 3)! 12 + 3 = 15!'
       },
       {
-        type: 'mc',
-        q: 'Lanjutkan: 1, 3, 5, 7, __',
-        opts: ['8', '9', '10', '11'],
-        ans: 1,
+        type: 'number-line',
+        q: 'Pola ganjil: 1, 3, 5, 7, … Tandai angka berikutnya di garis bilangan!',
+        nlMin: 5, nlMax: 12,
+        ans: 9,
         expl: 'Ini pola bilangan ganjil! Polanya +2. 7 + 2 = 9!'
       },
       {
@@ -1775,6 +1791,10 @@ function renderQ() {
     area.innerHTML = `<div class="opts-grid">${
       q.opts.map((o,i) => `<button class="opt-btn" onclick="pickOpt(${i})">${o}</button>`).join('')
     }</div>`;
+  } else if (q.type === 'drag-sort') {
+    renderDragSort(q, area);
+  } else if (q.type === 'number-line') {
+    renderNumberLine(q, area);
   } else {
     area.innerHTML = `
       <div class="inp-row">
@@ -1832,6 +1852,95 @@ function checkInp() {
   showToast(correct, q.ans, q.expl);
 }
 
+/* ─── DRAG-SORT (ported from the Gr5 engine) ─── */
+let _sortState = { order: [], selected: null };
+function renderDragSort(q, area) {
+  _sortState.order = [...q.items];
+  _sortState.selected = null;
+  area.innerHTML = `
+    <div class="sort-label">Klik dua angka untuk menukar posisi, lalu tekan Cek!</div>
+    <div class="sort-items" id="sortItems"></div>
+    <div class="sort-direction">Kiri → Kanan: Terkecil → Terbesar</div>
+    <div style="margin-top:12px;text-align:center">
+      <button class="chk-btn" onclick="checkSort()">Cek Urutan ✓</button>
+    </div>`;
+  renderSortItems();
+}
+function renderSortItems() {
+  const wrap = document.getElementById('sortItems');
+  if (!wrap) return;
+  wrap.innerHTML = _sortState.order.map((v, i) =>
+    `<div class="sort-item${i === _sortState.selected ? ' selected' : ''}" onclick="sortClick(${i})">${v}</div>`
+  ).join('');
+}
+function sortClick(idx) {
+  if (state.answered) return;
+  SFX.play('select');
+  if (_sortState.selected === null) {
+    _sortState.selected = idx;
+  } else if (_sortState.selected === idx) {
+    _sortState.selected = null;
+  } else {
+    const tmp = _sortState.order[_sortState.selected];
+    _sortState.order[_sortState.selected] = _sortState.order[idx];
+    _sortState.order[idx] = tmp;
+    _sortState.selected = null;
+  }
+  renderSortItems();
+}
+function checkSort() {
+  if (state.answered) return;
+  state.answered = true;
+  const q = CHAPTERS[state.chapter].questions[state.qIdx];
+  const correct = JSON.stringify(_sortState.order) === JSON.stringify(q.ans);
+  document.querySelectorAll('.sort-item').forEach((el, i) => {
+    el.classList.add('disabled');
+    el.classList.add(_sortState.order[i] === q.ans[i] ? 'correct' : 'wrong');
+  });
+  if (correct) state.score++;
+  state.history.push({ q: q.q, correct, correctAns: q.ans.join(' → '), userAns: _sortState.order.join(' → ') });
+  showToast(correct, q.ans.join(' → '), q.expl);
+}
+
+/* ─── NUMBER LINE (ported from the Gr5 engine) ─── */
+function renderNumberLine(q, area) {
+  const min = q.nlMin, max = q.nlMax;
+  const W = 300, H = 80, pad = 30;
+  const range = max - min;
+  const toX = v => pad + ((v - min) / range) * (W - 2 * pad);
+  let ticks = '', zones = '';
+  for (let v = min; v <= max; v++) {
+    const x = toX(v);
+    ticks += `<line x1="${x}" y1="32" x2="${x}" y2="44" stroke="var(--ink)" stroke-width="2"/>`;
+    ticks += `<text x="${x}" y="58" class="nline-tick" text-anchor="middle">${v}</text>`;
+    zones += `<rect x="${x - 12}" y="16" width="24" height="32" class="nline-zone" rx="4" onclick="pickNL(${v})"/>`;
+  }
+  const mainLine = `<line x1="${pad}" y1="38" x2="${W - pad}" y2="38" stroke="var(--ink)" stroke-width="2.5"/>`;
+  area.innerHTML = `
+    <div class="nline-wrap">
+      <svg class="nline-svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+        ${mainLine}${ticks}
+        <text id="nlMarker" x="-999" y="26" class="nline-marker" text-anchor="middle">🚂</text>
+        ${zones}
+      </svg>
+    </div>
+    <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:4px">Klik angka pada garis bilangan!</p>`;
+  area._nlToX = toX;
+}
+function pickNL(val) {
+  if (state.answered) return;
+  SFX.play('select');
+  const marker = document.getElementById('nlMarker');
+  const area = document.getElementById('answerArea');
+  if (marker && area._nlToX) marker.setAttribute('x', area._nlToX(val));
+  state.answered = true;
+  const q = CHAPTERS[state.chapter].questions[state.qIdx];
+  const correct = val === q.ans;
+  if (correct) state.score++;
+  state.history.push({ q: q.q, correct, correctAns: q.ans, userAns: val });
+  showToast(correct, q.ans, q.expl);
+}
+
 /* ── Sound effects (procedural Web Audio – no asset files) ── */
 const SFX = {
   ctx: null,
@@ -1855,8 +1964,20 @@ const SFX = {
   }
 };
 
+/* ── Weak-spot logging → adaptive Misi Harian on rayyan.html ── */
+function logWeakSpot() {
+  try {
+    const ch = CHAPTERS[state.chapter]; if (!ch) return;
+    const d = JSON.parse(localStorage.getItem('rayyanWeakSpots') || '{}');
+    const k = 'rayyanMath:' + ch.id;
+    d[k] = { miss: ((d[k] && d[k].miss) || 0) + 1, last: Date.now() };
+    localStorage.setItem('rayyanWeakSpots', JSON.stringify(d));
+  } catch (e) {}
+}
+
 function showToast(correct, correctAns, expl) {
   SFX.play(correct ? 'correct' : 'wrong');
+  if (!correct) logWeakSpot();
   if (correct && state.chapter === BOSS_IDX) { bossHit(); refreshBoss(); }
   const toast = document.getElementById('toast');
   document.getElementById('toastIco').textContent   = correct ? '🎉' : '❌';

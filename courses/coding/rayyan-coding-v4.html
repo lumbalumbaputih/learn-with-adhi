@@ -245,6 +245,15 @@
     .score-lbl{font-size:13px;color:var(--muted)}
     .done-msg{font-size:14px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.6}
     .done-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    /* ── Kanvas Bebas (free-draw) ── */
+    .kanvas-wrap{max-width:600px;margin:0 auto;padding:8px 0 40px}
+    .kanvas-help{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;line-height:1.7;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);border-radius:10px;padding:10px 12px;margin-bottom:12px;color:var(--muted)}
+    .kanvas-cv{display:block;width:100%;max-width:480px;margin:0 auto 12px;background:#fff;border:3px solid var(--ink);border-radius:14px}
+    .kanvas-code{width:100%;min-height:170px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;line-height:1.5;padding:14px;border:2px solid var(--ink);border-radius:12px;background:#1e1e2e;color:#cdd6f4;resize:vertical}
+    .kanvas-msg{white-space:pre-wrap;word-break:break-word;margin-top:10px;padding:12px;border:2px solid rgba(255,255,255,.2);border-radius:12px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--muted)}
+    .kanvas-msg.ok{border-color:#1F9D55;color:#7fe0a8}
+    .kanvas-msg.err{border-color:#FF5C39;color:#FF5C39}
+
     .act-btn{border:2.5px solid var(--ink);border-radius:var(--r);padding:14px;font-family:var(--fd);font-weight:800;font-size:14px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s}
     .act-btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--ink)}
     .act-btn.primary{background:var(--art);color:#fff}
@@ -340,6 +349,8 @@
 
   <div class="sec-title">🖌️ Pilih Lukisanmu</div>
   <div class="chapters-grid" id="chGrid"></div>
+
+  <button class="act-btn primary" style="max-width:340px;margin:22px auto 0;display:block" onclick="openKanvas()">🎨 Kanvas Bebas — Lukis Sendiri!</button>
 
   <div style="margin-top:20px;text-align:center">
     <button onclick="resetProgress()" style="font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;padding:8px">🔄 Reset Progress</button>
@@ -455,6 +466,27 @@
     </div>
     <div style="font-size:36px;margin:16px 0;letter-spacing:3px" id="allDoneStarEmoji"></div>
     <button class="act-btn primary" style="max-width:320px;margin:0 auto;display:block" onclick="goHome()">🖼️ Lihat Semua Lukisan</button>
+  </div>
+</div>
+
+<!-- ═══ KANVAS BEBAS (free-draw: type real drawing code) ═══ -->
+<div class="screen" id="sKanvas">
+  <button class="back-btn" onclick="goHome()">← Kembali ke Studio</button>
+  <div class="kanvas-wrap">
+    <div class="sec-title">🎨 Kanvas Bebas</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:10px;line-height:1.5">Tulis perintah lukis, tekan <strong>Lukis!</strong>, dan lihat karyamu muncul! Perintah yang bisa dipakai:</p>
+    <div class="kanvas-help">kotak(x, y, lebar, tinggi, "warna") · lingkaran(x, y, jari, "warna") · garis(x1, y1, x2, y2, "warna", tebal) · tulis("teks", x, y, ukuran, "warna") · acak(kecil, besar) · bersihkan()<br>Warna: merah, kuning, hijau, biru, pink, ungu, oranye, coklat, hitam, putih</div>
+    <canvas id="kanvasCv" width="320" height="280" class="kanvas-cv"></canvas>
+    <textarea id="kanvasCode" class="kanvas-code" spellcheck="false" autocapitalize="off" autocorrect="off">kotak(40, 60, 120, 80, "merah");
+lingkaran(230, 100, 50, "biru");
+garis(20, 200, 300, 200, "hijau", 5);
+tulis("Karya Rayyan!", 70, 245, 24, "ungu");
+
+for (let i = 0; i < 8; i++) {
+  lingkaran(30 + i * 38, 265, 8, "kuning");
+}</textarea>
+    <button class="act-btn primary" onclick="runKanvas()" style="margin-top:12px;width:100%">🖌️ Lukis!</button>
+    <pre id="kanvasMsg" class="kanvas-msg">(tekan Lukis! untuk menggambar)</pre>
   </div>
 </div>
 
@@ -1437,6 +1469,50 @@ function submitBugReport(event) {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && document.getElementById('bugModal').classList.contains('show')) closeBugReport();
 });
+/* ════════════════════════════════════════
+   KANVAS BEBAS – type real drawing code, see it render
+   (kid's own code on his own page; sandboxed via new Function)
+════════════════════════════════════════ */
+function runKanvas() {
+  const code = document.getElementById('kanvasCode').value;
+  const cv   = document.getElementById('kanvasCv');
+  const x    = cv.getContext('2d');
+  const msg  = document.getElementById('kanvasMsg');
+  const WARNA = {merah:'#FF5C39',kuning:'#FFC234',hijau:'#1F9D55',biru:'#1FA9C7',pink:'#E84BA0',ungu:'#2E3192',oranye:'#FF8C42',coklat:'#8B5A2B',hitam:'#1A1614',putih:'#FFFFFF'};
+  const warna = n => WARNA[String(n||'').toLowerCase()] || n || '#1A1614';
+  x.clearRect(0, 0, cv.width, cv.height);
+  let shapes = 0;
+  const guard = () => { if (++shapes > 5000) throw new Error('Terlalu banyak bentuk! (maksimal 5000)'); };
+  const helpers = {
+    kotak(px, py, w, h, c)        { guard(); x.fillStyle = warna(c); x.fillRect(px, py, w, h); },
+    lingkaran(px, py, r, c)       { guard(); x.fillStyle = warna(c); x.beginPath(); x.arc(px, py, Math.abs(r), 0, Math.PI*2); x.fill(); },
+    garis(x1, y1, x2, y2, c, t)   { guard(); x.strokeStyle = warna(c); x.lineWidth = t || 3; x.beginPath(); x.moveTo(x1, y1); x.lineTo(x2, y2); x.stroke(); },
+    tulis(teks, px, py, uk, c)    { guard(); x.fillStyle = warna(c); x.font = 'bold ' + (uk || 24) + 'px sans-serif'; x.fillText(String(teks), px, py); },
+    acak(a, b)                    { return a + Math.random() * (b - a); },
+    bersihkan()                   { x.clearRect(0, 0, cv.width, cv.height); }
+  };
+  try {
+    const f = new Function(...Object.keys(helpers), '"use strict";\n' + code);
+    f(...Object.values(helpers));
+    msg.textContent = '✅ Berhasil! Lukisanmu jadi — ' + shapes + ' bentuk digambar. Coba ubah angkanya!';
+    msg.className = 'kanvas-msg ok';
+    /* Keep his latest artwork → shown on the "Karya-mu" shelf (rayyan.html) */
+    try { localStorage.setItem('rayyanKanvasArt', JSON.stringify({ code: code, shapes: shapes, when: Date.now() })); } catch(e) {}
+    try { SoundFX.play('correct'); } catch(e) {}
+  } catch (e) {
+    msg.textContent = '❌ Ada yang salah: ' + e.message + '\nPeriksa lagi mantra lukismu ya!';
+    msg.className = 'kanvas-msg err';
+  }
+}
+
+/* Open the free canvas, restoring his last saved artwork code */
+function openKanvas() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('rayyanKanvasArt') || 'null');
+    if (saved && saved.code) document.getElementById('kanvasCode').value = saved.code;
+  } catch (e) {}
+  show('sKanvas');
+}
 </script>
 </body>
 </html>
