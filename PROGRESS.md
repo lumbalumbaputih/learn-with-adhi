@@ -17,6 +17,18 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-06-09
+
+### Improvement Plan v2 written — the new build queue for both kids ✅ (planning step, no course code changed)
+- Audited all 17 course files with greps (not just the docs) and wrote **"Improvement Plan v2"** into `CLAUDE.md` (supersedes the old "Next-up recommendation"; original Tracks A–E are ~done).
+- **Key verified findings driving the plan:**
+  - Raya's 3 courses have **zero audio** (no SFX, no `speechSynthesis`) — her literacy course teaches letter shapes but never letter *sounds*, and she can't use anything without a parent narrator.
+  - Rayyan Gr2–4 are still **MC/input-only** (0 drag/number-line/canvas) while Gr5 has `drag-sort`/`number-line`/`bar-fill` — his first courses are his plainest.
+  - Coding v4 remains the last ⚠️ course (kid never draws his own art); Misi Harian is random, not adaptive (misses are never recorded).
+- **The queue (one SOP step each):** R1 Raya read-aloud+SFX (literacy → visual → math) → Y2 v4 "Kanvas Bebas" free-draw sandbox → Y1 rich-interaction back-port Gr2/3/4 → R2 new Raya "Logika & Pola" → Y3 adaptive Misi Harian (weak-spot logging + weighting) → R3 "Dunia Raya" → Y4 "Karya-mu" shelf → R4 cleanup (delete paud duplicate + sync.js) / X1 real-device pass → stretch (Gr8 · Python).
+- **Decisions noted for Adhi (recs picked, not blocking):** Web Speech API for R1; delete `raya-learning-paud-v1.html`; Indonesian helper API (`kotak`/`lingkaran`) for Y2.
+- Files: `CLAUDE.md`, `PROGRESS.md`.
+
 ## 2026-06-05
 
 ### Raya – literacy course expanded to the full 26-letter alphabet (9 chapters) ✅

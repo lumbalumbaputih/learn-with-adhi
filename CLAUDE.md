@@ -222,7 +222,64 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 4. ❌ **Phase 4 – love/retention layer (THE priority now):** unified/themed map, daily quest/streak, badges + printable certificate, Flash Drills. Barely started.
 5. **Phase 5 – stretch:** B5 (Python) · Gr8 math.
 
-**Next-up recommendation (post-audit):** (a) back-port boss/sound/juice into Gr2–4 + coding v1 so the first impression isn't the weakest; (b) build Track D (streak + badges + themed map); (c) give B2 a real mini code-runner and B4 a real keepable game he can re-open.
+**Next-up recommendation:** superseded by the **Improvement Plan v2** below (2026-06-09) — the original Tracks A–E are essentially done; v2 is the new prioritized queue.
+
+---
+
+## Improvement Plan v2 – 2026-06-09 (the current build queue)
+
+> Planning audit of all 17 course files (not just the docs). The original roadmap is ~complete:
+> content ladders ✅, retention layer ✅, real sandbox/game payoffs ✅. What's left is **quality
+> asymmetry**: Raya's courses are silent, and Rayyan's *first* courses are his plainest.
+> Each item below = one SOP step (ship → verify → docs → commit/push). Ordered by leverage.
+
+### Verified gaps this plan is built on (grepped 2026-06-09)
+- **Raya has ZERO audio.** No SFX, no read-aloud in any of her 3 courses (`grep AudioContext|new Audio|speechSynthesis` → 0). A *literacy* course that never plays a letter **sound**, for a kid who can't read the prompts — every session requires a parent narrator.
+- **Rayyan Gr2–4 are MC/input-only.** They got SFX + lite boss (Phase 1), but have 0 drag/canvas/number-line interactions, while Gr5 has `drag-sort`, `number-line`, `bar-fill`. His easiest courses are his most boring — backwards for a kid who quits when bored.
+- **Coding v4 is the last ⚠️ course:** real demo canvases but the kid never draws his own art.
+- **Misi Harian is random, not adaptive:** Track E promised "revisit weak spots" — wrong answers are never recorded anywhere.
+
+### RAYA queue (bigger gaps, and she can't work around them herself)
+**R1 · Suara untuk Raya 🔊 — read-aloud + SFX in all 3 Raya courses** *(highest leverage in the repo)*
+- Add a tap-to-hear 🔊 button per question using **Web Speech API** (`speechSynthesis`, `lang:'id-ID'`, graceful hide if unsupported) + port the existing `SFX` module (from math Gr2–4) for correct/wrong/star jingles.
+- In `rayaLiteracy`, auto-speak the letter/word on answer ("A… Apel!") — letter **sounds**, not just shapes. This converts her courses from parent-required to self-serve.
+- One step per course: literacy → visual → math. No engine rewrite; additive buttons + hooks.
+
+**R2 · New course: "Logika & Pola" 🧩** (key `rayaLogic`, `courses/learning/raya-logic-v1.html`)
+- Early reasoning: what-comes-next patterns (🔴🔵🔴🔵…?), sort by size/color, odd-one-out, simple 2-step sequencing (wake up → ?). Same Raya engine (`pick` + `drag-match`), ~6 chapters, R1 audio from day one. Wire all 4 places.
+
+**R3 · New course: "Dunia Raya" 🌍** (key `rayaWorld`)
+- World knowledge: opposites (besar/kecil), body parts, food, transport, weather. Same recipe as R2.
+
+**R4 · Raya housekeeping**
+- Delete the never-wired duplicate `courses/learning/raya-learning-paud-v1.html` (recommended; confirm with Adhi in the PR, don't block) and the dead `assets/js/sync.js`.
+
+### RAYYAN queue
+**Y1 · Rich interactions back-ported to Gr2–4** *(finish the first-impression fix properly)*
+- Port Gr5's `drag-sort` / `number-line` / `bar-fill` question types into Gr2, Gr3, Gr4 and convert ~6–8 fitting questions per course (e.g. Gr2 number-line hops, Gr3 drag-sort train cars by size, Gr4 bar-fill fractions). One grade per step. Keep answer keys verified like the Bridge QA.
+
+**Y2 · v4 "Studio Pelukis Kode": let him paint 🎨** *(clears the last ⚠️ status)*
+- Add a **"Kanvas Bebas"** free-play screen mirroring v3's sandbox: type drawing commands (real JS against a tiny helper API — `kotak(x,y,w,h,'merah')`, `lingkaran(…)`, `ulang(n, …)`) → live canvas render + real errors. Stretch: save his artwork to localStorage as a mini gallery.
+
+**Y3 · Adaptive Misi Harian (finish Track E)**
+- Record misses per topic key (`rayyanWeakSpots` in localStorage) in the course engines' wrong-answer path; Misi Harian weights its question pool toward weak/stale topics (simple spaced-repetition: weight = misses + days-since-seen). Two steps: (a) logging hook in courses, (b) drill-side weighting.
+
+**Y4 · "Karya-mu" shelf on `rayyan.html`**
+- Surface his creations: v4 saved art, v5 Kereta-Lari high score, v3 last sandbox program. Ownership → return visits. (After Y2.)
+
+**Y5 · Stretch (only if he's flying):** Gr8 math biome · B5 Python "Penjinak Data".
+
+### Cross-cutting
+**X1 · Real-device pass 📱** — one session on the actual tablet/phone: tap-target sizes, speech-synthesis voice availability on the real device (id-ID voices vary by OS), Web-Audio-after-gesture, load time. Log findings in PROGRESS.md and fix the top 3.
+
+### Recommended order
+`R1a (literacy audio)` → `R1b/R1c (other 2 Raya courses)` → `Y2 (v4 canvas)` → `Y1 (Gr2→3→4, one per step)` → `R2 (Logika & Pola)` → `Y3 (adaptive drill)` → `R3` → `Y4` → `R4/X1` → stretch.
+*Rationale: R1 unlocks Raya's entire existing catalog for solo use (one mechanism, 3 courses); Y2 is the last broken promise; Y1 fixes what Rayyan actually touches first; new content (R2/R3) only after existing content is at full quality.*
+
+### Decisions for Adhi (per SOP: pick the rec, note it, don't block)
+- **R1 voice:** Web Speech API (free, offline-ish, instant) — recommended — vs. pre-recorded MP3s (consistent voice but heavy + violates single-file rule).
+- **R4:** delete `raya-learning-paud-v1.html` (rec) vs. keep on disk.
+- **Y2 command names:** Indonesian helper API (`kotak`, `lingkaran` — rec for age 7) vs. raw canvas JS.
 
 ### Per-course build spec (every new Rayyan course MUST follow)
 - **One self-contained HTML file**, vanilla HTML/CSS/JS, design-system tokens, mobile-first, big tap targets, minimal text, instant visual/audio feedback.
