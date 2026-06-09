@@ -1,5 +1,17 @@
 [
   {
+    "id": "perth-transport-report",
+    "n": "R2",
+    "title": "Car City or Transit Shift?",
+    "blurb": "Deep-research report on Perth's transport orientation: modal share data, road vs rail investment ($13.4B vs $4.8B), urban sprawl, political economy, and what METRONET is actually changing.",
+    "category": "Research",
+    "tags": ["Research", "Urban Planning", "Transport"],
+    "primitive": "wave",
+    "accent": "sea",
+    "path": "research/perth-transport-report.html",
+    "duration": "Report"
+  },
+  {
     "id": "ai-boom-report",
     "n": "R1",
     "title": "The AI Boom, Mapped",
