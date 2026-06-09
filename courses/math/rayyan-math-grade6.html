@@ -1078,6 +1078,16 @@ function checkBar() {
 /* ════════════════════════════════════════
    ANSWER LOGIC
 ════════════════════════════════════════ */
+/* ── Weak-spot logging → adaptive Misi Harian on rayyan.html ── */
+function logWeakSpot(chId) {
+  try {
+    const d = JSON.parse(localStorage.getItem('rayyanWeakSpots') || '{}');
+    const k = 'rayyanMath6:' + chId;
+    d[k] = { miss: ((d[k] && d[k].miss) || 0) + 1, last: Date.now() };
+    localStorage.setItem('rayyanWeakSpots', JSON.stringify(d));
+  } catch (e) {}
+}
+
 function handleAnswer(correct, correctAns, userAns, expl) {
   const ch = CHAPTERS[S.chapter];
   if (correct) {
@@ -1094,6 +1104,7 @@ function handleAnswer(correct, correctAns, userAns, expl) {
   } else {
     S.lives--;
     S.combo = 0;
+    logWeakSpot(ch.id);
     Audio.play('wrong');
     document.body.classList.add('shake');
     setTimeout(() => document.body.classList.remove('shake'), 380);

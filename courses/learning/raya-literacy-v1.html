@@ -218,6 +218,8 @@
     .ex-qnum{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--muted);flex-shrink:0}
 
     .read-aloud{background:var(--indigo);color:white;border-radius:12px 12px 0 0;padding:8px 16px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px;color:var(--mango)}
+    .speak-btn{margin-left:auto;background:var(--mango);color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:5px 14px;font-family:var(--fd);font-weight:800;font-size:13px;cursor:pointer;letter-spacing:normal;text-transform:none;transition:transform .12s}
+    .speak-btn:active{transform:scale(.92)}
 
     .q-card{border:2.5px solid var(--ink);border-radius:0 0 20px 20px;overflow:hidden;margin-bottom:16px;background:var(--paper-2)}
     .q-inner{padding:22px 18px 22px}
@@ -372,7 +374,7 @@
     <div class="parent-ico">👨‍👩‍👧</div>
     <div class="parent-text">
       <div class="parent-label">Untuk Orang Tua</div>
-      Raya belum bisa membaca, jadi <strong>bacakan tiap soal</strong> dan <strong>sebutkan bunyi hurufnya</strong> (a, be, ce…). Beberapa soal minta Raya <strong>mengetuk huruf yang benar</strong>, dan ada juga <strong>seret-letakkan</strong> untuk memasangkan huruf besar &amp; kecil!
+      Raya belum bisa membaca, jadi <strong>bacakan tiap soal</strong> dan <strong>sebutkan bunyi hurufnya</strong> (a, be, ce…). Sekarang ada tombol <strong>🔊 Dengarkan</strong> — soal bisa dibacakan otomatis, jadi Raya juga bisa bermain sendiri! Beberapa soal minta Raya <strong>mengetuk huruf yang benar</strong>, dan ada juga <strong>seret-letakkan</strong> untuk memasangkan huruf besar &amp; kecil!
     </div>
   </div>
 
@@ -431,7 +433,7 @@
     <div class="ex-qnum" id="exQNum">1/5</div>
   </div>
 
-  <div class="read-aloud"><span>👨‍👩‍👧</span> Bacakan untuk Raya:</div>
+  <div class="read-aloud"><span>👨‍👩‍👧</span> Bacakan untuk Raya: <button class="speak-btn" onclick="speakQ()">🔊 Dengarkan</button></div>
   <div class="q-card">
     <div class="q-inner">
       <div class="q-text" id="qText"></div>
@@ -741,6 +743,7 @@ function renderQ(){
   document.getElementById('toast').className='toast';
   document.getElementById('nxtBtn').className='nxt-btn';
   state.answered=false;
+  setTimeout(speakQ,300); // auto read-aloud (best-effort; 🔊 button is the fallback)
 }
 
 /* ── TAP-COUNT ── */
@@ -898,11 +901,63 @@ function checkDrag(){
   showToast(allCorrect,allCorrect?q.ok:'Belum tepat – coba lagi setelah ini ya!');
 }
 
+/* ── SUARA: sound effects (procedural Web Audio) + read-aloud (Web Speech, id-ID) ── */
+const SFX = {
+  ctx: null,
+  init() { if (this.ctx) return; try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {} },
+  tone(freq, dur, vol = 0.2, type = 'sine') {
+    if (!this.ctx) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(); o.stop(this.ctx.currentTime + dur);
+  },
+  play(type) {
+    this.init(); if (!this.ctx) return;
+    if (type === 'correct')      { this.tone(523,.15,.15); setTimeout(()=>this.tone(659,.15,.15),120); setTimeout(()=>this.tone(784,.3,.15),240); }
+    else if (type === 'wrong')   { this.tone(220,.15,.15); setTimeout(()=>this.tone(196,.25,.12),130); }
+    else if (type === 'select')  { this.tone(440,.08,.1,'square'); }
+    else if (type === 'fanfare') { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>this.tone(f,.3,.18), i*110)); }
+  }
+};
+const Suara = {
+  on: 'speechSynthesis' in window,
+  voice: null,
+  pickVoice(){
+    if(!this.on) return;
+    try{ this.voice = speechSynthesis.getVoices().find(v=>v.lang && v.lang.toLowerCase().startsWith('id')) || null; }catch(e){}
+  },
+  speak(text, rate){
+    if(!this.on || !text) return;
+    try{
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang='id-ID'; u.rate=rate||0.85; u.pitch=1.1;
+      if(!this.voice) this.pickVoice();
+      if(this.voice) u.voice=this.voice;
+      speechSynthesis.speak(u);
+    }catch(e){}
+  }
+};
+if(Suara.on){ try{ speechSynthesis.onvoiceschanged=()=>Suara.pickVoice(); Suara.pickVoice(); }catch(e){} }
+// Strip emoji/symbols so TTS reads only the words
+function cleanSay(t){ return String(t||'').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}→]/gu,'').replace(/\s+/g,' ').trim(); }
+function speakQ(){
+  if(state.chapter===null) return;
+  const ch=CHAPTERS[state.chapter]; const q=ch&&ch.questions[state.qIdx];
+  if(q) Suara.speak(cleanSay(q.q));
+}
+
 /* ── TOAST ── */
 function showToast(correct,okMsg){
+  SFX.play(correct?'correct':'wrong');
   const toast=document.getElementById('toast');
   document.getElementById('toastIco').textContent=correct?'🎉':'💪';
-  document.getElementById('toastMsg').textContent=correct?okMsg:'Belum tepat, Raya. Tidak apa-apa, coba lagi nanti ya!';
+  const msg=correct?okMsg:'Belum tepat, Raya. Tidak apa-apa, coba lagi nanti ya!';
+  document.getElementById('toastMsg').textContent=msg;
+  setTimeout(()=>Suara.speak(cleanSay(msg)),420);
   toast.className=`toast show ${correct?'ok':'bad'}`;
   document.getElementById('nxtBtn').className='nxt-btn show';
 }
@@ -939,6 +994,8 @@ function showComplete(){
   _timerStart=null;
   document.getElementById('doneTime').textContent=fmtTime(elapsed);
   show('sComplete');
+  SFX.play('fanfare');
+  setTimeout(()=>Suara.speak(cleanSay(titles[stars-1])),500);
   setTimeout(launchConfetti,300);
   updateOverall();
 }

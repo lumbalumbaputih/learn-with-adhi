@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Belajar Bersama Raya 🌸 · Learn with Adhi</title>
-  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23E84BA0"/><text y=".9em" font-size="75" x="12">🌸</text></svg>'>
+  <title>Logika &amp; Pola Raya 🧩 · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%232E3192"/><text y=".9em" font-size="75" x="12">🧩</text></svg>'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -502,16 +502,16 @@
 <!-- ═══ HOME ═══ -->
 <div class="screen active" id="sHome">
   <div class="home-hero">
-    <div class="home-avatar">👧</div>
+    <div class="home-avatar">🧩</div>
     <h1 class="home-greeting">Halo, <em>Raya!</em></h1>
-    <p class="home-sub">Pilih gambar yang mau dipelajari! 🌸</p>
+    <p class="home-sub">Ayo main tebak-tebakan pola! 🧩</p>
   </div>
 
   <div class="parent-notice">
     <div class="parent-ico">👨‍👩‍👧</div>
     <div class="parent-text">
       <div class="parent-label">Untuk Orang Tua</div>
-      Raya belum bisa membaca, jadi <strong>bacakan pertanyaannya</strong> dengan suara nyaring, lalu minta Raya menunjuk atau mengetuk gambar jawabannya! Sekarang ada tombol <strong>🔊 Dengarkan</strong> — soal bisa dibacakan otomatis, jadi Raya juga bisa bermain sendiri!
+      Kursus ini melatih <strong>penalaran awal</strong>: pola, membandingkan, mengelompokkan, dan urutan cerita. Bacakan pertanyaannya, atau tekan tombol <strong>🔊 Dengarkan</strong> supaya soal dibacakan otomatis — lalu minta Raya mengetuk gambar jawabannya!
     </div>
   </div>
 
@@ -524,13 +524,13 @@
               style="transition:stroke-dashoffset 1s ease"/>
     </svg>
     <div class="ov-info">
-      <div class="ov-label">Progress Belajar Raya 🌸</div>
+      <div class="ov-label">Progress Logika Raya 🧩</div>
       <div class="ov-bar-wrap"><div class="ov-bar" id="ovBar" style="width:0%"></div></div>
-      <div class="ov-sub" id="ovSub">0 dari 5 bab selesai</div>
+      <div class="ov-sub" id="ovSub">0 dari 6 bab selesai</div>
     </div>
   </div>
 
-  <div class="sec-title">Pilih Gambar 👇</div>
+  <div class="sec-title">Pilih Permainan 👇</div>
   <div class="ch-grid" id="chGrid"></div>
 
   <div style="margin-top:20px;text-align:center">
@@ -617,7 +617,7 @@
 <script>
 /* ════════════════════════════════════════════════
    HELPER: build option HTML
-   type: 'emoji' | 'num' | 'color' | 'shape'
+   type: 'emoji' | 'num' | 'color'
 ════════════════════════════════════════════════ */
 function optBtn(idx, type, value) {
   let inner = '';
@@ -627,270 +627,301 @@ function optBtn(idx, type, value) {
     inner = `<span class="opt-visual num">${value}</span>`;
   } else if (type === 'color') {
     inner = `<div class="opt-visual color-dot" style="background:${value}"></div>`;
-  } else if (type === 'shape') {
-    inner = `<div class="opt-visual shape-svg">${value}</div>`;
   }
   return `<button class="opt" onclick="pick(${idx})">${inner}</button>`;
 }
 
 /* ════════════════════════════════════════════════
-   SVG SHAPES (used as answer options)
-════════════════════════════════════════════════ */
-const SHAPES = {
-  circle:    `<svg viewBox="0 0 64 64" fill="#FCE8F3" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="28" stroke="#1A1614" stroke-width="4"/></svg>`,
-  square:    `<svg viewBox="0 0 64 64" fill="#FFF5D6" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="48" height="48" rx="5" stroke="#1A1614" stroke-width="4"/></svg>`,
-  triangle:  `<svg viewBox="0 0 64 64" fill="#E3F5EB" xmlns="http://www.w3.org/2000/svg"><polygon points="32,6 60,58 4,58" stroke="#1A1614" stroke-width="4" stroke-linejoin="round"/></svg>`,
-  rectangle: `<svg viewBox="0 0 64 64" fill="#E3F4F8" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="16" width="56" height="32" rx="5" stroke="#1A1614" stroke-width="4"/></svg>`,
-  star:      `<svg viewBox="0 0 64 64" fill="#FFF5D6" xmlns="http://www.w3.org/2000/svg"><polygon points="32,4 39,24 60,24 44,38 50,58 32,46 14,58 20,38 4,24 25,24" stroke="#1A1614" stroke-width="3" stroke-linejoin="round"/></svg>`,
-};
-
-/* ════════════════════════════════════════════════
-   CHAPTERS
-   Every answer option is visual-only – emoji, number,
-   colored dot, or SVG shape. No text labels.
+   CHAPTERS – early reasoning, all answers visual-only
+   (patterns · compare · odd-one-out · groups · sequences · mixed)
 ════════════════════════════════════════════════ */
 const CHAPTERS = [
   {
-    id: 'counting',
-    title: 'Berhitung',
-    emoji: '🔢',
-    colorBg: '#FFF5D6',
-    desc: 'Hitung gambar-gambarnya!',
-    parentGuide: 'Tunjuk gambar-gambar itu satu persatu dan hitung bersama Raya. Lalu tanya: "Ada berapa?" dan minta Raya mengetuk angka yang benar!',
-    previewEmojis: '1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣',
-    questions: [
-      {
-        q: 'Ada berapa 🍎?',
-        visual: '🍎 🍎 🍎',
-        grid: 'opts-3',
-        opts: [ {t:'num',v:'2'}, {t:'num',v:'3'}, {t:'num',v:'4'} ],
-        ans: 1,
-        ok: 'Betul! Ada 3 apel! 🍎🍎🍎',
-      },
-      {
-        q: 'Ada berapa ⭐?',
-        visual: '⭐ ⭐',
-        grid: 'opts-3',
-        opts: [ {t:'num',v:'1'}, {t:'num',v:'2'}, {t:'num',v:'3'} ],
-        ans: 1,
-        ok: 'Betul! Ada 2 bintang! ⭐⭐',
-      },
-      {
-        q: 'Ada berapa 🎈?',
-        visual: '🎈 🎈 🎈 🎈',
-        grid: 'opts-3',
-        opts: [ {t:'num',v:'3'}, {t:'num',v:'4'}, {t:'num',v:'5'} ],
-        ans: 1,
-        ok: 'Betul! Ada 4 balon! 🎈🎈🎈🎈',
-      },
-      {
-        q: 'Ada berapa 🌸?',
-        visual: '🌸 🌸 🌸 🌸 🌸',
-        grid: 'opts-3',
-        opts: [ {t:'num',v:'4'}, {t:'num',v:'5'}, {t:'num',v:'6'} ],
-        ans: 1,
-        ok: 'Betul! Ada 5 bunga! Cantik seperti Raya! 🌸',
-      },
-      {
-        q: 'Ada berapa 🐛?',
-        visual: '🐛 🐛 🐛',
-        grid: 'opts-3',
-        opts: [ {t:'num',v:'2'}, {t:'num',v:'3'}, {t:'num',v:'4'} ],
-        ans: 1,
-        ok: 'Betul! Ada 3 ulat! 🐛🐛🐛',
-      },
-    ]
-  },
-  {
-    id: 'colors',
-    title: 'Warna',
-    emoji: '🎨',
-    colorBg: '#FCE8F3',
-    desc: 'Tunjuk warna yang benar!',
-    parentGuide: 'Tunjukkan lingkaran warna pada Raya dan katakan namanya (merah, biru, dsb). Lalu tanya: "Mana yang merah?" dan minta Raya mengetuk lingkaran yang benar!',
-    previewEmojis: '🔴 🔵 🟢 🟡 🩷',
-    questions: [
-      {
-        q: 'Tunjuk yang MERAH! 🔴',
-        grid: 'opts-3',
-        opts: [ {t:'color',v:'#1FA9C7'}, {t:'color',v:'#FF5C39'}, {t:'color',v:'#1F9D55'} ],
-        ans: 1,
-        ok: 'Betul! Itu merah! 🔴❤️',
-      },
-      {
-        q: 'Tunjuk yang KUNING! 🟡',
-        grid: 'opts-3',
-        opts: [ {t:'color',v:'#FFC234'}, {t:'color',v:'#E84BA0'}, {t:'color',v:'#FF5C39'} ],
-        ans: 0,
-        ok: 'Betul! Itu kuning! 🟡🌟',
-      },
-      {
-        q: 'Tunjuk yang BIRU! 🔵',
-        grid: 'opts-3',
-        opts: [ {t:'color',v:'#1F9D55'}, {t:'color',v:'#FFC234'}, {t:'color',v:'#1FA9C7'} ],
-        ans: 2,
-        ok: 'Betul! Itu biru! 🔵💙',
-      },
-      {
-        q: 'Tunjuk yang HIJAU! 🟢',
-        grid: 'opts-3',
-        opts: [ {t:'color',v:'#FF5C39'}, {t:'color',v:'#1F9D55'}, {t:'color',v:'#E84BA0'} ],
-        ans: 1,
-        ok: 'Betul! Itu hijau! 🟢🌿',
-      },
-      {
-        q: 'Tunjuk yang PINK! 🩷',
-        grid: 'opts-3',
-        opts: [ {t:'color',v:'#1FA9C7'}, {t:'color',v:'#FFC234'}, {t:'color',v:'#E84BA0'} ],
-        ans: 2,
-        ok: 'Betul! Itu pink! Warna favorit Raya! 🩷🌸',
-      },
-    ]
-  },
-  {
-    id: 'shapes',
-    title: 'Bentuk',
-    emoji: '🔷',
-    colorBg: '#E3F5EB',
-    desc: 'Tunjuk bentuk yang sama!',
-    parentGuide: 'Tunjuk gambar bentuk di atas, lalu tanya Raya: "Mana yang sama?" dan minta dia mengetuk bentuk yang cocok di bawahnya!',
-    previewEmojis: '⭕ ⬜ 🔺',
-    questions: [
-      {
-        q: 'Ini bentuknya sama seperti yang mana?',
-        visual: '⭕',
-        grid: 'opts-3',
-        opts: [ {t:'shape',v:SHAPES.square}, {t:'shape',v:SHAPES.circle}, {t:'shape',v:SHAPES.triangle} ],
-        ans: 1,
-        ok: 'Betul! Sama-sama bulat! ⭕',
-      },
-      {
-        q: 'Ini bentuknya sama seperti yang mana?',
-        visual: '🔺',
-        grid: 'opts-3',
-        opts: [ {t:'shape',v:SHAPES.triangle}, {t:'shape',v:SHAPES.square}, {t:'shape',v:SHAPES.circle} ],
-        ans: 0,
-        ok: 'Betul! Sama-sama segitiga! 🔺',
-      },
-      {
-        q: 'Ini bentuknya sama seperti yang mana?',
-        visual: '⬜',
-        grid: 'opts-3',
-        opts: [ {t:'shape',v:SHAPES.circle}, {t:'shape',v:SHAPES.triangle}, {t:'shape',v:SHAPES.square} ],
-        ans: 2,
-        ok: 'Betul! Sama-sama kotak! ⬜',
-      },
-      {
-        q: 'Mana yang bentuknya BULAT?',
-        grid: 'opts-3',
-        opts: [ {t:'shape',v:SHAPES.triangle}, {t:'shape',v:SHAPES.circle}, {t:'shape',v:SHAPES.square} ],
-        ans: 1,
-        ok: 'Betul! Lingkaran itu bulat! ⭕',
-      },
-      {
-        q: 'Pizza berbentuk seperti yang mana?',
-        visual: '🍕',
-        grid: 'opts-3',
-        opts: [ {t:'shape',v:SHAPES.square}, {t:'shape',v:SHAPES.circle}, {t:'shape',v:SHAPES.triangle} ],
-        ans: 2,
-        ok: 'Betul! Sepotong pizza seperti segitiga! 🍕🔺',
-      },
-    ]
-  },
-  {
-    id: 'animals',
-    title: 'Hewan',
-    emoji: '🐾',
-    colorBg: '#E3F4F8',
-    desc: 'Tunjuk hewan yang benar!',
-    parentGuide: 'Tunjuk gambar hewan atau ceritakan ciri-cirinya (contoh: "yang punya belalai panjang"), lalu minta Raya mengetuk gambar hewan yang dimaksud!',
-    previewEmojis: '🐘 🦁 🐄 🐠 🐰',
-    questions: [
-      {
-        q: 'Tunjuk yang GAJAH! 🐘',
-        grid: 'opts-2',
-        opts: [ {t:'emoji',v:'🐘'}, {t:'emoji',v:'🦁'} ],
-        ans: 0,
-        ok: 'Betul! Itu gajah! Punya belalai panjang! 🐘',
-      },
-      {
-        q: 'Mana yang tinggal di LAUT?',
-        grid: 'opts-2',
-        opts: [ {t:'emoji',v:'🐰'}, {t:'emoji',v:'🐠'} ],
-        ans: 1,
-        ok: 'Betul! Ikan tinggal di laut! 🐠🌊',
-      },
-      {
-        q: 'Tunjuk yang KUPU-KUPU! 🦋',
-        grid: 'opts-2',
-        opts: [ {t:'emoji',v:'🦋'}, {t:'emoji',v:'🐝'} ],
-        ans: 0,
-        ok: 'Betul! Kupu-kupu cantik! Sayapnya berwarna-warni! 🦋',
-      },
-      {
-        q: 'Hewan mana yang bisa TERBANG?',
-        grid: 'opts-2',
-        opts: [ {t:'emoji',v:'🐘'}, {t:'emoji',v:'🦅'} ],
-        ans: 1,
-        ok: 'Betul! Elang bisa terbang karena punya sayap! 🦅',
-      },
-      {
-        q: 'Tunjuk yang KELINCI! 🐰',
-        grid: 'opts-3',
-        opts: [ {t:'emoji',v:'🐱'}, {t:'emoji',v:'🐶'}, {t:'emoji',v:'🐰'} ],
-        ans: 2,
-        ok: 'Betul! Itu kelinci! Telinganya panjang! 🐰',
-      },
-    ]
-  },
-  {
-    id: 'match',
-    title: 'Pasangkan!',
-    emoji: '🔍',
+    id: 'patterns',
+    title: 'Pola Apa Selanjutnya?',
+    emoji: '🔴',
     colorBg: '#FFE8E3',
-    desc: 'Tunjuk gambar yang sama!',
-    parentGuide: 'Tunjuk gambar di atas, lalu tanya Raya: "Mana yang SAMA?" dan minta dia mengetuk gambar yang cocok di bawahnya!',
-    previewEmojis: '🍎 🍎 &nbsp; 🐱 🐱',
+    desc: 'Tebak lanjutan polanya!',
+    parentGuide: 'Tunjuk barisan gambar satu per satu sambil menyebutkannya ("merah, biru, merah, biru…"), lalu tanya: "Selanjutnya apa?" dan minta Raya mengetuk jawabannya!',
+    previewEmojis: '🔴 🔵 🔴 🔵 ❓',
     questions: [
       {
-        q: 'Mana yang SAMA dengan ini?',
-        visual: '🍎',
-        grid: 'opts-3',
-        opts: [ {t:'emoji',v:'🍊'}, {t:'emoji',v:'🍎'}, {t:'emoji',v:'🍌'} ],
-        ans: 1,
-        ok: 'Betul! Sama-sama apel! 🍎🍎',
-      },
-      {
-        q: 'Mana yang SAMA dengan ini?',
-        visual: '⭐',
-        grid: 'opts-3',
-        opts: [ {t:'emoji',v:'⭐'}, {t:'emoji',v:'🌙'}, {t:'emoji',v:'☀️'} ],
+        q: 'Apa selanjutnya?',
+        visual: '🔴 🔵 🔴 🔵 ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🔴'}, {t:'emoji',v:'🔵'} ],
         ans: 0,
-        ok: 'Betul! Sama-sama bintang! ⭐⭐',
+        ok: 'Betul! Merah, biru, merah, biru… selanjutnya MERAH! 🔴',
       },
       {
-        q: 'Mana yang SAMA dengan ini?',
-        visual: '🐱',
+        q: 'Apa selanjutnya?',
+        visual: '🍎 🍌 🍎 🍌 ❓',
         grid: 'opts-3',
-        opts: [ {t:'emoji',v:'🐶'}, {t:'emoji',v:'🐰'}, {t:'emoji',v:'🐱'} ],
-        ans: 2,
-        ok: 'Betul! Sama-sama kucing! 🐱🐱',
-      },
-      {
-        q: 'Mana yang SAMA dengan ini?',
-        visual: '🌸',
-        grid: 'opts-3',
-        opts: [ {t:'emoji',v:'🌻'}, {t:'emoji',v:'🌸'}, {t:'emoji',v:'🌹'} ],
+        opts: [ {t:'emoji',v:'🍌'}, {t:'emoji',v:'🍎'}, {t:'emoji',v:'🍇'} ],
         ans: 1,
-        ok: 'Betul! Sama-sama bunga sakura! 🌸🌸',
+        ok: 'Betul! Apel, pisang, apel, pisang… selanjutnya APEL! 🍎',
       },
       {
-        q: 'Mana yang SAMA dengan ini?',
-        visual: '🚂',
+        q: 'Apa selanjutnya?',
+        visual: '⭐ ⭐ 🌙 ⭐ ⭐ ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'⭐'}, {t:'emoji',v:'🌙'} ],
+        ans: 1,
+        ok: 'Betul! Bintang, bintang, BULAN! Selanjutnya bulan! 🌙',
+      },
+      {
+        q: 'Apa selanjutnya?',
+        visual: '🐶 🐱 🐶 🐱 🐶 ❓',
         grid: 'opts-3',
-        opts: [ {t:'emoji',v:'🚗'}, {t:'emoji',v:'✈️'}, {t:'emoji',v:'🚂'} ],
+        opts: [ {t:'emoji',v:'🐶'}, {t:'emoji',v:'🐱'}, {t:'emoji',v:'🐰'} ],
+        ans: 1,
+        ok: 'Betul! Anjing, kucing, anjing, kucing… selanjutnya KUCING! 🐱',
+      },
+      {
+        q: 'Apa selanjutnya?',
+        visual: '🔺 ⭕ ⭕ 🔺 ⭕ ⭕ ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'⭕'}, {t:'emoji',v:'🔺'} ],
+        ans: 1,
+        ok: 'Betul! Segitiga, bulat, bulat… selanjutnya SEGITIGA! 🔺',
+      },
+    ]
+  },
+  {
+    id: 'compare',
+    title: 'Besar & Kecil',
+    emoji: '🐘',
+    colorBg: '#E3F5EB',
+    desc: 'Mana yang paling besar?',
+    parentGuide: 'Sebutkan nama hewan/benda pada pilihan, lalu tanya: "Mana yang paling besar?" (atau kecil/panjang/tinggi). Ajak Raya membayangkan ukuran aslinya!',
+    previewEmojis: '🐘 🐱 🐭',
+    questions: [
+      {
+        q: 'Mana yang PALING BESAR?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'🐭'}, {t:'emoji',v:'🐘'}, {t:'emoji',v:'🐱'} ],
+        ans: 1,
+        ok: 'Betul! Gajah paling besar! 🐘',
+      },
+      {
+        q: 'Mana yang PALING KECIL?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'🐜'}, {t:'emoji',v:'🐶'}, {t:'emoji',v:'🐮'} ],
+        ans: 0,
+        ok: 'Betul! Semut paling kecil! 🐜',
+      },
+      {
+        q: 'Mana yang lebih PANJANG?',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🐍'}, {t:'emoji',v:'🐛'} ],
+        ans: 0,
+        ok: 'Betul! Ular lebih panjang dari ulat! 🐍',
+      },
+      {
+        q: 'Mana yang PALING TINGGI?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'🐢'}, {t:'emoji',v:'🐰'}, {t:'emoji',v:'🦒'} ],
         ans: 2,
-        ok: 'Betul! Sama-sama kereta! Seperti game Rayyan! 🚂🚂',
+        ok: 'Betul! Jerapah paling tinggi! Lehernya panjang! 🦒',
+      },
+      {
+        q: 'Mana yang lebih BERAT?',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🪶'}, {t:'emoji',v:'🐘'} ],
+        ans: 1,
+        ok: 'Betul! Gajah jauh lebih berat dari bulu! 🐘',
+      },
+    ]
+  },
+  {
+    id: 'odd-one-out',
+    title: 'Mana yang Beda?',
+    emoji: '🤔',
+    colorBg: '#FFF5D6',
+    desc: 'Cari yang beda sendiri!',
+    parentGuide: 'Sebutkan ketiga gambar, lalu tanya: "Mana yang BEDA sendiri?" Bantu Raya berpikir: dua gambar itu temannya apa, dan satu yang bukan temannya!',
+    previewEmojis: '🍎 🍌 🚗',
+    questions: [
+      {
+        q: 'Mana yang BEDA sendiri?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'🍎'}, {t:'emoji',v:'🍌'}, {t:'emoji',v:'🚗'} ],
+        ans: 2,
+        ok: 'Betul! Apel dan pisang itu buah, mobil bukan! 🚗',
+      },
+      {
+        q: 'Mana yang BEDA sendiri?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'🐶'}, {t:'emoji',v:'🌳'}, {t:'emoji',v:'🐱'} ],
+        ans: 1,
+        ok: 'Betul! Anjing dan kucing itu hewan, pohon bukan! 🌳',
+      },
+      {
+        q: 'Mana yang warnanya BEDA?',
+        grid: 'opts-3',
+        opts: [ {t:'color',v:'#FF5C39'}, {t:'color',v:'#1FA9C7'}, {t:'color',v:'#FF5C39'} ],
+        ans: 1,
+        ok: 'Betul! Yang itu biru, yang lain merah! 🔵',
+      },
+      {
+        q: 'Mana yang BEDA sendiri?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'✈️'}, {t:'emoji',v:'🍦'}, {t:'emoji',v:'🚗'} ],
+        ans: 1,
+        ok: 'Betul! Pesawat dan mobil itu kendaraan, es krim bukan! 🍦',
+      },
+      {
+        q: 'Mana yang BEDA sendiri?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'⭐'}, {t:'emoji',v:'⭐'}, {t:'emoji',v:'🌙'} ],
+        ans: 2,
+        ok: 'Betul! Dua bintang sama, bulan yang beda! 🌙',
+      },
+    ]
+  },
+  {
+    id: 'groups',
+    title: 'Kelompokkan!',
+    emoji: '🧺',
+    colorBg: '#FCE8F3',
+    desc: 'Mana yang cocok?',
+    parentGuide: 'Bacakan pertanyaannya, lalu minta Raya memilih gambar yang cocok dengan kelompoknya (makanan, kendaraan, dst). Tanyakan juga "kenapa?" supaya Raya belajar menjelaskan!',
+    previewEmojis: '🍌 ☂️ 🚌',
+    questions: [
+      {
+        q: 'Mana yang bisa DIMAKAN?',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🍌'}, {t:'emoji',v:'⚽'} ],
+        ans: 0,
+        ok: 'Betul! Pisang bisa dimakan, bola tidak! 🍌',
+      },
+      {
+        q: 'Mana yang dipakai saat HUJAN?',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🕶️'}, {t:'emoji',v:'☂️'} ],
+        ans: 1,
+        ok: 'Betul! Payung melindungi kita dari hujan! ☂️',
+      },
+      {
+        q: 'Mana yang tinggal di AIR?',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🐬'}, {t:'emoji',v:'🐰'} ],
+        ans: 0,
+        ok: 'Betul! Lumba-lumba tinggal di air! 🐬',
+      },
+      {
+        q: 'Mana yang bisa TERBANG?',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🐢'}, {t:'emoji',v:'🦋'} ],
+        ans: 1,
+        ok: 'Betul! Kupu-kupu punya sayap dan bisa terbang! 🦋',
+      },
+      {
+        q: 'Mana KENDARAAN?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'🚌'}, {t:'emoji',v:'🍕'}, {t:'emoji',v:'🌸'} ],
+        ans: 0,
+        ok: 'Betul! Bus itu kendaraan — bisa mengantar kita jalan-jalan! 🚌',
+      },
+    ]
+  },
+  {
+    id: 'sequence',
+    title: 'Urutan Cerita',
+    emoji: '🌅',
+    colorBg: '#E3F4F8',
+    desc: 'Apa yang terjadi setelahnya?',
+    parentGuide: 'Ceritakan gambar pertama ("Raya bangun tidur…"), lalu tanya: "Setelah itu apa?" Ini melatih Raya berpikir urutan sebab-akibat!',
+    previewEmojis: '🥚 ➡️ 🐣',
+    questions: [
+      {
+        q: 'Setelah bangun tidur, kita…?',
+        visual: '😴 ➡️ ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🪥'}, {t:'emoji',v:'🌙'} ],
+        ans: 0,
+        ok: 'Betul! Setelah bangun, kita sikat gigi! 🪥',
+      },
+      {
+        q: 'Telur menetas jadi apa?',
+        visual: '🥚 ➡️ ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🐘'}, {t:'emoji',v:'🐣'} ],
+        ans: 1,
+        ok: 'Betul! Telur menetas jadi anak ayam! 🐣',
+      },
+      {
+        q: 'Ulat berubah jadi apa?',
+        visual: '🐛 ➡️ ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🦋'}, {t:'emoji',v:'🐟'} ],
+        ans: 0,
+        ok: 'Betul! Ulat berubah jadi kupu-kupu cantik! 🦋',
+      },
+      {
+        q: 'Biji kecil tumbuh jadi apa?',
+        visual: '🌱 ➡️ ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🚗'}, {t:'emoji',v:'🌳'} ],
+        ans: 1,
+        ok: 'Betul! Biji tumbuh jadi pohon besar! 🌳',
+      },
+      {
+        q: 'Kalau lapar, kita…?',
+        visual: '😋 ➡️ ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🍚'}, {t:'emoji',v:'⚽'} ],
+        ans: 0,
+        ok: 'Betul! Kalau lapar, kita makan! 🍚',
+      },
+    ]
+  },
+  {
+    id: 'mixed',
+    title: 'Petualangan Logika',
+    emoji: '🧩',
+    colorBg: '#E8E9F8',
+    desc: 'Campuran semua permainan!',
+    parentGuide: 'Bab terakhir: campuran pola, ukuran, kelompok, dan urutan. Kalau Raya bisa bab ini, dia sudah jago bernalar! Beri tepuk tangan meriah! 👏',
+    previewEmojis: '🧩 🌈 👑',
+    questions: [
+      {
+        q: 'Apa selanjutnya?',
+        visual: '🔵 🔴 🔴 🔵 🔴 🔴 ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🔵'}, {t:'emoji',v:'🔴'} ],
+        ans: 0,
+        ok: 'Betul! Biru, merah, merah… selanjutnya BIRU! 🔵',
+      },
+      {
+        q: 'Mana yang PALING BESAR?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'🦐'}, {t:'emoji',v:'🐋'}, {t:'emoji',v:'🐠'} ],
+        ans: 1,
+        ok: 'Betul! Paus paling besar di laut! 🐋',
+      },
+      {
+        q: 'Mana yang BEDA sendiri?',
+        grid: 'opts-3',
+        opts: [ {t:'emoji',v:'🚂'}, {t:'emoji',v:'🚗'}, {t:'emoji',v:'🍎'} ],
+        ans: 2,
+        ok: 'Betul! Kereta dan mobil itu kendaraan, apel bukan! 🍎',
+      },
+      {
+        q: 'Setelah hujan, muncul apa di langit?',
+        visual: '🌧️ ➡️ ❓',
+        grid: 'opts-2',
+        opts: [ {t:'emoji',v:'🌈'}, {t:'emoji',v:'🌵'} ],
+        ans: 0,
+        ok: 'Betul! Setelah hujan muncul pelangi! 🌈',
+      },
+      {
+        q: 'Angka apa selanjutnya? 1, 2, 3, …',
+        visual: '1️⃣ 2️⃣ 3️⃣ ❓',
+        grid: 'opts-3',
+        opts: [ {t:'num',v:'5'}, {t:'num',v:'4'}, {t:'num',v:'2'} ],
+        ans: 1,
+        ok: 'Betul! Satu, dua, tiga, EMPAT! Raya pintar berhitung! 4️⃣',
       },
     ]
   },
@@ -906,7 +937,7 @@ const state = {
 
 function loadState() {
   try {
-    const d = JSON.parse(localStorage.getItem('rayaVisual') || '{}');
+    const d = JSON.parse(localStorage.getItem('rayaLogic') || '{}');
     state.progress   = d.progress   || {};
     state.totalStars = d.totalStars || 0;
     document.getElementById('starCount').textContent = state.totalStars;
@@ -915,7 +946,7 @@ function loadState() {
 
 function saveState() {
   try {
-    localStorage.setItem('rayaVisual', JSON.stringify({
+    localStorage.setItem('rayaLogic', JSON.stringify({
       progress: state.progress, totalStars: state.totalStars,
     }));
   } catch(e) {}
@@ -1099,7 +1130,7 @@ function showComplete() {
   document.getElementById('starCount').textContent = state.totalStars;
   saveState();
 
-  const badges = ['🌸','🌟','👑'];
+  const badges = ['🧩','🌟','👑'];
   const titles = ['Bagus Raya!', 'Wah, Raya pintar!', 'LUAR BIASA! Raya juara!'];
   const msgs   = [
     `Raya menjawab ${state.score} dari ${total} soal. Yuk coba lagi! 💪`,
@@ -1200,7 +1231,7 @@ function submitBugReport(event) {
   const modal = document.getElementById('bugModal');
   const desc = document.getElementById('bugDescription').value;
   const email = document.getElementById('bugEmail').value || 'tidak-ada@example.com';
-  const courseName = 'Belajar Bersama Raya - Visual';
+  const courseName = 'Logika & Pola Raya';
 
   const formData = new FormData();
   formData.append('_subject', `[Learn with Adhi Bug Report] ${courseName}`);

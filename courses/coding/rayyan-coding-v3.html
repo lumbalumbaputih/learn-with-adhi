@@ -352,7 +352,7 @@
   <div class="chapters-grid" id="chGrid"></div>
 
   <div style="margin-top:18px;text-align:center">
-    <button class="act-btn primary" style="max-width:340px;margin:0 auto;display:block" onclick="show('sSandbox')">✨ Lab Mantra Bebas — Tulis Kodemu!</button>
+    <button class="act-btn primary" style="max-width:340px;margin:0 auto;display:block" onclick="openSandbox()">✨ Lab Mantra Bebas — Tulis Kodemu!</button>
   </div>
 
   <div style="margin-top:20px;text-align:center">
@@ -752,10 +752,21 @@ function runSandbox() {
     new Function('console', code)(fakeConsole);
     out.textContent = logs.length ? logs.join('\n') : '(tidak ada output — pakai console.log untuk menampilkan)';
     out.className = 'sandbox-out ok';
+    /* Keep his latest spell → shown on the "Karya-mu" shelf (rayyan.html) */
+    try { localStorage.setItem('rayyanMantraLab', JSON.stringify({ code: code, when: Date.now() })); } catch (e2) {}
   } catch (e) {
     out.textContent = '⚠️ ' + ((e && e.message) ? e.message : e);
     out.className = 'sandbox-out err';
   }
+}
+
+/* Open the sandbox, restoring his last saved spell */
+function openSandbox() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('rayyanMantraLab') || 'null');
+    if (saved && saved.code) document.getElementById('sandboxCode').value = saved.code;
+  } catch (e) {}
+  show('sSandbox');
 }
 
 function goHome() {
