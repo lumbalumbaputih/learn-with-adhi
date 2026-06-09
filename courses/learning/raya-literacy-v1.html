@@ -937,7 +937,9 @@ const Suara = {
       u.lang='id-ID'; u.rate=rate||0.85; u.pitch=1.1;
       if(!this.voice) this.pickVoice();
       if(this.voice) u.voice=this.voice;
-      speechSynthesis.speak(u);
+      this.u = u; // keep a reference — Chrome GCs unreferenced utterances mid-speech
+      // Chrome/Android swallows speak() in the same tick as cancel(); resume() un-sticks a paused engine
+      setTimeout(()=>{ try{ speechSynthesis.resume(); speechSynthesis.speak(u); }catch(e){} }, 80);
     }catch(e){}
   }
 };
