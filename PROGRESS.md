@@ -19,6 +19,11 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-10
 
+### Improvement Plan v4 — Front Door, Resilience & the Parent Loop 📋 (planning step, no code)
+- Adhi asked for a "make the site better" plan + a better index front page. Full-site audit (index.html, kids.html, manifest, sitemap, dashboard, README) surfaced: a dead **"Language" filter chip** (category doesn't exist → silently empty grid, no empty-state), stale hero counts ("12 courses" vs the real 11 + 3 tools + 2 reports), two dead nav links + **no parent entry point**, the **whole nav hidden on phones**, a hardcoded featured course drifting from the manifest's unused `featured` flag, "✓ Read" only writable by 2 of 11 adult courses, a stale sitemap (4 pages missing), a very stale README, `rayyanWeakSpots` never surfaced to the parent, and **no offline story** for the kids' tablet.
+- Plan v4 written into `CLAUDE.md` (4 pillars): **A** front door & adult library (A1 index refresh 🔜 this session, A2 real completion tracking, A3 README), **B** kids resilience (B1 offline/PWA, B2 device pass, B3 sound settings, B4 Raya photos), **C** parent loop (C1 weak-spots panel — cheapest real win, C2 last-played/weekly), **D** content backlog (F5 story-quest, Raya "Berhitung Lanjut", Gr8/Python).
+- Recommended order: A1 → C1 → B1 → A2+A3 → B3 → B2 → D. Next: ship A1.
+
 ### Plan v3 · F4 — "Masinis Kapi" 🚆 mission simulation ✅
 - `courses/games/rayyan-masinis-v1.html`, key `rayyanMasinis`, 6 missions (Mission 6 = BOSS).
 - Side-scrolling cab-view canvas scene (scrolling clouds, trees, rails, animated train with smoke puffs). Math IS the controls — fuel ÷ distance, passenger loading, time arithmetic, speed calculations — always in the context of running the train. Wrong answer = `consequence-overlay` flash (funny result), not a toast punishment; retry inline.
