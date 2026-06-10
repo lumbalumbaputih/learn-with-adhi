@@ -19,6 +19,13 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-10
 
+### Audio fix — all 4 Plan-v3 courses ✅
+- **Root cause (most likely):** newer browser/OS combinations (tablets on Android/iOS) start `AudioContext` in `suspended` state even when created during a user-gesture handler. Without an explicit `resume()`, tones schedule against time=0 and play nothing.
+- **Fix applied to all 4 files** (`raya-story-v1`, `rayyan-balance-v1`, `raya-tracing-v1`, `rayyan-masinis-v1`): `SFX.init()` now calls `ctx.resume()` immediately after creation; `SFX.play()` re-checks `ctx.state === 'suspended'` and resumes before scheduling tones.
+- **Extra fixes in masinis:** added `CanvasRenderingContext2D.roundRect` polyfill (browser < Chrome 99 / Safari 15.4 / Firefox 112 threw TypeError on every RAF frame, stopping the train animation).
+- **Extra fix in balance:** stray `${id}` in `ontouchend` attribute (was rendering as `'undefined'`; cleaned up).
+- PR #123 deployed green on Vercel.
+
 ### Plan v3 · F4 — "Masinis Kapi" 🚆 mission simulation ✅
 - `courses/games/rayyan-masinis-v1.html`, key `rayyanMasinis`, 6 missions (Mission 6 = BOSS).
 - Side-scrolling cab-view canvas scene (scrolling clouds, trees, rails, animated train with smoke puffs). Math IS the controls — fuel ÷ distance, passenger loading, time arithmetic, speed calculations — always in the context of running the train. Wrong answer = `consequence-overlay` flash (funny result), not a toast punishment; retry inline.

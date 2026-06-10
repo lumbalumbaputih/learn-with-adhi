@@ -519,7 +519,11 @@ function saveState() {
 ════════════════════════════════════════════════ */
 const SFX = {
   ctx: null,
-  init() { if (this.ctx) return; try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {} },
+  init() {
+    if (this.ctx) return;
+    try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+    if (this.ctx) this.ctx.resume().catch(()=>{});
+  },
   tone(freq, dur, vol=0.18, type='sine') {
     if (!this.ctx) return;
     const o = this.ctx.createOscillator(), g = this.ctx.createGain();
@@ -531,6 +535,7 @@ const SFX = {
   },
   play(type) {
     this.init(); if (!this.ctx) return;
+    if (this.ctx.state === 'suspended') this.ctx.resume().catch(()=>{});
     if (type === 'tap')     { this.tone(523,.1,.12,'square'); }
     if (type === 'correct') { this.tone(523,.15,.15); setTimeout(()=>this.tone(659,.15,.15),120); setTimeout(()=>this.tone(784,.3,.15),240); }
     if (type === 'fanfare') { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>this.tone(f,.3,.18),i*110)); }
