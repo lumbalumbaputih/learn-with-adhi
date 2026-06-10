@@ -19,6 +19,9 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-10
 
+### Plan v2 · R4 — Housekeeping ✅ (dead code removed)
+- Deleted `courses/learning/raya-learning-paud-v1.html` (never-wired near-duplicate of the visual course; its `rayaLearning` key was already purged from star lists on 2026-06-04) and `assets/js/sync.js` (duplicated `auth.js`, never initialized) + its lone `<script>` tag in `rayyan.html`. Verified: zero remaining references (`grep sync.js|raya-learning-paud` → 0). Per the SOP this deletion is flagged for Adhi's confirmation in the PR (#118) without blocking.
+
 ### Plan v2 · R3 — New Raya course: "Jelajah Dunia" 🌍 ✅ (world knowledge, her 5th course)
 - `courses/learning/raya-world-v1.html` (key `rayaWorld`): 6 chapters × 5 questions — **Lawan Kata** (big/small, day/night, hot/cold, slow/fast, up/down) → **Tubuhku** (eyes/ears/nose/feet/mouth, parent guide says touch your own!) → **Makanan & Minuman** (fruit/veg/drink/sweet + cow→milk) → **Kendaraan** (sky/water/rails 🚂/two wheels/fire truck) → **Cuaca & Langit** (umbrella, sun, rainbow, stars, cap) → **BOSS Petualangan Dunia** (mixed). Same Raya engine as R2 with full audio from day one; answer positions varied.
 - **Renamed from the planned "Dunia Raya"** — discovered `raya.html` (the hub) is itself titled "Dunia Raya"; the course is "Jelajah Dunia" to avoid the collision.

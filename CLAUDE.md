@@ -83,7 +83,7 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 
 > **Raya gap analysis (2026-06-04):** she was solid on early numeracy + colors/shapes/animals but had **zero literacy** — the single highest-leverage "ahead of peers" skill for a 3–4 yr old. `rayaLiteracy` closes that. ✅ **Logika & Pola** shipped 2026-06-09 (`rayaLogic`). ✅ **Jelajah Dunia** (world knowledge, = plan-v2 R3) shipped 2026-06-10 (`rayaWorld`) — her content ladder is now complete; remaining work is quality (X2 real photos).
 
-- ⚠️ `courses/learning/raya-learning-paud-v1.html` (key `rayaLearning`) is a **near-duplicate** of the visual course (same title, 4/5 same chapters) and was **never wired into `raya.html`**. The phantom `rayaLearning` key was removed from the star lists (`kids.html` / `auth.js` / `dashboard.html`) on 2026-06-04 so the data model matches Raya's 2 live courses. The paud file stays on disk – if you prefer it, swap the `rayaVisual` href in `raya.html` rather than surfacing both.
+- ~~`courses/learning/raya-learning-paud-v1.html`~~ — the never-wired near-duplicate of the visual course was **deleted 2026-06-10** (plan-v2 R4; its phantom `rayaLearning` key was already removed from the star lists on 2026-06-04).
 
 ### Games
 - Petualangan Kereta (choose-your-own-adventure stories)
@@ -254,8 +254,8 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 - **Renamed from the planned "Dunia Raya"** — `raya.html` (the hub) was already titled "Dunia Raya", so the course name would have collided.
 - ⚠️ Shipped with **emoji visuals, not the planned CC0 photos**: the build environment's network allowlist blocks image hosts (Wikimedia/Openverse tested 403). Photo upgrade (`assets/img/raya-world/`) moved into **X2** — needs a session with image-host network access (or Adhi drops photos into the repo).
 
-**R4 · Raya housekeeping**
-- Delete the never-wired duplicate `courses/learning/raya-learning-paud-v1.html` (recommended; confirm with Adhi in the PR, don't block) and the dead `assets/js/sync.js`.
+**R4 · Raya housekeeping** — ✅ **DONE (2026-06-10)**
+- Deleted the never-wired duplicate `courses/learning/raya-learning-paud-v1.html` and the dead `assets/js/sync.js` (+ its unused `<script>` tag in `rayyan.html`). Flagged for Adhi's confirmation in the PR per the SOP.
 
 ### RAYYAN queue
 **Y1 · Rich interactions back-ported to Gr2–4** *(finish the first-impression fix properly)* — ✅ **DONE (2026-06-09)**
@@ -345,5 +345,5 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 - Raya is younger (PAUD) – her content is visual-only, minimal reading, tap/drag interactions
 - **Wiring a new Rayyan (kids) course:** update the `ADVENTURES`/`GAMES` array in `rayyan.html`, add its key to `sumStars([...])` in `kids.html` AND to `PROGRESS_KEYS_BY_TYPE` in `assets/js/auth.js` (for cloud sync) AND to `COURSE_NAMES` in `dashboard.html` (for the parent view), and bump the count pills. (For *adult* courses instead, update `index.html` / `assets/courses.json`.)
 - **2026-06-04 audit:** all 12 Rayyan adventures (incl. the Track C Bridge) + 2 Raya courses are shipped & wired (this doc previously under-counted them). Math answers spot-checked correct. Fixed disguise leaks: the Gr2–5 `<title>` and bug-report `courseName` no longer show "Kelas N" (theme names only). Biggest remaining gaps: the Track D retention layer, and the faked "real code"/"real game" payoffs in coding v3/v5.
-- **Dead code:** `assets/js/sync.js` (family-code sync) duplicates `assets/js/auth.js` (the live per-kid Firestore sync) and is never initialized – safe to delete; kept for now to avoid churn.
+- **Dead code:** ~~`assets/js/sync.js`~~ **deleted 2026-06-10** (plan-v2 R4) — it duplicated `assets/js/auth.js` (the live per-kid Firestore sync) and was never initialized; its lone `<script>` tag in `rayyan.html` was removed with it.
 - **Tutor name:** ✅ unified to **"Kapi"** across all math courses (Gr2–4 were "Kai"/"Nova" → now Kapi; Gr5–7 already Kapi; Gr7 keeps the "Detektif Kapi" themed variant). The internal CSS classes/ids (`kai-name`, `nova-msg`, etc.) were left as-is (not visible to Rayyan).
