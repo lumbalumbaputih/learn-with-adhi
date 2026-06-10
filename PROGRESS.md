@@ -19,6 +19,11 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-10
 
+### Plan v2 · X2b/X2c — Medal cabinet art + space-boss UFO sprite ✅
+- **Medal cabinet (`rayyan.html`):** earned badges now show a Kenney medal image (`medals/medal1–8.png`) with the badge's emoji as a small corner overlay (meaning preserved: 🔥 streak, 👑 master…); locked stays 🔒. `onerror` falls back to the plain emoji.
+- **Gr4 space boss:** the 👽 boss enemy is now a Kenney UFO sprite (`space/ufoRed.png`, emoji fallback via `onerror`); the hit animation works unchanged since it animates the wrapper.
+- Fits the disguise: richer game art, zero new text.
+
 ### Plan v2 · X2a — Kenney CC0 sprites: both runner games get real game art ✅
 - **Assets:** `assets/img/kenney/` (148 KB, 24 files + LICENSE.md) — platformer obstacles/clouds/decor, space enemies/UFOs/meteor, 9 medals. Source: the GitHub mirror of Kenney's CC0 asset pack (github.com/iwenzhou/kenney — kenney.nl itself and all photo hosts are blocked by this env's network allowlist). License verified CC0 1.0 in the mirror; **every image visually reviewed** before adding.
 - **Standalone runner** (`courses/tools/rayyan-train-run-v1.html`): cactus + rock obstacles and the 3 clouds now draw Kenney sprites; **vector art remains as automatic fallback** if images don't load (flaky wifi safe), hitboxes unchanged.

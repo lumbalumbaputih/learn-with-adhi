@@ -282,6 +282,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 **X2 · Asset richness pass 🖼️** *(unlocked by Adhi 2026-06-09: internet images/APIs allowed)* — upgrade visuals where it adds real learning/joy value, one course per step:
 - ✅ **(2026-06-10) Kenney CC0 sprites downloaded** into `assets/img/kenney/` (platformer obstacles/clouds, space enemies/UFOs/meteor, 9 medals) from the GitHub mirror of the Kenney pack (kenney.nl itself + photo hosts are blocked by the env's network allowlist; mirror license verified CC0, every image visually vetted; see `assets/img/kenney/LICENSE.md`).
 - ✅ **(2026-06-10) Both runner games upgraded:** the standalone `rayyan-train-run-v1.html` (sprite cactus/rock obstacles + sprite clouds) and v5's in-course "Kereta Lari" (sprite obstacles). All sprite drawing **falls back to the original vector/rect art if images fail** — hitboxes untouched.
+- ✅ **(2026-06-10) Medal cabinet + Gr4 boss:** earned badges on `rayyan.html` show Kenney medal art (emoji corner-overlay keeps meaning, `onerror` emoji fallback); the Gr4 space boss 👽 is now a Kenney UFO sprite (same fallback).
 - **Raya visual & literacy:** real CC0 photos for animals/objects (emoji → photo where recognition matters) — ⏳ still blocked: no reachable photo host in this env (Pixabay/Pexels/Wikimedia/Openverse all 403). Needs a different env or photos dropped into the repo.
 - Follow the Technical Stack guardrails: download into `assets/`, license-check, never let a lesson depend on live network.
 
