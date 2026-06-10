@@ -246,6 +246,18 @@
     }
     .card-cta { font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--ink); }
 
+    /* ── KARYA-MU (his own creations) ──────────────── */
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    @media (max-width: 760px) { .grid-3 { grid-template-columns: 1fr; gap: 16px; } }
+    .karya-thumb { background: #fff; overflow: hidden; }
+    .karya-thumb canvas { width: 100%; height: 100%; object-fit: contain; }
+    .karya-code {
+      margin: 0; width: 100%; height: 100%; padding: 12px; overflow: hidden;
+      font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; line-height: 1.5;
+      color: #D7FFD7; background: #1A1614; white-space: pre-wrap; word-break: break-word; text-align: left;
+    }
+    .karya-score { font-family: var(--fd); font-weight: 800; font-size: 44px; }
+
     /* FOOTER */
     .footer {
       display: flex; align-items: center; justify-content: space-between;
@@ -407,6 +419,15 @@
     </div>
     <div class="badge-grid" id="badgeGrid"></div>
     <div style="text-align:center"><button class="cert-btn" onclick="openCert()">🏆 Lihat Sertifikatku</button></div>
+  </section>
+
+  <!-- KARYA-MU (hidden until he has made something in the coding courses) -->
+  <section class="section" id="karyaSection" style="display:none">
+    <div class="section-hdr">
+      <h2 class="section-title">🖼️ Karya-mu</h2>
+      <div class="section-sub">Buatan Rayyan sendiri!</div>
+    </div>
+    <div class="grid-3" id="karyaGrid"></div>
   </section>
 
   <!-- CERTIFICATE (printable) -->
@@ -670,6 +691,63 @@
       </a>`).join('');
   }
 
+  /* ── KARYA-MU shelf: surface his own creations from the coding courses ── */
+  function buildKarya() {
+    let art = null, spell = null, lari = null;
+    try { art   = JSON.parse(localStorage.getItem('rayyanKanvasArt')  || 'null'); } catch (e) {}
+    try { spell = JSON.parse(localStorage.getItem('rayyanMantraLab')  || 'null'); } catch (e) {}
+    try { lari  = JSON.parse(localStorage.getItem('rayyanKeretaLari') || 'null'); } catch (e) {}
+    const cards = [];
+    if (art && art.code)       cards.push({ kind: 'art',   href: 'courses/coding/rayyan-coding-v4.html', title: 'Lukisanku 🎨',        blurb: 'Karya terakhirmu di Studio Pelukis Kode.',  cta: 'Lanjut melukis →' });
+    if (spell && spell.code)   cards.push({ kind: 'spell', href: 'courses/coding/rayyan-coding-v3.html', title: 'Mantra Terakhirku ✨', blurb: 'Kode yang kamu tulis di Lab Mantra Bebas.', cta: 'Lanjut merapal →' });
+    if (lari && lari.best > 0) cards.push({ kind: 'lari',  href: 'courses/coding/rayyan-coding-v5.html', title: 'Rekor Kereta Lari 🚂', blurb: 'Skor terbaikmu di game buatanmu sendiri!',  cta: 'Pecahkan rekor →' });
+    if (!cards.length) return;
+    document.getElementById('karyaSection').style.display = '';
+    document.getElementById('karyaGrid').innerHTML = cards.map(c => `
+      <a href="${c.href}" class="card">
+        <div class="card-thumb karya-thumb" data-kind="${c.kind}"></div>
+        <div class="card-body">
+          <div class="card-title">${c.title}</div>
+          <div class="card-blurb">${c.blurb}</div>
+          <div class="card-foot">
+            <div class="card-cta">${c.cta}</div>
+          </div>
+        </div>
+      </a>`).join('');
+    const artBox = document.querySelector('#karyaGrid [data-kind="art"]');
+    if (artBox) {
+      const cv = document.createElement('canvas'); cv.width = 320; cv.height = 280;
+      artBox.appendChild(cv); drawKarya(cv, art.code);
+    }
+    const spellBox = document.querySelector('#karyaGrid [data-kind="spell"]');
+    if (spellBox) {
+      const pre = document.createElement('pre'); pre.className = 'karya-code';
+      pre.textContent = String(spell.code).split('\n').slice(0, 8).join('\n'); // textContent = injection-safe
+      spellBox.appendChild(pre);
+    }
+    const lariBox = document.querySelector('#karyaGrid [data-kind="lari"]');
+    if (lariBox) lariBox.innerHTML = '<div class="karya-score">🏆 ' + (lari.best | 0) + '</div>';
+  }
+
+  /* Same Indonesian drawing helpers as v4's Kanvas Bebas, so his saved art renders identically */
+  function drawKarya(cv, code) {
+    const x = cv.getContext('2d');
+    const WARNA = {merah:'#FF5C39',kuning:'#FFC234',hijau:'#1F9D55',biru:'#1FA9C7',pink:'#E84BA0',ungu:'#2E3192',oranye:'#FF8C42',coklat:'#8B5A2B',hitam:'#1A1614',putih:'#FFFFFF'};
+    const warna = n => WARNA[String(n||'').toLowerCase()] || n || '#1A1614';
+    let shapes = 0;
+    const guard = () => { if (++shapes > 5000) throw new Error('Terlalu banyak bentuk!'); };
+    const helpers = {
+      kotak(px, py, w, h, c)      { guard(); x.fillStyle = warna(c); x.fillRect(px, py, w, h); },
+      lingkaran(px, py, r, c)     { guard(); x.fillStyle = warna(c); x.beginPath(); x.arc(px, py, Math.abs(r), 0, Math.PI*2); x.fill(); },
+      garis(x1, y1, x2, y2, c, t) { guard(); x.strokeStyle = warna(c); x.lineWidth = t || 3; x.beginPath(); x.moveTo(x1, y1); x.lineTo(x2, y2); x.stroke(); },
+      tulis(teks, px, py, uk, c)  { guard(); x.fillStyle = warna(c); x.font = 'bold ' + (uk || 24) + 'px sans-serif'; x.fillText(String(teks), px, py); },
+      acak(a, b)                  { return a + Math.random() * (b - a); },
+      bersihkan()                 { x.clearRect(0, 0, cv.width, cv.height); }
+    };
+    try { new Function(...Object.keys(helpers), '"use strict";\n' + code)(...Object.values(helpers)); }
+    catch (e) { x.font = '48px serif'; x.textAlign = 'center'; x.fillText('🎨', cv.width/2, cv.height/2); }
+  }
+
   /* ── Daily streak (🔥 consecutive days the adventure was opened) ── */
   function updateStreak() {
     const KEY = 'rayyanStreak';
@@ -842,6 +920,7 @@
   updateStreak();
   buildBadges();
   buildQuest();
+  buildKarya();
 </script>
 
 <!-- ── FIREBASE (loaded async, gracefully optional) ─────────────── -->
