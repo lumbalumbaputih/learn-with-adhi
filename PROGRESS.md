@@ -19,6 +19,12 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-10
 
+### Plan v2 · R3 — New Raya course: "Jelajah Dunia" 🌍 ✅ (world knowledge, her 5th course)
+- `courses/learning/raya-world-v1.html` (key `rayaWorld`): 6 chapters × 5 questions — **Lawan Kata** (big/small, day/night, hot/cold, slow/fast, up/down) → **Tubuhku** (eyes/ears/nose/feet/mouth, parent guide says touch your own!) → **Makanan & Minuman** (fruit/veg/drink/sweet + cow→milk) → **Kendaraan** (sky/water/rails 🚂/two wheels/fire truck) → **Cuaca & Langit** (umbrella, sun, rainbow, stars, cap) → **BOSS Petualangan Dunia** (mixed). Same Raya engine as R2 with full audio from day one; answer positions varied.
+- **Renamed from the planned "Dunia Raya"** — discovered `raya.html` (the hub) is itself titled "Dunia Raya"; the course is "Jelajah Dunia" to avoid the collision.
+- ⚠️ **Emoji visuals instead of the planned CC0 photos:** this build environment's network allowlist blocks image hosts (Wikimedia/Openverse → 403 `host_not_allowed`). The photo upgrade (`assets/img/raya-world/`) is folded into X2 for a session with network access.
+- Wired in all 4 places: `raya.html` (COURSES + pills 4→5), `kids.html` (starsKeys + pill), `assets/js/auth.js`, `dashboard.html`. Verified: `node --check` OK, zero leftover `rayaLogic`/🧩 strings in the new file.
+
 ### Plan v2 · Y4 — "Karya-mu" shelf on `rayyan.html` ✅ (ownership → return visits)
 - **Persistence (the missing v5 piece):** Kereta Lari now saves his best score to `rayyanKeretaLari` `{best, when}` on game-over and shows "Rekor: N" on the game-over screen. (v4 `rayyanKanvasArt` and v3 `rayyanMantraLab` were already saving since the Y4-partial step.)
 - **The shelf:** new 🖼️ **Karya-mu** section on `rayyan.html` (after the medal cabinet), hidden until at least one creation exists. Cards: 🎨 his last Kanvas-Bebas painting **re-rendered live** on a mini canvas (same Indonesian helper set as v4, 5000-shape guard, falls back to a 🎨 emoji if his code errors), ✨ his last typed spell as a code snippet (set via `textContent` — injection-safe), 🚂 his best runner score. Each card links back to its course.
