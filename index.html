@@ -13,6 +13,9 @@
   <meta property="og:url" content="https://learnwithadhi.com/" />
   <meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png" />
   <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebSite","name":"Learn with Adhi","url":"https://learnwithadhi.com/","description":"A small library of practical, beginner-friendly courses on AI, coding, climate, design and life. Free, no login.","publisher":{"@type":"Person","name":"Adhi"}}
+  </script>
   <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FBF4E6"/><circle cx="38" cy="50" r="22" fill="none" stroke="%231A1614" stroke-width="14"/><rect x="54" y="28" width="14" height="44" fill="%231A1614"/><circle cx="78" cy="22" r="8" fill="%23FF5C39"/></svg>' />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -451,6 +454,115 @@
       color: var(--ink);
     }
 
+    /* ===== ABOUT ===== */
+    .about {
+      margin-top: 96px;
+      border: 2px solid var(--ink);
+      border-radius: 28px;
+      padding: 56px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      background: var(--paper-2);
+    }
+
+    .about-h3 {
+      font-family: var(--fd);
+      font-weight: 800;
+      font-size: clamp(32px, 4vw, 48px);
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+      margin-bottom: 18px;
+    }
+
+    .about-body { font-size: 16px; line-height: 1.65; color: var(--muted); }
+    .about-body p + p { margin-top: 14px; }
+    .about-body strong { color: var(--ink); }
+
+    .about-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-self: center;
+    }
+
+    .about-fact {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: 14px;
+    }
+
+    .about-fact b {
+      font-family: var(--fd);
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .about-fact span { font-size: 13px; color: var(--muted); }
+
+    /* ===== SEARCH & EMPTY STATE ===== */
+    .courses-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 14px;
+    }
+
+    .search-input {
+      font-family: var(--fm);
+      font-size: 13px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 9px 18px;
+      width: 280px;
+      max-width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .search-input::placeholder { color: var(--muted); }
+
+    .grid-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 24px;
+      border: 2px dashed var(--line);
+      border-radius: 18px;
+      color: var(--muted);
+      font-family: var(--fm);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ===== A11Y ===== */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--fm);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding: 10px 18px;
+      border-radius: 0 0 10px 0;
+      z-index: 100;
+    }
+
+    .skip-link:focus { left: 0; }
+
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 3px solid var(--tomato);
+      outline-offset: 2px;
+    }
+
     /* ===== FOOTER ===== */
     .footer {
       display: flex;
@@ -488,21 +600,28 @@
       .featured-panel { display: none; }
       .grid { grid-template-columns: repeat(2, 1fr); }
       .courses-header { flex-direction: column; align-items: flex-start; }
+      .courses-controls { align-items: flex-start; }
+      .about { grid-template-columns: 1fr; padding: 40px 32px; gap: 32px; }
     }
 
     @media (max-width: 640px) {
       .shell { padding: 0 20px; }
-      .nav-links { display: none; }
+      .nav-links { gap: 16px; }
+      .nav-link.nav-secondary { display: none; }
       .hero { padding-top: 48px; }
       .hero-lead { font-size: 18px; }
       .featured { padding: 36px 28px; margin-top: 60px; }
       .grid { grid-template-columns: 1fr; gap: 20px; }
       .courses-section { margin-top: 60px; }
+      .search-input { width: 100%; }
+      .about { margin-top: 60px; padding: 32px 22px; }
       .footer { flex-direction: column; gap: 16px; text-align: center; }
     }
   </style>
 </head>
 <body>
+
+<a class="skip-link" href="#courses">Skip to courses</a>
 
 <div class="shell">
 
@@ -523,11 +642,10 @@
       </a>
       <div class="nav-links">
         <a href="#courses" class="nav-link active">Courses</a>
-        <a href="#tools" class="nav-link">Tools</a>
         <a href="kids.html" class="nav-link">Kids ✦</a>
-        <a href="#" class="nav-link">Notes</a>
-        <a href="#" class="nav-link">About</a>
-        <a href="design-system/adhi-design-system.html" class="nav-link" target="_blank" rel="noopener noreferrer">System ↗</a>
+        <a href="dashboard.html" class="nav-link nav-secondary">Parents</a>
+        <a href="#about" class="nav-link nav-secondary">About</a>
+        <a href="design-system/adhi-design-system.html" class="nav-link nav-secondary" target="_blank" rel="noopener noreferrer">System ↗</a>
       </div>
     </nav>
   </header>
@@ -554,8 +672,8 @@
       <h1 class="hero-h1">Learn something<br><em>worth knowing.</em></h1>
       <p class="hero-lead">Clear, bold, and beginner-friendly. Pick a topic, go deep – free and no login required.</p>
       <div class="hero-meta">
-        <span><strong>12 courses</strong> live</span>
-        <span>3 tools &amp; games</span>
+        <span id="metaCounts"><strong>11 courses</strong> · 3 tools · 2 research reports</span>
+        <span id="metaDone" style="display:none"></span>
         <span>Last updated · June 2026</span>
         <span>Free · No login</span>
       </div>
@@ -566,9 +684,9 @@
   <section class="featured" aria-label="Featured course">
     <div>
       <div class="featured-label">Featured · Start here</div>
-      <h2 class="featured-h2">Bridging the AI Gap</h2>
-      <p class="featured-body">Build real AI literacy and useful workflows for everyday work. No coding required – just clarity and five focused days.</p>
-      <a href="courses/ai/ai-capability-course.html" class="featured-cta">Start the course →</a>
+      <h2 class="featured-h2" id="featTitle">Bridging the AI Gap</h2>
+      <p class="featured-body" id="featBody">Build real AI literacy and useful workflows for everyday work. No coding required – just clarity and five focused days.</p>
+      <a href="courses/ai/ai-capability-course.html" class="featured-cta" id="featCta">Start the course →</a>
     </div>
     <div class="featured-panel" aria-hidden="true">
       <!-- FigureReader illustration -->
@@ -591,7 +709,7 @@
       <div>
         <div style="font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(26,22,20,.6);margin-bottom:10px">Zona Belajar Khusus ✦</div>
         <div style="font-family:var(--fd);font-weight:800;font-size:clamp(22px,3.5vw,36px);letter-spacing:-.03em;line-height:1.05;color:var(--ink);margin-bottom:8px">Rayyan <span style="color:#FF5C39">&amp;</span> Raya's Learning World</div>
-        <div style="font-size:15px;color:rgba(26,22,20,.7)">Kursus, games, dan petualangan – semuanya ada di sini. Dibuat khusus untuk mereka. 🚀</div>
+        <div style="font-size:15px;color:rgba(26,22,20,.7)">14 petualangan Rayyan · 7 kursus Raya · 3 game seru – dibuat khusus untuk mereka. 🚀</div>
       </div>
       <div style="font-size:52px;flex-shrink:0;line-height:1">🧒👧</div>
     </a>
@@ -601,23 +719,39 @@
   <section class="courses-section" id="courses" aria-label="All courses and tools">
     <div class="courses-header">
       <h3 class="courses-h3">All courses</h3>
-      <div class="filter-chips" role="group" aria-label="Filter by topic">
-        <button class="chip active" data-filter="all">All</button>
-        <button class="chip" data-filter="Foundations">Foundations</button>
-        <button class="chip" data-filter="Language">Language</button>
-        <button class="chip" data-filter="Practice">Practice</button>
-        <button class="chip" data-filter="Life">Life</button>
-        <button class="chip" data-filter="Tools" id="tools">Tools</button>
-        <button class="chip" data-filter="Research">Research</button>
+      <div class="courses-controls">
+        <input type="search" id="courseSearch" class="search-input" placeholder="Search courses…" aria-label="Search courses" autocomplete="off">
+        <div class="filter-chips" id="filterChips" role="group" aria-label="Filter by topic">
+          <button class="chip active" data-filter="all" aria-pressed="true">All</button>
+        </div>
       </div>
     </div>
     <div class="grid" id="courseGrid" aria-live="polite"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about" aria-label="About Learn with Adhi">
+    <div>
+      <h3 class="about-h3">Made slowly,<br>for people I love.</h3>
+      <div class="about-body">
+        <p>Hi — I'm <strong>Adhi</strong>. This site began as a way to teach the things I kept explaining twice: AI tools, coding, carbon accounting, design. Every course is a single page you can finish in a sitting or two — <strong>free, no login, no ads</strong>.</p>
+        <p>The other half of the site is a <strong>learning world for my kids</strong>, Rayyan &amp; Raya — math and coding that feel like train journeys, space missions, and magic storybooks, in Bahasa Indonesia.</p>
+        <p>Everything here is plain HTML — fast, readable, built to last. Made slowly in Melbourne. 🌏</p>
+      </div>
+    </div>
+    <div class="about-facts">
+      <div class="about-fact"><b id="aboutCount">16</b><span>courses, tools &amp; reports — each one a single fast page</span></div>
+      <div class="about-fact"><b>21+</b><span>kids' adventures &amp; games in Bahasa Indonesia</span></div>
+      <div class="about-fact"><b>0</b><span>logins, paywalls or ads — learning should be free</span></div>
+    </div>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer">
     <span>© 2026 Learn with Adhi · Made slowly in Melbourne</span>
     <div class="footer-links">
+      <a href="dashboard.html" class="footer-link">Parents</a>
+      <a href="#about" class="footer-link">About</a>
       <a href="design-system/adhi-design-system.html" class="footer-link" target="_blank" rel="noopener noreferrer">Design system ↗</a>
     </div>
   </footer>
@@ -650,10 +784,16 @@
 
   // Hub renders from /assets/courses.json – the single source of truth.
   // The manifest schema uses { category, tags } per item; we adapt to the
-  // existing { tag, meta } shape used by the cards below.
+  // existing { tag, meta } shape used by the cards below. Filter chips,
+  // hero counts and the featured panel all derive from the manifest too,
+  // so adding a course (or a whole category) only touches courses.json.
+
+  const CATEGORY_ORDER = ['Foundations', 'Practice', 'Life', 'Tools', 'Research'];
 
   let ALL = [];
+  let loaded = false;
   let currentFilter = 'all';
+  let searchTerm = '';
 
   function adapt(item) {
     return {
@@ -674,11 +814,49 @@
     catch (_) { return new Set(); }
   }
 
-  function renderCards(filter) {
-    currentFilter = filter;
-    const items = filter === 'all' ? ALL : ALL.filter(c => c.tag === filter);
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, ch =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  }
+
+  function buildChips() {
+    const present = [...new Set(ALL.map(c => c.tag))];
+    const cats = CATEGORY_ORDER.filter(c => present.includes(c))
+      .concat(present.filter(c => !CATEGORY_ORDER.includes(c)).sort());
+    const box = document.getElementById('filterChips');
+    box.innerHTML = ['all', ...cats].map(c => {
+      const on = c === currentFilter;
+      return `<button class="chip${on ? ' active' : ''}" data-filter="${esc(c)}" aria-pressed="${on}">${c === 'all' ? 'All' : esc(c)}</button>`;
+    }).join('');
+    box.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        currentFilter = chip.dataset.filter;
+        box.querySelectorAll('.chip').forEach(c => {
+          const on = c === chip;
+          c.classList.toggle('active', on);
+          c.setAttribute('aria-pressed', on);
+        });
+        renderCards();
+      });
+    });
+  }
+
+  function matches(item) {
+    if (currentFilter !== 'all' && item.tag !== currentFilter) return false;
+    if (!searchTerm) return true;
+    const hay = [item.title, item.blurb, item.tag, ...item.meta].join(' ').toLowerCase();
+    return searchTerm.split(/\s+/).every(w => hay.includes(w));
+  }
+
+  function renderCards() {
+    if (!loaded) return;
+    const items = ALL.filter(matches);
     const done = completedSet();
     const grid = document.getElementById('courseGrid');
+    if (!items.length) {
+      grid.innerHTML = `<div class="grid-empty">Nothing matches${searchTerm ? ` “${esc(searchTerm)}”` : ''} here — try another topic or clear the search.</div>`;
+      return;
+    }
     grid.innerHTML = items.map(item => {
       const bg = ACCENT_BG[item.accent] || '#1A1614';
       const fg = ACCENT_FG[item.accent] || '#FBF4E6';
@@ -704,19 +882,65 @@
     }).join('');
   }
 
-  document.querySelectorAll('.chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      renderCards(chip.dataset.filter);
-    });
+  function updateHero(manifest) {
+    const tools = manifest.filter(m => m.category === 'Tools').length;
+    const research = manifest.filter(m => m.category === 'Research').length;
+    const courses = manifest.length - tools - research;
+    document.getElementById('metaCounts').innerHTML =
+      `<strong>${courses} courses</strong> · ${tools} tools · ${research} research reports`;
+    const aboutCount = document.getElementById('aboutCount');
+    if (aboutCount) aboutCount.textContent = manifest.length;
+    const finished = [...completedSet()].filter(id => manifest.some(m => m.id === id)).length;
+    if (finished > 0) {
+      const el = document.getElementById('metaDone');
+      el.innerHTML = `<strong>✓ ${finished}</strong> finished on this device`;
+      el.style.display = '';
+    }
+  }
+
+  function updateFeatured(manifest) {
+    const f = manifest.find(m => m.featured);
+    if (!f) return;
+    document.getElementById('featTitle').textContent = f.title;
+    document.getElementById('featBody').textContent = f.blurb;
+    const cta = document.getElementById('featCta');
+    cta.href = f.path;
+    cta.textContent = (f.category === 'Tools' ? 'Open the tool' : 'Start the course') + ' →';
+  }
+
+  function injectItemList(manifest) {
+    const data = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: manifest.map((m, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: m.title,
+        url: 'https://learnwithadhi.com/' + m.path,
+      })),
+    };
+    const s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify(data);
+    document.head.appendChild(s);
+  }
+
+  const searchBox = document.getElementById('courseSearch');
+  searchBox.addEventListener('input', () => {
+    searchTerm = searchBox.value.trim().toLowerCase();
+    renderCards();
   });
 
   fetch('/assets/courses.json', { cache: 'no-cache' })
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(manifest => {
       ALL = manifest.map(m => Object.assign(adapt(m), { id: m.id }));
-      renderCards(currentFilter);
+      loaded = true;
+      buildChips();
+      renderCards();
+      updateHero(manifest);
+      updateFeatured(manifest);
+      injectItemList(manifest);
     })
     .catch(() => {
       document.getElementById('courseGrid').innerHTML =
