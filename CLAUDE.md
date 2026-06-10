@@ -71,7 +71,9 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 | Buat Game-mu Sendiri 🎮 | Make Your Own Game | Game loop, sprite/input, spawning, collision, score/state | `courses/coding/rayyan-coding-v5.html` | `rayyanCoding5` | ✅ Lessons fill-in-the-blank, **PLUS a real playable "Kereta Lari" game** (🎮 Mainkan Game-mu! — canvas, jump, spawning obstacles, collision, score, game-over/restart) the kid plays & replays — the "build a game" payoff is now real |
 | Robot Ahli Matematika 🤖 (Track C Bridge) | Use code to DO math | Shapes & angles, number patterns, order-of-ops, coordinates + `y=2x`, solve-for-X | `courses/coding/rayyan-bridge-v1.html` | `rayyanBridge` | ✅ Done (4 interactive canvases + Gr7-style boss + celebration animation; MC de-biased) |
 
-→ All 5 coding rungs **+ the Track C "Bridge"** shipped & wired — **Rayyan now has 12 adventures.** v3/v5 lessons are still fill-in-the-blank but now have the **real** JS sandbox + playable game alongside them; the Bridge proves he can use code to *do* math.
+→ All 5 coding rungs **+ the Track C "Bridge" + Plan v3 F2/F4** shipped — **Rayyan now has 14 adventures.**
+- **Timbangan Misteri ⚖️** (`courses/math/rayyan-balance-v1.html`, key `rayyanBalance`) – ✅ **balance lab** (2026-06-10): 6 levels, SVG beam tilt = feedback, drag weights, discover solve-for-X by feel.
+- **Masinis Kapi 🚆** (`courses/games/rayyan-masinis-v1.html`, key `rayyanMasinis`) – ✅ **mission simulation** (2026-06-10): 6 missions, scrolling cab-view canvas, math IS the controls (fuel/time/passengers), no "Salah!" toasts — wrong = funny train consequence. v3/v5 lessons are still fill-in-the-blank but now have the **real** JS sandbox + playable game alongside them; the Bridge proves he can use code to *do* math.
 
 ### Raya's Content (younger sibling, ~3–4 years old)
 - **Matematika Raya** (`courses/math/raya-math-v1.html`, key `rayaMath`) – visual, tap-to-count.
@@ -79,6 +81,8 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 - **Logika & Pola Raya 🧩** (`courses/learning/raya-logic-v1.html`, key `rayaLogic`) – ✅ **early reasoning** (2026-06-09): 6 chapters × 5 q — patterns (what-comes-next) → size compare → odd-one-out → categories → 2-step sequencing → mixed review. Audio built-in from day one.
 - **Jelajah Dunia 🌍** (`courses/learning/raya-world-v1.html`, key `rayaWorld`) – ✅ **world knowledge** (2026-06-10): 6 chapters × 5 q — Lawan Kata (opposites) → Tubuhku (body parts) → Makanan & Minuman → Kendaraan → Cuaca & Langit → BOSS mixed review. Emoji visuals for now (CC0-photo upgrade = X2; build env blocked image hosts). Renamed from "Dunia Raya" to avoid colliding with the hub page title.
 - 🔊 **All 5 Raya courses have sound (2026-06-09/10):** SFX jingles + Web-Speech read-aloud (`id-ID`) with a "🔊 Dengarkan" button, auto-read questions, and spoken answer feedback — Raya can now play without a parent narrating. (Hardened 2026-06-09: deferred `speak()` after `cancel()` + utterance ref, fixing silent playback on Chrome/Android.)
+- **Buku Cerita Ajaib 📖** (`courses/learning/raya-story-v1.html`, key `rayaStory`) – ✅ **interactive storybook** (2026-06-10): 10-page tap-along story *Kiki si Kucing Naik Kereta* 🐱🚂, 4 interaction types (tap-reveal/find/count/choice), no fail state, Suara auto read-aloud.
+- **Papan Tulis Ajaib ✏️** (`courses/learning/raya-tracing-v1.html`, key `rayaTracing`) – ✅ **letter tracing** (2026-06-10): 4 chapters (vowels + R-A-Y-A + B-C-D + H-K), forgiving 70% path-coverage detection, celebrate popup on each letter, no fail state.
 - **Belajar Huruf Bersama Raya 📖** (`courses/learning/raya-literacy-v1.html`, key `rayaLiteracy`) – ✅ **literacy / pre-reading** (the big peer-gap closer): **9 chapters covering all 26 letters** — Vokal A-I-U-E-O → Konsonan B-G → H-M → N-T → Q-Z (recognition, each with an example word) → Bunyi Awal (beginning sounds, 🍎→A, 12q) → Besar & Kecil (upper/lowercase drag-match, all 26) → Kata Pertama (first words, IBU→👩, 10q) → BOSS Petualangan Huruf (mixed review). 66 questions, same Raya engine (parent read-aloud, stars, confetti, tap/drag). Wired in all 4 places (`raya.html`, `kids.html`, `auth.js`, `dashboard.html`).
 
 > **Raya gap analysis (2026-06-04):** she was solid on early numeracy + colors/shapes/animals but had **zero literacy** — the single highest-leverage "ahead of peers" skill for a 3–4 yr old. `rayaLiteracy` closes that. ✅ **Logika & Pola** shipped 2026-06-09 (`rayaLogic`). ✅ **Jelajah Dunia** (world knowledge, = plan-v2 R3) shipped 2026-06-10 (`rayaWorld`) — her content ladder is now complete; remaining work is quality (X2 real photos).
@@ -330,7 +334,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 
 ### The five formats (each pilot = one SOP step: ship → verify → docs → commit/push)
 
-**F1 · Raya: "Buku Cerita Ajaib" 📖✨ — interactive read-aloud storybook** *(pilot first — highest leverage)*
+**F1 · Raya: "Buku Cerita Ajaib" 📖✨ — interactive read-aloud storybook** *(pilot first — highest leverage)* ✅ **DONE (2026-06-10)**
 - A tap-along picture book, NOT a quiz: full-screen emoji-scene pages, auto read-aloud (reuse the
   hardened `Suara` module), one gentle interaction per page ("tap the red balloon", "tap each duck
   to count them — *satu, dua, tiga!*"), **no wrong answers, no fail state** — every page ends in
@@ -342,7 +346,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
   stars for its single "chapter" (keeps the standard `{totalStars, progress}` shape so all 4 wiring
   points work unchanged; the kid sees stickers, not scores).
 
-**F2 · Rayyan: "Timbangan Misteri" ⚖️ — equation-balance manipulative lab** *(deepest learning win)*
+**F2 · Rayyan: "Timbangan Misteri" ⚖️ — equation-balance manipulative lab** *(deepest learning win)* ✅ **DONE (2026-06-10)**
 - A real direct-manipulation toy: a balance scale he keeps level by dragging weights and mystery
   boxes (❓ = X) onto pans. Levels climb from numeric balancing → find the hidden box's weight →
   *remove the same thing from both sides* — he discovers **solving for X by feel**, the intuition
@@ -353,7 +357,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
   pattern as the existing `drag-sort`); scale tilt = CSS transform on a beam, weights re-parent
   between pans.
 
-**F3 · Raya: "Papan Tulis Ajaib" ✏️ — letter-tracing board** *(closes the literacy loop)*
+**F3 · Raya: "Papan Tulis Ajaib" ✏️ — letter-tracing board** *(closes the literacy loop)* ✅ **DONE (2026-06-10)**
 - Her literacy course teaches letter *recognition*; this adds **pre-writing**: trace letters with a
   finger on a canvas over a dotted guide with a start-arrow. Forgiving detection (sample the guide
   path; stroke must cover ~80% of points within a fat radius — no order strictness beyond
@@ -361,7 +365,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 - Scope: the 5 vowels + R-A-Y (her name!) first = 8 letters in v1; chapters = letter groups.
 - File `courses/learning/raya-tracing-v1.html`, key `rayaTracing`.
 
-**F4 · Rayyan: "Masinis Kapi" 🚆 — mission-simulation lesson** *(the big one — build after F1–F3)*
+**F4 · Rayyan: "Masinis Kapi" 🚆 — mission-simulation lesson** ✅ **DONE (2026-06-10)**
 - He IS the train driver: a side-scrolling cab view where missions *require* math to proceed —
   fuel purchase (rate × distance), departure-board arithmetic (elapsed time), passenger loading
   (multiplication/division into carriages), speed-limit zones (compare/round). The math is the

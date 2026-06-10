@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Masinis Kapi 🚆 · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%232E3192"/><text y=".9em" font-size="75" x="10">🚆</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink:#E84BA0; --mango:#FFC234; --forest:#1F9D55; --sea:#1FA9C7;
+      --tomato:#FF5C39; --indigo:#2E3192;
+      --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+      --muted:#6B6259;
+      --train:#2E3192; --rail:#8B7355; --sky:#D0EEFF; --ground:#8B5E3C;
+      --fd:'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb:'Inter',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{-webkit-font-smoothing:antialiased;}
+    body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+    /* HEADER */
+    .hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:2.5px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:100;}
+    .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;}
+    .hdr-word{font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-0.03em;}
+    .hdr-stars{background:var(--indigo);color:white;border:2px solid var(--ink);border-radius:999px;padding:6px 14px;font-family:var(--fd);font-weight:800;font-size:16px;display:flex;align-items:center;gap:6px;}
+
+    /* SCREENS */
+    .screen{display:none;} .screen.active{display:block;}
+
+    /* HOME */
+    .home-hero{padding:28px 20px 16px;text-align:center;}
+    .home-emoji{font-size:80px;line-height:1;margin-bottom:10px;}
+    .home-title{font-family:var(--fd);font-weight:800;font-size:26px;letter-spacing:-0.02em;margin-bottom:8px;}
+    .home-sub{font-size:15px;color:var(--muted);max-width:320px;margin:0 auto 24px;line-height:1.5;}
+    .mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px 28px;max-width:480px;margin:0 auto;}
+    .mission-card{border:3px solid var(--ink);border-radius:18px;padding:16px 14px;background:white;cursor:pointer;text-align:left;box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s;position:relative;}
+    .mission-card:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink);}
+    .mission-card.locked{opacity:.4;cursor:default;}
+    .mission-card.done{border-color:var(--forest);}
+    .mc-num{font-family:var(--fd);font-weight:800;font-size:13px;color:var(--muted);margin-bottom:4px;}
+    .mc-title{font-family:var(--fd);font-weight:800;font-size:15px;margin-bottom:4px;}
+    .mc-desc{font-size:12px;color:var(--muted);line-height:1.4;}
+    .mc-stars{position:absolute;top:12px;right:12px;font-size:14px;}
+
+    /* ═══ CAB VIEW ═══ */
+    .cab-wrap{max-width:520px;margin:0 auto;}
+
+    /* scene: side-scrolling window */
+    .scene-window{
+      margin:0 16px;
+      border:3px solid var(--ink);border-radius:20px;
+      background:var(--sky);box-shadow:5px 5px 0 var(--ink);
+      overflow:hidden;height:180px;position:relative;
+    }
+    #sceneCanvas{display:block;width:100%;height:100%;}
+
+    /* mission status bar */
+    .status-bar{
+      display:flex;align-items:center;gap:10px;
+      padding:10px 16px 4px;flex-wrap:wrap;
+    }
+    .status-chip{
+      background:white;border:2px solid var(--ink);border-radius:999px;
+      padding:5px 12px;font-family:var(--fd);font-weight:800;font-size:13px;
+      display:flex;align-items:center;gap:4px;
+    }
+    .status-chip.speed { background:#E8E9F8; }
+    .status-chip.time  { background:#FFF5D6; }
+    .status-chip.passengers { background:#E3F5EB; }
+
+    /* MATH PANEL — the controls */
+    .math-panel{
+      margin:8px 16px 6px;
+      border:3px solid var(--ink);border-radius:18px;
+      background:white;box-shadow:4px 4px 0 var(--ink);
+      overflow:hidden;
+    }
+    .mp-hdr{
+      background:var(--indigo);color:white;
+      padding:10px 16px;
+      font-family:var(--fd);font-weight:800;font-size:15px;
+      display:flex;align-items:center;gap:6px;
+    }
+    .mp-body{padding:14px 16px;}
+    .mp-question{font-family:var(--fd);font-weight:700;font-size:16px;margin-bottom:6px;line-height:1.4;}
+    .mp-sub{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+
+    /* number input row */
+    .mp-input-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+    .mp-input{
+      font-size:22px;font-family:var(--fd);font-weight:800;
+      border:3px solid var(--ink);border-radius:12px;padding:10px 14px;
+      width:110px;text-align:center;background:var(--paper);
+    }
+    .mp-input:focus{outline:none;border-color:var(--indigo);}
+    .mp-go{
+      background:var(--indigo);color:white;
+      border:3px solid var(--ink);border-radius:12px;padding:12px 20px;
+      font-family:var(--fd);font-weight:800;font-size:16px;
+      box-shadow:3px 3px 0 var(--ink);transition:transform .12s,box-shadow .12s;
+    }
+    .mp-go:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+
+    /* choice buttons */
+    .mp-choices{display:flex;gap:10px;flex-wrap:wrap;}
+    .mp-choice{
+      flex:1;min-width:80px;
+      border:3px solid var(--ink);border-radius:14px;padding:12px 10px;
+      font-family:var(--fd);font-weight:800;font-size:17px;text-align:center;
+      background:var(--paper);box-shadow:3px 3px 0 var(--ink);
+      cursor:pointer;transition:transform .12s,box-shadow .12s,background .12s;
+    }
+    .mp-choice:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+    .mp-choice.correct{background:#E3F5EB;border-color:var(--forest);}
+    .mp-choice.wrong{background:#FFE8E3;border-color:var(--tomato);}
+
+    /* feedback */
+    .mp-feedback{
+      margin:6px 16px 0;padding:10px 14px;border-radius:12px;
+      font-family:var(--fd);font-weight:700;font-size:14px;
+      border:2.5px solid transparent;min-height:40px;
+      transition:all .2s;display:flex;align-items:center;gap:6px;
+    }
+    .mp-feedback.ok  {background:#E3F5EB;border-color:var(--forest);color:var(--forest);}
+    .mp-feedback.bad {background:#FFE8E3;border-color:var(--tomato);color:var(--tomato);}
+    .mp-feedback.info{background:#FFF5D6;border-color:var(--mango);color:#996600;}
+
+    /* consequence overlay */
+    .consequence-overlay{
+      position:absolute;inset:0;background:rgba(255,92,57,.55);
+      display:flex;align-items:center;justify-content:center;
+      font-size:48px;z-index:10;
+      animation:flash .6s ease forwards;
+      pointer-events:none;
+    }
+    @keyframes flash{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
+
+    /* mission complete */
+    .mc-wrap{max-width:400px;margin:0 auto;padding:32px 24px;text-align:center;}
+    .mc-badge{font-size:80px;margin-bottom:10px;}
+    .mc-title-big{font-family:var(--fd);font-weight:800;font-size:26px;margin-bottom:8px;}
+    .mc-stars{font-size:38px;margin:12px 0;}
+    .mc-msg{font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+    .mc-btns{display:flex;flex-direction:column;gap:10px;align-items:center;}
+    .mc-btn{border:3px solid var(--ink);border-radius:14px;padding:14px 36px;font-family:var(--fd);font-weight:800;font-size:18px;box-shadow:4px 4px 0 var(--ink);width:100%;max-width:300px;}
+    .mc-btn.primary{background:var(--indigo);color:white;}
+    .mc-btn.secondary{background:var(--paper-2);color:var(--ink);}
+
+    #confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:300;}
+  </style>
+</head>
+<body>
+<canvas id="confettiCanvas"></canvas>
+
+<header class="hdr">
+  <a href="/rayyan.html" class="hdr-brand">
+    <span class="hdr-word">🚆 Masinis Kapi</span>
+  </a>
+  <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+</header>
+
+<!-- HOME -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="home-emoji">🚆👨‍✈️</div>
+    <div class="home-title">Masinis Kapi</div>
+    <div class="home-sub">Kamu adalah masinis KAI! Selesaikan misi dengan menjawab soal yang menjadi kontrol kereta. Salah sedikit? Kereta lewat stasiun — coba lagi!</div>
+  </div>
+  <div class="mission-grid" id="missionGrid"></div>
+</div>
+
+<!-- CAB / MISSION -->
+<div class="screen" id="sCab">
+  <div class="cab-wrap">
+    <!-- scene window -->
+    <div class="scene-window">
+      <canvas id="sceneCanvas"></canvas>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-chip speed">🚄 <span id="speedChip">60</span> km/j</div>
+      <div class="status-chip time">🕐 <span id="timeChip">08:00</span></div>
+      <div class="status-chip passengers">👥 <span id="passChip">0</span> penumpang</div>
+    </div>
+
+    <!-- math control panel -->
+    <div class="math-panel">
+      <div class="mp-hdr" id="mpHdr">🎮 Kontrol Kereta</div>
+      <div class="mp-body">
+        <div class="mp-question" id="mpQ"></div>
+        <div class="mp-sub"      id="mpSub"></div>
+        <div id="mpAnswerArea"></div>
+      </div>
+    </div>
+
+    <div class="mp-feedback" id="mpFeedback"></div>
+  </div>
+</div>
+
+<!-- MISSION COMPLETE -->
+<div class="screen" id="sMissionComplete">
+  <div class="mc-wrap">
+    <div class="mc-badge" id="mcBadge">🌟</div>
+    <div class="mc-title-big" id="mcTitle">Misi Selesai!</div>
+    <div class="mc-stars" id="mcStars">⭐⭐⭐</div>
+    <div class="mc-msg" id="mcMsg"></div>
+    <div class="mc-btns">
+      <button class="mc-btn primary"    id="mcNextBtn" onclick="mcNext()">Misi Berikutnya →</button>
+      <button class="mc-btn secondary"  onclick="goHome()">🗺️ Pilih Misi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   MISSIONS DATA
+   Each mission = { id, emoji, title, desc, steps[] }
+   Each step = {
+     type: 'choice' | 'input',
+     controlLabel: string (what control this represents),
+     question: string,
+     sub: string (context),
+     // for 'choice': opts:[{label,val}], correct index
+     // for 'input': answer number, unit string
+     consequence: string (what happens on wrong — show in scene),
+     ok: string (what happens when correct),
+   }
+════════════════════════════════════════════════ */
+const MISSIONS = [
+  {
+    id: 'm1', emoji: '🛤️', title: 'Misi 1 – Pilih Jalur',
+    desc: 'Masuk stasiun pertama! Pilih kecepatan dan jalur yang benar.',
+    steps: [
+      {
+        type: 'choice',
+        controlLabel: '🚦 Sinyal Masuk Stasiun',
+        question: 'Sinyal hijau artinya boleh jalan. Ada berapa sinyal hijau?',
+        sub: '🟢 🟢 🔴 🟢 — hitung yang hijau!',
+        opts: [{label:'2',val:2},{label:'3',val:3},{label:'4',val:4}],
+        correct: 1,
+        consequence: '💥 Kereta masuk jalur salah!',
+        ok: '✅ Jalur benar! Kereta masuk stasiun dengan mulus.',
+      },
+      {
+        type: 'input',
+        controlLabel: '⏱️ Hitung Waktu Tiba',
+        question: 'Kereta berangkat jam 08:00, perjalanan 2 jam. Tiba jam berapa?',
+        sub: '08 + 2 = ? (isi angka jam tiba)',
+        answer: 10,
+        unit: ':00',
+        consequence: '⏰ Kereta tiba di waktu yang salah!',
+        ok: '✅ Tepat! Tiba jam 10:00. Penumpang senang!',
+      },
+      {
+        type: 'choice',
+        controlLabel: '👥 Pintu Gerbong',
+        question: 'Tiap gerbong muat 10 penumpang. Ada 3 gerbong. Berapa total penumpang?',
+        sub: '3 × 10 = ?',
+        opts: [{label:'20',val:20},{label:'30',val:30},{label:'13',val:13}],
+        correct: 1,
+        consequence: '😓 Penumpang tidak muat semua!',
+        ok: '✅ 30 penumpang masuk! Berangkat!',
+      },
+    ],
+  },
+  {
+    id: 'm2', emoji: '⛽', title: 'Misi 2 – Isi Bahan Bakar',
+    desc: 'Sebelum berangkat, hitung bahan bakar yang dibutuhkan!',
+    steps: [
+      {
+        type: 'input',
+        controlLabel: '⛽ Kalkulator Bahan Bakar',
+        question: 'Jarak ke kota berikutnya 120 km. Kereta butuh 2 liter per 10 km. Berapa liter yang dibutuhkan?',
+        sub: '120 ÷ 10 = 12 segmen × 2 liter = ? liter',
+        answer: 24,
+        unit: ' liter',
+        consequence: '💨 Kereta kehabisan bahan bakar di tengah jalan!',
+        ok: '✅ 24 liter cukup untuk 120 km!',
+      },
+      {
+        type: 'choice',
+        controlLabel: '💰 Bayar di SPKLU',
+        question: 'Harga bahan bakar Rp 3.000 per liter. Kita butuh 24 liter. Lebih dekat ke berapa?',
+        sub: '24 × 3.000 = 72.000. Pilih estimasi terdekat:',
+        opts: [{label:'Rp 50 rb',val:50000},{label:'Rp 72 rb',val:72000},{label:'Rp 100 rb',val:100000}],
+        correct: 1,
+        consequence: '💸 Kasir salah terima uang!',
+        ok: '✅ Rp 72.000 pas! Bahan bakar penuh.',
+      },
+      {
+        type: 'input',
+        controlLabel: '🕐 Waktu Pengisian',
+        question: 'Mengisi 24 liter, kecepatan 8 liter per menit. Berapa menit?',
+        sub: '24 ÷ 8 = ?',
+        answer: 3,
+        unit: ' menit',
+        consequence: '⏰ Waktu pengisian salah — terlambat berangkat!',
+        ok: '✅ 3 menit! Tepat waktu.',
+      },
+    ],
+  },
+  {
+    id: 'm3', emoji: '👥', title: 'Misi 3 – Muat Penumpang',
+    desc: 'Distribusikan penumpang ke gerbong yang benar!',
+    steps: [
+      {
+        type: 'choice',
+        controlLabel: '🚃 Gerbong Penuh?',
+        question: 'Gerbong A sudah ada 7 orang, kapasitas 10. Berapa sisa tempat?',
+        sub: '10 − 7 = ?',
+        opts: [{label:'2',val:2},{label:'3',val:3},{label:'4',val:4}],
+        correct: 1,
+        consequence: '😰 Gerbong penuh tapi orang masih masuk!',
+        ok: '✅ Masih ada 3 tempat kosong!',
+      },
+      {
+        type: 'input',
+        controlLabel: '📊 Total Penumpang',
+        question: 'Gerbong A = 10, Gerbong B = 8, Gerbong C = 6. Total berapa?',
+        sub: '10 + 8 + 6 = ?',
+        answer: 24,
+        unit: ' orang',
+        consequence: '📋 Manifest penumpang salah!',
+        ok: '✅ 24 penumpang, semua tercatat!',
+      },
+      {
+        type: 'choice',
+        controlLabel: '🎫 Cek Tiket',
+        question: 'Dari 24 penumpang, ¼ (seperempat) punya tiket VIP. Berapa penumpang VIP?',
+        sub: '24 ÷ 4 = ?',
+        opts: [{label:'4',val:4},{label:'6',val:6},{label:'8',val:8}],
+        correct: 1,
+        consequence: '😤 Penumpang VIP duduk di kursi biasa!',
+        ok: '✅ 6 penumpang VIP duduk di gerbong premium!',
+      },
+    ],
+  },
+  {
+    id: 'm4', emoji: '⏰', title: 'Misi 4 – Jadwal Keberangkatan',
+    desc: 'Kereta harus tepat waktu! Hitung selisih dan keterlambatan.',
+    steps: [
+      {
+        type: 'choice',
+        controlLabel: '🕐 Selisih Waktu',
+        question: 'Jadwal tiba jam 14:30, sekarang jam 13:50. Berapa menit lagi?',
+        sub: '14:30 − 13:50 = ? menit',
+        opts: [{label:'30 mnt',val:30},{label:'40 mnt',val:40},{label:'50 mnt',val:50}],
+        correct: 1,
+        consequence: '😱 Kereta terlalu cepat, penumpang belum siap!',
+        ok: '✅ 40 menit lagi! Kecepatan aman.',
+      },
+      {
+        type: 'input',
+        controlLabel: '📐 Kecepatan Rata-rata',
+        question: 'Jarak 200 km ditempuh dalam 4 jam. Kecepatan rata-rata berapa?',
+        sub: '200 ÷ 4 = ? km/jam',
+        answer: 50,
+        unit: ' km/jam',
+        consequence: '💨 Kereta terlalu kencang atau terlalu lambat!',
+        ok: '✅ 50 km/jam — kecepatan tepat!',
+      },
+      {
+        type: 'choice',
+        controlLabel: '🔔 Pengumuman Stasiun',
+        question: 'Kereta tiba di stasiun A, B, C, D lalu E. Ini stasiun keberapa?',
+        sub: 'Stasiun A = 1, B = 2, C = 3, D = 4, E = ?',
+        opts: [{label:'4',val:4},{label:'5',val:5},{label:'6',val:6}],
+        correct: 1,
+        consequence: '📢 Pengumuman stasiun salah — penumpang bingung!',
+        ok: '✅ Stasiun ke-5! Pengumuman betul.',
+      },
+    ],
+  },
+  {
+    id: 'm5', emoji: '🗺️', title: 'Misi 5 – Rute Panjang',
+    desc: 'Perjalanan jauh! Hitung jarak, bahan bakar, dan waktu sekaligus.',
+    steps: [
+      {
+        type: 'input',
+        controlLabel: '🗺️ Total Jarak',
+        question: 'Rute: Bogor → Bandung = 120 km, Bandung → Yogya = 280 km. Total?',
+        sub: '120 + 280 = ?',
+        answer: 400,
+        unit: ' km',
+        consequence: '🗺️ Rute salah diprogram!',
+        ok: '✅ Total 400 km!',
+      },
+      {
+        type: 'choice',
+        controlLabel: '⛽ Cukup Bahan Bakar?',
+        question: 'Tangki penuh = 500 liter. Butuh 2 liter per km. 400 km butuh berapa liter?',
+        sub: '400 × 2 = ?',
+        opts: [{label:'600 L',val:600},{label:'800 L',val:800},{label:'400 L',val:400}],
+        correct: 1,
+        consequence: '⛽ Bahan bakar tidak cukup!',
+        ok: '✅ 800 liter! Perlu isi 300 liter lagi (500+300=800).',
+      },
+      {
+        type: 'input',
+        controlLabel: '⏱️ Estimasi Waktu',
+        question: 'Jarak 400 km, kecepatan 80 km/jam. Butuh berapa jam?',
+        sub: '400 ÷ 80 = ?',
+        answer: 5,
+        unit: ' jam',
+        consequence: '⏱️ Estimasi waktu salah!',
+        ok: '✅ 5 jam! Tiba tepat waktu.',
+      },
+    ],
+  },
+  {
+    id: 'm6', emoji: '👾', title: 'BOSS: Jadwal Penuh!',
+    desc: 'Misi terbesar — jalankan kereta dengan jadwal lengkap 4 pemberhentian!',
+    steps: [
+      {
+        type: 'input',
+        controlLabel: '📋 Gerbong Total',
+        question: 'Ada 4 gerbong ekonomi (40 kursi) dan 2 gerbong bisnis (20 kursi). Total kursi?',
+        sub: '(4 × 40) + (2 × 20) = ?',
+        answer: 200,
+        unit: ' kursi',
+        consequence: '📋 Manifest salah!',
+        ok: '✅ 200 kursi total!',
+      },
+      {
+        type: 'choice',
+        controlLabel: '💺 Persentase Terisi',
+        question: 'Dari 200 kursi, 150 terisi. Berapa persen terisi?',
+        sub: '150 ÷ 200 = 0,75 = ?%',
+        opts: [{label:'65%',val:65},{label:'75%',val:75},{label:'85%',val:85}],
+        correct: 1,
+        consequence: '📊 Data penumpang salah!',
+        ok: '✅ 75% penuh — kereta berangkat!',
+      },
+      {
+        type: 'input',
+        controlLabel: '⏱️ Total Perjalanan',
+        question: 'Jarak 600 km, kecepatan rata-rata 100 km/jam. Berapa jam perjalanan?',
+        sub: '600 ÷ 100 = ?',
+        answer: 6,
+        unit: ' jam',
+        consequence: '⏰ Jadwal kacau!',
+        ok: '✅ 6 jam — kereta tiba tepat waktu!',
+      },
+      {
+        type: 'choice',
+        controlLabel: '💰 Pendapatan Tiket',
+        question: 'Ekonomi Rp 100.000 × 120 penumpang = Rp 12.000.000. Bisnis Rp 200.000 × 30 penumpang = Rp 6.000.000. Total?',
+        sub: 'Rp 12.000.000 + Rp 6.000.000 = ?',
+        opts: [{label:'Rp 16 juta',val:16e6},{label:'Rp 18 juta',val:18e6},{label:'Rp 20 juta',val:20e6}],
+        correct: 1,
+        consequence: '💸 Keuangan tidak seimbang!',
+        ok: '✅ Rp 18 juta pendapatan! Misi BOSS selesai!',
+      },
+    ],
+  },
+];
+
+/* ════════════════════════════════════════════════
+   STATE + STORAGE
+════════════════════════════════════════════════ */
+const STORAGE_KEY = 'rayyanMasinis';
+const state = {
+  totalStars: 0,
+  progress: {},
+  missionIdx: 0,
+  stepIdx:    0,
+  mistakes:   0,
+  speed:      60,
+  time:       '08:00',
+  passengers: 0,
+  trainX:     0,
+};
+
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+    state.totalStars = d.totalStars || 0;
+    state.progress   = d.progress   || {};
+  } catch(e){}
+  document.getElementById('starCount').textContent = state.totalStars;
+}
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({totalStars:state.totalStars,progress:state.progress})); } catch(e){}
+}
+function isUnlocked(idx) {
+  if (idx===0) return true;
+  return (state.progress[MISSIONS[idx-1].id]||{}).stars > 0;
+}
+
+/* ════════════════════════════════════════════════
+   AUDIO
+════════════════════════════════════════════════ */
+const SFX = {
+  ctx:null,
+  init(){ if(this.ctx) return; try{this.ctx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){} },
+  tone(freq,dur,vol=0.18,type='sine'){
+    if(!this.ctx) return;
+    const o=this.ctx.createOscillator(),g=this.ctx.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(vol,this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,this.ctx.currentTime+dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(); o.stop(this.ctx.currentTime+dur);
+  },
+  play(type){
+    this.init(); if(!this.ctx) return;
+    if(type==='correct') { this.tone(523,.15,.15); setTimeout(()=>this.tone(659,.15,.15),120); setTimeout(()=>this.tone(784,.3,.15),240); }
+    if(type==='wrong')   { this.tone(200,.2,.15,'sawtooth'); setTimeout(()=>this.tone(180,.2,.12,'sawtooth'),180); }
+    if(type==='fanfare') { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>this.tone(f,.3,.18),i*110)); }
+    if(type==='chug')    { this.tone(80,.1,.08,'square'); setTimeout(()=>this.tone(100,.08,.08,'square'),100); }
+  }
+};
+
+/* ════════════════════════════════════════════════
+   SCENE CANVAS (scrolling landscape)
+════════════════════════════════════════════════ */
+let _sceneCanvas, _sctx, _sW, _sH, _sceneAnim;
+let _bgOffset = 0;
+
+function setupScene() {
+  _sceneCanvas = document.getElementById('sceneCanvas');
+  _sctx = _sceneCanvas.getContext('2d');
+  const win = document.querySelector('.scene-window');
+  const rect = win.getBoundingClientRect();
+  _sW = rect.width || 460;
+  _sH = 180;
+  _sceneCanvas.width  = _sW;
+  _sceneCanvas.height = _sH;
+  _sceneCanvas.style.width  = _sW + 'px';
+  _sceneCanvas.style.height = _sH + 'px';
+  startSceneAnim();
+}
+
+function startSceneAnim() {
+  if (_sceneAnim) cancelAnimationFrame(_sceneAnim);
+  let last = 0;
+  function frame(ts) {
+    if (ts - last > 40) { // ~25fps
+      _bgOffset = (_bgOffset + 2) % _sW;
+      drawScene();
+      last = ts;
+    }
+    _sceneAnim = requestAnimationFrame(frame);
+  }
+  _sceneAnim = requestAnimationFrame(frame);
+}
+
+function stopSceneAnim() {
+  if (_sceneAnim) { cancelAnimationFrame(_sceneAnim); _sceneAnim = null; }
+}
+
+function drawScene() {
+  const ctx = _sctx, W = _sW, H = _sH;
+  ctx.clearRect(0,0,W,H);
+
+  // sky
+  const skyGrad = ctx.createLinearGradient(0,0,0,H*0.55);
+  skyGrad.addColorStop(0,'#B3D9FF'); skyGrad.addColorStop(1,'#D0EEFF');
+  ctx.fillStyle = skyGrad; ctx.fillRect(0,0,W,H*0.55);
+
+  // clouds (tiled, scrolling)
+  ctx.fillStyle='rgba(255,255,255,0.85)';
+  [[80,18,30,14],[240,22,40,16],[420,15,28,12]].forEach(([cx,cy,rw,rh]) => {
+    const ox = ((cx - _bgOffset) % (W+60) + (W+60)) % (W+60) - 30;
+    ctx.beginPath(); ctx.ellipse(ox,cy,rw,rh,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(ox+rw*0.5,cy-rh*0.4,rw*0.65,rh*0.8,0,0,Math.PI*2); ctx.fill();
+  });
+
+  // ground
+  ctx.fillStyle='#A67C52'; ctx.fillRect(0,H*0.55,W,H*0.45);
+  ctx.fillStyle='#5C8A3C'; ctx.fillRect(0,H*0.55,W,H*0.08);
+
+  // rails
+  const railY = H*0.72;
+  ctx.strokeStyle='#5C4A30'; ctx.lineWidth=4;
+  ctx.beginPath(); ctx.moveTo(0,railY); ctx.lineTo(W,railY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,railY+8); ctx.lineTo(W,railY+8); ctx.stroke();
+  // sleepers
+  ctx.strokeStyle='#7A5C38'; ctx.lineWidth=5;
+  for(let x=(-_bgOffset%30+15); x<W; x+=30) {
+    ctx.beginPath(); ctx.moveTo(x,railY-3); ctx.lineTo(x,railY+11); ctx.stroke();
+  }
+
+  // trees (scrolling)
+  ctx.fillStyle='#2D6A2D';
+  [[60,H*0.55],[180,H*0.52],[350,H*0.54],[500,H*0.53]].forEach(([tx,ty]) => {
+    const ox = ((tx - _bgOffset*0.6) % (W+80) + (W+80)) % (W+80) - 40;
+    ctx.beginPath(); ctx.moveTo(ox,ty); ctx.lineTo(ox-14,ty+32); ctx.lineTo(ox+14,ty+32); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(ox,ty-14); ctx.lineTo(ox-10,ty+10); ctx.lineTo(ox+10,ty+10); ctx.closePath(); ctx.fill();
+  });
+
+  // train (fixed position, left-center)
+  drawTrain(ctx, W*0.15, railY - 4);
+}
+
+function drawTrain(ctx, x, y) {
+  // locomotive body
+  ctx.fillStyle='#2E3192';
+  ctx.beginPath();
+  ctx.roundRect(x, y-46, 80, 46, 8);
+  ctx.fill();
+
+  // cab window
+  ctx.fillStyle='#D0EEFF';
+  ctx.beginPath(); ctx.roundRect(x+48, y-42, 26, 22, 4); ctx.fill();
+  ctx.strokeStyle='white'; ctx.lineWidth=2;
+  ctx.strokeRect(x+48, y-42, 26, 22);
+
+  // front nose
+  ctx.fillStyle='#1A1C6E';
+  ctx.beginPath(); ctx.moveTo(x+80, y-46); ctx.lineTo(x+100, y-30); ctx.lineTo(x+100, y); ctx.lineTo(x+80, y); ctx.closePath(); ctx.fill();
+
+  // headlight
+  ctx.fillStyle='#FFD700';
+  ctx.beginPath(); ctx.arc(x+92, y-22, 5, 0, Math.PI*2); ctx.fill();
+
+  // wheels
+  [[x+12,y+4],[x+40,y+4],[x+68,y+4]].forEach(([wx,wy]) => {
+    ctx.fillStyle='#111'; ctx.beginPath(); ctx.arc(wx,wy,10,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#666'; ctx.beginPath(); ctx.arc(wx,wy,5,0,Math.PI*2); ctx.fill();
+  });
+
+  // smoke puffs (animated with bgOffset)
+  const puffPhase = (_bgOffset % 20) / 20;
+  ctx.fillStyle='rgba(200,200,200,0.65)';
+  ctx.beginPath(); ctx.arc(x+18, y-50 - puffPhase*10, 8+puffPhase*4, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle='rgba(200,200,200,0.4)';
+  ctx.beginPath(); ctx.arc(x+12, y-62 - puffPhase*8, 6+puffPhase*3, 0, Math.PI*2); ctx.fill();
+}
+
+/* ════════════════════════════════════════════════
+   RENDER STEP
+════════════════════════════════════════════════ */
+function renderStep() {
+  const mission = MISSIONS[state.missionIdx];
+  const step    = mission.steps[state.stepIdx];
+
+  document.getElementById('mpHdr').textContent = step.controlLabel;
+  document.getElementById('mpQ').textContent   = step.question;
+  document.getElementById('mpSub').textContent = step.sub;
+  document.getElementById('mpFeedback').className  = 'mp-feedback';
+  document.getElementById('mpFeedback').textContent = '';
+
+  const area = document.getElementById('mpAnswerArea');
+
+  if (step.type === 'choice') {
+    area.innerHTML = `<div class="mp-choices">
+      ${step.opts.map((o,i) =>
+        `<button class="mp-choice" onclick="checkChoice(${i})">${o.label}</button>`
+      ).join('')}
+    </div>`;
+  } else {
+    area.innerHTML = `
+      <div class="mp-input-row">
+        <input type="number" id="mpInput" class="mp-input" placeholder="?" inputmode="numeric">
+        <button class="mp-go" onclick="checkInput()">→ Gas!</button>
+      </div>`;
+    document.getElementById('mpInput').addEventListener('keydown', e => {
+      if(e.key==='Enter') checkInput();
+    });
+  }
+
+  // update status chips
+  document.getElementById('speedChip').textContent     = state.speed;
+  document.getElementById('timeChip').textContent      = state.time;
+  document.getElementById('passChip').textContent      = state.passengers;
+}
+
+/* ════════════════════════════════════════════════
+   ANSWER CHECKING
+════════════════════════════════════════════════ */
+function checkChoice(idx) {
+  const step    = MISSIONS[state.missionIdx].steps[state.stepIdx];
+  const correct = idx === step.correct;
+  const btns    = document.querySelectorAll('.mp-choice');
+  btns.forEach(b=>b.disabled=true);
+  btns[idx].classList.add(correct?'correct':'wrong');
+  if(!correct) btns[step.correct].classList.add('correct');
+
+  handleResult(correct, step);
+}
+
+function checkInput() {
+  const step    = MISSIONS[state.missionIdx].steps[state.stepIdx];
+  const input   = document.getElementById('mpInput');
+  const val     = Number(input.value);
+  input.disabled = true;
+  document.querySelector('.mp-go').disabled = true;
+  handleResult(val === step.answer, step);
+}
+
+function handleResult(correct, step) {
+  const fb = document.getElementById('mpFeedback');
+  if (correct) {
+    SFX.play('correct');
+    fb.className  = 'mp-feedback ok';
+    fb.textContent = step.ok;
+    updateStatusAfterStep(step);
+    SFX.play('chug');
+    setTimeout(advanceStep, 1300);
+  } else {
+    state.mistakes++;
+    SFX.play('wrong');
+    fb.className  = 'mp-feedback bad';
+    fb.textContent = step.consequence + ' — coba lagi!';
+    showConsequence();
+    setTimeout(() => {
+      fb.className  = 'mp-feedback info';
+      fb.textContent = '💡 ' + step.sub;
+      const area = document.getElementById('mpAnswerArea');
+      // re-enable
+      if (step.type === 'choice') {
+        document.querySelectorAll('.mp-choice').forEach((b,i)=>{
+          b.disabled=false; b.className='mp-choice';
+        });
+      } else {
+        const inp = document.getElementById('mpInput');
+        if(inp){ inp.disabled=false; inp.value=''; inp.focus(); }
+        const go = document.querySelector('.mp-go');
+        if(go) go.disabled=false;
+      }
+    }, 1400);
+  }
+}
+
+function showConsequence() {
+  const win = document.querySelector('.scene-window');
+  const div = document.createElement('div');
+  div.className = 'consequence-overlay';
+  div.textContent = '💥';
+  win.appendChild(div);
+  setTimeout(()=>div.remove(), 700);
+}
+
+function updateStatusAfterStep(step) {
+  // lightly update status chips based on step type for immersion
+  if (step.controlLabel.includes('Kecepatan')) {
+    state.speed = step.answer || state.speed;
+  }
+  if (step.controlLabel.includes('Waktu') || step.ok.includes('jam')) {
+    // bump time by 1hr
+    const [h,m] = state.time.split(':').map(Number);
+    const nh = (h + 1) % 24;
+    state.time = String(nh).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+  }
+  if (step.ok.includes('penumpang') || step.ok.includes('kursi')) {
+    state.passengers += 10;
+  }
+  document.getElementById('speedChip').textContent    = state.speed;
+  document.getElementById('timeChip').textContent     = state.time;
+  document.getElementById('passChip').textContent     = state.passengers;
+}
+
+/* ════════════════════════════════════════════════
+   ADVANCE
+════════════════════════════════════════════════ */
+function advanceStep() {
+  const mission = MISSIONS[state.missionIdx];
+  if (state.stepIdx + 1 < mission.steps.length) {
+    state.stepIdx++;
+    renderStep();
+  } else {
+    finishMission();
+  }
+}
+
+function finishMission() {
+  stopSceneAnim();
+  const mission = MISSIONS[state.missionIdx];
+  const stars   = state.mistakes === 0 ? 3 : state.mistakes <= 2 ? 2 : 1;
+  const prev    = (state.progress[mission.id]||{}).stars || 0;
+  const newS    = Math.max(prev, stars);
+  const earned  = newS - prev;
+  state.progress[mission.id] = { stars: newS };
+  state.totalStars += earned;
+  document.getElementById('starCount').textContent = state.totalStars;
+  saveState();
+
+  document.getElementById('mcBadge').textContent  = mission.emoji;
+  document.getElementById('mcTitle').textContent  = `${mission.title} selesai!`;
+  document.getElementById('mcStars').textContent  = '⭐'.repeat(newS)+'☆'.repeat(3-newS);
+  document.getElementById('mcMsg').textContent    =
+    newS===3 ? 'Sempurna! Tidak ada kesalahan. Masinis terbaik!'
+             : newS===2 ? 'Bagus! Sedikit kesalahan tapi misi berhasil.'
+                        : 'Misi selesai! Coba lagi untuk bintang lebih banyak.';
+
+  const nextBtn = document.getElementById('mcNextBtn');
+  const isLast  = state.missionIdx === MISSIONS.length - 1;
+  if (isLast) {
+    nextBtn.textContent = '🏆 Lihat Semua Bintang!';
+    nextBtn.onclick = () => {
+      show('sHome'); renderHome();
+      SFX.play('fanfare'); setTimeout(launchConfetti,200);
+    };
+  } else {
+    nextBtn.textContent = 'Misi Berikutnya →';
+    nextBtn.onclick = () => startMission(state.missionIdx + 1);
+  }
+
+  show('sMissionComplete');
+  SFX.play('fanfare');
+  setTimeout(launchConfetti, 200);
+}
+
+function mcNext() {} // overwritten per-mission above
+
+/* ════════════════════════════════════════════════
+   START / HOME
+════════════════════════════════════════════════ */
+function startMission(idx) {
+  SFX.init();
+  state.missionIdx = idx;
+  state.stepIdx    = 0;
+  state.mistakes   = 0;
+  state.speed      = 60;
+  state.time       = '08:00';
+  state.passengers = 0;
+  show('sCab');
+  // slight delay so layout is settled before canvas sizing
+  setTimeout(() => {
+    setupScene();
+    renderStep();
+  }, 60);
+}
+
+function renderHome() {
+  document.getElementById('missionGrid').innerHTML = MISSIONS.map((m,i) => {
+    const prog   = state.progress[m.id]||{};
+    const locked = !isUnlocked(i);
+    const stars  = prog.stars||0;
+    const starStr = stars>0 ? '⭐'.repeat(stars)+'☆'.repeat(3-stars) : '';
+    return `
+      <div class="mission-card${locked?' locked':''}${stars>0?' done':''}"
+           onclick="${locked?'':(`startMission(${i})`)}" role="button" tabindex="${locked?-1:0}">
+        <div class="mc-num">${m.emoji} Misi ${i+1}${i===5?' – BOSS':''}</div>
+        <div class="mc-title">${m.title.replace(/Misi \d+ – /,'').replace('BOSS: ','')}</div>
+        <div class="mc-desc">${m.desc}</div>
+        ${locked ? '<span style="position:absolute;top:12px;right:12px;font-size:18px">🔒</span>'
+                 : (starStr ? `<span class="mc-stars">${starStr}</span>` : '')}
+      </div>`;
+  }).join('');
+}
+
+function goHome() { stopSceneAnim(); show('sHome'); renderHome(); }
+
+/* ════════════════════════════════════════════════
+   CONFETTI
+════════════════════════════════════════════════ */
+function launchConfetti() {
+  const canvas=document.getElementById('confettiCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  const pieces=Array.from({length:50},()=>({
+    x:Math.random()*canvas.width,y:-20-Math.random()*80,
+    vx:(Math.random()-.5)*4,vy:2+Math.random()*4,
+    color:['#2E3192','#FFC234','#1FA9C7','#FF5C39','#1F9D55'][Math.floor(Math.random()*5)],
+    size:7+Math.random()*7,rot:Math.random()*360,drot:(Math.random()-.5)*6,
+  }));
+  let fr=0;
+  (function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.drot;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.color;ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size/2);
+      ctx.restore();
+    });
+    if(++fr<80) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  })();
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* init */
+loadState();
+renderHome();
+</script>
+</body>
+</html>

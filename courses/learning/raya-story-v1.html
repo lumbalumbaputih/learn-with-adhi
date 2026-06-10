@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Buku Cerita Ajaib 📖 · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23E84BA0"/><text y=".9em" font-size="75" x="12">📖</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #E84BA0;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --tomato:  #FF5C39;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --paper-2: #F4ECD8;
+      --line:    rgba(26,22,20,0.12);
+      --muted:   #6B6259;
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--fb);
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ── HEADER ── */
+    .hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 2.5px solid var(--ink);
+      background: var(--paper);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .hdr-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; }
+    .hdr-word  { font-family: var(--fd); font-weight: 800; font-size: 18px; letter-spacing: -0.03em; }
+    .hdr-stars {
+      background: var(--pink); color: white;
+      border: 2px solid var(--ink); border-radius: 999px;
+      padding: 6px 14px;
+      font-family: var(--fd); font-weight: 800; font-size: 16px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ── SCREENS ── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ── HOME ── */
+    .home-hero {
+      padding: 32px 20px 24px;
+      text-align: center;
+    }
+    .home-hero-emoji { font-size: 80px; line-height: 1; margin-bottom: 12px; }
+    .home-title {
+      font-family: var(--fd); font-weight: 800; font-size: 28px;
+      letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .home-sub { font-size: 16px; color: var(--muted); max-width: 320px; margin: 0 auto 28px; }
+    .start-btn {
+      background: var(--pink); color: white;
+      border: 3px solid var(--ink); border-radius: 16px;
+      padding: 18px 40px;
+      font-family: var(--fd); font-weight: 800; font-size: 22px;
+      box-shadow: 5px 5px 0 var(--ink);
+      transition: transform .15s, box-shadow .15s;
+      display: inline-block;
+    }
+    .start-btn:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--ink); }
+    .home-stars {
+      margin-top: 20px;
+      font-size: 14px; color: var(--muted);
+    }
+
+    /* ── BOOK PAGE ── */
+    .book-wrap {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 0 0 80px;
+    }
+    .page-progress {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 20px;
+      font-size: 14px; color: var(--muted);
+    }
+    .page-bar-track {
+      flex: 1; height: 8px;
+      background: var(--line); border-radius: 99px;
+    }
+    .page-bar-fill {
+      height: 100%; border-radius: 99px;
+      background: var(--pink);
+      transition: width .4s ease;
+    }
+
+    /* scene card */
+    .scene-card {
+      margin: 0 16px 20px;
+      border: 3px solid var(--ink);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+    .scene-bg {
+      width: 100%; min-height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+      font-size: 72px; line-height: 1;
+      padding: 28px 16px;
+      position: relative;
+    }
+    .scene-row { display: flex; gap: 8px; align-items: flex-end; justify-content: center; flex-wrap: wrap; }
+    .scene-caption {
+      padding: 16px 20px;
+      font-family: var(--fd); font-weight: 700; font-size: 18px;
+      line-height: 1.4; background: white;
+      border-top: 2.5px solid var(--ink);
+    }
+
+    /* ── INTERACTIONS ── */
+    /* tap-to-reveal */
+    .tap-hint {
+      font-size: 13px; color: var(--muted);
+      text-align: center; padding: 4px 0 8px;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+
+    /* tap-items (count, find color) */
+    .tap-items {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center; padding: 12px 16px 4px;
+    }
+    .tap-item {
+      font-size: 52px; line-height: 1;
+      cursor: pointer;
+      border: 3px solid transparent;
+      border-radius: 16px; padding: 6px 10px;
+      transition: transform .12s, background .12s;
+      user-select: none;
+    }
+    .tap-item.tapped {
+      border-color: var(--forest);
+      background: #E3F5EB;
+      transform: scale(1.12) rotate(-4deg);
+    }
+    .tap-item.highlighted {
+      border-color: var(--pink);
+      background: #FCE8F3;
+      animation: wiggle .3s;
+    }
+    @keyframes wiggle { 0%,100%{transform:rotate(0)} 33%{transform:rotate(-8deg) scale(1.1)} 66%{transform:rotate(8deg) scale(1.1)} }
+    .tap-counter {
+      text-align: center; font-family: var(--fd); font-weight: 800; font-size: 26px;
+      padding: 8px 0 4px;
+    }
+    .tap-goal { font-size: 14px; color: var(--muted); text-align: center; padding-bottom: 8px; }
+
+    /* drag-sort (train carriages) */
+    .drag-area {
+      display: flex; gap: 10px; justify-content: center;
+      padding: 12px 16px 8px; flex-wrap: wrap;
+    }
+    .drag-slot {
+      width: 72px; height: 72px;
+      border: 3px dashed var(--muted);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      background: var(--paper-2);
+      transition: border-color .2s, background .2s;
+    }
+    .drag-slot.over { border-color: var(--indigo); background: #e8e9f8; }
+    .drag-slot.filled { border-style: solid; border-color: var(--forest); background: #E3F5EB; }
+    .drag-piece {
+      font-size: 52px; cursor: grab;
+      user-select: none;
+      transition: transform .12s;
+    }
+    .drag-piece:active { cursor: grabbing; transform: scale(1.15); }
+    .drag-pieces { display: flex; gap: 14px; justify-content: center; padding: 8px 16px 12px; flex-wrap: wrap; }
+    .drag-feedback { text-align: center; font-size: 14px; color: var(--muted); padding: 4px 0 8px; }
+
+    /* choice (which is X?) */
+    .choice-opts {
+      display: flex; gap: 12px; justify-content: center;
+      padding: 12px 16px 8px; flex-wrap: wrap;
+    }
+    .choice-btn {
+      font-size: 52px; line-height: 1;
+      border: 3px solid var(--ink);
+      border-radius: 16px; padding: 10px 16px;
+      background: white;
+      cursor: pointer;
+      transition: transform .12s, background .12s, box-shadow .12s;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .choice-btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+    .choice-btn.correct { background: #E3F5EB; border-color: var(--forest); box-shadow: 3px 3px 0 var(--forest); }
+    .choice-btn.wrong   { background: #FFE8E3; border-color: var(--tomato); box-shadow: 3px 3px 0 var(--tomato); }
+
+    /* ── NAV BUTTONS ── */
+    .nav-btns {
+      display: flex; gap: 12px;
+      padding: 12px 16px 0;
+      justify-content: flex-end;
+    }
+    .nav-btn {
+      background: var(--ink); color: white;
+      border-radius: 14px; padding: 14px 28px;
+      font-family: var(--fd); font-weight: 800; font-size: 18px;
+      transition: opacity .15s;
+    }
+    .nav-btn:disabled { opacity: .35; cursor: default; }
+    .nav-btn.secondary {
+      background: var(--paper-2); color: var(--ink);
+      border: 2.5px solid var(--ink);
+    }
+
+    /* read-aloud btn */
+    .read-btn {
+      display: flex; align-items: center; gap: 6px;
+      margin: 0 16px 4px;
+      background: var(--paper-2); color: var(--ink);
+      border: 2px solid var(--ink); border-radius: 999px;
+      padding: 8px 18px; font-size: 14px; font-weight: 600;
+      width: fit-content;
+    }
+    .read-btn:active { opacity: .7; }
+
+    /* delight flash */
+    .delight-flash {
+      position: fixed; inset: 0; pointer-events: none;
+      background: radial-gradient(circle, rgba(255,194,52,0.35) 0%, transparent 70%);
+      opacity: 0; transition: opacity .25s;
+      z-index: 200;
+    }
+    .delight-flash.show { opacity: 1; }
+
+    /* ── COMPLETE ── */
+    .complete-wrap {
+      max-width: 460px; margin: 0 auto;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .complete-badge { font-size: 90px; margin-bottom: 12px; }
+    .complete-title {
+      font-family: var(--fd); font-weight: 800; font-size: 30px;
+      margin-bottom: 8px;
+    }
+    .complete-stars { font-size: 40px; margin: 16px 0; }
+    .complete-msg { font-size: 16px; color: var(--muted); margin-bottom: 28px; }
+    .complete-btns { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+    .complete-btn {
+      background: var(--pink); color: white;
+      border: 3px solid var(--ink); border-radius: 14px;
+      padding: 16px 40px;
+      font-family: var(--fd); font-weight: 800; font-size: 20px;
+      box-shadow: 4px 4px 0 var(--ink);
+      width: 100%; max-width: 320px;
+    }
+    .complete-btn.secondary {
+      background: var(--paper-2); color: var(--ink);
+    }
+
+    /* confetti canvas */
+    #confettiCanvas {
+      position: fixed; inset: 0; pointer-events: none; z-index: 300;
+    }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <a href="/raya.html" class="hdr-brand">
+    <span class="hdr-word">📖 Buku Cerita</span>
+  </a>
+  <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+</header>
+
+<canvas id="confettiCanvas"></canvas>
+<div class="delight-flash" id="delightFlash"></div>
+
+<!-- HOME -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="home-hero-emoji">🐱🚂</div>
+    <div class="home-title">Kiki si Kucing<br>Naik Kereta!</div>
+    <div class="home-sub">Cerita ajaib tentang Kiki yang naik Kereta KAI untuk pertama kali. Ketuk setiap halaman untuk menjelajah!</div>
+    <button class="start-btn" onclick="startBook()">▶ Baca Cerita!</button>
+    <div class="home-stars">⭐ <span id="homeStarCount">0</span> bintang terkumpul</div>
+  </div>
+</div>
+
+<!-- BOOK PAGE -->
+<div class="screen" id="sBook">
+  <div class="book-wrap">
+    <div class="page-progress">
+      <span id="pageNum" style="white-space:nowrap">Hal 1/10</span>
+      <div class="page-bar-track"><div class="page-bar-fill" id="pageBar" style="width:0%"></div></div>
+    </div>
+
+    <!-- scene -->
+    <div class="scene-card">
+      <div class="scene-bg" id="sceneBg"><!-- filled by JS --></div>
+      <div class="scene-caption" id="sceneCaption"></div>
+    </div>
+
+    <!-- interaction area -->
+    <div id="interactionArea"></div>
+
+    <button class="read-btn" onclick="readPage()">🔊 Dengarkan</button>
+
+    <!-- nav -->
+    <div class="nav-btns">
+      <button class="nav-btn secondary" id="prevBtn" onclick="prevPage()">← Kembali</button>
+      <button class="nav-btn" id="nextBtn" onclick="nextPage()" disabled>Lanjut →</button>
+    </div>
+  </div>
+</div>
+
+<!-- COMPLETE -->
+<div class="screen" id="sComplete">
+  <div class="complete-wrap">
+    <div class="complete-badge">🌟</div>
+    <div class="complete-title">Selesai, Raya!</div>
+    <div class="complete-stars">⭐⭐⭐</div>
+    <div class="complete-msg">Kiki sudah sampai di stasiun tujuan! Hebat sekali Raya sudah membaca cerita sampai habis!</div>
+    <div class="complete-btns">
+      <button class="complete-btn" onclick="startBook()">📖 Baca Lagi!</button>
+      <button class="complete-btn secondary" onclick="goHome()">🏠 Halaman Utama</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   STORY DATA  — "Kiki si Kucing Naik Kereta"
+   Each page: bg (html for scene), bgColor, caption (narrated text),
+   interaction type + config, readText (full TTS string)
+════════════════════════════════════════════════ */
+const PAGES = [
+  {
+    bg: `<div class="scene-row"><span>🐱</span><span>🏠</span><span>🌳</span></div>`,
+    bgColor: '#FFF5D6',
+    caption: 'Ini Kiki si kucing kecil. Kiki tinggal di rumah dekat pohon besar.',
+    readText: 'Ini Kiki si kucing kecil. Kiki tinggal di rumah dekat pohon besar.',
+    interaction: {
+      type: 'tap-find',
+      prompt: 'Ketuk Kiki si kucingnya! 🐱',
+      target: 0, // index in emojis array
+      emojis: ['🐱','🏠','🌳'],
+      ok: 'Iya, itu Kiki! Kucing oranye yang lucu!',
+    }
+  },
+  {
+    bg: `<div class="scene-row"><span>🐱</span><span>😊</span><span>📬</span></div>`,
+    bgColor: '#FFF0F7',
+    caption: 'Suatu pagi, Kiki menerima surat. Ada gambar kereta di dalamnya!',
+    readText: 'Suatu pagi, Kiki menerima surat. Ada gambar kereta di dalamnya!',
+    interaction: {
+      type: 'tap-reveal',
+      prompt: 'Ketuk surat untuk membukanya! 📬',
+      revealEmoji: '🚂',
+      revealText: 'Ada kereta di dalam surat!',
+      ok: 'Wah, gambar kereta! Kiki sangat senang!',
+    }
+  },
+  {
+    bg: `<div class="scene-row"><span>🐱</span><span>🎒</span><span>✅</span></div>`,
+    bgColor: '#E3F5EB',
+    caption: 'Kiki menyiapkan tas. Apa saja yang dibawa Kiki? Mari kita hitung!',
+    readText: 'Kiki menyiapkan tas. Apa saja yang dibawa Kiki?',
+    interaction: {
+      type: 'tap-count',
+      prompt: 'Ketuk setiap benda dalam tas Kiki!',
+      emojis: ['🍎','🥪','💧','📚'],
+      goal: 4,
+      ok: 'Bagus! Ada 4 benda dalam tas Kiki!',
+    }
+  },
+  {
+    bg: `<div class="scene-row"><span>🐱</span><span>🚶</span><span>🏙️</span><span>🚉</span></div>`,
+    bgColor: '#E8E9F8',
+    caption: 'Kiki berjalan ke stasiun. Stasiunnya besar dan ramai!',
+    readText: 'Kiki berjalan ke stasiun. Stasiunnya besar dan ramai!',
+    interaction: {
+      type: 'tap-find',
+      prompt: 'Ketuk stasiun keretanya! 🚉',
+      target: 3,
+      emojis: ['🐱','🚶','🏙️','🚉'],
+      ok: 'Betul! Itu stasiunnya! Besar sekali!',
+    }
+  },
+  {
+    bg: `<div class="scene-row"><span>🚂</span><span style="font-size:48px">💨</span></div>`,
+    bgColor: '#FFF5D6',
+    caption: 'Keretanya datang! Suaranya keras: Tuuut tuuut!',
+    readText: 'Keretanya datang! Suaranya keras: Tuuut tuuut!',
+    interaction: {
+      type: 'tap-reveal',
+      prompt: 'Ketuk keretanya untuk membunyikan klakson! 🚂',
+      revealEmoji: '📣💨',
+      revealText: 'Tuuut tuuut! Kereta siap berangkat!',
+      ok: 'Tuuut tuuut! Kereta siap berangkat!',
+    }
+  },
+  {
+    bg: `<div class="scene-row"><span>🚂</span><span>🚃</span><span>🚃</span><span>🚃</span></div>`,
+    bgColor: '#E3F5EB',
+    caption: 'Kereta punya banyak gerbong. Hitung gerbongnya bersama Kiki!',
+    readText: 'Kereta punya banyak gerbong. Hitung gerbongnya bersama Kiki!',
+    interaction: {
+      type: 'tap-count',
+      prompt: 'Ketuk setiap gerbong kereta! 🚃',
+      emojis: ['🚃','🚃','🚃'],
+      goal: 3,
+      ok: 'Betul! Ada 3 gerbong. Satu, dua, tiga!',
+    }
+  },
+  {
+    bg: `<div class="scene-row"><span>🐱</span><span>💺</span><span>🪟</span><span>🌄</span></div>`,
+    bgColor: '#FFF0F7',
+    caption: 'Kiki duduk di kursi dekat jendela. Pemandangannya indah sekali!',
+    readText: 'Kiki duduk di kursi dekat jendela. Pemandangannya indah sekali!',
+    interaction: {
+      type: 'tap-find',
+      prompt: 'Ketuk jendela tempat Kiki melihat pemandangan! 🪟',
+      target: 2,
+      emojis: ['🐱','💺','🪟','🌄'],
+      ok: 'Iya! Dari jendela itu Kiki bisa melihat pemandangan yang indah!',
+    }
+  },
+  {
+    bg: `<div class="scene-row"><span>🌾</span><span>⛰️</span><span>🌊</span><span>🌳</span></div>`,
+    bgColor: '#E3F5EB',
+    caption: 'Di luar jendela, Kiki melihat banyak hal! Sawah, gunung, sungai, dan pohon!',
+    readText: 'Di luar jendela, Kiki melihat banyak hal. Sawah, gunung, sungai, dan pohon!',
+    interaction: {
+      type: 'tap-count',
+      prompt: 'Ketuk semua yang dilihat Kiki dari jendela!',
+      emojis: ['🌾','⛰️','🌊','🌳'],
+      goal: 4,
+      ok: 'Hebat! Kiki melihat 4 hal dari jendela!',
+    }
+  },
+  {
+    bg: `<div class="scene-row"><span>🐱</span><span>👧</span><span>👦</span><span>❤️</span></div>`,
+    bgColor: '#FFF5D6',
+    caption: 'Di dalam kereta, Kiki bertemu teman baru: Raya dan Rayyan!',
+    readText: 'Di dalam kereta, Kiki bertemu teman baru: Raya dan Rayyan!',
+    interaction: {
+      type: 'choice',
+      prompt: 'Mana yang warnanya merah?',
+      emojis: ['💙','❤️','💚'],
+      correct: 1,
+      ok: 'Betul! Yang merah itu tanda cinta! Kiki, Raya, dan Rayyan jadi sahabat!',
+    }
+  },
+  {
+    bg: `<div class="scene-row"><span>🚉</span><span>🎊</span><span>🐱</span><span>🌟</span></div>`,
+    bgColor: '#FCE8F3',
+    caption: 'Akhirnya kereta sampai! Kiki sangat senang naik kereta hari ini. Tamat!',
+    readText: 'Akhirnya kereta sampai! Kiki sangat senang naik kereta hari ini. Tamat!',
+    interaction: {
+      type: 'tap-reveal',
+      prompt: 'Ketuk bintangnya untuk menyelesaikan cerita! 🌟',
+      revealEmoji: '🎉🎊🌟',
+      revealText: 'Selamat! Kamu sudah membaca cerita sampai selesai!',
+      ok: 'Selamat Raya! Kamu sudah membaca cerita sampai selesai!',
+    }
+  },
+];
+
+/* ════════════════════════════════════════════════
+   STATE + STORAGE
+════════════════════════════════════════════════ */
+const STORAGE_KEY = 'rayaStory';
+const state = {
+  pageIdx: 0,
+  interactionDone: false,
+  completed: false,
+  totalStars: 0,
+  progress: {},
+};
+
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    state.totalStars = d.totalStars || 0;
+    state.progress   = d.progress   || {};
+  } catch(e) {}
+  document.getElementById('starCount').textContent    = state.totalStars;
+  document.getElementById('homeStarCount').textContent = state.totalStars;
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      totalStars: state.totalStars,
+      progress:   state.progress,
+    }));
+  } catch(e) {}
+}
+
+/* ════════════════════════════════════════════════
+   AUDIO
+════════════════════════════════════════════════ */
+const SFX = {
+  ctx: null,
+  init() { if (this.ctx) return; try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {} },
+  tone(freq, dur, vol=0.18, type='sine') {
+    if (!this.ctx) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(); o.stop(this.ctx.currentTime + dur);
+  },
+  play(type) {
+    this.init(); if (!this.ctx) return;
+    if (type === 'tap')     { this.tone(523,.1,.12,'square'); }
+    if (type === 'correct') { this.tone(523,.15,.15); setTimeout(()=>this.tone(659,.15,.15),120); setTimeout(()=>this.tone(784,.3,.15),240); }
+    if (type === 'fanfare') { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>this.tone(f,.3,.18),i*110)); }
+    if (type === 'page')    { this.tone(440,.1,.1); }
+  }
+};
+
+const Suara = {
+  on: 'speechSynthesis' in window,
+  voice: null,
+  pickVoice() {
+    if (!this.on) return;
+    try { this.voice = speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith('id')) || null; } catch(e) {}
+  },
+  speak(text, rate) {
+    if (!this.on || !text) return;
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'id-ID'; u.rate = rate || 0.82; u.pitch = 1.1;
+      if (!this.voice) this.pickVoice();
+      if (this.voice) u.voice = this.voice;
+      this.u = u;
+      setTimeout(() => { try { speechSynthesis.resume(); speechSynthesis.speak(u); } catch(e){} }, 80);
+    } catch(e) {}
+  }
+};
+if (Suara.on) { try { speechSynthesis.onvoiceschanged = ()=>Suara.pickVoice(); Suara.pickVoice(); } catch(e){} }
+
+function cleanSay(t) {
+  return String(t||'').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}→]/gu,'').replace(/\s+/g,' ').trim();
+}
+
+function readPage() {
+  SFX.init();
+  const p = PAGES[state.pageIdx];
+  Suara.speak(cleanSay(p.readText));
+}
+
+/* ════════════════════════════════════════════════
+   DELIGHT
+════════════════════════════════════════════════ */
+function flashDelight() {
+  const el = document.getElementById('delightFlash');
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 300);
+}
+
+/* ════════════════════════════════════════════════
+   CONFETTI
+════════════════════════════════════════════════ */
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx    = canvas.getContext('2d');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = Array.from({length:60}, () => ({
+    x: Math.random() * canvas.width,
+    y: -20 - Math.random() * 100,
+    vx: (Math.random()-0.5)*4,
+    vy: 2 + Math.random()*4,
+    color: ['#E84BA0','#FFC234','#1FA9C7','#FF5C39','#1F9D55','#2E3192'][Math.floor(Math.random()*6)],
+    size: 8 + Math.random()*8,
+    rot: Math.random()*360,
+    drot: (Math.random()-0.5)*6,
+  }));
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.rot += p.drot;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI/180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size/2);
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 90) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+
+/* ════════════════════════════════════════════════
+   RENDER PAGE
+════════════════════════════════════════════════ */
+function renderPage() {
+  const p   = PAGES[state.pageIdx];
+  const tot = PAGES.length;
+
+  document.getElementById('pageNum').textContent = `Hal ${state.pageIdx+1}/${tot}`;
+  document.getElementById('pageBar').style.width  = `${((state.pageIdx+1)/tot)*100}%`;
+
+  const bg = document.getElementById('sceneBg');
+  bg.innerHTML = p.bg;
+  bg.style.background = p.bgColor;
+
+  document.getElementById('sceneCaption').textContent = p.caption;
+
+  state.interactionDone = false;
+  document.getElementById('nextBtn').disabled = true;
+  document.getElementById('prevBtn').disabled = state.pageIdx === 0;
+
+  renderInteraction(p.interaction);
+
+  // auto read-aloud
+  setTimeout(() => Suara.speak(cleanSay(p.readText)), 400);
+}
+
+function renderInteraction(ia) {
+  const area = document.getElementById('interactionArea');
+
+  if (ia.type === 'tap-reveal') {
+    area.innerHTML = `
+      <div class="tap-hint" id="tapHint">👆 ${ia.prompt}</div>
+      <div style="text-align:center;padding:8px 0 4px">
+        <span id="revealTarget" onclick="doReveal()" style="font-size:72px;cursor:pointer;display:inline-block;
+          transition:transform .2s" title="${ia.prompt}">❓</span>
+      </div>`;
+
+  } else if (ia.type === 'tap-find') {
+    const btns = ia.emojis.map((e,i) =>
+      `<span class="tap-item" onclick="doFind(${i})" data-idx="${i}">${e}</span>`
+    ).join('');
+    area.innerHTML = `
+      <div class="tap-hint">${ia.prompt}</div>
+      <div class="tap-items">${btns}</div>`;
+
+  } else if (ia.type === 'tap-count') {
+    const items = ia.emojis.map((e,i) =>
+      `<span class="tap-item" onclick="doCount(this,${i})" data-idx="${i}">${e}</span>`
+    ).join('');
+    area.innerHTML = `
+      <div class="tap-hint">${ia.prompt}</div>
+      <div class="tap-items">${items}</div>
+      <div class="tap-counter" id="tapCounter">0 / ${ia.goal}</div>
+      <div class="tap-goal" id="tapGoal">Ketuk semua yang kamu lihat!</div>`;
+
+  } else if (ia.type === 'choice') {
+    const btns = ia.emojis.map((e,i) =>
+      `<button class="choice-btn" onclick="doChoice(${i})">${e}</button>`
+    ).join('');
+    area.innerHTML = `
+      <div class="tap-hint" style="padding-bottom:4px">${ia.prompt}</div>
+      <div class="choice-opts">${btns}</div>`;
+  }
+}
+
+/* ── interaction handlers ── */
+function doReveal() {
+  if (state.interactionDone) return;
+  state.interactionDone = true;
+  SFX.play('correct'); flashDelight();
+  const p = PAGES[state.pageIdx];
+  const target = document.getElementById('revealTarget');
+  target.textContent = p.interaction.revealEmoji;
+  target.style.transform = 'scale(1.2) rotate(-8deg)';
+  document.getElementById('tapHint').textContent = '✨ ' + p.interaction.revealText;
+  setTimeout(() => Suara.speak(cleanSay(p.interaction.ok)), 300);
+  document.getElementById('nextBtn').disabled = false;
+}
+
+let _tapCounted = new Set();
+function doCount(el, idx) {
+  if (_tapCounted.has(idx)) return;
+  _tapCounted.add(idx);
+  el.classList.add('tapped');
+  SFX.play('tap');
+  const p  = PAGES[state.pageIdx];
+  const ia = p.interaction;
+  const count = _tapCounted.size;
+  document.getElementById('tapCounter').textContent = `${count} / ${ia.goal}`;
+  if (count === ia.goal) {
+    state.interactionDone = true;
+    SFX.play('correct'); flashDelight();
+    document.getElementById('tapGoal').textContent = '✅ ' + ia.ok;
+    setTimeout(() => Suara.speak(cleanSay(ia.ok)), 300);
+    document.getElementById('nextBtn').disabled = false;
+  }
+}
+
+function doFind(idx) {
+  if (state.interactionDone) return;
+  const p  = PAGES[state.pageIdx];
+  const ia = p.interaction;
+  const items = document.querySelectorAll('.tap-item');
+  if (idx === ia.target) {
+    state.interactionDone = true;
+    items[idx].classList.add('highlighted');
+    SFX.play('correct'); flashDelight();
+    document.querySelector('.tap-hint').textContent = '✅ ' + ia.ok;
+    setTimeout(() => Suara.speak(cleanSay(ia.ok)), 300);
+    document.getElementById('nextBtn').disabled = false;
+  } else {
+    items[idx].style.opacity = '0.35';
+    SFX.play('tap');
+  }
+}
+
+function doChoice(idx) {
+  if (state.interactionDone) return;
+  state.interactionDone = true;
+  const p  = PAGES[state.pageIdx];
+  const ia = p.interaction;
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+  btns[idx].classList.add(idx === ia.correct ? 'correct' : 'wrong');
+  if (idx !== ia.correct) btns[ia.correct].classList.add('correct');
+  SFX.play(idx === ia.correct ? 'correct' : 'tap');
+  if (idx === ia.correct) flashDelight();
+  const msg = idx === ia.correct ? ia.ok : 'Hampir! Yang merah itu ❤️. Kiki tetap senang!';
+  document.querySelector('.tap-hint').textContent = (idx === ia.correct ? '✅ ' : '💪 ') + msg;
+  setTimeout(() => Suara.speak(cleanSay(msg)), 300);
+  document.getElementById('nextBtn').disabled = false;
+}
+
+/* ════════════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════════════ */
+function nextPage() {
+  SFX.init();
+  if (state.pageIdx >= PAGES.length - 1) {
+    finishBook();
+    return;
+  }
+  SFX.play('page');
+  _tapCounted = new Set();
+  state.pageIdx++;
+  renderPage();
+}
+
+function prevPage() {
+  if (state.pageIdx <= 0) return;
+  SFX.play('page');
+  _tapCounted = new Set();
+  state.pageIdx--;
+  renderPage();
+}
+
+/* ════════════════════════════════════════════════
+   START / FINISH
+════════════════════════════════════════════════ */
+function startBook() {
+  SFX.init();
+  state.pageIdx = 0;
+  _tapCounted = new Set();
+  show('sBook');
+  renderPage();
+}
+
+function finishBook() {
+  // award 3 stars for completing the book (no-fail: reading = winning)
+  const prev = (state.progress['ch1'] || {}).stars || 0;
+  if (prev < 3) {
+    const earned = 3 - prev;
+    state.progress['ch1'] = { stars: 3 };
+    state.totalStars += earned;
+    document.getElementById('starCount').textContent    = state.totalStars;
+    document.getElementById('homeStarCount').textContent = state.totalStars;
+    saveState();
+  }
+  show('sComplete');
+  SFX.play('fanfare');
+  setTimeout(launchConfetti, 200);
+  setTimeout(() => Suara.speak('Selamat Raya! Kamu sudah membaca cerita sampai selesai! Hebat sekali!'), 600);
+}
+
+function goHome() {
+  show('sHome');
+  document.getElementById('homeStarCount').textContent = state.totalStars;
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ── init ── */
+loadState();
+</script>
+</body>
+</html>

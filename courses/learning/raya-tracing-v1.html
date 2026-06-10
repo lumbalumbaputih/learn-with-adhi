@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Papan Tulis Ajaib ✏️ · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23E84BA0"/><text y=".9em" font-size="75" x="14">✏️</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #E84BA0;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --tomato:  #FF5C39;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --paper-2: #F4ECD8;
+      --line:    rgba(26,22,20,0.12);
+      --muted:   #6B6259;
+      --fd: 'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb: 'Inter',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{-webkit-font-smoothing:antialiased;}
+    body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+    /* HEADER */
+    .hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:2.5px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:100;}
+    .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;}
+    .hdr-word{font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-0.03em;}
+    .hdr-stars{background:var(--pink);color:white;border:2px solid var(--ink);border-radius:999px;padding:6px 14px;font-family:var(--fd);font-weight:800;font-size:16px;display:flex;align-items:center;gap:6px;}
+
+    /* SCREENS */
+    .screen{display:none;}
+    .screen.active{display:block;}
+
+    /* HOME */
+    .home-hero{padding:28px 20px 20px;text-align:center;}
+    .home-emoji{font-size:80px;line-height:1;margin-bottom:10px;}
+    .home-title{font-family:var(--fd);font-weight:800;font-size:26px;letter-spacing:-0.02em;margin-bottom:8px;}
+    .home-sub{font-size:15px;color:var(--muted);max-width:320px;margin:0 auto 24px;line-height:1.5;}
+    .chapter-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px 24px;max-width:480px;margin:0 auto;}
+    .ch-card{border:3px solid var(--ink);border-radius:18px;padding:16px 14px;background:white;cursor:pointer;text-align:left;box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s;position:relative;}
+    .ch-card:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink);}
+    .ch-card.locked{opacity:.45;cursor:default;}
+    .ch-card.done{border-color:var(--forest);}
+    .ch-num{font-family:var(--fd);font-weight:800;font-size:13px;color:var(--muted);margin-bottom:4px;}
+    .ch-title{font-family:var(--fd);font-weight:800;font-size:16px;margin-bottom:4px;}
+    .ch-letters{font-size:22px;letter-spacing:4px;}
+    .ch-star-row{font-size:14px;margin-top:6px;}
+
+    /* TRACING SCREEN */
+    .trace-wrap{max-width:460px;margin:0 auto;padding:0 0 40px;}
+    .trace-hdr{padding:12px 16px 4px;display:flex;align-items:center;justify-content:space-between;}
+    .trace-ch-title{font-family:var(--fd);font-weight:800;font-size:16px;}
+    .trace-progress{font-size:13px;color:var(--muted);}
+
+    .letter-nav{display:flex;gap:8px;padding:4px 16px 8px;overflow-x:auto;scrollbar-width:none;}
+    .letter-nav::-webkit-scrollbar{display:none;}
+    .letter-pill{
+      flex-shrink:0;
+      border:2.5px solid var(--ink);border-radius:999px;padding:6px 14px;
+      font-family:var(--fd);font-weight:800;font-size:15px;
+      background:white;cursor:pointer;
+      transition:background .12s,color .12s;
+    }
+    .letter-pill.active{background:var(--pink);color:white;border-color:var(--pink);}
+    .letter-pill.done{background:var(--forest);color:white;border-color:var(--forest);}
+
+    /* canvas area */
+    .canvas-area{
+      margin:0 16px;
+      border:3px solid var(--ink);border-radius:20px;
+      background:#FFFEF7;
+      box-shadow:5px 5px 0 var(--ink);
+      position:relative;overflow:hidden;
+    }
+    #traceCanvas{display:block;width:100%;touch-action:none;cursor:crosshair;}
+    .canvas-overlay{
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+      font-size:160px;line-height:1;
+      opacity:.06;
+      font-family:var(--fd);font-weight:800;
+      user-select:none;
+    }
+
+    .start-arrow{
+      position:absolute;
+      font-size:28px;
+      pointer-events:none;
+      animation:bounce .8s ease-in-out infinite;
+    }
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+    /* instruction + feedback */
+    .trace-instruction{
+      text-align:center;padding:10px 16px 4px;
+      font-family:var(--fd);font-weight:700;font-size:16px;
+    }
+    .trace-feedback{
+      text-align:center;padding:4px 16px 8px;
+      font-size:14px;min-height:24px;
+      color:var(--muted);
+    }
+    .trace-feedback.success{color:var(--forest);font-weight:700;}
+    .trace-feedback.tryagain{color:var(--tomato);}
+
+    /* example word */
+    .example-word{
+      display:flex;align-items:center;gap:10px;justify-content:center;
+      padding:6px 16px 10px;
+      font-family:var(--fd);font-weight:700;font-size:18px;
+    }
+    .example-emoji{font-size:32px;}
+
+    /* action bar */
+    .trace-actions{display:flex;gap:10px;padding:4px 16px 8px;justify-content:space-between;}
+    .trace-btn{border:2.5px solid var(--ink);border-radius:12px;padding:12px 18px;font-family:var(--fd);font-weight:800;font-size:15px;box-shadow:3px 3px 0 var(--ink);transition:transform .12s,box-shadow .12s;}
+    .trace-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+    .trace-btn.primary{background:var(--pink);color:white;}
+    .trace-btn.secondary{background:var(--paper-2);color:var(--ink);}
+    .trace-btn.success-btn{background:var(--forest);color:white;}
+
+    /* celebration overlay */
+    .celebrate-overlay{
+      position:fixed;inset:0;background:rgba(26,22,20,.55);z-index:200;
+      display:none;align-items:center;justify-content:center;
+    }
+    .celebrate-overlay.show{display:flex;}
+    .celebrate-box{
+      background:var(--paper);border:3px solid var(--ink);border-radius:24px;
+      padding:32px 28px;max-width:320px;width:90%;text-align:center;
+      box-shadow:0 12px 48px rgba(0,0,0,.2);
+      animation:pop .3s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+    .cel-letter{font-size:96px;line-height:1;margin-bottom:8px;}
+    .cel-title{font-family:var(--fd);font-weight:800;font-size:24px;margin-bottom:6px;}
+    .cel-word{font-size:16px;color:var(--muted);margin-bottom:20px;}
+    .cel-btn{background:var(--pink);color:white;border:3px solid var(--ink);border-radius:14px;padding:14px 32px;font-family:var(--fd);font-weight:800;font-size:18px;box-shadow:4px 4px 0 var(--ink);width:100%;}
+
+    /* chapter complete */
+    .lc-wrap{max-width:400px;margin:0 auto;padding:32px 24px;text-align:center;}
+    .lc-badge{font-size:80px;margin-bottom:10px;}
+    .lc-title{font-family:var(--fd);font-weight:800;font-size:26px;margin-bottom:8px;}
+    .lc-stars{font-size:38px;margin:12px 0;}
+    .lc-msg{font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+    .lc-btns{display:flex;flex-direction:column;gap:10px;align-items:center;}
+    .lc-btn{border:3px solid var(--ink);border-radius:14px;padding:14px 36px;font-family:var(--fd);font-weight:800;font-size:18px;box-shadow:4px 4px 0 var(--ink);width:100%;max-width:300px;}
+    .lc-btn.primary{background:var(--pink);color:white;}
+    .lc-btn.secondary{background:var(--paper-2);color:var(--ink);}
+
+    #confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:300;}
+  </style>
+</head>
+<body>
+<canvas id="confettiCanvas"></canvas>
+
+<div class="celebrate-overlay" id="celebrateOverlay">
+  <div class="celebrate-box">
+    <div class="cel-letter" id="celLetter">A</div>
+    <div class="cel-title" id="celTitle">Bagus, Raya!</div>
+    <div class="cel-word" id="celWord"></div>
+    <button class="cel-btn" onclick="closeCelebrate()">▶ Huruf Berikutnya!</button>
+  </div>
+</div>
+
+<header class="hdr">
+  <a href="/raya.html" class="hdr-brand">
+    <span class="hdr-word">✏️ Papan Tulis Ajaib</span>
+  </a>
+  <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+</header>
+
+<!-- HOME -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="home-emoji">✏️🔤</div>
+    <div class="home-title">Papan Tulis Ajaib</div>
+    <div class="home-sub">Gambar huruf dengan jari! Ikuti garis titik-titik, terus tekan, dan hurufnya akan muncul!</div>
+  </div>
+  <div class="chapter-grid" id="chapterGrid"></div>
+</div>
+
+<!-- TRACING -->
+<div class="screen" id="sTrace">
+  <div class="trace-wrap">
+    <div class="trace-hdr">
+      <div class="trace-ch-title" id="traceChTitle"></div>
+      <div class="trace-progress" id="traceProgress"></div>
+    </div>
+
+    <div class="letter-nav" id="letterNav"></div>
+
+    <div class="canvas-area" id="canvasArea">
+      <canvas id="traceCanvas"></canvas>
+      <div class="canvas-overlay" id="canvasOverlay"></div>
+      <div class="start-arrow" id="startArrow">👆</div>
+    </div>
+
+    <div class="trace-instruction" id="traceInstruction"></div>
+    <div class="trace-feedback" id="traceFeedback"></div>
+    <div class="example-word" id="exampleWord"></div>
+
+    <button class="read-btn" onclick="speakLetter()" style="display:flex;align-items:center;gap:6px;margin:0 16px 4px;background:var(--paper-2);color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:8px 18px;font-size:14px;font-weight:600;width:fit-content;">
+      🔊 Dengarkan
+    </button>
+
+    <div class="trace-actions">
+      <button class="trace-btn secondary" onclick="clearCanvas()">🗑️ Hapus</button>
+      <button class="trace-btn primary" id="nextLetterBtn" onclick="nextLetter()" disabled>Huruf Berikutnya →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER COMPLETE -->
+<div class="screen" id="sChapterComplete">
+  <div class="lc-wrap">
+    <div class="lc-badge" id="lcBadge">🌟</div>
+    <div class="lc-title" id="lcTitle">Bab selesai!</div>
+    <div class="lc-stars" id="lcStars">⭐⭐⭐</div>
+    <div class="lc-msg" id="lcMsg"></div>
+    <div class="lc-btns">
+      <button class="lc-btn primary" id="lcNextBtn" onclick="goHome()">▶ Bab Berikutnya</button>
+      <button class="lc-btn secondary" onclick="goHome()">🏠 Pilih Bab</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   LETTER DATA
+   Chapters: (1) Vokal A-I-U-E-O  (2) R-A-Y-A nama Raya!
+             (3) B-C-D-F-G        (4) H-J-K-L-M
+   Each letter: {letter, example emoji, example word, guide path as array of {x,y} 0-1 normalized}
+   Path coords are normalized 0–1 within canvas, traced from start dot.
+   We use simple stroke coverage checking (forgiving radius).
+════════════════════════════════════════════════ */
+
+// Paths are normalized [0,1] within canvas W×H.
+// Each segment is array of {x,y} waypoints the stroke must pass through (in order-ish).
+// Detection: user stroke must hit ≥75% of waypoints within radius=12% of canvas width.
+
+const LETTERS = {
+  A: {
+    emoji:'🍎', word:'Apel',
+    path:[{x:.35,y:.85},{x:.50,y:.15},{x:.65,y:.85}], // two legs + top
+    extra:[{x:.40,y:.55},{x:.60,y:.55}], // crossbar
+    hint:'Mulai dari bawah kiri, naik ke atas, turun ke bawah kanan!',
+    start:{x:.35,y:.85},
+  },
+  I: {
+    emoji:'🐟', word:'Ikan',
+    path:[{x:.50,y:.15},{x:.50,y:.85}],
+    hint:'Garis lurus ke bawah!',
+    start:{x:.50,y:.15},
+  },
+  U: {
+    emoji:'🐛', word:'Ulat',
+    path:[{x:.30,y:.15},{x:.30,y:.70},{x:.50,y:.88},{x:.70,y:.70},{x:.70,y:.15}],
+    hint:'Dari atas kiri, melengkung ke bawah, naik lagi ke atas kanan!',
+    start:{x:.30,y:.15},
+  },
+  E: {
+    emoji:'🥚', word:'Endog',
+    path:[{x:.65,y:.15},{x:.30,y:.15},{x:.30,y:.50},{x:.60,y:.50},{x:.30,y:.50},{x:.30,y:.85},{x:.65,y:.85}],
+    hint:'Dari atas kanan, ke kiri, turun, garis tengah, turun, ke kanan!',
+    start:{x:.65,y:.15},
+  },
+  O: {
+    emoji:'🐑', word:'Ombak',
+    path:[{x:.50,y:.15},{x:.75,y:.30},{x:.80,y:.50},{x:.75,y:.70},{x:.50,y:.85},{x:.25,y:.70},{x:.20,y:.50},{x:.25,y:.30},{x:.50,y:.15}],
+    hint:'Lingkaran! Mulai dari atas, ke kanan, ke bawah, ke kiri, kembali ke atas.',
+    start:{x:.50,y:.15},
+  },
+  R: {
+    emoji:'🌧️', word:'Raya',
+    path:[{x:.30,y:.85},{x:.30,y:.15},{x:.60,y:.15},{x:.72,y:.28},{x:.72,y:.42},{x:.60,y:.55},{x:.30,y:.55},{x:.60,y:.55},{x:.72,y:.85}],
+    hint:'Garis ke atas, kepala bundar, turun ke tengah, lalu kaki diagonal!',
+    start:{x:.30,y:.85},
+  },
+  Y: {
+    emoji:'🪁', word:'Yoyo',
+    path:[{x:.25,y:.15},{x:.50,y:.52},{x:.75,y:.15},{x:.50,y:.52},{x:.50,y:.85}],
+    hint:'Dua garis dari atas bertemu di tengah, lalu turun lurus!',
+    start:{x:.25,y:.15},
+  },
+  B: {
+    emoji:'🎈', word:'Balon',
+    path:[{x:.30,y:.15},{x:.30,y:.85},{x:.60,y:.85},{x:.72,y:.72},{x:.72,y:.60},{x:.60,y:.50},{x:.30,y:.50},{x:.60,y:.50},{x:.72,y:.38},{x:.72,y:.26},{x:.60,y:.15},{x:.30,y:.15}],
+    hint:'Garis ke bawah, dua benjolan ke kanan!',
+    start:{x:.30,y:.15},
+  },
+  C: {
+    emoji:'🐛', word:'Cacing',
+    path:[{x:.72,y:.28},{x:.58,y:.15},{x:.38,y:.15},{x:.24,y:.28},{x:.20,y:.50},{x:.24,y:.72},{x:.38,y:.85},{x:.58,y:.85},{x:.72,y:.72}],
+    hint:'Setengah lingkaran terbuka ke kanan!',
+    start:{x:.72,y:.28},
+  },
+  D: {
+    emoji:'🥁', word:'Drum',
+    path:[{x:.30,y:.15},{x:.30,y:.85},{x:.60,y:.85},{x:.78,y:.65},{x:.78,y:.35},{x:.60,y:.15},{x:.30,y:.15}],
+    hint:'Garis ke bawah, lalu benjolan besar ke kanan!',
+    start:{x:.30,y:.15},
+  },
+  H: {
+    emoji:'🦁', word:'Harimau',
+    path:[{x:.28,y:.15},{x:.28,y:.85},{x:.28,y:.50},{x:.72,y:.50},{x:.72,y:.15},{x:.72,y:.85}],
+    hint:'Dua tiang tegak lurus, dihubungkan garis di tengah!',
+    start:{x:.28,y:.15},
+  },
+  K: {
+    emoji:'🦋', word:'Kupu-kupu',
+    path:[{x:.32,y:.15},{x:.32,y:.85},{x:.32,y:.50},{x:.68,y:.15},{x:.32,y:.50},{x:.68,y:.85}],
+    hint:'Garis ke bawah, lalu dua kaki diagonal dari tengah!',
+    start:{x:.32,y:.15},
+  },
+};
+
+const CHAPTERS = [
+  {
+    id: 'ch-vokal',
+    title: 'Bab 1 – Vokal Ajaib',
+    emoji: '🌸',
+    colorBg: '#FFF0F7',
+    letters: ['A','I','U','E','O'],
+    desc: 'A · I · U · E · O',
+  },
+  {
+    id: 'ch-nama',
+    title: 'Bab 2 – Nama Raya! 👧',
+    emoji: '💖',
+    colorBg: '#FCE8F3',
+    letters: ['R','A','Y','A'],
+    desc: 'R · A · Y · A',
+  },
+  {
+    id: 'ch-konsonan1',
+    title: 'Bab 3 – Konsonan B, C, D',
+    emoji: '🎈',
+    colorBg: '#FFF5D6',
+    letters: ['B','C','D'],
+    desc: 'B · C · D',
+  },
+  {
+    id: 'ch-konsonan2',
+    title: 'Bab 4 – Konsonan H, K',
+    emoji: '🦋',
+    colorBg: '#E3F5EB',
+    letters: ['H','K'],
+    desc: 'H · K',
+  },
+];
+
+/* ════════════════════════════════════════════════
+   STATE + STORAGE
+════════════════════════════════════════════════ */
+const STORAGE_KEY = 'rayaTracing';
+const state = {
+  totalStars: 0,
+  progress:   {},
+  chapterIdx: 0,
+  letterIdx:  0,
+  letterDone: new Set(),
+};
+
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+    state.totalStars = d.totalStars || 0;
+    state.progress   = d.progress   || {};
+  } catch(e){}
+  document.getElementById('starCount').textContent = state.totalStars;
+}
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({totalStars:state.totalStars,progress:state.progress})); } catch(e){}
+}
+function isUnlocked(idx) {
+  if (idx===0) return true;
+  return (state.progress[CHAPTERS[idx-1].id]||{}).stars > 0;
+}
+
+/* ════════════════════════════════════════════════
+   AUDIO
+════════════════════════════════════════════════ */
+const SFX = {
+  ctx:null,
+  init(){ if(this.ctx) return; try{this.ctx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){} },
+  tone(freq,dur,vol=0.18,type='sine'){
+    if(!this.ctx) return;
+    const o=this.ctx.createOscillator(),g=this.ctx.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(vol,this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,this.ctx.currentTime+dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(); o.stop(this.ctx.currentTime+dur);
+  },
+  play(type){
+    this.init(); if(!this.ctx) return;
+    if(type==='success') { this.tone(523,.15,.15); setTimeout(()=>this.tone(659,.15,.15),120); setTimeout(()=>this.tone(784,.3,.15),240); }
+    if(type==='stroke')  { this.tone(440,.06,.08,'square'); }
+    if(type==='fanfare') { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>this.tone(f,.3,.18),i*110)); }
+  }
+};
+
+const Suara = {
+  on: 'speechSynthesis' in window,
+  voice: null,
+  pickVoice(){ if(!this.on) return; try{this.voice=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith('id'))||null;}catch(e){} },
+  speak(text,rate){
+    if(!this.on||!text) return;
+    try{
+      speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(text);
+      u.lang='id-ID'; u.rate=rate||0.82; u.pitch=1.15;
+      if(!this.voice) this.pickVoice();
+      if(this.voice) u.voice=this.voice;
+      this.u=u;
+      setTimeout(()=>{ try{speechSynthesis.resume();speechSynthesis.speak(u);}catch(e){} },80);
+    }catch(e){}
+  }
+};
+if(Suara.on){ try{speechSynthesis.onvoiceschanged=()=>Suara.pickVoice();Suara.pickVoice();}catch(e){} }
+
+function speakLetter() {
+  const ch   = CHAPTERS[state.chapterIdx];
+  const ltr  = ch.letters[state.letterIdx];
+  const data = LETTERS[ltr];
+  if (!data) return;
+  Suara.speak(`Huruf ${ltr}. Contoh: ${data.word}`);
+}
+
+/* ════════════════════════════════════════════════
+   CONFETTI
+════════════════════════════════════════════════ */
+function launchConfetti() {
+  const canvas=document.getElementById('confettiCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  const pieces=Array.from({length:50},()=>({
+    x:Math.random()*canvas.width,y:-20-Math.random()*80,
+    vx:(Math.random()-.5)*4,vy:2+Math.random()*4,
+    color:['#E84BA0','#FFC234','#1FA9C7','#FF5C39','#1F9D55'][Math.floor(Math.random()*5)],
+    size:7+Math.random()*7,rot:Math.random()*360,drot:(Math.random()-.5)*6,
+  }));
+  let fr=0;
+  (function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.drot;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.color;ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size/2);
+      ctx.restore();
+    });
+    if(++fr<80) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  })();
+}
+
+/* ════════════════════════════════════════════════
+   CANVAS / TRACING ENGINE
+════════════════════════════════════════════════ */
+let _canvas, _ctx, _W, _H;
+let _drawing = false;
+let _stroke  = []; // [{x,y}] normalized points user drew
+let _letterSucceeded = false;
+
+function setupCanvas() {
+  _canvas = document.getElementById('traceCanvas');
+  _ctx    = _canvas.getContext('2d');
+
+  const area = document.getElementById('canvasArea');
+  const rect = area.getBoundingClientRect();
+  const side = Math.min(rect.width - 0, 340);
+  _W = side; _H = side;
+  _canvas.width  = _W;
+  _canvas.height = _H;
+  _canvas.style.width  = _W + 'px';
+  _canvas.style.height = _H + 'px';
+
+  _canvas.addEventListener('mousedown',  onPointerDown);
+  _canvas.addEventListener('mousemove',  onPointerMove);
+  _canvas.addEventListener('mouseup',    onPointerUp);
+  _canvas.addEventListener('touchstart', onTouchDown, {passive:false});
+  _canvas.addEventListener('touchmove',  onTouchDrag, {passive:false});
+  _canvas.addEventListener('touchend',   onTouchUp,   {passive:false});
+}
+
+function getPos(e) {
+  const r = _canvas.getBoundingClientRect();
+  const scaleX = _W / r.width;
+  const scaleY = _H / r.height;
+  if (e.touches) {
+    const t = e.touches[0];
+    return { x:(t.clientX-r.left)*scaleX, y:(t.clientY-r.top)*scaleY };
+  }
+  return { x:(e.clientX-r.left)*scaleX, y:(e.clientY-r.top)*scaleY };
+}
+
+function onPointerDown(e) { _drawing=true; _stroke=[]; const p=getPos(e); _stroke.push(p); _ctx.beginPath(); _ctx.moveTo(p.x,p.y); SFX.play('stroke'); }
+function onPointerMove(e) { if(!_drawing) return; const p=getPos(e); _stroke.push(p); _ctx.lineTo(p.x,p.y); _ctx.strokeStyle=_letterSucceeded?'#1F9D55':'#E84BA0'; _ctx.lineWidth=12; _ctx.lineCap='round'; _ctx.lineJoin='round'; _ctx.stroke(); }
+function onPointerUp()    { _drawing=false; if(_stroke.length>4) evaluateStroke(); }
+function onTouchDown(e)   { e.preventDefault(); onPointerDown(e); }
+function onTouchDrag(e)   { e.preventDefault(); onPointerMove(e); }
+function onTouchUp(e)     { e.preventDefault(); onPointerUp(); }
+
+function clearCanvas() {
+  _ctx.clearRect(0, 0, _W, _H);
+  _stroke = [];
+  drawGuide();
+}
+
+/* draw dotted guide path */
+function drawGuide() {
+  const ch   = CHAPTERS[state.chapterIdx];
+  const ltr  = ch.letters[state.letterIdx];
+  const data = LETTERS[ltr];
+  if (!data) return;
+
+  _ctx.clearRect(0, 0, _W, _H);
+
+  // draw guide dots along path
+  const allPts = [...data.path, ...(data.extra||[])];
+  _ctx.fillStyle = 'rgba(26,22,20,0.20)';
+  allPts.forEach(pt => {
+    for (let t=0; t<=1; t+=0.05) {
+      // interpolate dots between waypoints by just drawing at each waypoint + intervals
+    }
+    _ctx.beginPath();
+    _ctx.arc(pt.x*_W, pt.y*_H, 5, 0, Math.PI*2);
+    _ctx.fill();
+  });
+
+  // draw faint path lines between waypoints
+  _ctx.strokeStyle = 'rgba(26,22,20,0.12)';
+  _ctx.lineWidth = 4;
+  _ctx.setLineDash([8,8]);
+  _ctx.beginPath();
+  allPts.forEach((pt,i) => {
+    if (i===0) _ctx.moveTo(pt.x*_W, pt.y*_H);
+    else       _ctx.lineTo(pt.x*_W, pt.y*_H);
+  });
+  _ctx.stroke();
+  _ctx.setLineDash([]);
+
+  // start dot
+  const sp = data.start;
+  _ctx.fillStyle = '#E84BA0';
+  _ctx.beginPath();
+  _ctx.arc(sp.x*_W, sp.y*_H, 10, 0, Math.PI*2);
+  _ctx.fill();
+  _ctx.fillStyle = 'white';
+  _ctx.beginPath();
+  _ctx.arc(sp.x*_W, sp.y*_H, 5, 0, Math.PI*2);
+  _ctx.fill();
+
+  // position start arrow
+  const arrow = document.getElementById('startArrow');
+  arrow.style.left = (sp.x*_W - 14) + 'px';
+  arrow.style.top  = (sp.y*_H - 38) + 'px';
+}
+
+/* evaluate whether user's stroke covers enough waypoints */
+function evaluateStroke() {
+  const ch   = CHAPTERS[state.chapterIdx];
+  const ltr  = ch.letters[state.letterIdx];
+  const data = LETTERS[ltr];
+  if (!data || _letterSucceeded) return;
+
+  const allPts = [...data.path, ...(data.extra||[])];
+  const radius = _W * 0.13; // forgiving 13% radius
+  let hit = 0;
+  allPts.forEach(wp => {
+    const wx = wp.x * _W, wy = wp.y * _H;
+    const covered = _stroke.some(p => Math.hypot(p.x-wx, p.y-wy) < radius);
+    if (covered) hit++;
+  });
+
+  const pct = hit / allPts.length;
+  const fb  = document.getElementById('traceFeedback');
+
+  if (pct >= 0.70) {
+    // success!
+    _letterSucceeded = true;
+    SFX.play('success');
+    fb.className   = 'trace-feedback success';
+    fb.textContent = '✅ Bagus sekali, Raya! Huruf ' + ltr + '!';
+    document.getElementById('nextLetterBtn').disabled = false;
+    document.getElementById('startArrow').style.display = 'none';
+    // re-draw the guide in green
+    _ctx.clearRect(0,0,_W,_H);
+    _ctx.strokeStyle = '#1F9D55';
+    _ctx.lineWidth = 14; _ctx.lineCap='round'; _ctx.lineJoin='round'; _ctx.setLineDash([]);
+    _ctx.beginPath();
+    allPts.forEach((pt,i) => {
+      if(i===0) _ctx.moveTo(pt.x*_W,pt.y*_H);
+      else _ctx.lineTo(pt.x*_W,pt.y*_H);
+    });
+    _ctx.stroke();
+    // show celebrate popup
+    setTimeout(() => showCelebrate(ltr), 400);
+  } else if (pct >= 0.40) {
+    fb.className   = 'trace-feedback tryagain';
+    fb.textContent = '💪 Hampir! Coba lagi – ikuti titik-titiknya.';
+  } else {
+    fb.className   = 'trace-feedback tryagain';
+    fb.textContent = '🤔 Coba lagi – mulai dari titik merah!';
+  }
+}
+
+/* ════════════════════════════════════════════════
+   CELEBRATE POPUP
+════════════════════════════════════════════════ */
+function showCelebrate(ltr) {
+  const data = LETTERS[ltr];
+  document.getElementById('celLetter').textContent = ltr;
+  document.getElementById('celTitle').textContent  = `Huruf ${ltr}! Hebat, Raya!`;
+  document.getElementById('celWord').textContent   = data ? `${data.emoji} Contoh: ${data.word}` : '';
+  document.getElementById('celebrateOverlay').classList.add('show');
+  launchConfetti();
+  if (data) Suara.speak(`Huruf ${ltr}! Contoh: ${data.word}`);
+  state.letterDone.add(ltr);
+  updateLetterNav();
+}
+
+function closeCelebrate() {
+  document.getElementById('celebrateOverlay').classList.remove('show');
+}
+
+/* ════════════════════════════════════════════════
+   CHAPTER / LETTER NAVIGATION
+════════════════════════════════════════════════ */
+function openChapter(idx) {
+  SFX.init();
+  state.chapterIdx = idx;
+  state.letterIdx  = 0;
+  state.letterDone = new Set();
+  show('sTrace');
+  setupCanvas();
+  renderTraceHeader();
+  renderLetter();
+}
+
+function renderTraceHeader() {
+  const ch = CHAPTERS[state.chapterIdx];
+  document.getElementById('traceChTitle').textContent = ch.title;
+  updateLetterNav();
+}
+
+function updateLetterNav() {
+  const ch   = CHAPTERS[state.chapterIdx];
+  document.getElementById('traceProgress').textContent =
+    `${state.letterDone.size} / ${ch.letters.length} huruf`;
+  document.getElementById('letterNav').innerHTML = ch.letters.map((ltr,i) => {
+    const done   = state.letterDone.has(ltr);
+    const active = i === state.letterIdx;
+    return `<button class="letter-pill${active?' active':''}${done?' done':''}"
+      onclick="jumpToLetter(${i})">${ltr}</button>`;
+  }).join('');
+}
+
+function jumpToLetter(idx) {
+  state.letterIdx = idx;
+  renderLetter();
+}
+
+function renderLetter() {
+  const ch   = CHAPTERS[state.chapterIdx];
+  const ltr  = ch.letters[state.letterIdx];
+  const data = LETTERS[ltr];
+
+  _letterSucceeded = false;
+  _stroke = [];
+  document.getElementById('traceFeedback').className  = 'trace-feedback';
+  document.getElementById('traceFeedback').textContent = '';
+  document.getElementById('nextLetterBtn').disabled = false; // always allow skip
+  document.getElementById('startArrow').style.display = '';
+
+  document.getElementById('canvasOverlay').textContent = ltr;
+  document.getElementById('traceInstruction').textContent = data
+    ? `✏️ Gambar huruf ${ltr}! ${data.hint}`
+    : `✏️ Gambar huruf ${ltr}!`;
+
+  document.getElementById('exampleWord').innerHTML = data
+    ? `<span class="example-emoji">${data.emoji}</span><span>${ltr} → ${data.word}</span>`
+    : '';
+
+  updateLetterNav();
+  drawGuide();
+  setTimeout(() => speakLetter(), 300);
+}
+
+function nextLetter() {
+  const ch = CHAPTERS[state.chapterIdx];
+  if (state.letterIdx + 1 < ch.letters.length) {
+    state.letterIdx++;
+    _ctx.clearRect(0,0,_W,_H);
+    renderLetter();
+  } else {
+    finishChapter();
+  }
+}
+
+/* ════════════════════════════════════════════════
+   FINISH CHAPTER
+════════════════════════════════════════════════ */
+function finishChapter() {
+  const ch   = CHAPTERS[state.chapterIdx];
+  const done = state.letterDone.size;
+  const tot  = ch.letters.length;
+  const pct  = done / tot;
+  const stars = pct >= 1 ? 3 : pct >= 0.6 ? 2 : 1;
+
+  const prev   = (state.progress[ch.id]||{}).stars||0;
+  const newS   = Math.max(prev, stars);
+  const earned = newS - prev;
+  state.progress[ch.id] = { stars: newS };
+  state.totalStars += earned;
+  document.getElementById('starCount').textContent = state.totalStars;
+  saveState();
+
+  document.getElementById('lcBadge').textContent = ch.emoji;
+  document.getElementById('lcTitle').textContent = `${ch.title} selesai!`;
+  document.getElementById('lcStars').textContent = '⭐'.repeat(newS)+'☆'.repeat(3-newS);
+  document.getElementById('lcMsg').textContent   =
+    newS===3 ? `Hebat! Raya berhasil menulis semua ${tot} huruf!`
+             : `${done} dari ${tot} huruf berhasil! Coba lagi untuk bintang lebih banyak.`;
+
+  const nextBtn = document.getElementById('lcNextBtn');
+  const isLast  = state.chapterIdx === CHAPTERS.length - 1;
+  nextBtn.textContent = isLast ? '🏠 Pulang' : '▶ Bab Berikutnya';
+  nextBtn.onclick = () => {
+    if (!isLast) {
+      openChapter(state.chapterIdx + 1);
+    } else {
+      goHome();
+    }
+  };
+
+  show('sChapterComplete');
+  SFX.play('fanfare');
+  setTimeout(launchConfetti, 200);
+}
+
+/* ════════════════════════════════════════════════
+   HOME
+════════════════════════════════════════════════ */
+function renderHome() {
+  document.getElementById('chapterGrid').innerHTML = CHAPTERS.map((ch,i) => {
+    const prog   = state.progress[ch.id]||{};
+    const locked = !isUnlocked(i);
+    const stars  = prog.stars||0;
+    const starStr = stars>0 ? '⭐'.repeat(stars)+'☆'.repeat(3-stars) : '';
+    return `
+      <div class="ch-card${locked?' locked':''}${stars>0?' done':''}"
+           onclick="${locked?'':(`openChapter(${i})`)}" role="button" tabindex="${locked?-1:0}"
+           style="background:${ch.colorBg}">
+        <div class="ch-num">${ch.emoji} Bab ${i+1}</div>
+        <div class="ch-title">${ch.title.replace(/^Bab \d+ – /,'')}</div>
+        <div class="ch-letters">${ch.letters.join(' ')}</div>
+        <div class="ch-star-row">${locked?'🔒':starStr}</div>
+      </div>`;
+  }).join('');
+}
+
+function goHome() { show('sHome'); renderHome(); }
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* init */
+loadState();
+renderHome();
+</script>
+</body>
+</html>
