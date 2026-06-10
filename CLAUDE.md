@@ -304,7 +304,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 - **6 chapters**, chapter 6 = BOSS. Star rating per chapter.
 - **localStorage shape:** `{ totalStars, progress: { <chapterId>: { stars } } }` (matches `getProgress()` in `rayyan.html`). Use the keys assigned above.
 - **File naming:** math → `courses/math/rayyan-math-gradeN.html`; coding → `courses/coding/rayyan-<theme>-vN.html`.
-- **Wire it up (3 places):** add to `ADVENTURES` (or `GAMES`) in `rayyan.html` (emoji, title, blurb, href, progressKey, totalChapters); add the new key to the `sumStars([...])` list in `kids.html`; bump the "X petualangan" pill + "/ N petualangan selesai" counts in `kids.html` and `rayyan.html`.
+- **Wire it up (3 places):** add to `ADVENTURES` (or `GAMES`) in `rayyan.html` (emoji, title, blurb, href, progressKey, totalChapters); add the new key to the `sumStars([...])` list in `kids.html`; bump the "X petualangan" pill + "/ N petualangan selesai" counts in `kids.html` and `rayyan.html` **and the kids-strip counts on `index.html`** (added 2026-06-10, plan-v4 A1).
 - **Disguise rules (non-negotiable):** no grade numbers Rayyan can see; adventure framing only; for coding say "mengajari robot / membuat petualangan", never "coding/programming". Indonesian UI + English code.
 - **One world:** new themes must connect to the existing biomes (train → space → ocean → city → lab), so it feels like one journey.
 
@@ -407,6 +407,75 @@ biggest build, so it goes after the format patterns are proven.*
 
 ---
 
+## Improvement Plan v4 – 2026-06-10: Front Door, Resilience & the Parent Loop (current queue after v3)
+
+> Adhi asked (2026-06-10): *"how could Learn with Adhi be better — improve what's important but
+> missing, and make the index front page better."* Full-site audit below. The kids' content ladders
+> are in great shape after v2/v3; the **neglected surfaces are the adult-facing front door, the
+> parent loop, and resilience** (offline / real devices). Each item = one SOP step
+> (ship → verify → docs → commit/push).
+
+### Verified findings this plan is built on (audited 2026-06-10)
+- **index.html bugs/staleness:**
+  - The **"Language" filter chip matches zero courses** (no such category in `courses.json`) → clicking it shows a silently empty grid, and there's no empty-state message either. Chips are hardcoded while categories live in the manifest.
+  - Hero claims "**12 courses** live" — the manifest actually has **11 courses + 3 tools + 2 research reports** (16 items).
+  - Nav has two dead links (**"Notes"**, **"About"** → `#`) and **no parent entry point** (login/dashboard unreachable from the front page).
+  - On phones (<640px) the **entire nav disappears** (`display:none`) — no menu at all; kids.html only reachable via the yellow strip.
+  - The featured course is **hardcoded in HTML** while `courses.json` has an unused `featured: true` flag → drift risk.
+  - The **"✓ Read" pill can only ever show for 2 of 11 adult courses** — only `design-principles` + `perth-architecture` write `lwa:completed`; `assets/js/progress.js` (which automates it) is referenced only by the unused course template.
+  - No search, no JSON-LD, no skip-link, chips lack `aria-pressed`, no `:focus-visible` styles.
+- **sitemap.xml is stale:** missing `design-principles`, `perth-architecture`, and both research reports.
+- **README.md is very stale:** still lists IELTS courses (deleted), claims a dark/light theme the index doesn't have, lists the old fonts (DM Serif/Nunito instead of Bricolage/Inter).
+- **Parent dashboard is thin:** it shows stars-per-course, but `rayyanWeakSpots` (collected since plan-v2 Y3 for the adaptive Misi Harian) is **never shown to the parent** — the single most actionable dataset on the site.
+- **No offline story:** courses are single-file, but every visit needs the network (Google Fonts, fresh HTML fetch, Firebase). The Technical-Stack guardrail says "lesson must never break on flaky wifi" — true *within* a loaded lesson, false for the site as a whole (tablet in the car / hotel wifi).
+
+### PILLAR A — Front door & adult library
+**A1 · index.html refresh + sitemap** — ✅ **DONE (2026-06-10)**
+- Filter chips render dynamically from the manifest's actual categories (kills the dead-chip class of bug forever) + an empty-state message + client-side **search** over title/blurb/tags.
+- Hero counts computed live from the manifest (static fallback text corrected); featured panel renders the `featured: true` manifest item (hardcoded copy kept as no-JS fallback).
+- Nav fixed: dead links removed, **Parents → dashboard.html** and **About → #about** added, compact mobile nav (Courses + Kids ✦ stay visible on phones).
+- New **About** section (#about) — who/why/how, builds trust with strangers (careful: no "disguise" wording that could leak the strategy).
+- Kids strip states concrete counts (14 petualangan · 7 kursus · 3 game). ⚠️ This adds a wiring point — see the updated wiring checklist.
+- A11y: skip-link, `:focus-visible`, `aria-pressed`. SEO: JSON-LD (WebSite + ItemList), sitemap refreshed (+4 missing pages).
+
+**A2 · Make adult completion real** — add `assets/js/progress.js` + `data-course-id` (+ the thin `.progress-bar` element it drives) to the 9 adult courses that never mark completion; ids must match `courses.json` ids so the "✓ Read" pill and the hero "finished on this device" count become honest. One sweep, low risk.
+
+**A3 · README refresh** — rewrite to match reality (structure, fonts, kids' world, manifest-driven hub, no theme toggle). Quick step; removes the worst "docs lie" in the repo.
+
+**A4 (later) · Per-course meta sweep** — canonical + og tags on adult course pages. Low priority.
+
+### PILLAR B — Kids: resilience & device-readiness
+**B1 · Offline/PWA layer** *(the biggest missing capability)* — `manifest.webmanifest` + a small service worker: precache the 3 hubs + all kid course files + Kenney sprites + font CSS (cache-first with background update); Firebase/auth requests bypass the cache; never serve `courses.json` stale-first. Result: the tablet works in the car / on hotel wifi, and "Add to Home Screen" makes it feel like a real app for Rayyan. Version the cache name per deploy + `skipWaiting` to avoid stale-cache hell. Test via DevTools offline mode.
+
+**B2 · X1 carried — real-device pass 📱** — tap targets, `id-ID` voice availability, Web-Audio-after-gesture, load times on the actual tablet; log findings in PROGRESS.md, fix the top 3.
+
+**B3 · Sound/voice settings ⚙️** — persisted per-device `lwaSettings` (`{sfx, voice}`), a small toggle on the kid hubs, respected by the `SFX`/`Suara`/`AX` modules (roll out hubs + Raya courses first — she's the read-aloud user). Parents sometimes need quiet; today the only option is device mute.
+
+**B4 · X2 carried — Raya real photos 🖼️** — still blocked (no reachable image host in this build env): needs Adhi to drop photos into `assets/img/raya-world/` or a session with image-host network access.
+
+### PILLAR C — Parent loop (make the dashboard worth opening)
+**C1 · Weak-spots panel on dashboard.html** *(cheapest real win on the whole board — the data already exists)* — read `rayyanWeakSpots`, map chapter ids → human topic names (reuse `WEAK_TOPIC_MAP` from `rayyan.html`), show e.g. "Rayyan lagi kesulitan di: pecahan (×4)" + which adventure to replay together. Zero new collection code.
+
+**C2 · "Active this week"** — stamp `lastPlayed` (ISO date) into each course's localStorage key on save (1-line change per save helper), then the dashboard shows per-kid recency + a simple stars-this-week delta (snapshot totals on each dashboard open).
+
+**C3 (not recommended now) · Email digest** — needs a backend/cron; revisit only if the dashboard goes unopened.
+
+### PILLAR D — Content backlog (only after the quality work above)
+- **D1 · F5 carried** — Rayyan story-quest "Misteri di Stasiun" 🔍 (branching fiction, puzzle-gated plot).
+- **D2 · Raya "Berhitung Lanjut" 🔢** — numbers 11–20 + intro penjumlahan/pengurangan within 10 (her math course is tap-to-count; this is the natural next rung at 4–5 yrs).
+- **D3 · Y5 carried** — Gr8 math biome / Python "Penjinak Data" (only if Rayyan is flying).
+
+### Recommended order
+`A1 (✅ done)` → `C1 (weak-spots panel — one session, instant parent value)` → `B1 (offline PWA)` → `A2 + A3 (adult completion + README, one light session)` → `B3 (sound settings)` → `B2/X1 (needs the physical device)` → `D-track`.
+*Rationale: A1 was the direct ask. C1 is the highest value-per-effort anywhere (data already collected, parent acts on it tomorrow). B1 removes the biggest real-world failure mode (no wifi = no learning). A2/A3 make the adult side honest. D only after quality.*
+
+### Decisions for Adhi (per SOP: pick the rec, note it, don't block)
+- **A1 About copy:** a short honest draft ships at `index.html#about` — edit freely, it's plain HTML.
+- **B1 scope:** precache *all* kid courses up front (heavier first load, rec — guarantees car-trip mode) vs. cache-each-course-on-first-visit.
+- **C2 privacy:** `lastPlayed` syncs inside the existing per-kid Firestore doc (rec) vs. local-only.
+
+---
+
 ## Technical Stack
 - Pure HTML + CSS + Vanilla JS, single-file per course
 - No build tools, no frameworks
@@ -434,7 +503,7 @@ biggest build, so it goes after the format patterns are proven.*
 - Always keep the "disguise" intact – no grade numbers visible to Rayyan in the adventure courses
 - The math and coding ladder should feel like ONE continuous adventure world, not separate subjects
 - Raya is younger (PAUD) – her content is visual-only, minimal reading, tap/drag interactions
-- **Wiring a new Rayyan (kids) course:** update the `ADVENTURES`/`GAMES` array in `rayyan.html`, add its key to `sumStars([...])` in `kids.html` AND to `PROGRESS_KEYS_BY_TYPE` in `assets/js/auth.js` (for cloud sync) AND to `COURSE_NAMES` in `dashboard.html` (for the parent view), and bump the count pills. (For *adult* courses instead, update `index.html` / `assets/courses.json`.)
+- **Wiring a new Rayyan (kids) course:** update the `ADVENTURES`/`GAMES` array in `rayyan.html`, add its key to `sumStars([...])` in `kids.html` AND to `PROGRESS_KEYS_BY_TYPE` in `assets/js/auth.js` (for cloud sync) AND to `COURSE_NAMES` in `dashboard.html` (for the parent view), and bump the count pills — incl. the kids-strip counts on `index.html` (since plan-v4 A1). (For *adult* courses instead, update `assets/courses.json` only — the index hub derives chips/counts/featured from the manifest.)
 - **2026-06-04 audit:** all 12 Rayyan adventures (incl. the Track C Bridge) + 2 Raya courses are shipped & wired (this doc previously under-counted them). Math answers spot-checked correct. Fixed disguise leaks: the Gr2–5 `<title>` and bug-report `courseName` no longer show "Kelas N" (theme names only). Biggest remaining gaps: the Track D retention layer, and the faked "real code"/"real game" payoffs in coding v3/v5.
 - **Dead code:** ~~`assets/js/sync.js`~~ **deleted 2026-06-10** (plan-v2 R4) — it duplicated `assets/js/auth.js` (the live per-kid Firestore sync) and was never initialized; its lone `<script>` tag in `rayyan.html` was removed with it.
 - **Tutor name:** ✅ unified to **"Kapi"** across all math courses (Gr2–4 were "Kai"/"Nova" → now Kapi; Gr5–7 already Kapi; Gr7 keeps the "Detektif Kapi" themed variant). The internal CSS classes/ids (`kai-name`, `nova-msg`, etc.) were left as-is (not visible to Rayyan).
