@@ -280,8 +280,9 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 **X1 · Real-device pass 📱** — one session on the actual tablet/phone: tap-target sizes, speech-synthesis voice availability on the real device (id-ID voices vary by OS), Web-Audio-after-gesture, load time. Log findings in PROGRESS.md and fix the top 3.
 
 **X2 · Asset richness pass 🖼️** *(unlocked by Adhi 2026-06-09: internet images/APIs allowed)* — upgrade visuals where it adds real learning/joy value, one course per step:
-- **Raya visual & literacy:** real CC0 photos for animals/objects (emoji → photo where recognition matters).
-- **Rayyan games & bosses:** Kenney.nl CC0 sprite packs (trains, space, characters) for the runner game (`Kereta Lari`), boss enemies, and v5's game — real game art instead of emoji sprites.
+- ✅ **(2026-06-10) Kenney CC0 sprites downloaded** into `assets/img/kenney/` (platformer obstacles/clouds, space enemies/UFOs/meteor, 9 medals) from the GitHub mirror of the Kenney pack (kenney.nl itself + photo hosts are blocked by the env's network allowlist; mirror license verified CC0, every image visually vetted; see `assets/img/kenney/LICENSE.md`).
+- ✅ **(2026-06-10) Both runner games upgraded:** the standalone `rayyan-train-run-v1.html` (sprite cactus/rock obstacles + sprite clouds) and v5's in-course "Kereta Lari" (sprite obstacles). All sprite drawing **falls back to the original vector/rect art if images fail** — hitboxes untouched.
+- **Raya visual & literacy:** real CC0 photos for animals/objects (emoji → photo where recognition matters) — ⏳ still blocked: no reachable photo host in this env (Pixabay/Pexels/Wikimedia/Openverse all 403). Needs a different env or photos dropped into the repo.
 - Follow the Technical Stack guardrails: download into `assets/`, license-check, never let a lesson depend on live network.
 
 ### Recommended order

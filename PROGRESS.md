@@ -19,6 +19,12 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-10
 
+### Plan v2 · X2a — Kenney CC0 sprites: both runner games get real game art ✅
+- **Assets:** `assets/img/kenney/` (148 KB, 24 files + LICENSE.md) — platformer obstacles/clouds/decor, space enemies/UFOs/meteor, 9 medals. Source: the GitHub mirror of Kenney's CC0 asset pack (github.com/iwenzhou/kenney — kenney.nl itself and all photo hosts are blocked by this env's network allowlist). License verified CC0 1.0 in the mirror; **every image visually reviewed** before adding.
+- **Standalone runner** (`courses/tools/rayyan-train-run-v1.html`): cactus + rock obstacles and the 3 clouds now draw Kenney sprites; **vector art remains as automatic fallback** if images don't load (flaky wifi safe), hitboxes unchanged.
+- **v5 in-course "Kereta Lari"**: obstacles are now sprite cactus/rock (random per spawn) instead of pink rectangles, same fallback + hitbox rules.
+- Still blocked for X2: real CC0 *photos* for Raya (no reachable photo host). Next X2 steps: medal-cabinet images + space-boss sprite.
+
 ### Plan v2 · R4 — Housekeeping ✅ (dead code removed)
 - Deleted `courses/learning/raya-learning-paud-v1.html` (never-wired near-duplicate of the visual course; its `rayaLearning` key was already purged from star lists on 2026-06-04) and `assets/js/sync.js` (duplicated `auth.js`, never initialized) + its lone `<script>` tag in `rayyan.html`. Verified: zero remaining references (`grep sync.js|raya-learning-paud` → 0). Per the SOP this deletion is flagged for Adhi's confirmation in the PR (#118) without blocking.
 
