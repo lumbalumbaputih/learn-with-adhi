@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Timbangan Misteri ⚖️ · Learn with Adhi</title>
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%232E3192"/><text y=".9em" font-size="75" x="10">⚖️</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #E84BA0;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --tomato:  #FF5C39;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --paper-2: #F4ECD8;
+      --line:    rgba(26,22,20,0.12);
+      --muted:   #6B6259;
+      --lab-bg:  #EFE0F7;
+      --lab-acc: #7C3AED;
+      --fd: 'Bricolage Grotesque','Arial Black',sans-serif;
+      --fb: 'Inter',system-ui,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{-webkit-font-smoothing:antialiased;}
+    body{font-family:var(--fb);background:var(--paper);color:var(--ink);min-height:100dvh;overflow-x:hidden;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+    /* HEADER */
+    .hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:2.5px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:100;}
+    .hdr-brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;}
+    .hdr-word{font-family:var(--fd);font-weight:800;font-size:18px;letter-spacing:-0.03em;}
+    .hdr-stars{background:var(--lab-acc);color:white;border:2px solid var(--ink);border-radius:999px;padding:6px 14px;font-family:var(--fd);font-weight:800;font-size:16px;display:flex;align-items:center;gap:6px;}
+
+    /* SCREENS */
+    .screen{display:none;}
+    .screen.active{display:block;}
+
+    /* HOME */
+    .home-hero{padding:28px 20px 20px;text-align:center;}
+    .home-emoji{font-size:80px;line-height:1;margin-bottom:10px;}
+    .home-title{font-family:var(--fd);font-weight:800;font-size:26px;letter-spacing:-0.02em;margin-bottom:8px;}
+    .home-sub{font-size:15px;color:var(--muted);max-width:320px;margin:0 auto 24px;line-height:1.5;}
+    .level-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px 24px;max-width:480px;margin:0 auto;}
+    .level-card{border:3px solid var(--ink);border-radius:18px;padding:16px 14px;background:white;cursor:pointer;text-align:left;box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s;position:relative;}
+    .level-card:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink);}
+    .level-card.locked{opacity:.45;cursor:default;}
+    .level-card.done{border-color:var(--forest);}
+    .level-num{font-family:var(--fd);font-weight:800;font-size:13px;color:var(--muted);margin-bottom:4px;}
+    .level-title{font-family:var(--fd);font-weight:800;font-size:15px;margin-bottom:4px;}
+    .level-desc{font-size:12px;color:var(--muted);line-height:1.4;}
+    .level-stars{position:absolute;top:12px;right:12px;font-size:14px;}
+    .lock-icon{position:absolute;top:12px;right:12px;font-size:18px;}
+
+    /* LAB SCREEN */
+    .lab-wrap{max-width:520px;margin:0 auto;padding:0 0 60px;}
+    .lab-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;}
+    .lab-hdr-title{font-family:var(--fd);font-weight:800;font-size:16px;}
+    .lab-lives{display:flex;gap:6px;font-size:22px;}
+    .lab-puzzle-num{font-size:13px;color:var(--muted);}
+
+    /* SCALE */
+    .scale-container{padding:0 16px;margin-bottom:4px;}
+    .scale-svg-wrap{width:100%;max-width:480px;margin:0 auto;display:block;}
+
+    /* PUZZLE INFO */
+    .puzzle-goal{text-align:center;font-family:var(--fd);font-weight:700;font-size:17px;padding:8px 20px 4px;line-height:1.4;}
+    .puzzle-hint{text-align:center;font-size:13px;color:var(--muted);padding:0 16px 8px;}
+
+    /* WEIGHT BANK */
+    .weight-bank-label{padding:4px 16px;font-size:13px;color:var(--muted);font-weight:600;}
+    .weight-bank{display:flex;flex-wrap:wrap;gap:10px;padding:8px 16px 12px;}
+    .weight-chip{
+      display:flex;align-items:center;justify-content:center;
+      border:3px solid var(--ink);border-radius:14px;padding:10px 16px;
+      font-family:var(--fd);font-weight:800;font-size:18px;
+      background:white;cursor:grab;box-shadow:3px 3px 0 var(--ink);
+      user-select:none;transition:transform .12s,opacity .12s;
+      touch-action:none;
+    }
+    .weight-chip:active{cursor:grabbing;transform:scale(1.12);}
+    .weight-chip.used{opacity:.35;cursor:default;}
+
+    /* PAN DROP ZONES */
+    .pans-row{display:flex;gap:16px;padding:0 16px;margin-bottom:6px;}
+    .pan-zone{
+      flex:1;min-height:90px;
+      border:3px dashed var(--muted);border-radius:16px;
+      background:var(--paper-2);
+      display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;
+      padding:10px 8px;
+      transition:border-color .2s,background .2s;
+      position:relative;
+    }
+    .pan-zone.over{border-color:var(--lab-acc);background:#f0e8ff;border-style:solid;}
+    .pan-zone-label{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap;}
+    .pan-chip{
+      display:flex;align-items:center;justify-content:center;
+      border:2.5px solid var(--ink);border-radius:10px;padding:6px 12px;
+      font-family:var(--fd);font-weight:800;font-size:16px;
+      background:var(--lab-bg);cursor:pointer;
+      user-select:none;
+    }
+    .mystery-chip{background:#f0e8ff;border-color:var(--lab-acc);color:var(--lab-acc);}
+
+    /* ACTIONS */
+    .lab-actions{display:flex;gap:10px;padding:8px 16px 4px;justify-content:flex-end;}
+    .action-btn{border:2.5px solid var(--ink);border-radius:12px;padding:12px 20px;font-family:var(--fd);font-weight:800;font-size:15px;box-shadow:3px 3px 0 var(--ink);transition:transform .12s,box-shadow .12s;}
+    .action-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+    .action-btn.primary{background:var(--lab-acc);color:white;}
+    .action-btn.secondary{background:var(--paper-2);color:var(--ink);}
+
+    /* FEEDBACK */
+    .feedback-bar{
+      margin:6px 16px 0;padding:12px 16px;border-radius:14px;
+      font-family:var(--fd);font-weight:700;font-size:15px;
+      border:2.5px solid transparent;
+      min-height:48px;transition:all .2s;
+      display:flex;align-items:center;gap:8px;
+    }
+    .feedback-bar.balanced{background:#E3F5EB;border-color:var(--forest);color:var(--forest);}
+    .feedback-bar.tipped-l{background:#FFF5D6;border-color:var(--mango);color:#996600;}
+    .feedback-bar.tipped-r{background:#FFF5D6;border-color:var(--mango);color:#996600;}
+    .feedback-bar.wrong{background:#FFE8E3;border-color:var(--tomato);color:var(--tomato);}
+
+    /* COMPLETE / LEVEL COMPLETE */
+    .lc-wrap{max-width:400px;margin:0 auto;padding:32px 24px;text-align:center;}
+    .lc-badge{font-size:80px;margin-bottom:10px;}
+    .lc-title{font-family:var(--fd);font-weight:800;font-size:26px;margin-bottom:8px;}
+    .lc-stars{font-size:38px;margin:12px 0;}
+    .lc-msg{font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+    .lc-btns{display:flex;flex-direction:column;gap:10px;align-items:center;}
+    .lc-btn{border:3px solid var(--ink);border-radius:14px;padding:14px 36px;font-family:var(--fd);font-weight:800;font-size:18px;box-shadow:4px 4px 0 var(--ink);width:100%;max-width:300px;}
+    .lc-btn.primary{background:var(--lab-acc);color:white;}
+    .lc-btn.secondary{background:var(--paper-2);color:var(--ink);}
+
+    #confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:300;}
+  </style>
+</head>
+<body>
+<canvas id="confettiCanvas"></canvas>
+
+<header class="hdr">
+  <a href="/rayyan.html" class="hdr-brand">
+    <span class="hdr-word">⚖️ Timbangan Misteri</span>
+  </a>
+  <div class="hdr-stars">⭐ <span id="starCount">0</span></div>
+</header>
+
+<!-- HOME -->
+<div class="screen active" id="sHome">
+  <div class="home-hero">
+    <div class="home-emoji">⚖️🔬</div>
+    <div class="home-title">Timbangan Misteri</div>
+    <div class="home-sub">Seimbangkan timbangan lab! Temukan berapa berat kotak misterius ❓ — tanpa menebak, dengan berpikir!</div>
+  </div>
+  <div class="level-grid" id="levelGrid"></div>
+</div>
+
+<!-- LAB -->
+<div class="screen" id="sLab">
+  <div class="lab-wrap">
+    <div class="lab-hdr">
+      <div>
+        <div class="lab-hdr-title" id="labTitle">Level 1</div>
+        <div class="lab-puzzle-num" id="labPuzzleNum">Teka-teki 1 / 3</div>
+      </div>
+      <div class="lab-lives" id="labLives"></div>
+    </div>
+
+    <!-- scale SVG -->
+    <div class="scale-container">
+      <svg class="scale-svg-wrap" viewBox="0 0 320 200" id="scaleSvg">
+        <!-- base + pillar -->
+        <rect x="145" y="170" width="30" height="24" rx="4" fill="#7C3AED" opacity=".7"/>
+        <rect x="157" y="80" width="6" height="92" rx="3" fill="#7C3AED" opacity=".7"/>
+        <!-- fulcrum mark -->
+        <circle cx="160" cy="78" r="7" fill="#7C3AED"/>
+        <!-- beam — rotated by JS via transform-origin 160,78 -->
+        <g id="beam" style="transform-origin:160px 78px;transition:transform .5s cubic-bezier(.34,1.56,.64,1)">
+          <rect x="60" y="74" width="200" height="8" rx="4" fill="#4C1D95"/>
+          <!-- left pan -->
+          <line x1="90" y1="82" x2="90" y2="122" stroke="#4C1D95" stroke-width="3"/>
+          <ellipse cx="90" cy="122" rx="44" ry="12" fill="#DDD6FE" stroke="#4C1D95" stroke-width="2.5"/>
+          <!-- right pan -->
+          <line x1="230" y1="82" x2="230" y2="122" stroke="#4C1D95" stroke-width="3"/>
+          <ellipse cx="230" cy="122" rx="44" ry="12" fill="#DDD6FE" stroke="#4C1D95" stroke-width="2.5"/>
+        </g>
+        <!-- tilt indicator (emoji) -->
+        <text id="tiltIcon" x="160" y="58" text-anchor="middle" font-size="22">⚖️</text>
+      </svg>
+    </div>
+
+    <div class="puzzle-goal" id="puzzleGoal"></div>
+    <div class="puzzle-hint" id="puzzleHint"></div>
+
+    <!-- pan drop zones -->
+    <div class="pans-row">
+      <div class="pan-zone" id="panLeft" ondragover="onDragOver(event,'left')" ondrop="onDrop(event,'left')" ondragleave="onDragLeave(event)">
+        <span class="pan-zone-label">Piring Kiri ⬅️</span>
+      </div>
+      <div class="pan-zone" id="panRight" ondragover="onDragOver(event,'right')" ondrop="onDrop(event,'right')" ondragleave="onDragLeave(event)">
+        <span class="pan-zone-label">Piring Kanan ➡️</span>
+      </div>
+    </div>
+
+    <div class="feedback-bar" id="feedbackBar"></div>
+
+    <!-- weight bank -->
+    <div class="weight-bank-label">🧲 Berat tersedia — seret ke piring:</div>
+    <div class="weight-bank" id="weightBank"></div>
+
+    <div class="lab-actions">
+      <button class="action-btn secondary" onclick="resetPuzzle()">↺ Reset</button>
+      <button class="action-btn primary" id="checkBtn" onclick="checkBalance()">✅ Periksa</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEVEL COMPLETE -->
+<div class="screen" id="sLevelComplete">
+  <div class="lc-wrap">
+    <div class="lc-badge" id="lcBadge">🌟</div>
+    <div class="lc-title" id="lcTitle">Level selesai!</div>
+    <div class="lc-stars" id="lcStars">⭐⭐⭐</div>
+    <div class="lc-msg" id="lcMsg"></div>
+    <div class="lc-btns">
+      <button class="lc-btn primary" id="lcNextBtn" onclick="lcNext()">Level Berikutnya →</button>
+      <button class="lc-btn secondary" onclick="goHome()">🏠 Pilih Level</button>
+    </div>
+  </div>
+</div>
+
+<!-- ALL DONE -->
+<div class="screen" id="sAllDone">
+  <div class="lc-wrap">
+    <div class="lc-badge">🏆</div>
+    <div class="lc-title">Hebat, Rayyan!</div>
+    <div class="lc-stars">⭐⭐⭐⭐⭐⭐</div>
+    <div class="lc-msg">Semua misteri timbangan sudah terpecahkan! Rayyan sudah tahu cara mencari nilai tersembunyi — itu adalah aljabar sungguhan!</div>
+    <div class="lc-btns">
+      <button class="lc-btn primary" onclick="goHome()">🏠 Pilih Level</button>
+      <button class="lc-btn secondary" onclick="window.location.href='/rayyan.html'">🗺️ Peta Petualangan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   LEVEL DATA
+   Each level = { id, title, desc, puzzles[] }
+   Each puzzle = {
+     left: [{val, label, isMystery}],   // items placed on left pan
+     right:[{val, label, isMystery}],   // items placed on right pan
+     bank: [{val, label}],              // draggable weights available
+     goal: string,                      // instruction shown to Rayyan
+     hint: string,
+     // isMystery items have val known to JS but shown as ❓
+   }
+════════════════════════════════════════════════ */
+const LEVELS = [
+  {
+    id: 'l1', title: 'Level 1 – Angka & Berat', emoji: '🧪',
+    desc: 'Seimbangkan dua piring dengan memilih berat yang tepat.',
+    puzzles: [
+      {
+        left:  [{val:3, label:'3'}],
+        right: [],
+        bank:  [{val:1,label:'1'},{val:2,label:'2'},{val:3,label:'3'},{val:5,label:'5'}],
+        goal:  'Piring kiri ada beban 3. Pilih beban yang sama untuk piring kanan!',
+        hint:  'Cari satu beban yang nilainya sama dengan 3.',
+      },
+      {
+        left:  [{val:2,label:'2'},{val:4,label:'4'}],
+        right: [],
+        bank:  [{val:1,label:'1'},{val:3,label:'3'},{val:4,label:'4'},{val:6,label:'6'},{val:8,label:'8'}],
+        goal:  'Piring kiri = 2 + 4. Piring kanan harus sama berat! Pilih beban yang benar.',
+        hint:  '2 + 4 = ? Cari satu beban dengan nilai itu.',
+      },
+      {
+        left:  [{val:5,label:'5'},{val:3,label:'3'}],
+        right: [{val:4,label:'4'}],
+        bank:  [{val:1,label:'1'},{val:2,label:'2'},{val:3,label:'3'},{val:4,label:'4'},{val:5,label:'5'}],
+        goal:  'Kiri = 5+3 = 8. Kanan sudah ada 4. Tambah berapa lagi supaya seimbang?',
+        hint:  '8 − 4 = ? Taruh beban itu di piring kanan.',
+      },
+    ],
+  },
+  {
+    id: 'l2', title: 'Level 2 – Kotak Misterius', emoji: '❓',
+    desc: 'Kotak ❓ berat yang tidak diketahui. Temukan nilainya!',
+    puzzles: [
+      {
+        left:  [{val:5,label:'5'}],
+        right: [{val:5, label:'❓', isMystery:true, mysteryId:'x'}],
+        bank:  [],
+        goal:  '❓ = berapa? Piring kiri = 5, piring kanan punya kotak ❓. Kotak misterius beratnya berapa?',
+        hint:  'Supaya seimbang, kedua sisi harus sama.',
+        answerInput: true,
+        answer: 5,
+      },
+      {
+        left:  [{val:3,label:'3'},{val:4,label:'4'}],
+        right: [{val:7, label:'❓', isMystery:true, mysteryId:'x'}],
+        bank:  [],
+        goal:  '❓ = berapa? Kiri ada 3 dan 4. Kanan hanya kotak ❓.',
+        hint:  '3 + 4 = ? Itu berat kotak ❓.',
+        answerInput: true,
+        answer: 7,
+      },
+      {
+        left:  [{val:10,label:'10'}],
+        right: [{val:6, label:'❓', isMystery:true}, {val:4,label:'4'}],
+        bank:  [],
+        goal:  'Kiri = 10. Kanan ada ❓ dan 4. Berapa berat ❓?',
+        hint:  '❓ + 4 = 10, jadi ❓ = 10 − 4 = ?',
+        answerInput: true,
+        answer: 6,
+      },
+    ],
+  },
+  {
+    id: 'l3', title: 'Level 3 – Seimbangkan Sendiri', emoji: '🔬',
+    desc: 'Seret beban untuk menyeimbangkan — ❓ ada di salah satu piring.',
+    puzzles: [
+      {
+        left:  [{val:7, label:'❓', isMystery:true}],
+        right: [],
+        bank:  [{val:1,label:'1'},{val:2,label:'2'},{val:3,label:'3'},{val:4,label:'4'},{val:5,label:'5'},{val:7,label:'7'}],
+        goal:  'Piring kiri ada kotak ❓ yang beratnya 7. Seimbangkan piring kanan!',
+        hint:  'Pilih beban-beban di bank yang totalnya = 7.',
+        targetLeft: 7,
+      },
+      {
+        left:  [{val:9,label:'9'}],
+        right: [{val:4, label:'❓', isMystery:true}],
+        bank:  [{val:1,label:'1'},{val:2,label:'2'},{val:3,label:'3'},{val:4,label:'4'},{val:5,label:'5'}],
+        goal:  'Kiri = 9. Kanan ada ❓ (berat 4). Tambah beban ke piring kanan supaya seimbang!',
+        hint:  '4 + ? = 9, jadi tambah beban senilai 5.',
+        targetLeft: 9,
+      },
+      {
+        left:  [{val:6,label:'6'},{val:2,label:'2'}],
+        right: [{val:5, label:'❓', isMystery:true}],
+        bank:  [{val:1,label:'1'},{val:2,label:'2'},{val:3,label:'3'},{val:4,label:'4'},{val:5,label:'5'}],
+        goal:  'Kiri = 6+2 = 8. Kanan ada ❓ (berat 5). Tambah beban ke piring kanan supaya 8!',
+        hint:  '5 + ? = 8',
+        targetLeft: 8,
+      },
+    ],
+  },
+  {
+    id: 'l4', title: 'Level 4 – Hapus Keduanya', emoji: '🔭',
+    desc: 'Hapus beban yang sama dari KEDUA sisi — ❓ akan terungkap!',
+    puzzles: [
+      {
+        left:  [{val:5,label:'5'},{val:3,label:'3'}],
+        right: [{val:5, label:'❓x', isMystery:true},{val:3,label:'3'}],
+        bank:  [],
+        goal:  'Kedua sisi punya beban 3. Kalau kita hapus 3 dari kanan dan kiri, sisi kiri = 5. Jadi ❓ = berapa?',
+        hint:  'Hapus yang sama dari dua sisi → yang tersisa = jawabannya.',
+        answerInput: true,
+        answer: 5,
+        showRemove: true,
+        removeVal: 3,
+      },
+      {
+        left:  [{val:8,label:'8'},{val:2,label:'2'}],
+        right: [{val:8, label:'❓x', isMystery:true},{val:2,label:'2'}],
+        bank:  [],
+        goal:  'Kiri punya 8 dan 2. Kanan punya ❓ dan 2. Hapus 2 dari kedua sisi. ❓ = ?',
+        hint:  'Setelah 2 dihapus dari kedua sisi, kiri = 8, jadi ❓ = 8.',
+        answerInput: true,
+        answer: 8,
+        showRemove: true,
+        removeVal: 2,
+      },
+      {
+        left:  [{val:10,label:'10'},{val:4,label:'4'}],
+        right: [{val:10, label:'❓x', isMystery:true},{val:4,label:'4'}],
+        bank:  [],
+        goal:  'Kiri = 10 + 4 = 14. Kanan = ❓ + 4 = 14. Hapus 4 dari kedua sisi. ❓ = ?',
+        hint:  'Hapus 4 dari kedua sisi → kiri = 10 → ❓ = 10.',
+        answerInput: true,
+        answer: 10,
+        showRemove: true,
+        removeVal: 4,
+      },
+    ],
+  },
+  {
+    id: 'l5', title: 'Level 5 – Campuran Rumit', emoji: '🌀',
+    desc: 'Seret beban DAN temukan nilai ❓ — dua langkah!',
+    puzzles: [
+      {
+        left:  [{val:12,label:'12'}],
+        right: [{val:5, label:'❓', isMystery:true}],
+        bank:  [{val:1,label:'1'},{val:2,label:'2'},{val:3,label:'3'},{val:4,label:'4'},{val:7,label:'7'}],
+        goal:  'Kiri = 12. Kanan punya ❓ (berat 5). Tambah beban ke kanan supaya kanan = 12.',
+        hint:  '5 + ? = 12, tambah 7.',
+        targetLeft: 12,
+      },
+      {
+        left:  [{val:9,label:'9'},{val:3,label:'3'}],
+        right: [{val:8, label:'❓', isMystery:true}],
+        bank:  [{val:1,label:'1'},{val:2,label:'2'},{val:3,label:'3'},{val:4,label:'4'}],
+        goal:  'Kiri = 9 + 3 = 12. Kanan ada ❓ (berat 8). Tambah beban untuk menyeimbangkan!',
+        hint:  '8 + ? = 12',
+        targetLeft: 12,
+      },
+      {
+        left:  [{val:15,label:'15'}],
+        right: [{val:6, label:'❓', isMystery:true},{val:3,label:'3'}],
+        bank:  [{val:1,label:'1'},{val:2,label:'2'},{val:3,label:'3'},{val:4,label:'4'},{val:6,label:'6'}],
+        goal:  'Kiri = 15. Kanan punya ❓(6) + 3. Tambah beban ke kanan sampai 15!',
+        hint:  '6 + 3 + ? = 15',
+        targetLeft: 15,
+      },
+    ],
+  },
+  {
+    id: 'l6', title: 'BOSS: Dua Kotak Misteri!', emoji: '👾',
+    desc: 'Dua langkah — seimbangkan DAN temukan dua ❓ berbeda!',
+    puzzles: [
+      {
+        left:  [{val:8,label:'8'},{val:4,label:'4'}],
+        right: [{val:6, label:'❓A', isMystery:true},{val:6, label:'❓B', isMystery:true}],
+        bank:  [],
+        goal:  'Kiri = 8+4 = 12. Kanan = ❓A + ❓B = 12. Kalau keduanya sama, berapa tiap ❓?',
+        hint:  '12 ÷ 2 = 6. Jadi tiap ❓ = 6!',
+        answerInput: true,
+        answer: 6,
+        doubleAnswer: true,
+      },
+      {
+        left:  [{val:10,label:'10'},{val:5,label:'5'}],
+        right: [{val:5, label:'❓A', isMystery:true},{val:10,label:'❓B', isMystery:true}],
+        bank:  [],
+        goal:  'Kiri = 15. Kanan = ❓A + ❓B. ❓A = 5, ❓B = ?',
+        hint:  '5 + ❓B = 15 → ❓B = 10.',
+        answerInput: true,
+        answer: 10,
+        doubleAnswer: false,
+      },
+      {
+        left:  [{val:20,label:'20'}],
+        right: [{val:7, label:'❓A', isMystery:true},{val:7, label:'❓B', isMystery:true},{val:6,label:'6'}],
+        bank:  [],
+        goal:  'Kiri = 20. Kanan = ❓A + ❓B + 6. ❓A dan ❓B sama besar! Berapa tiap ❓?',
+        hint:  '20 − 6 = 14 → 14 ÷ 2 = 7.',
+        answerInput: true,
+        answer: 7,
+        doubleAnswer: true,
+      },
+    ],
+  },
+];
+
+/* ════════════════════════════════════════════════
+   STATE + STORAGE
+════════════════════════════════════════════════ */
+const STORAGE_KEY = 'rayyanBalance';
+const state = {
+  totalStars: 0,
+  progress: {},       // {levelId: {stars, bestAttempts}}
+  levelIdx: 0,
+  puzzleIdx: 0,
+  attempts: 0,
+  panLeft:  [],       // [{val, label, isMystery}]
+  panRight: [],
+  bankUsed: new Set(),
+  removed:  new Set(),
+};
+
+function loadState() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+    state.totalStars = d.totalStars || 0;
+    state.progress   = d.progress   || {};
+  } catch(e){}
+  document.getElementById('starCount').textContent = state.totalStars;
+}
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      totalStars: state.totalStars,
+      progress:   state.progress,
+    }));
+  } catch(e){}
+}
+function isUnlocked(idx) {
+  if (idx === 0) return true;
+  const prev = LEVELS[idx-1];
+  return (state.progress[prev.id]||{}).stars > 0;
+}
+
+/* ════════════════════════════════════════════════
+   AUDIO
+════════════════════════════════════════════════ */
+const SFX = {
+  ctx: null,
+  init(){ if(this.ctx) return; try{this.ctx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){} },
+  tone(freq,dur,vol=0.18,type='sine'){
+    if(!this.ctx) return;
+    const o=this.ctx.createOscillator(),g=this.ctx.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(vol,this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,this.ctx.currentTime+dur);
+    o.connect(g); g.connect(this.ctx.destination);
+    o.start(); o.stop(this.ctx.currentTime+dur);
+  },
+  play(type){
+    this.init(); if(!this.ctx) return;
+    if(type==='drop')    this.tone(330,.08,.1,'square');
+    if(type==='balance') { this.tone(523,.15,.15); setTimeout(()=>this.tone(659,.15,.15),120); setTimeout(()=>this.tone(784,.3,.15),240); }
+    if(type==='wrong')   { this.tone(220,.15,.15); setTimeout(()=>this.tone(196,.25,.12),130); }
+    if(type==='fanfare') { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>this.tone(f,.3,.18),i*110)); }
+    if(type==='tip')     this.tone(300,.1,.08,'sawtooth');
+  }
+};
+
+/* ════════════════════════════════════════════════
+   SCALE ANIMATION
+════════════════════════════════════════════════ */
+function setBeamAngle(leftSum, rightSum) {
+  const beam     = document.getElementById('beam');
+  const tiltIcon = document.getElementById('tiltIcon');
+  const diff     = leftSum - rightSum;
+  // clamp tilt to ±18 deg
+  const angle    = Math.max(-18, Math.min(18, diff * 2.5));
+  beam.style.transform = `rotate(${angle}deg)`;
+  if (Math.abs(diff) < 0.01) {
+    tiltIcon.textContent = '⚖️';
+  } else if (diff > 0) {
+    tiltIcon.textContent = '⬅️';
+  } else {
+    tiltIcon.textContent = '➡️';
+  }
+}
+
+/* ════════════════════════════════════════════════
+   CONFETTI
+════════════════════════════════════════════════ */
+function launchConfetti() {
+  const canvas=document.getElementById('confettiCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  const pieces=Array.from({length:50},()=>({
+    x:Math.random()*canvas.width, y:-20-Math.random()*80,
+    vx:(Math.random()-.5)*4, vy:2+Math.random()*4,
+    color:['#7C3AED','#FFC234','#1FA9C7','#FF5C39','#1F9D55','#E84BA0'][Math.floor(Math.random()*6)],
+    size:7+Math.random()*7, rot:Math.random()*360, drot:(Math.random()-.5)*6,
+  }));
+  let fr=0;
+  (function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.rot+=p.drot;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size/2);
+      ctx.restore();
+    });
+    if(++fr<80) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  })();
+}
+
+/* ════════════════════════════════════════════════
+   HOME / LEVEL GRID
+════════════════════════════════════════════════ */
+function renderHome() {
+  document.getElementById('levelGrid').innerHTML = LEVELS.map((lv, i) => {
+    const prog    = state.progress[lv.id] || {};
+    const locked  = !isUnlocked(i);
+    const stars   = prog.stars || 0;
+    const starStr = stars > 0
+      ? '⭐'.repeat(stars) + '☆'.repeat(3-stars)
+      : '';
+    return `
+      <div class="level-card${locked?' locked':''}${stars>0?' done':''}"
+           onclick="${locked?'':(`openLevel(${i})`)}" role="button" tabindex="${locked?-1:0}">
+        <div class="level-num">${lv.emoji} Level ${i+1}</div>
+        <div class="level-title">${lv.title}</div>
+        <div class="level-desc">${lv.desc}</div>
+        ${locked ? '<span class="lock-icon">🔒</span>' : (starStr ? `<span class="level-stars">${starStr}</span>` : '')}
+      </div>`;
+  }).join('');
+}
+
+function goHome() { show('sHome'); renderHome(); }
+
+/* ════════════════════════════════════════════════
+   LEVEL / PUZZLE
+════════════════════════════════════════════════ */
+function openLevel(idx) {
+  SFX.init();
+  state.levelIdx  = idx;
+  state.puzzleIdx = 0;
+  state.attempts  = 0;
+  renderPuzzle();
+  show('sLab');
+}
+
+function renderPuzzle() {
+  const lv = LEVELS[state.levelIdx];
+  const pz = lv.puzzles[state.puzzleIdx];
+
+  document.getElementById('labTitle').textContent    = lv.title;
+  document.getElementById('labPuzzleNum').textContent = `Teka-teki ${state.puzzleIdx+1} / ${lv.puzzles.length}`;
+
+  // lives (attempts left — start at 3 per puzzle)
+  const lives = Math.max(0, 3 - state.attempts);
+  document.getElementById('labLives').innerHTML = '❤️'.repeat(lives) + '🖤'.repeat(3-lives);
+
+  document.getElementById('puzzleGoal').textContent = pz.goal;
+  document.getElementById('puzzleHint').textContent = '';
+  document.getElementById('feedbackBar').className  = 'feedback-bar';
+  document.getElementById('feedbackBar').textContent = '';
+
+  // reset pan state to puzzle defaults
+  state.panLeft  = pz.left  ? pz.left.map(x=>({...x}))  : [];
+  state.panRight = pz.right ? pz.right.map(x=>({...x})) : [];
+  state.bankUsed = new Set();
+  state.removed  = new Set();
+
+  renderPans();
+  renderWeightBank(pz);
+  updateBeam();
+
+  // answer input puzzle — swap Check button to input+check
+  const checkBtn = document.getElementById('checkBtn');
+  if (pz.answerInput) {
+    checkBtn.textContent = '✅ Jawab';
+    checkBtn.onclick = checkAnswer;
+    // inject input field below hint
+    document.getElementById('puzzleHint').innerHTML =
+      `<input type="number" id="answerInput" placeholder="Jawaban: ?" inputmode="numeric"
+        style="margin-top:8px;font-size:22px;font-family:var(--fd);font-weight:800;
+        border:3px solid var(--ink);border-radius:12px;padding:10px 14px;width:130px;text-align:center;">`;
+    if (pz.showRemove) {
+      document.getElementById('puzzleHint').innerHTML +=
+        `<br><button onclick="doRemove()" style="margin-top:6px;border:2.5px solid var(--ink);border-radius:10px;padding:8px 16px;background:var(--lab-bg);font-family:var(--fd);font-weight:700;font-size:14px;cursor:pointer;">
+          ✂️ Hapus beban ${pz.removeVal} dari KEDUA sisi
+        </button>`;
+    }
+  } else {
+    checkBtn.textContent = '✅ Periksa';
+    checkBtn.onclick = checkBalance;
+  }
+}
+
+function resetPuzzle() {
+  state.attempts = 0;
+  renderPuzzle();
+}
+
+/* ── pan rendering ── */
+function renderPans() {
+  renderPan('panLeft',  state.panLeft);
+  renderPan('panRight', state.panRight);
+}
+
+function renderPan(id, items) {
+  const el = document.getElementById(id);
+  const label = el.querySelector('.pan-zone-label').outerHTML;
+  const chips = items.map((it,i) => {
+    const cls = it.isMystery ? 'pan-chip mystery-chip' : 'pan-chip';
+    return `<div class="${cls}" data-side="${id==='panLeft'?'left':'right'}" data-idx="${i}">${it.label}</div>`;
+  }).join('');
+  el.innerHTML = label + chips;
+}
+
+function renderWeightBank(pz) {
+  const bank = pz.bank || [];
+  document.getElementById('weightBank').innerHTML = bank.map((w,i) => {
+    const used = state.bankUsed.has(i);
+    return `<div class="weight-chip${used?' used':''}"
+      draggable="${!used}"
+      data-bank-idx="${i}"
+      data-val="${w.val}"
+      data-label="${w.label}"
+      ondragstart="onBankDragStart(event,${i})"
+      ontouchstart="onTouchStart(event,${i})"
+      ontouchmove="onTouchMove(event)"
+      ontouchend="onTouchEnd(event,'${id}')"
+    >${w.label}</div>`;
+  }).join('');
+}
+
+function updateBeam() {
+  const L = state.panLeft.reduce((s,x)=>s+x.val,0);
+  const R = state.panRight.reduce((s,x)=>s+x.val,0);
+  setBeamAngle(L, R);
+}
+
+/* ── drag & drop (desktop) ── */
+let _dragBankIdx = -1;
+let _dragVal = 0, _dragLabel = '';
+
+function onBankDragStart(e, idx) {
+  SFX.play('drop');
+  _dragBankIdx = idx;
+  const chip = e.currentTarget;
+  _dragVal   = Number(chip.dataset.val);
+  _dragLabel = chip.dataset.label;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', idx);
+}
+
+function onDragOver(e, side) {
+  e.preventDefault();
+  document.getElementById(side==='left'?'panLeft':'panRight').classList.add('over');
+}
+function onDragLeave(e) {
+  document.getElementById('panLeft').classList.remove('over');
+  document.getElementById('panRight').classList.remove('over');
+}
+function onDrop(e, side) {
+  e.preventDefault();
+  onDragLeave(e);
+  if (_dragBankIdx < 0) return;
+  state.bankUsed.add(_dragBankIdx);
+  const item = {val: _dragVal, label: _dragLabel};
+  if (side === 'left')  state.panLeft.push(item);
+  else                  state.panRight.push(item);
+  SFX.play('drop');
+  const pz = LEVELS[state.levelIdx].puzzles[state.puzzleIdx];
+  renderPans();
+  renderWeightBank(pz);
+  updateBeam();
+  _dragBankIdx = -1;
+}
+
+/* ── touch drag ── */
+let _touchBankIdx = -1, _touchVal = 0, _touchLabel = '', _touchEl = null;
+let _clone = null;
+
+function onTouchStart(e, idx) {
+  SFX.play('drop');
+  _touchBankIdx = idx;
+  const chip = e.currentTarget;
+  _touchVal   = Number(chip.dataset.val);
+  _touchLabel = chip.dataset.label;
+  _touchEl    = chip;
+  // create floating clone
+  _clone = chip.cloneNode(true);
+  _clone.style.cssText = `position:fixed;pointer-events:none;z-index:999;opacity:0.85;font-size:24px;padding:8px 14px;border:3px solid var(--ink);border-radius:12px;background:white;`;
+  const r = chip.getBoundingClientRect();
+  _clone.style.left = r.left + 'px';
+  _clone.style.top  = r.top  + 'px';
+  document.body.appendChild(_clone);
+}
+function onTouchMove(e) {
+  if (!_clone) return;
+  const t = e.touches[0];
+  _clone.style.left = (t.clientX - 30) + 'px';
+  _clone.style.top  = (t.clientY - 30) + 'px';
+  // highlight drop zone under finger
+  document.getElementById('panLeft').classList.remove('over');
+  document.getElementById('panRight').classList.remove('over');
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  const zone = el && (el.closest('#panLeft') || el.closest('#panRight'));
+  if (zone) zone.classList.add('over');
+}
+function onTouchEnd(e) {
+  if (_clone) { _clone.remove(); _clone = null; }
+  document.getElementById('panLeft').classList.remove('over');
+  document.getElementById('panRight').classList.remove('over');
+  if (_touchBankIdx < 0) return;
+  const t = e.changedTouches[0];
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  const side = el && (el.closest('#panLeft') ? 'left' : el.closest('#panRight') ? 'right' : null);
+  if (side) {
+    state.bankUsed.add(_touchBankIdx);
+    const item = {val:_touchVal, label:_touchLabel};
+    if (side==='left') state.panLeft.push(item);
+    else               state.panRight.push(item);
+    SFX.play('drop');
+    const pz = LEVELS[state.levelIdx].puzzles[state.puzzleIdx];
+    renderPans();
+    renderWeightBank(pz);
+    updateBeam();
+  }
+  _touchBankIdx = -1;
+}
+
+/* ── remove shared weight (Level 4 mechanic) ── */
+function doRemove() {
+  const pz = LEVELS[state.levelIdx].puzzles[state.puzzleIdx];
+  const rv = pz.removeVal;
+  const liIdx = state.panLeft.findIndex(x=>x.val===rv && !x.isMystery);
+  const riIdx = state.panRight.findIndex(x=>x.val===rv && !x.isMystery);
+  if (liIdx>=0) state.panLeft.splice(liIdx,1);
+  if (riIdx>=0) state.panRight.splice(riIdx,1);
+  SFX.play('balance');
+  renderPans();
+  updateBeam();
+  document.getElementById('feedbackBar').className  = 'feedback-bar balanced';
+  document.getElementById('feedbackBar').textContent = `✂️ Beban ${rv} dihapus dari kedua sisi! Sekarang seimbang? Jawab berapa ❓!`;
+}
+
+/* ════════════════════════════════════════════════
+   CHECK BALANCE (drag-to-balance puzzles)
+════════════════════════════════════════════════ */
+function checkBalance() {
+  const pz   = LEVELS[state.levelIdx].puzzles[state.puzzleIdx];
+  const L    = state.panLeft.reduce((s,x)=>s+x.val,0);
+  const R    = state.panRight.reduce((s,x)=>s+x.val,0);
+  const fb   = document.getElementById('feedbackBar');
+
+  if (L === R) {
+    SFX.play('balance');
+    fb.className  = 'feedback-bar balanced';
+    fb.textContent = '✅ Seimbang! Bagus sekali, Rayyan!';
+    setTimeout(advancePuzzle, 1000);
+  } else {
+    state.attempts++;
+    SFX.play('wrong');
+    const diff = L - R;
+    fb.className  = 'feedback-bar ' + (diff>0?'tipped-l':'tipped-r');
+    const tip     = diff>0 ? `Kiri lebih berat ${Math.abs(diff)}. Tambah beban ke kanan atau kurangi kiri.`
+                           : `Kanan lebih berat ${Math.abs(diff)}. Tambah beban ke kiri atau kurangi kanan.`;
+    fb.textContent = '⚠️ ' + tip;
+    document.getElementById('labLives').innerHTML =
+      '❤️'.repeat(Math.max(0,3-state.attempts)) + '🖤'.repeat(Math.min(3,state.attempts));
+    if (state.attempts >= 2) {
+      document.getElementById('puzzleHint').textContent = '💡 Petunjuk: ' + pz.hint;
+    }
+    SFX.play('tip');
+  }
+}
+
+/* ════════════════════════════════════════════════
+   CHECK ANSWER (answer-input puzzles)
+════════════════════════════════════════════════ */
+function checkAnswer() {
+  const pz     = LEVELS[state.levelIdx].puzzles[state.puzzleIdx];
+  const input  = document.getElementById('answerInput');
+  const val    = input ? Number(input.value) : NaN;
+  const fb     = document.getElementById('feedbackBar');
+
+  if (isNaN(val) || input.value.trim() === '') {
+    fb.className  = 'feedback-bar wrong';
+    fb.textContent = '⚠️ Ketik dulu jawabannya!';
+    return;
+  }
+
+  if (val === pz.answer) {
+    SFX.play('balance');
+    fb.className  = 'feedback-bar balanced';
+    fb.textContent = `✅ Tepat! ❓ = ${pz.answer}. Kamu menemukan misterinya!`;
+    setBeamAngle(0,0);
+    setTimeout(advancePuzzle, 1100);
+  } else {
+    state.attempts++;
+    SFX.play('wrong');
+    fb.className  = 'feedback-bar wrong';
+    fb.textContent = `🤔 Hmm, bukan ${val}. Coba lagi! (Sisa percobaan: ${Math.max(0,3-state.attempts)})`;
+    document.getElementById('labLives').innerHTML =
+      '❤️'.repeat(Math.max(0,3-state.attempts)) + '🖤'.repeat(Math.min(3,state.attempts));
+    if (state.attempts >= 2) {
+      document.getElementById('puzzleHint').textContent = '💡 Petunjuk: ' + pz.hint;
+    }
+  }
+}
+
+/* ════════════════════════════════════════════════
+   ADVANCE
+════════════════════════════════════════════════ */
+function advancePuzzle() {
+  const lv = LEVELS[state.levelIdx];
+  if (state.puzzleIdx + 1 < lv.puzzles.length) {
+    state.puzzleIdx++;
+    state.attempts = 0;
+    renderPuzzle();
+  } else {
+    finishLevel();
+  }
+}
+
+function finishLevel() {
+  const lv      = LEVELS[state.levelIdx];
+  const stars   = Math.max(1, 3 - Math.floor(state.attempts / lv.puzzles.length));
+  const prev    = (state.progress[lv.id] || {}).stars || 0;
+  const newS    = Math.max(prev, stars);
+  const earned  = newS - prev;
+  state.progress[lv.id] = { stars: newS };
+  state.totalStars += earned;
+  document.getElementById('starCount').textContent = state.totalStars;
+  saveState();
+
+  document.getElementById('lcBadge').textContent  = lv.emoji;
+  document.getElementById('lcTitle').textContent  = `${lv.title} selesai!`;
+  document.getElementById('lcStars').textContent  = '⭐'.repeat(newS) + '☆'.repeat(3-newS);
+  document.getElementById('lcMsg').textContent    =
+    newS === 3 ? 'Sempurna! Semua teka-teki diselesaikan dengan sedikit percobaan!'
+               : 'Level selesai! Coba lagi untuk mendapat bintang lebih banyak.';
+
+  const nextBtn = document.getElementById('lcNextBtn');
+  const isLast  = state.levelIdx === LEVELS.length - 1;
+  if (isLast) {
+    nextBtn.textContent = '🏆 Lihat Hasil Akhir!';
+    nextBtn.onclick = () => { show('sAllDone'); SFX.play('fanfare'); setTimeout(launchConfetti,200); };
+  } else {
+    nextBtn.textContent = 'Level Berikutnya →';
+    nextBtn.onclick = () => openLevel(state.levelIdx + 1);
+  }
+
+  show('sLevelComplete');
+  SFX.play('fanfare');
+  setTimeout(launchConfetti, 200);
+}
+
+/* ════════════════════════════════════════════════
+   UTIL
+════════════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ── init ── */
+loadState();
+renderHome();
+</script>
+</body>
+</html>
