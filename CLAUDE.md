@@ -225,11 +225,11 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 4. ❌ **Phase 4 – love/retention layer (THE priority now):** unified/themed map, daily quest/streak, badges + printable certificate, Flash Drills. Barely started.
 5. **Phase 5 – stretch:** B5 (Python) · Gr8 math.
 
-**Next-up recommendation:** superseded by the **Improvement Plan v2** below (2026-06-09) — the original Tracks A–E are essentially done; v2 is the new prioritized queue.
+**Next-up recommendation:** superseded by **Improvement Plan v3** below (2026-06-10) — Tracks A–E and Plan v2 are essentially done; v3 (new lesson formats) is the current prioritized queue.
 
 ---
 
-## Improvement Plan v2 – 2026-06-09 (the current build queue)
+## Improvement Plan v2 – 2026-06-09 (✅ shipped except X1 device pass + X2 Raya photos — superseded by Plan v3 below)
 
 > Planning audit of all 17 course files (not just the docs). The original roadmap is ~complete:
 > content ladders ✅, retention layer ✅, real sandbox/game payoffs ✅. What's left is **quality
@@ -315,6 +315,91 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 - Gr6 theme: **Future City** (recommended, ties to Feifelusia) vs. another biome (jungle/mountain/arctic).
 - Gr7: keep **6 chapters** vs. split into **7a/7b**.
 - First real language in B2: **JavaScript** (recommended) vs. Python.
+
+---
+
+## Improvement Plan v3 – 2026-06-10: Lesson-Format Diversification (the current build queue)
+
+> **Adhi's green light (2026-06-10): lessons may use ANY format, not just the 6-chapter quiz engine.**
+> The diagnosis: all 17 courses share one DNA — *question → answer → toast → stars*. Even the
+> "rich" interactions (drag-sort, number-line) are still quiz items wearing costumes. That
+> monoculture is now the quality ceiling: a 3–4 yr old learns through **story and play**, not
+> assessment; a 7–8 yr old racing 5 years ahead needs **exploration and construction** to build
+> intuition, not just answer-checking. v3 adds *new lesson shapes* — each one still a single
+> self-contained HTML file, still disguised, still wired into the same hub/star system.
+
+### The five formats (each pilot = one SOP step: ship → verify → docs → commit/push)
+
+**F1 · Raya: "Buku Cerita Ajaib" 📖✨ — interactive read-aloud storybook** *(pilot first — highest leverage)*
+- A tap-along picture book, NOT a quiz: full-screen emoji-scene pages, auto read-aloud (reuse the
+  hardened `Suara` module), one gentle interaction per page ("tap the red balloon", "tap each duck
+  to count them — *satu, dua, tiga!*"), **no wrong answers, no fail state** — every page ends in
+  delight. Learning rides inside the narrative (counting, colors, opposites = stealth review of
+  her whole catalog).
+- Pilot story: **"Kiki si Kucing Naik Kereta"** 🐱🚂 (ties Raya's world to Rayyan's train biome —
+  one family universe). ~10 pages, 1 interaction each.
+- File `courses/learning/raya-story-v1.html`, key `rayaStory`. Progress: finishing the book = full
+  stars for its single "chapter" (keeps the standard `{totalStars, progress}` shape so all 4 wiring
+  points work unchanged; the kid sees stickers, not scores).
+
+**F2 · Rayyan: "Timbangan Misteri" ⚖️ — equation-balance manipulative lab** *(deepest learning win)*
+- A real direct-manipulation toy: a balance scale he keeps level by dragging weights and mystery
+  boxes (❓ = X) onto pans. Levels climb from numeric balancing → find the hidden box's weight →
+  *remove the same thing from both sides* — he discovers **solving for X by feel**, the intuition
+  the Gr7 quiz course can't teach. No multiple choice anywhere; the scale tipping IS the feedback.
+- 6 levels-as-chapters (level 6 = BOSS: two boxes / two-step equations), stars by attempts, lives
+  in the **Lab biome** next to Lab Misteri X.
+- File `courses/math/rayyan-balance-v1.html`, key `rayyanBalance`. Drag via pointer events (same
+  pattern as the existing `drag-sort`); scale tilt = CSS transform on a beam, weights re-parent
+  between pans.
+
+**F3 · Raya: "Papan Tulis Ajaib" ✏️ — letter-tracing board** *(closes the literacy loop)*
+- Her literacy course teaches letter *recognition*; this adds **pre-writing**: trace letters with a
+  finger on a canvas over a dotted guide with a start-arrow. Forgiving detection (sample the guide
+  path; stroke must cover ~80% of points within a fat radius — no order strictness beyond
+  start-zone). On success: the letter animates, `Suara` says its sound + an example word, confetti.
+- Scope: the 5 vowels + R-A-Y (her name!) first = 8 letters in v1; chapters = letter groups.
+- File `courses/learning/raya-tracing-v1.html`, key `rayaTracing`.
+
+**F4 · Rayyan: "Masinis Kapi" 🚆 — mission-simulation lesson** *(the big one — build after F1–F3)*
+- He IS the train driver: a side-scrolling cab view where missions *require* math to proceed —
+  fuel purchase (rate × distance), departure-board arithmetic (elapsed time), passenger loading
+  (multiplication/division into carriages), speed-limit zones (compare/round). The math is the
+  *controls of the game*, never a quiz interrupt. Wrong math = funny consequence (overshoot the
+  station), retry instantly.
+- 6 missions-as-chapters, mission 6 = BOSS (a full timetabled run). Reuses the runner-game canvas
+  muscle + Kenney sprites. File `courses/games/rayyan-masinis-v1.html`, key `rayyanMasinis`.
+
+**F5 · Stretch: "Cerita Pilihanmu: Misteri di Stasiun" 🔍 — Rayyan story-quest**
+- Branching interactive fiction where embedded puzzles gate the plot (a cipher = pattern practice,
+  a locked door = equation). Builds on the existing choose-your-own-adventure engine. Only after
+  F1–F4 land.
+
+### Format-specific build rules (extends, not replaces, the per-course spec)
+- Everything in the v2 per-course spec still applies (single file, disguise, 4-place wiring,
+  design tokens, Raya audio from day one) **except** the "6 chapters of questions" shape — formats
+  may define chapters as pages/levels/missions, as long as the localStorage shape stays
+  `{ totalStars, progress: { <chapterId>: { stars } } }` so `getProgress()`/sync/dashboard work untouched.
+- **No-fail formats (F1/F3):** completion always awards full stars; difficulty lives in the
+  interaction, never in punishment. Raya must never see a ❌.
+- **Manipulative/sim formats (F2/F4):** the world state IS the feedback (scale tips, train
+  overshoots) — avoid toast-popup "Salah!" patterns entirely.
+- New formats still connect to the one adventure world (Kiki rides the SAME train; the balance lab
+  sits in the Lab biome; Masinis runs the KAI line).
+
+### Recommended order & rationale
+`F1 (Raya storybook)` → `F2 (balance lab)` → `F3 (tracing)` → `F4 (Masinis sim)` → `F5 (stretch)`.
+*F1 first: Raya's entire catalog is quiz-shaped and she's the age where story IS the curriculum —
+one pilot proves the no-fail format cheaply. F2 second: it's the single deepest learning upgrade
+for Rayyan's capstone skill (algebra intuition). F3 is small and closes literacy. F4 is the
+biggest build, so it goes after the format patterns are proven.*
+
+### Decisions for Adhi (per SOP: pick the rec, note it, don't block)
+- **F1 progress model:** full stars on book completion (rec — keeps hub wiring untouched) vs. a
+  separate starless "sticker book" system.
+- **F2 placement:** wire as a math ADVENTURE in the Lab biome (rec) vs. under GAMES.
+- **F3 letter set:** vowels + R-A-Y-A's letters first (rec — her own name is the killer feature)
+  vs. straight A–Z order.
 
 ---
 

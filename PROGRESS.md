@@ -19,6 +19,17 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-10
 
+### Improvement Plan v3 — Lesson-Format Diversification 📋 (planning step, no code)
+- Adhi gave the green light to build lessons in **any format**, not just the 6-chapter quiz engine. Audit insight: all 17 courses share one DNA (question → answer → toast → stars) — even the "rich" interactions are quiz items. That format monoculture is now the quality ceiling for both kids.
+- New plan (full spec in `CLAUDE.md` → "Improvement Plan v3"), five formats, build order **F1→F5**:
+  - **F1 · Raya "Buku Cerita Ajaib" 📖** — no-fail tap-along read-aloud storybook (pilot: *Kiki si Kucing Naik Kereta* 🐱🚂, rides Rayyan's train = one family universe). `raya-story-v1.html`, key `rayaStory`.
+  - **F2 · Rayyan "Timbangan Misteri" ⚖️** — equation-balance manipulative lab: solve-for-X by *feel* (drag weights/mystery boxes, scale tilt IS the feedback, zero multiple choice). `rayyan-balance-v1.html`, key `rayyanBalance`, Lab biome.
+  - **F3 · Raya "Papan Tulis Ajaib" ✏️** — finger letter-tracing (pre-writing; vowels + R-A-Y-A's name letters first). `raya-tracing-v1.html`, key `rayaTracing`.
+  - **F4 · Rayyan "Masinis Kapi" 🚆** — mission simulation where math is the *controls of the game* (fuel = rate×distance, timetables, passenger loading). `rayyan-masinis-v1.html`, key `rayyanMasinis`.
+  - **F5 · stretch** — Rayyan branching story-quest with puzzle-gated plot.
+- All formats keep: single-file HTML, disguise rules, 4-place wiring, the `{totalStars, progress}` localStorage shape (chapters may be pages/levels/missions), Raya audio from day one. New rules: no-fail formats never show a ❌; manipulative/sim formats never use "Salah!" toasts.
+- Also retitled Plan v2 as shipped (only X1 device pass + X2 Raya photos remain open) and repointed the "next-up" note to v3. Files: `CLAUDE.md`, `PROGRESS.md`. Next: **F1**.
+
 ### Plan v2 · X2b/X2c — Medal cabinet art + space-boss UFO sprite ✅
 - **Medal cabinet (`rayyan.html`):** earned badges now show a Kenney medal image (`medals/medal1–8.png`) with the badge's emoji as a small corner overlay (meaning preserved: 🔥 streak, 👑 master…); locked stays 🔒. `onerror` falls back to the plain emoji.
 - **Gr4 space boss:** the 👽 boss enemy is now a Kenney UFO sprite (`space/ufoRed.png`, emoji fallback via `onerror`); the hit animation works unchanged since it animates the wrapper.
