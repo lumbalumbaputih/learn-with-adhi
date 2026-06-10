@@ -23,7 +23,7 @@ const AUTH = (() => {
       'rayyanMath6','rayyanMath7','rayyanCoding','rayyanCoding2',
       'rayyanCoding3','rayyanCoding4','rayyanCoding5','rayyanBridge',
     ],
-    raya: ['rayaMath','rayaVisual','rayaLiteracy','rayaLogic','rayaWorld'],
+    raya: ['rayaMath','rayaVisual','rayaLiteracy','rayaLogic','rayaWorld','rayaStory'],
   };
 
   const HUB_BY_TYPE = { rayyan: '/rayyan.html', raya: '/raya.html' };
