@@ -454,7 +454,9 @@ biggest build, so it goes after the format patterns are proven.*
 **B4 · X2 carried — Raya real photos 🖼️** — still blocked (no reachable image host in this build env): needs Adhi to drop photos into `assets/img/raya-world/` or a session with image-host network access.
 
 ### PILLAR C — Parent loop (make the dashboard worth opening)
-**C1 · Weak-spots panel on dashboard.html** *(cheapest real win on the whole board — the data already exists)* — read `rayyanWeakSpots`, map chapter ids → human topic names (reuse `WEAK_TOPIC_MAP` from `rayyan.html`), show e.g. "Rayyan lagi kesulitan di: pecahan (×4)" + which adventure to replay together. Zero new collection code.
+**C1 · Weak-spots panel on dashboard.html** — ✅ **DONE (2026-06-10)**
+- Each rayyan-type kid card now shows **"🎯 Perlu latihan bareng"**: top-3 struggling topics (misses aggregated by topic via a `WEAK_TOPIC_MAP` copy — keep in sync with `rayyan.html`'s), each with a "N× keliru" count and "Ulangi: <adventure>" (the course where he missed most). Positive "✨ Tidak ada kesulitan terdeteksi" line once he has stars but no recorded struggles; hidden for brand-new kids and Raya-type kids.
+- **Cross-device:** `pushKidProgress` (auth.js) now rides `rayyanWeakSpots` into the kid doc as a `weakSpots` field — `update()` replaces the field wholesale so quest-healed topics disappear from the cloud too; devices without the localStorage key skip the write (a parent's phone can't clobber the kid's data). Dashboard falls back to this device's localStorage when the cloud field is missing (same-device case).
 
 **C2 · "Active this week"** — stamp `lastPlayed` (ISO date) into each course's localStorage key on save (1-line change per save helper), then the dashboard shows per-kid recency + a simple stars-this-week delta (snapshot totals on each dashboard open).
 
@@ -466,7 +468,7 @@ biggest build, so it goes after the format patterns are proven.*
 - **D3 · Y5 carried** — Gr8 math biome / Python "Penjinak Data" (only if Rayyan is flying).
 
 ### Recommended order
-`A1 (✅ done)` → `C1 (weak-spots panel — one session, instant parent value)` → `B1 (offline PWA)` → `A2 + A3 (adult completion + README, one light session)` → `B3 (sound settings)` → `B2/X1 (needs the physical device)` → `D-track`.
+`A1 (✅ done)` → `C1 (✅ done)` → `B1 (offline PWA)` → `A2 + A3 (adult completion + README, one light session)` → `B3 (sound settings)` → `B2/X1 (needs the physical device)` → `D-track`.
 *Rationale: A1 was the direct ask. C1 is the highest value-per-effort anywhere (data already collected, parent acts on it tomorrow). B1 removes the biggest real-world failure mode (no wifi = no learning). A2/A3 make the adult side honest. D only after quality.*
 
 ### Decisions for Adhi (per SOP: pick the rec, note it, don't block)

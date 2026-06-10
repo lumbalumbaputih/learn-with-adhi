@@ -98,6 +98,25 @@
     .stat.stars .stat-num { color:var(--mango); }
     .stat.done  .stat-num { color:var(--forest); }
 
+    /* Weak spots (Perlu Latihan Bareng) */
+    .kid-weak { padding:16px 24px 2px; border-bottom:1.5px solid var(--line); }
+    .weak-label {
+      font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--tomato); margin-bottom:10px; display:flex; align-items:center; gap:6px;
+    }
+    .weak-rows { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+    .weak-row { display:flex; align-items:center; gap:10px; font-size:13px; }
+    .weak-topic { font-weight:700; white-space:nowrap; }
+    .weak-miss {
+      font-size:11px; font-weight:700; color:#fff; background:var(--tomato);
+      border-radius:999px; padding:2px 8px; flex-shrink:0;
+    }
+    .weak-hint {
+      color:var(--muted); font-size:12px; flex:1; text-align:right;
+      min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .weak-ok { font-size:13px; color:var(--forest); font-weight:600; margin-bottom:16px; }
+
     .kid-courses { padding:20px 24px; flex:1; }
     .courses-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
     .course-rows { display:flex; flex-direction:column; gap:8px; }
@@ -321,6 +340,74 @@
     rayaTracing:   { name:'Papan Tulis Ajaib ✏️',        total:4 },
   };
 
+  /* Weak-spot mapping for the "Perlu Latihan Bareng" panel (plan-v4 C1).
+     Chapter→topic entries must stay in sync with WEAK_TOPIC_MAP in rayyan.html
+     (both only change when a new math course ships). */
+  const WEAK_TOPIC_MAP = {
+    'rayyanMath:addition':'tambah',          'rayyanMath:subtraction':'kurang',
+    'rayyanMath:multiplication':'kali',      'rayyanMath:patterns':'pola',
+    'rayyanMath3:multiplication-2d':'kali',  'rayyanMath3:division':'bagi',
+    'rayyanMath3:fractions':'pecahan',
+    'rayyanMath4:multi-big':'kali',          'rayyanMath4:div-big':'bagi',
+    'rayyanMath4:fraction-ops':'pecahan',    'rayyanMath4:kpk-fpb':'pola',
+    'rayyanMath5:frac-ops':'pecahan',        'rayyanMath5:persen-desimal':'pecahan',
+    'rayyanMath5:int-numbers':'kurang',
+    'rayyanMath6:integers':'kurang',         'rayyanMath6:ratio-prop':'pecahan',
+    'rayyanMath7:number-ops':'pecahan',      'rayyanMath7:equations':'pola',
+  };
+  const TOPIC_LABELS = {
+    tambah:'Penjumlahan', kurang:'Pengurangan', kali:'Perkalian',
+    bagi:'Pembagian', pecahan:'Pecahan & Persen', pola:'Pola & Aljabar',
+  };
+
+  /* The kid's device syncs localStorage `rayyanWeakSpots` into the kid doc
+     as `weakSpots` (see auth.js). Fall back to this device's localStorage
+     for the not-yet-synced same-device case. */
+  function weakSpotsPanel(kid, totalStars) {
+    if (kid.progressType !== 'rayyan') return '';
+    let spots = kid.weakSpots;
+    if (!spots) {
+      try { spots = JSON.parse(localStorage.getItem('rayyanWeakSpots') || '{}'); }
+      catch (e) { spots = {}; }
+    }
+    const byTopic = {};
+    for (const k in spots) {
+      const topic = WEAK_TOPIC_MAP[k];
+      const miss  = (spots[k] && spots[k].miss) || 0;
+      if (!topic || miss <= 0) continue;
+      if (!byTopic[topic]) byTopic[topic] = { miss:0, worstKey:null, worstMiss:0 };
+      byTopic[topic].miss += miss;
+      if (miss > byTopic[topic].worstMiss) {
+        byTopic[topic].worstMiss = miss;
+        byTopic[topic].worstKey  = k.split(':')[0];
+      }
+    }
+    const top = Object.entries(byTopic).sort((a,b) => b[1].miss - a[1].miss).slice(0, 3);
+    if (!top.length) {
+      /* No struggles recorded. Only celebrate that once he's actually played. */
+      if (!totalStars) return '';
+      return `
+        <div class="kid-weak">
+          <div class="weak-label">🎯 Perlu latihan bareng</div>
+          <div class="weak-ok">✨ Tidak ada kesulitan terdeteksi — lanjutkan!</div>
+        </div>`;
+    }
+    const rows = top.map(([topic, t]) => {
+      const course = COURSE_NAMES[t.worstKey];
+      return `
+        <div class="weak-row">
+          <span class="weak-topic">${TOPIC_LABELS[topic] || topic}</span>
+          <span class="weak-miss">${t.miss}× keliru</span>
+          <span class="weak-hint">${course ? 'Ulangi: ' + course.name : ''}</span>
+        </div>`;
+    }).join('');
+    return `
+      <div class="kid-weak">
+        <div class="weak-label">🎯 Perlu latihan bareng</div>
+        <div class="weak-rows">${rows}</div>
+      </div>`;
+  }
+
   let selectedEmoji = '🧒';
 
   /* Auth gate */
@@ -414,6 +501,7 @@
             <div class="stat-label">📚 Kursus</div>
           </div>
         </div>
+        ${weakSpotsPanel(kid, totalStars)}
         <div class="kid-courses">
           <div class="courses-label">Progres per Kursus</div>
           <div class="course-rows">${courseRows}</div>
