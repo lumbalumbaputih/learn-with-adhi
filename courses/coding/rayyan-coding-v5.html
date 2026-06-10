@@ -689,6 +689,9 @@ function show(id) {
 /* ── Real playable game: Kereta Lari (the keepable payoff) ── */
 const Game = (function(){
   let raf=null, g=null, ctx=null, cv=null, W=0, H=0, GROUND=0, bound=false;
+  /* Kenney CC0 sprites (assets/img/kenney/) — falls back to the plain rectangles if not loaded */
+  const SPR={};
+  ['cactus','rock'].forEach(n=>{ const im=new Image(); im.onload=()=>{im.ok=true;}; im.src='/assets/img/kenney/platformer/'+n+'.png'; SPR[n]=im; });
   function active(){ const s=document.getElementById('sPlay'); return s && s.classList.contains('active'); }
   function jump(){ if(!g) return; if(g.over){ start(); return; } if(g.onGround){ g.vy=-11; g.onGround=false; } }
   function start(){
@@ -710,7 +713,7 @@ const Game = (function(){
     const floor=GROUND-g.h;
     if(g.y>=floor){ g.y=floor; g.vy=0; g.onGround=true; }
     const speed=4+Math.min(g.score/400,5);
-    if(g.t % g.spawnEvery===0){ g.obstacles.push({ x:W, w:18, h:20+Math.floor(Math.random()*24) }); if(g.spawnEvery>44) g.spawnEvery-=2; }
+    if(g.t % g.spawnEvery===0){ g.obstacles.push({ x:W, w:18, h:20+Math.floor(Math.random()*24), spr:(Math.random()<0.5?'cactus':'rock') }); if(g.spawnEvery>44) g.spawnEvery-=2; }
     g.obstacles.forEach(o=>o.x-=speed);
     g.obstacles=g.obstacles.filter(o=>o.x+o.w>0);
     for(const o of g.obstacles){
@@ -720,7 +723,11 @@ const Game = (function(){
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle='#1A1614'; ctx.fillRect(0,GROUND,W,3);
     ctx.fillStyle='#E84BA0';
-    g.obstacles.forEach(o=>ctx.fillRect(o.x, GROUND-o.h, o.w, o.h));
+    g.obstacles.forEach(o=>{
+      const im=SPR[o.spr];
+      if(im&&im.ok){ ctx.drawImage(im, o.x-7, GROUND-o.h-2, o.w+14, o.h+2); } // hitbox unchanged
+      else ctx.fillRect(o.x, GROUND-o.h, o.w, o.h);
+    });
     ctx.font='28px serif'; ctx.textBaseline='top'; ctx.fillText('🚂', g.x, g.y-2);
     ctx.fillStyle='#1A1614'; ctx.font='bold 18px sans-serif'; ctx.fillText('Skor: '+Math.floor(g.score/5), 12, 10);
     if(g.over){

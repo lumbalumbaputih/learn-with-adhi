@@ -127,6 +127,15 @@
   let best = +(localStorage.getItem('rayyanTrainRunBest') || 0);
   bestEl.textContent = best;
 
+  // ── Kenney CC0 sprites (assets/img/kenney/) — game falls back to vector art if not loaded ──
+  const SPRITES = {};
+  ['cactus','rock','cloud1','cloud2','cloud3','bush','mushroomRed'].forEach(n => {
+    const im = new Image();
+    im.onload = () => { im.ok = true; };
+    im.src = '/assets/img/kenney/platformer/' + n + '.png';
+    SPRITES[n] = im;
+  });
+
   // ── State ───────────────────────────────────────────
   let running = false;
   let t = 0;
@@ -343,7 +352,13 @@
 
     // clouds
     ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    let ci = 0;
     for (const c of clouds) {
+      const im = SPRITES['cloud' + (ci++ % 3 + 1)];
+      if (im && im.ok) {
+        ctx.drawImage(im, c.x - c.r*1.6, c.y - c.r*0.9, c.r*3.2, c.r*1.8);
+        continue;
+      }
       ctx.beginPath();
       ctx.arc(c.x, c.y, c.r, 0, Math.PI*2);
       ctx.arc(c.x+c.r*0.8, c.y+4, c.r*0.8, 0, Math.PI*2);
@@ -418,6 +433,11 @@
     ctx.lineJoin = 'round';
     ctx.strokeStyle = '#1A1614';
     ctx.lineWidth = 4;
+    // Kenney sprite if loaded (same hitbox — drawing only), vector fallback below
+    if ((o.type === 'rock' || o.type === 'cactus') && SPRITES[o.type] && SPRITES[o.type].ok) {
+      ctx.drawImage(SPRITES[o.type], o.x - 4, o.y - o.h - 4, o.w + 8, o.h + 8);
+      return;
+    }
     if (o.type === 'rock') {
       // bright magenta boulder – pops against green hills + brown ground
       ctx.fillStyle = '#E84BA0';
