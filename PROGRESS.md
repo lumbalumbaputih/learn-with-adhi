@@ -19,6 +19,26 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-10
 
+### Plan v3 · F4 — "Masinis Kapi" 🚆 mission simulation ✅
+- `courses/games/rayyan-masinis-v1.html`, key `rayyanMasinis`, 6 missions (Mission 6 = BOSS).
+- Side-scrolling cab-view canvas scene (scrolling clouds, trees, rails, animated train with smoke puffs). Math IS the controls — fuel ÷ distance, passenger loading, time arithmetic, speed calculations — always in the context of running the train. Wrong answer = `consequence-overlay` flash (funny result), not a toast punishment; retry inline.
+- 6 missions: Pilih Jalur (counting/multiplication/time) → Isi Bahan Bakar (division/ratio/rate) → Muat Penumpang (subtraction/fractions) → Jadwal Keberangkatan (time subtraction/speed/ordinal) → Rute Panjang (addition/multiplication/division) → BOSS Jadwal Penuh (percentages/ratios/large numbers). 3 steps per mission, mix of `choice` and number-input.
+- Stars by mistake count (0=3★, ≤2=2★, else 1★). Wired in all 4 places, adventure count 13→14.
+
+### Plan v3 · F3 — "Papan Tulis Ajaib" ✏️ letter-tracing ✅
+- `courses/learning/raya-tracing-v1.html`, key `rayaTracing`, 4 chapters.
+- Chapters: Vokal A-I-U-E-O → R-A-Y-A (her own name!) → B-C-D → H-K. Each letter: dotted dashed guide path + start dot (pink) + ghost overlay letter. Canvas pointer+touch events record stroke; ≥70% waypoint coverage within forgiving 13% radius = success.
+- On success: celebrate popup with letter bounce, Suara says "Huruf X! Contoh: [word]", confetti. No fail state — every attempt is a learning rep. "Next letter" button always enabled (skip allowed). Stars by how many letters traced. Wired in all 4 places, Raya count 6→7.
+
+### Plan v3 · F2 — "Timbangan Misteri" ⚖️ balance lab ✅
+- `courses/math/rayyan-balance-v1.html`, key `rayyanBalance`, 6 levels (Level 6 = BOSS).
+- SVG beam tilts in CSS via `transform: rotate(Ndeg)` — scale tipping IS the feedback. Drag-and-drop weights (desktop drag events + touch events with floating clone). Levels: numeric balance → mystery ❓ boxes (answer input) → drag to balance → remove-from-both-sides mechanic → mixed → BOSS two unknowns. Zero multiple choice on drag levels.
+- Stars by attempt count, locked levels, confetti on level complete. Wired in all 4 places, Rayyan count 12→13.
+
+### Plan v3 · F1 — "Buku Cerita Ajaib" 📖 Raya storybook ✅
+- `courses/learning/raya-story-v1.html`, key `rayaStory`, 10 pages.
+- Pilot story: Kiki si Kucing Naik Kereta 🐱🚂 — ties Raya's world to Rayyan's train biome (one family universe). 4 interaction types: tap-reveal (❓ → emoji), tap-find (spot the target), tap-count (tap each item, counter increments), choice (which color?). No fail state; every page ends in delight. Suara auto read-aloud per page + 🔊 Dengarkan button. Full 3 stars on book completion. Wired in all 4 places, Raya count 5→6.
+
 ### Improvement Plan v3 — Lesson-Format Diversification 📋 (planning step, no code)
 - Adhi gave the green light to build lessons in **any format**, not just the 6-chapter quiz engine. Audit insight: all 17 courses share one DNA (question → answer → toast → stars) — even the "rich" interactions are quiz items. That format monoculture is now the quality ceiling for both kids.
 - New plan (full spec in `CLAUDE.md` → "Improvement Plan v3"), five formats, build order **F1→F5**:
