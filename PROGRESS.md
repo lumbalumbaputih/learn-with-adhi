@@ -17,6 +17,15 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-06-10
+
+### Plan v2 · Y4 — "Karya-mu" shelf on `rayyan.html` ✅ (ownership → return visits)
+- **Persistence (the missing v5 piece):** Kereta Lari now saves his best score to `rayyanKeretaLari` `{best, when}` on game-over and shows "Rekor: N" on the game-over screen. (v4 `rayyanKanvasArt` and v3 `rayyanMantraLab` were already saving since the Y4-partial step.)
+- **The shelf:** new 🖼️ **Karya-mu** section on `rayyan.html` (after the medal cabinet), hidden until at least one creation exists. Cards: 🎨 his last Kanvas-Bebas painting **re-rendered live** on a mini canvas (same Indonesian helper set as v4, 5000-shape guard, falls back to a 🎨 emoji if his code errors), ✨ his last typed spell as a code snippet (set via `textContent` — injection-safe), 🚂 his best runner score. Each card links back to its course.
+- Files: `rayyan.html`, `courses/coding/rayyan-coding-v5.html`, `CLAUDE.md`, `PROGRESS.md`. Verified: `node --check` on all edited script blocks.
+
+---
+
 ## 2026-06-09
 
 ### Hotfix — 🔊 Dengarkan button was silent on the real device ✅

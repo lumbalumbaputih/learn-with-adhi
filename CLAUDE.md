@@ -268,8 +268,9 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 **Y3 · Adaptive Misi Harian (finish Track E)** — ✅ **DONE (2026-06-09)**
 - (a) All 6 math courses (Gr2–7) log wrong answers into localStorage `rayyanWeakSpots` (`{"<courseKey>:<chapterId>": {miss,last}}`) via a `logWeakSpot()` hook in `showToast` (old engine) / `handleAnswer` (rich engine). (b) `rayyan.html` Misi Harian: QUESTS are topic-tagged (kali/bagi/tambah/kurang/pecahan/pola), `WEAK_TOPIC_MAP` maps chapter ids → topics, daily pick is weighted `1 + min(misses,8)` (deterministic per day), and a correct review **heals** one miss on that topic.
 
-**Y4 · "Karya-mu" shelf on `rayyan.html`**
-- Surface his creations: v4 saved art, v5 Kereta-Lari high score, v3 last sandbox program. Ownership → return visits. (After Y2.)
+**Y4 · "Karya-mu" shelf on `rayyan.html`** — ✅ **DONE (2026-06-10)**
+- All three creations persist on success: v4 Kanvas Bebas → `rayyanKanvasArt` `{code,shapes,when}` (restored into the editor on reopen), v3 Lab Mantra → `rayyanMantraLab` `{code,when}` (idem), v5 Kereta Lari → `rayyanKeretaLari` `{best,when}` (game-over screen now also shows "Rekor: N").
+- New **🖼️ Karya-mu** section on `rayyan.html` (after the medal cabinet, hidden until ≥1 creation exists): his last painting **re-rendered live** on a mini canvas (same `kotak`/`lingkaran`/… helper set as v4), his last typed spell as a code snippet (`textContent`, injection-safe), and his best runner score — each card links back to its course.
 
 **Y5 · Stretch (only if he's flying):** Gr8 math biome · B5 Python "Penjinak Data".
 

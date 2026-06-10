@@ -724,11 +724,18 @@ const Game = (function(){
     ctx.font='28px serif'; ctx.textBaseline='top'; ctx.fillText('🚂', g.x, g.y-2);
     ctx.fillStyle='#1A1614'; ctx.font='bold 18px sans-serif'; ctx.fillText('Skor: '+Math.floor(g.score/5), 12, 10);
     if(g.over){
+      let best=Math.floor(g.score/5);
+      /* Keep his best run → shown on the "Karya-mu" shelf (rayyan.html) */
+      try{
+        const d=JSON.parse(localStorage.getItem('rayyanKeretaLari')||'{}');
+        if(best>(d.best||0)) localStorage.setItem('rayyanKeretaLari', JSON.stringify({best:best, when:Date.now()}));
+        else best=d.best;
+      }catch(e){}
       ctx.fillStyle='rgba(0,0,0,.6)'; ctx.fillRect(0,0,W,H);
       ctx.fillStyle='#fff'; ctx.textAlign='center';
       ctx.font='bold 26px sans-serif'; ctx.fillText('💥 Game Over!', W/2, H/2-34);
       ctx.font='16px sans-serif';
-      ctx.fillText('Skor akhir: '+Math.floor(g.score/5), W/2, H/2-4);
+      ctx.fillText('Skor akhir: '+Math.floor(g.score/5)+'  ·  Rekor: '+best, W/2, H/2-4);
       ctx.fillText('Tekan SPASI / tap untuk main lagi', W/2, H/2+24);
       ctx.textAlign='left'; ctx.textBaseline='alphabetic';
       raf=null; return;
