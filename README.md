@@ -1,81 +1,72 @@
 # Learn with Adhi
 
-A simple static learning hub built with HTML, CSS, and vanilla JavaScript.
+A static learning hub built with pure HTML, CSS, and vanilla JavaScript — no frameworks, no build step. Every course is a single self-contained `.html` file.
 
-## Design System
+Live at **learnwithadhi.com** (hosted on Vercel). Two halves:
 
-The **Adhi Design System** is the primary visual identity reference for this project.
-
-| Token | Value | Usage |
-|---|---|---|
-| `--orange` | `#FF5C39` | Primary accent, CTAs |
-| `--yellow` | `#FFC234` | Hero highlights, badges |
-| `--green` | `#1F9D55` | Success, nature topics |
-| `--magenta` | `#E84BA0` | Creative accents |
-| `--ink` | `#1A1614` | Text, borders, shadows |
-| `--cream` | `#FBF4E6` | Page background (light) |
-| `--font-display` | DM Serif Display | Headings |
-| `--font-body` | Nunito | Body text |
-| `--font-mono` | JetBrains Mono | Labels, chips, code |
-
-The full interactive reference is at [`design-system/adhi-design-system.html`](design-system/adhi-design-system.html).
+1. **Adult library** (`index.html`) — practical courses, tools, and research reports (AI, coding, climate, design, life). Free, no login. The hub renders everything from `assets/courses.json` — filter chips, hero counts, and the featured panel all derive from that manifest.
+2. **Kids' world** (`kids.html` → `rayyan.html` / `raya.html`) — gamified learning adventures for Rayyan & Raya in Bahasa Indonesia: math & coding ladders, games, storybooks, tracing. Progress is stored in `localStorage` (stars per course) and optionally synced per kid to Firestore via the parent account (`login.html` / `dashboard.html`).
 
 ## Structure
 
 ```
 learn-with-adhi/
-├── index.html                        – Home page (course listing, dark/light theme)
-├── assets/                           – Shared static assets
-├── design-system/
-│   ├── adhi-design-system.html       – Adhi Design System reference (primary)
-│   └── tca-design-system.html        – Previous design reference (archived)
-├── README.md
-└── courses/
-    ├── ai/
-    │   ├── ai-capability-course.html – Bridging the AI Gap (live)
-    │   ├── 2026-04-18-claude-efficiency-course-v1.html – Claude Without Burning Tokens (live)
-    │   └── ai-capability-v2.html     – v2 in progress
-    ├── carbon-accounting/
-    │   ├── carbon-accounting-course.html – Carbon Accounting (live)
-    │   └── carbon-accounting-v2.html     – v2 in progress
-    ├── lca/
-    │   └── life-cycle-assessment-course-v1.html – Life Cycle Assessment (live)
-    ├── disaster-management/
-    │   └── 2026-05-08-disaster-management-course-v1.html – Disaster Management Fundamentals (live)
-    ├── coding/
-    │   ├── code-ecosystem-guide-complete-v1.html – How to Code for Non-Coders (live)
-    │   └── code-for-non-coders-v2.html           – v2 in progress
-    ├── clothing-textiles/
-    │   └── 2026-05-08-clothing-textiles-course-v2.html – Clothing, Textiles & Our World (live)
-    ├── ielts/
-    │   ├── ielts-bahasa-hacking.html      – Bahasa Hacking IELTS (live)
-    │   ├── ielts-bahasa-hacking-v2.html   – v2 in progress
-    │   ├── ielts-band7-precision.html     – Band 7 Precision Lab (live)
-    │   └── ielts-band7-precision-v2.html  – v2 in progress
-    └── tools/
-        ├── feifelusiac-safe-area-calculator-v3.html – Safe-area calculator v3
-        ├── feifelusiac-safe-area-calculator-v4.html – Safe-area calculator v4 (live)
-        ├── train_adventure.html – Rayyan & Raya's Train Adventure v1
-        ├── train_adventure_v2.html – Rayyan & Raya's Train Adventure v2
-        ├── train_adventure_v3.html – Rayyan & Raya's Train Adventure v3
-        └── train_adventure_hub.html – Train Adventure hub (version picker)
+├── index.html                – adult hub (manifest-driven course grid, search, about)
+├── kids.html                 – kid chooser (Rayyan / Raya) + parent auth bar
+├── rayyan.html / raya.html   – per-kid adventure hubs (world map, streak, badges, daily quest)
+├── login.html / dashboard.html – parent account + progress/weak-spots dashboard
+├── sw.js / manifest.webmanifest – offline layer: precaches the kid world, installable PWA
+├── sitemap.xml / robots.txt
+├── api/quotes.js             – Vercel edge function (stock quotes for the AI-boom report)
+├── assets/
+│   ├── courses.json          – the adult-library manifest (single source of truth)
+│   ├── js/auth.js            – Firebase auth + per-kid Firestore progress sync
+│   ├── js/progress.js        – scroll-completion tracker ("✓ Read" pills on the index)
+│   ├── img/kenney/           – CC0 game sprites (see LICENSE.md there)
+│   └── css/, course-template.html, icons
+├── courses/
+│   ├── ai/, architecture/, carbon-accounting/, clothing-textiles/,
+│   │   design/, disaster-management/, health/, lca/   – adult courses
+│   ├── math/, coding/, learning/, games/              – kids' courses
+│   ├── tools/                – calculators + kid games
+│   └── _archive/             – old versions, not linked
+├── research/                 – deep-research reports
+├── design-system/            – Adhi Design System reference
+├── CLAUDE.md                 – project memory: SOP, build plans, wiring checklists
+└── PROGRESS.md               – chronological build log (newest first)
 ```
 
-## How to run locally
+## Design system
 
-Because this is a static site, you can open `index.html` directly in your browser.
+Reference: [`design-system/adhi-design-system.html`](design-system/adhi-design-system.html). Quick tokens:
 
-If you prefer a local server, run any static server command, for example:
+| Token | Value | Usage |
+|---|---|---|
+| `--tomato` | `#FF5C39` | Primary accent, CTAs |
+| `--mango` | `#FFC234` | Highlights, badges |
+| `--forest` | `#1F9D55` | Success, nature topics |
+| `--sea` | `#1FA9C7` | Water/ocean topics |
+| `--mawar` | `#E84BA0` | Creative accents, Raya |
+| `--indigo` | `#2E3192` | Parent/auth surfaces |
+| `--ink` | `#1A1614` | Text, borders, shadows |
+| `--paper` | `#FBF4E6` | Page background (warm cream) |
+
+Fonts: **Bricolage Grotesque** (display), **Inter** (body), **JetBrains Mono** (labels/code). Interactive elements use bold 2px ink borders with a `translate(-4px,-4px)` + hard-shadow hover.
+
+## Run locally
+
+It's a static site — any web server works:
 
 ```bash
 python3 -m http.server 8000
+# open http://localhost:8000
 ```
 
-Then open `http://localhost:8000` in your browser.
+Opening `index.html` directly also works, except the manifest `fetch` and the service worker need an HTTP origin.
 
-## Notes
+## Conventions
 
-- Theme preference on the home page is saved in browser `localStorage`.
-- No build step is required.
-- Most v2 course files are works in progress and not yet linked from the home page.
-- Use [`design-system/adhi-design-system.html`](design-system/adhi-design-system.html) as the default reference when building new pages/components, except the logo (do not reuse the logo).
+- **One self-contained HTML file per course.** No shared runtime dependencies a course can break on; lessons must keep working on flaky wifi.
+- **Adding an adult course:** add the file + an entry in `assets/courses.json` (the index derives everything) + `sitemap.xml`. Include `assets/js/progress.js` and a matching `data-course-id` so completion tracking works.
+- **Adding a kids' course:** follow the wiring checklist in `CLAUDE.md` (hub arrays, star keys, auth sync, dashboard names, count pills, `sw.js` precache).
+- `CLAUDE.md` holds the operating procedure and the current improvement plan; `PROGRESS.md` is the step-by-step build log. Keep both current with every change.
