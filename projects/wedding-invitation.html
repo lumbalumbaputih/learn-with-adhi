@@ -1336,7 +1336,14 @@
     if (wish) {
       const card = document.createElement('div');
       card.className = 'wish-card';
-      card.innerHTML = `<p class="wish-text">"${wish}"</p><p class="wish-author">– ${name || 'A Guest'}</p>`;
+      const wishP = document.createElement('p');
+      wishP.className = 'wish-text';
+      wishP.textContent = `"${wish}"`;
+      const authorP = document.createElement('p');
+      authorP.className = 'wish-author';
+      authorP.textContent = `– ${name || 'A Guest'}`;
+      card.appendChild(wishP);
+      card.appendChild(authorP);
       document.getElementById('wish-list').prepend(card);
     }
     document.getElementById('rsvp-form').style.display = 'none';
