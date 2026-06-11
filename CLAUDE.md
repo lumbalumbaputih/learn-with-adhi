@@ -304,7 +304,7 @@ Going 5 years ahead is only safe if earlier skills stay sharp.
 - **6 chapters**, chapter 6 = BOSS. Star rating per chapter.
 - **localStorage shape:** `{ totalStars, progress: { <chapterId>: { stars } } }` (matches `getProgress()` in `rayyan.html`). Use the keys assigned above.
 - **File naming:** math → `courses/math/rayyan-math-gradeN.html`; coding → `courses/coding/rayyan-<theme>-vN.html`.
-- **Wire it up (3 places):** add to `ADVENTURES` (or `GAMES`) in `rayyan.html` (emoji, title, blurb, href, progressKey, totalChapters); add the new key to the `sumStars([...])` list in `kids.html`; bump the "X petualangan" pill + "/ N petualangan selesai" counts in `kids.html` and `rayyan.html` **and the kids-strip counts on `index.html`** (added 2026-06-10, plan-v4 A1).
+- **Wire it up (3 places):** add to `ADVENTURES` (or `GAMES`) in `rayyan.html` (emoji, title, blurb, href, progressKey, totalChapters); add the new key to the `sumStars([...])` list in `kids.html`; bump the "X petualangan" pill + "/ N petualangan selesai" counts in `kids.html` and `rayyan.html` **and the kids-strip counts on `index.html`** (added 2026-06-10, plan-v4 A1); **add the course file to `PRECACHE` in `sw.js`** so it works offline (added 2026-06-10, plan-v4 B1).
 - **Disguise rules (non-negotiable):** no grade numbers Rayyan can see; adventure framing only; for coding say "mengajari robot / membuat petualangan", never "coding/programming". Indonesian UI + English code.
 - **One world:** new themes must connect to the existing biomes (train → space → ocean → city → lab), so it feels like one journey.
 
@@ -445,7 +445,11 @@ biggest build, so it goes after the format patterns are proven.*
 **A4 (later) · Per-course meta sweep** — canonical + og tags on adult course pages. Low priority.
 
 ### PILLAR B — Kids: resilience & device-readiness
-**B1 · Offline/PWA layer** *(the biggest missing capability)* — `manifest.webmanifest` + a small service worker: precache the 3 hubs + all kid course files + Kenney sprites + font CSS (cache-first with background update); Firebase/auth requests bypass the cache; never serve `courses.json` stale-first. Result: the tablet works in the car / on hotel wifi, and "Add to Home Screen" makes it feel like a real app for Rayyan. Version the cache name per deploy + `skipWaiting` to avoid stale-cache hell. Test via DevTools offline mode.
+**B1 · Offline/PWA layer** — ✅ **DONE (2026-06-10)**
+- `sw.js` + `manifest.webmanifest`, registered on the 3 kid hubs (covers the whole origin once active; adult-only visitors never pay the precache cost). **Online behavior is unchanged:** pages + `courses.json` are network-first (cache is only the offline fallback — no stale-cache hell, deploys flow immediately); same-origin assets cache-first with background refresh; Google Fonts + Firebase compat libs cache-first; Firestore/auth APIs, `/api/`, `/_vercel/` never intercepted.
+- Precaches all 54 kid-world files on install (3 hubs + 14 Rayyan adventures + 2 games + 7 Raya courses + 1 game + 24 Kenney sprites + `auth.js` + icons) → car-trip/hotel-wifi mode even for pages never opened before. Per-file `cache.add` so a single 404 can't void the install; versioned `lwa-*` cache, old versions purged on activate, `skipWaiting` + `clients.claim`. Uncached offline navigations land on `kids.html`.
+- "Add to Home Screen" works (standalone, starts at `kids.html`) — feels like a real app on the tablet.
+- ⚠️ New wiring point: new kid course files must be added to `PRECACHE` in `sw.js` (see checklist). 🧪 Real-device offline + install test folded into B2.
 
 **B2 · X1 carried — real-device pass 📱** — tap targets, `id-ID` voice availability, Web-Audio-after-gesture, load times on the actual tablet; log findings in PROGRESS.md, fix the top 3.
 
@@ -468,7 +472,7 @@ biggest build, so it goes after the format patterns are proven.*
 - **D3 · Y5 carried** — Gr8 math biome / Python "Penjinak Data" (only if Rayyan is flying).
 
 ### Recommended order
-`A1 (✅ done)` → `C1 (✅ done)` → `B1 (offline PWA)` → `A2 + A3 (adult completion + README, one light session)` → `B3 (sound settings)` → `B2/X1 (needs the physical device)` → `D-track`.
+`A1 (✅ done)` → `C1 (✅ done)` → `B1 (✅ done)` → `A2 + A3 (adult completion + README, one light session)` → `B3 (sound settings)` → `B2/X1 (needs the physical device)` → `D-track`.
 *Rationale: A1 was the direct ask. C1 is the highest value-per-effort anywhere (data already collected, parent acts on it tomorrow). B1 removes the biggest real-world failure mode (no wifi = no learning). A2/A3 make the adult side honest. D only after quality.*
 
 ### Decisions for Adhi (per SOP: pick the rec, note it, don't block)
@@ -487,6 +491,7 @@ biggest build, so it goes after the format patterns are proven.*
   - **Runtime third-party APIs only with a graceful offline fallback** (course must still be fully playable without it). Pre-vet every image — nothing dynamically fetched and unreviewed should ever render in front of the kids.
   - License-check everything (CC0 / explicit free license); note the source in PROGRESS.md when adding assets.
 - Hosted on Vercel (learn-with-adhi project)
+- **Offline layer (plan-v4 B1):** `sw.js` precaches the kid world (hubs + all kid courses + sprites); pages are network-first so the SW never serves stale HTML online. `manifest.webmanifest` makes the kids' world installable (Add to Home Screen → standalone, starts at `kids.html`). New kid course files must be added to `PRECACHE`.
 - Progress stored in localStorage (per-course keys: `rayyanMath`, `rayyanMath3`, etc.)
 - Hub page: `kids.html`
 - All kids courses in: `courses/math/`, `courses/coding/`, `courses/games/`, `courses/learning/`
@@ -505,7 +510,7 @@ biggest build, so it goes after the format patterns are proven.*
 - Always keep the "disguise" intact – no grade numbers visible to Rayyan in the adventure courses
 - The math and coding ladder should feel like ONE continuous adventure world, not separate subjects
 - Raya is younger (PAUD) – her content is visual-only, minimal reading, tap/drag interactions
-- **Wiring a new Rayyan (kids) course:** update the `ADVENTURES`/`GAMES` array in `rayyan.html`, add its key to `sumStars([...])` in `kids.html` AND to `PROGRESS_KEYS_BY_TYPE` in `assets/js/auth.js` (for cloud sync) AND to `COURSE_NAMES` in `dashboard.html` (for the parent view), and bump the count pills — incl. the kids-strip counts on `index.html` (since plan-v4 A1). (For *adult* courses instead, update `assets/courses.json` only — the index hub derives chips/counts/featured from the manifest.)
+- **Wiring a new Rayyan (kids) course:** update the `ADVENTURES`/`GAMES` array in `rayyan.html`, add its key to `sumStars([...])` in `kids.html` AND to `PROGRESS_KEYS_BY_TYPE` in `assets/js/auth.js` (for cloud sync) AND to `COURSE_NAMES` in `dashboard.html` (for the parent view), add the course file to `PRECACHE` in `sw.js` (offline layer, since plan-v4 B1), and bump the count pills — incl. the kids-strip counts on `index.html` (since plan-v4 A1). (For *adult* courses instead, update `assets/courses.json` only — the index hub derives chips/counts/featured from the manifest.)
 - **2026-06-04 audit:** all 12 Rayyan adventures (incl. the Track C Bridge) + 2 Raya courses are shipped & wired (this doc previously under-counted them). Math answers spot-checked correct. Fixed disguise leaks: the Gr2–5 `<title>` and bug-report `courseName` no longer show "Kelas N" (theme names only). Biggest remaining gaps: the Track D retention layer, and the faked "real code"/"real game" payoffs in coding v3/v5.
 - **Dead code:** ~~`assets/js/sync.js`~~ **deleted 2026-06-10** (plan-v2 R4) — it duplicated `assets/js/auth.js` (the live per-kid Firestore sync) and was never initialized; its lone `<script>` tag in `rayyan.html` was removed with it.
 - **Tutor name:** ✅ unified to **"Kapi"** across all math courses (Gr2–4 were "Kai"/"Nova" → now Kapi; Gr5–7 already Kapi; Gr7 keeps the "Detektif Kapi" themed variant). The internal CSS classes/ids (`kai-name`, `nova-msg`, etc.) were left as-is (not visible to Rayyan).

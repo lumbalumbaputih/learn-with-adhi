@@ -19,6 +19,14 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ## 2026-06-10
 
+### Plan v4 · B1 — Offline/PWA layer 📴→📱 ✅
+- **The gap:** every visit needed the network (fresh HTML fetch, fonts, Firebase) even though courses are single-file — flaky hotel wifi or the car = no learning. The "lesson must never break on flaky wifi" guardrail was only true *within* an already-loaded lesson.
+- **`sw.js` (new):** precaches the whole kid world on install — **54 files**: 3 hubs, 14 Rayyan adventures + 2 games, 7 Raya courses + 1 game, 24 Kenney sprites, `auth.js`, icons. Routing is deliberately conservative so **online behavior never changes**: pages + `courses.json` are network-first (cache is offline-fallback only; uncached offline navigations land on `kids.html`); same-origin assets cache-first with background refresh; Google Fonts + Firebase compat libs cache-first; Firestore/auth APIs, `/api/`, `/_vercel/` never intercepted. Versioned cache (`lwa-v1`), old `lwa-*` caches purged on activate, `skipWaiting`+`clients.claim`, per-file `cache.add` so a single 404 can't void the install.
+- **`manifest.webmanifest` (new):** `start_url: /kids.html`, standalone, paper theme, 32/512 icons → "Add to Home Screen" makes the kids' world feel like a real app on the tablet.
+- **Wiring:** manifest `<link>` + SW registration on `kids.html`, `rayyan.html`, `raya.html` only (the SW covers the whole origin once active; adult-only visitors never pay the ~2 MB precache). **New wiring point** added to the checklists: new kid courses must also be added to `PRECACHE`.
+- **Verified:** `node --check sw.js`; manifest JSON parses + both icons exist; **all 54 PRECACHE paths exist on disk**; all 3 hubs' script blocks still parse. 🧪 Remaining: DevTools-offline + Add-to-Home-Screen test on the real tablet (folded into B2).
+- Files: `sw.js` (new), `manifest.webmanifest` (new), `kids.html`, `rayyan.html`, `raya.html`, `CLAUDE.md` (B1 ✅ + wiring checklists + tech stack), `PROGRESS.md`. Next: **A2+A3** (adult completion + README refresh).
+
 ### Plan v4 · C1 — "Perlu Latihan Bareng" weak-spots panel on the parent dashboard ✅
 - **The gap:** `rayyanWeakSpots` (collected since plan-v2 Y3 to power the adaptive Misi Harian) was never shown to the parent — and it only lived in localStorage on the kid's device.
 - **Sync (auth.js):** `pushKidProgress` now rides `rayyanWeakSpots` into the kid's Firestore doc as a top-level `weakSpots` field. Written via `update()` (full field replace) so topics the daily quest *heals* disappear from the cloud too; devices that never recorded weak spots have no localStorage key and skip the write entirely — a parent's phone can't clobber the kid's data. Only for `progressType === 'rayyan'`.
