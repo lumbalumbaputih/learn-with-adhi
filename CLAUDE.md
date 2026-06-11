@@ -438,9 +438,12 @@ biggest build, so it goes after the format patterns are proven.*
 - Kids strip states concrete counts (14 petualangan · 7 kursus · 3 game). ⚠️ This adds a wiring point — see the updated wiring checklist.
 - A11y: skip-link, `:focus-visible`, `aria-pressed`. SEO: JSON-LD (WebSite + ItemList), sitemap refreshed (+4 missing pages).
 
-**A2 · Make adult completion real** — add `assets/js/progress.js` + `data-course-id` (+ the thin `.progress-bar` element it drives) to the 9 adult courses that never mark completion; ids must match `courses.json` ids so the "✓ Read" pill and the hero "finished on this device" count become honest. One sweep, low risk.
+**A2 · Make adult completion real** — ✅ **DONE (2026-06-11)**
+- Audit surprise: 8 of the 9 "never mark completion" courses already carried the correct `data-course-id` on `<html>` — but nothing loaded `progress.js`, and several have their *own* module-driven `.progress-bar` (so the old progress.js would have hijacked them). Fix: `progress.js` v2 — the scroll bar is **opt-in** via `[data-scroll-progress]` (template updated), completion (>90% scroll → `lwa:completed`) works bar-less.
+- Wired the script into **11 files**: the 9 courses + both research reports (reports got `data-course-id` added: `ai-boom-report`, `perth-transport-report`). All ids verified against `courses.json`. `design-principles` + `perth-architecture` keep their own (more accurate) module-based completion writes.
+- Known caveat: SPA-style courses (code-ecosystem, ai-capability) paginate content, so scroll-90% may under-report there — acceptable v1; their own bars untouched.
 
-**A3 · README refresh** — rewrite to match reality (structure, fonts, kids' world, manifest-driven hub, no theme toggle). Quick step; removes the worst "docs lie" in the repo.
+**A3 · README refresh** — ✅ **DONE (2026-06-11)** — rewritten to match reality: real structure tree (kids' world, manifest, sw.js, auth), correct fonts (Bricolage/Inter/JetBrains Mono), real token table, no phantom IELTS courses or theme toggle, plus adding-a-course conventions pointing at the wiring checklists.
 
 **A4 (later) · Per-course meta sweep** — canonical + og tags on adult course pages. Low priority.
 
@@ -472,7 +475,7 @@ biggest build, so it goes after the format patterns are proven.*
 - **D3 · Y5 carried** — Gr8 math biome / Python "Penjinak Data" (only if Rayyan is flying).
 
 ### Recommended order
-`A1 (✅ done)` → `C1 (✅ done)` → `B1 (✅ done)` → `A2 + A3 (adult completion + README, one light session)` → `B3 (sound settings)` → `B2/X1 (needs the physical device)` → `D-track`.
+`A1 (✅ done)` → `C1 (✅ done)` → `B1 (✅ done)` → `A2 + A3 (✅ done)` → `B3 (sound settings)` → `B2/X1 (needs the physical device)` → `D-track`.
 *Rationale: A1 was the direct ask. C1 is the highest value-per-effort anywhere (data already collected, parent acts on it tomorrow). B1 removes the biggest real-world failure mode (no wifi = no learning). A2/A3 make the adult side honest. D only after quality.*
 
 ### Decisions for Adhi (per SOP: pick the rec, note it, don't block)

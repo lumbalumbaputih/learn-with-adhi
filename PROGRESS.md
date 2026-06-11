@@ -17,6 +17,20 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-06-11
+
+### Plan v4 · A3 — README refresh ✅
+- Rewritten to match reality: the two-halves shape of the site (manifest-driven adult hub + kids' world with Firebase sync and the PWA layer), a truthful structure tree, the real fonts (Bricolage/Inter/JetBrains Mono) and token table, local-run notes (incl. why `file://` partially works), and adding-a-course conventions pointing at the `CLAUDE.md` wiring checklists. Removed: deleted IELTS courses, the nonexistent dark/light theme claim, the old DM Serif/Nunito font table.
+
+### Plan v4 · A2 — Adult completion tracking made real ("✓ Read") ✅
+- **Audit surprise:** 8 of the 9 target courses already had the correct `data-course-id` on `<html>` — but nothing ever loaded `assets/js/progress.js`, and several courses have their **own module-driven `.progress-bar`** (chapter dots, level colors), which the old progress.js would have hijacked (it grabbed `.progress-bar` and drove its width on scroll).
+- **`progress.js` v2:** the scroll bar is now **opt-in** via `[data-scroll-progress]` (the unused `course-template.html` updated to carry it); the completion write (>90% scroll → add id to `lwa:completed`) no longer needs a bar at all. Existing course bars are untouched.
+- **Wired into 11 files:** 9 courses (code-ecosystem, carbon-accounting, lca, clothing-textiles, disaster-management, ai-capability, claude-efficiency, tropical-islamic-home, ai-bot-vps) + both research reports (`ai-boom-report`, `perth-transport-report` — these two also got `data-course-id` added). Script inserted before the **last** `</body>` (course files can contain literal markup in code samples). `design-principles` + `perth-architecture` keep their own more-accurate module-completion writes.
+- **Verified:** `node --check progress.js`; every file has exactly one include and a `data-course-id` that exists in `courses.json` (scripted check, 11/11 OK). Caveat noted: SPA-style courses may under-report via scroll-90% — fine for v1.
+- Files: `assets/js/progress.js`, `assets/course-template.html`, 11 course/report files, `CLAUDE.md` (A2 ✅), `PROGRESS.md`. With A1's hero counter, the index "✓ Read" pills + "finished on this device" stat are now honest for all 16 manifest items.
+
+---
+
 ## 2026-06-10
 
 ### Plan v4 · B1 — Offline/PWA layer 📴→📱 ✅
