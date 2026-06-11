@@ -143,11 +143,22 @@ const AUTH = (() => {
       const val = localStorage.getItem(key);
       if (val) { try { progress[key] = JSON.parse(val); } catch (_) {} }
     }
-    await _db.collection('accounts').doc(_user.uid)
-      .collection('kids').doc(kidId).set(
-        { progress, lastActive: new Date().toISOString() },
-        { merge: true }
-      );
+    const ref = _db.collection('accounts').doc(_user.uid).collection('kids').doc(kidId);
+    await ref.set(
+      { progress, lastActive: new Date().toISOString() },
+      { merge: true }
+    );
+    /* Weak-spots (adaptive Misi Harian data) ride along so the parent
+       dashboard can show them. update() replaces the whole field, so
+       topics "healed" by the daily quest disappear from the cloud too.
+       Devices that never recorded weak spots have no localStorage key at
+       all and skip the write — they can't clobber the kid's data. */
+    if (progressType === 'rayyan') {
+      const raw = localStorage.getItem('rayyanWeakSpots');
+      if (raw) {
+        try { await ref.update({ weakSpots: JSON.parse(raw) }); } catch (_) {}
+      }
+    }
     return true;
   }
 
