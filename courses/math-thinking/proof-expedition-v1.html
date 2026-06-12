@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="proof-expedition">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Proof Expedition · Learn with Adhi</title>
+<meta name="description" content="An expedition through abstract mathematics: break a lying prime formula, topple infinite dominoes, check into Hilbert's Hotel and discover that infinities come in sizes. Based on Brendan W. Sullivan's free 698-page book.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/math-thinking/proof-expedition-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Proof Expedition — a climb to absolute certainty">
+<meta property="og:description" content="Interactive abstract mathematics: logic, sets, induction, infinity and counting.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"The Proof Expedition","description":"Interactive journey into abstract mathematics and proof-writing.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#171310; --paper:#FBF4E6; --paper2:#F3EAD6; --muted:#6B6259;
+  --line:rgba(23,19,16,.12);
+  --c1:#E84B3C; --c2:#4F46E5; --c3:#0E8B8B; --c4:#E8930C; --c5:#1F9D55; --c6:#8B5CF6; --c7:#90B4FF; --c8:#E0457B;
+  --gold:#FFC234;
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.75;overflow-x:hidden}
+.progress-bar{position:fixed;top:0;left:0;height:4px;background:var(--gold);z-index:400;width:0}
+::selection{background:var(--gold)}
+
+/* ───── HERO ───── */
+#hero{min-height:100vh;background:var(--ink);color:var(--paper);position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+#glyphs{position:absolute;inset:0}
+.hero-inner{position:relative;z-index:2;padding:40px 24px;max-width:880px}
+.hero-eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;margin-bottom:22px}
+.hero-title{font-family:var(--fd);font-weight:800;font-size:clamp(44px,9vw,104px);line-height:.95;letter-spacing:-.04em}
+.hero-title em{font-style:normal;color:var(--gold);display:block}
+.hero-sub{font-size:clamp(15px,2.2vw,19px);color:rgba(251,244,230,.72);max-width:560px;margin:28px auto 0;line-height:1.7}
+.hero-cta{margin-top:38px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.hero-cta a{font-family:var(--fd);font-weight:700;font-size:16px;text-decoration:none;padding:14px 30px;border-radius:99px;transition:transform .15s var(--ease),box-shadow .15s}
+.cta-main{background:var(--gold);color:var(--ink)}
+.cta-main:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 rgba(255,194,52,.35)}
+.cta-ghost{border:2px solid rgba(251,244,230,.35);color:var(--paper)}
+.cta-ghost:hover{border-color:var(--paper)}
+.hero-scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:11px;letter-spacing:.2em;color:rgba(251,244,230,.45);animation:bob 2.2s infinite var(--ease)}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* ───── TRAIL (fixed metro-line nav) ───── */
+#trail{position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:300;display:flex;flex-direction:column;gap:0;opacity:0;pointer-events:none;transition:opacity .4s}
+#trail.show{opacity:1;pointer-events:auto}
+.trail-stop{display:flex;align-items:center;gap:10px;text-decoration:none;padding:3px 0}
+.trail-dot{width:14px;height:14px;border-radius:50%;border:3px solid var(--ink);background:var(--paper);transition:transform .2s,background .2s;flex:0 0 auto}
+.trail-stop.active .trail-dot{transform:scale(1.5)}
+.trail-stop.stamped .trail-dot{background:var(--ink)}
+.trail-line{width:3px;height:16px;background:var(--ink);margin-left:5.5px;opacity:.25}
+.trail-label{font-family:var(--fm);font-size:10px;color:var(--ink);opacity:0;transform:translateX(-6px);transition:opacity .2s,transform .2s;white-space:nowrap;background:var(--paper);padding:2px 8px;border-radius:6px;border:1.5px solid var(--ink)}
+.trail-stop:hover .trail-label,.trail-stop.active .trail-label{opacity:1;transform:none}
+@media(max-width:980px){#trail{display:none}}
+
+/* ───── PASSPORT ───── */
+#passport{position:fixed;right:18px;bottom:18px;z-index:300;background:var(--ink);color:var(--paper);border-radius:16px;padding:12px 16px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .4s,transform .3s;transform:translateY(8px)}
+#passport.show{opacity:1;pointer-events:auto;transform:none}
+.pp-title{font-family:var(--fm);font-size:9px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:7px}
+.pp-grid{display:grid;grid-template-columns:repeat(4,30px);gap:6px}
+.pp-slot{width:30px;height:30px;border-radius:8px;border:1.5px dashed rgba(251,244,230,.3);display:flex;align-items:center;justify-content:center;font-size:15px}
+.pp-slot.got{border-style:solid;border-color:var(--gold);background:rgba(255,194,52,.14);animation:stampin .45s var(--ease)}
+@keyframes stampin{0%{transform:scale(2.2) rotate(-18deg);opacity:0}100%{transform:none;opacity:1}}
+
+/* ───── CAMP SECTIONS ───── */
+.camp{position:relative;padding:110px 24px 90px;--cc:var(--c1)}
+.camp-inner{max-width:780px;margin:0 auto;position:relative}
+.camp-watermark{position:absolute;top:30px;right:-10px;font-family:var(--fd);font-weight:800;font-size:clamp(120px,22vw,260px);line-height:1;color:var(--cc);opacity:.09;user-select:none;pointer-events:none;z-index:0}
+.camp-badge{display:inline-flex;align-items:center;gap:12px;margin-bottom:20px;position:relative;z-index:1}
+.camp-flag{width:52px;height:52px;border-radius:14px;background:var(--cc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:4px 4px 0 var(--ink)}
+.camp-meta{font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.camp-meta b{display:block;color:var(--cc);font-size:12px}
+h2.camp-title{font-family:var(--fd);font-weight:800;font-size:clamp(32px,5.4vw,52px);letter-spacing:-.03em;line-height:1.02;margin-bottom:18px;position:relative;z-index:1}
+h2.camp-title em{font-style:normal;color:var(--cc)}
+.camp-lede{font-size:17.5px;color:var(--muted);line-height:1.7;max-width:620px;margin-bottom:34px;position:relative;z-index:1}
+.camp p{margin-bottom:15px;max-width:660px;position:relative;z-index:1}
+h3.peak{font-family:var(--fd);font-size:21px;font-weight:700;letter-spacing:-.02em;margin:38px 0 10px;position:relative;z-index:1}
+h3.peak::before{content:'◢ ';color:var(--cc);font-size:14px}
+code{font-family:var(--fm);font-size:.85em;background:var(--paper2);padding:2px 7px;border-radius:6px;border:1px solid var(--line)}
+.field-note{position:relative;z-index:1;border:2px solid var(--ink);border-radius:16px;background:#fff;padding:18px 22px;margin:24px 0;max-width:660px;font-size:14.5px;line-height:1.7;box-shadow:5px 5px 0 var(--cc)}
+.field-note .fn-tag{font-family:var(--fm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cc);display:block;margin-bottom:6px;font-weight:700}
+.camp.alt{background:var(--paper2)}
+
+/* dark interlude camp (infinity) */
+.camp.night{background:var(--ink);color:var(--paper)}
+.camp.night .camp-lede,.camp.night p{color:rgba(251,244,230,.78)}
+.camp.night .camp-meta{color:rgba(251,244,230,.5)}
+.camp.night code{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:var(--c7)}
+.camp.night .field-note{background:#221d18;border-color:var(--c7);box-shadow:5px 5px 0 rgba(144,180,255,.3);color:var(--paper)}
+.camp.night h3.peak{color:var(--paper)}
+
+/* ───── LABS ───── */
+.lab{position:relative;z-index:1;border:2.5px solid var(--ink);border-radius:20px;background:#fff;padding:26px 26px 22px;margin:30px 0 36px;max-width:720px;box-shadow:8px 8px 0 var(--cc)}
+.camp.night .lab{background:#1f1a15;border-color:var(--c7);box-shadow:8px 8px 0 rgba(144,180,255,.25)}
+.lab-tag{display:inline-block;font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;background:var(--cc);color:#fff;border-radius:6px;padding:4px 10px;margin-bottom:16px}
+.lab-cap{font-size:12.5px;color:var(--muted);margin-top:14px;font-style:italic;line-height:1.6}
+.camp.night .lab-cap{color:rgba(251,244,230,.55)}
+button.btn{font-family:var(--fb);font-size:13.5px;font-weight:700;border:2px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:10px;padding:9px 16px;cursor:pointer;transition:transform .12s,box-shadow .12s}
+button.btn:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+button.btn.primary{background:var(--cc,var(--ink));color:#fff;border-color:var(--ink)}
+button.btn:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none}
+input[type=range]{accent-color:var(--cc);width:min(260px,60vw);vertical-align:middle}
+.big-readout{font-family:var(--fm);font-size:clamp(15px,2.4vw,21px);font-weight:700;margin:12px 0}
+.ok{color:var(--c5)} .bad{color:var(--c1)}
+
+/* truth machine */
+table.tt{border-collapse:collapse;font-family:var(--fm);font-size:14px;margin:14px 0;width:100%;max-width:520px}
+table.tt th,table.tt td{border:1.5px solid var(--ink);padding:9px 8px;text-align:center}
+table.tt th{background:var(--ink);color:var(--paper);font-weight:500;font-size:12px}
+table.tt td.T{background:rgba(31,157,85,.15);color:var(--c5);font-weight:700}
+table.tt td.F{background:rgba(232,75,60,.12);color:var(--c1);font-weight:700}
+.lever{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:14px;font-weight:700;border:2.5px solid var(--ink);border-radius:99px;padding:8px 18px;cursor:pointer;user-select:none;margin:0 10px 10px 0;transition:background .2s,color .2s}
+.lever.on{background:var(--c5);color:#fff}
+.lever.off{background:var(--c1);color:#fff}
+
+/* venn */
+.venn-wrap{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.venn-ops{display:flex;flex-direction:column;gap:8px}
+.venn-ops button.btn{font-family:var(--fm);font-size:12.5px;text-align:left}
+.venn-ops button.btn.sel{background:var(--cc);color:#fff}
+
+/* dominoes */
+#domino-stage{display:flex;align-items:flex-end;gap:9px;height:118px;padding:8px 2px;overflow-x:auto}
+.domino{width:21px;height:82px;background:var(--ink);border-radius:5px;position:relative;transform-origin:bottom right;transition:transform .32s var(--ease),background .32s;flex:0 0 auto}
+.domino.fallen{transform:rotate(78deg);background:var(--c4)}
+.domino span{position:absolute;top:6px;left:0;right:0;text-align:center;color:var(--paper);font-family:var(--fm);font-size:9px}
+.domino.broken{background:var(--c1)}
+.inf-dots{align-self:center;font-family:var(--fm);color:var(--muted);font-size:18px;letter-spacing:2px;flex:0 0 auto}
+
+#sumgrid{display:grid;gap:3px;margin:14px 0}
+#sumgrid div{width:17px;height:17px;border-radius:4px;background:var(--c4)}
+#sumgrid div.ghost{background:rgba(232,147,12,.18)}
+
+/* clock */
+#clock-stage{position:relative;width:236px;height:236px;flex:0 0 auto}
+.clock-num{position:absolute;width:36px;height:36px;border-radius:50%;background:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-weight:700;font-size:13px;transition:background .25s,color .25s}
+.clock-num.lit{background:var(--c6);color:#fff;border-color:var(--ink)}
+.clock-num.start{background:var(--gold);border-color:var(--ink)}
+
+/* hotel */
+.hotel-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.room{width:46px;height:54px;border:2px solid var(--c7);border-radius:9px;background:rgba(144,180,255,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--fm);font-size:10.5px;transition:background .3s;color:var(--paper)}
+.room .guest{font-size:17px;line-height:1}
+.room.occupied{background:rgba(144,180,255,.18)}
+
+/* pascal */
+#pascal{display:flex;flex-direction:column;align-items:center;gap:5px;margin:14px 0}
+.p-row{display:flex;gap:5px}
+.p-cell{min-width:38px;height:32px;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:11.5px;border-radius:7px;background:var(--paper);border:1.5px solid var(--line);cursor:pointer;transition:all .15s;padding:0 5px}
+.p-cell:hover{border-color:var(--ink)}
+.p-cell.hl{background:var(--c8);color:#fff;font-weight:700;border-color:var(--ink)}
+.p-cell.hl2{background:var(--gold);font-weight:700;border-color:var(--ink)}
+
+/* checkpoint quizzes */
+.checkpoint{position:relative;z-index:1;border:2.5px dashed var(--cc);border-radius:18px;padding:22px 24px;margin:28px 0;max-width:660px;background:rgba(255,255,255,.55)}
+.camp.night .checkpoint{background:rgba(255,255,255,.04)}
+.cp-tag{font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cc);margin-bottom:10px}
+.cp-q{font-weight:700;font-size:15.5px;margin-bottom:12px;font-family:var(--fd)}
+.cp-opt{display:block;width:100%;text-align:left;font-family:var(--fb);font-size:14px;padding:11px 15px;margin:7px 0;border:2px solid var(--line);border-radius:11px;background:#fff;cursor:pointer;transition:border-color .15s,transform .1s}
+.camp.night .cp-opt{background:#262019;color:var(--paper);border-color:rgba(255,255,255,.15)}
+.cp-opt:hover{border-color:var(--cc);transform:translateX(3px)}
+.cp-opt.right{border-color:var(--c5);background:rgba(31,157,85,.13)}
+.cp-opt.wrong{border-color:var(--c1);background:rgba(232,75,60,.10)}
+.cp-expl{display:none;font-size:13.5px;color:var(--muted);margin-top:12px;border-top:1.5px dashed var(--line);padding-top:12px;line-height:1.65}
+.camp.night .cp-expl{color:rgba(251,244,230,.65)}
+.checkpoint.answered .cp-expl{display:block}
+
+/* stamp row */
+.stamp-row{display:flex;align-items:center;gap:16px;margin-top:44px;flex-wrap:wrap;position:relative;z-index:1}
+.stamp-btn{font-family:var(--fd);font-size:15px;font-weight:700;background:var(--cc);color:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:13px 24px;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.stamp-btn:hover{transform:translate(-3px,-3px) rotate(-1deg);box-shadow:5px 5px 0 var(--ink)}
+.stamp-btn.got{background:#fff;color:var(--c5);border-color:var(--c5);cursor:default;transform:none;box-shadow:none}
+.camp.night .stamp-btn.got{background:transparent}
+.next-link{font-family:var(--fm);font-size:12.5px;color:inherit;opacity:.65;text-decoration:none}
+.next-link:hover{opacity:1}
+
+/* summit */
+#summit{background:var(--ink);color:var(--paper);text-align:center;padding:120px 24px;position:relative;overflow:hidden}
+.summit-title{font-family:var(--fd);font-weight:800;font-size:clamp(40px,8vw,84px);letter-spacing:-.04em;line-height:1}
+.summit-title span{color:var(--gold)}
+#summit p{max-width:560px;margin:24px auto;color:rgba(251,244,230,.75)}
+.book-card{display:inline-block;margin-top:22px;background:#fff;color:var(--ink);border-radius:18px;padding:24px 32px;text-decoration:none;border:3px solid var(--gold);transition:transform .15s}
+.book-card:hover{transform:translate(-3px,-3px) rotate(-.6deg)}
+.book-card .bc-t{font-family:var(--fd);font-weight:800;font-size:19px;letter-spacing:-.02em}
+.book-card .bc-s{font-family:var(--fm);font-size:11.5px;color:var(--muted);margin-top:6px}
+.summit-foot{margin-top:54px;font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.4);letter-spacing:.08em}
+.summit-foot a{color:rgba(251,244,230,.7)}
+
+@media(max-width:640px){
+  .camp{padding:80px 18px 64px}
+  .lab{padding:20px 16px;box-shadow:5px 5px 0 var(--cc)}
+  #passport{right:10px;bottom:10px;padding:9px 12px}
+  .pp-grid{grid-template-columns:repeat(4,26px)}
+  .pp-slot{width:26px;height:26px;font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+
+<!-- ════════ HERO ════════ -->
+<header id="hero">
+  <canvas id="glyphs"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">An 8-camp expedition · No experience required</div>
+    <h1 class="hero-title">The Proof <em>Expedition</em></h1>
+    <p class="hero-sub">School maths taught you to <strong>compute</strong>. Nobody ever showed you the other mathematics — the one about being <strong>absolutely, permanently certain</strong>. This climb fixes that: you'll break a lying formula, topple infinite dominoes, and discover that some infinities are bigger than others.</p>
+    <div class="hero-cta">
+      <a class="cta-main" href="#camp1">⛰️ Start the climb</a>
+      <a class="cta-ghost" href="../../dropzone/bws_book.pdf" target="_blank">📕 The 698-page map</a>
+    </div>
+  </div>
+  <div class="hero-scroll">▼ SCROLL</div>
+</header>
+
+<!-- trail nav -->
+<nav id="trail" aria-label="Expedition camps"></nav>
+
+<!-- passport -->
+<div id="passport">
+  <div class="pp-title">Expedition Passport</div>
+  <div class="pp-grid" id="ppGrid"></div>
+</div>
+
+<!-- ════════ CAMP 1 ════════ -->
+<section class="camp" id="camp1" style="--cc:var(--c1)">
+  <div class="camp-inner">
+    <div class="camp-watermark">01</div>
+    <div class="camp-badge"><div class="camp-flag">🔍</div><div class="camp-meta">Camp 1 · base of the mountain<b>book ch. 1 — truths &amp; proofs</b></div></div>
+    <h2 class="camp-title">Evidence Is <em>Not</em> Proof</h2>
+    <p class="camp-lede">In science, enough evidence makes a theory. In mathematics, a million confirming examples prove <em>nothing</em>. Here is the demonstration that converts everyone.</p>
+
+    <p>In 1772 Euler noticed that the formula <code>n² + n + 41</code> seems to always spit out a <strong>prime number</strong>. Test it yourself — slide n and watch the streak grow:</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · break Euler's formula</div>
+      <div>n = <b id="eulN" style="font-family:var(--fm)">1</b>&nbsp;<input type="range" id="eulSlider" min="1" max="45" value="1"></div>
+      <div class="big-readout" id="eulOut"></div>
+      <div id="eulStreak" style="font-size:13.5px;color:var(--muted)"></div>
+      <div class="lab-cap">Slide all the way right. It works for n = 1…39, then fails at n = 40 — because 40² + 40 + 41 = 41 × 41. Forty confirmations. Zero proof.</div>
+    </div>
+
+    <h3 class="peak">So what IS a proof?</h3>
+    <p>A finite chain of undeniable logical steps from agreed assumptions to the claim. Here's a real one, three lines long:</p>
+    <div class="field-note"><span class="fn-tag">Field note · a complete proof</span>
+      <strong>Claim:</strong> odd + odd = even, always.<br>
+      <strong>Proof:</strong> every odd number is 2k+1 for some integer k. Take any two: (2a+1) + (2b+1) = 2a+2b+2 = 2(a+b+1) — that's 2 × (an integer), the very definition of even. ∎
+    </div>
+    <p>Notice the move: no examples were tested. Using letters instead of numbers covered <em>every possible pair at once</em>. That single trick is the engine of all mathematics.</p>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">A claim has been verified by computer for the first 10 quintillion cases. Status?</div>
+      <button class="cp-opt" data-ok="0">Proven — that's overwhelming evidence</button>
+      <button class="cp-opt" data-ok="1">Still just a conjecture — one untested case could fail</button>
+      <button class="cp-opt" data-ok="0">Proven, if the cases were double-checked</button>
+      <div class="cp-expl">This literally happened: the Pólya conjecture held for ~900 million cases, then failed. Evidence ≠ proof — that's the whole point of the mountain you're climbing.</div>
+    </div>
+
+    <div class="stamp-row">
+      <button class="stamp-btn" data-stamp="0">🔍 Stamp passport — Camp 1 cleared</button>
+      <a class="next-link" href="#camp2">next: the language of certainty ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CAMP 2 ════════ -->
+<section class="camp alt" id="camp2" style="--cc:var(--c2)">
+  <div class="camp-inner">
+    <div class="camp-watermark">02</div>
+    <div class="camp-badge"><div class="camp-flag">⚙️</div><div class="camp-meta">Camp 2 · the language<b>book ch. 4 — logic</b></div></div>
+    <h2 class="camp-title">The Truth <em>Machine</em></h2>
+    <p class="camp-lede">Every proof ever written is built from four little words: <strong>and, or, not, if-then</strong>. Pull the levers and learn their exact meanings.</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · pull the levers</div>
+      <div style="margin-bottom:8px">
+        <span class="lever on" id="pillP" onclick="flipPill('P')">P = TRUE</span>
+        <span class="lever on" id="pillQ" onclick="flipPill('Q')">Q = TRUE</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">P = “it's raining” · Q = “I carry an umbrella”</div>
+      <table class="tt">
+        <tr><th>P ∧ Q<br>and</th><th>P ∨ Q<br>or</th><th>¬P<br>not</th><th>P → Q<br>if-then</th><th>P ↔ Q<br>iff</th></tr>
+        <tr id="ttRow"><td></td><td></td><td></td><td></td><td></td></tr>
+      </table>
+      <div class="lab-cap" id="ttCaption"></div>
+    </div>
+
+    <h3 class="peak">The lever that trips everybody</h3>
+    <p>Set P to FALSE and look at <code>P → Q</code>: it's <strong>true no matter what Q does</strong>. “If it rains, I carry an umbrella” promises nothing about dry days — so a dry day can never make it a lie. A conditional is false in exactly one world: promise made, promise broken.</p>
+    <div class="field-note"><span class="fn-tag">Field note · the contrapositive twist</span>
+      “P → Q” and “¬Q → ¬P” are <strong>always identical claims</strong>. “If it rains, I carry an umbrella” = “If I'm umbrella-less, it isn't raining.” But the <em>converse</em> “Q → P” is a different claim entirely — confusing them is arguably humanity's most common reasoning error.</div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">“If a number is divisible by 4, it is even.” Which is guaranteed equally true?</div>
+      <button class="cp-opt" data-ok="0">If a number is even, it's divisible by 4</button>
+      <button class="cp-opt" data-ok="1">If a number is odd, it's not divisible by 4</button>
+      <button class="cp-opt" data-ok="0">If a number isn't divisible by 4, it's odd</button>
+      <div class="cp-expl">Option 2 is the contrapositive — always equivalent. Option 1 is the converse, and false: 6 is even but not divisible by 4.</div>
+    </div>
+
+    <div class="stamp-row">
+      <button class="stamp-btn" data-stamp="1">⚙️ Stamp passport — Camp 2 cleared</button>
+      <a class="next-link" href="#camp3">next: the bricks everything is built from ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CAMP 3 ════════ -->
+<section class="camp" id="camp3" style="--cc:var(--c3)">
+  <div class="camp-inner">
+    <div class="camp-watermark">03</div>
+    <div class="camp-badge"><div class="camp-flag">🧺</div><div class="camp-meta">Camp 3 · the foundations<b>book ch. 3 — sets</b></div></div>
+    <h2 class="camp-title">Sets: the <em>LEGO Bricks</em> of Mathematics</h2>
+    <p class="camp-lede">Numbers, functions, even infinity itself — all of modern maths is built from one primitive idea: a <strong>bag of things</strong>. Four operations combine the bags.</p>
+
+    <p>Below, A = multiples of 2 and B = multiples of 3 (from 1–20). Click an operation and watch which numbers light up:</p>
+    <div class="lab">
+      <div class="lab-tag">Lab · set operations, live</div>
+      <div class="venn-wrap">
+        <svg width="320" height="220" viewBox="0 0 320 220" aria-label="Venn diagram">
+          <circle cx="120" cy="110" r="85" fill="rgba(14,139,139,.10)" stroke="#0E8B8B" stroke-width="2.5"/>
+          <circle cx="200" cy="110" r="85" fill="rgba(255,194,52,.14)" stroke="#B8860B" stroke-width="2.5"/>
+          <text x="50" y="32" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="#0E8B8B">A (×2)</text>
+          <text x="228" y="32" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="#B8860B">B (×3)</text>
+          <g id="vennNums" font-family="JetBrains Mono" font-size="12"></g>
+        </svg>
+        <div class="venn-ops">
+          <button class="btn sel" data-op="union">A ∪ B · union — “in either”</button>
+          <button class="btn" data-op="inter">A ∩ B · intersection — “in both”</button>
+          <button class="btn" data-op="diff">A − B · difference — “A only”</button>
+          <button class="btn" data-op="comp">Aᶜ · complement — “not in A”</button>
+        </div>
+      </div>
+      <div class="big-readout" id="vennOut" style="font-size:14px"></div>
+      <div class="lab-cap">Notice A ∩ B = the multiples of 6. Intersecting properties is literally how mathematicians define new concepts.</div>
+    </div>
+
+    <h3 class="peak">Why such a humble idea runs everything</h3>
+    <p>“Even numbers” is a set. A function is a set of input→output pairs. The number 3 itself can be <em>defined</em> as a set. And Camp 2's logic maps perfectly onto sets: ∪ is <em>or</em>, ∩ is <em>and</em>, complement is <em>not</em> — two views of one machine.</p>
+    <div class="field-note"><span class="fn-tag">Field note · the paradox that broke mathematics</span>
+      Consider “the set of all sets that don't contain themselves.” Does it contain itself? If yes → it shouldn't be in there. If no → it qualifies, so it should. <strong>Both answers explode.</strong> Bertrand Russell's 1901 puzzle forced mathematicians to rebuild the foundations of the entire subject.</div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">A = {1,2,3,4}, B = {3,4,5}. What is A ∩ B?</div>
+      <button class="cp-opt" data-ok="0">{1,2,3,4,5}</button>
+      <button class="cp-opt" data-ok="1">{3,4}</button>
+      <button class="cp-opt" data-ok="0">{1,2}</button>
+      <div class="cp-expl">Intersection keeps only what's shared: 3 and 4. ({1,2,3,4,5} is the union; {1,2} is A − B.)</div>
+    </div>
+
+    <div class="stamp-row">
+      <button class="stamp-btn" data-stamp="2">🧺 Stamp passport — Camp 3 cleared</button>
+      <a class="next-link" href="#camp4">next: proving infinitely many things at once ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CAMP 4 ════════ -->
+<section class="camp alt" id="camp4" style="--cc:var(--c4)">
+  <div class="camp-inner">
+    <div class="camp-watermark">04</div>
+    <div class="camp-badge"><div class="camp-flag">🁢</div><div class="camp-meta">Camp 4 · the great trick<b>book ch. 2 &amp; 5 — induction</b></div></div>
+    <h2 class="camp-title">The <em>Infinite Domino</em> Run</h2>
+    <p class="camp-lede">How can a finite human prove a statement about ALL infinitely many numbers? Two ingredients: the first domino falls, and every domino knocks over the next.</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · the domino principle</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px">
+        <button class="btn primary" id="dominoGo">▶ Tip the first domino</button>
+        <button class="btn" id="dominoBreak">💥 Sabotage one link</button>
+        <button class="btn" id="dominoReset">↺ Reset</button>
+      </div>
+      <div id="domino-stage"></div>
+      <div id="dominoMsg" style="font-size:13.5px"></div>
+      <div class="lab-cap">Sabotage = one broken inductive step. Everything after it stays standing — the proof is dead. That's why the “P(k) → P(k+1)” step must hold for EVERY k.</div>
+    </div>
+
+    <h3 class="peak">An induction you can SEE</h3>
+    <p><strong>Claim:</strong> 1 + 2 + … + n = n(n+1)/2. Stack the staircase, add its upside-down ghost twin, and a perfect n × (n+1) rectangle appears — so the staircase is exactly half of it:</p>
+    <div class="lab">
+      <div class="lab-tag">Lab · the staircase identity</div>
+      <div>n = <b id="sumN" style="font-family:var(--fm)">5</b>&nbsp;<input type="range" id="sumSlider" min="2" max="10" value="5"></div>
+      <div id="sumgrid"></div>
+      <div class="big-readout" id="sumOut" style="font-size:16px"></div>
+      <div class="lab-cap">Legend says Gauss spotted this at age 8 when a teacher tried to keep the class busy adding 1 to 100. (Answer: 5050, in seconds.)</div>
+    </div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">A proof shows P(1) is true, and P(k) → P(k+1) — but only for k ≥ 5. What's actually proven?</div>
+      <button class="cp-opt" data-ok="0">P(n) for all n — both ingredients exist</button>
+      <button class="cp-opt" data-ok="0">Nothing at all</button>
+      <button class="cp-opt" data-ok="1">Only P(1) — the chain from domino 1 never reaches the working links</button>
+      <div class="cp-expl">Domino 1 falls, but the knocking only works from domino 5 on — and 2, 3, 4, 5 were never toppled. Broken chain, exactly where it matters.</div>
+    </div>
+
+    <div class="stamp-row">
+      <button class="stamp-btn" data-stamp="3">🁢 Stamp passport — Camp 4 cleared</button>
+      <a class="next-link" href="#camp5">next: the climber's toolbox ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CAMP 5 ════════ -->
+<section class="camp" id="camp5" style="--cc:var(--c5)">
+  <div class="camp-inner">
+    <div class="camp-watermark">05</div>
+    <div class="camp-badge"><div class="camp-flag">🛠️</div><div class="camp-meta">Camp 5 · the toolbox<b>book ch. 4–6 — proof strategies</b></div></div>
+    <h2 class="camp-title">Four Ways Up <em>Any</em> Cliff</h2>
+    <p class="camp-lede">Mathematicians don't stare at a claim and hope. They reach for one of four standard attacks — and picking the right one is a learnable instinct.</p>
+
+    <p><strong>① Direct:</strong> assume the “if”, march to the “then” <em>(Camp 1's odd+odd proof)</em>.<br>
+    <strong>② Contrapositive:</strong> prove ¬Q → ¬P instead — same claim, often a far gentler slope.<br>
+    <strong>③ Contradiction:</strong> assume the claim is FALSE, derive an absurdity, conclude it's true.<br>
+    <strong>④ Induction:</strong> the dominoes of Camp 4, for “all n” claims.</p>
+
+    <div class="field-note"><span class="fn-tag">Field note · the most famous contradiction ever (Euclid, ~300 BC)</span>
+      Are the primes infinite? Suppose NOT — say the complete list is p₁ … pₙ. Let N = p₁p₂⋯pₙ + 1. Divide N by any prime on the list: remainder 1, every time. So N's prime factors are missing from the “complete” list. <strong>Contradiction — the primes never end. ∎</strong></div>
+
+    <h3 class="peak">Strategy range — train your instincts</h3>
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">🎯 Pick your tool · 1 of 3</div>
+      <div class="cp-q">Claim: “If n² is even, then n is even.”</div>
+      <button class="cp-opt" data-ok="0">① Direct: assume n² = 2k and factor</button>
+      <button class="cp-opt" data-ok="1">② Contrapositive: assume n is odd, show n² is odd</button>
+      <button class="cp-opt" data-ok="0">④ Induction on n</button>
+      <div class="cp-expl">From n² = 2k it's awkward to reach n. The contrapositive is one line: n = 2m+1 → n² = 4m²+4m+1, odd. Done.</div>
+    </div>
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">🎯 Pick your tool · 2 of 3</div>
+      <div class="cp-q">Claim: “√2 cannot be written as a fraction a/b.”</div>
+      <button class="cp-opt" data-ok="1">③ Contradiction: suppose √2 = a/b in lowest terms, and squeeze</button>
+      <button class="cp-opt" data-ok="0">① Direct: compute √2's digits and inspect them</button>
+      <button class="cp-opt" data-ok="0">④ Induction on the denominator</button>
+      <div class="cp-expl">“IMPOSSIBLE” claims almost always want contradiction: a² = 2b² → a even → b even → not lowest terms. Absurd. ∎ This proof reportedly scandalized the Pythagoreans.</div>
+    </div>
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">🎯 Pick your tool · 3 of 3</div>
+      <div class="cp-q">Claim: “Every postage amount ≥ 8¢ can be made from 3¢ and 5¢ stamps.”</div>
+      <button class="cp-opt" data-ok="0">③ Contradiction</button>
+      <button class="cp-opt" data-ok="1">④ Induction: check 8¢, then show k¢ → (k+1)¢</button>
+      <button class="cp-opt" data-ok="0">Check the first 100 cases and call it a day</button>
+      <div class="cp-expl">“Every n ≥ 8” is the induction signature. The step: a pile with a 5¢? Swap it for two 3¢ (+1). No 5¢? Then it has three 3¢ — swap for two 5¢ (+1). Either way the dominoes keep falling.</div>
+    </div>
+
+    <div class="stamp-row">
+      <button class="stamp-btn" data-stamp="4">🛠️ Stamp passport — Camp 5 cleared</button>
+      <a class="next-link" href="#camp6">next: inventing new number worlds ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CAMP 6 ════════ -->
+<section class="camp alt" id="camp6" style="--cc:var(--c6)">
+  <div class="camp-inner">
+    <div class="camp-watermark">06</div>
+    <div class="camp-badge"><div class="camp-flag">🕰️</div><div class="camp-meta">Camp 6 · new worlds<b>book ch. 6 — relations &amp; modular arithmetic</b></div></div>
+    <h2 class="camp-title">Arithmetic on a <em>Clock</em></h2>
+    <p class="camp-lede">On a 12-hour clock, 9 + 5 = 2 — and that's not a mistake, it's a whole new number system. It runs RSA encryption, ISBN check digits, and your credit card's checksum.</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · the modular clock</div>
+      <div style="display:flex;gap:26px;flex-wrap:wrap;align-items:center">
+        <div id="clock-stage"></div>
+        <div>
+          <div style="font-size:13px;margin-bottom:10px">Clock size (modulus): <b id="modN" style="font-family:var(--fm)">12</b><br><input type="range" id="modSlider" min="3" max="16" value="12" style="width:168px"></div>
+          <div style="font-size:13px;margin-bottom:8px">Compute <b style="font-family:var(--fm)"><span id="modA">9</span> + <span id="modB">5</span></b><br>
+            a <input type="range" id="modASlider" min="0" max="20" value="9" style="width:168px"><br>
+            b <input type="range" id="modBSlider" min="0" max="20" value="5" style="width:168px"></div>
+          <div class="big-readout" id="modOut"></div>
+        </div>
+      </div>
+      <div class="lab-cap">Gold = start at a; the purple trail walks b steps round the clock. Where you land = (a+b) mod n. Try shrinking the clock to 7 — that's the days of the week.</div>
+    </div>
+
+    <h3 class="peak">The machinery underneath: equivalence relations</h3>
+    <p>Declaring 14 ≡ 2 (mod 12) means relating numbers that differ by a multiple of 12. A relation earns the title “equivalence” by passing three checks — <strong>reflexive</strong> (a~a), <strong>symmetric</strong> (a~b ⇒ b~a), <strong>transitive</strong> (a~b, b~c ⇒ a~c) — and the prize is huge: it slices the world into clean, non-overlapping classes, like the 12 hour-positions. “Same birthday”, “same remainder”, “same blood type”: each one instantly partitions everything.</p>
+    <div class="field-note"><span class="fn-tag">Field note · imposters</span>
+      “Is a friend of” is symmetric but famously not transitive. “Is at most as tall as” is reflexive and transitive but not symmetric. Genuine equivalence relations are rarer than they look — that's why mathematicians run the three checks every time.</div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">Today is Wednesday. What day is it 100 days from now? (Hint: the week is a mod-7 clock.)</div>
+      <button class="cp-opt" data-ok="0">Wednesday</button>
+      <button class="cp-opt" data-ok="1">Friday</button>
+      <button class="cp-opt" data-ok="0">Monday</button>
+      <div class="cp-expl">100 = 14×7 + 2, so 100 ≡ 2 (mod 7). Two days past Wednesday → Friday. You just used modular arithmetic in the wild.</div>
+    </div>
+
+    <div class="stamp-row">
+      <button class="stamp-btn" data-stamp="5">🕰️ Stamp passport — Camp 6 cleared</button>
+      <a class="next-link" href="#camp7">next: the night climb into infinity ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CAMP 7 (night) ════════ -->
+<section class="camp night" id="camp7" style="--cc:var(--c7)">
+  <div class="camp-inner">
+    <div class="camp-watermark">07</div>
+    <div class="camp-badge"><div class="camp-flag" style="color:var(--ink)">∞</div><div class="camp-meta">Camp 7 · the night climb<b>book ch. 7 — functions &amp; cardinality</b></div></div>
+    <h2 class="camp-title">Some Infinities Are <em>Bigger</em> Than Others</h2>
+    <p class="camp-lede">The wildest result on this whole mountain — and the proof needs nothing but the idea of pairing things up.</p>
+
+    <p>How do you compare sizes without counting? <strong>Pair things up perfectly</strong> — a <em>bijection</em>: everyone matched, no one doubled, no one left over. A shepherd with no number words still knows if sheep went missing: one pebble per sheep.</p>
+
+    <h3 class="peak">Hilbert's fully-booked hotel</h3>
+    <p>A hotel with infinitely many rooms, every one occupied. A new guest arrives. Watch:</p>
+    <div class="lab">
+      <div class="lab-tag">Lab · Hilbert's Hotel</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px">
+        <button class="btn primary" id="hotelOne">🧳 One new guest arrives</button>
+        <button class="btn" id="hotelInf" style="background:#262019;color:var(--paper)">🚌 An INFINITE bus arrives</button>
+        <button class="btn" id="hotelReset" style="background:#262019;color:var(--paper)">↺ Reset</button>
+      </div>
+      <div class="hotel-row" id="hotelRow"></div>
+      <div id="hotelMsg" style="font-size:14px;line-height:1.65"></div>
+      <div class="lab-cap">“Full” doesn't mean “no vacancies” when you're infinite. Both announcements are bijections — and they prove ℕ is the same size as ℕ+1, and even the same size as HALF of itself.</div>
+    </div>
+
+    <p>Cantor pushed further: even the fractions ℚ — seemingly vastly more numerous — pair up perfectly with ℕ. All these sets share one size, called <strong>ℵ₀</strong> (“aleph-nought”). So is every infinity the same? <strong>No.</strong></p>
+    <div class="field-note"><span class="fn-tag">Field note · Cantor's diagonal (1891) — contradiction at altitude</span>
+      Suppose someone hands you a complete numbered list of every decimal between 0 and 1. Build a saboteur number: make its 1st digit differ from entry #1's 1st digit, its 2nd differ from entry #2's 2nd… straight down the diagonal. The saboteur differs from <em>every</em> entry somewhere — it's not on the “complete” list. Contradiction (Camp 5!). <strong>No list can hold the reals. ℝ is a strictly larger infinity. ∎</strong></div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">Which set is genuinely BIGGER than the counting numbers ℕ?</div>
+      <button class="cp-opt" data-ok="0">All even numbers</button>
+      <button class="cp-opt" data-ok="0">All fractions ℚ</button>
+      <button class="cp-opt" data-ok="1">All real numbers between 0 and 1</button>
+      <div class="cp-expl">Evens (n ↔ 2n) and fractions both pair with ℕ — size ℵ₀. The diagonal argument shows the reals can't be listed. Infinity comes in sizes; mathematics proved it in one page.</div>
+    </div>
+
+    <div class="stamp-row">
+      <button class="stamp-btn" data-stamp="6" style="color:var(--ink)">∞ Stamp passport — Camp 7 cleared</button>
+      <a class="next-link" href="#camp8">next: dawn at the counting fields ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CAMP 8 ════════ -->
+<section class="camp" id="camp8" style="--cc:var(--c8)">
+  <div class="camp-inner">
+    <div class="camp-watermark">08</div>
+    <div class="camp-badge"><div class="camp-flag">🎲</div><div class="camp-meta">Camp 8 · the final ridge<b>book ch. 8 — combinatorics</b></div></div>
+    <h2 class="camp-title">Counting <em>Without</em> Counting</h2>
+    <p class="camp-lede">How many 5-card poker hands exist? You'll never list 2,598,960 of them — combinatorics counts them anyway, with two humble rules.</p>
+
+    <p><strong>Rule of product:</strong> independent choices multiply (a 4-digit PIN: 10×10×10×10 = 10,000). <strong>Rule of sum:</strong> exclusive cases add. From these grows <code>C(n,k)</code> — the number of ways to <em>choose</em> k things from n. And every value lives in one triangle:</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · Pascal's triangle — click any cell</div>
+      <div id="pascal"></div>
+      <div class="big-readout" id="pasOut" style="font-size:14px">Click a number…</div>
+      <div class="lab-cap">Why is each cell the sum of the two above? To choose k of n items: either you take item #n (then choose k−1 from the rest) or you don't (choose k from the rest). Add the cases — the triangle rule, <em>proven</em> in one sentence.</div>
+    </div>
+
+    <div class="field-note"><span class="fn-tag">Field note · poker, properly counted</span>
+      Hands: C(52,5) = 2,598,960. Flushes: 4 suits × C(13,5) = 4 × 1,287 = 5,148 → about 0.2%. Choosing a team of 3 from 8 people? Not 8×7×6 = 336 — that counts <em>line-ups</em>. The same trio appears in 3! = 6 orders, so teams = 336 ÷ 6 = <strong>C(8,3) = 56</strong>. That division is the entire soul of “choose”. Casinos are built on this camp.</div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Final checkpoint</div>
+      <div class="cp-q">A 3-person team from 8 people. How many possible teams?</div>
+      <button class="cp-opt" data-ok="0">8 × 7 × 6 = 336</button>
+      <button class="cp-opt" data-ok="1">C(8,3) = 56</button>
+      <button class="cp-opt" data-ok="0">8³ = 512</button>
+      <div class="cp-expl">336 counts ordered line-ups; divide by the 3! = 6 orderings of each trio → 56. (8³ would allow picking the same person three times.)</div>
+    </div>
+
+    <div class="stamp-row">
+      <button class="stamp-btn" data-stamp="7">🎲 Stamp passport — Camp 8 cleared</button>
+      <a class="next-link" href="#summit">to the summit ↑</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SUMMIT ════════ -->
+<section id="summit">
+  <canvas id="confetti" style="position:absolute;inset:0;pointer-events:none"></canvas>
+  <div style="position:relative;z-index:2">
+    <div class="hero-eyebrow" style="margin-bottom:18px" id="summitEyebrow">SUMMIT · 0 / 8 STAMPS</div>
+    <h2 class="summit-title">You climbed<br><span id="summitWord">the mountain.</span></h2>
+    <p>You've now stood at every landmark of real mathematics: what proof is, the logic it's written in, the sets it's built from, the domino principle, the strategy toolbox, clock-worlds, the sizes of infinity, and the art of counting. None of it was about computing — all of it was about <strong>certainty</strong>.</p>
+    <p>The mountain has a 698-page map, and it's free, witty, and written for self-study. You're ready for it now.</p>
+    <a class="book-card" href="../../dropzone/bws_book.pdf" target="_blank">
+      <div class="bc-t">📕 Everything You Always Wanted To Know About Mathematics</div>
+      <div class="bc-s">(*But didn't even know to ask) — Brendan W. Sullivan with John Mackey, Carnegie Mellon, 2013 · open PDF →</div>
+    </a>
+    <div class="summit-foot">THE PROOF EXPEDITION · <a href="../../index.html">LEARN WITH ADHI</a> · ∎</div>
+  </div>
+</section>
+
+<script>
+/* ───────── hero glyph field ───────── */
+(function(){
+  const cv = document.getElementById('glyphs'), cx = cv.getContext('2d');
+  const GLYPHS = ['∀','∃','ℵ','∎','π','Σ','→','∩','∪','¬','∞','≡','√','∈'];
+  let W,H,parts=[];
+  function size(){ W=cv.width=cv.offsetWidth; H=cv.height=cv.offsetHeight;
+    parts = Array.from({length:Math.min(40,W/30)},()=>({
+      x:Math.random()*W, y:Math.random()*H, g:GLYPHS[Math.random()*GLYPHS.length|0],
+      s:14+Math.random()*30, vy:.15+Math.random()*.4, o:.05+Math.random()*.14, r:Math.random()*Math.PI
+    }));
+  }
+  size(); addEventListener('resize',size);
+  (function loop(){
+    cx.clearRect(0,0,W,H);
+    parts.forEach(p=>{
+      p.y -= p.vy; p.r += .0012;
+      if (p.y < -40) { p.y = H+40; p.x = Math.random()*W; }
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(Math.sin(p.r)*.35);
+      cx.font = `700 ${p.s}px "JetBrains Mono",monospace`;
+      cx.fillStyle = `rgba(255,194,52,${p.o})`;
+      cx.fillText(p.g,0,0); cx.restore();
+    });
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ───────── trail + passport + persistence ───────── */
+const CAMPS = [
+  ['camp1','🔍','C1 Evidence ≠ Proof'],['camp2','⚙️','C2 The Truth Machine'],
+  ['camp3','🧺','C3 Sets'],['camp4','🁢','C4 Dominoes'],
+  ['camp5','🛠️','C5 Strategy Toolbox'],['camp6','🕰️','C6 Clock Worlds'],
+  ['camp7','∞','C7 Infinity'],['camp8','🎲','C8 Counting'],
+];
+const LSKEY='lwa:proof-expedition';
+let stamps = [];
+try { stamps = JSON.parse(localStorage.getItem(LSKEY)||'[]'); } catch(e){}
+const trail = document.getElementById('trail'), ppGrid = document.getElementById('ppGrid');
+CAMPS.forEach(([id,icon,label],i)=>{
+  const a=document.createElement('a'); a.className='trail-stop'; a.href='#'+id; a.dataset.camp=id;
+  a.innerHTML = `<span class="trail-dot"></span><span class="trail-label">${label}</span>`;
+  trail.appendChild(a);
+  if (i<CAMPS.length-1){ const l=document.createElement('div'); l.className='trail-line'; trail.appendChild(l); }
+  const s=document.createElement('div'); s.className='pp-slot'; s.dataset.i=i; s.textContent='·';
+  ppGrid.appendChild(s);
+});
+function renderStamps(){
+  document.querySelectorAll('.pp-slot').forEach(s=>{
+    const i=+s.dataset.i;
+    if (stamps.includes(i)){ s.classList.add('got'); s.textContent = CAMPS[i][1]; }
+  });
+  document.querySelectorAll('.trail-stop').forEach((t,i)=>t.classList.toggle('stamped', stamps.includes(i)));
+  document.querySelectorAll('[data-stamp]').forEach(b=>{
+    const i=+b.dataset.stamp;
+    if (stamps.includes(i)){ b.classList.add('got'); b.textContent = '✓ Camp '+(i+1)+' stamped'; }
+  });
+  document.getElementById('summitEyebrow').textContent = `SUMMIT · ${stamps.length} / 8 STAMPS`;
+  document.getElementById('summitWord').textContent = stamps.length>=8 ? 'every single camp. 🏔️' : 'the mountain.';
+}
+document.querySelectorAll('[data-stamp]').forEach(b=>{
+  b.onclick = ()=>{
+    const i=+b.dataset.stamp;
+    if (stamps.includes(i)) return;
+    stamps.push(i);
+    try{ localStorage.setItem(LSKEY, JSON.stringify(stamps)); }catch(e){}
+    renderStamps();
+    if (stamps.length>=8){
+      try { const s=new Set(JSON.parse(localStorage.getItem('lwa:completed')||'[]')); s.add('proof-expedition'); localStorage.setItem('lwa:completed', JSON.stringify([...s])); } catch(e){}
+      confettiBurst();
+    }
+  };
+});
+renderStamps();
+
+/* scrollspy + show/hide chrome */
+const obs = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if (e.isIntersecting)
+      document.querySelectorAll('.trail-stop').forEach(t=>t.classList.toggle('active', t.dataset.camp===e.target.id));
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+CAMPS.forEach(([id])=>obs.observe(document.getElementById(id)));
+addEventListener('scroll',()=>{
+  const past = scrollY > innerHeight*.7;
+  trail.classList.toggle('show', past);
+  document.getElementById('passport').classList.toggle('show', past);
+},{passive:true});
+
+/* checkpoints */
+document.querySelectorAll('[data-quiz]').forEach(q=>{
+  q.querySelectorAll('.cp-opt').forEach(opt=>{
+    opt.onclick=()=>{
+      if (q.classList.contains('answered')) return;
+      q.classList.add('answered');
+      q.querySelectorAll('.cp-opt').forEach(o=>{
+        if (o.dataset.ok==='1') o.classList.add('right');
+        else if (o===opt) o.classList.add('wrong');
+        o.disabled=true;
+      });
+    };
+  });
+});
+
+/* ───────── Camp 1: Euler ───────── */
+function isPrime(n){ if(n<2)return false; for(let i=2;i*i<=n;i++) if(n%i===0) return false; return true; }
+function factor(v){ for(let i=2;i*i<=v;i++) if(v%i===0) return `${i} × ${v/i}`; return v; }
+const eulSlider=document.getElementById('eulSlider');
+function eulRender(){
+  const n=+eulSlider.value, v=n*n+n+41, p=isPrime(v);
+  document.getElementById('eulN').textContent=n;
+  document.getElementById('eulOut').innerHTML = `${n}² + ${n} + 41 = <b>${v.toLocaleString()}</b> — `+(p?`<span class="ok">PRIME ✓</span>`:`<span class="bad">NOT PRIME ✗ &nbsp;(${v.toLocaleString()} = ${factor(v)})</span>`);
+  let streak=0; for(let i=1;i<=n;i++) if(isPrime(i*i+i+41)) streak++;
+  document.getElementById('eulStreak').textContent = p
+    ? `Primes so far: ${streak} in a row. Looking VERY convincing…`
+    : `A streak of ${streak} confirmations just collapsed. This is why mathematicians demand proof.`;
+}
+eulSlider.oninput=eulRender; eulRender();
+
+/* ───────── Camp 2: truth machine ───────── */
+let P=true,Q=true;
+function flipPill(w){ if(w==='P')P=!P; else Q=!Q; ttRender(); }
+function ttRender(){
+  const pp=document.getElementById('pillP'), pq=document.getElementById('pillQ');
+  pp.textContent=`P = ${P?'TRUE':'FALSE'}`; pp.className=`lever ${P?'on':'off'}`;
+  pq.textContent=`Q = ${Q?'TRUE':'FALSE'}`; pq.className=`lever ${Q?'on':'off'}`;
+  const vals=[P&&Q,P||Q,!P,!P||Q,P===Q], cells=document.getElementById('ttRow').children;
+  vals.forEach((v,i)=>{ cells[i].textContent=v?'T':'F'; cells[i].className=v?'T':'F'; });
+  document.getElementById('ttCaption').textContent =
+    !P ? '→ With P false, "P → Q" is TRUE whatever Q does. A promise about rainy days can\'t be broken on a dry one.'
+       : (Q ? 'All friendly when both are true. Now make P false and watch the if-then column…' : 'P true, Q false: the ONE world where the promise "P → Q" is broken.');
+}
+ttRender();
+
+/* ───────── Camp 3: venn ───────── */
+const NUMS=Array.from({length:20},(_,i)=>i+1);
+const inA=n=>n%2===0, inB=n=>n%3===0;
+const OPS={ union:{f:n=>inA(n)||inB(n),label:'A ∪ B'}, inter:{f:n=>inA(n)&&inB(n),label:'A ∩ B'},
+  diff:{f:n=>inA(n)&&!inB(n),label:'A − B'}, comp:{f:n=>!inA(n),label:'Aᶜ'} };
+let curOp='union';
+const vg=document.getElementById('vennNums');
+NUMS.forEach(n=>{
+  let x,y;
+  if (inA(n)&&inB(n)){ x=148+(n%2)*24; y=80+(n%4)*18; }
+  else if (inA(n)){ x=55+(n/2%3|0)*27; y=70+((n*7)%5)*20; }
+  else if (inB(n)){ x=212+(n%2)*30; y=70+((n*7)%4)*25; }
+  else { x=6+(n%2)*18; y=150+((n*3)%4)*17; }
+  const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x',x); t.setAttribute('y',y); t.dataset.n=n; t.textContent=n;
+  vg.appendChild(t);
+});
+function vennRender(){
+  const op=OPS[curOp], hits=[];
+  vg.querySelectorAll('text').forEach(t=>{
+    const ok=op.f(+t.dataset.n);
+    t.setAttribute('fill', ok?'#0E8B8B':'rgba(23,19,16,.25)');
+    t.setAttribute('font-weight', ok?'700':'400');
+    if(ok) hits.push(t.dataset.n);
+  });
+  document.getElementById('vennOut').textContent=`${op.label} = { ${hits.join(', ')} }`;
+  document.querySelectorAll('.venn-ops .btn').forEach(b=>b.classList.toggle('sel',b.dataset.op===curOp));
+}
+document.querySelectorAll('.venn-ops .btn').forEach(b=>b.onclick=()=>{curOp=b.dataset.op;vennRender();});
+vennRender();
+
+/* ───────── Camp 4: dominoes + staircase ───────── */
+const DCOUNT=14, stage=document.getElementById('domino-stage');
+let brokenAt=-1, falling=false;
+function dominoBuild(){
+  stage.innerHTML='';
+  for(let i=0;i<DCOUNT;i++){
+    const d=document.createElement('div'); d.className='domino'+(i===brokenAt?' broken':''); d.innerHTML=`<span>${i+1}</span>`;
+    stage.appendChild(d);
+  }
+  stage.insertAdjacentHTML('beforeend',`<div class="inf-dots">⋯${brokenAt<0?'∞':''}</div>`);
+}
+function dmsg(t){ document.getElementById('dominoMsg').innerHTML=t; }
+document.getElementById('dominoGo').onclick=()=>{
+  if(falling) return; falling=true;
+  const ds=stage.querySelectorAll('.domino'); let i=0;
+  const tick=setInterval(()=>{
+    if(i>=ds.length||i===brokenAt){ clearInterval(tick); falling=false;
+      dmsg(i>=ds.length ? '<span class="ok"><b>All infinitely many dominoes fall.</b> P(n) is true for every n. ∎</span>'
+        : `<span class="bad"><b>Domino ${brokenAt+1} doesn't pass it on</b> — dominoes ${brokenAt+2}, ${brokenAt+3}, … never fall. One broken step kills the whole proof.</span>`);
+      return; }
+    ds[i].classList.add('fallen'); i++;
+  },150);
+};
+document.getElementById('dominoBreak').onclick=()=>{ brokenAt=5; falling=false; dominoBuild(); dmsg('Link 6 sabotaged: P(6) no longer implies P(7). Now tip the first domino…'); };
+document.getElementById('dominoReset').onclick=()=>{ brokenAt=-1; falling=false; dominoBuild(); dmsg(''); };
+dominoBuild();
+
+const sumSlider=document.getElementById('sumSlider');
+function sumRender(){
+  const n=+sumSlider.value, g=document.getElementById('sumgrid');
+  document.getElementById('sumN').textContent=n;
+  g.style.gridTemplateColumns=`repeat(${n+1},17px)`;
+  g.innerHTML='';
+  for(let r=1;r<=n;r++) for(let c=1;c<=n+1;c++){
+    const cell=document.createElement('div'); if(c>r) cell.className='ghost'; g.appendChild(cell);
+  }
+  document.getElementById('sumOut').innerHTML=`1 + 2 + … + ${n} &nbsp;=&nbsp; ${n}×${n+1}/2 &nbsp;=&nbsp; <b>${n*(n+1)/2}</b>`;
+}
+sumSlider.oninput=sumRender; sumRender();
+
+/* ───────── Camp 6: modular clock ───────── */
+const modSlider=document.getElementById('modSlider'), modASl=document.getElementById('modASlider'), modBSl=document.getElementById('modBSlider');
+function clockRender(){
+  const n=+modSlider.value, a=+modASl.value, b=+modBSl.value;
+  document.getElementById('modN').textContent=n;
+  document.getElementById('modA').textContent=a; document.getElementById('modB').textContent=b;
+  const st=document.getElementById('clock-stage'); st.innerHTML='';
+  const R=96,cx=118,cy=118, startPos=((a%n)+n)%n, endPos=(((a+b)%n)+n)%n;
+  for(let i=0;i<n;i++){
+    const ang=(i/n)*2*Math.PI-Math.PI/2;
+    const d=document.createElement('div'); d.className='clock-num';
+    d.style.left=(cx+R*Math.cos(ang)-18)+'px'; d.style.top=(cy+R*Math.sin(ang)-18)+'px';
+    d.textContent=i;
+    for(let s=1;s<=b;s++) if(((startPos+s)%n)===i){ d.classList.add('lit'); break; }
+    if (i===startPos) d.classList.add('start');
+    st.appendChild(d);
+  }
+  document.getElementById('modOut').innerHTML=`${a} + ${b} ≡ <b>${endPos}</b> (mod ${n})`;
+}
+[modSlider,modASl,modBSl].forEach(s=>s.oninput=clockRender); clockRender();
+
+/* ───────── Camp 7: hotel ───────── */
+const ROOMS=8, hotelRow=document.getElementById('hotelRow');
+let guests;
+function hotelInit(){ guests=Array.from({length:ROOMS},(_,i)=>'G'+(i+1)); hotelRender('Every room occupied: guest Gₙ sleeps in room n. The hotel is <b>full</b>.'); }
+function hotelRender(msg){
+  hotelRow.innerHTML='';
+  for(let i=0;i<ROOMS;i++){
+    const r=document.createElement('div'); r.className='room'+(guests[i]?' occupied':'');
+    r.innerHTML=`<span class="guest">${guests[i]?(guests[i][0]==='B'?'🧑‍🤝‍🧑':'🧍'):''}</span><span>${guests[i]||'—'}</span><span style="opacity:.5">rm ${i+1}</span>`;
+    hotelRow.appendChild(r);
+  }
+  hotelRow.insertAdjacentHTML('beforeend','<div class="inf-dots" style="color:rgba(251,244,230,.5)">⋯∞</div>');
+  document.getElementById('hotelMsg').innerHTML=msg;
+}
+document.getElementById('hotelOne').onclick=()=>{
+  guests=['NEW',...Array.from({length:ROOMS-1},(_,i)=>'G'+(i+1))];
+  hotelRender('<b>Announcement: “Everyone move from room n to room n+1.”</b> Every guest still has a room (there is always an n+1) — and room 1 is free for the newcomer. A full infinite hotel just absorbed a guest. 🤯');
+};
+document.getElementById('hotelInf').onclick=()=>{
+  guests=Array.from({length:ROOMS},(_,i)=> i%2===0 ? 'G'+(i/2+1) : 'B'+((i+1)/2));
+  hotelRender('<b>Announcement: “Everyone move from room n to room 2n.”</b> The old guests (G) now fill exactly the even rooms — leaving infinitely many odd rooms for the infinite busload (B). Infinity + infinity = the same infinity.');
+};
+document.getElementById('hotelReset').onclick=hotelInit;
+hotelInit();
+
+/* ───────── Camp 8: pascal ───────── */
+const PROWS=9, pas=document.getElementById('pascal'), C=[[1]];
+for(let r=1;r<PROWS;r++){ C[r]=[1]; for(let k=1;k<r;k++) C[r][k]=C[r-1][k-1]+C[r-1][k]; C[r][r]=1; }
+C.forEach((row,r)=>{
+  const div=document.createElement('div'); div.className='p-row';
+  row.forEach((v,k)=>{
+    const c=document.createElement('div'); c.className='p-cell'; c.textContent=v; c.dataset.r=r; c.dataset.k=k;
+    c.onclick=()=>{
+      document.querySelectorAll('.p-cell').forEach(x=>x.classList.remove('hl','hl2'));
+      c.classList.add('hl');
+      if(r>0){
+        if(k>0) document.querySelector(`.p-cell[data-r="${r-1}"][data-k="${k-1}"]`)?.classList.add('hl2');
+        if(k<r) document.querySelector(`.p-cell[data-r="${r-1}"][data-k="${k}"]`)?.classList.add('hl2');
+      }
+      const above = r>0 ? ` = ${k>0?C[r-1][k-1]:0} + ${k<r?C[r-1][k]:0} (the two gold cells above)` : '';
+      document.getElementById('pasOut').innerHTML=`C(${r},${k}) = <b>${v}</b> — ways to choose ${k} from ${r}${above}`;
+    };
+    div.appendChild(c);
+  });
+  pas.appendChild(div);
+});
+
+/* ───────── summit confetti ───────── */
+function confettiBurst(){
+  const cv=document.getElementById('confetti'); if(!cv) return;
+  const cx=cv.getContext('2d');
+  cv.width=cv.offsetWidth; cv.height=cv.offsetHeight;
+  const COLS=['#FFC234','#E84B3C','#4F46E5','#1F9D55','#E0457B','#90B4FF'];
+  const ps=Array.from({length:160},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,vy:2+Math.random()*3.5,vx:(Math.random()-.5)*2,s:5+Math.random()*7,c:COLS[Math.random()*COLS.length|0],r:Math.random()*Math.PI}));
+  let frames=0;
+  (function loop(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p=>{ p.y+=p.vy; p.x+=p.vx; p.r+=.08;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle=p.c; cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); cx.restore(); });
+    if (++frames<260) requestAnimationFrame(loop); else cx.clearRect(0,0,cv.width,cv.height);
+  })();
+  document.getElementById('summit').scrollIntoView({behavior:'smooth'});
+}
+</script>
+<script src="../../assets/js/progress.js" defer></script>
+</body>
+</html>

@@ -17,6 +17,12 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-06-12
+
+- ✅ **NEW adult course: "The Proof Expedition"** (`courses/math-thinking/proof-expedition-v1.html`, id `proof-expedition`) — interactive companion to Brendan W. Sullivan's free 698-page CMU book *"Everything You Always Wanted To Know About Mathematics"* (now at `dropzone/bws_book.pdf`, moved from repo root). Deliberately NOT the sidebar course template (Adhi: "be as creative as you can"): a one-page scrollytelling **expedition up a mountain** — animated math-glyph hero canvas, 8 color-themed "camps" (ch1 proof vs evidence → logic → sets → induction → strategies → modular arithmetic → infinity (dark night-climb section) → combinatorics), a fixed metro-line trail nav, and a **stamp-collecting passport** (localStorage `lwa:proof-expedition`) instead of checkboxes; all 8 stamps → confetti summit + `lwa:completed` entry. Seven hands-on labs: Euler's n²+n+41 prime-breaker slider, live truth-table lever machine, Venn set-op lab (SVG), sabotage-able infinite domino run, Gauss staircase grid, modular clock (variable modulus), Hilbert's Hotel (+1 guest / infinite bus), clickable Pascal's triangle; 9 checkpoint quizzes with explanations. Wired: `assets/courses.json` (n=12, Foundations, manifest-driven index hub picks it up automatically) + `sitemap.xml`; uses `assets/js/progress.js` + `data-course-id` for the "✓ Read" pill. JSON validated; inline JS `node --check` passed.
+
+---
+
 ## 2026-06-10
 
 ### Plan v4 · B1 — Offline/PWA layer 📴→📱 ✅

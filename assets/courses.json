@@ -157,6 +157,18 @@
     "duration": "~1 week"
   },
   {
+    "id": "proof-expedition",
+    "n": "12",
+    "title": "The Proof Expedition",
+    "blurb": "An 8-camp climb into abstract mathematics: break a lying prime formula, topple infinite dominoes, check into Hilbert's Hotel and learn how mathematicians achieve absolute certainty. Based on a free 698-page CMU book.",
+    "category": "Foundations",
+    "tags": ["Beginner", "Math", "Interactive"],
+    "primitive": "plus",
+    "accent": "mango",
+    "path": "courses/math-thinking/proof-expedition-v1.html",
+    "duration": "~3 days"
+  },
+  {
     "id": "tool-safe-area",
     "n": "T1",
     "title": "Feifelusiac Safe Area Calculator",
