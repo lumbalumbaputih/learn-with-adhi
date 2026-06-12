@@ -169,6 +169,18 @@
     "duration": "~3 days"
   },
   {
+    "id": "proof-expedition-series",
+    "n": "13",
+    "title": "Proof Expedition · Base Camp",
+    "blurb": "The full ascent: 8 interactive expeditions covering the entire 698-page CMU abstract-math book, one chapter each — induction, sets, logic, relations, infinity and counting. Expedition 1 (7 trail days, 7 labs) is open now.",
+    "category": "Foundations",
+    "tags": ["Beginner", "Math", "Interactive", "Series"],
+    "primitive": "arc",
+    "accent": "tomato",
+    "path": "courses/math-thinking/expedition-basecamp.html",
+    "duration": "Series"
+  },
+  {
     "id": "tool-safe-area",
     "n": "T1",
     "title": "Feifelusiac Safe Area Calculator",

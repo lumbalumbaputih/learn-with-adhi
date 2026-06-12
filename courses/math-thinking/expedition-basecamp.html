@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="proof-expedition-series">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base Camp · The Proof Expedition · Learn with Adhi</title>
+<meta name="description" content="Base camp for the full Proof Expedition series: 8 interactive courses covering the whole of Sullivan's 'Everything You Always Wanted To Know About Mathematics' — one expedition per chapter.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/math-thinking/expedition-basecamp.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Proof Expedition — Base Camp">
+<meta property="og:description" content="8 expeditions, one mountain: the full 698-page book as interactive courses.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#171310; --paper:#FBF4E6; --paper2:#F3EAD6; --muted:#6B6259; --line:rgba(23,19,16,.12);
+  --gold:#FFC234;
+  --e1:#E84B3C; --e2:#E8930C; --e3:#0E8B8B; --e4:#4F46E5; --e5:#1F9D55; --e6:#8B5CF6; --e7:#90B4FF; --e8:#E0457B;
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--ink);color:var(--paper);font-size:16px;line-height:1.7}
+::selection{background:var(--gold);color:var(--ink)}
+
+header{padding:80px 24px 30px;text-align:center;position:relative;overflow:hidden}
+.eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+h1{font-family:var(--fd);font-weight:800;font-size:clamp(38px,7vw,76px);letter-spacing:-.04em;line-height:.98}
+h1 em{font-style:normal;color:var(--gold)}
+.sub{color:rgba(251,244,230,.7);max-width:620px;margin:22px auto 0;font-size:clamp(14.5px,2vw,17px)}
+.sub a{color:var(--gold)}
+.totals{font-family:var(--fm);font-size:12px;color:rgba(251,244,230,.55);margin-top:24px;letter-spacing:.08em}
+
+#route{max-width:880px;margin:30px auto 0;padding:0 18px 80px;position:relative}
+.spine{position:absolute;left:50%;top:0;bottom:120px;width:4px;background:repeating-linear-gradient(180deg,rgba(251,244,230,.25) 0 10px,transparent 10px 20px);transform:translateX(-50%)}
+.exp{display:flex;align-items:stretch;margin:34px 0;position:relative}
+.exp:nth-child(even){flex-direction:row-reverse}
+.exp-card{width:calc(50% - 42px);background:#221c16;border:2.5px solid var(--cc);border-radius:20px;padding:24px 26px;position:relative;transition:transform .18s var(--ease),box-shadow .18s;text-decoration:none;color:var(--paper);display:block}
+a.exp-card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--cc)}
+.exp-card.locked{opacity:.55;border-style:dashed}
+.exp-knot{position:absolute;left:50%;top:34px;transform:translateX(-50%);width:46px;height:46px;border-radius:50%;background:var(--cc);border:3.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:21px;z-index:2;box-shadow:0 0 0 3px var(--cc)}
+.exp-n{font-family:var(--fm);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--cc);font-weight:700}
+.exp-t{font-family:var(--fd);font-weight:800;font-size:clamp(19px,2.6vw,24px);letter-spacing:-.02em;line-height:1.1;margin:6px 0 8px}
+.exp-b{font-size:13px;color:rgba(251,244,230,.65);line-height:1.65}
+.exp-ch{font-family:var(--fm);font-size:10.5px;color:rgba(251,244,230,.45);margin-top:10px}
+.exp-prog{margin-top:13px}
+.exp-bar{height:7px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.exp-fill{height:100%;background:var(--cc);border-radius:99px;transition:width .6s var(--ease)}
+.exp-pct{font-family:var(--fm);font-size:10.5px;color:rgba(251,244,230,.55);margin-top:5px}
+.exp-status{display:inline-block;font-family:var(--fm);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;border:1.5px solid;border-radius:99px;padding:3px 10px;margin-top:12px}
+.st-open{color:var(--gold);border-color:var(--gold)}
+.st-done{color:#7BE3A4;border-color:#7BE3A4}
+.st-soon{color:rgba(251,244,230,.45);border-color:rgba(251,244,230,.3)}
+
+#daytrip{max-width:880px;margin:0 auto;padding:0 18px 70px;text-align:center}
+.dt-card{display:inline-block;text-decoration:none;color:var(--ink);background:var(--paper);border:3px solid var(--gold);border-radius:18px;padding:20px 30px;transition:transform .15s}
+.dt-card:hover{transform:translate(-3px,-3px) rotate(-.5deg)}
+.dt-t{font-family:var(--fd);font-weight:800;font-size:18px}
+.dt-s{font-family:var(--fm);font-size:11px;color:var(--muted);margin-top:5px}
+.foot{padding:30px 24px 60px;text-align:center;font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.4);letter-spacing:.08em}
+.foot a{color:rgba(251,244,230,.7)}
+
+@media(max-width:720px){
+  .spine{left:24px}
+  .exp,.exp:nth-child(even){flex-direction:row}
+  .exp-card{width:calc(100% - 64px);margin-left:64px}
+  .exp-knot{left:24px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Base Camp · the full ascent · 8 expeditions</div>
+  <h1>The Proof <em>Expedition</em><br>Route Map</h1>
+  <p class="sub">One mountain, eight expeditions — one per chapter of Brendan W. Sullivan's free 698-page <a href="../../dropzone/bws_book.pdf" target="_blank">“Everything You Always Wanted To Know About Mathematics”</a>. Each expedition is a self-contained interactive course: labs, puzzles, checkpoints and a passport to stamp.</p>
+  <div class="totals" id="totals">— / 8 EXPEDITIONS COMPLETE</div>
+</header>
+
+<div id="route"><div class="spine"></div></div>
+
+<section id="daytrip">
+  <a class="dt-card" href="proof-expedition-v1.html">
+    <div class="dt-t">🥾 Short on time? Take the Highlights Trek</div>
+    <div class="dt-s">the original 1-page tour — 8 camps, 7 labs, ~1 evening</div>
+  </a>
+</section>
+
+<div class="foot">THE PROOF EXPEDITION SERIES · <a href="../../index.html">LEARN WITH ADHI</a> · ∎</div>
+
+<script>
+const EXPS=[
+  {n:1,icon:'🔍',cc:'var(--e1)',title:'What Is Mathematics?',ch:'book ch. 1 · pp. 13–100',days:7,key:'lwa:expedition1',
+   href:'expedition-1-truth-v1.html',
+   blurb:'Truth vs evidence, reading & writing proofs, and five legendary puzzles: the missing dollar, Gauss\'s trick, the Ramsey party game and Monty Hall.'},
+  {n:2,icon:'🁢',cc:'var(--e2)',title:'And So On… (Induction)',ch:'book ch. 2 · pp. 101–148',days:6,key:'lwa:expedition2',
+   blurb:'The domino principle from scratch: chessboard tilings, winning strategies in games, recursion and the Tower of Hanoi.'},
+  {n:3,icon:'🧺',cc:'var(--e3)',title:'Sets: The Foundations',ch:'book ch. 3 · pp. 149–214',days:6,key:'lwa:expedition3',
+   blurb:'Bags of things all the way down: subsets and power sets, set algebra, indexed families, partitions, and building ℕ itself.'},
+  {n:4,icon:'⚙️',cc:'var(--e4)',title:'Logic: The Language',ch:'book ch. 4 · pp. 215–320',days:8,key:'lwa:expedition4',
+   blurb:'The big one: quantifiers, connectives, truth tables, negation machines, logical equivalence and the four proof strategies — used for real.'},
+  {n:5,icon:'⛓️',cc:'var(--e5)',title:'Induction, Forged Rigorous',ch:'book ch. 5 · pp. 321–376',days:6,key:'lwa:expedition5',
+   blurb:'Induction rebuilt on solid ground: variants, strong induction, minimal-criminal arguments, and proofs about sequences and sums.'},
+  {n:6,icon:'🕰️',cc:'var(--e6)',title:'Relations & Clock Worlds',ch:'book ch. 6 · pp. 377–466',days:6,key:'lwa:expedition6',
+   blurb:'Equivalence relations, partitions and orderings — then the payoff: modular arithmetic, ℤₙ, and divisibility proofs.'},
+  {n:7,icon:'∞',cc:'var(--e7)',title:'Functions & Infinity',ch:'book ch. 7 · pp. 467–566',days:7,key:'lwa:expedition7',
+   blurb:'Injections, surjections, bijections — then Hilbert\'s Hotel, countability, and Cantor\'s diagonal: infinities of different sizes.'},
+  {n:8,icon:'🎲',cc:'var(--e8)',title:'Counting Stuff',ch:'book ch. 8 · pp. 567–670',days:7,key:'lwa:expedition8',
+   blurb:'Sum & product rules, permutations vs combinations, poker hands, binomial theorem, inclusion–exclusion and the pigeonhole principle.'},
+];
+const route=document.getElementById('route');
+let doneCount=0;
+EXPS.forEach(e=>{
+  let stamps=0;
+  try{ stamps=(JSON.parse(localStorage.getItem(e.key)||'[]')).length; }catch(_){ }
+  const pct=Math.min(100,Math.round(stamps/e.days*100));
+  const done=pct>=100; if(done) doneCount++;
+  const open=!!e.href;
+  const el=document.createElement('div'); el.className='exp'; el.style.setProperty('--cc',e.cc);
+  const tag = done?'<span class="exp-status st-done">✓ Summited</span>'
+            : open?'<span class="exp-status st-open">● Route open — climb now</span>'
+                  :'<span class="exp-status st-soon">Route being mapped…</span>';
+  const inner=`
+    <div class="exp-n">Expedition ${e.n} · ${e.days} trail days</div>
+    <div class="exp-t">${e.title}</div>
+    <div class="exp-b">${e.blurb}</div>
+    <div class="exp-ch">${e.ch}</div>
+    ${open?`<div class="exp-prog"><div class="exp-bar"><div class="exp-fill" style="width:${pct}%"></div></div><div class="exp-pct">${stamps} / ${e.days} days logged</div></div>`:''}
+    ${tag}`;
+  el.innerHTML=`<div class="exp-knot">${e.icon}</div>`;
+  if(open){
+    const a=document.createElement('a'); a.className='exp-card'; a.href=e.href; a.innerHTML=inner; el.appendChild(a);
+  } else {
+    const d=document.createElement('div'); d.className='exp-card locked'; d.innerHTML=inner; el.appendChild(d);
+  }
+  route.appendChild(el);
+});
+document.getElementById('totals').textContent=`${doneCount} / 8 EXPEDITIONS COMPLETE`;
+if (doneCount>=8){
+  try{ const s=new Set(JSON.parse(localStorage.getItem('lwa:completed')||'[]')); s.add('proof-expedition-series'); localStorage.setItem('lwa:completed',JSON.stringify([...s])); }catch(_){}
+}
+</script>
+</body>
+</html>
