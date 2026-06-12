@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="proof-expedition-1">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expedition 1 · What Is Mathematics? · The Proof Expedition</title>
+<meta name="description" content="Deep-dive course on chapter 1 of Sullivan's 'Everything You Always Wanted To Know About Mathematics': drag a triangle, test Goldbach, step through the √2 proof, play the Ramsey friendship game and beat the Monty Hall problem.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/math-thinking/expedition-1-truth-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Expedition 1 — What Is Mathematics?">
+<meta property="og:description" content="7 trail days through truth, proof, and five legendary puzzles.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#171310; --paper:#FBF4E6; --paper2:#F3EAD6; --muted:#6B6259;
+  --line:rgba(23,19,16,.12);
+  --c1:#E84B3C; --c2:#0E8B8B; --c3:#4F46E5; --c4:#8B5CF6; --c5:#1F9D55; --c6:#E8930C; --c7:#E0457B;
+  --gold:#FFC234;
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.75;overflow-x:hidden}
+.progress-bar{position:fixed;top:0;left:0;height:4px;background:var(--gold);z-index:400;width:0}
+::selection{background:var(--gold)}
+
+#hero{min-height:78vh;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:60px 24px}
+.hero-eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:20px}
+.hero-eyebrow a{color:inherit;text-decoration:none;border-bottom:1px dotted}
+.hero-title{font-family:var(--fd);font-weight:800;font-size:clamp(40px,8vw,86px);line-height:.97;letter-spacing:-.04em}
+.hero-title em{font-style:normal;color:var(--gold);display:block}
+.hero-sub{font-size:clamp(15px,2vw,18px);color:rgba(251,244,230,.72);max-width:580px;margin:26px auto 0;line-height:1.7}
+.hero-cta{margin-top:34px}
+.hero-cta a{font-family:var(--fd);font-weight:700;font-size:16px;text-decoration:none;padding:14px 30px;border-radius:99px;background:var(--gold);color:var(--ink);display:inline-block;transition:transform .15s var(--ease),box-shadow .15s}
+.hero-cta a:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 rgba(255,194,52,.35)}
+
+#trail{position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:300;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .4s}
+#trail.show{opacity:1;pointer-events:auto}
+.trail-stop{display:flex;align-items:center;gap:10px;text-decoration:none;padding:3px 0}
+.trail-dot{width:14px;height:14px;border-radius:50%;border:3px solid var(--ink);background:var(--paper);transition:transform .2s,background .2s;flex:0 0 auto}
+.trail-stop.active .trail-dot{transform:scale(1.5)}
+.trail-stop.stamped .trail-dot{background:var(--ink)}
+.trail-line{width:3px;height:14px;background:var(--ink);margin-left:5.5px;opacity:.25}
+.trail-label{font-family:var(--fm);font-size:10px;color:var(--ink);opacity:0;transform:translateX(-6px);transition:.2s;white-space:nowrap;background:var(--paper);padding:2px 8px;border-radius:6px;border:1.5px solid var(--ink)}
+.trail-stop:hover .trail-label,.trail-stop.active .trail-label{opacity:1;transform:none}
+@media(max-width:980px){#trail{display:none}}
+
+#passport{position:fixed;right:18px;bottom:18px;z-index:300;background:var(--ink);color:var(--paper);border-radius:16px;padding:12px 16px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .4s,transform .3s;transform:translateY(8px)}
+#passport.show{opacity:1;pointer-events:auto;transform:none}
+.pp-title{font-family:var(--fm);font-size:9px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:7px}
+.pp-grid{display:grid;grid-template-columns:repeat(7,30px);gap:6px}
+.pp-slot{width:30px;height:30px;border-radius:8px;border:1.5px dashed rgba(251,244,230,.3);display:flex;align-items:center;justify-content:center;font-size:15px}
+.pp-slot.got{border-style:solid;border-color:var(--gold);background:rgba(255,194,52,.14);animation:stampin .45s var(--ease)}
+@keyframes stampin{0%{transform:scale(2.2) rotate(-18deg);opacity:0}100%{transform:none;opacity:1}}
+
+.camp{position:relative;padding:100px 24px 84px;--cc:var(--c1)}
+.camp.alt{background:var(--paper2)}
+.camp-inner{max-width:780px;margin:0 auto;position:relative}
+.camp-watermark{position:absolute;top:24px;right:-10px;font-family:var(--fd);font-weight:800;font-size:clamp(110px,20vw,230px);line-height:1;color:var(--cc);opacity:.09;user-select:none;pointer-events:none}
+.camp-badge{display:inline-flex;align-items:center;gap:12px;margin-bottom:20px;position:relative;z-index:1}
+.camp-flag{width:52px;height:52px;border-radius:14px;background:var(--cc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:25px;box-shadow:4px 4px 0 var(--ink)}
+.camp-meta{font-family:var(--fm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.camp-meta b{display:block;color:var(--cc);font-size:12px}
+h2.camp-title{font-family:var(--fd);font-weight:800;font-size:clamp(30px,5vw,48px);letter-spacing:-.03em;line-height:1.04;margin-bottom:16px;position:relative;z-index:1}
+h2.camp-title em{font-style:normal;color:var(--cc)}
+.camp-lede{font-size:17px;color:var(--muted);line-height:1.7;max-width:620px;margin-bottom:32px;position:relative;z-index:1}
+.camp p{margin-bottom:15px;max-width:660px;position:relative;z-index:1}
+h3.peak{font-family:var(--fd);font-size:20px;font-weight:700;letter-spacing:-.02em;margin:36px 0 10px;position:relative;z-index:1}
+h3.peak::before{content:'◢ ';color:var(--cc);font-size:13px}
+code{font-family:var(--fm);font-size:.85em;background:var(--paper2);padding:2px 7px;border-radius:6px;border:1px solid var(--line)}
+.camp.alt code{background:var(--paper)}
+.field-note{position:relative;z-index:1;border:2px solid var(--ink);border-radius:16px;background:#fff;padding:18px 22px;margin:24px 0;max-width:660px;font-size:14.5px;line-height:1.7;box-shadow:5px 5px 0 var(--cc)}
+.field-note .fn-tag{font-family:var(--fm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cc);display:block;margin-bottom:6px;font-weight:700}
+
+.lab{position:relative;z-index:1;border:2.5px solid var(--ink);border-radius:20px;background:#fff;padding:24px 24px 20px;margin:28px 0 34px;max-width:720px;box-shadow:8px 8px 0 var(--cc)}
+.lab-tag{display:inline-block;font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;background:var(--cc);color:#fff;border-radius:6px;padding:4px 10px;margin-bottom:14px}
+.lab-cap{font-size:12.5px;color:var(--muted);margin-top:13px;font-style:italic;line-height:1.6}
+button.btn{font-family:var(--fb);font-size:13.5px;font-weight:700;border:2px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:10px;padding:9px 16px;cursor:pointer;transition:transform .12s,box-shadow .12s}
+button.btn:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+button.btn.primary{background:var(--cc);color:#fff}
+button.btn:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none}
+input[type=range]{accent-color:var(--cc);width:min(250px,58vw);vertical-align:middle}
+input[type=number]{font-family:var(--fm);font-size:15px;border:2px solid var(--ink);border-radius:9px;padding:7px 10px;width:110px;background:var(--paper)}
+.big-readout{font-family:var(--fm);font-size:clamp(14px,2.2vw,19px);font-weight:700;margin:12px 0}
+.ok{color:var(--c5)} .bad{color:var(--c1)}
+
+.checkpoint{position:relative;z-index:1;border:2.5px dashed var(--cc);border-radius:18px;padding:22px 24px;margin:26px 0;max-width:660px;background:rgba(255,255,255,.55)}
+.cp-tag{font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cc);margin-bottom:10px}
+.cp-q{font-weight:700;font-size:15.5px;margin-bottom:12px;font-family:var(--fd)}
+.cp-opt{display:block;width:100%;text-align:left;font-family:var(--fb);font-size:14px;padding:11px 15px;margin:7px 0;border:2px solid var(--line);border-radius:11px;background:#fff;cursor:pointer;transition:border-color .15s,transform .1s}
+.cp-opt:hover{border-color:var(--cc);transform:translateX(3px)}
+.cp-opt.right{border-color:var(--c5);background:rgba(31,157,85,.13)}
+.cp-opt.wrong{border-color:var(--c1);background:rgba(232,75,60,.10)}
+.cp-expl{display:none;font-size:13.5px;color:var(--muted);margin-top:12px;border-top:1.5px dashed var(--line);padding-top:12px;line-height:1.65}
+.checkpoint.answered .cp-expl{display:block}
+
+.stamp-row{display:flex;align-items:center;gap:16px;margin-top:42px;flex-wrap:wrap;position:relative;z-index:1}
+.stamp-btn{font-family:var(--fd);font-size:15px;font-weight:700;background:var(--cc);color:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:13px 24px;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.stamp-btn:hover{transform:translate(-3px,-3px) rotate(-1deg);box-shadow:5px 5px 0 var(--ink)}
+.stamp-btn.got{background:#fff;color:var(--c5);border-color:var(--c5);cursor:default;transform:none;box-shadow:none}
+.next-link{font-family:var(--fm);font-size:12.5px;color:inherit;opacity:.65;text-decoration:none}
+.next-link:hover{opacity:1}
+
+/* proof stepper */
+.stepper{margin:10px 0}
+.step-card{border:2px solid var(--ink);border-radius:13px;background:var(--paper);padding:16px 18px;font-size:14.5px;line-height:1.7;min-height:120px}
+.step-card .st-n{font-family:var(--fm);font-size:10px;letter-spacing:.18em;color:var(--cc);font-weight:700;text-transform:uppercase;display:block;margin-bottom:6px}
+.step-ctl{display:flex;gap:10px;align-items:center;margin-top:12px}
+.step-dots{font-family:var(--fm);font-size:12px;color:var(--muted)}
+
+/* monty */
+.doors{display:flex;gap:14px;margin:14px 0;flex-wrap:wrap}
+.door{width:92px;height:128px;border:3px solid var(--ink);border-radius:12px 12px 6px 6px;background:linear-gradient(#A0622D,#7A4A20);color:#fff;font-family:var(--fd);font-weight:800;font-size:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:transform .15s}
+.door:hover{transform:translateY(-4px)}
+.door.open{background:#EFE7D2;color:var(--ink);font-size:44px;cursor:default}
+.door.picked::after{content:'YOUR PICK';position:absolute;bottom:-24px;left:0;right:0;text-align:center;font-family:var(--fm);font-size:9px;letter-spacing:.12em;color:var(--c7)}
+.door.win{box-shadow:0 0 0 4px var(--gold)}
+.mh-bars{margin-top:14px}
+.mh-bar{display:flex;align-items:center;gap:10px;margin:7px 0;font-family:var(--fm);font-size:12px}
+.mh-bar .bar{height:18px;border-radius:6px;min-width:2px;transition:width .4s var(--ease)}
+
+/* ramsey */
+#ramseyWrap{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+#ramseySvg line{cursor:pointer;stroke-width:5;transition:stroke .15s}
+#ramseySvg line.e0{stroke:rgba(23,19,16,.15)}
+#ramseySvg line.e1{stroke:#4F46E5}
+#ramseySvg line.e2{stroke:#E84B3C}
+#ramseySvg line.tri{stroke-width:8;filter:drop-shadow(0 0 4px rgba(0,0,0,.4))}
+
+/* gauss arcs */
+#gaussSvg path{fill:none;stroke:var(--c6);stroke-width:2}
+#gaussSvg text{font-family:var(--fm);font-size:11px}
+
+#summit{background:var(--ink);color:var(--paper);text-align:center;padding:110px 24px;position:relative;overflow:hidden}
+.summit-title{font-family:var(--fd);font-weight:800;font-size:clamp(36px,7vw,74px);letter-spacing:-.04em;line-height:1}
+.summit-title span{color:var(--gold)}
+#summit p{max-width:560px;margin:22px auto;color:rgba(251,244,230,.75)}
+.book-card{display:inline-block;margin-top:18px;background:#fff;color:var(--ink);border-radius:18px;padding:22px 30px;text-decoration:none;border:3px solid var(--gold);transition:transform .15s}
+.book-card:hover{transform:translate(-3px,-3px) rotate(-.6deg)}
+.book-card .bc-t{font-family:var(--fd);font-weight:800;font-size:18px}
+.book-card .bc-s{font-family:var(--fm);font-size:11px;color:var(--muted);margin-top:6px}
+.summit-foot{margin-top:50px;font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.4);letter-spacing:.08em}
+.summit-foot a{color:rgba(251,244,230,.7)}
+
+@media(max-width:640px){
+  .camp{padding:74px 18px 60px}
+  .lab{padding:18px 14px;box-shadow:5px 5px 0 var(--cc)}
+  #passport{right:10px;bottom:10px;padding:9px 12px}
+  .pp-grid{grid-template-columns:repeat(7,24px)}
+  .pp-slot{width:24px;height:24px;font-size:12px}
+  .door{width:74px;height:106px}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+
+<header id="hero">
+  <div>
+    <div class="hero-eyebrow"><a href="expedition-basecamp.html">⛺ Base Camp</a> · Expedition 1 of 8 · book chapter 1 (90 pages)</div>
+    <h1 class="hero-title">What Is<em>Mathematics?</em></h1>
+    <p class="hero-sub">Seven days on the first trail: why "I checked lots of examples" isn't knowing, how to <strong>read and write</strong> mathematics, and five legendary puzzles — including the one that fooled thousands of PhDs.</p>
+    <div class="hero-cta"><a href="#day1">🥾 Start Day 1</a></div>
+  </div>
+</header>
+
+<nav id="trail" aria-label="Trail days"></nav>
+<div id="passport"><div class="pp-title">Trail Log · Exp. 1</div><div class="pp-grid" id="ppGrid"></div></div>
+
+<!-- ════ DAY 1 · Triangle Tangle ════ -->
+<section class="camp" id="day1" style="--cc:var(--c1)">
+  <div class="camp-inner">
+    <div class="camp-watermark">D1</div>
+    <div class="camp-badge"><div class="camp-flag">📐</div><div class="camp-meta">Day 1 · §1.1.1 Triangle Tangle<b>how do you KNOW it's true?</b></div></div>
+    <h2 class="camp-title">The 180° You Were <em>Told</em> To Believe</h2>
+    <p class="camp-lede">You've been told the angles of a triangle add to 180°. But how do you <em>know</em>? Your teacher said so? You measured a few? Drag the triangle below — then watch the actual proof appear.</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · drag the apex</div>
+      <svg id="triSvg" width="100%" viewBox="0 0 560 300" style="touch-action:none;max-width:560px">
+        <line id="parLine" x1="60" y1="50" x2="500" y2="50" stroke="#E84B3C" stroke-width="2.5" stroke-dasharray="7 6" opacity="0"/>
+        <text id="parLabel" x="62" y="38" font-family="JetBrains Mono" font-size="11" fill="#E84B3C" opacity="0">line through the apex, parallel to the base</text>
+        <polygon id="triPoly" fill="rgba(232,75,60,.10)" stroke="#171310" stroke-width="2.5"/>
+        <g id="triLabels" font-family="JetBrains Mono" font-size="13" font-weight="700"></g>
+        <circle id="apex" r="11" fill="#E84B3C" stroke="#171310" stroke-width="2.5" style="cursor:grab"/>
+      </svg>
+      <div class="big-readout" id="triOut"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="triProof">✨ Reveal the proof</button></div>
+      <div class="lab-cap" id="triCap">Drag the red apex anywhere. The three angles change — their sum doesn't. That's evidence. Now click "Reveal the proof".</div>
+    </div>
+
+    <p>The proof: draw a line through the apex <strong>parallel to the base</strong>. The two base angles reappear at the top as <em>alternate angles</em> (the Z-pattern) — and together with the apex angle they form a straight line. A straight line is 180°. Done — for <strong>every triangle that could ever exist</strong>, in two sentences.</p>
+    <div class="field-note"><span class="fn-tag">Field note · what just happened</span>
+      Measuring triangles gives you confidence. The parallel-line argument gives you <strong>certainty</strong> — it doesn't depend on which triangle you drew. The whole book is about learning to make this move yourself.</div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">Why is the parallel-line argument better than measuring 1,000 triangles?</div>
+      <button class="cp-opt" data-ok="0">It's faster than measuring</button>
+      <button class="cp-opt" data-ok="1">It covers every possible triangle at once, including ones nobody ever drew</button>
+      <button class="cp-opt" data-ok="0">Measurements are usually wrong</button>
+      <div class="cp-expl">Speed is nice but not the point: the argument never mentions a specific triangle, so its conclusion holds for all of them — infinitely many — forever.</div>
+    </div>
+
+    <div class="stamp-row"><button class="stamp-btn" data-stamp="0">📐 Stamp Day 1</button><a class="next-link" href="#day2">day 2: a conjecture worth a million dollars ↓</a></div>
+  </div>
+</section>
+
+<!-- ════ DAY 2 · Prime Time ════ -->
+<section class="camp alt" id="day2" style="--cc:var(--c2)">
+  <div class="camp-inner">
+    <div class="camp-watermark">D2</div>
+    <div class="camp-badge"><div class="camp-flag">🧮</div><div class="camp-meta">Day 2 · §1.1.2 Prime Time<b>open problems: where proof hasn't reached</b></div></div>
+    <h2 class="camp-title">Goldbach: True for <em>Quadrillions</em>, Proven for None</h2>
+    <p class="camp-lede">In 1742, Christian Goldbach guessed: <strong>every even number ≥ 4 is the sum of two primes</strong>. 283 years later, nobody has proven it — or found a counterexample. Be the tester:</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · the Goldbach machine</div>
+      <div>Even number: <input type="number" id="gbIn" value="36" min="4" max="100000" step="2"> <button class="btn primary" id="gbGo">Test it</button></div>
+      <div class="big-readout" id="gbOut"></div>
+      <div id="gbPairs" style="font-family:var(--fm);font-size:13px;line-height:2"></div>
+      <div class="lab-cap">Try 4, 36, 1000, 99998… Every even number you'll ever test works (it's been verified past 4×10¹⁸). And yet — Day 1 taught you why this proves nothing. The proof is still missing; finding it would make you instantly famous.</div>
+    </div>
+
+    <p>This is the strange life of mathematicians: a statement can be <em>almost certainly true</em> and still officially unknown. Notice the pattern in your results too: big even numbers have <em>many</em> prime pairs — which makes the missing proof even more maddening.</p>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">What would it take to settle Goldbach FALSE?</div>
+      <button class="cp-opt" data-ok="0">A trillion more confirmed cases</button>
+      <button class="cp-opt" data-ok="1">One single even number with no prime pair</button>
+      <button class="cp-opt" data-ok="0">A vote among mathematicians</button>
+      <div class="cp-expl">Asymmetry of proof: confirming examples never finish the job, but ONE counterexample kills a universal claim instantly. That's why mathematicians hunt both directions at once.</div>
+    </div>
+
+    <div class="stamp-row"><button class="stamp-btn" data-stamp="1">🧮 Stamp Day 2</button><a class="next-link" href="#day3">day 3: the proof that allegedly got a man drowned ↓</a></div>
+  </div>
+</section>
+
+<!-- ════ DAY 3 · Irrational Irreverence ════ -->
+<section class="camp" id="day3" style="--cc:var(--c3)">
+  <div class="camp-inner">
+    <div class="camp-watermark">D3</div>
+    <div class="camp-badge"><div class="camp-flag">🌀</div><div class="camp-meta">Day 3 · §1.1.3 Irrational Irreverence<b>your first full proof, step by step</b></div></div>
+    <h2 class="camp-title">√2 Is Not a Fraction — <em>Walk the Proof</em></h2>
+    <p class="camp-lede">Legend says the Pythagoreans drowned Hippasus for proving this. Step through the same argument yourself — five clicks, total certainty at the end.</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · proof stepper</div>
+      <div class="stepper">
+        <div class="step-card" id="stepCard"><span class="st-n" id="stepN"></span><span id="stepBody"></span></div>
+        <div class="step-ctl">
+          <button class="btn" id="stepPrev">← Back</button>
+          <button class="btn primary" id="stepNext">Next step →</button>
+          <span class="step-dots" id="stepDots"></span>
+        </div>
+      </div>
+      <div class="lab-cap">This is "proof by contradiction" — you'll meet it formally in Expedition 4. Assume the opposite, follow the logic, watch the assumption destroy itself.</div>
+    </div>
+
+    <div class="field-note"><span class="fn-tag">Field note · why this mattered so much</span>
+      The Pythagoreans believed everything was ratios of whole numbers. This 5-step argument proves their worldview impossible — using nothing but even/odd. It's also the book's first demonstration that a proof can be <strong>short, elementary, and earth-shattering</strong> at the same time.</div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">The proof assumes √2 = a/b "in lowest terms". Why is that allowed?</div>
+      <button class="cp-opt" data-ok="0">It isn't — that's the flaw in the proof</button>
+      <button class="cp-opt" data-ok="1">Any fraction can be reduced until numerator and denominator share no factor</button>
+      <button class="cp-opt" data-ok="0">Because √2 is special</button>
+      <div class="cp-expl">6/4 → 3/2: keep dividing out common factors and the process must stop. So IF √2 were a fraction, a lowest-terms version would exist — and that's the version the proof then strangles.</div>
+    </div>
+
+    <div class="stamp-row"><button class="stamp-btn" data-stamp="2">🌀 Stamp Day 3</button><a class="next-link" href="#day4">day 4: learning to write like a mathematician ↓</a></div>
+  </div>
+</section>
+
+<!-- ════ DAY 4 · Write Right ════ -->
+<section class="camp alt" id="day4" style="--cc:var(--c4)">
+  <div class="camp-inner">
+    <div class="camp-watermark">D4</div>
+    <div class="camp-badge"><div class="camp-flag">✍️</div><div class="camp-meta">Day 4 · §1.2 Exposition Exhibition<b>symbols, style &amp; spotting bad proofs</b></div></div>
+    <h2 class="camp-title">Write Right, <em>Read Right</em></h2>
+    <p class="camp-lede">Mathematics is a written art. The book spends 20 pages on it because a proof that can't be read isn't a proof — and a confident-sounding argument can hide a fatal flaw.</p>
+
+    <h3 class="peak">The symbols you'll use everywhere</h3>
+    <p><code>∀</code> "for all" · <code>∃</code> "there exists" · <code>∈</code> "is in" · <code>⇒</code> "implies" · <code>∎</code> "proof complete". One sentence, two ways:</p>
+    <div class="field-note"><span class="fn-tag">Field note · same claim, two costumes</span>
+      <strong>Words:</strong> every even number bigger than 2 can be written as a sum of two primes.<br>
+      <strong>Symbols:</strong> ∀n ∈ E, n &gt; 2 ⇒ ∃p,q primes with n = p + q.<br>
+      Symbols aren't for showing off — they remove ambiguity. But the book's rule is balance: <em>use symbols for precision, words for flow</em>. A wall of pure symbols is as unreadable as a wall of pure prose.</div>
+
+    <h3 class="peak">Spot the flaw — proofs that lie</h3>
+    <p>Here's a "proof" that 2 = 1. Every line looks innocent. One is a crime:</p>
+    <div class="lab">
+      <div class="lab-tag">Lab · find the illegal line</div>
+      <div style="font-family:var(--fm);font-size:14px;line-height:2.3" id="flawLines">
+        <div data-l="0">1&nbsp;&nbsp;Let a = b (both nonzero)</div>
+        <div data-l="1">2&nbsp;&nbsp;Multiply both sides by a: &nbsp;a² = ab</div>
+        <div data-l="2">3&nbsp;&nbsp;Subtract b²: &nbsp;a² − b² = ab − b²</div>
+        <div data-l="3">4&nbsp;&nbsp;Factor: &nbsp;(a+b)(a−b) = b(a−b)</div>
+        <div data-l="4">5&nbsp;&nbsp;Divide by (a−b): &nbsp;a + b = b</div>
+        <div data-l="5">6&nbsp;&nbsp;Since a = b: &nbsp;2b = b, so 2 = 1 &nbsp;∎?!</div>
+      </div>
+      <div class="big-readout" id="flawOut" style="font-size:14px">Click the line where the proof breaks the law…</div>
+      <div class="lab-cap">Hint from Day 3: what do we know about a − b, given line 1?</div>
+    </div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">Per the book, the main reason to write proofs in clear prose (not just symbols) is…</div>
+      <button class="cp-opt" data-ok="0">Tradition — journals require it</button>
+      <button class="cp-opt" data-ok="1">A proof is communication: if a reader can't verify each step, it isn't doing its job</button>
+      <button class="cp-opt" data-ok="0">Symbols are less rigorous than words</button>
+      <div class="cp-expl">A proof's entire purpose is to let a skeptical reader check every step. Writing IS the mathematics — which is why this 698-page math book is mostly… sentences.</div>
+    </div>
+
+    <div class="stamp-row"><button class="stamp-btn" data-stamp="3">✍️ Stamp Day 4</button><a class="next-link" href="#day5">day 5: the missing dollar &amp; Gauss's trick ↓</a></div>
+  </div>
+</section>
+
+<!-- ════ DAY 5 · Funny Money + Gauss ════ -->
+<section class="camp" id="day5" style="--cc:var(--c5)">
+  <div class="camp-inner">
+    <div class="camp-watermark">D5</div>
+    <div class="camp-badge"><div class="camp-flag">💵</div><div class="camp-meta">Day 5 · §1.4.1–1.4.3 Puzzle valley, part 1<b>funny money &amp; Gauss in the house</b></div></div>
+    <h2 class="camp-title">The Missing Dollar &amp; the <em>8-Year-Old</em> Who Beat Arithmetic</h2>
+    <p class="camp-lede">Puzzle valley begins. First: a story where $1 vanishes into thin air. Then: the pairing trick young Gauss used to humiliate his teacher's busywork.</p>
+
+    <h3 class="peak">The hotel's missing dollar</h3>
+    <p>Three friends pay $30 for a room. It should've been $25, so the bellhop returns $5; they each take $1 back and tip him $2. Now: each friend paid $9 (= $27), plus the $2 tip… <strong>$29. Where's the missing dollar?</strong></p>
+    <div class="lab">
+      <div class="lab-tag">Lab · follow the money</div>
+      <button class="btn primary" id="moneyGo">💵 Trace every dollar</button>
+      <div id="moneyTrace" style="font-family:var(--fm);font-size:13.5px;line-height:2;margin-top:10px"></div>
+      <div class="lab-cap">The puzzle's "$27 + $2" is an accounting crime: the $2 tip is already INSIDE the $27. The lesson (the book's real point): a confidently-worded wrong calculation <em>feels</em> like math — until you demand that every step be justified. Same skill as Day 4's flaw-hunt.</div>
+    </div>
+
+    <h3 class="peak">Gauss in the house</h3>
+    <p>A teacher orders the class to add 1+2+⋯+100. Eight-year-old Gauss answers in seconds: <strong>pair the ends</strong>. 1+100, 2+99, 3+98… every pair makes 101, and there are 50 pairs: 5050.</p>
+    <div class="lab">
+      <div class="lab-tag">Lab · the pairing trick</div>
+      <div>n = <b id="gaussN" style="font-family:var(--fm)">10</b>&nbsp;<input type="range" id="gaussSlider" min="4" max="20" step="2" value="10"></div>
+      <svg id="gaussSvg" width="100%" viewBox="0 0 560 120" style="max-width:560px"></svg>
+      <div class="big-readout" id="gaussOut" style="font-size:15px"></div>
+      <div class="lab-cap">n/2 pairs, each summing to n+1 → total n(n+1)/2. You met this formula at the highlights trek as a staircase; here is where it was born. (The book then asks: what if n is odd? Try to convince yourself the formula survives.)</div>
+    </div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">Sum 1 + 2 + ⋯ + 200, using Gauss's trick:</div>
+      <button class="cp-opt" data-ok="0">40,000</button>
+      <button class="cp-opt" data-ok="1">20,100</button>
+      <button class="cp-opt" data-ok="0">10,050</button>
+      <div class="cp-expl">100 pairs × 201 = 20,100 — or n(n+1)/2 = 200×201/2. No adding machine required.</div>
+    </div>
+
+    <div class="stamp-row"><button class="stamp-btn" data-stamp="4">💵 Stamp Day 5</button><a class="next-link" href="#day6">day 6: the friendship theorem you can't escape ↓</a></div>
+  </div>
+</section>
+
+<!-- ════ DAY 6 · Friend Trends (Ramsey) ════ -->
+<section class="camp alt" id="day6" style="--cc:var(--c6)">
+  <div class="camp-inner">
+    <div class="camp-watermark">D6</div>
+    <div class="camp-badge"><div class="camp-flag">👥</div><div class="camp-meta">Day 6 · §1.4.4 Friend Trends<b>your first impossibility proof — by playing</b></div></div>
+    <h2 class="camp-title">The Party Where Patterns Are <em>Unavoidable</em></h2>
+    <p class="camp-lede">At any party of 6 people, there must be 3 mutual friends or 3 mutual strangers. Don't believe it? The lab below lets you try to defeat the theorem. You will lose — and the losing IS the lesson.</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · the Ramsey game — avoid a same-colour triangle</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px">
+        <button class="btn primary" id="ram5">5 people (winnable)</button>
+        <button class="btn" id="ram6">6 people (try me)</button>
+        <button class="btn" id="ramReset">↺ Clear colours</button>
+      </div>
+      <div id="ramseyWrap">
+        <svg id="ramseySvg" width="300" height="300" viewBox="0 0 300 300"></svg>
+        <div style="max-width:280px;font-size:13.5px;line-height:1.7">
+          <p style="margin-bottom:8px">Click each connection to cycle:<br>
+          <span style="font-family:var(--fm)">grey → <b style="color:#4F46E5">friends</b> → <b style="color:#E84B3C">enemies</b></span></p>
+          <div class="big-readout" id="ramOut" style="font-size:13.5px">Colour all the lines. Goal: NO triangle with 3 sides the same colour.</div>
+        </div>
+      </div>
+      <div class="lab-cap">With 5 people there's a clever colouring that wins (hint: friends-pentagon, enemies-star). With 6, every single one of the 32,768 colourings contains a one-colour triangle — that's Ramsey's theorem, the gateway to a whole field of combinatorics.</div>
+    </div>
+
+    <div class="field-note"><span class="fn-tag">Field note · why 6 always traps you</span>
+      Pick any person at the 6-party. They have 5 connections, so at least 3 are the same colour — say 3 friends. Now look at those 3 friends among themselves: if ANY pair of them are friends, they + you form a friend-triangle. If NO pair is, they form an enemy-triangle themselves. Trapped either way. ∎ &nbsp;<em>(That's a complete proof — pigeonhole + case analysis, two tools you'll use forever.)</em></div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Checkpoint</div>
+      <div class="cp-q">Why does the argument need at least 3 same-coloured connections from the first person?</div>
+      <button class="cp-opt" data-ok="1">5 connections in 2 colours — one colour must appear ≥ 3 times (pigeonhole)</button>
+      <button class="cp-opt" data-ok="0">Because triangles have 3 sides</button>
+      <button class="cp-opt" data-ok="0">It's an extra assumption the proof quietly makes</button>
+      <div class="cp-expl">Split 5 things into 2 boxes: some box gets ⌈5/2⌉ = 3. The humble pigeonhole principle — you'll meet it properly in Expedition 8 — is doing the heavy lifting.</div>
+    </div>
+
+    <div class="stamp-row"><button class="stamp-btn" data-stamp="5">👥 Stamp Day 6</button><a class="next-link" href="#day7">day 7, the summit: the puzzle that fooled the PhDs ↓</a></div>
+  </div>
+</section>
+
+<!-- ════ DAY 7 · Monty Hall ════ -->
+<section class="camp" id="day7" style="--cc:var(--c7)">
+  <div class="camp-inner">
+    <div class="camp-watermark">D7</div>
+    <div class="camp-badge"><div class="camp-flag">🚪</div><div class="camp-meta">Day 7 · §1.4.5 The Full Monty Hall<b>summit day — intuition vs proof</b></div></div>
+    <h2 class="camp-title">Three Doors, One Car, <em>Thousands of Fooled PhDs</em></h2>
+    <p class="camp-lede">A car behind one door, goats behind two. You pick a door; the host — who knows where the car is — opens a different door showing a goat, then offers a switch. In 1990 Marilyn vos Savant said "always switch" and ~10,000 readers, hundreds with PhDs, wrote in to call her wrong. She wasn't. Play first:</p>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · play the game</div>
+      <div class="doors" id="mhDoors"></div>
+      <div class="big-readout" id="mhMsg" style="font-size:14.5px">Pick a door…</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <button class="btn" id="mhStick" disabled>✋ Stick</button>
+        <button class="btn primary" id="mhSwitch" disabled>🔄 Switch</button>
+        <button class="btn" id="mhAgain" style="display:none">↺ Play again</button>
+      </div>
+      <div style="font-family:var(--fm);font-size:12px;color:var(--muted);margin-top:10px" id="mhTally">Your record — stick: 0/0 · switch: 0/0</div>
+      <div class="lab-cap">Play a few rounds. Then let the machine settle it below.</div>
+    </div>
+
+    <div class="lab">
+      <div class="lab-tag">Lab · let 1,000 games decide</div>
+      <button class="btn primary" id="mhSim">⚡ Simulate 1,000 games each way</button>
+      <div class="mh-bars">
+        <div class="mh-bar"><span style="width:64px">STICK</span><div class="bar" id="barStick" style="background:#E84B3C;width:0"></div><span id="pctStick"></span></div>
+        <div class="mh-bar"><span style="width:64px">SWITCH</span><div class="bar" id="barSwitch" style="background:#1F9D55;width:0"></div><span id="pctSwitch"></span></div>
+      </div>
+      <div class="lab-cap" id="mhSimCap"></div>
+    </div>
+
+    <div class="field-note"><span class="fn-tag">Field note · the proof in one breath</span>
+      Your first pick is the car with probability 1/3 — nothing the host does changes that, because he can ALWAYS show you a goat. So the car is behind "the other unopened door" with probability 2/3. Switching wins exactly when your first pick was wrong: <strong>2/3 of the time</strong>. The host's inside knowledge is what your gut keeps ignoring — if he opened a random door (sometimes revealing the car), switching truly wouldn't help.</div>
+
+    <div class="checkpoint" data-quiz>
+      <div class="cp-tag">⛺ Final checkpoint</div>
+      <div class="cp-q">Why is "two doors left, so it's 50–50" wrong?</div>
+      <button class="cp-opt" data-ok="0">It's not wrong — switching is just luckier</button>
+      <button class="cp-opt" data-ok="1">The host's choice was forced by where the car is, so the doors don't carry equal information</button>
+      <button class="cp-opt" data-ok="0">Because goats are more likely than cars</button>
+      <div class="cp-expl">Equal-looking options aren't equally likely when one of them was filtered by someone who knows the answer. Your simulation above is the empirical witness; the 1/3-stays-1/3 argument is the proof. Intuition lost; proof won — the perfect end to Expedition 1.</div>
+    </div>
+
+    <div class="stamp-row"><button class="stamp-btn" data-stamp="6">🚪 Stamp Day 7 — Expedition 1 complete</button><a class="next-link" href="#summit">to the cairn ↓</a></div>
+  </div>
+</section>
+
+<!-- ════ SUMMIT ════ -->
+<section id="summit">
+  <canvas id="confetti" style="position:absolute;inset:0;pointer-events:none"></canvas>
+  <div style="position:relative;z-index:2">
+    <div class="hero-eyebrow" id="sumEyebrow">EXPEDITION 1 · 0 / 7 DAYS LOGGED</div>
+    <h2 class="summit-title">First peak<br><span id="sumWord">awaits.</span></h2>
+    <p>You now know what a proof is and isn't, how to read and write one, and you've felt four classic arguments from the inside: contradiction (√2), accounting discipline (missing dollar), pigeonhole + cases (Ramsey), and probability against intuition (Monty Hall).</p>
+    <p><strong>Next trail:</strong> Expedition 2 — <em>Mathematical Induction</em>, the machine for proving infinitely many things at once (book chapter 2).</p>
+    <a class="book-card" href="expedition-basecamp.html"><div class="bc-t">⛺ Return to Base Camp</div><div class="bc-s">see the full 8-expedition route map</div></a>
+    &nbsp;
+    <a class="book-card" href="../../dropzone/bws_book.pdf" target="_blank"><div class="bc-t">📕 Read chapter 1 in full</div><div class="bc-s">pp. 13–105 — incl. all Questions &amp; Exercises</div></a>
+    <div class="summit-foot">THE PROOF EXPEDITION · EXPEDITION 1 OF 8 · <a href="../../index.html">LEARN WITH ADHI</a> · ∎</div>
+  </div>
+</section>
+
+<script>
+/* ───── shell: trail, passport, persistence ───── */
+const DAYS=[['day1','📐','D1 Triangle Tangle'],['day2','🧮','D2 Goldbach'],['day3','🌀','D3 √2 Proof'],
+  ['day4','✍️','D4 Write Right'],['day5','💵','D5 Money & Gauss'],['day6','👥','D6 Ramsey Party'],['day7','🚪','D7 Monty Hall']];
+const LSKEY='lwa:expedition1';
+let stamps=[]; try{ stamps=JSON.parse(localStorage.getItem(LSKEY)||'[]'); }catch(e){}
+const trail=document.getElementById('trail'), ppGrid=document.getElementById('ppGrid');
+DAYS.forEach(([id,icon,label],i)=>{
+  const a=document.createElement('a'); a.className='trail-stop'; a.href='#'+id; a.dataset.camp=id;
+  a.innerHTML=`<span class="trail-dot"></span><span class="trail-label">${label}</span>`;
+  trail.appendChild(a);
+  if(i<DAYS.length-1){ const l=document.createElement('div'); l.className='trail-line'; trail.appendChild(l); }
+  const s=document.createElement('div'); s.className='pp-slot'; s.dataset.i=i; s.textContent='·'; ppGrid.appendChild(s);
+});
+function renderStamps(){
+  document.querySelectorAll('.pp-slot').forEach(s=>{ const i=+s.dataset.i;
+    if(stamps.includes(i)){ s.classList.add('got'); s.textContent=DAYS[i][1]; }});
+  document.querySelectorAll('.trail-stop').forEach((t,i)=>t.classList.toggle('stamped',stamps.includes(i)));
+  document.querySelectorAll('[data-stamp]').forEach(b=>{ const i=+b.dataset.stamp;
+    if(stamps.includes(i)){ b.classList.add('got'); b.textContent='✓ Day '+(i+1)+' logged'; }});
+  document.getElementById('sumEyebrow').textContent=`EXPEDITION 1 · ${stamps.length} / 7 DAYS LOGGED`;
+  document.getElementById('sumWord').textContent = stamps.length>=7 ? 'conquered. 🏔️' : 'awaits.';
+}
+document.querySelectorAll('[data-stamp]').forEach(b=>{
+  b.onclick=()=>{ const i=+b.dataset.stamp; if(stamps.includes(i)) return;
+    stamps.push(i); try{ localStorage.setItem(LSKEY,JSON.stringify(stamps)); }catch(e){}
+    renderStamps();
+    if(stamps.length>=7){
+      try{ const s=new Set(JSON.parse(localStorage.getItem('lwa:completed')||'[]')); s.add('proof-expedition-1'); localStorage.setItem('lwa:completed',JSON.stringify([...s])); }catch(e){}
+      confettiBurst();
+    }};
+});
+renderStamps();
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{ if(e.isIntersecting)
+  document.querySelectorAll('.trail-stop').forEach(t=>t.classList.toggle('active',t.dataset.camp===e.target.id)); });},
+  {rootMargin:'-40% 0px -50% 0px'});
+DAYS.forEach(([id])=>obs.observe(document.getElementById(id)));
+addEventListener('scroll',()=>{ const past=scrollY>innerHeight*.6;
+  trail.classList.toggle('show',past); document.getElementById('passport').classList.toggle('show',past); },{passive:true});
+document.querySelectorAll('[data-quiz]').forEach(q=>{
+  q.querySelectorAll('.cp-opt').forEach(opt=>{ opt.onclick=()=>{
+    if(q.classList.contains('answered')) return;
+    q.classList.add('answered');
+    q.querySelectorAll('.cp-opt').forEach(o=>{ if(o.dataset.ok==='1') o.classList.add('right'); else if(o===opt) o.classList.add('wrong'); o.disabled=true; });
+  };});
+});
+
+/* ───── D1: draggable triangle ───── */
+(function(){
+  const svg=document.getElementById('triSvg'), apex=document.getElementById('apex'),
+    poly=document.getElementById('triPoly'), labels=document.getElementById('triLabels');
+  const A=[110,260], B=[450,260]; let C=[280,70], proof=false;
+  function angle(p,q,r){ // angle at p
+    const v1=[q[0]-p[0],q[1]-p[1]], v2=[r[0]-p[0],r[1]-p[1]];
+    const d=v1[0]*v2[0]+v1[1]*v2[1], m=Math.hypot(...v1)*Math.hypot(...v2);
+    return Math.acos(Math.min(1,Math.max(-1,d/m)))*180/Math.PI;
+  }
+  function render(){
+    poly.setAttribute('points',`${A} ${B} ${C}`);
+    apex.setAttribute('cx',C[0]); apex.setAttribute('cy',C[1]);
+    const aA=angle(A,B,C), aB=angle(B,A,C), aC=angle(C,A,B);
+    labels.innerHTML='';
+    [[A,aA,'#E8930C',[14,-10]],[B,aB,'#1F9D55',[-58,-10]],[C,aC,'#E84B3C',[12,4]]].forEach(([p,a,col,off])=>{
+      const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',p[0]+off[0]); t.setAttribute('y',p[1]+off[1]); t.setAttribute('fill',col);
+      t.textContent=a.toFixed(1)+'°'; labels.appendChild(t);
+    });
+    document.getElementById('triOut').innerHTML=
+      `<span style="color:#E8930C">${aA.toFixed(1)}°</span> + <span style="color:#1F9D55">${aB.toFixed(1)}°</span> + <span style="color:#E84B3C">${aC.toFixed(1)}°</span> = <b>${(aA+aB+aC).toFixed(1)}°</b>`;
+    if(proof){
+      const pl=document.getElementById('parLine');
+      pl.setAttribute('x1',C[0]-200); pl.setAttribute('y1',C[1]); pl.setAttribute('x2',C[0]+200); pl.setAttribute('y2',C[1]);
+      const lb=document.getElementById('parLabel'); lb.setAttribute('x',Math.max(8,C[0]-190)); lb.setAttribute('y',C[1]-12);
+    }
+  }
+  let drag=false;
+  function pt(e){ const r=svg.getBoundingClientRect(), sx=560/r.width, sy=300/r.height;
+    const t=e.touches?e.touches[0]:e; return [(t.clientX-r.left)*sx,(t.clientY-r.top)*sy]; }
+  ['pointerdown','touchstart'].forEach(ev=>apex.addEventListener(ev,e=>{drag=true;e.preventDefault();}));
+  ['pointermove','touchmove'].forEach(ev=>svg.addEventListener(ev,e=>{ if(!drag) return;
+    const [x,y]=pt(e); C=[Math.min(530,Math.max(30,x)),Math.min(225,Math.max(28,y))]; render(); e.preventDefault(); }));
+  ['pointerup','touchend','pointerleave'].forEach(ev=>svg.addEventListener(ev,()=>drag=false));
+  document.getElementById('triProof').onclick=()=>{
+    proof=true;
+    document.getElementById('parLine').setAttribute('opacity',1);
+    document.getElementById('parLabel').setAttribute('opacity',1);
+    document.getElementById('triCap').textContent=
+      'The dashed line is parallel to the base. The orange and green base angles reappear beside the red apex angle as alternate ("Z") angles — and the three together fill the straight line: 180°. True for EVERY position you drag to.';
+    render();
+  };
+  render();
+})();
+
+/* ───── D2: Goldbach ───── */
+(function(){
+  function sieve(n){ const p=new Uint8Array(n+1).fill(1); p[0]=p[1]=0;
+    for(let i=2;i*i<=n;i++) if(p[i]) for(let j=i*i;j<=n;j+=i) p[j]=0; return p; }
+  document.getElementById('gbGo').onclick=()=>{
+    let n=+document.getElementById('gbIn').value;
+    const out=document.getElementById('gbOut'), pairsEl=document.getElementById('gbPairs');
+    if(!n||n<4||n%2){ out.innerHTML='<span class="bad">Give me an even number ≥ 4.</span>'; pairsEl.textContent=''; return; }
+    if(n>100000) n=100000;
+    const p=sieve(n), pairs=[];
+    for(let a=2;a<=n/2;a++) if(p[a]&&p[n-a]) pairs.push([a,n-a]);
+    out.innerHTML=`<span class="ok">${n.toLocaleString()} works:</span> ${pairs.length} prime pair${pairs.length>1?'s':''} found`;
+    pairsEl.textContent = pairs.slice(0,8).map(([a,b])=>`${a} + ${b}`).join('   ·   ') + (pairs.length>8?`   ·   …and ${pairs.length-8} more`:'');
+  };
+  document.getElementById('gbGo').click();
+})();
+
+/* ───── D3: √2 stepper ───── */
+(function(){
+  const STEPS=[
+    ['Step 1 · the setup','Suppose, for contradiction, that √2 IS a fraction: √2 = a/b, reduced to lowest terms — so a and b share no common factor. (Day 3 checkpoint explains why "lowest terms" is free.)'],
+    ['Step 2 · square it','Then 2 = a²/b², so a² = 2b². The right side is 2 × (something), so a² is even.'],
+    ['Step 3 · so a is even','If a were odd, a² would be odd (odd × odd = odd). But a² is even — so a must be even: a = 2k for some integer k.'],
+    ['Step 4 · so b is even too','Substitute: (2k)² = 2b² → 4k² = 2b² → b² = 2k². Same reasoning as step 3: b is even as well.'],
+    ['Step 5 · the contradiction ∎','Both a and b are even — they share the factor 2. But step 1 said they share NO factor. Our assumption destroyed itself: √2 is not a fraction. It is irrational. ∎'],
+  ];
+  let i=0;
+  function render(){
+    document.getElementById('stepN').textContent=STEPS[i][0];
+    document.getElementById('stepBody').textContent=STEPS[i][1];
+    document.getElementById('stepDots').textContent=`${i+1} / ${STEPS.length}`;
+    document.getElementById('stepPrev').disabled=i===0;
+    document.getElementById('stepNext').disabled=i===STEPS.length-1;
+    document.getElementById('stepCard').style.borderColor = i===STEPS.length-1?'#1F9D55':'#171310';
+  }
+  document.getElementById('stepPrev').onclick=()=>{ if(i>0){i--;render();} };
+  document.getElementById('stepNext').onclick=()=>{ if(i<STEPS.length-1){i++;render();} };
+  render();
+})();
+
+/* ───── D4: flaw hunt ───── */
+(function(){
+  const out=document.getElementById('flawOut');
+  document.querySelectorAll('#flawLines div').forEach(d=>{
+    d.style.cursor='pointer';
+    d.onmouseenter=()=>d.style.background='rgba(139,92,246,.10)';
+    d.onmouseleave=()=>d.style.background='';
+    d.onclick=()=>{
+      if(d.dataset.l==='4'){
+        d.style.background='rgba(232,75,60,.18)';
+        out.innerHTML='<span class="ok">Caught it!</span> Line 1 says a = b, so a − b = 0 — and line 5 <b>divides by zero</b>, the cardinal sin dressed in algebra. Every "proof" of an absurdity hides a move like this.';
+      } else out.innerHTML='<span class="bad">That line is legal.</span> Keep hunting — remember a = b…';
+    };
+  });
+})();
+
+/* ───── D5: money + gauss ───── */
+document.getElementById('moneyGo').onclick=()=>{
+  document.getElementById('moneyTrace').innerHTML=
+`🏨 Hotel register: <b>$25</b><br>
+🤵 Bellhop pocket: <b>$2</b><br>
+🧍🧍🧍 Friends' pockets: <b>$3</b> ($1 each)<br>
+─────────────────<br>
+TOTAL: 25 + 2 + 3 = <b class="ok">$30 ✓ nothing is missing</b><br><br>
+The trick: friends paid 27 = room 25 + tip 2. Adding the tip <i>again</i> (27 + 2 = 29) counts it twice and compares to the wrong total. Smooth words ≠ valid math.`;
+};
+(function(){
+  const sl=document.getElementById('gaussSlider');
+  function render(){
+    const n=+sl.value; document.getElementById('gaussN').textContent=n;
+    const svg=document.getElementById('gaussSvg'); svg.innerHTML='';
+    const W=560, pad=30, step=(W-2*pad)/(n-1), y=92;
+    for(let i=1;i<=n;i++){
+      const x=pad+(i-1)*step;
+      const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',x-5); t.setAttribute('y',y+18); t.textContent=i; svg.appendChild(t);
+    }
+    for(let i=0;i<n/2;i++){
+      const x1=pad+i*step, x2=pad+(n-1-i)*step, h=14+i*((y-25)/(n/2));
+      const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d',`M ${x1} ${y} C ${x1} ${y-h}, ${x2} ${y-h}, ${x2} ${y}`); svg.appendChild(p);
+    }
+    document.getElementById('gaussOut').innerHTML=
+      `${n/2} pairs × ${n+1} each &nbsp;=&nbsp; <b>${n*(n+1)/2}</b> &nbsp;&nbsp;(= ${n}·${n+1}/2)`;
+  }
+  sl.oninput=render; render();
+})();
+
+/* ───── D6: Ramsey game ───── */
+(function(){
+  const svg=document.getElementById('ramseySvg'), out=document.getElementById('ramOut');
+  let N=5, state={};
+  function build(){
+    svg.innerHTML=''; state={};
+    const R=118,cx=150,cy=150, pts=[];
+    for(let i=0;i<N;i++){ const a=(i/N)*2*Math.PI-Math.PI/2; pts.push([cx+R*Math.cos(a),cy+R*Math.sin(a)]); }
+    for(let i=0;i<N;i++) for(let j=i+1;j<N;j++){
+      const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+      l.setAttribute('x1',pts[i][0]); l.setAttribute('y1',pts[i][1]);
+      l.setAttribute('x2',pts[j][0]); l.setAttribute('y2',pts[j][1]);
+      l.setAttribute('class','e0'); l.dataset.k=i+'-'+j; state[i+'-'+j]=0;
+      l.onclick=()=>{ state[l.dataset.k]=(state[l.dataset.k]+1)%3; check(); };
+      svg.appendChild(l);
+    }
+    pts.forEach((p,i)=>{
+      const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx',p[0]); c.setAttribute('cy',p[1]); c.setAttribute('r',16);
+      c.setAttribute('fill','#171310'); svg.appendChild(c);
+      const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',p[0]); t.setAttribute('y',p[1]+5); t.setAttribute('text-anchor','middle');
+      t.setAttribute('fill','#FBF4E6'); t.setAttribute('font-family','JetBrains Mono'); t.setAttribute('font-size','13');
+      t.textContent=String.fromCharCode(65+i); svg.appendChild(t);
+    });
+    check();
+  }
+  function check(){
+    svg.querySelectorAll('line').forEach(l=>{ l.setAttribute('class','e'+state[l.dataset.k]); });
+    let mono=null, colored=0, total=0;
+    for(const k in state){ total++; if(state[k]) colored++; }
+    for(let a=0;a<N&&!mono;a++) for(let b=a+1;b<N&&!mono;b++) for(let c=b+1;c<N&&!mono;c++){
+      const e1=state[a+'-'+b], e2=state[b+'-'+c], e3=state[a+'-'+c];
+      if(e1&&e1===e2&&e2===e3) mono=[a+'-'+b,b+'-'+c,a+'-'+c,e1];
+    }
+    if(mono){
+      mono.slice(0,3).forEach(k=>svg.querySelector(`[data-k="${k}"]`).classList.add('tri'));
+      out.innerHTML=`<span class="bad">⚠ A ${mono[3]===1?'FRIENDS':'ENEMIES'} triangle appeared!</span> ${N===6?'It always will — that\'s the theorem.':'Undo it and keep trying — 5 people CAN win.'}`;
+    } else if(colored===total && total>0){
+      out.innerHTML = N===5
+        ? '<span class="ok">🏆 You beat 5 people — no mono triangle! Now try 6…</span>'
+        : '<span class="ok">All coloured with no triangle?! Check again…</span>';
+    } else out.innerHTML=`${colored}/${total} connections coloured. No same-colour triangle yet…`;
+  }
+  document.getElementById('ram5').onclick=()=>{ N=5; build(); setSel(); };
+  document.getElementById('ram6').onclick=()=>{ N=6; build(); setSel(); };
+  document.getElementById('ramReset').onclick=build;
+  function setSel(){ document.getElementById('ram5').className='btn'+(N===5?' primary':''); document.getElementById('ram6').className='btn'+(N===6?' primary':''); }
+  build();
+})();
+
+/* ───── D7: Monty Hall ───── */
+(function(){
+  const doorsEl=document.getElementById('mhDoors'), msg=document.getElementById('mhMsg');
+  const btnStick=document.getElementById('mhStick'), btnSwitch=document.getElementById('mhSwitch'), btnAgain=document.getElementById('mhAgain');
+  let car, picked, opened, phase, tally={sw:0,swn:0,st:0,stn:0};
+  function newGame(){
+    car=Math.random()*3|0; picked=null; opened=null; phase='pick';
+    doorsEl.innerHTML='';
+    for(let i=0;i<3;i++){
+      const d=document.createElement('div'); d.className='door'; d.textContent=i+1; d.dataset.i=i;
+      d.onclick=()=>{ if(phase==='pick') pick(i); };
+      doorsEl.appendChild(d);
+    }
+    msg.textContent='Pick a door…';
+    btnStick.disabled=btnSwitch.disabled=true; btnAgain.style.display='none';
+  }
+  function doors(){ return [...doorsEl.children]; }
+  function pick(i){
+    picked=i; phase='offer';
+    const options=[0,1,2].filter(j=>j!==i&&j!==car);
+    opened=options[Math.random()*options.length|0];
+    doors().forEach((d,j)=>{ d.classList.toggle('picked',j===i);
+      if(j===opened){ d.classList.add('open'); d.textContent='🐐'; } });
+    msg.innerHTML=`Monty opens door ${opened+1} — a goat. <b>Stick with ${i+1}, or switch to ${[0,1,2].find(j=>j!==i&&j!==opened)+1}?</b>`;
+    btnStick.disabled=btnSwitch.disabled=false;
+  }
+  function finish(switched){
+    phase='done';
+    const final = switched ? [0,1,2].find(j=>j!==picked&&j!==opened) : picked;
+    doors().forEach((d,j)=>{ d.classList.add('open'); d.textContent = j===car?'🚗':'🐐'; d.classList.toggle('win',j===car); d.classList.toggle('picked',j===final); });
+    const won = final===car;
+    if(switched){ tally.swn++; if(won) tally.sw++; } else { tally.stn++; if(won) tally.st++; }
+    msg.innerHTML = won ? `<span class="ok">🚗 You ${switched?'switched':'stuck'} and WON the car!</span>` : `<span class="bad">🐐 You ${switched?'switched':'stuck'} and got the goat.</span>`;
+    document.getElementById('mhTally').textContent=`Your record — stick: ${tally.st}/${tally.stn} · switch: ${tally.sw}/${tally.swn}`;
+    btnStick.disabled=btnSwitch.disabled=true; btnAgain.style.display='inline-block';
+  }
+  btnStick.onclick=()=>finish(false); btnSwitch.onclick=()=>finish(true); btnAgain.onclick=newGame;
+  newGame();
+  document.getElementById('mhSim').onclick=()=>{
+    let st=0, sw=0;
+    for(let i=0;i<1000;i++){ const c=Math.random()*3|0, p=Math.random()*3|0; if(p===c) st++; if(p!==c) sw++; }
+    const pS=st/10, pW=sw/10;
+    document.getElementById('barStick').style.width=(pS*2.2)+'px';
+    document.getElementById('barSwitch').style.width=(pW*2.2)+'px';
+    document.getElementById('pctStick').textContent=`${st}/1000 wins (${pS.toFixed(1)}%)`;
+    document.getElementById('pctSwitch').textContent=`${sw}/1000 wins (${pW.toFixed(1)}%)`;
+    document.getElementById('mhSimCap').textContent='Switching wins whenever the first pick was wrong — which is 2 times out of 3. The PhDs who wrote angry letters eventually ran simulations like this one and apologized.';
+  };
+})();
+
+/* ───── confetti ───── */
+function confettiBurst(){
+  const cv=document.getElementById('confetti'); if(!cv) return;
+  const cx=cv.getContext('2d');
+  cv.width=cv.offsetWidth; cv.height=cv.offsetHeight;
+  const COLS=['#FFC234','#E84B3C','#4F46E5','#1F9D55','#E0457B','#8B5CF6'];
+  const ps=Array.from({length:160},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,vy:2+Math.random()*3.5,vx:(Math.random()-.5)*2,s:5+Math.random()*7,c:COLS[Math.random()*COLS.length|0],r:Math.random()*Math.PI}));
+  let f=0;
+  (function loop(){ cx.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p=>{ p.y+=p.vy; p.x+=p.vx; p.r+=.08;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle=p.c; cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); cx.restore(); });
+    if(++f<260) requestAnimationFrame(loop); else cx.clearRect(0,0,cv.width,cv.height);
+  })();
+  document.getElementById('summit').scrollIntoView({behavior:'smooth'});
+}
+</script>
+<script src="../../assets/js/progress.js" defer></script>
+</body>
+</html>
