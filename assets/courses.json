@@ -1,5 +1,17 @@
 [
   {
+    "id": "eco-board-game",
+    "n": "G1",
+    "title": "Penyelamat Bumi 🌍",
+    "blurb": "A 3D board game about sustainability & the climate emergency — play together from kids to grown-ups, learning while you play. Roll the dice, collect Planet Points, answer eco-quizzes. Runs right in the browser.",
+    "category": "Play",
+    "tags": ["Game", "Sustainability", "Family", "3D"],
+    "primitive": "arc",
+    "accent": "forest",
+    "path": "courses/games/eco-board-v1.html",
+    "duration": "Game"
+  },
+  {
     "id": "perth-transport-report",
     "n": "R2",
     "title": "Car City or Transit Shift?",
