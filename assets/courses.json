@@ -12,6 +12,18 @@
     "duration": "Game"
   },
   {
+    "id": "ular-tangga-game",
+    "n": "G2",
+    "title": "Ular Tangga 3D 🎲",
+    "blurb": "The classic Snakes & Ladders board game, reborn in 3D — play together from kids to grown-ups on one screen. Roll the tumbling dice, climb the ladders, dodge the snakes, first to 100 wins. Runs right in the browser.",
+    "category": "Play",
+    "tags": ["Game", "Classic", "Family", "3D"],
+    "primitive": "dot",
+    "accent": "mawar",
+    "path": "courses/games/ular-tangga-v1.html",
+    "duration": "Game"
+  },
+  {
     "id": "perth-transport-report",
     "n": "R2",
     "title": "Car City or Transit Shift?",

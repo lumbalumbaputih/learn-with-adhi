@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ular Tangga 3D 🎲 · Learn with Adhi</title>
+  <meta name="description" content="Permainan klasik Ular Tangga dalam 3D — main bareng dari anak sampai dewasa. Lempar dadu, naik tangga, hati-hati ular! Bisa dimainkan langsung di browser.">
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23E84BA0"/><text y=".9em" font-size="64" x="16">🎲</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #E84BA0;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --tomato:  #FF5C39;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --line:    rgba(26,22,20,0.14);
+      --muted:   #6B6259;
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--fb);
+      background: #131a2e;
+      color: var(--ink);
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    canvas { display: block; }
+
+    #scene { position: fixed; inset: 0; z-index: 0; }
+
+    /* ---- top bar ---- */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(19,26,46,0.92), rgba(19,26,46,0));
+      pointer-events: none;
+    }
+    .topbar > * { pointer-events: auto; }
+    .home {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--paper); color: var(--ink);
+      border: 2px solid var(--ink); border-radius: 12px;
+      padding: 8px 12px; font-weight: 800; font-size: 14px;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .title {
+      font-family: var(--fd); color: #fff; font-weight: 800;
+      font-size: 18px; letter-spacing: .3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.5);
+    }
+    .spacer { flex: 1; }
+    .iconbtn {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: var(--paper); color: var(--ink);
+      border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+      font-size: 20px; display: grid; place-items: center;
+    }
+
+    /* ---- turn / status banner ---- */
+    .turnbar {
+      position: fixed; top: 64px; left: 50%; transform: translateX(-50%); z-index: 9;
+      display: flex; align-items: center; gap: 10px;
+      background: var(--paper); border: 2px solid var(--ink);
+      border-radius: 14px; padding: 8px 16px; box-shadow: 4px 4px 0 var(--ink);
+      font-weight: 800; max-width: 92vw; text-align: center;
+    }
+    .turnbar .dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); flex: none; }
+    .turnbar .msg { font-size: 15px; }
+
+    /* ---- bottom controls ---- */
+    .controls {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      padding: 14px 12px calc(16px + env(safe-area-inset-bottom));
+      background: linear-gradient(0deg, rgba(19,26,46,0.92), rgba(19,26,46,0));
+    }
+    .players-strip { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .pchip {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--paper); border: 2px solid var(--ink); border-radius: 999px;
+      padding: 5px 11px 5px 7px; font-weight: 800; font-size: 13px;
+      box-shadow: 2px 2px 0 var(--ink); opacity: .55; transition: opacity .2s, transform .2s;
+    }
+    .pchip.active { opacity: 1; transform: translateY(-3px) scale(1.05); }
+    .pchip .pd { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); }
+    .pchip .pn { font-size: 12px; color: var(--muted); }
+
+    .roll {
+      font-family: var(--fd); font-size: 22px; font-weight: 800;
+      background: var(--mango); color: var(--ink);
+      border: 3px solid var(--ink); border-radius: 18px;
+      padding: 14px 34px; box-shadow: 5px 5px 0 var(--ink);
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: transform .08s;
+    }
+    .roll:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--ink); }
+    .roll:disabled { opacity: .5; box-shadow: 5px 5px 0 var(--ink); }
+
+    /* ---- modal (setup + win) ---- */
+    .modal {
+      position: fixed; inset: 0; z-index: 40;
+      background: rgba(10,14,26,0.78); backdrop-filter: blur(4px);
+      display: grid; place-items: center; padding: 18px;
+    }
+    .modal.hidden { display: none; }
+    .card {
+      background: var(--paper); border: 3px solid var(--ink); border-radius: 22px;
+      box-shadow: 8px 8px 0 var(--ink); padding: 24px 22px; max-width: 420px; width: 100%;
+      text-align: center; max-height: 92vh; overflow-y: auto;
+    }
+    .card h1 { font-family: var(--fd); font-size: 28px; line-height: 1.05; margin-bottom: 6px; }
+    .card .sub { color: var(--muted); font-weight: 600; font-size: 14px; margin-bottom: 18px; }
+    .card h2 { font-family: var(--fd); font-size: 22px; margin: 18px 0 10px; }
+
+    .count-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; }
+    .count-row button {
+      width: 54px; height: 54px; border-radius: 14px; font-family: var(--fd); font-size: 22px; font-weight: 800;
+      background: #fff; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+    }
+    .count-row button.sel { background: var(--sea); color: #fff; }
+
+    .legend { display: flex; gap: 14px; justify-content: center; margin: 14px 0 4px; font-size: 13px; font-weight: 700; color: var(--ink); flex-wrap: wrap; }
+    .legend span { display: inline-flex; align-items: center; gap: 5px; }
+
+    .start {
+      font-family: var(--fd); font-size: 22px; font-weight: 800;
+      background: var(--forest); color: #fff;
+      border: 3px solid var(--ink); border-radius: 16px;
+      padding: 14px 30px; box-shadow: 5px 5px 0 var(--ink); margin-top: 8px;
+    }
+    .start:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--ink); }
+
+    .winemoji { font-size: 64px; line-height: 1; margin-bottom: 6px; }
+
+    .loaderr { color: #fff; text-align: center; font-weight: 700; padding: 30px; }
+    .loaderr a { color: var(--mango); }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+
+  <div class="topbar">
+    <a class="home" href="../../kids.html">‹ Rumah</a>
+    <div class="title">Ular Tangga 3D 🎲</div>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="muteBtn" title="Suara">🔊</button>
+    <button class="iconbtn" id="camBtn" title="Lihat papan">🔭</button>
+  </div>
+
+  <div class="turnbar" id="turnbar" style="display:none">
+    <span class="dot" id="turnDot"></span>
+    <span class="msg" id="turnMsg">Giliran Pemain 1</span>
+  </div>
+
+  <div class="controls" id="controls" style="display:none">
+    <div class="players-strip" id="pstrip"></div>
+    <button class="roll" id="rollBtn">🎲 Lempar Dadu</button>
+  </div>
+
+  <!-- Setup modal -->
+  <div class="modal" id="setup">
+    <div class="card">
+      <h1>Ular Tangga 3D</h1>
+      <div class="sub">Permainan klasik untuk seluruh keluarga — anak sampai dewasa main bareng di satu layar.</div>
+      <h2>Berapa pemain?</h2>
+      <div class="count-row" id="countRow"></div>
+      <div class="legend">
+        <span>🪜 Tangga = naik!</span>
+        <span>🐍 Ular = turun!</span>
+        <span>🏁 Sampai 100 = menang</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);font-weight:600;margin-top:10px">
+        Lempar dadu bergiliran. Dapat angka 6 = lempar lagi! Geser layar untuk memutar papan.
+      </p>
+      <button class="start" id="startBtn">Mulai Main!</button>
+    </div>
+  </div>
+
+  <!-- Win modal -->
+  <div class="modal hidden" id="winModal">
+    <div class="card">
+      <div class="winemoji" id="winEmoji">🏆</div>
+      <h1 id="winTitle">Pemain 1 Menang!</h1>
+      <div class="sub" id="winSub">Sampai duluan di kotak 100. Hebat!</div>
+      <button class="start" id="againBtn">Main Lagi</button>
+    </div>
+  </div>
+
+  <script src="../../assets/js/vendor/three.min.js"></script>
+  <script src="../../assets/js/vendor/OrbitControls.js"></script>
+  <script>
+  (function () {
+    "use strict";
+
+    if (typeof THREE === 'undefined') {
+      document.getElementById('scene').innerHTML =
+        '<div class="loaderr">Gagal memuat grafis 3D.<br>Coba muat ulang halaman, atau <a href="../../kids.html">kembali ke rumah</a>.</div>';
+      return;
+    }
+
+    /* ============================================================
+       AUDIO — tiny procedural WebAudio (no files)
+       ============================================================ */
+    var AX = {
+      ctx: null, muted: false,
+      on: function () { if (!this.ctx) { try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); },
+      beep: function (freq, dur, type, vol) {
+        if (this.muted || !this.ctx) return;
+        var o = this.ctx.createOscillator(), g = this.ctx.createGain();
+        o.type = type || 'sine'; o.frequency.value = freq;
+        g.gain.value = vol == null ? 0.18 : vol;
+        o.connect(g); g.connect(this.ctx.destination);
+        var t = this.ctx.currentTime;
+        g.gain.setValueAtTime(g.gain.value, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        o.start(t); o.stop(t + dur);
+      },
+      roll: function () { for (var i = 0; i < 5; i++) (function (i) { setTimeout(function () { AX.beep(180 + Math.random() * 220, 0.06, 'square', 0.12); }, i * 70); })(i); },
+      step: function () { this.beep(520, 0.07, 'triangle', 0.13); },
+      ladder: function () { var n = [523, 659, 784, 1046]; for (var i = 0; i < n.length; i++) (function (i) { setTimeout(function () { AX.beep(n[i], 0.12, 'sine', 0.18); }, i * 80); })(i); },
+      snake: function () { var n = [784, 622, 466, 311]; for (var i = 0; i < n.length; i++) (function (i) { setTimeout(function () { AX.beep(n[i], 0.13, 'sawtooth', 0.14); }, i * 90); })(i); },
+      win: function () { var n = [523, 659, 784, 1046, 1318]; for (var i = 0; i < n.length; i++) (function (i) { setTimeout(function () { AX.beep(n[i], 0.18, 'triangle', 0.2); }, i * 130); })(i); }
+    };
+
+    /* ============================================================
+       GAME CONSTANTS
+       ============================================================ */
+    var N = 10;              // 10x10 board
+    var CELL = 1.6;          // tile size
+    var HALF = (N * CELL) / 2;
+    var TILE_H = 0.22;
+
+    // Snakes (head -> tail, going down) and ladders (bottom -> top, going up)
+    var LADDERS = { 4: 25, 13: 46, 33: 49, 42: 63, 50: 69, 62: 81, 74: 92 };
+    var SNAKES  = { 27: 5, 40: 3, 43: 18, 54: 31, 66: 45, 76: 58, 89: 53, 99: 41 };
+
+    var PLAYER_COLORS = ['#FF5C39', '#1FA9C7', '#FFC234', '#1F9D55'];
+    var PLAYER_HEX    = [0xFF5C39, 0x1FA9C7, 0xFFC234, 0x1F9D55];
+    var PLAYER_NAMES  = ['Merah', 'Biru', 'Kuning', 'Hijau'];
+
+    /* ============================================================
+       BOARD MATH — square number (1..100) -> world x,z
+       boustrophedon: row 0 (1-10) left->right, row 1 (11-20) right->left
+       ============================================================ */
+    function tileCenter(sq) {
+      var idx = sq - 1;               // 0..99
+      var row = Math.floor(idx / N);  // 0 = bottom
+      var col = idx % N;
+      if (row % 2 === 1) col = N - 1 - col; // serpentine
+      var x = -HALF + CELL / 2 + col * CELL;
+      var z = HALF - CELL / 2 - row * CELL;  // row 0 nearest +z (front)
+      return { x: x, z: z, row: row, col: col };
+    }
+
+    /* ============================================================
+       THREE.JS SETUP
+       ============================================================ */
+    var scene, camera, renderer, controls;
+    var raf, clock;
+
+    function makeRenderer() {
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      if (THREE.sRGBEncoding) renderer.outputEncoding = THREE.sRGBEncoding;
+      document.getElementById('scene').appendChild(renderer.domElement);
+    }
+
+    // number label texture for a tile
+    function tileTexture(num, baseColor) {
+      var cv = document.createElement('canvas'); cv.width = cv.height = 128;
+      var c = cv.getContext('2d');
+      c.fillStyle = baseColor; c.fillRect(0, 0, 128, 128);
+      c.strokeStyle = 'rgba(26,22,20,0.18)'; c.lineWidth = 6; c.strokeRect(3, 3, 122, 122);
+      c.fillStyle = 'rgba(26,22,20,0.82)';
+      c.font = '800 52px Inter, sans-serif';
+      c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.fillText(String(num), 64, 70);
+      var tex = new THREE.CanvasTexture(cv);
+      if (THREE.sRGBEncoding) tex.encoding = THREE.sRGBEncoding;
+      return tex;
+    }
+
+    function shade(hex, amt) {
+      var c = new THREE.Color(hex);
+      c.r = Math.max(0, Math.min(1, c.r + amt));
+      c.g = Math.max(0, Math.min(1, c.g + amt));
+      c.b = Math.max(0, Math.min(1, c.b + amt));
+      return '#' + c.getHexString();
+    }
+
+    var TILE_COLORS = ['#FBF4E6', '#FFE9C7', '#D9F0E4', '#D7ECF5'];
+
+    function buildBoard() {
+      var board = new THREE.Group();
+
+      // base slab
+      var base = new THREE.Mesh(
+        new THREE.BoxGeometry(N * CELL + 0.8, 0.4, N * CELL + 0.8),
+        new THREE.MeshStandardMaterial({ color: '#3a2f6b', roughness: 0.8 })
+      );
+      base.position.y = -0.2 + TILE_H / 2 - 0.01;
+      base.receiveShadow = true;
+      board.add(base);
+
+      // tiles
+      var sideMat = new THREE.MeshStandardMaterial({ color: '#caa86b', roughness: 0.85 });
+      for (var sq = 1; sq <= 100; sq++) {
+        var p = tileCenter(sq);
+        var colorIdx = (p.row + p.col) % 2;
+        var base2 = TILE_COLORS[(p.row % 2) * 2 + colorIdx];
+        var topMat = new THREE.MeshStandardMaterial({ map: tileTexture(sq, base2), roughness: 0.7 });
+        var mats = [sideMat, sideMat, topMat, sideMat, sideMat, sideMat];
+        var tile = new THREE.Mesh(new THREE.BoxGeometry(CELL * 0.96, TILE_H, CELL * 0.96), mats);
+        tile.position.set(p.x, TILE_H / 2, p.z);
+        tile.castShadow = false; tile.receiveShadow = true;
+        board.add(tile);
+
+        // tint special tiles
+        if (LADDERS[sq] != null) markTile(board, p, 0x1F9D55);
+        if (SNAKES[sq] != null) markTile(board, p, 0xE84BA0);
+        if (sq === 100) markTile(board, p, 0xFFC234);
+      }
+
+      // ladders + snakes
+      for (var k in LADDERS) if (LADDERS.hasOwnProperty(k)) buildLadder(board, +k, LADDERS[k]);
+      for (var s in SNAKES) if (SNAKES.hasOwnProperty(s)) buildSnake(board, +s, SNAKES[s]);
+
+      scene.add(board);
+      return board;
+    }
+
+    function markTile(board, p, hex) {
+      var ring = new THREE.Mesh(
+        new THREE.RingGeometry(CELL * 0.30, CELL * 0.40, 28),
+        new THREE.MeshBasicMaterial({ color: hex, transparent: true, opacity: 0.55, side: THREE.DoubleSide })
+      );
+      ring.rotation.x = -Math.PI / 2;
+      ring.position.set(p.x, TILE_H + 0.02, p.z);
+      board.add(ring);
+    }
+
+    function buildLadder(board, bottom, top) {
+      var a = tileCenter(bottom), b = tileCenter(top);
+      var p1 = new THREE.Vector3(a.x, TILE_H + 0.05, a.z);
+      var p2 = new THREE.Vector3(b.x, TILE_H + 0.05, b.z);
+      var dir = new THREE.Vector3().subVectors(p2, p1);
+      var len = dir.length();
+      var perp = new THREE.Vector3(-dir.z, 0, dir.x).normalize().multiplyScalar(0.26);
+      var mat = new THREE.MeshStandardMaterial({ color: '#b5772f', roughness: 0.6, metalness: 0.05 });
+      var rise = 0.9; // arc height
+      var mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5); mid.y += rise;
+
+      // two rails as tube-ish boxes following arc via segments
+      var SEG = 10;
+      function railPts(off) {
+        var pts = [];
+        for (var i = 0; i <= SEG; i++) {
+          var t = i / SEG;
+          var x = p1.x + (p2.x - p1.x) * t + off.x;
+          var z = p1.z + (p2.z - p1.z) * t + off.z;
+          var y = (1 - t) * p1.y + t * p2.y + Math.sin(t * Math.PI) * rise;
+          pts.push(new THREE.Vector3(x, y, z));
+        }
+        return pts;
+      }
+      [perp, perp.clone().negate()].forEach(function (off) {
+        var curve = new THREE.CatmullRomCurve3(railPts(off));
+        var geo = new THREE.TubeGeometry(curve, 24, 0.05, 6, false);
+        var m = new THREE.Mesh(geo, mat); m.castShadow = true; board.add(m);
+      });
+      // rungs
+      var nr = Math.max(3, Math.round(len / 0.5));
+      for (var i = 1; i < nr; i++) {
+        var t = i / nr;
+        var cx = p1.x + (p2.x - p1.x) * t;
+        var cz = p1.z + (p2.z - p1.z) * t;
+        var cy = (1 - t) * p1.y + t * p2.y + Math.sin(t * Math.PI) * rise;
+        var rung = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.04, 0.04), mat);
+        rung.position.set(cx, cy, cz);
+        rung.lookAt(p2.x, cy, p2.z);
+        rung.castShadow = true;
+        board.add(rung);
+      }
+    }
+
+    function buildSnake(board, head, tail) {
+      var a = tileCenter(head), b = tileCenter(tail);
+      var p1 = new THREE.Vector3(a.x, TILE_H + 0.12, a.z);
+      var p2 = new THREE.Vector3(b.x, TILE_H + 0.12, b.z);
+      // wavy curve between
+      var pts = [];
+      var SEG = 14;
+      var dir = new THREE.Vector3().subVectors(p2, p1);
+      var perp = new THREE.Vector3(-dir.z, 0, dir.x).normalize();
+      for (var i = 0; i <= SEG; i++) {
+        var t = i / SEG;
+        var wob = Math.sin(t * Math.PI * 3) * 0.5;
+        var x = p1.x + dir.x * t + perp.x * wob;
+        var z = p1.z + dir.z * t + perp.z * wob;
+        var y = p1.y + (p2.y - p1.y) * t + Math.sin(t * Math.PI) * 0.5;
+        pts.push(new THREE.Vector3(x, y, z));
+      }
+      var curve = new THREE.CatmullRomCurve3(pts);
+      var geo = new THREE.TubeGeometry(curve, 60, 0.16, 8, false);
+      var mat = new THREE.MeshStandardMaterial({ color: '#E84BA0', roughness: 0.5 });
+      var body = new THREE.Mesh(geo, mat); body.castShadow = true; board.add(body);
+
+      // head
+      var headG = new THREE.Group();
+      var hMat = new THREE.MeshStandardMaterial({ color: '#c0307f', roughness: 0.45 });
+      var h = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 12), hMat);
+      h.scale.set(1, 0.8, 1.25);
+      headG.add(h);
+      var eyeMat = new THREE.MeshStandardMaterial({ color: '#fff' });
+      var pupMat = new THREE.MeshStandardMaterial({ color: '#1A1614' });
+      [-1, 1].forEach(function (s) {
+        var e = new THREE.Mesh(new THREE.SphereGeometry(0.08, 10, 8), eyeMat);
+        e.position.set(0.12 * s, 0.12, 0.18); headG.add(e);
+        var pu = new THREE.Mesh(new THREE.SphereGeometry(0.04, 8, 6), pupMat);
+        pu.position.set(0.12 * s, 0.12, 0.25); headG.add(pu);
+      });
+      // tongue
+      var tongue = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.02, 0.22), new THREE.MeshStandardMaterial({ color: '#FF5C39' }));
+      tongue.position.set(0, 0, 0.34); headG.add(tongue);
+      headG.position.copy(p1); headG.position.y += 0.12;
+      headG.lookAt(pts[2]);
+      headG.castShadow = true;
+      board.add(headG);
+    }
+
+    /* ---- pawns ---- */
+    var pawns = [];
+    function makePawn(hex) {
+      var g = new THREE.Group();
+      var mat = new THREE.MeshStandardMaterial({ color: hex, roughness: 0.4, metalness: 0.1 });
+      var body = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.26, 0.5, 20), mat);
+      body.position.y = 0.25; body.castShadow = true; g.add(body);
+      var head = new THREE.Mesh(new THREE.SphereGeometry(0.2, 18, 14), mat);
+      head.position.y = 0.62; head.castShadow = true; g.add(head);
+      var ring = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.05, 10, 22),
+        new THREE.MeshStandardMaterial({ color: '#1A1614', roughness: .6 }));
+      ring.rotation.x = Math.PI / 2; ring.position.y = 0.48; g.add(ring);
+      return g;
+    }
+
+    // offset so multiple pawns on a tile don't fully overlap
+    function pawnOffset(i) {
+      var off = [[-0.32, -0.32], [0.32, -0.32], [-0.32, 0.32], [0.32, 0.32]];
+      return off[i] || [0, 0];
+    }
+
+    var dice; // 3D dice mesh group
+    function buildDice() {
+      var g = new THREE.Group();
+      var mat = new THREE.MeshStandardMaterial({ color: '#FBF4E6', roughness: 0.5 });
+      var cube = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.7, 0.7), mat);
+      cube.castShadow = true; g.add(cube);
+      g.position.set(HALF + 1.8, 0.9, 0);
+      g.visible = false;
+      scene.add(g);
+      return g;
+    }
+
+    /* ============================================================
+       SCENE INIT
+       ============================================================ */
+    function initScene() {
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color('#131a2e');
+      scene.fog = new THREE.Fog('#131a2e', 38, 70);
+
+      camera = new THREE.PerspectiveCamera(46, window.innerWidth / window.innerHeight, 0.1, 200);
+      camera.position.set(0, 17, 17);
+
+      makeRenderer();
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true; controls.dampingFactor = 0.08;
+      controls.minDistance = 10; controls.maxDistance = 38;
+      controls.maxPolarAngle = Math.PI * 0.46;
+      controls.target.set(0, 0, 0);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+      scene.add(new THREE.HemisphereLight(0xbfe3ff, 0x2a2350, 0.5));
+      var sun = new THREE.DirectionalLight(0xffffff, 0.95);
+      sun.position.set(10, 20, 12);
+      sun.castShadow = true;
+      sun.shadow.mapSize.width = 1024; sun.shadow.mapSize.height = 1024;
+      sun.shadow.camera.left = -16; sun.shadow.camera.right = 16;
+      sun.shadow.camera.top = 16; sun.shadow.camera.bottom = -16;
+      scene.add(sun);
+
+      // floor
+      var floor = new THREE.Mesh(
+        new THREE.CircleGeometry(50, 48),
+        new THREE.MeshStandardMaterial({ color: '#1b2440', roughness: 0.95 })
+      );
+      floor.rotation.x = -Math.PI / 2; floor.position.y = -0.25; floor.receiveShadow = true;
+      scene.add(floor);
+
+      buildBoard();
+      dice = buildDice();
+
+      clock = new THREE.Clock();
+      window.addEventListener('resize', onResize);
+      animate();
+    }
+
+    function onResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+      raf = requestAnimationFrame(animate);
+      var dt = clock.getDelta();
+      controls.update();
+      if (dice.visible && dice.userData.spin) {
+        dice.rotation.x += dt * 12; dice.rotation.y += dt * 9;
+        dice.position.y = 0.9 + Math.abs(Math.sin(clock.elapsedTime * 12)) * 0.6;
+      }
+      // gentle pawn bob for active player
+      animTick(dt);
+      renderer.render(scene, camera);
+    }
+
+    /* ============================================================
+       GAME STATE + LOGIC
+       ============================================================ */
+    var G = {
+      numPlayers: 2,
+      turn: 0,
+      pos: [],          // square per player (0 = off-board start)
+      busy: false,
+      started: false
+    };
+
+    var anim = null; // current movement animation
+
+    function setupPlayers(n) {
+      G.numPlayers = n;
+      G.pos = [];
+      pawns.forEach(function (p) { scene.remove(p); });
+      pawns = [];
+      for (var i = 0; i < n; i++) {
+        G.pos.push(0);
+        var pw = makePawn(PLAYER_HEX[i]);
+        pawns.push(pw);
+        scene.add(pw);
+        placePawnAtStart(i);
+      }
+      G.turn = 0;
+      G.started = true;
+      updatePlayersUI();
+      updateTurnUI();
+    }
+
+    function placePawnAtStart(i) {
+      // line them up just off the board near tile 1
+      var p = tileCenter(1);
+      var pw = pawns[i];
+      var o = pawnOffset(i);
+      pw.position.set(p.x + o[0], TILE_H, HALF + 0.9);
+    }
+
+    function pawnTarget(player, sq) {
+      // stable slot among all pawns sharing this tile (by player index)
+      var order = [];
+      for (var j = 0; j < G.numPlayers; j++) if (G.pos[j] === sq || j === player) order.push(j);
+      var idx = order.indexOf(player);
+      var o = pawnOffset(idx >= 0 ? idx : 0);
+      var c = tileCenter(sq);
+      return { x: c.x + o[0], z: c.z + o[1] };
+    }
+
+    /* ---- dice roll ---- */
+    function rollDice() {
+      if (G.busy || !G.started) return;
+      AX.on();
+      G.busy = true;
+      document.getElementById('rollBtn').disabled = true;
+      AX.roll();
+      dice.visible = true; dice.userData.spin = true;
+      dice.material && (dice.material.color = new THREE.Color(PLAYER_COLORS[G.turn]));
+      var value = 1 + Math.floor(Math.random() * 6);
+      setTurnMsg(PLAYER_NAMES[G.turn] + ' melempar dadu…');
+      setTimeout(function () {
+        dice.userData.spin = false;
+        dice.position.y = 0.9;
+        finishRoll(value);
+      }, 900);
+    }
+
+    function finishRoll(value) {
+      setTurnMsg(PLAYER_NAMES[G.turn] + ' dapat ⚂ ' + value + '!');
+      var from = G.pos[G.turn];
+      var to = from + value;
+      if (to > 100) {
+        // bounce back rule
+        to = 100 - (to - 100);
+        setTurnMsg(PLAYER_NAMES[G.turn] + ' dapat ' + value + ' — mantul balik!');
+      }
+      // hop pawn tile by tile
+      hopPawn(G.turn, from, to, function () {
+        dice.visible = false;
+        afterMove(value);
+      });
+    }
+
+    /* ---- movement animation (queue of hops, then snake/ladder slide) ---- */
+    function hopPawn(player, from, to, done) {
+      var seq = [];
+      if (to >= from) { for (var s = from + 1; s <= to; s++) seq.push(s); }
+      else { for (var s = from - 1; s >= to; s--) seq.push(s); }
+      if (seq.length === 0) { G.pos[player] = to; done(); return; }
+      var i = 0;
+      function next() {
+        if (i >= seq.length) { G.pos[player] = to; done(); return; }
+        var sq = seq[i++];
+        var tgt = pawnTarget(player, sq);
+        startHop(player, tgt, 0.26, function () {
+          G.pos[player] = sq;
+          AX.step();
+          next();
+        });
+      }
+      next();
+    }
+
+    function afterMove(value) {
+      var player = G.turn;
+      var sq = G.pos[player];
+      // ladder?
+      if (LADDERS[sq] != null) {
+        var top = LADDERS[sq];
+        setTurnMsg('🪜 Tangga! ' + PLAYER_NAMES[player] + ' naik ke ' + top);
+        AX.ladder();
+        slidePawn(player, sq, top, true, function () { G.pos[player] = top; checkWinOrNext(value, top); });
+        return;
+      }
+      // snake?
+      if (SNAKES[sq] != null) {
+        var tail = SNAKES[sq];
+        setTurnMsg('🐍 Ular! ' + PLAYER_NAMES[player] + ' turun ke ' + tail);
+        AX.snake();
+        slidePawn(player, sq, tail, false, function () { G.pos[player] = tail; checkWinOrNext(value, tail); });
+        return;
+      }
+      checkWinOrNext(value, sq);
+    }
+
+    function checkWinOrNext(value, sq) {
+      if (sq === 100) { win(G.turn); return; }
+      updatePlayersUI();
+      // roll-again on 6
+      if (value === 6) {
+        setTurnMsg(PLAYER_NAMES[G.turn] + ' dapat 6 — lempar lagi! 🎉');
+        endBusy();
+        return;
+      }
+      G.turn = (G.turn + 1) % G.numPlayers;
+      updateTurnUI();
+      endBusy();
+    }
+
+    function endBusy() {
+      G.busy = false;
+      document.getElementById('rollBtn').disabled = false;
+    }
+
+    /* ---- pawn tween helpers ---- */
+    function startHop(player, tgt, dur, done) {
+      var pw = pawns[player];
+      anim = {
+        type: 'hop', pw: pw, t: 0, dur: dur,
+        x0: pw.position.x, z0: pw.position.z, x1: tgt.x, z1: tgt.z,
+        done: done
+      };
+    }
+    function slidePawn(player, fromSq, toSq, up, done) {
+      var pw = pawns[player];
+      var tgt = pawnTarget(player, toSq);
+      anim = {
+        type: 'slide', pw: pw, t: 0, dur: 0.9,
+        x0: pw.position.x, z0: pw.position.z, x1: tgt.x, z1: tgt.z,
+        arc: up ? 1.3 : 0.4, done: done
+      };
+    }
+
+    function animTick(dt) {
+      // active-player bob when idle
+      if (!anim && G.started && !G.busy && pawns[G.turn]) {
+        var pw = pawns[G.turn];
+        pw.position.y = TILE_H + Math.abs(Math.sin(clock.elapsedTime * 3)) * 0.12;
+      }
+      if (!anim) return;
+      anim.t += dt;
+      var k = Math.min(1, anim.t / anim.dur);
+      var pw = anim.pw;
+      var ease = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      pw.position.x = anim.x0 + (anim.x1 - anim.x0) * ease;
+      pw.position.z = anim.z0 + (anim.z1 - anim.z0) * ease;
+      if (anim.type === 'hop') {
+        pw.position.y = TILE_H + Math.sin(k * Math.PI) * 0.45;
+      } else {
+        pw.position.y = TILE_H + Math.sin(k * Math.PI) * (anim.arc || 0.5);
+      }
+      if (k >= 1) {
+        pw.position.y = TILE_H;
+        var d = anim.done; anim = null;
+        if (d) d();
+      }
+    }
+
+    /* ---- win ---- */
+    function win(player) {
+      AX.win();
+      var winModal = document.getElementById('winModal');
+      document.getElementById('winTitle').textContent = 'Pemain ' + PLAYER_NAMES[player] + ' Menang!';
+      document.getElementById('winEmoji').textContent = '🏆';
+      document.getElementById('winSub').textContent = 'Sampai duluan di kotak 100. Hebat sekali! 🎉';
+      winModal.classList.remove('hidden');
+      G.started = false;
+      confettiBurst(PLAYER_HEX[player]);
+    }
+
+    // simple 3D confetti
+    function confettiBurst(hex) {
+      var grp = new THREE.Group();
+      var colors = [hex, 0xFFC234, 0x1FA9C7, 0xFF5C39, 0xffffff];
+      for (var i = 0; i < 80; i++) {
+        var m = new THREE.Mesh(
+          new THREE.BoxGeometry(0.18, 0.18, 0.02),
+          new THREE.MeshStandardMaterial({ color: colors[i % colors.length] })
+        );
+        m.position.set((Math.random() - 0.5) * 4, 14 + Math.random() * 3, (Math.random() - 0.5) * 4);
+        m.userData.v = -4 - Math.random() * 3;
+        m.userData.sx = (Math.random() - 0.5) * 2;
+        m.userData.sz = (Math.random() - 0.5) * 2;
+        grp.add(m);
+      }
+      scene.add(grp);
+      var life = 0;
+      var id = setInterval(function () {
+        life += 0.05;
+        grp.children.forEach(function (m) {
+          m.position.y += m.userData.v * 0.05;
+          m.position.x += m.userData.sx * 0.05;
+          m.position.z += m.userData.sz * 0.05;
+          m.rotation.x += 0.2; m.rotation.y += 0.15;
+        });
+        if (life > 3) { clearInterval(id); scene.remove(grp); }
+      }, 40);
+    }
+
+    /* ============================================================
+       UI WIRING
+       ============================================================ */
+    function setTurnMsg(t) { document.getElementById('turnMsg').textContent = t; }
+
+    function updateTurnUI() {
+      document.getElementById('turnDot').style.background = PLAYER_COLORS[G.turn];
+      setTurnMsg('Giliran ' + PLAYER_NAMES[G.turn]);
+      updatePlayersUI();
+    }
+
+    function updatePlayersUI() {
+      var strip = document.getElementById('pstrip');
+      strip.innerHTML = '';
+      for (var i = 0; i < G.numPlayers; i++) {
+        var chip = document.createElement('div');
+        chip.className = 'pchip' + (i === G.turn ? ' active' : '');
+        chip.innerHTML = '<span class="pd" style="background:' + PLAYER_COLORS[i] + '"></span>' +
+          '<span>' + PLAYER_NAMES[i] + '</span>' +
+          '<span class="pn">kotak ' + G.pos[i] + '</span>';
+        strip.appendChild(chip);
+      }
+    }
+
+    // setup modal player count
+    var chosen = 2;
+    function buildCountButtons() {
+      var row = document.getElementById('countRow');
+      row.innerHTML = '';
+      [2, 3, 4].forEach(function (n) {
+        var b = document.createElement('button');
+        b.textContent = n;
+        if (n === chosen) b.classList.add('sel');
+        b.onclick = function () {
+          chosen = n;
+          Array.prototype.forEach.call(row.children, function (c) { c.classList.remove('sel'); });
+          b.classList.add('sel');
+        };
+        row.appendChild(b);
+      });
+    }
+
+    function startGame() {
+      AX.on();
+      document.getElementById('setup').classList.add('hidden');
+      document.getElementById('winModal').classList.add('hidden');
+      document.getElementById('turnbar').style.display = 'flex';
+      document.getElementById('controls').style.display = 'flex';
+      setupPlayers(chosen);
+    }
+
+    // camera presets
+    var topView = false;
+    function toggleCam() {
+      topView = !topView;
+      if (topView) {
+        camera.position.set(0, 26, 0.001);
+      } else {
+        camera.position.set(0, 17, 17);
+      }
+      controls.target.set(0, 0, 0);
+    }
+
+    /* ---- bind ---- */
+    document.getElementById('startBtn').onclick = startGame;
+    document.getElementById('againBtn').onclick = function () {
+      document.getElementById('winModal').classList.add('hidden');
+      document.getElementById('setup').classList.remove('hidden');
+    };
+    document.getElementById('rollBtn').onclick = rollDice;
+    document.getElementById('camBtn').onclick = toggleCam;
+    document.getElementById('muteBtn').onclick = function () {
+      AX.muted = !AX.muted;
+      this.textContent = AX.muted ? '🔇' : '🔊';
+    };
+
+    /* ---- go ---- */
+    buildCountButtons();
+    initScene();
+
+  })();
+  </script>
+</body>
+</html>
