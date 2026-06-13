@@ -93,6 +93,7 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 - Petualangan Kereta (choose-your-own-adventure stories)
 - Kereta Rayyan: Lari Cepat! (endless runner game)
 - Cari Bersama Raya (find-it / Where's Waldo style)
+- **Penyelamat Bumi 🌍** (`courses/games/eco-board-v1.html`, id `eco-board-game`) – ✅ **3D sustainability / climate board game** (2026-06-13): a real Three.js (r128, vendored locally at `assets/js/vendor/`, MIT) race-around-the-board for **2–4 players, kids→adults together** (local hotseat). 24-tile ring, tumbling 3D dice, hopping pawn tokens, floating spinning Earth. Land on Kuis (18-q eco/climate quiz, no-penalty), Aksi Hijau (+), Bencana Iklim (−), Tahukah (fact +1), Bonus corners (+5); first to the target Poin Bumi wins. Bahasa Indonesia, WebAudio SFX + mute. **Family game, NOT a per-kid star course** → wired on the manifest front door only (`assets/courses.json`, category **"Play"**); deliberately *not* in `kids.html`/`sumStars`/`sw.js`. 🧪 needs a real-device WebGL/touch pass.
 
 ---
 

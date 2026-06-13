@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Penyelamat Bumi 🌍 · Learn with Adhi</title>
+  <meta name="description" content="Permainan papan 3D tentang menjaga bumi & menghadapi krisis iklim — main bareng dari anak sampai dewasa, belajar sambil bermain. Bisa dimainkan langsung di browser.">
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%231F9D55"/><text y=".9em" font-size="68" x="14">🌍</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #E84BA0;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --tomato:  #FF5C39;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --line:    rgba(26,22,20,0.14);
+      --muted:   #6B6259;
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--fb);
+      background: #0e1726;
+      color: var(--ink);
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    canvas { display: block; }
+
+    #scene { position: fixed; inset: 0; z-index: 0; }
+
+    /* ---------- top bar ---------- */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 5;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; padding: 10px 14px;
+      background: linear-gradient(180deg, rgba(14,23,38,.85), rgba(14,23,38,0));
+      color: var(--paper); pointer-events: none;
+    }
+    .topbar a, .topbar button { pointer-events: auto; }
+    .brand { display: flex; align-items: center; gap: 8px; font-family: var(--fd); font-weight: 800; font-size: 17px; }
+    .brand .globe { font-size: 22px; }
+    .exit {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-weight: 700; font-size: 13px; color: var(--paper);
+      text-decoration: none; padding: 7px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.25);
+    }
+    .top-actions { display: flex; gap: 8px; }
+    .icon-btn {
+      width: 40px; height: 40px; border-radius: 12px; font-size: 18px;
+      background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.25);
+      display: grid; place-items: center; color: var(--paper);
+    }
+
+    /* ---------- scoreboard ---------- */
+    .scores {
+      position: fixed; top: 60px; left: 12px; z-index: 5;
+      display: flex; flex-direction: column; gap: 8px; max-width: 46vw;
+    }
+    .pcard {
+      background: rgba(251,244,230,.95); border: 2px solid var(--ink);
+      border-radius: 14px; padding: 8px 10px; min-width: 132px;
+      box-shadow: 3px 3px 0 rgba(0,0,0,.35);
+      transition: transform .15s, box-shadow .15s, opacity .15s;
+      opacity: .62;
+    }
+    .pcard.active { opacity: 1; transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+    .pcard .row1 { display: flex; align-items: center; gap: 7px; }
+    .dotc { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); flex: none; }
+    .pname { font-weight: 800; font-size: 13px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pturn { font-size: 11px; font-weight: 800; color: var(--forest); }
+    .pscore { font-family: var(--fd); font-weight: 800; font-size: 20px; line-height: 1.05; margin-top: 2px; }
+    .pscore small { font-size: 11px; font-weight: 700; color: var(--muted); font-family: var(--fb); }
+    .pbar { height: 6px; border-radius: 999px; background: rgba(26,22,20,.12); margin-top: 5px; overflow: hidden; }
+    .pbar i { display: block; height: 100%; border-radius: 999px; transition: width .4s; }
+
+    /* ---------- bottom dock ---------- */
+    .dock {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 12px 14px calc(14px + env(safe-area-inset-bottom));
+      background: linear-gradient(0deg, rgba(14,23,38,.9), rgba(14,23,38,0));
+      pointer-events: none;
+    }
+    .ticker {
+      pointer-events: none; max-width: 560px; text-align: center;
+      background: rgba(251,244,230,.96); color: var(--ink);
+      border: 2px solid var(--ink); border-radius: 14px;
+      padding: 9px 14px; font-weight: 700; font-size: 14px; line-height: 1.35;
+      box-shadow: 3px 3px 0 rgba(0,0,0,.3); min-height: 40px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .roll-btn {
+      pointer-events: auto;
+      font-family: var(--fd); font-weight: 800; font-size: 20px; color: var(--ink);
+      background: var(--mango); border: 2.5px solid var(--ink); border-radius: 16px;
+      padding: 14px 30px; box-shadow: 4px 4px 0 var(--ink);
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: transform .08s, box-shadow .08s, opacity .15s;
+    }
+    .roll-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+    .roll-btn:disabled { opacity: .45; cursor: default; box-shadow: 2px 2px 0 var(--ink); transform: translate(2px,2px); }
+    .roll-btn .die { font-size: 24px; }
+
+    /* ---------- modal ---------- */
+    .scrim {
+      position: fixed; inset: 0; z-index: 20; display: none;
+      align-items: center; justify-content: center; padding: 18px;
+      background: rgba(10,15,25,.6); backdrop-filter: blur(3px);
+    }
+    .scrim.show { display: flex; }
+    .card {
+      width: 100%; max-width: 460px; background: var(--paper);
+      border: 3px solid var(--ink); border-radius: 22px;
+      box-shadow: 8px 8px 0 var(--ink); padding: 22px 22px 20px;
+      animation: pop .28s cubic-bezier(.2,1.3,.5,1);
+      max-height: 92vh; overflow-y: auto;
+    }
+    @keyframes pop { from { transform: scale(.85) translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
+    .card-emoji { font-size: 50px; text-align: center; line-height: 1; }
+    .card-kicker { text-align: center; font-weight: 800; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; margin-top: 8px; }
+    .card-title { font-family: var(--fd); font-weight: 800; font-size: 24px; text-align: center; margin-top: 4px; line-height: 1.15; }
+    .card-msg { text-align: center; font-size: 15px; line-height: 1.45; color: #2b2620; margin-top: 10px; }
+    .card-delta { text-align: center; font-family: var(--fd); font-weight: 800; font-size: 22px; margin-top: 12px; }
+    .delta-plus { color: var(--forest); }
+    .delta-minus { color: var(--tomato); }
+    .opts { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+    .opt {
+      text-align: left; background: #fff; border: 2px solid var(--ink);
+      border-radius: 13px; padding: 13px 15px; font-weight: 700; font-size: 15px;
+      display: flex; align-items: center; gap: 10px;
+      transition: transform .08s, background .15s;
+    }
+    .opt:active { transform: scale(.98); }
+    .opt .lab { width: 26px; height: 26px; border-radius: 8px; background: var(--indigo); color: #fff; display: grid; place-items: center; font-family: var(--fd); font-size: 14px; flex: none; }
+    .opt.correct { background: #dff5e6; border-color: var(--forest); }
+    .opt.correct .lab { background: var(--forest); }
+    .opt.wrong { background: #ffe6df; border-color: var(--tomato); }
+    .opt.wrong .lab { background: var(--tomato); }
+    .opt:disabled { cursor: default; }
+    .explain {
+      margin-top: 14px; background: #fff6da; border: 2px dashed var(--mango);
+      border-radius: 13px; padding: 12px 14px; font-size: 14px; line-height: 1.45;
+    }
+    .explain b { display: block; margin-bottom: 3px; }
+    .cta {
+      width: 100%; margin-top: 18px;
+      font-family: var(--fd); font-weight: 800; font-size: 18px; color: var(--paper);
+      background: var(--forest); border: 2.5px solid var(--ink); border-radius: 14px;
+      padding: 13px; box-shadow: 4px 4px 0 var(--ink);
+      transition: transform .08s, box-shadow .08s;
+    }
+    .cta:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+
+    /* ---------- setup / win overlay ---------- */
+    .overlay {
+      position: fixed; inset: 0; z-index: 30; display: flex;
+      align-items: center; justify-content: center; padding: 18px;
+      background: radial-gradient(120% 120% at 50% 0%, #1b3b5e 0%, #0e1726 70%);
+      overflow-y: auto;
+    }
+    .overlay.hide { display: none; }
+    .panel {
+      width: 100%; max-width: 480px; background: var(--paper);
+      border: 3px solid var(--ink); border-radius: 24px;
+      box-shadow: 10px 10px 0 var(--ink); padding: 26px 24px;
+    }
+    .panel h1 { font-family: var(--fd); font-weight: 800; font-size: 30px; line-height: 1.05; }
+    .panel h1 .g { font-size: 34px; }
+    .panel .sub { color: var(--muted); font-size: 14px; margin-top: 8px; line-height: 1.5; }
+    .seg-label { font-weight: 800; font-size: 13px; margin: 18px 0 8px; }
+    .seg { display: flex; gap: 8px; }
+    .seg button {
+      flex: 1; border: 2px solid var(--ink); border-radius: 12px; padding: 11px;
+      font-weight: 800; font-size: 15px; background: #fff;
+    }
+    .seg button.on { background: var(--indigo); color: #fff; }
+    .names { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+    .nrow { display: flex; align-items: center; gap: 9px; }
+    .nrow .dotc { width: 18px; height: 18px; }
+    .nrow input {
+      flex: 1; font-family: var(--fb); font-weight: 700; font-size: 15px;
+      border: 2px solid var(--ink); border-radius: 11px; padding: 10px 12px; background: #fff; color: var(--ink);
+    }
+    .how {
+      margin-top: 16px; font-size: 13.5px; line-height: 1.55; color: #2b2620;
+      background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 14px 16px;
+    }
+    .how b { color: var(--ink); }
+    .how .leg { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 8px; }
+    .how .leg span { white-space: nowrap; }
+    .start-btn {
+      width: 100%; margin-top: 18px;
+      font-family: var(--fd); font-weight: 800; font-size: 21px; color: var(--ink);
+      background: var(--mango); border: 2.5px solid var(--ink); border-radius: 16px;
+      padding: 15px; box-shadow: 5px 5px 0 var(--ink);
+      transition: transform .08s, box-shadow .08s;
+    }
+    .start-btn:active { transform: translate(2px,2px); box-shadow: 3px 3px 0 var(--ink); }
+
+    .win-scores { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .win-row { display: flex; align-items: center; gap: 10px; background: #fff; border: 2px solid var(--ink); border-radius: 12px; padding: 10px 12px; }
+    .win-row .rk { font-family: var(--fd); font-weight: 800; width: 26px; }
+    .win-row .nm { flex: 1; font-weight: 800; }
+    .win-row .sc { font-family: var(--fd); font-weight: 800; }
+    .win-row.first { background: #fff6da; border-color: var(--mango); }
+
+    .err {
+      position: fixed; inset: 0; z-index: 50; display: none;
+      align-items: center; justify-content: center; padding: 24px; text-align: center;
+      background: #0e1726; color: var(--paper); font-size: 16px; line-height: 1.5;
+    }
+
+    @media (max-width: 520px) {
+      .scores { max-width: 50vw; }
+      .pcard { min-width: 118px; padding: 7px 9px; }
+      .pscore { font-size: 18px; }
+      .panel { padding: 22px 18px; }
+      .panel h1 { font-size: 25px; }
+      .roll-btn { font-size: 18px; padding: 13px 24px; }
+    }
+    @media (max-height: 520px) and (orientation: landscape) {
+      .scores { top: 54px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+
+  <!-- top bar -->
+  <div class="topbar">
+    <a class="exit" href="../../index.html" aria-label="Keluar">← Keluar</a>
+    <div class="brand"><span class="globe">🌍</span> Penyelamat Bumi</div>
+    <div class="top-actions">
+      <button class="icon-btn" id="muteBtn" title="Suara" aria-label="Hidup/matikan suara">🔊</button>
+      <button class="icon-btn" id="helpBtn" title="Cara main" aria-label="Cara main">❓</button>
+    </div>
+  </div>
+
+  <!-- scoreboard -->
+  <div class="scores" id="scores"></div>
+
+  <!-- bottom dock -->
+  <div class="dock">
+    <div class="ticker" id="ticker">Selamat datang! 🌍</div>
+    <button class="roll-btn" id="rollBtn"><span class="die">🎲</span> Lempar Dadu</button>
+  </div>
+
+  <!-- event / quiz modal -->
+  <div class="scrim" id="scrim"><div class="card" id="card"></div></div>
+
+  <!-- setup overlay -->
+  <div class="overlay" id="setup">
+    <div class="panel">
+      <h1><span class="g">🌍</span> Penyelamat Bumi</h1>
+      <p class="sub">Permainan papan 3D untuk dimainkan bareng — dari anak sampai dewasa.
+        Kumpulkan <b>Poin Bumi</b> dengan beraksi hijau dan menjawab kuis. Pemain pertama
+        yang mencapai target <b>menyelamatkan bumi & menang!</b></p>
+
+      <div class="seg-label">Jumlah pemain</div>
+      <div class="seg" id="segPlayers">
+        <button data-n="2">2</button>
+        <button data-n="3">3</button>
+        <button data-n="4">4</button>
+      </div>
+
+      <div class="names" id="names"></div>
+
+      <div class="seg-label">Lama permainan (target Poin Bumi)</div>
+      <div class="seg" id="segTarget">
+        <button data-t="20">Cepat · 20</button>
+        <button data-t="30">Normal · 30</button>
+        <button data-t="45">Panjang · 45</button>
+      </div>
+
+      <div class="how">
+        <b>Cara main:</b> Lempar dadu, lalu pionmu melompat mengelilingi papan.
+        Petak yang kamu injak menentukan apa yang terjadi:
+        <div class="leg">
+          <span>❓ <b>Kuis</b> — jawab benar, +4</span>
+          <span>🌱 <b>Aksi Hijau</b> — +poin</span>
+          <span>⚠️ <b>Bencana Iklim</b> — −poin</span>
+          <span>💡 <b>Tahukah</b> — +1 & belajar</span>
+          <span>⭐ <b>Bonus</b> — +5</span>
+          <span>🏁 <b>Lewati Mulai</b> — +2</span>
+        </div>
+        <div style="margin-top:8px">🖱️ Seret layar untuk memutar papan, cubit/scroll untuk zoom.</div>
+      </div>
+
+      <button class="start-btn" id="startBtn">Mulai Bermain →</button>
+    </div>
+  </div>
+
+  <!-- win overlay -->
+  <div class="overlay hide" id="winScreen">
+    <div class="panel">
+      <h1 id="winTitle">🎉 Bumi Selamat!</h1>
+      <p class="sub" id="winSub"></p>
+      <div class="win-scores" id="winScores"></div>
+      <button class="start-btn" id="againBtn">Main Lagi ↻</button>
+    </div>
+  </div>
+
+  <div class="err" id="errBox"></div>
+
+  <script src="../../assets/js/vendor/three.min.js"></script>
+  <script src="../../assets/js/vendor/OrbitControls.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    if (typeof THREE === 'undefined') {
+      var e = document.getElementById('errBox');
+      e.style.display = 'flex';
+      e.textContent = 'Gagal memuat mesin 3D. Coba muat ulang halaman saat ada koneksi internet.';
+      return;
+    }
+
+    /* ============================================================
+       SOUND (tiny WebAudio SFX, respects a mute toggle)
+       ============================================================ */
+    var AX = (function () {
+      var ctx = null, on = true;
+      function ac() {
+        if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) {} }
+        if (ctx && ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+      function tone(freq, t0, dur, type, vol) {
+        var c = ac(); if (!c) return;
+        var o = c.createOscillator(), g = c.createGain();
+        o.type = type || 'sine'; o.frequency.value = freq;
+        var start = c.currentTime + t0;
+        g.gain.setValueAtTime(0.0001, start);
+        g.gain.exponentialRampToValueAtTime(vol || 0.18, start + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+        o.connect(g); g.connect(c.destination);
+        o.start(start); o.stop(start + dur + 0.02);
+      }
+      return {
+        roll: function () { if (!on) return; for (var i = 0; i < 5; i++) tone(180 + Math.random() * 240, i * 0.05, 0.07, 'square', 0.08); },
+        correct: function () { if (!on) return; tone(660, 0, 0.12, 'triangle', 0.16); tone(880, 0.1, 0.16, 'triangle', 0.16); tone(1175, 0.22, 0.22, 'triangle', 0.14); },
+        good: function () { if (!on) return; tone(523, 0, 0.1, 'sine', 0.16); tone(784, 0.09, 0.18, 'sine', 0.16); },
+        bad: function () { if (!on) return; tone(300, 0, 0.18, 'sawtooth', 0.12); tone(180, 0.12, 0.26, 'sawtooth', 0.12); },
+        wrong: function () { if (!on) return; tone(330, 0, 0.16, 'square', 0.1); tone(247, 0.12, 0.22, 'square', 0.1); },
+        win: function () { if (!on) return; var n = [523, 659, 784, 1047, 1319]; n.forEach(function (f, i) { tone(f, i * 0.12, 0.3, 'triangle', 0.16); }); },
+        hop: function () { if (!on) return; tone(520, 0, 0.05, 'sine', 0.06); },
+        set: function (v) { on = v; if (on) ac(); },
+        isOn: function () { return on; }
+      };
+    })();
+
+    /* ============================================================
+       CONTENT (Bahasa Indonesia) — kid-to-adult sustainability
+       ============================================================ */
+    var QUIZ = [
+      { q: 'Gas apa yang paling banyak menyebabkan pemanasan global?', o: ['Karbon dioksida (CO₂)', 'Oksigen', 'Gas helium'], c: 0, e: 'CO₂ dari pembakaran bahan bakar (mobil, pabrik) menahan panas di atmosfer.' },
+      { q: 'Sumber energi mana yang ramah lingkungan dan tidak akan habis?', o: ['Matahari', 'Batu bara', 'Minyak bumi'], c: 0, e: 'Energi matahari, angin, dan air bisa diperbarui dan tidak mencemari udara.' },
+      { q: 'Apa yang sebaiknya dilakukan dengan botol plastik bekas?', o: ['Didaur ulang', 'Dibakar', 'Dibuang ke sungai'], c: 0, e: 'Daur ulang mengubah sampah jadi barang baru dan mengurangi pencemaran.' },
+      { q: 'Hewan apa yang terancam karena es di kutub mencair?', o: ['Beruang kutub', 'Unta', 'Kambing'], c: 0, e: 'Es yang mencair membuat beruang kutub kehilangan tempat berburu.' },
+      { q: 'Cara hemat air saat menyikat gigi adalah…', o: ['Matikan keran', 'Biarkan air mengalir', 'Pakai dua keran'], c: 0, e: 'Mematikan keran saat menyikat gigi menghemat banyak liter air setiap hari.' },
+      { q: 'Bagaimana pohon membantu bumi?', o: ['Menyerap CO₂ & menghasilkan oksigen', 'Membuat polusi udara', 'Menghasilkan asap'], c: 0, e: 'Pohon menyerap karbon dan memberi kita udara segar untuk bernapas.' },
+      { q: 'Kendaraan mana yang paling sedikit menghasilkan polusi?', o: ['Sepeda', 'Mobil bensin', 'Pesawat'], c: 0, e: 'Bersepeda tidak mengeluarkan asap sama sekali — sehat untukmu dan bumi.' },
+      { q: 'Apa arti "3R" dalam menjaga lingkungan?', o: ['Reduce, Reuse, Recycle', 'Run, Read, Rest', 'Red, Round, Rich'], c: 0, e: 'Kurangi (reduce), pakai ulang (reuse), dan daur ulang (recycle).' },
+      { q: 'Lampu jenis apa yang paling hemat listrik?', o: ['Lampu LED', 'Bohlam pijar', 'Lampu sorot besar'], c: 0, e: 'Lampu LED memakai listrik jauh lebih sedikit dan tahan lama.' },
+      { q: 'Mengapa sebaiknya membawa tas belanja sendiri?', o: ['Mengurangi sampah plastik', 'Supaya terlihat keren', 'Supaya belanja jadi berat'], c: 0, e: 'Tas pakai-ulang mengurangi kantong plastik sekali pakai yang sulit terurai.' },
+      { q: 'Efek rumah kaca membuat suhu bumi menjadi…', o: ['Lebih panas', 'Lebih dingin', 'Tidak berubah'], c: 0, e: 'Gas rumah kaca menahan panas sehingga bumi makin menghangat.' },
+      { q: 'Mana yang termasuk energi terbarukan?', o: ['Tenaga angin', 'Bensin', 'Gas alam'], c: 0, e: 'Angin tidak akan habis dan tidak mengeluarkan asap kotor.' },
+      { q: 'Apa manfaat memilah sampah organik dan anorganik?', o: ['Memudahkan daur ulang & kompos', 'Tidak ada gunanya', 'Membuat lebih bau'], c: 0, e: 'Sampah organik bisa jadi kompos, anorganik bisa didaur ulang.' },
+      { q: 'Terumbu karang memutih dan rusak terutama karena…', o: ['Air laut menghangat', 'Terlalu banyak ikan', 'Air laut terlalu dingin'], c: 0, e: 'Laut yang menghangat akibat perubahan iklim membuat karang stres dan memutih.' },
+      { q: 'Saat keluar ruangan, apa yang sebaiknya dimatikan untuk hemat listrik?', o: ['Lampu & alat elektronik', 'Kulkas selamanya', 'Tidak perlu mematikan apa pun'], c: 0, e: 'Mematikan lampu dan alat yang tidak dipakai menghemat banyak energi.' },
+      { q: 'Mengapa mobil listrik lebih ramah lingkungan?', o: ['Tidak mengeluarkan asap knalpot', 'Lebih berisik', 'Lebih boros bensin'], c: 0, e: 'Mobil listrik tidak membakar bensin sehingga udara lebih bersih.' },
+      { q: 'Kompos yang menyuburkan tanaman dibuat dari…', o: ['Sisa sayur & daun', 'Plastik', 'Pecahan kaca'], c: 0, e: 'Sisa makanan dan daun bisa terurai menjadi pupuk alami.' },
+      { q: 'Apa yang membuat banjir makin sering terjadi di kota?', o: ['Sampah menyumbat & hutan ditebang', 'Terlalu banyak pohon', 'Udara terlalu bersih'], c: 0, e: 'Saluran air tersumbat sampah dan hilangnya pohon membuat air meluap.' }
+    ];
+
+    var ACTION = [
+      { m: 'Kamu menanam pohon di taman! 🌳', p: 4 },
+      { m: 'Kamu naik sepeda ke sekolah, bukan mobil. 🚲', p: 3 },
+      { m: 'Kamu mematikan lampu yang tidak terpakai. 💡', p: 2 },
+      { m: 'Kamu memilah sampah dengan benar. ♻️', p: 3 },
+      { m: 'Kamu membawa botol minum sendiri. 🥤', p: 2 },
+      { m: 'Keluargamu memasang panel surya di atap! ☀️', p: 4 },
+      { m: 'Kamu ikut membersihkan sampah di pantai. 🏖️', p: 4 },
+      { m: 'Kamu menghemat air saat mandi. 🚿', p: 2 },
+      { m: 'Kamu memakai tas belanja kain. 🛍️', p: 2 },
+      { m: 'Kamu menanam sayur di kebun rumah. 🥬', p: 3 }
+    ];
+
+    var HAZARD = [
+      { m: 'Asap pabrik mencemari udara kota. 🏭', p: 2, t: 'Ayo dukung energi bersih!' },
+      { m: 'Kebakaran hutan terjadi karena cuaca panas. 🔥', p: 3, t: 'Jaga hutan tetap lestari.' },
+      { m: 'Banjir melanda karena sampah menyumbat selokan. 🌊', p: 2, t: 'Jangan buang sampah sembarangan.' },
+      { m: 'Kemarau panjang membuat tanaman layu. 🌵', p: 2, t: 'Hemat air mulai sekarang.' },
+      { m: 'Sampah plastik mengotori laut. 🐟', p: 2, t: 'Kurangi plastik sekali pakai.' },
+      { m: 'Macet panjang, banyak asap kendaraan. 🚗💨', p: 1, t: 'Coba transportasi umum atau sepeda.' },
+      { m: 'Es di kutub mencair makin cepat. 🧊🐧', p: 3, t: 'Kurangi jejak karbonmu.' },
+      { m: 'Boros listrik membuat pembangkit bekerja ekstra. 🔌', p: 1, t: 'Matikan alat yang tak terpakai.' }
+    ];
+
+    var FACT = [
+      'Satu pohon dewasa bisa menyerap puluhan kilogram CO₂ setiap tahun. 🌳',
+      'Mendaur ulang kaleng aluminium menghemat energi besar dibanding membuat yang baru. ♻️',
+      'Mematikan keran saat menyikat gigi menghemat berliter-liter air. 🚰',
+      'Indonesia memiliki salah satu hutan hujan tropis terbesar di dunia. 🌴',
+      'Lampu LED memakai listrik jauh lebih sedikit daripada bohlam biasa. 💡',
+      'Lautan menyerap sebagian besar panas akibat pemanasan global. 🌊',
+      'Bersepeda 5 km sama sekali tidak menghasilkan asap. 🚲',
+      'Sisa makanan bisa diubah menjadi kompos yang menyuburkan tanaman. 🌱',
+      'Energi angin dan surya tidak akan pernah habis. 🌬️☀️',
+      'Satu botol plastik butuh ratusan tahun untuk terurai di alam. ⏳'
+    ];
+
+    /* board plan — 24 tiles, corners at 0/6/12/18 */
+    var META = {
+      start:        { cat: 'start',  emoji: '🏁', label: 'MULAI',         color: '#FFC234' },
+      quiz:         { cat: 'quiz',   emoji: '❓', label: 'KUIS',          color: '#5B6CF0' },
+      action:       { cat: 'action', emoji: '🌱', label: 'AKSI HIJAU',    color: '#1F9D55' },
+      hazard:       { cat: 'hazard', emoji: '⚠️', label: 'BENCANA',       color: '#FF5C39' },
+      fact:         { cat: 'fact',   emoji: '💡', label: 'TAHUKAH',       color: '#1FA9C7' },
+      bonusRecycle: { cat: 'bonus',  emoji: '♻️', label: 'DAUR ULANG',    color: '#16A34A', p: 5, msg: 'Pusat Daur Ulang! Sampahmu diubah jadi barang berguna.' },
+      bonusSolar:   { cat: 'bonus',  emoji: '☀️', label: 'ENERGI SURYA',  color: '#16A34A', p: 5, msg: 'Ladang Energi Surya! Listrik bersih untuk semua.' },
+      bonusForest:  { cat: 'bonus',  emoji: '🌳', label: 'HUTAN LINDUNG',  color: '#16A34A', p: 5, msg: 'Hutan Lindung! Rumah aman bagi banyak satwa.' }
+    };
+    var PLAN = [
+      'start', 'quiz', 'action', 'hazard', 'quiz', 'fact',
+      'bonusRecycle', 'quiz', 'hazard', 'action', 'quiz', 'fact',
+      'bonusSolar', 'quiz', 'action', 'hazard', 'quiz', 'fact',
+      'bonusForest', 'quiz', 'hazard', 'action', 'quiz', 'fact'
+    ];
+    var N = PLAN.length; // 24
+
+    var PCOL = [
+      { hex: '#FF5C39', name: 'Pemain 1' },
+      { hex: '#1FA9C7', name: 'Pemain 2' },
+      { hex: '#E84BA0', name: 'Pemain 3' },
+      { hex: '#FFC234', name: 'Pemain 4' }
+    ];
+
+    /* random drawer with no immediate repeats (bag shuffle) */
+    function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+    function drawer(arr) { var bag = []; return function () { if (!bag.length) bag = shuffle(arr.slice()); return bag.pop(); }; }
+    var drawQuiz = drawer(QUIZ), drawAction = drawer(ACTION), drawHazard = drawer(HAZARD), drawFact = drawer(FACT);
+
+    /* ============================================================
+       THREE.JS SCENE
+       ============================================================ */
+    var SPACING = 2.4;
+    var STEP = (N / 4);            // 6 tiles per side incl. one corner
+    var HALF = (STEP / 2) * SPACING; // 7.2
+    var TILE_TOP = 0.5;
+    var TOKEN_Y = TILE_TOP;
+
+    var scene, camera, renderer, controls, clock, ringPos = [], dieMesh, globe;
+
+    function ringPositions() {
+      var n = STEP, pts = [];
+      for (var i = 0; i < n; i++) pts.push([-HALF + i * SPACING, HALF]);   // bottom (+z), left→right  (START at 0)
+      for (i = 0; i < n; i++) pts.push([HALF, HALF - i * SPACING]);        // right (+x), front→back
+      for (i = 0; i < n; i++) pts.push([HALF - i * SPACING, -HALF]);       // top (-z), right→left
+      for (i = 0; i < n; i++) pts.push([-HALF, -HALF + i * SPACING]);      // left (-x), back→front
+      return pts;
+    }
+
+    function tileTexture(type) {
+      var m = META[type];
+      var s = 256, cv = document.createElement('canvas'); cv.width = cv.height = s;
+      var x = cv.getContext('2d');
+      x.fillStyle = m.color; x.fillRect(0, 0, s, s);
+      // subtle inner frame
+      x.strokeStyle = 'rgba(0,0,0,.28)'; x.lineWidth = 10; x.strokeRect(8, 8, s - 16, s - 16);
+      x.fillStyle = 'rgba(255,255,255,.16)'; x.fillRect(16, 16, s - 32, 70);
+      // emoji
+      x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.font = '120px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif';
+      x.fillText(m.emoji, s / 2, s / 2 - 6);
+      // label
+      var dark = (type === 'quiz');
+      x.fillStyle = dark ? '#fff' : 'rgba(26,22,20,.92)';
+      x.font = '800 30px "Bricolage Grotesque",Arial,sans-serif';
+      x.fillText(m.label, s / 2, s - 36);
+      var tex = new THREE.CanvasTexture(cv);
+      tex.anisotropy = 4; if (THREE.sRGBEncoding) tex.encoding = THREE.sRGBEncoding;
+      return tex;
+    }
+
+    function earthTexture() {
+      var s = 256, cv = document.createElement('canvas'); cv.width = cv.height = s;
+      var x = cv.getContext('2d');
+      x.fillStyle = '#1f7fc4'; x.fillRect(0, 0, s, s);
+      x.fillStyle = '#2fa15a';
+      var blobs = [[60, 70, 38], [150, 60, 30], [200, 120, 34], [90, 160, 42], [170, 200, 30], [40, 200, 22]];
+      blobs.forEach(function (b) {
+        x.beginPath();
+        for (var a = 0; a < Math.PI * 2; a += 0.4) {
+          var r = b[2] * (0.7 + Math.random() * 0.5);
+          var px = b[0] + Math.cos(a) * r, py = b[1] + Math.sin(a) * r;
+          a === 0 ? x.moveTo(px, py) : x.lineTo(px, py);
+        }
+        x.closePath(); x.fill();
+      });
+      x.fillStyle = 'rgba(255,255,255,.5)';
+      for (var i = 0; i < 7; i++) { x.beginPath(); x.ellipse(Math.random() * s, Math.random() * s, 22 + Math.random() * 18, 9, 0, 0, 7); x.fill(); }
+      var tex = new THREE.CanvasTexture(cv); if (THREE.sRGBEncoding) tex.encoding = THREE.sRGBEncoding;
+      return tex;
+    }
+
+    function pipTexture(val) {
+      var s = 128, cv = document.createElement('canvas'); cv.width = cv.height = s;
+      var x = cv.getContext('2d');
+      x.fillStyle = '#fbf4e6'; x.fillRect(0, 0, s, s);
+      x.strokeStyle = 'rgba(26,22,20,.18)'; x.lineWidth = 6; x.strokeRect(6, 6, s - 12, s - 12);
+      var map = {
+        1: [[.5, .5]], 2: [[.27, .27], [.73, .73]],
+        3: [[.27, .27], [.5, .5], [.73, .73]],
+        4: [[.27, .27], [.73, .27], [.27, .73], [.73, .73]],
+        5: [[.27, .27], [.73, .27], [.5, .5], [.27, .73], [.73, .73]],
+        6: [[.27, .27], [.73, .27], [.27, .5], [.73, .5], [.27, .73], [.73, .73]]
+      };
+      x.fillStyle = '#1F9D55';
+      map[val].forEach(function (p) { x.beginPath(); x.arc(p[0] * s, p[1] * s, 12, 0, 7); x.fill(); });
+      var tex = new THREE.CanvasTexture(cv); if (THREE.sRGBEncoding) tex.encoding = THREE.sRGBEncoding;
+      return tex;
+    }
+
+    // rotation that puts each die value face-up (+y).  faces: [+x,-x,+y,-y,+z,-z] = [1,6,2,5,3,4]
+    var FACE_ROT = {
+      1: [0, 0, Math.PI / 2], 2: [0, 0, 0], 3: [-Math.PI / 2, 0, 0],
+      4: [Math.PI / 2, 0, 0], 5: [Math.PI, 0, 0], 6: [0, 0, -Math.PI / 2]
+    };
+
+    function makePawn(hex) {
+      var g = new THREE.Group();
+      var mat = new THREE.MeshStandardMaterial({ color: hex, roughness: 0.45, metalness: 0.1 });
+      var body = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.34, 0.62, 24), mat);
+      body.position.y = 0.31; body.castShadow = true;
+      var head = new THREE.Mesh(new THREE.SphereGeometry(0.26, 24, 18), mat);
+      head.position.y = 0.82; head.castShadow = true;
+      var ring = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.06, 12, 28), new THREE.MeshStandardMaterial({ color: '#1A1614', roughness: .6 }));
+      ring.position.y = 0.5; ring.rotation.x = Math.PI / 2;
+      g.add(body); g.add(head); g.add(ring);
+      return g;
+    }
+
+    function buildScene() {
+      var host = document.getElementById('scene');
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color('#0e1726');
+      scene.fog = new THREE.Fog('#0e1726', 34, 60);
+
+      camera = new THREE.PerspectiveCamera(46, window.innerWidth / window.innerHeight, 0.1, 200);
+      camera.position.set(0, 17, 17);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      if (THREE.sRGBEncoding) renderer.outputEncoding = THREE.sRGBEncoding;
+      host.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.target.set(0, 0.5, 0);
+      controls.enableDamping = true; controls.dampingFactor = 0.08;
+      controls.enablePan = false;
+      controls.minDistance = 12; controls.maxDistance = 38;
+      controls.minPolarAngle = 0.25; controls.maxPolarAngle = 1.32;
+      controls.update();
+
+      // lights
+      scene.add(new THREE.AmbientLight(0xffffff, 0.62));
+      scene.add(new THREE.HemisphereLight(0xbfe3ff, 0x1b3a2a, 0.5));
+      var sun = new THREE.DirectionalLight(0xffffff, 0.95);
+      sun.position.set(10, 20, 8); sun.castShadow = true;
+      sun.shadow.mapSize.set(1024, 1024);
+      var sc = sun.shadow.camera; sc.left = -14; sc.right = 14; sc.top = 14; sc.bottom = -14; sc.near = 1; sc.far = 60;
+      scene.add(sun);
+
+      // water
+      var water = new THREE.Mesh(new THREE.CircleGeometry(40, 48), new THREE.MeshStandardMaterial({ color: '#1f6f9e', roughness: 0.4, metalness: 0.1 }));
+      water.rotation.x = -Math.PI / 2; water.position.y = -0.35; water.receiveShadow = true;
+      scene.add(water);
+
+      // land platform
+      var land = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2 + 4, 0.5, HALF * 2 + 4), new THREE.MeshStandardMaterial({ color: '#cfe9c4', roughness: 0.9 }));
+      land.position.y = -0.25; land.receiveShadow = true; scene.add(land);
+
+      // tiles
+      ringPos = ringPositions();
+      for (var i = 0; i < N; i++) {
+        var type = PLAN[i], m = META[type];
+        var side = new THREE.MeshStandardMaterial({ color: m.color, roughness: 0.7 });
+        var dark = new THREE.MeshStandardMaterial({ color: shade(m.color, -0.28), roughness: 0.8 });
+        var top = new THREE.MeshStandardMaterial({ map: tileTexture(type), roughness: 0.65 });
+        var mats = [side, side, top, dark, side, side];
+        var box = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.5, 2.0), mats);
+        box.position.set(ringPos[i][0], 0.25, ringPos[i][1]);
+        box.castShadow = true; box.receiveShadow = true;
+        scene.add(box);
+      }
+
+      // floating earth in the middle
+      globe = new THREE.Mesh(new THREE.SphereGeometry(1.5, 40, 30), new THREE.MeshStandardMaterial({ map: earthTexture(), roughness: 0.75 }));
+      globe.position.set(0, 3.4, 0); globe.castShadow = true; scene.add(globe);
+      var halo = new THREE.Mesh(new THREE.SphereGeometry(1.62, 32, 24), new THREE.MeshBasicMaterial({ color: '#8fd0ff', transparent: true, opacity: 0.16 }));
+      halo.position.copy(globe.position); scene.add(halo);
+
+      // dice
+      var dmats = [1, 6, 2, 5, 3, 4].map(function (v) { return new THREE.MeshStandardMaterial({ map: pipTexture(v), roughness: 0.5 }); });
+      dieMesh = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.1, 1.1), dmats);
+      dieMesh.position.set(0, 1.05, 0); dieMesh.castShadow = true;
+      dieMesh.quaternion.setFromEuler(new THREE.Euler(FACE_ROT[6][0], FACE_ROT[6][1], FACE_ROT[6][2]));
+      scene.add(dieMesh);
+
+      clock = new THREE.Clock();
+      window.addEventListener('resize', onResize);
+      animate();
+    }
+
+    function shade(hex, amt) {
+      var c = new THREE.Color(hex);
+      c.r = Math.max(0, Math.min(1, c.r + amt));
+      c.g = Math.max(0, Math.min(1, c.g + amt));
+      c.b = Math.max(0, Math.min(1, c.b + amt));
+      return '#' + c.getHexString();
+    }
+
+    function onResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    var OFF = [{ x: -0.5, z: -0.5 }, { x: 0.5, z: -0.5 }, { x: -0.5, z: 0.5 }, { x: 0.5, z: 0.5 }];
+    function tokenPos(tile, idx) {
+      var o = OFF[idx] || OFF[0];
+      return new THREE.Vector3(ringPos[tile][0] + o.x, TOKEN_Y, ringPos[tile][1] + o.z);
+    }
+
+    /* ---- animation state ---- */
+    var dieAnim = null, moveAnim = null;
+    function rollDieAnim(value, onDone) {
+      var euler = FACE_ROT[value];
+      var target = new THREE.Quaternion().setFromEuler(new THREE.Euler(euler[0], euler[1], euler[2]));
+      dieAnim = { t: 0, dur: 1.05, target: target, onDone: onDone,
+        sx: (Math.random() * 2 - 1), sy: (Math.random() * 2 - 1), sz: (Math.random() * 2 - 1) };
+      AX.roll();
+    }
+    function updateDie(dt) {
+      if (!dieAnim) return;
+      var a = dieAnim; a.t += dt;
+      var p = Math.min(a.t / a.dur, 1);
+      dieMesh.position.y = 1.05 + Math.sin(p * Math.PI) * 1.4;
+      if (p < 0.62) {
+        dieMesh.rotation.x += dt * 14 * a.sx;
+        dieMesh.rotation.y += dt * 14 * a.sy;
+        dieMesh.rotation.z += dt * 14 * a.sz;
+      } else {
+        dieMesh.quaternion.slerp(a.target, 0.18 + (p - 0.62) * 0.6);
+        if (p >= 1) {
+          dieMesh.quaternion.copy(a.target); dieMesh.position.y = 1.05;
+          var cb = a.onDone; dieAnim = null; if (cb) cb();
+        }
+      }
+    }
+    function startMove(player, seq, onStep, onDone) {
+      moveAnim = { player: player, seq: seq, i: 0, onStep: onStep, onDone: onDone, t: 0, dur: 0.3 };
+      beginHop();
+    }
+    function beginHop() {
+      var m = moveAnim; if (!m) return;
+      if (m.i >= m.seq.length) { var cb = m.onDone; moveAnim = null; if (cb) cb(); return; }
+      m.from = m.player.mesh.position.clone();
+      m.to = tokenPos(m.seq[m.i], m.player.idx);
+      m.t = 0; AX.hop();
+    }
+    function updateMove(dt) {
+      if (!moveAnim) return;
+      var m = moveAnim; m.t += dt;
+      var p = Math.min(m.t / m.dur, 1);
+      var pos = m.from.clone().lerp(m.to, p);
+      pos.y = TOKEN_Y + Math.sin(p * Math.PI) * 0.85;
+      m.player.mesh.position.copy(pos);
+      if (p >= 1) {
+        m.player.mesh.position.copy(m.to);
+        var tile = m.seq[m.i]; m.i++;
+        if (m.onStep) m.onStep(tile, m.i >= m.seq.length);
+        beginHop();
+      }
+    }
+    function animate() {
+      requestAnimationFrame(animate);
+      var dt = Math.min(clock.getDelta(), 0.05);
+      if (globe) { globe.rotation.y += dt * 0.25; }
+      updateDie(dt); updateMove(dt);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    /* ============================================================
+       GAME LOGIC
+       ============================================================ */
+    var G = { players: [], turn: 0, target: 30, busy: false, started: false };
+
+    var $ = function (id) { return document.getElementById(id); };
+    var ticker = $('ticker'), rollBtn = $('rollBtn'), scoresEl = $('scores');
+    var scrim = $('scrim'), card = $('card');
+
+    function setTicker(t) { ticker.innerHTML = t; }
+    function setRoll(on) { rollBtn.disabled = !on; }
+
+    function renderScores() {
+      scoresEl.innerHTML = G.players.map(function (p, i) {
+        var pct = Math.min(100, Math.round(p.points / G.target * 100));
+        return '<div class="pcard' + (i === G.turn ? ' active' : '') + '">' +
+          '<div class="row1"><span class="dotc" style="background:' + p.hex + '"></span>' +
+          '<span class="pname">' + esc(p.name) + '</span>' +
+          (i === G.turn ? '<span class="pturn">▶ giliran</span>' : '') + '</div>' +
+          '<div class="pscore">' + p.points + ' <small>/ ' + G.target + ' 🌍</small></div>' +
+          '<div class="pbar"><i style="width:' + pct + '%;background:' + p.hex + '"></i></div>' +
+          '</div>';
+      }).join('');
+    }
+
+    function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); }
+
+    function curPlayer() { return G.players[G.turn]; }
+
+    function doRoll() {
+      if (G.busy) return;
+      G.busy = true; setRoll(false);
+      var val = 1 + Math.floor(Math.random() * 6);
+      var p = curPlayer();
+      setTicker('🎲 ' + esc(p.name) + ' melempar… <b>' + val + '</b>!');
+      rollDieAnim(val, function () { moveSequence(p, val); });
+    }
+
+    function moveSequence(p, val) {
+      var seq = [];
+      for (var k = 1; k <= val; k++) seq.push((p.tile + k) % N);
+      startMove(p, seq, function (tile, isLast) {
+        if (tile === 0 && !isLast) { p.points += 2; renderScores(); AX.good(); flashTicker('🏁 Lewati Mulai! +2 Poin Bumi'); }
+      }, function () {
+        p.tile = seq[seq.length - 1];
+        resolveTile(p);
+      });
+    }
+
+    var flashTimer = null;
+    function flashTicker(t) {
+      setTicker(t);
+      clearTimeout(flashTimer);
+    }
+
+    function resolveTile(p) {
+      var type = PLAN[p.tile], m = META[type];
+      if (m.cat === 'quiz') return showQuiz(p);
+      if (m.cat === 'action') { var a = drawAction(); return showEvent(p, { emoji: '🌱', kicker: 'Aksi Hijau', title: 'Hebat!', msg: a.m, delta: a.p }); }
+      if (m.cat === 'hazard') { var h = drawHazard(); return showEvent(p, { emoji: '⚠️', kicker: 'Bencana Iklim', title: 'Oh tidak!', msg: h.m + '<br><span style="color:#1F9D55;font-weight:800">' + esc(h.t) + '</span>', delta: -h.p }); }
+      if (m.cat === 'fact') { var f = drawFact(); return showEvent(p, { emoji: '💡', kicker: 'Tahukah Kamu?', title: 'Fakta Bumi', msg: f, delta: 1 }); }
+      if (m.cat === 'bonus') return showEvent(p, { emoji: m.emoji, kicker: 'Petak Bonus', title: m.label, msg: m.msg, delta: m.p });
+      if (m.cat === 'start') return showEvent(p, { emoji: '🏁', kicker: 'Petak Mulai', title: 'Mulai Lagi', msg: 'Kamu kembali ke titik Mulai dengan semangat baru!', delta: 2 });
+    }
+
+    function showEvent(p, ev) {
+      var sign = ev.delta >= 0 ? '+' : '−';
+      var cls = ev.delta >= 0 ? 'delta-plus' : 'delta-minus';
+      if (ev.delta > 0) AX.good(); else if (ev.delta < 0) AX.bad();
+      card.innerHTML =
+        '<div class="card-emoji">' + ev.emoji + '</div>' +
+        '<div class="card-kicker" style="color:' + (ev.delta >= 0 ? 'var(--forest)' : 'var(--tomato)') + '">' + ev.kicker + '</div>' +
+        '<div class="card-title">' + ev.title + '</div>' +
+        '<div class="card-msg">' + ev.msg + '</div>' +
+        '<div class="card-delta ' + cls + '">' + sign + Math.abs(ev.delta) + ' Poin Bumi</div>' +
+        '<button class="cta" id="contBtn">Lanjut →</button>';
+      openModal();
+      $('contBtn').onclick = function () { applyDelta(p, ev.delta); closeModal(); endTurn(); };
+    }
+
+    function showQuiz(p) {
+      var q = drawQuiz();
+      var labels = ['A', 'B', 'C', 'D'];
+      var opts = q.o.map(function (o, i) {
+        return '<button class="opt" data-i="' + i + '"><span class="lab">' + labels[i] + '</span><span>' + esc(o) + '</span></button>';
+      }).join('');
+      card.innerHTML =
+        '<div class="card-emoji">❓</div>' +
+        '<div class="card-kicker" style="color:var(--indigo)">Kuis Bumi · ' + esc(p.name) + '</div>' +
+        '<div class="card-title">' + esc(q.q) + '</div>' +
+        '<div class="opts" id="opts">' + opts + '</div>' +
+        '<div id="quizFoot"></div>';
+      openModal();
+      var answered = false;
+      var btns = card.querySelectorAll('.opt');
+      btns.forEach(function (b) {
+        b.onclick = function () {
+          if (answered) return; answered = true;
+          var i = +b.dataset.i, correct = (i === q.c);
+          btns.forEach(function (x) {
+            x.disabled = true;
+            var xi = +x.dataset.i;
+            if (xi === q.c) x.classList.add('correct');
+            else if (xi === i) x.classList.add('wrong');
+          });
+          var pts = correct ? 4 : 1;
+          if (correct) AX.correct(); else AX.wrong();
+          $('quizFoot').innerHTML =
+            '<div class="explain"><b>' + (correct ? '✅ Benar! +4 Poin Bumi' : '📚 Belum tepat — tetap +1 karena sudah belajar!') + '</b>' + esc(q.e) + '</div>' +
+            '<button class="cta" id="contBtn">Lanjut →</button>';
+          $('contBtn').onclick = function () { applyDelta(p, pts); closeModal(); endTurn(); };
+        };
+      });
+    }
+
+    function applyDelta(p, d) {
+      p.points = Math.max(0, p.points + d);
+      renderScores();
+    }
+
+    function openModal() { scrim.classList.add('show'); }
+    function closeModal() { scrim.classList.remove('show'); }
+
+    function endTurn() {
+      var winner = G.players.find(function (p) { return p.points >= G.target; });
+      if (winner) return winGame();
+      G.turn = (G.turn + 1) % G.players.length;
+      renderScores();
+      setTicker('Giliran <b>' + esc(curPlayer().name) + '</b> — lempar dadu! 🎲');
+      G.busy = false; setRoll(true);
+    }
+
+    function winGame() {
+      G.busy = true; setRoll(false); AX.win();
+      var ranked = G.players.slice().sort(function (a, b) { return b.points - a.points; });
+      var w = ranked[0];
+      $('winTitle').innerHTML = '🎉 ' + esc(w.name) + ' Menyelamatkan Bumi!';
+      $('winSub').textContent = 'Berhasil mengumpulkan ' + w.points + ' Poin Bumi. Terima kasih sudah menjaga planet kita! 🌍💚';
+      var medals = ['🥇', '🥈', '🥉', '🏅'];
+      $('winScores').innerHTML = ranked.map(function (p, i) {
+        return '<div class="win-row' + (i === 0 ? ' first' : '') + '">' +
+          '<span class="rk">' + medals[i] + '</span>' +
+          '<span class="dotc" style="background:' + p.hex + '"></span>' +
+          '<span class="nm">' + esc(p.name) + '</span>' +
+          '<span class="sc">' + p.points + ' 🌍</span></div>';
+      }).join('');
+      launchConfetti();
+      $('winScreen').classList.remove('hide');
+    }
+
+    /* ---------- confetti (2D overlay) ---------- */
+    function launchConfetti() {
+      var cv = document.createElement('canvas');
+      cv.style.cssText = 'position:fixed;inset:0;z-index:40;pointer-events:none';
+      document.body.appendChild(cv);
+      var x = cv.getContext('2d'); cv.width = innerWidth; cv.height = innerHeight;
+      var cols = ['#FF5C39', '#1FA9C7', '#E84BA0', '#FFC234', '#1F9D55'];
+      var ps = []; for (var i = 0; i < 140; i++) ps.push({ x: Math.random() * cv.width, y: -20 - Math.random() * cv.height, r: 4 + Math.random() * 6, c: cols[i % cols.length], v: 2 + Math.random() * 4, a: Math.random() * 7, s: Math.random() * 0.2 - 0.1 });
+      var t0 = Date.now();
+      (function frame() {
+        x.clearRect(0, 0, cv.width, cv.height);
+        ps.forEach(function (p) { p.y += p.v; p.x += Math.sin(p.a) * 1.5; p.a += p.s; x.fillStyle = p.c; x.fillRect(p.x, p.y, p.r, p.r * 1.6); });
+        if (Date.now() - t0 < 4500) requestAnimationFrame(frame); else cv.remove();
+      })();
+    }
+
+    /* ============================================================
+       SETUP SCREEN
+       ============================================================ */
+    var nPlayers = 2, target = 30;
+    function renderNames() {
+      $('names').innerHTML = '';
+      for (var i = 0; i < nPlayers; i++) {
+        var row = document.createElement('div'); row.className = 'nrow';
+        row.innerHTML = '<span class="dotc" style="background:' + PCOL[i].hex + '"></span>' +
+          '<input type="text" maxlength="14" value="' + PCOL[i].name + '" data-i="' + i + '">';
+        $('names').appendChild(row);
+      }
+    }
+    function selSeg(box, val, attr) {
+      box.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.dataset[attr] == val); });
+    }
+    $('segPlayers').querySelectorAll('button').forEach(function (b) {
+      b.onclick = function () { nPlayers = +b.dataset.n; selSeg($('segPlayers'), nPlayers, 'n'); renderNames(); };
+    });
+    $('segTarget').querySelectorAll('button').forEach(function (b) {
+      b.onclick = function () { target = +b.dataset.t; selSeg($('segTarget'), target, 't'); };
+    });
+
+    function startGame() {
+      AX.set(AX.isOn()); // unlock audio on user gesture
+      var inputs = $('names').querySelectorAll('input');
+      G.players = []; G.target = target; G.turn = 0; G.busy = false;
+      for (var i = 0; i < nPlayers; i++) {
+        var name = (inputs[i].value || PCOL[i].name).trim().slice(0, 14) || PCOL[i].name;
+        var mesh = makePawn(PCOL[i].hex);
+        mesh.position.copy(tokenPos(0, i));
+        scene.add(mesh);
+        G.players.push({ idx: i, name: name, hex: PCOL[i].hex, points: 0, tile: 0, mesh: mesh });
+      }
+      G.started = true;
+      $('setup').classList.add('hide');
+      $('winScreen').classList.add('hide');
+      renderScores();
+      setTicker('Giliran <b>' + esc(curPlayer().name) + '</b> — lempar dadu! 🎲');
+      setRoll(true);
+    }
+
+    function resetGame() {
+      G.players.forEach(function (p) { scene.remove(p.mesh); });
+      G.players = [];
+      $('winScreen').classList.add('hide');
+      $('setup').classList.remove('hide');
+    }
+
+    /* ---------- wire UI ---------- */
+    rollBtn.onclick = doRoll;
+    $('startBtn').onclick = startGame;
+    $('againBtn').onclick = resetGame;
+    $('helpBtn').onclick = function () { $('setup').classList.remove('hide'); };
+    $('muteBtn').onclick = function () {
+      var on = !AX.isOn(); AX.set(on);
+      $('muteBtn').textContent = on ? '🔊' : '🔇';
+    };
+
+    // init
+    buildScene();
+    selSeg($('segPlayers'), nPlayers, 'n');
+    selSeg($('segTarget'), target, 't');
+    renderNames();
+  })();
+  </script>
+</body>
+</html>
