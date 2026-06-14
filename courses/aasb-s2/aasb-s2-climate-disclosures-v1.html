@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="aasb-s2-climate">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AASB S2 Decoded: Climate-related Disclosures · Learn with Adhi</title>
+<meta name="description" content="A plain-English, fun-to-read field guide to the whole of AASB S2 Climate-related Disclosures – governance, strategy, risk management, metrics & targets, scenario analysis, Scope 1/2/3 emissions and the full reporting rulebook.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/aasb-s2/aasb-s2-climate-disclosures-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AASB S2 Decoded: Climate-related Disclosures">
+<meta property="og:description" content="The whole Australian climate-disclosure standard, decoded into plain English – no shortcuts.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-forest-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"AASB S2 Decoded: Climate-related Disclosures","description":"A plain-English walkthrough of the entire AASB S2 Climate-related Disclosures standard.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#1F9D55; --acc-dim:#177544; --acc-bg:rgba(31,157,85,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --sea:#2D6FB3;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:280px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:280px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:920px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:700px}
+strong{font-weight:600}
+em{font-style:italic}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:700px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:700px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+.para-ref{font-family:var(--fm);font-size:11px;color:var(--acc-dim);background:var(--acc-bg);padding:1px 7px;border-radius:5px;white-space:nowrap}
+
+/* ── CALLOUTS ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:700px}
+.callout.gold{border-left-color:var(--gold);background:rgba(255,194,52,.10)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.sea{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.red{border-left-color:var(--red);background:rgba(255,92,57,.08)}
+.callout .co-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+.callout strong{font-weight:600}
+
+/* ── ANALOGY BADGE ── */
+.analogy{background:linear-gradient(135deg,rgba(255,194,52,.14),rgba(31,157,85,.10));border:1px dashed var(--line-s);border-radius:12px;padding:18px 22px;margin:22px 0;max-width:700px}
+.analogy .an-label{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--acc-dim);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.analogy p{margin:0;font-size:14px}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;margin:22px 0;border:1px solid var(--line-s);border-radius:12px}
+table.dt{border-collapse:collapse;width:100%;font-size:13px;min-width:480px}
+table.dt th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;text-align:left;padding:10px 14px;font-weight:500}
+table.dt td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top;line-height:1.5}
+table.dt tr:nth-child(even) td{background:var(--paper-2)}
+table.dt td strong{color:var(--acc-dim)}
+
+/* ── PILLAR DIAGRAM ── */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.pillar{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:16px 14px;text-align:center}
+.pillar .p-icon{font-size:26px;margin-bottom:8px}
+.pillar h4{font-family:var(--fd);font-size:13px;font-weight:700;margin-bottom:4px}
+.pillar p{font-size:11px;color:var(--muted);margin:0;line-height:1.4}
+@media(max-width:640px){.pillars{grid-template-columns:repeat(2,1fr)}}
+
+/* ── STEP FLOW ── */
+.flow{display:flex;flex-direction:column;gap:10px;margin:22px 0;max-width:700px}
+.flow-step{display:flex;gap:14px;align-items:flex-start;background:var(--paper-2);border:1px solid var(--line-s);border-radius:10px;padding:14px 16px}
+.flow-num{font-family:var(--fm);font-size:13px;font-weight:700;color:#fff;background:var(--acc);min-width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.flow-step .fs-body h4{font-size:14px;font-weight:700;margin-bottom:3px}
+.flow-step .fs-body p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── SCOPE DIAGRAM ── */
+.scope-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.scope-card{border-radius:12px;padding:18px 16px;border:1px solid var(--line-s)}
+.scope-card.s1{background:rgba(255,92,57,.1);border-color:rgba(255,92,57,.3)}
+.scope-card.s2{background:rgba(255,194,52,.14);border-color:rgba(255,194,52,.4)}
+.scope-card.s3{background:rgba(45,111,179,.1);border-color:rgba(45,111,179,.3)}
+.scope-card h4{font-family:var(--fd);font-size:15px;font-weight:800;margin-bottom:6px}
+.scope-card .s-tag{font-family:var(--fm);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.scope-card p{font-size:12px;margin:0;line-height:1.5}
+@media(max-width:640px){.scope-grid{grid-template-columns:1fr}}
+
+/* ── GLOSSARY ── */
+.gloss{display:flex;flex-direction:column;gap:2px;margin:20px 0}
+.gloss-item{border:1px solid var(--line-s);border-radius:10px;padding:14px 18px;background:var(--paper-2)}
+.gloss-item dt{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--acc-dim);margin-bottom:4px}
+.gloss-item dd{font-size:13px;color:var(--ink);line-height:1.6}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── DONE BUTTON ── */
+.done-btn{margin-top:40px;padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#34c97a);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.95;margin:0;max-width:none}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-280px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE · AASB S2</span></a>
+  </div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 10 chapters</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1"><span class="nav-num">01</span><span class="nav-title">Why This Standard Exists</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="2"><span class="nav-num">02</span><span class="nav-title">Governance — Who's in Charge</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="3"><span class="nav-num">03</span><span class="nav-title">Strategy I — Spotting Risks & Opportunities</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="4"><span class="nav-num">04</span><span class="nav-title">Strategy II — Money & Resilience</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="5"><span class="nav-num">05</span><span class="nav-title">Risk Management</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="6"><span class="nav-num">06</span><span class="nav-title">Metrics & Targets I — Counting Carbon</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="7"><span class="nav-num">07</span><span class="nav-title">Metrics & Targets II — Beyond Emissions</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="8"><span class="nav-num">08</span><span class="nav-title">The Reporting Rulebook (Appendix D)</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="9"><span class="nav-num">09</span><span class="nav-title">Dictionary & Transition (A & C)</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="10"><span class="nav-num">10</span><span class="nav-title">Behind the Scenes (Why the AASB Chose This)</span><span class="nav-check">✓</span></div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">AASB S2 Decoded</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – WHY THIS STANDARD EXISTS
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Chapter 01 / 10 · The Big Picture</div>
+  <h1 class="mod-title">Why This <span class="acc">Standard</span> Exists</h1>
+  <p class="mod-lede">Imagine a rule that forces big Australian companies to tell their investors, in writing, exactly how a hotter, weirder climate could mess with their money. That rule has a name: <strong>AASB S2 Climate-related Disclosures</strong>. This chapter is your map of the whole thing before we dive into the detail.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What AASB S2 actually <em>is</em>, and the problem it was built to solve</li>
+      <li>Who has to comply, and from when (the three start dates)</li>
+      <li>The Objective and Scope — what's in, what's out</li>
+      <li>The four pillars every later chapter hangs off</li>
+      <li>How AASB S2 relates to its global cousin IFRS S2, and to the voluntary AASB S1</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The one-sentence version</h2>
+  <p>AASB S2 requires an entity to <strong>disclose information about its climate-related risks and opportunities that is useful to investors and lenders</strong> when they decide whether to put money into the entity. <span class="para-ref">Objective ¶1</span></p>
+  <p>That's it. Everything else in the 59-page standard is just spelling out <em>what</em> to disclose, <em>how</em>, and <em>when</em>. The information has to be useful to the people the standard calls <strong>primary users</strong> — existing and potential investors, lenders and other creditors — the folks deciding whether to give the entity resources.</p>
+
+  <div class="analogy">
+    <div class="an-label">🩺 Think of it like a health check-up</div>
+    <p>A company's annual financial report is a check-up of its money. AASB S2 adds a new test to that check-up: a "climate stress test." The patient (the company) must honestly report any symptoms — like a factory in a flood zone, or revenue that dries up as the world switches to clean energy — so the people funding it can decide whether it's a healthy bet.</p>
+  </div>
+
+  <h2 class="sh">The problem it solves</h2>
+  <p>Before standards like this, companies talked about climate in a thousand different, fluffy, un-comparable ways — if at all. Investors kept asking for <strong>consistent, complete, comparable and verifiable</strong> information. In 2023 the Australian Government confirmed it would make climate disclosures <em>mandatory</em> for large businesses and financial institutions, and in September 2024 Parliament passed the law (the <em>Treasury Laws Amendment (Financial Market Infrastructure and Other Measures) Act 2024</em>) to make it happen, by amending the <em>Corporations Act 2001</em>.</p>
+  <p>The Australian Accounting Standards Board (AASB) wrote AASB S2 to support that decision. The goal: better quality and comparability of climate information across companies and sectors, so investors can make more informed calls.</p>
+
+  <h2 class="sh">Who has to do it — and when</h2>
+  <p>The standard itself applies to annual reporting periods <strong>beginning on or after 1 January 2025</strong>, and you're allowed to start early. But <em>which</em> entities are forced to comply (and exactly when) is set by the <em>Corporations Act</em>, which phases it in by company size across three start dates: <span class="para-ref">Preface · ¶AusC1.1</span></p>
+  <div class="tbl-wrap">
+    <table class="dt">
+      <thead><tr><th>Phase</th><th>Financial years beginning on or after</th><th>Roughly who</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Group 1</strong></td><td>1 January 2025</td><td>The largest entities</td></tr>
+        <tr><td><strong>Group 2</strong></td><td>1 July 2026</td><td>Large entities</td></tr>
+        <tr><td><strong>Group 3</strong></td><td>1 July 2027</td><td>Smaller (but still sizeable) entities</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="callout gold"><span class="co-label">Heads up</span> AASB S2 doesn't decide who's caught — the law does, based on thresholds for things like size, revenue and emissions. AASB S2 decides <em>what you disclose</em> once you're caught.</p>
+
+  <h2 class="sh">Scope: what's in, what's out</h2>
+  <p>AASB S2 applies to: <span class="para-ref">Scope ¶3</span></p>
+  <ul class="bl">
+    <li><strong>Climate-related <span style="color:var(--red)">risks</span></strong> the entity is exposed to, split into two flavours:
+      <ul class="bl" style="margin-top:6px;margin-bottom:6px">
+        <li><strong>Physical risks</strong> — the climate itself doing damage (storms, floods, drought, heatwaves, rising seas).</li>
+        <li><strong>Transition risks</strong> — the <em>shift</em> to a low-carbon economy doing damage (new carbon laws, new tech, changing customer tastes, reputation hits).</li>
+      </ul>
+    </li>
+    <li><strong>Climate-related <span style="color:var(--green)">opportunities</span></strong> available to the entity (e.g. new revenue from greener products).</li>
+  </ul>
+  <p>The boundary line: only risks and opportunities that <strong>could reasonably be expected to affect the entity's prospects</strong> — meaning its cash flows, its access to finance, or its cost of capital, over the short, medium or long term. Anything that couldn't reasonably be expected to affect those things is <strong>out of scope</strong>. <span class="para-ref">¶2, ¶4</span></p>
+
+  <div class="callout sea"><span class="co-label">The magic phrase</span> You'll see "<em>climate-related risks and opportunities that could reasonably be expected to affect the entity's prospects</em>" everywhere. It's the standard's way of saying: <strong>we only care about climate stuff that's financially relevant to investors.</strong> This is "financial materiality," not "save the planet for its own sake."</p>
+
+  <h2 class="sh">The four pillars (memorise these)</h2>
+  <p>Every disclosure in AASB S2 lives under one of four headings, called the <strong>core content</strong>. They come straight from the globally-recognised TCFD framework, and they're the spine of this whole course:</p>
+  <div class="pillars">
+    <div class="pillar"><div class="p-icon">🏛️</div><h4>Governance</h4><p>Who oversees and manages climate risk?</p></div>
+    <div class="pillar"><div class="p-icon">🧭</div><h4>Strategy</h4><p>How does climate affect the plan & the money?</p></div>
+    <div class="pillar"><div class="p-icon">🛡️</div><h4>Risk Management</h4><p>How are risks found, judged & tracked?</p></div>
+    <div class="pillar"><div class="p-icon">📊</div><h4>Metrics & Targets</h4><p>The numbers: emissions & goals.</p></div>
+  </div>
+  <p>Chapters 2–7 of this course walk through these four pillars one at a time. Then chapters 8–9 cover the "how to actually write the report" rulebook and the dictionary, and chapter 10 reveals the behind-the-scenes reasoning.</p>
+
+  <h2 class="sh">The S2 / S1 / IFRS family tree</h2>
+  <p>This trips everyone up, so let's make it simple. There are three relatives:</p>
+  <div class="tbl-wrap">
+    <table class="dt">
+      <thead><tr><th>Name</th><th>What it is</th><th>Mandatory?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>IFRS S2</strong></td><td>The global climate standard from the International Sustainability Standards Board (ISSB). AASB S2 is built on it, keeping the same paragraph numbers.</td><td>Depends on country</td></tr>
+        <tr><td><strong>AASB S2</strong></td><td>The Australian version — IFRS S2 with Australian tweaks (the "Aus" paragraphs). <em>This is the one we're studying.</em></td><td><strong>Yes</strong> (for caught entities)</td></tr>
+        <tr><td><strong>AASB S1</strong></td><td>A broader standard for <em>all</em> sustainability topics (not just climate).</td><td><strong>No</strong> — voluntary</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Here's the clever bit. Globally, IFRS S2 (climate) was designed to be used <em>together with</em> IFRS S1 (general rules). But in Australia, AASB S1 is only voluntary. So the AASB couldn't rely on it. Instead, they copied the essential general rules from S1 into <strong>Appendix D</strong> of AASB S2. That makes AASB S2 a complete, <strong>standalone</strong> standard — you never have to open AASB S1 to comply. (We cover Appendix D in Chapter 8.) <span class="para-ref">Preface · ¶BC20</span></p>
+
+  <h3 class="sub">The main Australian tweaks</h3>
+  <p>When the AASB localised IFRS S2, it made a handful of deliberate changes. The big ones:</p>
+  <ul class="bl">
+    <li><strong>Added "Aus" paragraphs</strong> for the commencement date, effective date and other Australia-specific bits.</li>
+    <li><strong>Dropped the industry-based disclosures.</strong> IFRS S2 asks entities to also report industry-specific metrics (from SASB guidance). The AASB <em>removed</em> that requirement for now (it deleted ¶12, 23, 28(b), 32, 37, B65(d), B67 and the "disclosure topic" definition). More on why in Chapter 10.</li>
+    <li><strong>Consolidated-group choice.</strong> Under the <em>Corporations Act</em>, a parent can report for either the whole consolidated group <em>or</em> just the parent — so AASB S2 says your climate disclosures must cover the <em>same</em> reporting entity as your financial statements (unless the law allows otherwise).</li>
+    <li><strong>Not-for-profit accommodations.</strong> NFP entities use the <em>Framework for the Preparation and Presentation of Financial Statements</em> for terms like "primary users."</li>
+    <li><strong>Pinned document versions.</strong> Because of the <em>Legislation Act 2003</em>, AASB S2 names the exact version of outside documents it references (like the Paris Agreement and the GICS classification).</li>
+  </ul>
+
+  <div class="callout green"><span class="co-label">Where the words have force</span> AASB S2 is set out in paragraphs 1–Aus37.2 plus Appendices A–D. <strong>All paragraphs have equal authority</strong>, and the ones in <strong>bold</strong> in the standard state the main principles. Terms defined in Appendix A appear in italics the first time they show up. The Basis for Conclusions and the accompanying guidance, by contrast, are <em>not</em> part of the standard — they're background (Chapter 10).</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick check — Chapter 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A mining company identifies a risk that a future carbon tax will raise its operating costs. Is this a physical risk or a transition risk?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Physical risks come from the climate itself — storms, floods, heat. A carbon tax is a policy change, not weather.">Physical risk</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Transition risks arise from the shift to a low-carbon economy — including policy and legal changes like a carbon tax.">Transition risk</button>
+        <button class="q-option" data-correct="false" data-explanation="It's squarely in scope — a carbon tax could clearly affect the entity's cash flows.">Out of scope entirely</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Which statement about AASB S1 is correct?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="No — an entity applying AASB S2 is NOT required to apply AASB S1.">You must apply AASB S1 to comply with AASB S2</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! AASB S1 is voluntary. The general rules S2 needs were copied into Appendix D, so S2 stands alone.">AASB S1 is voluntary; AASB S2 stands alone via its Appendix D</button>
+        <button class="q-option" data-correct="false" data-explanation="The reverse — AASB S2 (climate) is mandatory for caught entities; AASB S1 (broader sustainability) is voluntary.">AASB S1 is mandatory and AASB S2 is voluntary</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Who are the "primary users" that AASB S2 disclosures are written for?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Regulators may use the reports, but the standard defines primary users more specifically.">Government regulators only</button>
+        <button class="q-option" data-correct="false" data-explanation="The general public isn't the defined audience — the standard targets resource-providers.">The general public and journalists</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Primary users = existing and potential investors, lenders and other creditors — those deciding whether to provide resources.">Existing and potential investors, lenders and other creditors</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="1">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – GOVERNANCE
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Chapter 02 / 10 · Pillar 1 of 4</div>
+  <h1 class="mod-title">Governance — <span class="acc">Who's in Charge</span></h1>
+  <p class="mod-lede">Before anyone trusts a company's climate numbers, they want to know: who at the top is actually watching this, and do they know what they're doing? That's governance — the shortest of the four pillars, but the one that sets the tone for everything else.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The objective of governance disclosures</li>
+      <li>Everything you must say about the <em>oversight body</em> (the board)</li>
+      <li>Everything you must say about <em>management's</em> role</li>
+      <li>The "avoid duplication" rule and where it bites</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The objective</h2>
+  <p>The point of governance disclosures is to let users <strong>understand the governance processes, controls and procedures the entity uses to monitor, manage and oversee climate-related risks and opportunities.</strong> <span class="para-ref">¶5</span></p>
+  <p>In plain terms: <em>show us the chain of command for climate, and prove it's a real one.</em> The standard splits this into two characters — the <strong>oversight body</strong> (think board or committee) and <strong>management</strong>.</p>
+
+  <div class="analogy">
+    <div class="an-label">🚢 Think of a ship</div>
+    <p>The <strong>oversight body</strong> is the captain and senior officers who set the course and make sure the ship is seaworthy. <strong>Management</strong> is the engine-room crew actually steering and tending the engines day to day. AASB S2 wants to see both — and proof they talk to each other.</p>
+  </div>
+
+  <h2 class="sh">Part A — The oversight body (the board)</h2>
+  <p>First, you must <strong>identify the body or individual responsible</strong> for oversight of climate risks and opportunities (a board, a committee, or an equivalent). Then disclose information about: <span class="para-ref">¶6(a)</span></p>
+  <ol class="nl">
+    <li><strong>Responsibilities in writing.</strong> How climate responsibilities are reflected in the body's terms of reference, mandates, role descriptions and policies.</li>
+    <li><strong>Skills & competencies.</strong> How the body decides whether the right skills are available — or will be developed — to oversee the climate strategy.</li>
+    <li><strong>How and how often informed.</strong> How, and how frequently, the body is told about climate risks and opportunities.</li>
+    <li><strong>How it's factored into decisions.</strong> How the body takes climate into account when overseeing strategy, major transactions and risk-management processes — <em>including whether it weighed the trade-offs</em>.</li>
+    <li><strong>Oversight of targets & pay.</strong> How the body oversees the setting of climate targets and monitors progress — <em>including whether climate performance is built into remuneration policies</em>.</li>
+  </ol>
+
+  <h2 class="sh">Part B — Management's role</h2>
+  <p>Then you describe <strong>management's role</strong> in the processes, controls and procedures used to monitor and manage climate risks, including: <span class="para-ref">¶6(b)</span></p>
+  <ul class="bl">
+    <li>Whether the role is <strong>delegated to a specific position or committee</strong>, and how oversight is exercised over them.</li>
+    <li>Whether management uses <strong>controls and procedures</strong> to support this oversight — and if so, how those are integrated with other internal functions.</li>
+  </ul>
+
+  <div class="callout"><span class="co-label">Notice the pattern</span> The standard never asks "are you doing a good job?" It asks "<em>describe your process</em>." It's about <strong>transparency</strong>, not grading. Users form their own judgement once you've shown them the machinery.</p>
+
+  <h2 class="sh">The "don't repeat yourself" rule</h2>
+  <p>When preparing governance disclosures, an entity must <strong>avoid unnecessary duplication</strong>. If a company oversees <em>all</em> its sustainability risks together on an integrated basis, it should give <strong>one integrated governance disclosure</strong> rather than a separate one for climate, another for water, another for human rights, and so on. <span class="para-ref">¶7</span></p>
+  <p>The Australian "Aus" paragraph clarifies <em>when</em> this matters most: <strong>particularly if the entity has voluntarily chosen to also apply AASB S1</strong> to disclose other sustainability topics alongside climate. <span class="para-ref">¶Aus7.1</span></p>
+
+  <div class="callout gold"><span class="co-label">Why this exists</span> Imagine a board that oversees climate, nature and social risks in one quarterly meeting. Forcing three near-identical governance write-ups would just bury the reader. The rule keeps reports readable — a theme you'll see again in the risk-management pillar (Chapter 5) and in the "connected information" rules (Chapter 8).</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick check — Chapter 2</div>
+
+    <div class="q-card">
+      <p class="q-text">Which of these is specifically required as part of the governance disclosure about the oversight body?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The standard doesn't require disclosing individual directors' salaries here. It asks whether climate performance metrics are included in remuneration policies.">Each director's total salary in dollars</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! ¶6(a)(ii) requires disclosure of how the body determines whether appropriate skills and competencies are available or will be developed.">How the body decides whether it has (or will develop) the right skills</button>
+        <button class="q-option" data-correct="false" data-explanation="A guarantee of outcomes isn't required — the standard asks you to describe processes, not promise results.">A guarantee that climate targets will be met</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A company manages climate, water and biodiversity oversight in one integrated process and voluntarily applies AASB S1 too. What does the duplication rule suggest?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Where oversight is integrated, provide integrated governance disclosures rather than separate ones for each topic (¶7 and ¶Aus7.1).">Provide one integrated governance disclosure rather than three separate ones</button>
+        <button class="q-option" data-correct="false" data-explanation="Separate disclosures for each topic is exactly what the rule tries to avoid when oversight is integrated.">Write a completely separate governance section for each topic</button>
+        <button class="q-option" data-correct="false" data-explanation="You can't skip governance — it's a core requirement; the rule is about avoiding duplication, not omission.">Skip governance disclosures to save space</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="2">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – STRATEGY I
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Chapter 03 / 10 · Pillar 2 of 4 (part 1)</div>
+  <h1 class="mod-title">Strategy I — <span class="acc">Spotting Risks &amp; Opportunities</span></h1>
+  <p class="mod-lede">Strategy is the biggest pillar, so we split it in two. This half is about <em>identification</em>: naming the climate risks and opportunities, sorting them by type and time horizon, and explaining how they ripple through your business model and your plans. The next chapter handles the money and the stress-testing.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The five things the strategy pillar must let users understand</li>
+      <li>How to describe each risk/opportunity, its type, and its time horizon</li>
+      <li>What "short / medium / long term" really means here</li>
+      <li>Business model & value chain effects — and where risk concentrates</li>
+      <li>Strategy, decision-making and the all-important transition plan</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The objective, and the five sub-topics</h2>
+  <p>The strategy pillar exists so users can <strong>understand the entity's strategy for managing climate-related risks and opportunities.</strong> <span class="para-ref">¶8</span> To get there, the entity must disclose enough for users to understand five things: <span class="para-ref">¶9</span></p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div class="fs-body"><h4>The risks & opportunities</h4><p>What climate risks and opportunities could reasonably affect the entity's prospects? (this chapter, ¶10–12)</p></div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="fs-body"><h4>Effects on business model & value chain</h4><p>Current and anticipated. (this chapter, ¶13)</p></div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="fs-body"><h4>Effects on strategy & decision-making</h4><p>Including the transition plan. (this chapter, ¶14)</p></div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="fs-body"><h4>Effects on financial position, performance & cash flows</h4><p>Now and anticipated. (next chapter, ¶15–21)</p></div></div>
+    <div class="flow-step"><div class="flow-num">5</div><div class="fs-body"><h4>Climate resilience</h4><p>Tested with scenario analysis. (next chapter, ¶22)</p></div></div>
+  </div>
+
+  <h2 class="sh">Describing the risks & opportunities</h2>
+  <p>For the risks and opportunities that could reasonably affect its prospects, the entity must: <span class="para-ref">¶10</span></p>
+  <ul class="bl">
+    <li><strong>Describe them.</strong></li>
+    <li><strong>Classify each risk</strong> as either a physical risk or a transition risk.</li>
+    <li><strong>State the time horizon(s)</strong> — short, medium or long term — over which each could reasonably be expected to occur.</li>
+    <li><strong>Explain how it defines</strong> "short term", "medium term" and "long term", and how those link to the planning horizons it uses for strategic decisions.</li>
+  </ul>
+  <p>In identifying these, the entity must use <strong>all reasonable and supportable information available without undue cost or effort</strong> — including past events, current conditions and forecasts of future conditions. <span class="para-ref">¶11</span> (You'll meet "reasonable and supportable… without undue cost or effort" constantly — it's the standard's built-in reality check, so smaller entities aren't asked to do the impossible.)</p>
+  <p class="callout"><span class="co-label">Deleted by the AASB</span> Paragraph 12 (which in IFRS S2 pointed to industry-based disclosure topics) was <strong>deleted</strong> in the Australian version. So there's no requirement here to consult SASB industry topics. <span class="para-ref">¶12 [Deleted]</span></p>
+
+  <div class="analogy">
+    <div class="an-label">⏱️ Why time horizons are entity-specific</div>
+    <p>For a fast-fashion retailer, "long term" might be 5 years. For a company building a 40-year gas pipeline, "short term" might be longer than the retailer's "long term"! The standard refuses to set fixed numbers — it makes each entity define its own horizons and tie them to how it actually plans. That's why it must <em>explain</em> its definitions.</p>
+  </div>
+
+  <h2 class="sh">Business model & value chain</h2>
+  <p>Next, users need to understand the current and anticipated effects of climate risks and opportunities on the entity's <strong>business model and value chain</strong>. The entity discloses: <span class="para-ref">¶13</span></p>
+  <ul class="bl">
+    <li>A <strong>description of the effects</strong> (current and anticipated) on the business model and value chain.</li>
+    <li><strong>Where</strong> in the business model and value chain those risks and opportunities are <strong>concentrated</strong> — for example, particular geographic areas, facilities, or types of assets.</li>
+  </ul>
+  <p>("Value chain" is a defined term — the full range of interactions, resources and relationships from conception to end-of-life, upstream and downstream. We unpack it in the Chapter 9 dictionary.)</p>
+
+  <h2 class="sh">Strategy, decision-making & the transition plan</h2>
+  <p>Now the meaty bit. Users must understand how climate affects the entity's <strong>strategy and decision-making</strong>. The entity discloses how it has responded, and plans to respond — including how it plans to hit any climate targets it has set or is legally required to meet. Specifically: <span class="para-ref">¶14(a)</span></p>
+  <ul class="bl">
+    <li><strong>Changes to the business model</strong>, including resource allocation — e.g. plans to manage or decommission carbon-, energy- or water-intensive operations; shifts from supply/demand changes; spending on R&amp;D; acquisitions or divestments.</li>
+    <li><strong>Direct mitigation & adaptation</strong> — e.g. changing production processes or equipment, relocating facilities, workforce changes, new product specs.</li>
+    <li><strong>Indirect mitigation & adaptation</strong> — e.g. working with customers and supply chains.</li>
+    <li><strong>Any climate-related transition plan</strong>, including the key <em>assumptions</em> used in developing it and the <em>dependencies</em> it relies on.</li>
+    <li><strong>How it plans to achieve any targets</strong>, including greenhouse gas emissions targets (described per ¶33–36, covered in Chapter 7).</li>
+  </ul>
+  <p>And two more pieces: how the entity <strong>is resourcing (and plans to resource)</strong> those activities <span class="para-ref">¶14(b)</span>, and <strong>quantitative and qualitative progress</strong> on plans it disclosed in previous periods <span class="para-ref">¶14(c)</span> — so you can't quietly drop a plan and hope nobody notices.</p>
+
+  <div class="callout green"><span class="co-label">What's a transition plan?</span> A defined term: an aspect of the entity's overall strategy that lays out its <strong>targets, actions or resources for its transition towards a lower-carbon economy</strong> — like cutting emissions. It's not a separate document the standard mandates; it's whatever plan you have, disclosed honestly (including the assumptions holding it up).</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick check — Chapter 3</div>
+
+    <div class="q-card">
+      <p class="q-text">Why does AASB S2 make each entity define "short, medium and long term" itself instead of giving fixed year ranges?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Horizons depend on industry, cash-flow, investment and business cycles, so the standard ties them to each entity's own planning horizons.">Because relevant horizons differ by industry and planning cycle</button>
+        <button class="q-option" data-correct="false" data-explanation="It's not an oversight — it's a deliberate design choice, and the entity must explain its definitions.">The drafters simply forgot to specify them</button>
+        <button class="q-option" data-correct="false" data-explanation="There's no global table of horizons; entities define and explain their own.">Because a global ISSB table already sets the exact years</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Under ¶14, when disclosing its transition plan, an entity must also disclose...</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The standard doesn't require naming competitors' plans.">Its main competitors' transition plans</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! The key assumptions used in developing the plan, and the dependencies it relies on, must be disclosed.">The key assumptions and dependencies the plan relies on</button>
+        <button class="q-option" data-correct="false" data-explanation="No personal guarantee is required; the standard asks for honest disclosure of the plan and its assumptions.">A personal guarantee from the CEO that it will succeed</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">An entity quietly abandons a decarbonisation plan it disclosed last year. What does ¶14(c) require?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Silence isn't an option — progress reporting is explicitly required.">Nothing — past plans don't need follow-up</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! ¶14(c) requires quantitative and qualitative information about the progress of plans disclosed in previous periods.">Disclose quantitative and qualitative progress on previously disclosed plans</button>
+        <button class="q-option" data-correct="false" data-explanation="There's no requirement to restate all prior financial statements because a plan changed.">Restate all prior-year financial statements</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="3">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – STRATEGY II
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Chapter 04 / 10 · Pillar 2 of 4 (part 2)</div>
+  <h1 class="mod-title">Strategy II — <span class="acc">Money &amp; Resilience</span></h1>
+  <p class="mod-lede">Now we follow the money. How does climate hit the financial position, performance and cash flows — today and in the future? And could the whole strategy survive a hotter, stricter world? That last question is answered with the standard's most demanding tool: <strong>scenario analysis</strong>.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Current vs anticipated financial effects (¶15–16)</li>
+      <li>The relief valves — when you can skip quantifying (¶17–21)</li>
+      <li>Climate resilience and what scenario analysis is (¶22)</li>
+      <li>The "commensurate with circumstances" principle (¶B1–B18)</li>
+      <li>How often you must run and refresh the analysis</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Financial effects: now and later</h2>
+  <p>Users need to understand two things: <span class="para-ref">¶15</span></p>
+  <ul class="bl">
+    <li><strong>Current financial effects</strong> — how climate risks and opportunities affected the entity's financial position, performance and cash flows <em>this</em> reporting period.</li>
+    <li><strong>Anticipated financial effects</strong> — how they're expected to affect those things over the short, medium and long term, given how climate is factored into financial planning.</li>
+  </ul>
+  <p>Specifically, the entity discloses quantitative and qualitative information about: <span class="para-ref">¶16</span></p>
+  <ul class="bl">
+    <li>How climate <strong>affected</strong> its position, performance and cash flows this period.</li>
+    <li>Which of those risks/opportunities carry a <strong>significant risk of a material adjustment</strong> to the carrying amounts of assets and liabilities <strong>within the next year</strong>.</li>
+    <li>How it expects its <strong>financial position</strong> to change (given investment/disposal plans and planned funding sources).</li>
+    <li>How it expects its <strong>financial performance and cash flows</strong> to change (e.g. more revenue from low-carbon products; costs from physical damage; adaptation/mitigation expenses).</li>
+  </ul>
+  <p class="callout sea"><span class="co-label">Single number or a range?</span> When giving quantitative information, the entity <strong>may disclose a single amount or a range.</strong> Climate is uncertain — the standard accepts that. <span class="para-ref">¶17</span></p>
+
+  <h2 class="sh">The relief valves: when you can skip the numbers</h2>
+  <p>The standard is realistic: sometimes you genuinely can't put a credible number on a future effect. So it builds in escape hatches.</p>
+  <p>When preparing <em>anticipated</em> financial-effect disclosures, the entity must use all reasonable and supportable information available without undue cost or effort, and <strong>an approach commensurate with its skills, capabilities and resources.</strong> <span class="para-ref">¶18</span></p>
+  <p>An entity <strong>need not provide quantitative information</strong> about current or anticipated effects if: <span class="para-ref">¶19</span></p>
+  <ul class="bl">
+    <li>the effects are <strong>not separately identifiable</strong>; or</li>
+    <li>the <strong>measurement uncertainty is so high</strong> that the number wouldn't be useful.</li>
+  </ul>
+  <p>And it <strong>need not</strong> quantify <em>anticipated</em> effects if it simply <strong>doesn't have the skills, capabilities or resources</strong> to do so. <span class="para-ref">¶20</span></p>
+  <p>But — and this matters — if you use these reliefs, you can't just go silent. You must: <span class="para-ref">¶21</span></p>
+  <ol class="nl">
+    <li><strong>Explain why</strong> you didn't provide quantitative information;</li>
+    <li>Provide <strong>qualitative information</strong> about the financial effects, including which line items, totals and subtotals in the financial statements are likely affected; and</li>
+    <li>Provide quantitative information about the <strong>combined</strong> effects with other risks/opportunities and factors — unless even that wouldn't be useful.</li>
+  </ol>
+
+  <div class="callout gold"><span class="co-label">The spirit of the reliefs</span> The standard would rather get honest "we can't reliably quantify this yet, but here's where it bites and why" than a fake-precise number. The reliefs prevent companies being punished for the inherent uncertainty of climate — while still forcing them to say something useful.</p>
+
+  <h2 class="sh">Climate resilience &amp; scenario analysis</h2>
+  <p>The grand finale of the strategy pillar. The entity must disclose information letting users understand the <strong>resilience of its strategy and business model</strong> to climate changes, developments and uncertainties. And to assess that resilience, <strong>it must use climate-related scenario analysis</strong>, with an approach <strong>commensurate with its circumstances</strong>. <span class="para-ref">¶22</span></p>
+
+  <div class="analogy">
+    <div class="an-label">🎮 Scenario analysis = "what-if" playthroughs</div>
+    <p>Scenario analysis isn't a prediction. It's like running your business through several different "future worlds" — one where the world transitions fast to clean energy, one where it barely transitions and the planet heats a lot — and seeing whether your strategy survives each. You're stress-testing the plan, not forecasting one outcome.</p>
+  </div>
+
+  <h3 class="sub">What you disclose about resilience</h3>
+  <p>Two big buckets: <span class="para-ref">¶22(a)–(b)</span></p>
+  <p><strong>(a) Your resilience assessment as at the reporting date</strong>, so users understand:</p>
+  <ul class="bl">
+    <li>the <strong>implications</strong> for your strategy and business model, including how you'd need to respond to what the analysis surfaced;</li>
+    <li>the <strong>significant areas of uncertainty</strong> you considered;</li>
+    <li>your <strong>capacity to adjust or adapt</strong> over short/medium/long term — including the availability and flexibility of your financial resources; your ability to redeploy, repurpose, upgrade or decommission assets; and the effect of your current and planned investments in mitigation, adaptation and resilience.</li>
+  </ul>
+  <p><strong>(b) How and when the scenario analysis was carried out</strong>, including the <strong>inputs</strong>:</p>
+  <ul class="bl">
+    <li>which scenarios you used and their <strong>sources</strong>;</li>
+    <li>whether you used a <strong>diverse range</strong> of scenarios;</li>
+    <li>whether they relate to transition risks or physical risks;</li>
+    <li>whether you used a scenario <strong>aligned with the latest international agreement on climate change</strong> (the Paris Agreement);</li>
+    <li><strong>why</strong> the chosen scenarios are relevant to your resilience;</li>
+    <li>the <strong>time horizons</strong> and the <strong>scope of operations</strong> covered;</li>
+    <li>the <strong>key assumptions</strong> (climate policies, macroeconomic trends, national/regional variables, energy usage & mix, technology developments); and</li>
+    <li>the <strong>reporting period</strong> in which the analysis was carried out.</li>
+  </ul>
+
+  <h3 class="sub">"Commensurate with circumstances" — the proportionality engine (¶B1–B18)</h3>
+  <p>Appendix B spends 18 paragraphs explaining how to pick an approach that fits <em>you</em>. The logic:</p>
+  <ul class="bl">
+    <li>Assess your <strong>circumstances</strong>: your <strong>exposure</strong> to climate risk/opportunity, and the <strong>skills, capabilities and resources</strong> you have. <span class="para-ref">¶B2–B7</span></li>
+    <li><strong>The more exposed you are, the more sophisticated (quantitative) your analysis should be.</strong> Highly exposed + well-resourced entities are <em>required</em> to use a more advanced quantitative approach. <span class="para-ref">¶B4, B17</span></li>
+    <li>A less-exposed entity, or one just starting out, may use a <strong>simpler qualitative approach</strong> (scenario narratives) and build up over time through an iterative learning process. <span class="para-ref">¶B7, B15, B17</span></li>
+    <li>Use scenarios that are <strong>publicly and freely available from authoritative sources</strong> where you can — those count as available "without undue cost or effort." <span class="para-ref">¶B11–B12</span></li>
+  </ul>
+
+  <h3 class="sub">How often?</h3>
+  <p>Clever split: <span class="para-ref">¶B18</span></p>
+  <ul class="bl">
+    <li>You may run the <strong>scenario analysis itself</strong> in line with your strategic planning cycle — even every 3–5 years. So the ¶22(b) "how we did it" disclosures can stay unchanged between full analyses.</li>
+    <li>But the <strong>resilience assessment</strong> — the ¶22(a) results — must be <strong>updated every reporting period</strong> to reflect the latest insight.</li>
+  </ul>
+
+  <div class="callout"><span class="co-label">Australian note</span> When preparing the ¶13–22 disclosures, an entity must refer to and consider the cross-industry metric categories described in ¶29 (Chapter 7). <span class="para-ref">¶Aus23.1</span> (IFRS S2's ¶23, which also pointed to industry-based metrics, was deleted by the AASB.)</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick check — Chapter 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A small entity with modest climate exposure lacks the skills to model dollar figures for a future risk. Under the standard, it...</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="It is not forced to invent a number it can't credibly produce — that's exactly what the reliefs prevent.">Must hire consultants to produce a precise dollar figure</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Under ¶20 it need not quantify anticipated effects it lacks the skills/resources for — but per ¶21 must explain why, give qualitative info, and disclose combined effects.">May skip the quantitative figure, but must explain why and give qualitative information</button>
+        <button class="q-option" data-correct="false" data-explanation="Going silent isn't allowed — ¶21 requires explanation plus qualitative and combined-effect information.">May simply say nothing about that risk</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Which best describes scenario analysis under AASB S2?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="It's not a single prediction of the future — it's a stress test across multiple plausible futures.">A single precise forecast of the company's future profits</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! It tests the resilience of the strategy and business model across a range of plausible climate futures, with an approach commensurate with the entity's circumstances.">A stress test of the strategy across a range of plausible climate futures</button>
+        <button class="q-option" data-correct="false" data-explanation="It's required (¶22) for assessing resilience — not optional.">An optional marketing exercise</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">An entity runs a full scenario analysis every three years. What must it still update every single reporting period?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The resilience assessment (the ¶22(a) results) must be updated annually, even if the underlying scenario analysis runs on a multi-year cycle.">Its resilience assessment (the results)</button>
+        <button class="q-option" data-correct="false" data-explanation="The 'how we did it' inputs (¶22(b)) can stay unchanged between full analyses; it's the results that must refresh.">The detailed list of scenario inputs and assumptions</button>
+        <button class="q-option" data-correct="false" data-explanation="Nothing requires re-running the whole analysis annually — that's the point of the split.">It must re-run the entire analysis every year</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="4">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – RISK MANAGEMENT
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Chapter 05 / 10 · Pillar 3 of 4</div>
+  <h1 class="mod-title">Risk Management — <span class="acc">The Machinery</span></h1>
+  <p class="mod-lede">Governance is <em>who</em> oversees climate risk. Strategy is <em>what</em> it means for the plan and the money. Risk management is the <em>machinery in between</em>: the actual processes for finding, sizing, ranking and tracking climate risks — and whether that machine is bolted into the company's main risk system or sitting off to the side.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The objective of risk-management disclosures (¶24)</li>
+      <li>The full checklist for risk <em>and</em> opportunity processes (¶25)</li>
+      <li>Why "integration" is the headline word</li>
+      <li>The duplication rule again (¶26 &amp; ¶Aus26.1)</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The objective</h2>
+  <p>Risk-management disclosures exist so users can understand the entity's <strong>processes to identify, assess, prioritise and monitor climate-related risks and opportunities</strong> — and crucially, <strong>whether and how those processes are integrated into the entity's overall risk management.</strong> <span class="para-ref">¶24</span></p>
+  <p>Those four verbs — <strong>identify, assess, prioritise, monitor</strong> — are the heartbeat of this pillar. Memorise them.</p>
+
+  <h2 class="sh">What you disclose about the process</h2>
+  <p>For climate <strong>risks</strong>, disclose the processes and related policies you use to identify, assess, prioritise and monitor them, including: <span class="para-ref">¶25(a)</span></p>
+  <ul class="bl">
+    <li>the <strong>inputs and parameters</strong> used (e.g. data sources, scope of operations covered);</li>
+    <li>whether and how you use <strong>scenario analysis</strong> to <em>identify</em> risks;</li>
+    <li>how you assess the <strong>nature, likelihood and magnitude</strong> of effects (qualitative factors? quantitative thresholds? other criteria?);</li>
+    <li>whether and how you <strong>prioritise</strong> climate risks relative to other risk types;</li>
+    <li>how you <strong>monitor</strong> the risks;</li>
+    <li>whether and how the process has <strong>changed</strong> since last period.</li>
+  </ul>
+  <p>For climate <strong>opportunities</strong>, disclose the processes used to identify, assess, prioritise and monitor them — including whether and how you use scenario analysis to spot opportunities. <span class="para-ref">¶25(b)</span></p>
+  <p>And the headline: the <strong>extent to which, and how, these processes are integrated into and inform the entity's overall risk management process.</strong> <span class="para-ref">¶25(c)</span></p>
+
+  <div class="analogy">
+    <div class="an-label">🏭 The smoke detector test</div>
+    <p>Is your climate-risk process a smoke detector wired into the building's central alarm system — or a standalone gadget on a shelf that nobody checks? ¶25(c) is asking exactly that. Investors want climate risk handled by the same machinery that handles every other serious business risk, not quarantined into a "sustainability" silo.</p>
+  </div>
+
+  <h2 class="sh">Avoid duplication (you've seen this before)</h2>
+  <p>Just like governance, when preparing risk-management disclosures the entity must <strong>avoid unnecessary duplication</strong> (per Appendix D ¶B42(b)). If sustainability oversight is integrated, give <strong>integrated risk-management disclosures</strong> rather than a separate write-up per topic. <span class="para-ref">¶26</span></p>
+  <p>And the Australian clarification echoes Chapter 2: this matters <strong>particularly if the entity voluntarily also applies AASB S1</strong> to disclose other sustainability topics. <span class="para-ref">¶Aus26.1</span></p>
+
+  <div class="callout green"><span class="co-label">The four-pillar connection</span> Notice how the pillars interlock: scenario analysis (a Strategy tool) feeds Risk Management's <em>identification</em> step (¶25); Risk Management's output feeds Governance's oversight; and the risks it surfaces drive the Metrics &amp; Targets numbers in the next two chapters. The standard isn't four separate boxes — it's one connected loop. (Chapter 8's "connected information" rules make that explicit.)</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick check — Chapter 5</div>
+
+    <div class="q-card">
+      <p class="q-text">What are the four process verbs at the heart of the risk-management pillar?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Close, but the standard's wording is identify, assess, prioritise and monitor.">Predict, prevent, profit, publish</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! ¶24–25: identify, assess, prioritise and monitor climate-related risks and opportunities.">Identify, assess, prioritise, monitor</button>
+        <button class="q-option" data-correct="false" data-explanation="Not the standard's terms — it specifies identify, assess, prioritise and monitor.">Measure, market, mitigate, merge</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Paragraph 25(c) is considered the headline requirement because it asks about...</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! It asks the extent to which, and how, climate-risk processes are integrated into and inform the entity's overall risk management.">Whether climate-risk processes are integrated into overall risk management</button>
+        <button class="q-option" data-correct="false" data-explanation="The dollar cost of the risk team isn't what ¶25(c) targets — integration is.">The total budget of the risk-management department</button>
+        <button class="q-option" data-correct="false" data-explanation="Naming the software isn't the requirement; integration into the overall process is.">The brand of risk-management software used</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="5">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – METRICS & TARGETS I
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Chapter 06 / 10 · Pillar 4 of 4 (part 1)</div>
+  <h1 class="mod-title">Metrics &amp; Targets I — <span class="acc">Counting Carbon</span></h1>
+  <p class="mod-lede">Time for the numbers everyone's heard of: <strong>Scope 1, 2 and 3 greenhouse gas emissions</strong>. This is the most technical part of the standard, so we'll take it slowly — what the scopes mean, how to measure them, and the surprisingly deep rules for the trickiest one, Scope 3.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The objective of metrics & targets (¶27–28)</li>
+      <li>Scope 1, 2 and 3 — what each captures (¶29(a))</li>
+      <li>The GHG Protocol, CO₂-equivalent and global warming potential (¶B19–B29)</li>
+      <li>Location-based Scope 2 and contractual instruments (¶B30–B31)</li>
+      <li>The Scope 3 measurement framework — prioritising data quality (¶B32–B57)</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The objective</h2>
+  <p>Metrics &amp; targets disclosures let users understand the entity's <strong>performance</strong> on climate risks and opportunities, including progress towards any targets it set or is legally required to meet. <span class="para-ref">¶27</span> To achieve that, the entity discloses: <span class="para-ref">¶28</span></p>
+  <ul class="bl">
+    <li>information relevant to the <strong>cross-industry metric categories</strong> (¶29–31 — greenhouse gases plus six more, covered across this chapter and the next); and</li>
+    <li>its <strong>targets</strong> (¶33 onwards — Chapter 7).</li>
+  </ul>
+  <p class="callout"><span class="co-label">Deleted</span> IFRS S2's ¶28(b) — which required <em>industry-based</em> metrics — was deleted by the AASB. Australian entities don't report industry-based metrics (for now). <span class="para-ref">¶28(b) [Deleted]</span></p>
+
+  <h2 class="sh">The three scopes</h2>
+  <p>The headline metric is <strong>absolute gross greenhouse gas emissions</strong> for the reporting period, expressed in <strong>metric tonnes of CO₂ equivalent</strong>, split into three scopes: <span class="para-ref">¶29(a)(i)</span></p>
+  <div class="scope-grid">
+    <div class="scope-card s1"><div class="s-tag">Direct</div><h4>Scope 1</h4><p>Emissions from sources the entity <strong>owns or controls</strong>. E.g. fuel burned in its own vehicles, furnaces, on-site boilers.</p></div>
+    <div class="scope-card s2"><div class="s-tag">Indirect · energy</div><h4>Scope 2</h4><p>Indirect emissions from the <strong>purchased</strong> electricity, steam, heating or cooling the entity consumes. The emissions physically happen at the power plant.</p></div>
+    <div class="scope-card s3"><div class="s-tag">Indirect · value chain</div><h4>Scope 3</h4><p>All <strong>other</strong> indirect emissions across the value chain — upstream &amp; downstream. Suppliers, business travel, use of sold products, etc. Usually the biggest and hardest.</p></div>
+  </div>
+
+  <div class="analogy">
+    <div class="an-label">🍕 The pizza-shop way to remember scopes</div>
+    <p><strong>Scope 1</strong> = the gas flame in <em>your</em> oven. <strong>Scope 2</strong> = the electricity you buy to run the lights and fridge (burned at the power station, not your shop). <strong>Scope 3</strong> = everything else in the story — the emissions from growing the wheat and cheese (upstream), the customer driving to pick up the pizza, and the waste from the box (downstream).</p>
+  </div>
+
+  <h2 class="sh">How to measure: the GHG Protocol</h2>
+  <p>Emissions must be measured using the <strong>Greenhouse Gas Protocol: A Corporate Accounting and Reporting Standard (2004)</strong> — unless a jurisdictional authority or the exchange you're listed on <em>requires</em> a different method (then you may use that one). <span class="para-ref">¶29(a)(ii), ¶B23–B25</span></p>
+  <p>You also disclose <strong>your measurement approach, inputs and assumptions</strong> — what approach you used, why, and any changes you made during the period. <span class="para-ref">¶29(a)(iii), ¶B26–B29</span> Under the GHG Protocol you use the <strong>equity share or control approach</strong>, and you disclose which, and why. Emission factors must be the ones that <strong>best represent the entity's activity</strong>. <span class="para-ref">¶B27, B29</span></p>
+
+  <h3 class="sub">CO₂-equivalent &amp; global warming potential</h3>
+  <p>There are <strong>seven greenhouse gases</strong> (the Kyoto Protocol list — see Chapter 9). They warm the planet by different amounts, so the standard converts them all into one common unit: <strong>CO₂ equivalent (CO₂e)</strong>, using <strong>global warming potential (GWP)</strong> values. <span class="para-ref">¶B20–B22</span></p>
+  <ul class="bl">
+    <li>If you measure directly, convert gases to CO₂e using GWP values on a <strong>100-year time horizon</strong> from the <strong>latest IPCC assessment</strong> available at the reporting date.</li>
+    <li>The Australian standard pins "latest IPCC assessment" to the <strong>Sixth Assessment Report (AR6)</strong>. <span class="para-ref">¶AusB22.1</span></li>
+    <li>If you use emission factors that <em>already</em> convert gases to CO₂e, you don't have to recalculate them. <span class="para-ref">¶B22</span></li>
+  </ul>
+
+  <h3 class="sub">Two more details on Scope 1 &amp; 2</h3>
+  <ul class="bl">
+    <li><strong>Disaggregation.</strong> For Scope 1 and 2, split emissions between (1) the <strong>consolidated accounting group</strong> (parent + consolidated subsidiaries) and (2) <strong>other investees</strong> (associates, joint ventures, unconsolidated subsidiaries). <span class="para-ref">¶29(a)(iv)</span></li>
+    <li><strong>Scope 2 is location-based.</strong> You disclose <strong>location-based</strong> Scope 2 emissions, and provide information about any <strong>contractual instruments</strong> (e.g. renewable energy contracts) that help users understand your Scope 2 — you <em>may</em> also disclose a market-based figure. <span class="para-ref">¶29(a)(v), ¶B30–B31</span></li>
+  </ul>
+
+  <h2 class="sh">Scope 3: the hard one (¶B32–B57)</h2>
+  <p>Scope 3 is everything indirect across your value chain. There are <strong>15 categories</strong> (purchased goods, capital goods, business travel, use of sold products, investments, etc. — full list in Chapter 9). You must consider <strong>all 15</strong> and disclose <strong>which</strong> categories are included in your number. <span class="para-ref">¶29(a)(vi), ¶B32–B33</span></p>
+
+  <h3 class="sub">It's mostly estimation, prioritised by quality</h3>
+  <p>Scope 3 almost always involves <strong>estimation</strong>, not direct measurement. The standard gives a <strong>measurement framework</strong>: prioritise inputs and assumptions using these characteristics: <span class="para-ref">¶B40</span></p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div class="fs-body"><h4>Direct measurement over estimation</h4><p>All else equal, prioritise directly measured data. <span class="para-ref">¶B43–B45</span></p></div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="fs-body"><h4>Primary over secondary data</h4><p>Data from specific activities in your value chain (meter readings, supplier data) beats industry averages. <span class="para-ref">¶B46–B49</span></p></div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="fs-body"><h4>Representative & timely data</h4><p>Prioritise data that reflects the right technology, the right jurisdiction, and the right time period. <span class="para-ref">¶B50–B52</span></p></div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="fs-body"><h4>Verified data</h4><p>Prioritise data that's been internally or externally verified. <span class="para-ref">¶B53–B54</span></p></div></div>
+  </div>
+  <p>You disclose how you prioritised — including the extent to which Scope 3 is measured using <strong>inputs from specific value-chain activities</strong> and the extent to which it's <strong>verified</strong>. <span class="para-ref">¶B55–B56</span></p>
+
+  <div class="callout gold"><span class="co-label">Reassess on big changes</span> On a significant event or change in circumstances (e.g. a merger, a major supplier change, a new emissions regulation), you must <strong>reassess</strong> which Scope 3 categories and value-chain entities to include. <span class="para-ref">¶B34–B35</span></p>
+  <p class="callout red"><span class="co-label">The "impracticable" backstop</span> The standard <em>presumes</em> Scope 3 can be estimated using secondary data and industry averages. In the rare case it's genuinely <strong>impracticable</strong>, the entity must instead disclose <strong>how it is managing</strong> its Scope 3 emissions. ("Impracticable" = can't do it after every reasonable effort.) <span class="para-ref">¶B57</span></p>
+
+  <p>One more Scope 3 wrinkle — <strong>financed emissions</strong> for banks, insurers and asset managers — is big enough that we give it its own section in the next chapter (¶B58 onwards).</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick check — Chapter 6</div>
+
+    <div class="q-card">
+      <p class="q-text">A factory buys grid electricity to run its machines. Those emissions (created at the power station) are which scope?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Scope 1 is direct emissions from sources the entity owns or controls — like its own on-site fuel combustion.">Scope 1</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Purchased/acquired electricity, steam, heating or cooling = Scope 2 (indirect energy emissions).">Scope 2</button>
+        <button class="q-option" data-correct="false" data-explanation="Scope 3 is other indirect value-chain emissions; purchased electricity specifically is Scope 2.">Scope 3</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the standard convert all seven greenhouse gases into "CO₂ equivalent"?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Different gases warm the planet by different amounts; CO₂e (via global warming potential values) puts them on one common basis.">To express different gases on one common warming basis</button>
+        <button class="q-option" data-correct="false" data-explanation="CO₂ isn't the only gas reported — the others are converted into a CO₂-equivalent figure, not ignored.">Because only CO₂ actually matters</button>
+        <button class="q-option" data-correct="false" data-explanation="It's about comparability of warming impact, not currency conversion.">To convert emissions into Australian dollars</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">When estimating Scope 3, two data sources are available. Which should be prioritised, all else equal?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Generic industry-average (secondary) data is lower in the priority order than primary data from your actual value chain.">Generic industry-average data, because it's easier</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Primary data from specific activities in the entity's own value chain is prioritised over secondary data (¶B47).">Primary data from specific activities in your own value chain</button>
+        <button class="q-option" data-correct="false" data-explanation="The standard sets a clear priority order — quality of data is not a coin toss.">Whichever you pick first — it doesn't matter</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="6">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – METRICS & TARGETS II
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">Chapter 07 / 10 · Pillar 4 of 4 (part 2)</div>
+  <h1 class="mod-title">Metrics &amp; Targets II — <span class="acc">Beyond Emissions</span></h1>
+  <p class="mod-lede">Emissions are only the first of the cross-industry metrics. This chapter covers the other six, the special rules for financial firms (financed emissions), and then the whole world of <strong>climate-related targets</strong> — including the carbon-credit transparency rules that stop "net zero" from becoming a magic word.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The six non-emissions cross-industry metric categories (¶29(b)–(g))</li>
+      <li>Financed emissions for asset managers, banks & insurers (¶B58–B63)</li>
+      <li>Everything a target disclosure must contain (¶33–34)</li>
+      <li>Performance, GHG targets, gross vs net, and carbon credits (¶35–36, ¶B66–B71)</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The other six cross-industry metrics (¶29(b)–(g))</h2>
+  <p>Beyond greenhouse gases, the entity discloses information relevant to: <span class="para-ref">¶29(b)–(g)</span></p>
+  <div class="tbl-wrap">
+    <table class="dt">
+      <thead><tr><th>Metric</th><th>What you disclose</th></tr></thead>
+      <tbody>
+        <tr><td><strong>(b) Transition risk</strong></td><td>The amount and % of assets or business activities <strong>vulnerable to transition risks</strong>.</td></tr>
+        <tr><td><strong>(c) Physical risk</strong></td><td>The amount and % of assets or business activities <strong>vulnerable to physical risks</strong>.</td></tr>
+        <tr><td><strong>(d) Opportunities</strong></td><td>The amount and % of assets or business activities <strong>aligned with climate opportunities</strong>.</td></tr>
+        <tr><td><strong>(e) Capital deployment</strong></td><td>The amount of capital expenditure, financing or investment <strong>deployed toward</strong> climate risks and opportunities.</td></tr>
+        <tr><td><strong>(f) Internal carbon prices</strong></td><td>Whether and how you apply a carbon price in decision-making, and the <strong>price per tonne</strong> you use.</td></tr>
+        <tr><td><strong>(g) Remuneration</strong></td><td>Whether and how climate is factored into executive pay, and the <strong>% of exec remuneration</strong> linked to climate considerations.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>For (b)–(d), use all reasonable and supportable information available without undue cost or effort. <span class="para-ref">¶30</span> For (b)–(g), also refer to the guidance in ¶B64–B65 — which tells you to consider time horizons, where risk concentrates, the financial effects already disclosed, and the <strong>connections to the financial statements</strong> (consistent data, linked amounts). <span class="para-ref">¶31, ¶B64–B65</span></p>
+  <p class="callout"><span class="co-label">Deleted</span> ¶32 (industry-based metrics) and ¶B65(d) were deleted by the AASB — consistent with dropping industry-based disclosures. <span class="para-ref">¶32 [Deleted]</span></p>
+
+  <h2 class="sh">Financed emissions (¶B58–B63)</h2>
+  <p>If an entity does <strong>asset management, commercial banking or insurance</strong>, its biggest climate exposure is often the emissions of the companies it <em>funds</em> — its "<strong>financed emissions</strong>" (part of Scope 3, Category 15: investments). So such entities must disclose <strong>additional, specific</strong> information. <span class="para-ref">¶29(a)(vi)(2), ¶B58–B60</span></p>
+
+  <div class="analogy">
+    <div class="an-label">🏦 Why a bank's own office emissions miss the point</div>
+    <p>A bank's Scope 1 &amp; 2 (its offices, its servers) might be tiny. But if it lends billions to coal projects, <em>that's</em> where its real climate exposure lives. Financed-emissions disclosure drags that exposure into the light, so investors can see it.</p>
+  </div>
+
+  <p>For each of the three activity types, the disclosures are tailored: <span class="para-ref">¶B61–B63</span></p>
+  <ul class="bl">
+    <li><strong>Asset management:</strong> absolute gross financed emissions split by Scope 1/2/3; the total <strong>assets under management (AUM)</strong> included; the <strong>% of AUM</strong> covered (with explanations for any exclusions); and the <strong>methodology</strong> used (including how emissions are allocated by investment size).</li>
+    <li><strong>Commercial banking</strong> &amp; <strong>insurance:</strong> financed emissions by Scope, broken down <strong>by industry and by asset class</strong> (loans, bonds, equity, undrawn commitments, etc.); <strong>gross exposure</strong> by industry/asset class; the <strong>% of gross exposure</strong> covered; and the methodology. Industry is classified using the <strong>GICS 6-digit code</strong> (the version incorporating amendments to August 2024). <span class="para-ref">¶AusB63.1</span></li>
+  </ul>
+
+  <h2 class="sh">Climate-related targets (¶33–36)</h2>
+  <p>An entity discloses the quantitative and qualitative <strong>targets</strong> it has set (and any it's legally required to meet), including greenhouse gas emissions targets. For <strong>each</strong> target, disclose: <span class="para-ref">¶33</span></p>
+  <ul class="bl">
+    <li>(a) the <strong>metric</strong> used to set it;</li>
+    <li>(b) the <strong>objective</strong> (mitigation, adaptation, or conformance with science-based initiatives);</li>
+    <li>(c) the <strong>part of the entity</strong> it applies to (whole entity? one business unit? one region?);</li>
+    <li>(d) the <strong>period</strong> over which it applies;</li>
+    <li>(e) the <strong>base period</strong> progress is measured from;</li>
+    <li>(f) any <strong>milestones and interim targets</strong>;</li>
+    <li>(g) if quantitative, whether it's an <strong>absolute</strong> or <strong>intensity</strong> target;</li>
+    <li>(h) how the <strong>latest international agreement on climate change</strong> (and jurisdictional commitments under it) informed the target.</li>
+  </ul>
+  <p class="callout sea"><span class="co-label">Absolute vs intensity</span> An <strong>absolute target</strong> = a total amount (or change in total), e.g. "cut total emissions to 1 million tonnes." An <strong>intensity target</strong> = a ratio to a business metric, e.g. "cut emissions per tonne of product by 30%." A company can grow and still hit an intensity target while total emissions rise — which is why the distinction must be disclosed. <span class="para-ref">¶B66</span></p>
+
+  <p>You also disclose your <strong>approach to setting and reviewing</strong> each target: whether the target (and its methodology) was <strong>validated by a third party</strong>; your review processes; the metrics used to monitor progress; and any revisions (with reasons). <span class="para-ref">¶34</span> Plus your actual <strong>performance against each target</strong> and an analysis of trends or changes. <span class="para-ref">¶35</span></p>
+
+  <h3 class="sub">Greenhouse gas emissions targets — the extra rules (¶36)</h3>
+  <p>For each GHG emissions target, also disclose: <span class="para-ref">¶36</span></p>
+  <ul class="bl">
+    <li>(a) which <strong>gases</strong> it covers;</li>
+    <li>(b) whether <strong>Scope 1, 2 or 3</strong> are covered;</li>
+    <li>(c) whether it's a <strong>gross</strong> or <strong>net</strong> target — and if net, you must <em>also</em> separately disclose the associated <strong>gross</strong> target (a net figure can't hide the gross one); <span class="para-ref">¶B68–B69</span></li>
+    <li>(d) whether it was derived using a <strong>sectoral decarbonisation approach</strong>;</li>
+    <li>(e) your planned use of <strong>carbon credits</strong> to offset emissions toward a net target.</li>
+  </ul>
+
+  <h3 class="sub">Carbon credits — no hand-waving (¶36(e), ¶B70–B71)</h3>
+  <p>If you plan to use carbon credits to hit a net target, you must clearly show <strong>how much you're relying on them</strong>, plus: <span class="para-ref">¶36(e)</span></p>
+  <ul class="bl">
+    <li>which <strong>third-party scheme(s)</strong> will verify or certify the credits;</li>
+    <li>the <strong>type</strong> of credit — nature-based vs technological, and reduction vs removal;</li>
+    <li>any other factors needed to judge the <strong>credibility and integrity</strong> of the credits (e.g. assumptions about permanence).</li>
+  </ul>
+
+  <div class="callout gold"><span class="co-label">Why the carbon-credit rules are strict</span> "Net zero" is easy to claim and hard to verify. By forcing disclosure of <em>how much</em> a target leans on offsets — and how solid those offsets are — the standard makes the difference between a real emissions cut and a paper one visible to investors.</p>
+
+  <p class="callout"><span class="co-label">Australian wrap-up</span> ¶37 (industry-based metrics for targets) was deleted; instead ¶Aus37.1 says when identifying target metrics you refer to the cross-industry metrics in ¶29. And the whole legislative instrument formally <strong>commenced on 31 December 2024</strong>. <span class="para-ref">¶Aus37.1, ¶Aus37.2</span></p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick check — Chapter 7</div>
+
+    <div class="q-card">
+      <p class="q-text">A company sets a "net zero by 2050" target that relies heavily on buying carbon credits. Under ¶36, it must...</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! For a net target it must also disclose the associated gross target, plus the extent of reliance on credits, who certifies them, and their type/integrity.">Also disclose the associated gross target and detailed information about the credits</button>
+        <button class="q-option" data-correct="false" data-explanation="A net target can't obscure the gross picture — the gross target must be disclosed separately.">Disclose only the net figure, since that's the headline goal</button>
+        <button class="q-option" data-correct="false" data-explanation="Carbon-credit reliance must be disclosed in detail, not kept confidential.">Keep the use of carbon credits confidential</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A bank's own offices emit very little, but it lends heavily to high-emitting industries. Which disclosure captures its real exposure?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Scope 1 & 2 are exactly the small office/energy emissions that miss the bank's real exposure.">Just its Scope 1 and Scope 2 office emissions</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Financed emissions (¶B58–B62) capture the emissions of the entities the bank funds — its real climate exposure.">Its financed emissions, broken down by industry and asset class</button>
+        <button class="q-option" data-correct="false" data-explanation="Executive remuneration is a separate metric and doesn't capture lending-portfolio emissions.">Its executive remuneration percentage</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A company's total emissions rose, yet it still met its target. What kind of target was it most likely?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! An intensity target is a ratio (e.g. emissions per unit of output); output can grow, lifting total emissions while the ratio improves.">An intensity target</button>
+        <button class="q-option" data-correct="false" data-explanation="An absolute target caps the total amount, so rising total emissions would breach it.">An absolute target</button>
+        <button class="q-option" data-correct="false" data-explanation="The gross/net distinction is about offsets, not about why total emissions can rise under a ratio target.">A net target with no offsets</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="7">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 8 – APPENDIX D RULEBOOK
+═══════════════════════════════════════════ -->
+<section id="module-8" class="module-section">
+  <div class="mod-eyebrow">Chapter 08 / 10 · The General Rules</div>
+  <h1 class="mod-title">The Reporting <span class="acc">Rulebook</span> (Appendix D)</h1>
+  <p class="mod-lede">The four pillars tell you <em>what</em> to disclose. Appendix D tells you <em>how to actually prepare and present</em> it — the conceptual foundations, what "material" means, where to put the disclosures, when, how to handle comparatives, and what to do about judgements, uncertainties and errors. It's the rules-of-the-game appendix, copied from the voluntary AASB S1 so AASB S2 can stand alone.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why Appendix D exists and how its numbering works</li>
+      <li>Fair presentation, materiality and the reporting entity</li>
+      <li>Connected information, location and timing of disclosures</li>
+      <li>Comparatives, the statement of compliance, and the two exemptions</li>
+      <li>Judgements, measurement uncertainty and errors</li>
+      <li>The qualitative characteristics of useful information</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Why this appendix exists</h2>
+  <p>Recall from Chapter 1: globally, IFRS S2 leans on IFRS S1 for general rules. In Australia, AASB S1 is voluntary — so the AASB lifted the necessary general requirements into <strong>Appendix D</strong>. To comply with AASB S2 you must satisfy <strong>all</strong> of Appendix D plus the rest of the standard. Only then can you make an <strong>explicit and unreserved statement of compliance</strong>. <span class="para-ref">App D intro</span></p>
+  <p class="callout"><span class="co-label">Numbering quirk</span> Appendix D keeps <strong>AASB S1's</strong> paragraph numbers (so the two line up for entities using both), and marks paragraphs "[Not included]" where S1 content was left out. Don't confuse Appendix D's ¶B-numbers with the main standard's ¶B-numbers — they're different series.</p>
+
+  <h2 class="sh">Conceptual foundations &amp; fair presentation</h2>
+  <p>For climate information to be useful it must be <strong>relevant</strong> and <strong>faithfully represent</strong> what it claims to (the two <em>fundamental</em> qualities), and ideally be <strong>comparable, verifiable, timely and understandable</strong> (the <em>enhancing</em> qualities). <span class="para-ref">¶10</span></p>
+  <p>A complete set of disclosures must <strong>present fairly</strong> all climate risks and opportunities that could reasonably affect the entity's prospects. Faithful representation means a <strong>complete, neutral and accurate</strong> depiction. Fair presentation also requires <strong>additional information</strong> when the specific requirements aren't enough for users to understand the effects. <span class="para-ref">¶11–16</span></p>
+
+  <h2 class="sh">Materiality — the master filter</h2>
+  <p>You must disclose <strong>material</strong> information. Information is <strong>material</strong> if omitting, misstating or obscuring it could reasonably be expected to <strong>influence the decisions of primary users.</strong> <span class="para-ref">¶17–18</span></p>
+  <ul class="bl">
+    <li>Materiality is <strong>entity-specific</strong> — the standard sets <strong>no fixed thresholds</strong>. <span class="para-ref">¶B19</span></li>
+    <li>You consider both <strong>quantitative and qualitative</strong> factors, and assess information in the context of the disclosures <strong>as a whole</strong>. <span class="para-ref">¶B21</span></li>
+    <li>For <strong>uncertain future events</strong>, weigh the possible outcomes and their likelihood — and note that <strong>low-probability, high-impact</strong> outcomes can be material, individually or combined. <span class="para-ref">¶B22–B24</span></li>
+    <li>You <strong>need not</strong> disclose immaterial information, even if a requirement lists it as a "minimum." <span class="para-ref">¶B25</span></li>
+    <li>Don't <strong>obscure</strong> material info (e.g. burying it in boilerplate, scattering it, or over-aggregating). Reassess materiality <strong>each reporting date</strong>. <span class="para-ref">¶B27–B28</span></li>
+  </ul>
+  <p class="callout sea"><span class="co-label">Aggregation</span> Combine information that shares characteristics; separate (disaggregate) things that don't — e.g. split water drawn from abundant sources vs water-stressed areas if lumping them would hide something material. <span class="para-ref">¶B29–B30</span></p>
+
+  <h2 class="sh">Reporting entity &amp; connected information</h2>
+  <p>Your climate disclosures must be for the <strong>same reporting entity</strong> as the related financial statements, unless the law permits otherwise. <span class="para-ref">¶Aus20.1, ¶AusB38.1</span> (This is the consolidated-group choice from Chapter 1.)</p>
+  <p>And you must present information so users can see the <strong>connections</strong>: <span class="para-ref">¶21–24, ¶B39–B44</span></p>
+  <ul class="bl">
+    <li>between the items themselves (e.g. how different risks relate);</li>
+    <li>between your disclosures (governance ↔ strategy ↔ risk management ↔ metrics);</li>
+    <li>between your climate disclosures and your <strong>financial statements</strong>.</li>
+  </ul>
+  <p>Data and assumptions used must be <strong>consistent</strong> — to the extent possible — with those in the related financial statements, and you use the <strong>same presentation currency</strong>. <span class="para-ref">¶23–24</span></p>
+
+  <h2 class="sh">Location &amp; timing</h2>
+  <ul class="bl">
+    <li><strong>Location:</strong> disclosures go <strong>in the general purpose financial reports</strong>. You may put them alongside other info (e.g. regulator-required info), as long as the climate disclosures stay <strong>clearly identifiable</strong>. You can include info by <strong>cross-reference</strong> to another report, under conditions (¶B45–B47). <span class="para-ref">¶60–63</span></li>
+    <li><strong>Timing:</strong> report climate disclosures <strong>at the same time</strong> as, and covering the <strong>same period</strong> as, the related financial statements (normally 12 months). Disclose changes if you use a longer/shorter period, and update for new information about end-of-period conditions or significant <strong>events after the reporting period</strong>. Interim reporting rules per ¶B48. <span class="para-ref">¶64–69</span></li>
+  </ul>
+
+  <h2 class="sh">Comparatives, compliance &amp; exemptions</h2>
+  <ul class="bl">
+    <li><strong>Comparatives:</strong> disclose prior-period comparatives for all amounts (and for narrative info where useful). If you get new evidence about a prior estimate, revise the comparative and explain. Special handling for forward-looking, redefined, or newly introduced metrics — unless <strong>impracticable</strong>. <span class="para-ref">¶70, ¶B49–B54</span></li>
+    <li><strong>Statement of compliance:</strong> only claim compliance with an <strong>explicit and unreserved statement</strong>, and only if you meet <strong>every</strong> requirement. <span class="para-ref">¶72</span></li>
+    <li><strong>Two exemptions</strong> that don't break your compliance claim: <span class="para-ref">¶73, ¶B33–B37</span>
+      <ul class="bl" style="margin-top:6px">
+        <li><strong>Prohibited by law:</strong> you may omit info that law/regulation forbids you to disclose (identify the type and the source of the restriction).</li>
+        <li><strong>Commercially sensitive opportunities:</strong> you may omit info about a climate <em>opportunity</em> if it's not already public, disclosure would seriously prejudice the economic benefit, and you can't disclose it even at an aggregated level. This <strong>never</strong> applies to risks, and can't be a basis for broad non-disclosure.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2 class="sh">Judgements, uncertainties &amp; errors</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><div class="icon">⚖️</div><h4>Judgements</h4><p>Disclose the judgements (other than estimations) with the most significant effect on the disclosures — e.g. which risks to identify, which guidance to apply, what's material. <span class="para-ref">¶74–75</span></p></div>
+    <div class="concept-card"><div class="icon">🌫️</div><h4>Measurement uncertainty</h4><p>Identify amounts subject to high uncertainty and disclose the sources of uncertainty and the assumptions made. Estimates are normal and don't undermine usefulness if well-explained. <span class="para-ref">¶77–81</span></p></div>
+    <div class="concept-card"><div class="icon">🛠️</div><h4>Errors</h4><p>Correct material prior-period errors by restating comparatives, unless impracticable. Errors (maths mistakes, misapplied definitions, fraud) differ from changes in estimates. <span class="para-ref">¶83–86, ¶B55–B59</span></p></div>
+  </div>
+
+  <h2 class="sh">The qualitative characteristics (Appendix D, from S1's App D)</h2>
+  <p>Finally, Appendix D restates the qualities that make information useful — worth knowing because they're the "why" behind many rules:</p>
+  <div class="tbl-wrap">
+    <table class="dt">
+      <thead><tr><th>Type</th><th>Characteristic</th><th>Plain meaning</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="2"><strong>Fundamental</strong></td><td>Relevance</td><td>Capable of making a difference to a decision (predictive and/or confirmatory value). Materiality is the entity-specific side of relevance.</td></tr>
+        <tr><td>Faithful representation</td><td>Complete, neutral &amp; accurate. Neutrality is supported by <strong>prudence</strong> (don't overstate opportunities or understate risks).</td></tr>
+        <tr><td rowspan="4"><strong>Enhancing</strong></td><td>Comparability</td><td>Like things look alike, different things look different. Consistency helps achieve it; comparability ≠ uniformity.</td></tr>
+        <tr><td>Verifiability</td><td>Knowledgeable, independent observers could reach consensus it's a faithful representation.</td></tr>
+        <tr><td>Timeliness</td><td>Available in time to influence decisions.</td></tr>
+        <tr><td>Understandability</td><td>Clear and concise — avoid boilerplate, avoid duplication, but never drop complex material info just to look simpler.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick check — Chapter 8</div>
+
+    <div class="q-card">
+      <p class="q-text">An entity faces a low-probability but catastrophic climate event. Its potential financial effect is huge. How should materiality be judged?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Low probability alone doesn't make it immaterial — high-impact, low-probability outcomes can be material.">Automatically immaterial because it's unlikely</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! ¶B22–B23: low-probability, high-impact outcomes can be material, individually or combined with others.">It can still be material despite low probability, given the high impact</button>
+        <button class="q-option" data-correct="false" data-explanation="There are no fixed numeric thresholds — materiality is entity-specific and considers nature and magnitude.">Material only if it crosses a fixed 5% threshold</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">The commercially-sensitive-information exemption can be used to omit...</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="It explicitly does NOT apply to climate-related risks, and can't justify broad non-disclosure.">Information about a serious climate risk</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Only a climate opportunity, and only if it's not already public, disclosure would seriously prejudice the benefit, and it can't be disclosed even at an aggregated level.">Narrow information about a climate opportunity meeting strict conditions</button>
+        <button class="q-option" data-correct="false" data-explanation="It's a narrow, condition-bound exemption for opportunities — not a free pass for anything inconvenient.">Anything the entity finds inconvenient to report</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does Appendix D exist inside AASB S2 at all?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! AASB S1 is voluntary, so the general requirements S2 needs were copied into Appendix D to make S2 a standalone mandatory standard.">Because AASB S1 is voluntary, so S2 needs its own copy of the general rules</button>
+        <button class="q-option" data-correct="false" data-explanation="It's not optional bonus material — entities must comply with all of Appendix D.">It's optional reading that entities can ignore</button>
+        <button class="q-option" data-correct="false" data-explanation="It contains general reporting requirements, not the emissions metrics (those are in the main body).">It contains the Scope 1/2/3 emissions formulas</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="8">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 9 – DICTIONARY & TRANSITION
+═══════════════════════════════════════════ -->
+<section id="module-9" class="module-section">
+  <div class="mod-eyebrow">Chapter 09 / 10 · Appendices A &amp; C</div>
+  <h1 class="mod-title">The <span class="acc">Dictionary</span> &amp; the Transition Rules</h1>
+  <p class="mod-lede">Two short-but-essential appendices. <strong>Appendix A</strong> is the legally-binding glossary — these definitions have the same authority as everything else, so getting them right matters. <strong>Appendix C</strong> is the on-ramp: the effective date and the first-year reliefs that make starting less painful.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Every key defined term in Appendix A</li>
+      <li>The seven greenhouse gases and the 15 Scope 3 categories</li>
+      <li>The not-for-profit term accommodation (¶AusA1)</li>
+      <li>The effective date and the two first-year transition reliefs (Appendix C)</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Appendix A — the defined terms</h2>
+  <p>These aren't decoration — they're <strong>part of the standard with equal authority</strong>, and they appear in italics the first time they're used in the body. Here are the ones that carry the most weight:</p>
+  <dl class="gloss">
+    <div class="gloss-item"><dt>climate-related physical risks</dt><dd>Risks from climate change that are <strong>event-driven (acute)</strong> — storms, floods, drought, heatwaves — or from <strong>longer-term shifts (chronic)</strong> — changing precipitation/temperature, sea-level rise, reduced water availability, biodiversity loss, soil-productivity changes.</dd></div>
+    <div class="gloss-item"><dt>climate-related transition risks</dt><dd>Risks from the effort to transition to a lower-carbon economy: <strong>policy, legal, technological, market and reputational</strong> risks. E.g. higher operating costs or asset impairment from new climate regulations.</dd></div>
+    <div class="gloss-item"><dt>climate-related opportunities</dt><dd>The potential <strong>positive</strong> effects arising from climate change for an entity — efforts to mitigate and adapt can create them.</dd></div>
+    <div class="gloss-item"><dt>climate resilience</dt><dd>The entity's <strong>capacity to adjust</strong> to climate-related changes, developments or uncertainties — managing risks and benefiting from opportunities. Includes both <strong>strategic</strong> and <strong>operational</strong> resilience.</dd></div>
+    <div class="gloss-item"><dt>climate-related transition plan</dt><dd>An aspect of the entity's overall strategy laying out its <strong>targets, actions or resources</strong> for transitioning toward a lower-carbon economy.</dd></div>
+    <div class="gloss-item"><dt>CO₂ equivalent (CO₂e)</dt><dd>The universal unit indicating the <strong>global warming potential</strong> of each greenhouse gas, expressed relative to one unit of carbon dioxide — a common basis for comparing gases.</dd></div>
+    <div class="gloss-item"><dt>global warming potential (GWP)</dt><dd>A factor describing the radiative-forcing impact (harm to the atmosphere) of one unit of a given greenhouse gas relative to one unit of CO₂.</dd></div>
+    <div class="gloss-item"><dt>greenhouse gases</dt><dd>The <strong>seven</strong> gases listed in the Kyoto Protocol: carbon dioxide (CO₂), methane (CH₄), nitrous oxide (N₂O), hydrofluorocarbons (HFCs), nitrogen trifluoride (NF₃), perfluorocarbons (PFCs) and sulphur hexafluoride (SF₆).</dd></div>
+    <div class="gloss-item"><dt>Scope 1 / Scope 2 / Scope 3 emissions</dt><dd><strong>Scope 1:</strong> direct emissions from sources the entity owns or controls. <strong>Scope 2:</strong> indirect emissions from purchased/acquired electricity, steam, heating or cooling. <strong>Scope 3:</strong> other indirect emissions in the value chain (upstream &amp; downstream).</dd></div>
+    <div class="gloss-item"><dt>financed emissions</dt><dd>The portion of an investee's or counterparty's gross emissions <strong>attributed to the loans and investments</strong> an entity makes to them — part of Scope 3 Category 15 (investments).</dd></div>
+    <div class="gloss-item"><dt>internal carbon price</dt><dd>A price the entity uses to assess the financial implications of emissions. Two common types: a <strong>shadow price</strong> (a notional cost used in decision-making) and an <strong>internal tax/fee</strong> (an actual charge on a business unit's emissions).</dd></div>
+    <div class="gloss-item"><dt>latest international agreement on climate change</dt><dd>The agreement by UN member states to combat climate change — i.e. the <strong>Paris Agreement (December 2015)</strong>.</dd></div>
+    <div class="gloss-item"><dt>value chain</dt><dd>The full range of <strong>interactions, resources and relationships</strong> related to the entity's business model and external environment — from conception to delivery, consumption and end-of-life, upstream and downstream.</dd></div>
+    <div class="gloss-item"><dt>business model</dt><dd>The entity's system of <strong>transforming inputs into outputs and outcomes</strong> to fulfil its purposes and generate cash flows over short, medium and long term.</dd></div>
+    <div class="gloss-item"><dt>general purpose financial reports</dt><dd>Reports providing financial information useful to primary users for resource decisions — including the financial statements <em>and</em> sustainability-related financial disclosures.</dd></div>
+    <div class="gloss-item"><dt>primary users</dt><dd>Existing and potential <strong>investors, lenders and other creditors</strong>.</dd></div>
+    <div class="gloss-item"><dt>impracticable</dt><dd>Applying a requirement is impracticable when the entity <strong>cannot apply it after making every reasonable effort</strong> to do so.</dd></div>
+    <div class="gloss-item"><dt>carbon credit</dt><dd>An emissions unit issued by a carbon-crediting programme representing an emission <strong>reduction or removal</strong>; uniquely serialised, issued, tracked and cancelled in an electronic registry.</dd></div>
+  </dl>
+  <p class="callout"><span class="co-label">Deleted definition</span> The term <strong>"disclosure topic"</strong> was deleted by the AASB, consistent with dropping industry-based disclosures.</p>
+
+  <h3 class="sub">The 15 Scope 3 categories</h3>
+  <p>Scope 3 (per the GHG Protocol Corporate Value Chain Standard) is split into 15 categories — you must consider all of them and disclose which you include: <span class="para-ref">App A</span></p>
+  <div class="tbl-wrap">
+    <table class="dt">
+      <thead><tr><th>Upstream</th><th>Downstream</th></tr></thead>
+      <tbody>
+        <tr><td>1. Purchased goods &amp; services</td><td>9. Downstream transportation &amp; distribution</td></tr>
+        <tr><td>2. Capital goods</td><td>10. Processing of sold products</td></tr>
+        <tr><td>3. Fuel- &amp; energy-related activities (not in Scope 1/2)</td><td>11. Use of sold products</td></tr>
+        <tr><td>4. Upstream transportation &amp; distribution</td><td>12. End-of-life treatment of sold products</td></tr>
+        <tr><td>5. Waste generated in operations</td><td>13. Downstream leased assets</td></tr>
+        <tr><td>6. Business travel</td><td>14. Franchises</td></tr>
+        <tr><td>7. Employee commuting</td><td>15. Investments <em>(→ financed emissions)</em></td></tr>
+        <tr><td>8. Upstream leased assets</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Not-for-profit accommodation</h3>
+  <p>For NFP entities, the terms <strong>"general purpose financial reports"</strong> and <strong>"primary users"</strong> take their meaning from the <em>Framework for the Preparation and Presentation of Financial Statements</em> (amended to March 2020) rather than the Appendix A definitions — because an NFP's users include parliaments, taxpayers, donors and service recipients, not just investors. <span class="para-ref">¶AusA1</span></p>
+
+  <h2 class="sh">Appendix C — effective date &amp; transition</h2>
+  <p>The on-ramp. An entity applies the standard for annual periods <strong>beginning on or after 1 January 2025</strong>; earlier application is permitted (disclose the fact if you do). The <strong>date of initial application</strong> is the start of the first period you apply it. <span class="para-ref">¶AusC1.1, ¶C2</span></p>
+  <p>The reliefs that make year one survivable:</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div class="fs-body"><h4>No comparatives in year one</h4><p>You need not provide disclosures for any period <strong>before</strong> the date of initial application — so no comparative information is required in your first year. <span class="para-ref">¶C3</span></p></div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="fs-body"><h4>Keep your old GHG method (one year)</h4><p>If the year before you started you used a GHG measurement method other than the GHG Protocol, you may <strong>keep using it</strong> in year one. <span class="para-ref">¶C4(a)</span></p></div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="fs-body"><h4>Scope 3 relief in year one</h4><p>In your first year you need <strong>not</strong> disclose Scope 3 emissions at all (including financed emissions). <span class="para-ref">¶C4(b)</span></p></div></div>
+  </div>
+  <p>If you use either ¶C4 relief, you may continue using it when presenting that information as comparatives in <strong>later</strong> periods. <span class="para-ref">¶C5</span></p>
+  <p class="callout green"><span class="co-label">The logic of the reliefs</span> Scope 3 and value-chain data are the hardest to gather. Giving everyone a one-year grace period on Scope 3 (and on comparatives) lets entities stand up the machinery without failing compliance on day one — a pragmatic "learn by doing" ramp.</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick check — Chapter 9</div>
+
+    <div class="q-card">
+      <p class="q-text">How many greenhouse gases does AASB S2 recognise, per the Kyoto Protocol list?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Only carbon dioxide would ignore methane, nitrous oxide and the fluorinated gases — the list has seven.">Just one — carbon dioxide</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Seven: CO₂, CH₄, N₂O, HFCs, NF₃, PFCs and SF₆.">Seven</button>
+        <button class="q-option" data-correct="false" data-explanation="The standard names exactly seven Kyoto Protocol gases.">Fifteen</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Which transition relief is available in an entity's very first year of applying AASB S2?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! ¶C4(b) lets an entity omit Scope 3 emissions (incl. financed emissions) in the first year, and ¶C3 waives comparatives.">It need not disclose Scope 3 emissions in the first year</button>
+        <button class="q-option" data-correct="false" data-explanation="There's no permanent exemption from governance disclosures — that's a core requirement from year one.">It can permanently skip governance disclosures</button>
+        <button class="q-option" data-correct="false" data-explanation="Targets aren't blanket-exempted; the year-one reliefs concern comparatives, the old GHG method, and Scope 3.">It never has to disclose any targets</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">For a not-for-profit entity, where do the meanings of "primary users" and "general purpose financial reports" come from?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="For NFPs, ¶AusA1 redirects to the Framework, because NFP users include parliaments, taxpayers and donors.">The same Appendix A definitions as for-profit entities</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! ¶AusA1 points NFPs to the Framework for the Preparation and Presentation of Financial Statements.">The Framework for the Preparation and Presentation of Financial Statements</button>
+        <button class="q-option" data-correct="false" data-explanation="The terms are defined by reference to the Framework, not left undefined.">They are left undefined for NFPs</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="9">Mark as Complete</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 10 – BEHIND THE SCENES
+═══════════════════════════════════════════ -->
+<section id="module-10" class="module-section">
+  <div class="mod-eyebrow">Chapter 10 / 10 · Basis for Conclusions &amp; Recap</div>
+  <h1 class="mod-title">Behind the Scenes — <span class="acc">Why the AASB Chose This</span></h1>
+  <p class="mod-lede">The <strong>Basis for Conclusions</strong> isn't part of the standard — it's the AASB explaining <em>why</em> it made each call. Reading it turns you from someone who knows the rules into someone who understands the thinking behind them. We'll finish with a full-course recap.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How AASB S2 came to exist (the law and the ISSB baseline)</li>
+      <li>The key design decisions and the reasoning behind each</li>
+      <li>The deliberate departures from IFRS S2 — and what's coming later</li>
+      <li>A consolidated recap of the whole standard</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">How we got here</h2>
+  <p>The AASB issued AASB S2 to support the Government's decision to mandate climate disclosures for large businesses and financial institutions. The chain: investors demanded consistent, comparable info → in 2023 the Government confirmed mandatory disclosure aligned with the ISSB → the AASB used <strong>IFRS S1 and S2 as the baseline</strong>, modified for Australia → in September 2024 the enabling law passed. <span class="para-ref">¶BC2–BC4</span></p>
+  <p>After extensive consultation (Exposure Draft ED SR1, 117 comment letters, 289 survey responses, roundtables in nine cities), most stakeholders wanted <strong>minimal departure from IFRS S2</strong>. So the AASB adopted nearly all of IFRS S2, modifying only a handful of things. <span class="para-ref">¶BC12–BC15</span></p>
+
+  <h2 class="sh">The key decisions, decoded</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><div class="icon">📗</div><h4>Voluntary S1, standalone S2</h4><p>Since Australia tackled climate first, S1 (broad sustainability) was made <strong>voluntary</strong> and the needed general rules were placed in S2's Appendix D — so S2 works alone. <span class="para-ref">¶BC18–BC25</span></p></div>
+    <div class="concept-card"><div class="icon">🏢</div><h4>Consolidated-group choice</h4><p>The Corporations Act lets a parent report for the group <em>or</em> just itself, so S2 ties disclosures to the same reporting entity as the financial statements. <span class="para-ref">¶BC26–BC27</span></p></div>
+    <div class="concept-card"><div class="icon">🏭</div><h4>Industry metrics dropped (for now)</h4><p>Industry-based disclosures (SASB) were omitted as an <strong>interim</strong> measure; the AASB aims to finalise mandatory industry requirements by <strong>2030</strong>. <span class="para-ref">¶BC28–BC30</span></p></div>
+    <div class="concept-card"><div class="icon">🤝</div><h4>Not-for-profit users</h4><p>NFP terms refer to the Framework, recognising users like parliaments, taxpayers and donors. <span class="para-ref">¶BC31–BC35</span></p></div>
+    <div class="concept-card"><div class="icon">📐</div><h4>GHG Protocol over NGER</h4><p>ED SR1 first proposed prioritising NGER Scheme methods; after feedback the AASB aligned with IFRS S2 and made the <strong>GHG Protocol</strong> the default (NGER methods still allowed where required by an authority). <span class="para-ref">¶BC36–BC39</span></p></div>
+    <div class="concept-card"><div class="icon">🧪</div><h4>Keeping NF₃</h4><p>The AASB kept all seven Kyoto gases including <strong>nitrogen trifluoride (NF₃)</strong> — even though NGER doesn't list it — to stay aligned and future-proof (NF₃ is used making solar panels &amp; semiconductors). <span class="para-ref">¶BC40–BC41</span></p></div>
+    <div class="concept-card"><div class="icon">🌡️</div><h4>CO₂e via latest IPCC</h4><p>It used the <strong>latest IPCC assessment (AR6)</strong> for GWP values rather than AR5, again favouring IFRS S2 alignment. <span class="para-ref">¶BC42–BC44</span></p></div>
+    <div class="concept-card"><div class="icon">🔌</div><h4>Market-based Scope 2 not mandated</h4><p>The AASB decided <strong>not</strong> to mandate market-based Scope 2 disclosure; entities may still provide it. Location-based remains required. <span class="para-ref">¶BC45–BC46</span></p></div>
+  </div>
+  <p class="callout sea"><span class="co-label">The throughline</span> Almost every Australian decision points the same way: <strong>stay as close to IFRS S2 as possible.</strong> Why? Because Australian companies and investors operate in global markets — international comparability and interoperability (with frameworks like the European ESRS) is worth more than local tweaks. The big exception, industry-based metrics, is explicitly temporary.</p>
+
+  <h2 class="sh">🏁 The whole standard, on one page</h2>
+  <div class="tbl-wrap">
+    <table class="dt">
+      <thead><tr><th>Part</th><th>The one thing to remember</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Objective &amp; Scope</strong></td><td>Disclose climate risks &amp; opportunities that could reasonably affect the entity's <strong>prospects</strong> (cash flows, access to finance, cost of capital), useful to <strong>primary users</strong>.</td></tr>
+        <tr><td><strong>Governance</strong></td><td>Show the oversight body and management roles — the chain of command for climate.</td></tr>
+        <tr><td><strong>Strategy</strong></td><td>Identify risks/opps (type + time horizon), their effect on business model, strategy &amp; <strong>finances</strong>, and test <strong>resilience</strong> with scenario analysis.</td></tr>
+        <tr><td><strong>Risk Management</strong></td><td>Identify, assess, prioritise, monitor — and <strong>integrate</strong> into overall risk management.</td></tr>
+        <tr><td><strong>Metrics &amp; Targets</strong></td><td><strong>Scope 1/2/3</strong> emissions in CO₂e + six other cross-industry metrics + financed emissions; plus detailed <strong>targets</strong> and carbon-credit transparency.</td></tr>
+        <tr><td><strong>Appendix A</strong></td><td>The binding glossary (7 gases, 15 Scope 3 categories, value chain, primary users…).</td></tr>
+        <tr><td><strong>Appendix C</strong></td><td>Effective 1 Jan 2025; year-one reliefs (no comparatives, keep old GHG method, skip Scope 3).</td></tr>
+        <tr><td><strong>Appendix D</strong></td><td>The reporting rulebook: fair presentation, materiality, connected info, location, timing, comparatives, compliance, judgements/uncertainties/errors, qualitative characteristics.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Final check — Chapter 10</div>
+
+    <div class="q-card">
+      <p class="q-text">What single principle best explains most of the AASB's modification decisions?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The throughline is staying as close to IFRS S2 as possible, for international comparability and interoperability.">Stay as closely aligned with IFRS S2 as possible</button>
+        <button class="q-option" data-correct="false" data-explanation="The AASB largely moved AWAY from Australia-specific tweaks (e.g. dropping the NGER-first proposal) toward IFRS S2 alignment.">Diverge from international standards wherever possible</button>
+        <button class="q-option" data-correct="false" data-explanation="Industry-based metrics were dropped for now, not strengthened — the opposite of this option.">Maximise Australian industry-specific metrics immediately</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">The Basis for Conclusions is...</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="It's explicitly NOT part of AASB S2 — it accompanies but doesn't carry the force of the standard.">An enforceable part of the standard with equal authority</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! It accompanies, but is not part of, AASB S2 — it explains the Board's reasoning.">Background that explains the Board's reasoning, not part of the standard</button>
+        <button class="q-option" data-correct="false" data-explanation="It's the reasoning document, not the glossary — defined terms live in Appendix A.">The binding glossary of defined terms</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">By when does the AASB intend to finalise mandatory industry-based disclosure requirements?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="They were dropped as an interim measure — not required from the 2025 start.">They were required from the very start in 2025</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! The AASB signalled it intends to finalise mandatory industry-based requirements by 2030.">By 2030</button>
+        <button class="q-option" data-correct="false" data-explanation="The omission is explicitly interim, with a stated intention to revisit — not permanent.">Never — they are permanently abolished</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div id="completion-banner">
+    <h2>Course Complete! 🎉</h2>
+    <p>You've walked through the entire AASB S2 standard — all four pillars, the full reporting rulebook, every defined term, the transition reliefs, and the reasoning behind the AASB's choices. You can now read a real climate-related financial disclosure and know exactly what each part is doing and which paragraph demands it.</p>
+  </div>
+
+  <button class="done-btn" data-module="10">Mark as Complete</button>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'aasb-s2-climate';
+const TOTAL = 10;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' chapters done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('.nav-item[data-module="' + m + '"]');
+    if (!item) continue;
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    const cb = document.getElementById('completion-banner');
+    if (cb) cb.style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+function goto(m) {
+  const sec = document.getElementById('module-' + m);
+  if (!sec) return;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  sec.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  const item = document.querySelector('.nav-item[data-module="' + m + '"]');
+  if (item) item.classList.add('active');
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

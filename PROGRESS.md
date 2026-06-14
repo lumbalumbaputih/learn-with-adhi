@@ -17,6 +17,16 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-06-14
+
+- ✅ **NEW adult course: "AASB S2 Decoded: Climate-related Disclosures"** (`courses/aasb-s2/aasb-s2-climate-disclosures-v1.html`, id `aasb-s2-climate`, manifest `n:"15"`). Adhi dropped the full **AASB S2 September 2024** legislative standard (59-page PDF) into `dropzone/` and asked for a *fun-to-read* course that covers **the same things as the PDF — no shortcuts**, OK to be big, build in parts.
+  - **Coverage = the whole standard, no skipping.** 10 chapters, one self-contained HTML file (mirrors the `design-principles`/`perth-architecture` adult-course engine: dark sidebar nav, per-chapter progress in localStorage, `data-course-id` + `lwa:completed` so the index "✓ Read" pill works, mobile hamburger, inline quizzes).
+    - Ch1 Why it exists — Objective ¶1–2, Scope ¶3–4, the four TCFD pillars, S2/S1/IFRS family tree, application dates, the Australian modifications.
+    - Ch2 Governance ¶5–7 + Aus7.1. · Ch3 Strategy I ¶8–14 (risks/opps, physical vs transition, time horizons, business model & value chain, transition plan). · Ch4 Strategy II ¶15–22 + B1–B18 (financial effects, the ¶19–21 reliefs, climate resilience & scenario analysis). · Ch5 Risk management ¶24–26 + Aus26.1. · Ch6 Metrics & Targets I ¶27–31, ¶29(a), B19–B57 (Scope 1/2/3, GHG Protocol, CO₂e/GWP, location-based Scope 2, the Scope 3 data-quality framework). · Ch7 Metrics & Targets II ¶29(b)–(g), B58–B71, ¶33–36 (six cross-industry metrics, financed emissions for asset mgrs/banks/insurers, targets, gross vs net, carbon-credit transparency). · Ch8 Appendix D rulebook (fair presentation, materiality, connected info, reporting entity, location/timing, comparatives, statement of compliance + the 2 exemptions, judgements/uncertainties/errors, qualitative characteristics). · Ch9 Appendix A glossary (all key defined terms, 7 GHG gases, 15 Scope 3 categories, NFP ¶AusA1) + Appendix C transition reliefs. · Ch10 Basis for Conclusions (why voluntary S1, consolidated-group choice, industry-metrics dropped to ~2030, GHG Protocol over NGER, keeping NF₃, AR6, market-based Scope 2 not mandated) + one-page recap.
+    - "Fun to read" without dumbing down: plain-English ledes, analogies (pizza-shop scopes, smoke-detector integration, ship's captain/crew governance), `.para-ref` chips citing the exact paragraph for every claim, scope/pillar/flow diagrams, 28 inline self-check quizzes with explanations.
+  - **Wired (adult course = manifest only):** added to `assets/courses.json` (Practice · Climate/ESG/Reporting · forest), added to `sitemap.xml`, bumped the index static hero fallback 14→15 (live count is manifest-derived). Source PDF left in `dropzone/`.
+  - 🧪 Content is paraphrased from the standard for teaching; spot-checked against the PDF paragraph-by-paragraph, but a domain review before relying on it professionally is wise.
+
 ## 2026-06-13
 
 - ✅ **NEW family game: "Ular Tangga 3D" 🎲 — the classic Snakes & Ladders, in 3D** (`courses/games/ular-tangga-v1.html`, id `ular-tangga-game`). Adhi's ask: *"a classic game that can be played together for kids and adults, designed in 3D to look nice."* Chose the most universally-known classic (Ular Tangga / Snakes & Ladders) — zero rules to teach, true cross-generation play.

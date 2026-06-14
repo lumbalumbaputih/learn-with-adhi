@@ -326,5 +326,22 @@
     "accent": "forest",
     "path": "courses/climate-esg/climate-risk-esg-portfolio-briefing-v1.html",
     "duration": "~3 days"
+  },
+  {
+    "id": "aasb-s2-climate",
+    "n": "15",
+    "title": "AASB S2 Decoded: Climate-related Disclosures",
+    "blurb": "A plain-English, fun-to-read field guide to the entire AASB S2 standard — the four pillars (governance, strategy, risk management, metrics & targets), scenario analysis, Scope 1/2/3 emissions, the full reporting rulebook and the reasoning behind every Australian tweak. No shortcuts.",
+    "category": "Practice",
+    "tags": [
+      "Intermediate",
+      "Climate",
+      "ESG",
+      "Reporting"
+    ],
+    "primitive": "arc",
+    "accent": "forest",
+    "path": "courses/aasb-s2/aasb-s2-climate-disclosures-v1.html",
+    "duration": "~1 week"
   }
 ]
