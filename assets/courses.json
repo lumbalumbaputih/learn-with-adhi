@@ -5,7 +5,12 @@
     "title": "Penyelamat Bumi 🌍",
     "blurb": "A 3D board game about sustainability & the climate emergency — play together from kids to grown-ups, learning while you play. Roll the dice, collect Planet Points, answer eco-quizzes. Runs right in the browser.",
     "category": "Play",
-    "tags": ["Game", "Sustainability", "Family", "3D"],
+    "tags": [
+      "Game",
+      "Sustainability",
+      "Family",
+      "3D"
+    ],
     "primitive": "arc",
     "accent": "forest",
     "path": "courses/games/eco-board-v1.html",
@@ -17,7 +22,12 @@
     "title": "Ular Tangga 3D 🎲",
     "blurb": "The classic Snakes & Ladders board game, reborn in 3D — play together from kids to grown-ups on one screen. Roll the tumbling dice, climb the ladders, dodge the snakes, first to 100 wins. Runs right in the browser.",
     "category": "Play",
-    "tags": ["Game", "Classic", "Family", "3D"],
+    "tags": [
+      "Game",
+      "Classic",
+      "Family",
+      "3D"
+    ],
     "primitive": "dot",
     "accent": "mawar",
     "path": "courses/games/ular-tangga-v1.html",
@@ -29,7 +39,11 @@
     "title": "Car City or Transit Shift?",
     "blurb": "Deep-research report on Perth's transport orientation: modal share data, road vs rail investment ($13.4B vs $4.8B), urban sprawl, political economy, and what METRONET is actually changing.",
     "category": "Research",
-    "tags": ["Research", "Urban Planning", "Transport"],
+    "tags": [
+      "Research",
+      "Urban Planning",
+      "Transport"
+    ],
     "primitive": "wave",
     "accent": "sea",
     "path": "research/perth-transport-report.html",
@@ -41,7 +55,11 @@
     "title": "The AI Boom, Mapped",
     "blurb": "Deep-research map of the US AI-stock boom: 44 companies across 8 layers, the hyperscaler money web, live stock data, and where the next multibagger might hide.",
     "category": "Research",
-    "tags": ["Research", "Finance", "AI"],
+    "tags": [
+      "Research",
+      "Finance",
+      "AI"
+    ],
     "primitive": "dot",
     "accent": "indigo",
     "path": "research/ai-boom-report.html",
@@ -53,7 +71,9 @@
     "title": "How to Code for Non-Coders",
     "blurb": "Learn coding fundamentals in a practical, beginner-first way.",
     "category": "Foundations",
-    "tags": ["Beginner"],
+    "tags": [
+      "Beginner"
+    ],
     "primitive": "blade",
     "accent": "ink",
     "path": "courses/coding/code-ecosystem-guide-complete-v1.html",
@@ -65,7 +85,10 @@
     "title": "Carbon Accounting",
     "blurb": "Understand emissions measurement and reporting with practical examples.",
     "category": "Life",
-    "tags": ["Beginner", "Climate"],
+    "tags": [
+      "Beginner",
+      "Climate"
+    ],
     "primitive": "arc",
     "accent": "forest",
     "path": "courses/carbon-accounting/carbon-accounting-course.html",
@@ -77,7 +100,10 @@
     "title": "Life Cycle Assessment",
     "blurb": "Go from LCA basics to ISO-aligned practice with real-world examples.",
     "category": "Life",
-    "tags": ["Beginner", "Climate"],
+    "tags": [
+      "Beginner",
+      "Climate"
+    ],
     "primitive": "eye",
     "accent": "forest",
     "path": "courses/lca/life-cycle-assessment-course-v1.html",
@@ -89,7 +115,10 @@
     "title": "Clothing, Textiles & Our World",
     "blurb": "Follow the clothing supply chain and learn about impact and circular solutions.",
     "category": "Life",
-    "tags": ["Beginner", "Climate"],
+    "tags": [
+      "Beginner",
+      "Climate"
+    ],
     "primitive": "wave",
     "accent": "sea",
     "path": "courses/clothing-textiles/2026-05-08-clothing-textiles-course-v2.html",
@@ -101,7 +130,10 @@
     "title": "Disaster Management Fundamentals",
     "blurb": "Learn the disaster management cycle, risk basics, and preparedness essentials.",
     "category": "Life",
-    "tags": ["Beginner", "Safety"],
+    "tags": [
+      "Beginner",
+      "Safety"
+    ],
     "primitive": "plus",
     "accent": "sea",
     "path": "courses/disaster-management/2026-05-08-disaster-management-course-v1.html",
@@ -113,7 +145,10 @@
     "title": "Bridging the AI Gap",
     "blurb": "Build AI literacy and useful workflows for real-world work.",
     "category": "Foundations",
-    "tags": ["Beginner", "AI"],
+    "tags": [
+      "Beginner",
+      "AI"
+    ],
     "primitive": "dot",
     "accent": "tomato",
     "path": "courses/ai/ai-capability-course.html",
@@ -126,7 +161,10 @@
     "title": "Claude Without Burning Tokens",
     "blurb": "Save tokens with smarter context, prompts, and tool workflows.",
     "category": "Practice",
-    "tags": ["Intermediate", "AI"],
+    "tags": [
+      "Intermediate",
+      "AI"
+    ],
     "primitive": "slab",
     "accent": "mango",
     "path": "courses/ai/2026-04-18-claude-efficiency-course-v1.html",
@@ -138,7 +176,10 @@
     "title": "Rumah Harmonis – Architecture",
     "blurb": "Design a tropical home that unites climate science, Feng Shui spatial wisdom, and Islamic values.",
     "category": "Life",
-    "tags": ["Beginner", "Design"],
+    "tags": [
+      "Beginner",
+      "Design"
+    ],
     "primitive": "slab",
     "accent": "forest",
     "path": "courses/architecture/2026-05-21-tropical-islamic-home-v1.html",
@@ -150,7 +191,11 @@
     "title": "Build Your AI Agent Bot",
     "blurb": "Launch a Telegram AI bot on a VPS with OpenRouter, systemd, and production-ready workflows.",
     "category": "Practice",
-    "tags": ["Intermediate", "AI", "VPS"],
+    "tags": [
+      "Intermediate",
+      "AI",
+      "VPS"
+    ],
     "primitive": "dot",
     "accent": "indigo",
     "path": "courses/ai/2026-05-24-ai-bot-vps-course-v1.html",
@@ -162,7 +207,10 @@
     "title": "Design Principles: Applied Aesthetics",
     "blurb": "Master the science of making things look good – contrast, composition, color, and typography with visual examples and exercises.",
     "category": "Practice",
-    "tags": ["Intermediate", "Design"],
+    "tags": [
+      "Intermediate",
+      "Design"
+    ],
     "primitive": "eye",
     "accent": "mawar",
     "path": "courses/design/design-principles-course-v1.html",
@@ -174,7 +222,11 @@
     "title": "Reading Perth – Architecture by Rail",
     "blurb": "Trace Perth's buildings from the 1829 Swan River Colony to today – a train-line field guide to spotting and understanding the city's architecture.",
     "category": "Life",
-    "tags": ["Beginner", "Design", "Travel"],
+    "tags": [
+      "Beginner",
+      "Design",
+      "Travel"
+    ],
     "primitive": "arc",
     "accent": "indigo",
     "path": "courses/architecture/2026-06-03-perth-architecture-by-train-v1.html",
@@ -186,7 +238,11 @@
     "title": "The Proof Expedition",
     "blurb": "An 8-camp climb into abstract mathematics: break a lying prime formula, topple infinite dominoes, check into Hilbert's Hotel and learn how mathematicians achieve absolute certainty. Based on a free 698-page CMU book.",
     "category": "Foundations",
-    "tags": ["Beginner", "Math", "Interactive"],
+    "tags": [
+      "Beginner",
+      "Math",
+      "Interactive"
+    ],
     "primitive": "plus",
     "accent": "mango",
     "path": "courses/math-thinking/proof-expedition-v1.html",
@@ -198,7 +254,12 @@
     "title": "Proof Expedition · Base Camp",
     "blurb": "The full ascent: 8 interactive expeditions covering the entire 698-page CMU abstract-math book, one chapter each — induction, sets, logic, relations, infinity and counting. Expedition 1 (7 trail days, 7 labs) is open now.",
     "category": "Foundations",
-    "tags": ["Beginner", "Math", "Interactive", "Series"],
+    "tags": [
+      "Beginner",
+      "Math",
+      "Interactive",
+      "Series"
+    ],
     "primitive": "arc",
     "accent": "tomato",
     "path": "courses/math-thinking/expedition-basecamp.html",
@@ -210,7 +271,10 @@
     "title": "Feifelusiac Safe Area Calculator",
     "blurb": "Quickly calculate safe area values with practical controls.",
     "category": "Tools",
-    "tags": ["Tool", "Live"],
+    "tags": [
+      "Tool",
+      "Live"
+    ],
     "primitive": "plus",
     "accent": "tomato",
     "path": "courses/tools/feifelusiac-safe-area-calculator-v4.html",
@@ -222,7 +286,10 @@
     "title": "Life Expectancy Risk Calculator",
     "blurb": "Select your risk factors and see how they affect your estimated lifespan.",
     "category": "Tools",
-    "tags": ["Tool", "Health"],
+    "tags": [
+      "Tool",
+      "Health"
+    ],
     "primitive": "eye",
     "accent": "indigo",
     "path": "courses/tools/2026-05-10-life-expectancy-risk-calculator-v1.html",
@@ -234,10 +301,30 @@
     "title": "AU vs ID Specialist Doctor Dashboard",
     "blurb": "Side-by-side comparison of specialist availability across Australia and Indonesia.",
     "category": "Tools",
-    "tags": ["Dashboard", "Health"],
+    "tags": [
+      "Dashboard",
+      "Health"
+    ],
     "primitive": "dot",
     "accent": "forest",
     "path": "courses/health/2026-05-11-au-id-specialist-dashboard-v2.html",
     "duration": "Dashboard"
+  },
+  {
+    "id": "climate-risk-esg",
+    "n": "14",
+    "title": "Climate Risk & ESG Data: A Portfolio Briefing",
+    "blurb": "Brief yourself on three climate-risk / ESG data projects — WA cyclone trends, SW WA rainfall decline, and AASB S2 disclosure readiness — and learn to speak about them confidently in a Perth consulting interview.",
+    "category": "Practice",
+    "tags": [
+      "Intermediate",
+      "Climate",
+      "ESG",
+      "Career"
+    ],
+    "primitive": "wave",
+    "accent": "forest",
+    "path": "courses/climate-esg/climate-risk-esg-portfolio-briefing-v1.html",
+    "duration": "~3 days"
   }
 ]

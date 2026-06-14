@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="climate-risk-esg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Climate Risk &amp; ESG Data: A Portfolio Briefing · Learn with Adhi</title>
+<meta name="description" content="A portfolio briefing for talking confidently about physical climate risk and AASB S2 ESG disclosure work in a Perth consulting interview." />
+<meta name="author" content="Adhi" />
+<meta name="robots" content="index,follow" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Climate Risk & ESG Data: A Portfolio Briefing" />
+<meta property="og:description" content="Understand your three climate-risk / ESG data projects well enough to brief an employer with confidence." />
+<meta property="og:image" content="../../assets/on-indigo-512.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png" />
+<style>
+/* ===== ADHI DESIGN TOKENS (inlined for full offline use) ===== */
+:root {
+  --tomato:  #FF5C39;
+  --mango:   #FFC234;
+  --forest:  #1F9D55;
+  --sea:     #1FA9C7;
+  --mawar:   #E84BA0;
+  --indigo:  #2E3192;
+  --ink:     #1A1614;
+  --paper:   #FBF4E6;
+  --paper-2: #F4ECD8;
+  --muted:   #6B6259;
+  --line:    rgba(26,22,20,0.12);
+  --line-strong: rgba(26,22,20,0.14);
+  /* font stacks fall back to system fonts so nothing is fetched from the network */
+  --fd: 'Bricolage Grotesque', 'Arial Black', system-ui, sans-serif;
+  --fb: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fm: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-pill: 999px;
+  --shadow-block: 8px 8px 0 var(--ink);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 200ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--fb);
+  background: var(--paper);
+  color: var(--ink);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 280px; min-width: 280px;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex; flex-direction: column;
+  padding: 24px 0;
+  overflow-y: auto;
+}
+.sidebar-header {
+  padding: 0 20px 18px;
+  border-bottom: 1px solid rgba(251,244,230,0.08);
+  margin-bottom: 8px;
+}
+.sidebar-brand { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; }
+.brand-mark {
+  width: 34px; height: 34px; flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--tomato);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fd); font-weight: 800; font-size: 19px; color: var(--paper);
+}
+.brand-text { font-family: var(--fd); font-size: 13px; font-weight: 700; line-height: 1.2; }
+.brand-text small {
+  display: block; font-family: var(--fm); font-size: 9px; font-weight: 400;
+  color: rgba(251,244,230,0.45); letter-spacing: 0.1em; margin-top: 3px;
+}
+.prog-wrap {
+  height: 4px; background: rgba(251,244,230,0.1);
+  border-radius: var(--r-pill); overflow: hidden; margin-top: 14px;
+}
+.prog-fill { height: 100%; background: var(--tomato); border-radius: var(--r-pill); transition: width 500ms var(--ease); }
+.prog-meta {
+  display: flex; justify-content: space-between; margin-top: 6px;
+  font-family: var(--fm); font-size: 9px; color: rgba(251,244,230,0.4); letter-spacing: 0.08em;
+}
+.module-nav { flex: 1; padding-top: 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 20px; width: 100%;
+  background: none; border: none; border-right: 3px solid transparent;
+  cursor: pointer; color: rgba(251,244,230,0.55);
+  font-family: var(--fb); font-size: 12.5px; font-weight: 500;
+  text-align: left; line-height: 1.35;
+  transition: background var(--dur), color var(--dur);
+}
+.nav-item:hover { background: rgba(251,244,230,0.06); color: var(--paper); }
+.nav-item.active { background: rgba(255,92,57,0.12); border-right-color: var(--tomato); color: var(--paper); }
+.nav-item.done { color: rgba(251,244,230,0.75); }
+.nav-dot {
+  width: 21px; height: 21px; border-radius: 50%;
+  border: 1.5px solid rgba(251,244,230,0.18);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  font-family: var(--fm); font-size: 9px; color: rgba(251,244,230,0.35);
+}
+.nav-item.active .nav-dot { border-color: var(--tomato); color: var(--tomato); background: rgba(255,92,57,0.18); }
+.nav-item.done .nav-dot { border-color: var(--forest); background: var(--forest); color: #fff; }
+.sidebar-footer { padding: 16px 20px 4px; border-top: 1px solid rgba(251,244,230,0.08); }
+.sidebar-hub-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--fm); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(251,244,230,0.7); text-decoration: none;
+}
+.sidebar-hub-link:hover { color: var(--paper); }
+
+/* ===== MAIN ===== */
+.main { flex: 1; overflow-y: auto; padding: 48px 60px 90px; max-width: 940px; }
+
+.eyebrow {
+  font-family: var(--fm); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--tomato); margin-bottom: 10px;
+}
+.mod-title {
+  font-family: var(--fd); font-size: clamp(28px, 4vw, 39px);
+  font-weight: 800; letter-spacing: -0.035em; line-height: 1.04;
+  color: var(--ink); margin-bottom: 18px;
+}
+.mod-title .accent { color: var(--tomato); }
+.mod-intro { font-size: 15.5px; line-height: 1.65; color: var(--muted); margin-bottom: 32px; max-width: 680px; }
+
+/* OBJECTIVES */
+.objectives {
+  background: var(--paper-2); border: 1px solid var(--line-strong);
+  border-radius: var(--r-md); padding: 20px 24px; margin-bottom: 44px;
+}
+.objectives h3 {
+  font-family: var(--fm); font-size: 9px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+}
+.objectives ol { list-style: none; counter-reset: obj; display: flex; flex-direction: column; gap: 9px; }
+.objectives li { counter-increment: obj; display: flex; align-items: flex-start; gap: 11px; font-size: 13.5px; line-height: 1.5; }
+.objectives li::before {
+  content: counter(obj); font-family: var(--fm); font-size: 9px; font-weight: 500;
+  background: var(--tomato); color: #fff; width: 18px; height: 18px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+
+/* CONTENT */
+.section { margin-bottom: 44px; }
+.section h2 {
+  font-family: var(--fd); font-size: 21px; font-weight: 700; letter-spacing: -0.025em;
+  color: var(--ink); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1.5px solid var(--line);
+}
+.section h3.sub { font-family: var(--fd); font-size: 16px; font-weight: 700; margin: 22px 0 10px; letter-spacing: -0.01em; }
+.section p { font-size: 14px; line-height: 1.72; color: var(--ink); margin-bottom: 13px; }
+.section p:last-child { margin-bottom: 0; }
+.section ul.body-list { margin: 4px 0 14px; padding-left: 4px; list-style: none; }
+.section ul.body-list li {
+  font-size: 14px; line-height: 1.6; margin-bottom: 8px; padding-left: 22px; position: relative;
+}
+.section ul.body-list li::before { content: '▸'; position: absolute; left: 2px; color: var(--tomato); font-size: 12px; top: 1px; }
+.kt { background: var(--mango); padding: 1px 5px; border-radius: 4px; font-weight: 600; }
+
+/* CALLOUTS — blue/sea, mango, green/forest, tomato */
+.callout {
+  border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 14px 17px; margin: 18px 0;
+  font-size: 13.5px; line-height: 1.62;
+}
+.callout b {
+  display: block; font-family: var(--fm); font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.c-blue   { background: rgba(31,169,199,0.09);  border-left: 3px solid var(--sea); }
+.c-blue b { color: var(--sea); }
+.c-mango  { background: rgba(255,194,52,0.13);  border-left: 3px solid #d99b00; }
+.c-mango b{ color: #a86d00; }
+.c-green  { background: rgba(31,157,85,0.09);   border-left: 3px solid var(--forest); }
+.c-green b{ color: var(--forest); }
+.c-tomato { background: rgba(255,92,57,0.08);   border-left: 3px solid var(--tomato); }
+.c-tomato b{ color: var(--tomato); }
+.callout.sample { background: var(--ink); color: var(--paper); border-left: 3px solid var(--mango); border-radius: var(--r-sm); }
+.callout.sample b { color: var(--mango); }
+.callout.sample em { color: var(--mango); font-style: normal; font-weight: 600; }
+
+/* STAT CARDS */
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; margin: 22px 0; }
+.stat-card {
+  background: var(--ink); color: var(--paper); border-radius: var(--r-md);
+  padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 4px;
+}
+.stat-num { font-family: var(--fd); font-size: 30px; font-weight: 800; color: var(--mango); letter-spacing: -0.02em; line-height: 1; }
+.stat-lbl { font-size: 12px; line-height: 1.4; color: rgba(251,244,230,0.85); margin-top: 6px; }
+.stat-sub { font-family: var(--fm); font-size: 9px; letter-spacing: 0.06em; color: rgba(251,244,230,0.45); margin-top: 4px; }
+@media (max-width: 720px){ .stat-grid { grid-template-columns: 1fr; } }
+
+/* TERMS GRID */
+.terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin: 16px 0; }
+.term-card { background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px 14px; }
+.term-card dt { font-family: var(--fd); font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+.term-card dd { font-size: 12.5px; line-height: 1.5; color: var(--muted); }
+@media (max-width: 720px){ .terms-grid { grid-template-columns: 1fr; } }
+
+/* FIGURE / SVG */
+.figure { margin: 24px 0; border: 1.5px solid var(--line-strong); border-radius: var(--r-md); overflow: hidden; background: #fff; }
+.figure .fig-svg { display: block; width: 100%; height: auto; background: var(--paper); }
+.figure figcaption {
+  font-family: var(--fm); font-size: 10px; letter-spacing: 0.04em; color: var(--muted);
+  padding: 10px 16px; border-top: 1px solid var(--line); background: var(--paper-2);
+}
+
+/* ===== QUIZ ===== */
+.quiz-section { margin-top: 52px; padding-top: 40px; border-top: 1.5px solid var(--line); }
+.quiz-head { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+.quiz-head h2 { font-family: var(--fd); font-size: 22px; font-weight: 700; letter-spacing: -0.025em; }
+.quiz-badge {
+  font-family: var(--fm); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--tomato); color: #fff; padding: 4px 10px; border-radius: var(--r-pill);
+}
+.quiz-q { background: var(--paper-2); border: 1.5px solid var(--line-strong); border-radius: var(--r-md); padding: 20px 22px; margin-bottom: 20px; }
+.quiz-q p { font-size: 13.5px; font-weight: 600; line-height: 1.5; margin-bottom: 14px; }
+.qn { font-family: var(--fm); font-size: 10px; color: var(--muted); margin-right: 6px; }
+.options { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  display: flex; align-items: flex-start; gap: 10px; padding: 10px 13px;
+  border: 1.5px solid var(--line-strong); border-radius: var(--r-sm); cursor: pointer;
+  background: var(--paper); color: var(--ink); font-family: var(--fb); font-size: 13px;
+  line-height: 1.45; text-align: left; width: 100%; transition: border-color var(--dur), background var(--dur);
+}
+.opt:hover:not(:disabled) { border-color: var(--tomato); background: rgba(255,92,57,0.04); }
+.opt.correct { border-color: var(--forest); background: rgba(31,157,85,0.07); }
+.opt.wrong   { border-color: var(--tomato); background: rgba(255,92,57,0.07); }
+.opt:disabled { cursor: default; }
+.opt-letter {
+  width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--paper-2); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-family: var(--fm); font-size: 9px; font-weight: 500; margin-top: 1px;
+}
+.opt.correct .opt-letter { background: var(--forest); color: #fff; border-color: var(--forest); }
+.opt.wrong .opt-letter { background: var(--tomato); color: #fff; border-color: var(--tomato); }
+.feedback { margin-top: 10px; padding: 10px 13px; border-radius: var(--r-sm); font-size: 13px; line-height: 1.55; display: none; }
+.feedback.show { display: block; }
+.feedback.ok  { background: rgba(31,157,85,0.1); color: #124a28; }
+.feedback.bad { background: rgba(255,92,57,0.1); color: #7a1e07; }
+
+.complete-btn {
+  display: inline-block; margin-top: 28px; padding: 13px 30px;
+  background: var(--ink); color: var(--paper); border: 2px solid var(--ink);
+  border-radius: var(--r-pill); font-family: var(--fd); font-size: 14px; font-weight: 700;
+  cursor: pointer; letter-spacing: -0.01em;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.complete-btn:hover:not(:disabled) { transform: translate(-3px,-3px); box-shadow: var(--shadow-block); }
+.complete-btn:disabled { opacity: 0.38; cursor: not-allowed; }
+.nav-btns { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+.nav-btn {
+  padding: 9px 22px; border-radius: var(--r-pill); font-family: var(--fb); font-size: 13px;
+  font-weight: 600; cursor: pointer; border: 1.5px solid var(--line-strong);
+  background: var(--paper); color: var(--ink); transition: border-color var(--dur);
+}
+.nav-btn:hover { border-color: var(--ink); }
+.nav-btn.primary { background: var(--tomato); color: #fff; border-color: var(--tomato); }
+.nav-btn.primary:hover { background: #df4c2d; border-color: #df4c2d; }
+
+/* COMPLETION */
+.done-screen { text-align: center; padding: 70px 20px; }
+.done-badge {
+  width: 82px; height: 82px; background: var(--mango); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 26px; font-size: 38px;
+}
+.done-screen h1 { font-family: var(--fd); font-size: 40px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 14px; }
+.done-screen p { font-size: 15px; color: var(--muted); max-width: 520px; margin: 0 auto 32px; line-height: 1.6; }
+.score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 580px; margin: 0 auto 36px; }
+.score-card { background: var(--paper-2); border: 1.5px solid var(--line-strong); border-radius: var(--r-md); padding: 18px 12px; }
+.score-num { font-family: var(--fd); font-size: 28px; font-weight: 800; color: var(--tomato); }
+.score-lbl { font-family: var(--fm); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+@media (max-width: 720px){ .score-grid { grid-template-columns: 1fr 1fr; } }
+
+/* REFERENCES */
+.ref-group-label {
+  font-family: var(--fm); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin: 32px 0 12px; padding-bottom: 7px; border-bottom: 1px solid var(--line);
+}
+.ref-group-label:first-child { margin-top: 0; }
+.ref-item {
+  border: 1px solid var(--line-strong); border-left-width: 3px;
+  border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 13px 16px; margin-bottom: 10px; background: var(--paper);
+}
+.ref-citation { font-size: 13px; line-height: 1.65; color: var(--ink); margin-bottom: 7px; }
+.ref-annotation { font-size: 12.5px; line-height: 1.6; color: var(--muted); margin-bottom: 8px; }
+.ref-link { font-family: var(--fm); font-size: 10px; color: var(--sea); text-decoration: none; letter-spacing: 0.03em; }
+.ref-link:hover { text-decoration: underline; }
+.ref-caveat {
+  background: rgba(255,92,57,0.07); border-left: 3px solid var(--tomato);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 14px 17px; margin-top: 32px;
+  font-size: 13px; line-height: 1.62; color: var(--ink);
+}
+.ref-caveat b { display: block; font-family: var(--fm); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tomato); margin-bottom: 6px; }
+
+@media (max-width: 860px){
+  body { overflow: auto; height: auto; flex-direction: column; }
+  .sidebar { width: 100%; min-width: 0; height: auto; flex-direction: column; }
+  .main { padding: 32px 22px 70px; max-width: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">
+      <div class="brand-mark">A</div>
+      <div class="brand-text">Climate Risk &amp; ESG Data<small id="module-count">Portfolio Briefing</small></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="prog-meta"><span>Progress</span><span id="prog-text">0 / 8</span></div>
+  </div>
+  <nav class="module-nav" id="module-nav"></nav>
+  <div class="sidebar-footer">
+    <a class="sidebar-hub-link" href="../../index.html">← Learning Hub</a>
+  </div>
+</aside>
+
+<main class="main" id="main"></main>
+
+<script>
+/* =========================================================
+   DATA — 8 modules + references
+   ========================================================= */
+const MODS = [
+/* ===================== MODULE 01 ===================== */
+{
+  id: 0,
+  titleNav: "01 · Why This Portfolio Exists",
+  title: 'Why This <span class="accent">Portfolio</span> Exists',
+  intro: "Before you talk about any single project, you need the one-sentence answer to 'why did you build these?' — because Australia just made climate-risk disclosure the law, and Perth's consultancies are scrambling to staff the work. Your portfolio is built to sit exactly where that demand is.",
+  objectives: [
+    "State what AASB S2 is and why 2026 is the inflection point for the whole market",
+    "Name the Perth CBD employers hiring for this work and what roles they are filling",
+    "Explain why physical climate risk analysis and disclosure readiness are the two in-demand skill areas",
+    "Map each of your three projects to a specific employer need"
+  ],
+  sections: [
+    { h: "The thing that changed: AASB S2", body:
+      `<p><span class="kt">AASB S2</span> is Australia's mandatory climate-related financial disclosure standard, issued by the Australian Accounting Standards Board. It is the local adoption of the international <span class="kt">IFRS S2</span> standard, and it is law — not a voluntary framework, not best-practice guidance. From <strong>1 January 2026</strong> the largest Australian companies must report their climate-related risks and opportunities inside their annual financial reports, audited and signed off like any other financial statement.</p>
+      <p>That last point is what makes this a job market rather than a talking point. Climate risk used to live in a glossy sustainability brochure that nobody audited. Under AASB S2 it sits in the financial report, which means it must be defensible, evidenced, and consistent year to year. Companies that have never quantified a cyclone's effect on a port, or a rainfall decline's effect on a water licence, suddenly have to — and put their name to it.</p>
+      <div class="callout c-blue"><b>Key definition</b>AASB S2 = Australian Sustainability Reporting Standard 2, "Climate-related Disclosures." It mandates disclosure across four pillars — governance, strategy, risk management, and metrics &amp; targets — and is phased in by company size, starting with the biggest in FY2025–26.</div>`
+    },
+    { h: "Why Perth, why now", body:
+      `<p>Perth is not a coincidental location for this. Western Australia's economy is concentrated in mining, oil &amp; gas, and resources — exactly the sectors that are both <em>large enough to be in the first reporting wave</em> and <em>exposed enough</em> to physical climate hazards (cyclones over the Pilbara, heat over remote operations, water stress in the south-west) that the disclosures are non-trivial to write.</p>
+      <p>So the consultancies with Perth CBD offices are hiring. <span class="kt">Deloitte</span> and the other big-four firms staff climate &amp; sustainability assurance teams. Engineering and environmental consultancies — <span class="kt">GHD</span>, <span class="kt">Arup</span>, and specialist sustainability firms such as <span class="kt">Greenbase</span> — sell physical risk assessments and disclosure-readiness services to the resource majors. The common job titles are climate risk analyst, ESG / sustainability consultant, and climate disclosure advisor.</p>
+      <p>Two distinct skill areas drive that demand, and they map cleanly onto your work:</p>
+      <ul class="body-list">
+        <li><strong>Physical climate risk analysis</strong> — taking real climate data (cyclone tracks, rainfall records, temperature trends) and turning it into a defensible statement about how a hazard is changing and what it means for an asset. Projects 1 and 2.</li>
+        <li><strong>Disclosure readiness</strong> — reading a company's reports against the AASB S2 four pillars and identifying where the gaps are. Project 3.</li>
+      </ul>
+      <div class="callout c-mango"><b>How this shows up in client work</b>A resources company comes to a consultancy and says "we report under AASB S2 next year — are we ready, and can you back our physical risk statements with data?" Answering that <em>is</em> the billable engagement. Your three projects are a rehearsal of exactly that engagement.</div>`
+    },
+    { h: "Three projects, three needs", body:
+      `<p>Hold this mapping in your head — it is the spine of every answer you'll give in an interview:</p>
+      <div class="terms-grid">
+        <dl class="term-card"><dt>Project 1 — WA Cyclone Intensity Trends</dt><dd>Acute physical risk. Demonstrates you can take historical hazard data and describe a trend that feeds a forward-looking AASB S2 risk statement.</dd></dl>
+        <dl class="term-card"><dt>Project 2 — SW WA Rainfall Decline</dt><dd>Chronic physical risk. Demonstrates you understand slow-onset, well-documented climate shifts and their water/agriculture consequences.</dd></dl>
+        <dl class="term-card"><dt>Project 3 — AASB S2 Readiness Scoring</dt><dd>Disclosure readiness. Demonstrates you can read a sustainability report against the four pillars and find the gaps a consultant is paid to close.</dd></dl>
+      </div>
+      <p>Two of the three are physical risk (one acute, one chronic — covering both halves of how AASB S2 defines physical risk), and the third is the disclosure side. Together they cover the full shape of an entry-level climate-risk consulting role.</p>`
+    },
+    { h: "The numbers worth memorising", body:
+      `<div class="stat-grid">
+        <div class="stat-card"><div class="stat-num">2026</div><div class="stat-lbl">First mandatory AASB S2 reporting year (Group 1 entities, FY starting on/after 1 Jan 2025)</div><div class="stat-sub">AASB</div></div>
+        <div class="stat-card"><div class="stat-num">~1,800+</div><div class="stat-lbl">Australian entities phased into mandatory climate reporting across the three groups by 2027–28</div><div class="stat-sub">Treasury estimate</div></div>
+        <div class="stat-card"><div class="stat-num">~$0.5B</div><div class="stat-lbl">Indicative damage attributed to the 2025–26 WA cyclone season (Cyclone Narelle scenario used in Project 1)</div><div class="stat-sub">Portfolio dataset</div></div>
+      </div>
+      <div class="figure">
+        <svg class="fig-svg" viewBox="0 0 800 230" role="img" aria-label="Flow from climate event to consultant role">
+          <defs>
+            <marker id="arrow1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1A1614"/></marker>
+          </defs>
+          <g font-family="'JetBrains Mono',monospace" font-size="10">
+            <!-- box 1 -->
+            <rect x="20" y="80" width="150" height="70" rx="12" fill="#1FA9C7"/>
+            <text x="95" y="108" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Climate event</text>
+            <text x="95" y="126" text-anchor="middle" fill="#eaffff" font-size="9">cyclone · drought</text>
+            <!-- box 2 -->
+            <rect x="215" y="80" width="150" height="70" rx="12" fill="#2E3192"/>
+            <text x="290" y="104" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Physical risk</text>
+            <text x="290" y="120" text-anchor="middle" fill="#dfe0ff" font-size="9">to an asset /</text>
+            <text x="290" y="132" text-anchor="middle" fill="#dfe0ff" font-size="9">operation</text>
+            <!-- box 3 -->
+            <rect x="410" y="80" width="160" height="70" rx="12" fill="#1F9D55"/>
+            <text x="490" y="104" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">AASB S2</text>
+            <text x="490" y="120" text-anchor="middle" fill="#e3ffe9" font-size="9">disclosure</text>
+            <text x="490" y="132" text-anchor="middle" fill="#e3ffe9" font-size="9">requirement</text>
+            <!-- box 4 -->
+            <rect x="615" y="80" width="165" height="70" rx="12" fill="#FF5C39"/>
+            <text x="697" y="104" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Consultant role</text>
+            <text x="697" y="120" text-anchor="middle" fill="#ffe7df" font-size="9">quantify · advise ·</text>
+            <text x="697" y="132" text-anchor="middle" fill="#ffe7df" font-size="9">assure</text>
+            <!-- arrows -->
+            <line x1="172" y1="115" x2="210" y2="115" stroke="#1A1614" stroke-width="2" marker-end="url(#arrow1)"/>
+            <line x1="367" y1="115" x2="405" y2="115" stroke="#1A1614" stroke-width="2" marker-end="url(#arrow1)"/>
+            <line x1="572" y1="115" x2="610" y2="115" stroke="#1A1614" stroke-width="2" marker-end="url(#arrow1)"/>
+            <text x="400" y="40" text-anchor="middle" font-size="12" font-weight="700" font-family="'Bricolage Grotesque',sans-serif" fill="#1A1614">From a weather event to a billable job</text>
+            <text x="400" y="195" text-anchor="middle" font-size="9" fill="#6B6259">Your portfolio lives in the middle two boxes — the analysis and the disclosure logic that connect them.</text>
+          </g>
+        </svg>
+        <figcaption>Fig 1.1 — The causal chain that creates the demand your portfolio is built for.</figcaption>
+      </div>`
+    }
+  ],
+  quiz: [
+    { q: "What best describes the status of AASB S2 from 2026?", opts: ["A voluntary best-practice guideline companies may adopt if they wish", "A mandatory, audited climate disclosure standard phased in by company size", "A Western Australian state regulation that applies only to mining", "A marketing framework for corporate sustainability brochures"], ans: 1, fb: "Correct. AASB S2 is mandatory, sits inside the audited annual financial report, and phases in by entity size from FY2025–26. That mandatory, audited status is exactly what created the hiring demand — disclosures now have to be defensible." },
+    { q: "Why is Perth a hotspot for this hiring in particular?", opts: ["WA has the strictest emissions laws in Australia", "WA's economy is concentrated in large, hazard-exposed resource companies in the first reporting wave", "AASB S2 only applies to companies headquartered in WA", "Perth has the cheapest consulting labour market"], ans: 1, fb: "Correct. WA's resources, oil & gas and mining firms are both big enough to be in the early reporting groups and physically exposed enough (cyclones, heat, water stress) that the disclosures are genuinely hard to write — so consultancies staff up there." },
+    { q: "Which pairing of your projects to skill areas is correct?", opts: ["All three projects are disclosure-readiness work", "Projects 1 and 2 are physical climate risk; Project 3 is disclosure readiness", "Project 1 is disclosure readiness; Projects 2 and 3 are physical risk", "Projects 1 and 3 are physical risk; Project 2 is governance"], ans: 1, fb: "Correct. Projects 1 (cyclones, acute) and 2 (rainfall, chronic) are physical climate risk analysis; Project 3 (scoring companies against the four pillars) is disclosure readiness. Together they cover both halves of an entry-level climate-risk role." }
+  ]
+},
+/* ===================== MODULE 02 ===================== */
+{
+  id: 1,
+  titleNav: "02 · Physical Risk: The Framework",
+  title: 'Physical Climate Risk: The <span class="accent">Framework</span>',
+  intro: "AASB S2 splits climate risk into two families: transition risk (from the shift to a low-carbon economy) and physical risk (from the climate itself). Your first two projects are physical risk. This module gives you the vocabulary — acute vs chronic — and shows how historical data becomes a forward-looking disclosure.",
+  objectives: [
+    "Define physical climate risk as AASB S2 / IFRS S2 use the term",
+    "Distinguish acute from chronic physical risk with WA examples",
+    "Explain why historical trend analysis is the evidence base for forward-looking risk statements",
+    "Describe how a consultant turns this analysis into a section of a client report"
+  ],
+  sections: [
+    { h: "What 'physical risk' means here", body:
+      `<p>In AASB S2, <span class="kt">physical climate risk</span> is the risk to a business that arises directly from the physical effects of a changing climate — as opposed to <span class="kt">transition risk</span>, which arises from policy, technology, and market shifts as the world decarbonises. If a cyclone floods a port, that is physical risk. If a carbon price erodes the value of a coal asset, that is transition risk.</p>
+      <p>The standard requires a company to describe its material physical risks, explain how resilient its strategy is to them (including under different climate scenarios), and disclose how it identifies, assesses and manages them. To do any of that honestly, somebody has to actually look at the hazard data. That "somebody" is the analyst — the role your portfolio is auditioning for.</p>`
+    },
+    { h: "Acute vs chronic", body:
+      `<p>Physical risk comes in two flavours, and AASB S2 explicitly asks companies to consider both:</p>
+      <div class="terms-grid">
+        <dl class="term-card"><dt>Acute</dt><dd>Event-driven, sudden. A single cyclone, flood, or extreme-heat day. The risk is about <em>severity and frequency of discrete events</em>. → Project 1 (cyclones).</dd></dl>
+        <dl class="term-card"><dt>Chronic</dt><dd>Gradual, long-term shifts in climate. Declining average rainfall, rising mean temperature, sea-level rise. The risk is about a <em>baseline moving permanently</em>. → Project 2 (rainfall decline).</dd></dl>
+      </div>
+      <div class="figure">
+        <svg class="fig-svg" viewBox="0 0 800 300" role="img" aria-label="Acute versus chronic physical risk">
+          <g font-family="'Inter',sans-serif">
+            <text x="200" y="34" text-anchor="middle" font-size="13" font-weight="700" font-family="'Bricolage Grotesque',sans-serif" fill="#1A1614">ACUTE — discrete shocks</text>
+            <text x="600" y="34" text-anchor="middle" font-size="13" font-weight="700" font-family="'Bricolage Grotesque',sans-serif" fill="#1A1614">CHRONIC — moving baseline</text>
+            <!-- acute axes -->
+            <line x1="60" y1="220" x2="360" y2="220" stroke="#6B6259" stroke-width="1.5"/>
+            <line x1="60" y1="60" x2="60" y2="220" stroke="#6B6259" stroke-width="1.5"/>
+            <!-- acute spikes -->
+            <g stroke="#FF5C39" stroke-width="3">
+              <line x1="110" y1="220" x2="110" y2="150"/>
+              <line x1="170" y1="220" x2="170" y2="110"/>
+              <line x1="250" y1="220" x2="250" y2="95"/>
+              <line x1="320" y1="220" x2="320" y2="70"/>
+            </g>
+            <text x="210" y="245" text-anchor="middle" font-size="10" fill="#6B6259">time →</text>
+            <text x="210" y="262" text-anchor="middle" font-size="10" fill="#FF5C39" font-weight="600">cyclones: rarer but more intense spikes</text>
+            <!-- chronic axes -->
+            <line x1="460" y1="220" x2="760" y2="220" stroke="#6B6259" stroke-width="1.5"/>
+            <line x1="460" y1="60" x2="460" y2="220" stroke="#6B6259" stroke-width="1.5"/>
+            <!-- chronic declining line -->
+            <polyline points="470,110 520,120 560,118 600,140 650,150 700,165 750,178" fill="none" stroke="#1FA9C7" stroke-width="3"/>
+            <line x1="470" y1="110" x2="750" y2="178" stroke="#2E3192" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text x="610" y="245" text-anchor="middle" font-size="10" fill="#6B6259">time →</text>
+            <text x="610" y="262" text-anchor="middle" font-size="10" fill="#1FA9C7" font-weight="600">rainfall: long-term downward drift</text>
+          </g>
+        </svg>
+        <figcaption>Fig 2.1 — Acute risk is about the spikes; chronic risk is about the trend line beneath them.</figcaption>
+      </div>
+      <p>The same region can carry both. The Pilbara faces acute cyclone risk <em>and</em> chronic heat increase. The distinction matters because the disclosure language and the data methods differ: acute work counts and characterises events; chronic work fits a trend to a long record.</p>`
+    },
+    { h: "Why history is the foundation of a forward-looking statement", body:
+      `<p>This sounds paradoxical and interviewers love it: AASB S2 asks for <em>forward-looking</em> risk statements, yet the credible evidence is <em>historical</em>. You cannot defensibly say "cyclones affecting our Pilbara port are intensifying" unless you can point to a record — say 1985–2024 — that shows the trend. The historical analysis is the anchor; the forward-looking statement is the extrapolation, ideally cross-checked against climate-model projections (IPCC scenarios).</p>
+      <div class="callout c-blue"><b>Key definition</b>A <strong>baseline</strong> is the historical reference period against which change is measured. Picking it well (long enough to average out natural variability, recent enough to be relevant) is half the craft of physical risk analysis.</div>
+      <p>This is why Project 1 runs 1985–2024 and Project 2 runs 1950–2024: long records reduce the chance that a few noisy years masquerade as a trend. The longer and cleaner the record, the more weight the forward-looking statement can bear.</p>`
+    },
+    { h: "How it lands in a client report", body:
+      `<p>In practice the analyst's output becomes a few defensible paragraphs plus a chart in the client's risk-assessment deliverable, which the client then distils into their AASB S2 disclosure. The chain is: <em>raw data → trend analysis → plain-language risk statement → disclosure text</em>. The consultant owns the first three; the client (with assurance) owns the last.</p>
+      <div class="callout c-mango"><b>How this shows up in client work</b>You won't be handed a clean answer — you'll be handed a messy BOM or IBTrACS file and a question like "is cyclone risk to this asset rising?" Your value is producing a defensible, caveated answer, not a perfect one. Knowing the limits of your data (Module 08) is part of the deliverable, not an afterthought.</div>`
+    }
+  ],
+  quiz: [
+    { q: "A carbon price reduces the market value of a company's coal reserves. Under AASB S2 this is best classified as:", opts: ["Acute physical risk", "Chronic physical risk", "Transition risk", "Governance risk"], ans: 2, fb: "Correct. That is transition risk — driven by policy/market shifts toward a low-carbon economy, not by the physical climate. Physical risk would be a cyclone or drought directly hitting an asset. Knowing this split cleanly is foundational." },
+    { q: "Which pair correctly matches the risk type to its defining feature?", opts: ["Acute = a permanently shifting baseline; chronic = discrete events", "Acute = discrete severe events; chronic = gradual long-term shifts", "Acute = transition risk; chronic = physical risk", "Acute and chronic are the same thing measured differently"], ans: 1, fb: "Correct. Acute risk is about discrete shocks (a cyclone, a flood); chronic risk is about a slowly moving baseline (declining rainfall, rising mean temperature). Your two physical-risk projects deliberately cover one of each." },
+    { q: "Why is a long historical record (e.g. 1985–2024) central to a forward-looking AASB S2 risk statement?", opts: ["The standard forbids using any climate model projections", "A long record averages out natural variability, giving the forward-looking claim a defensible evidence base", "Historical data is the only data that exists for cyclones", "It lets the company avoid disclosing future risk altogether"], ans: 1, fb: "Correct. The forward-looking statement is an extrapolation; its credibility rests on a historical trend long enough to separate real signal from year-to-year noise. History is the anchor that makes the forecast defensible." }
+  ]
+},
+/* ===================== MODULE 03 ===================== */
+{
+  id: 2,
+  titleNav: "03 · Project 1 — Cyclone Trends",
+  title: 'Project 1: WA <span class="accent">Cyclone</span> Intensity Trends',
+  intro: "Your first physical-risk project analyses how tropical cyclone intensity off Western Australia has behaved from 1985 to 2024. This module gives you the data source, the intensity vocabulary, what the trend shows, and — crucially — why it matters to the Pilbara and Kimberley operations a consultancy's clients run.",
+  objectives: [
+    "Name the dataset and what a cyclone 'track' record contains",
+    "Define cyclone intensity in measurable terms (wind, pressure, category)",
+    "Explain rapid intensification and why it is the headline risk",
+    "Connect the trend to specific WA industries and to AASB S2 reporting"
+  ],
+  sections: [
+    { h: "What the project analyses", body:
+      `<p>The project uses <span class="kt">South Indian Ocean cyclone track data</span> — the basin that produces the systems hitting WA's north-west. The data comes from the <span class="kt">IBTrACS</span> archive (International Best Track Archive for Climate Stewardship, NOAA), which merges the official records of the world's meteorological agencies — for this basin primarily Australia's <span class="kt">Bureau of Meteorology (BOM)</span> — into one consistent "best track" per storm.</p>
+      <p>A track record is a time series of fixes for one cyclone: every few hours, its position (lat/long) plus its intensity at that moment. Aggregate forty years of these and you can ask: are storms reaching higher intensities? Are the strongest ones getting stronger? Are they intensifying faster?</p>`
+    },
+    { h: "What 'intensity' actually means", body:
+      `<p>Cyclone intensity is measured three interlocking ways — know all three:</p>
+      <div class="terms-grid">
+        <dl class="term-card"><dt>Maximum sustained wind</dt><dd>The headline number. Higher wind = more destructive potential (damage rises roughly with the square of wind speed).</dd></dl>
+        <dl class="term-card"><dt>Minimum central pressure</dt><dd>The pressure at the storm's centre, in hPa. <em>Lower</em> pressure = stronger storm. Often the more reliable historical measure, especially before modern satellite wind estimation.</dd></dl>
+        <dl class="term-card"><dt>Category (intensity scale)</dt><dd>A banding of the storm. Australia uses its own 1–5 tropical cyclone category scale; the US Saffir–Simpson scale is the better-known equivalent. Both bucket wind speed into categories.</dd></dl>
+      </div>
+      <div class="callout c-blue"><b>Key definition</b>Wind and pressure are inversely related: as a cyclone strengthens, central pressure drops and winds rise. When you report a "trend in intensity," you are really reporting a trend in these underlying quantities — and you should say which one, because their data quality differs across the record.</div>`
+    },
+    { h: "What the trend shows — and rapid intensification", body:
+      `<p>Consistent with the global picture in IPCC AR6, the analysis points to <strong>no clear increase in the total number of cyclones, but a shift in the distribution toward the more intense end</strong> — a greater share of high-category storms and lower minimum pressures among the strongest systems. The total count is noisy; the <em>intensity of the strongest storms</em> is the signal that matters for risk.</p>
+      <p>The sharpest concern is <span class="kt">rapid intensification</span> (RI): a storm gaining a large amount of intensity in a short window (conventionally ≥35 knots of wind in 24 hours). RI is dangerous precisely because it compresses warning time — a system that looked manageable yesterday makes landfall as a major cyclone today. Warmer sea-surface temperatures provide more energy for RI, which is why it features in forward-looking risk language.</p>
+      <div class="figure">
+        <svg class="fig-svg" viewBox="0 0 800 280" role="img" aria-label="Shift in cyclone category distribution">
+          <g font-family="'Inter',sans-serif">
+            <text x="400" y="30" text-anchor="middle" font-size="13" font-weight="700" font-family="'Bricolage Grotesque',sans-serif" fill="#1A1614">Distribution of storms by category: a shift toward the strong end</text>
+            <line x1="70" y1="220" x2="760" y2="220" stroke="#6B6259" stroke-width="1.5"/>
+            <line x1="70" y1="60" x2="70" y2="220" stroke="#6B6259" stroke-width="1.5"/>
+            <text x="40" y="140" text-anchor="middle" font-size="9" fill="#6B6259" transform="rotate(-90 40 140)">share of storms</text>
+            <!-- early period bars (grey) -->
+            <g fill="#C9BFA8">
+              <rect x="110" y="120" width="38" height="100"/>
+              <rect x="240" y="100" width="38" height="120"/>
+              <rect x="370" y="150" width="38" height="70"/>
+              <rect x="500" y="180" width="38" height="40"/>
+              <rect x="630" y="200" width="38" height="20"/>
+            </g>
+            <!-- recent period bars (tomato) -->
+            <g fill="#FF5C39">
+              <rect x="150" y="150" width="38" height="70"/>
+              <rect x="280" y="135" width="38" height="85"/>
+              <rect x="410" y="120" width="38" height="100"/>
+              <rect x="540" y="135" width="38" height="85"/>
+              <rect x="670" y="160" width="38" height="60"/>
+            </g>
+            <g font-size="10" fill="#6B6259" text-anchor="middle">
+              <text x="148" y="238">Cat 1</text>
+              <text x="278" y="238">Cat 2</text>
+              <text x="408" y="238">Cat 3</text>
+              <text x="538" y="238">Cat 4</text>
+              <text x="668" y="238">Cat 5</text>
+            </g>
+            <rect x="540" y="55" width="13" height="13" fill="#C9BFA8"/><text x="560" y="65" font-size="10" fill="#6B6259">1985–2004</text>
+            <rect x="650" y="55" width="13" height="13" fill="#FF5C39"/><text x="670" y="65" font-size="10" fill="#6B6259">2005–2024</text>
+            <text x="400" y="265" text-anchor="middle" font-size="9" fill="#6B6259">Schematic — illustrates the direction of the shift, not exact published values.</text>
+          </g>
+        </svg>
+        <figcaption>Fig 3.1 — The count stays noisy; the mass of the distribution drifts toward higher categories.</figcaption>
+      </div>`
+    },
+    { h: "The 2025–26 season and what it means for WA industry", body:
+      `<p>The 2025–26 WA season provides the live context: in the portfolio's framing, <span class="kt">Cyclone Narelle</span> is the headline event, associated with on the order of <strong>$500 million</strong> in damage and a sharp reminder that the north-west coast is a working industrial coastline, not empty hazard space.</p>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num">≈$500M</div><div class="stat-lbl">Indicative damage, Cyclone Narelle, 2025–26 WA season</div><div class="stat-sub">Portfolio dataset</div></div>
+        <div class="stat-card"><div class="stat-num">≥35 kt</div><div class="stat-lbl">Wind gain in 24 h that defines rapid intensification — the warning-time killer</div><div class="stat-sub">Standard RI threshold</div></div>
+        <div class="stat-card"><div class="stat-num">1985–2024</div><div class="stat-lbl">Record length analysed — long enough to separate trend from year-to-year noise</div><div class="stat-sub">IBTrACS / BOM</div></div>
+      </div>
+      <p>The exposed industries are concentrated and high-value: iron-ore ports and rail in the <strong>Pilbara</strong> (Port Hedland, Dampier), LNG infrastructure, the <strong>Kimberley</strong>, and pastoral/agricultural operations in the <strong>Gascoyne</strong>. A more intense cyclone, or one that intensifies rapidly before landfall, means longer port shutdowns, higher design-standard requirements, and bigger insured-loss exposure — all of which a resources company now has to describe under AASB S2.</p>
+      <div class="callout c-green"><b>What this means for AASB S2 reporting</b>A Pilbara miner's disclosure can't just say "cyclones are a risk." Under AASB S2 it needs an evidenced statement — "the intensity of the strongest cyclones affecting our operations has trended upward over 1985–2024, with rapid-intensification events reducing effective warning time" — and a strategy response. Producing and defending that sentence is the consulting job your project rehearses.</div>`
+    }
+  ],
+  quiz: [
+    { q: "Which statement best reflects what the cyclone trend analysis shows?", opts: ["Cyclones are becoming far more frequent every year", "The total count is noisy, but the distribution is shifting toward more intense storms", "Cyclones are disappearing from the South Indian Ocean", "Wind speed and central pressure both rise together as a storm strengthens"], ans: 1, fb: "Correct. The robust signal is intensity, not frequency — a greater share of high-category storms and lower minimum pressures among the strongest. (And note: as a storm strengthens, pressure FALLS while wind rises — they move oppositely.)" },
+    { q: "Why is rapid intensification (RI) singled out as a headline risk?", opts: ["It makes cyclones last longer", "It compresses warning time, so a storm can reach major intensity just before landfall", "It only happens to weak storms", "It reduces the damage a cyclone causes"], ans: 1, fb: "Correct. RI (≈≥35 kt gain in 24 h) means a system can jump from manageable to major in a day, collapsing the lead time for evacuation and asset protection. Warmer seas make it more likely, which is why it appears in forward-looking risk language." },
+    { q: "A Port Hedland iron-ore exporter must write its AASB S2 physical risk section. Your analysis is most directly useful for:", opts: ["Calculating the company's carbon price exposure", "Providing an evidenced trend statement on cyclone intensity affecting its operations", "Auditing the company's governance committee structure", "Estimating transition risk from the energy market"], ans: 1, fb: "Correct. The analysis turns historical cyclone data into a defensible, evidenced statement about how the hazard to that asset is changing — exactly the physical-risk content AASB S2 requires, and exactly what the company cannot credibly write without the data work." }
+  ]
+},
+/* ===================== MODULE 04 ===================== */
+{
+  id: 3,
+  titleNav: "04 · Project 2 — Rainfall Decline",
+  title: 'Project 2: SW WA <span class="accent">Rainfall</span> Decline',
+  intro: "Your second physical-risk project is the textbook case of chronic risk: the long, well-documented drying of South West Western Australia. This is one of the most studied regional climate shifts on Earth — which makes it a strong evidence base, and a great interview topic, provided you also know where the nuance lives.",
+  objectives: [
+    "Describe the SW WA rainfall step-change: what, when, and how well documented",
+    "Explain why this is chronic (not acute) physical risk",
+    "List the downstream consequences across water, agriculture, and fire",
+    "Hold the attribution nuance: climate change vs natural variability"
+  ],
+  sections: [
+    { h: "The step-change", body:
+      `<p>Since around the <strong>1970s</strong>, the South West of Western Australia — the corner that holds Perth, the Wheatbelt, and the forests of the south-west — has seen a sustained decline in cool-season (May–October) rainfall, on the order of <strong>15–20%</strong> below the early-20th-century baseline, with the steepest drops in the most recent decades. It is often described as a <span class="kt">step-change</span> rather than a smooth slide: rainfall dropped to a new, lower regime and largely stayed there.</p>
+      <p>The data behind this comes from <span class="kt">BOM rainfall station records</span> — some of the longest continuous instrumental records in Australia, running from 1950 (and earlier) to 2024. The length and density of that network is exactly why the signal is so robust: this is not a few noisy stations, it is a coherent regional shift seen across dozens of long records.</p>
+      <div class="figure">
+        <svg class="fig-svg" viewBox="0 0 800 280" role="img" aria-label="Rainfall anomaly before and after the step-change">
+          <g font-family="'Inter',sans-serif">
+            <text x="400" y="30" text-anchor="middle" font-size="13" font-weight="700" font-family="'Bricolage Grotesque',sans-serif" fill="#1A1614">Cool-season rainfall anomaly: a step down to a drier regime</text>
+            <line x1="70" y1="150" x2="760" y2="150" stroke="#6B6259" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="765" y="153" font-size="9" fill="#6B6259" text-anchor="start">0</text>
+            <line x1="70" y1="60" x2="70" y2="250" stroke="#6B6259" stroke-width="1.5"/>
+            <text x="45" y="155" text-anchor="middle" font-size="9" fill="#6B6259" transform="rotate(-90 45 155)">rainfall anomaly</text>
+            <!-- early wetter scatter (above baseline) -->
+            <polyline points="80,120 110,135 140,110 170,130 200,115 230,140 260,125 290,118" fill="none" stroke="#1FA9C7" stroke-width="2.5"/>
+            <!-- step marker -->
+            <line x1="300" y1="60" x2="300" y2="250" stroke="#FF5C39" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text x="300" y="270" text-anchor="middle" font-size="9" fill="#FF5C39">~mid-1970s step</text>
+            <!-- later drier scatter (below baseline) -->
+            <polyline points="300,130 340,170 380,165 430,185 480,175 540,190 600,200 670,195 750,210" fill="none" stroke="#2E3192" stroke-width="2.5"/>
+            <text x="180" y="90" text-anchor="middle" font-size="10" fill="#1FA9C7" font-weight="600">wetter regime</text>
+            <text x="540" y="240" text-anchor="middle" font-size="10" fill="#2E3192" font-weight="600">drier regime (new normal)</text>
+            <text x="415" y="265" text-anchor="middle" font-size="9" fill="#6B6259">  </text>
+          </g>
+        </svg>
+        <figcaption>Fig 4.1 — Schematic of the step-change: rainfall settles into a persistently drier regime rather than drifting smoothly.</figcaption>
+      </div>`
+    },
+    { h: "Why this is chronic risk", body:
+      `<p>This is the cleanest example of <span class="kt">chronic physical risk</span> you could ask for. Nothing dramatic happens on any single day — there is no "rainfall decline event" to photograph. Instead the <em>baseline</em> moves, permanently, and every system calibrated to the old baseline (dam yields, water licences, crop varieties, fire schedules) is quietly left out of alignment. That is the defining texture of chronic risk: slow, cumulative, and easy to under-react to precisely because there is no shock.</p>`
+    },
+    { h: "The consequences", body:
+      `<ul class="body-list">
+        <li><strong>Water security.</strong> Perth's surface-water dam inflows collapsed by far more than rainfall fell (runoff responds non-linearly — a 15–20% rainfall drop produced a far larger fall in streamflow into dams). The city's response — desalination, groundwater, the move away from rain-fed dams — is a direct adaptation to this trend.</li>
+        <li><strong>Agriculture.</strong> The Wheatbelt's cropping calendar is built on cool-season rain. Less reliable rainfall shifts viable crops, planting windows, and land value — a material risk for agribusiness and its lenders.</li>
+        <li><strong>Urban supply &amp; planning.</strong> Long-term water planning for a growing Perth has to assume the drier regime is the new normal, not a temporary dry spell.</li>
+        <li><strong>Bushfire.</strong> Drier landscapes and longer dry seasons extend the fire-weather window, compounding an acute hazard on top of the chronic one.</li>
+      </ul>
+      <div class="callout c-mango"><b>How this shows up in client work</b>The clients here aren't only miners — they're water utilities (Water Corporation), state government planners, and the agribusiness/finance sector. A disclosure-readiness or physical-risk engagement for any of them leans on exactly this evidence base.</div>`
+    },
+    { h: "The two callouts to memorise", body:
+      `<div class="callout c-tomato"><b>Strong evidence base</b>The SW WA drying is one of the most thoroughly documented regional climate shifts in the world — decades of dense station data, CSIRO and BOM analysis, and a dedicated research program (the Indian Ocean Climate Initiative). In an interview this is a feature: you can speak about it with confidence because the literature is deep and consistent.</div>
+      <div class="callout c-mango"><b>Attribution nuance — know this</b>The <em>decline</em> is not seriously disputed; the <em>full attribution</em> is more nuanced. Part of the variability is driven by large-scale natural modes — the <strong>El Niño–Southern Oscillation (ENSO)</strong> and especially the <strong>Indian Ocean Dipole (IOD)</strong>, plus a southward shift of rain-bearing systems linked to the strengthening of the subtropical ridge. The scientific consensus is that <em>anthropogenic climate change is a major contributor</em> (via circulation changes and the expanding Hadley cell), with natural variability modulating it. If asked, don't overclaim "it's all climate change" — say the trend is robust and human-caused warming is a primary driver, with ocean–atmosphere variability layered on top. That nuance signals real domain literacy.</div>`
+    }
+  ],
+  quiz: [
+    { q: "Why is the SW WA rainfall decline classified as chronic rather than acute physical risk?", opts: ["Because it only affects agriculture", "Because the baseline shifts gradually and permanently, with no single discrete event", "Because it happens during cyclone season", "Because it is not caused by climate change"], ans: 1, fb: "Correct. Chronic risk is a permanently moving baseline — no shock to point at, just a drier new normal that quietly leaves dams, licences and crops mis-calibrated. That slow, cumulative character is what makes it the textbook chronic case." },
+    { q: "Perth's dam inflows fell by much more than rainfall did. What does this illustrate?", opts: ["A data error in the BOM records", "Runoff responds non-linearly, so a modest rainfall drop produces a far larger streamflow drop", "Rainfall actually increased", "Desalination caused the rainfall decline"], ans: 1, fb: "Correct. The rainfall–runoff relationship is non-linear: a 15–20% rainfall decline translated into a far larger fall in dam inflows, which is why Perth pivoted to desalination and groundwater. It's a vivid way to show you understand downstream consequences." },
+    { q: "An interviewer asks whether the SW WA drying is 'just climate change.' The most domain-literate answer is:", opts: ["Yes, it is entirely caused by anthropogenic climate change", "No, it is entirely natural ENSO/IOD variability", "The decline is robust; human-caused warming is a primary driver, with natural ocean–atmosphere variability (ENSO/IOD) modulating it", "The decline is too uncertain to discuss"], ans: 2, fb: "Correct. The decline itself is well established; attribution is nuanced. Anthropogenic warming (circulation changes, expanding Hadley cell, stronger subtropical ridge) is a primary driver, with ENSO and the IOD layered on top. Holding that nuance is exactly the literacy signal you want to send." }
+  ]
+},
+/* ===================== MODULE 05 ===================== */
+{
+  id: 4,
+  titleNav: "05 · Project 3 — AASB S2 Readiness",
+  title: 'Project 3: AASB S2 <span class="accent">Readiness</span>',
+  intro: "Your third project crosses from physical science to corporate disclosure. You take WA's biggest ASX-listed emitters, read their reports against the four pillars of AASB S2, and score how ready each one is. This is the most direct simulation of the day-job a Perth ESG consultant is hired to do right now.",
+  objectives: [
+    "List the four pillars AASB S2 requires companies to disclose",
+    "Explain what a sustainability / annual report is and how to read one for disclosure content",
+    "Describe how to score readiness across the pillars and spot common gaps",
+    "Name the WA-headquartered companies in scope and why this maps to a real consulting service"
+  ],
+  sections: [
+    { h: "The four pillars", body:
+      `<p>AASB S2 inherits its structure from the TCFD framework via IFRS S2. Every disclosure is organised under <span class="kt">four pillars</span> — memorise these, they are the backbone of the whole project:</p>
+      <div class="figure">
+        <svg class="fig-svg" viewBox="0 0 800 300" role="img" aria-label="The four pillars of AASB S2">
+          <g font-family="'Inter',sans-serif">
+            <text x="400" y="30" text-anchor="middle" font-size="13" font-weight="700" font-family="'Bricolage Grotesque',sans-serif" fill="#1A1614">The four pillars of AASB S2 disclosure</text>
+            <!-- pillar 1 -->
+            <rect x="40" y="60" width="170" height="190" rx="12" fill="#2E3192"/>
+            <text x="125" y="90" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">Governance</text>
+            <text x="125" y="120" text-anchor="middle" fill="#dfe0ff" font-size="9.5">Board oversight</text>
+            <text x="125" y="138" text-anchor="middle" fill="#dfe0ff" font-size="9.5">of climate risk</text>
+            <text x="125" y="162" text-anchor="middle" fill="#dfe0ff" font-size="9.5">Management's</text>
+            <text x="125" y="180" text-anchor="middle" fill="#dfe0ff" font-size="9.5">role</text>
+            <!-- pillar 2 -->
+            <rect x="225" y="60" width="170" height="190" rx="12" fill="#1FA9C7"/>
+            <text x="310" y="90" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">Strategy</text>
+            <text x="310" y="120" text-anchor="middle" fill="#eaffff" font-size="9.5">Risks &amp;</text>
+            <text x="310" y="138" text-anchor="middle" fill="#eaffff" font-size="9.5">opportunities</text>
+            <text x="310" y="162" text-anchor="middle" fill="#eaffff" font-size="9.5">Scenario</text>
+            <text x="310" y="180" text-anchor="middle" fill="#eaffff" font-size="9.5">analysis</text>
+            <text x="310" y="204" text-anchor="middle" fill="#eaffff" font-size="9.5">Financial impact</text>
+            <!-- pillar 3 -->
+            <rect x="410" y="60" width="170" height="190" rx="12" fill="#1F9D55"/>
+            <text x="495" y="90" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="700">Risk Mgmt</text>
+            <text x="495" y="120" text-anchor="middle" fill="#e3ffe9" font-size="9.5">How risks are</text>
+            <text x="495" y="138" text-anchor="middle" fill="#e3ffe9" font-size="9.5">identified,</text>
+            <text x="495" y="156" text-anchor="middle" fill="#e3ffe9" font-size="9.5">assessed &amp;</text>
+            <text x="495" y="174" text-anchor="middle" fill="#e3ffe9" font-size="9.5">managed</text>
+            <!-- pillar 4 -->
+            <rect x="595" y="60" width="170" height="190" rx="12" fill="#FF5C39"/>
+            <text x="680" y="90" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">Metrics &amp;</text>
+            <text x="680" y="106" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">Targets</text>
+            <text x="680" y="132" text-anchor="middle" fill="#ffe7df" font-size="9.5">Scope 1, 2, 3</text>
+            <text x="680" y="150" text-anchor="middle" fill="#ffe7df" font-size="9.5">emissions</text>
+            <text x="680" y="174" text-anchor="middle" fill="#ffe7df" font-size="9.5">Targets &amp;</text>
+            <text x="680" y="192" text-anchor="middle" fill="#ffe7df" font-size="9.5">performance</text>
+            <text x="400" y="278" text-anchor="middle" font-size="9.5" fill="#6B6259">Score a company on each pillar; the gaps between pillars are where the consulting work lives.</text>
+          </g>
+        </svg>
+        <figcaption>Fig 5.1 — Governance · Strategy · Risk Management · Metrics &amp; Targets — the same four pillars as TCFD/IFRS S2.</figcaption>
+      </div>
+      <p>The clever part for an analyst: the four pillars also tell you <em>where</em> to look in a company's reporting and <em>what good looks like</em> for each. Governance asks "who's accountable?"; Strategy asks "have you done scenario analysis and quantified the impact?"; Risk Management asks "is climate risk in your enterprise risk process?"; Metrics &amp; Targets asks "do you disclose Scope 1/2/3 emissions and credible targets?"</p>`
+    },
+    { h: "How to read a company report", body:
+      `<p>The raw material is the company's published reporting — typically an <strong>annual report</strong>, a standalone <strong>sustainability / climate report</strong>, and increasingly a <strong>climate transition plan</strong>. You are not reading these for the prose; you are hunting for evidence against each pillar. Practical moves:</p>
+      <ul class="body-list">
+        <li>Search the PDF for "scenario," "1.5°C," "2°C," "Scope 3," "physical risk," "board," "TCFD" — the presence and quality of these tells you a lot fast.</li>
+        <li>Distinguish a genuine disclosure from a glossy aspiration. "We are committed to sustainability" scores nothing; "we ran a 2°C and a 4°C scenario and quantified the impact on our Pilbara assets" scores well.</li>
+        <li>Note what's <em>missing</em> — absent Scope 3, no scenario analysis, no board mandate — because gaps are the deliverable.</li>
+      </ul>
+      <div class="callout c-blue"><b>AASB S2 is based on IFRS S2</b>That international alignment matters: a company already reporting under TCFD or IFRS S2 is most of the way to AASB S2. When you score readiness, prior TCFD adoption is a strong positive signal — and a talking point that shows you understand the global standards landscape, not just the Australian rule.</div>`
+    },
+    { h: "Scoring readiness and the common gaps", body:
+      `<p>A workable readiness score rates each pillar (say, 0–3: absent / partial / substantive / mature) and aggregates. You're not auditing — you're triaging where a company needs help. Across WA's emitters the recurring gaps are predictable:</p>
+      <ul class="body-list">
+        <li><strong>Scope 3 emissions</strong> — the hardest to measure (value-chain emissions) and the most often missing or heavily caveated. For an iron-ore exporter, Scope 3 (the steelmaking that uses their ore) dwarfs Scope 1 &amp; 2.</li>
+        <li><strong>Quantified scenario analysis</strong> — many disclose that they "considered scenarios" without quantifying the financial impact AASB S2 wants.</li>
+        <li><strong>Physical risk specificity</strong> — generic "we face climate risk" language rather than asset-level, data-backed statements (this is exactly the gap your Projects 1 &amp; 2 fill).</li>
+      </ul>`
+    },
+    { h: "Who's in scope, and why it's the real job", body:
+      `<p>The WA-headquartered ASX heavyweights you'd score are the obvious ones: <span class="kt">BHP</span>, <span class="kt">Rio Tinto</span>, <span class="kt">Woodside</span>, <span class="kt">Fortescue</span>, <span class="kt">Mineral Resources</span>, and <span class="kt">South32</span>. All are large enough to be in the first AASB S2 reporting groups and all carry serious physical and transition exposure.</p>
+      <div class="callout c-green"><b>This is what employers are paid to do</b>Reading reports against the four pillars, scoring readiness, and writing up the gaps with recommendations <em>is</em> the disclosure-readiness engagement Deloitte, GHD, Arup and Greenbase sell. Project 3 isn't a proxy for the job — it's a scaled-down version of the actual deliverable. That's the single strongest thing you can say about it in an interview.</div>`
+    }
+  ],
+  quiz: [
+    { q: "What are the four pillars of AASB S2 disclosure?", opts: ["Carbon, Water, Waste, Biodiversity", "Governance, Strategy, Risk Management, Metrics & Targets", "Scope 1, Scope 2, Scope 3, Net Zero", "Physical, Transition, Acute, Chronic"], ans: 1, fb: "Correct. Governance, Strategy, Risk Management, and Metrics & Targets — inherited from TCFD via IFRS S2. These four are the backbone of the whole scoring project and should be instantly recallable in an interview." },
+    { q: "Why does AASB S2 being based on IFRS S2 matter when scoring a company's readiness?", opts: ["It means the company can ignore Australian rules", "A company already reporting under TCFD / IFRS S2 is largely aligned and scores as more ready", "It makes Scope 3 emissions optional", "It only applies to overseas companies"], ans: 1, fb: "Correct. AASB S2 is the Australian adoption of the international IFRS S2, which itself builds on TCFD. So prior TCFD/IFRS adoption is a strong readiness signal — and citing that alignment shows you understand the global standards landscape." },
+    { q: "For a WA iron-ore exporter, which is typically the largest and most commonly missing disclosure gap?", opts: ["Scope 1 emissions from their own diesel use", "Scope 3 emissions from the steelmaking that uses their ore", "The board's meeting schedule", "The company's electricity bill"], ans: 1, fb: "Correct. Scope 3 (value-chain emissions — here, the steelmaking downstream) dwarfs Scope 1 & 2 for a miner, is the hardest to measure, and is the gap most often missing or heavily caveated. Spotting that is exactly the consultant's value-add." }
+  ]
+},
+/* ===================== MODULE 06 ===================== */
+{
+  id: 5,
+  titleNav: "06 · Interview Prep",
+  title: 'Interview Prep: <span class="accent">Talking</span> About This Work',
+  intro: "You now know the domain. This module converts that into spoken answers: a tight pitch for each project, honest responses to the predictable follow-ups, and a clean way to handle the 'did you write the code yourself?' question. Read the sample answers aloud — fluency comes from having said the words before.",
+  objectives: [
+    "Deliver a 3–5 sentence answer for each of the three projects",
+    "Anticipate the common follow-up questions and answer them honestly",
+    "Handle the 'did you code it yourself?' question with confidence and integrity",
+    "Pivot to your Marine Engineering + Environment & Climate Emergency background as an asset"
+  ],
+  sections: [
+    { h: "The frame for every answer", body:
+      `<p>Whatever the project, structure the pitch the same way: <strong>(1) what it analyses, (2) the WA relevance, (3) the AASB S2 connection, (4) your contribution.</strong> Lead with the problem, not the tooling. Interviewers in this field care that you understand <em>why the work matters to a client</em> far more than which library drew the chart.</p>
+      <div class="callout c-blue"><b>The golden thread</b>Always close the loop back to AASB S2 and a real WA client. That's the difference between "I did a data project" and "I did the kind of analysis a Perth consultancy bills for."</div>`
+    },
+    { h: "Sample answer — Project 1 (Cyclones)", body:
+      `<div class="callout sample"><b>"Tell me about one of your data projects"</b>"I analysed forty years of South Indian Ocean cyclone track data — from the IBTrACS and BOM records — to test how cyclone <em>intensity</em> off WA's north-west has changed from 1985 to 2024. The headline finding matches the IPCC picture: the count is noisy, but the strongest storms are getting stronger, and rapid intensification is cutting warning time. That matters because the Pilbara and Kimberley are a working industrial coastline — ports, rail, LNG — so under AASB S2 those companies now have to make evidenced statements about physical cyclone risk. My contribution was the domain interpretation: framing the data as a defensible, caveated risk statement a consultant could hand a resources client."</div>`
+    },
+    { h: "Sample answer — Project 2 (Rainfall)", body:
+      `<div class="callout sample"><b>"Tell me about one of your data projects"</b>"I worked on the South West WA rainfall decline — the long cool-season drying since the 1970s, using BOM station records back to 1950. It's the textbook case of <em>chronic</em> physical climate risk: the baseline shifts permanently, and Perth's dam inflows fell even faster than rainfall, which is why the city moved to desalination. It's also one of the most documented regional climate shifts in the world, so it's a strong evidence base — though I'm careful on attribution: the decline is robust and human-caused warming is a primary driver, with ENSO and the Indian Ocean Dipole modulating it. The relevance is water utilities, agribusiness and state planners, all of whom face this in their disclosures and adaptation planning."</div>`
+    },
+    { h: "Sample answer — Project 3 (AASB S2 Readiness)", body:
+      `<div class="callout sample"><b>"Tell me about one of your data projects"</b>"I took WA's biggest ASX emitters — BHP, Rio Tinto, Woodside, Fortescue, Mineral Resources, South32 — and scored their reporting against the four AASB S2 pillars: governance, strategy, risk management, and metrics and targets. The recurring gaps were predictable: thin Scope 3 disclosure, scenario analysis that isn't quantified, and generic physical-risk language instead of asset-level statements. This is the one that maps most directly to the job — reading reports against the pillars, scoring readiness and writing up the gaps is exactly the disclosure-readiness engagement firms like Deloitte and GHD are selling right now. My value was the judgement: knowing what 'good' looks like for each pillar."</div>`
+    },
+    { h: "Common follow-ups — and honest answers", body:
+      `<ul class="body-list">
+        <li><strong>"What surprised you?"</strong> — Project 1: that frequency is the wrong thing to watch; intensity is the signal. Project 2: how much more dam inflows fell than rainfall (the non-linear runoff response). Project 3: how much of corporate reporting is aspiration rather than disclosure.</li>
+        <li><strong>"What were the limitations?"</strong> — Always have one ready. Cyclone intensity before satellites (pre-~1990) is less reliable; corporate disclosures are self-reported; a readiness score is a triage judgement, not an audit. Naming limits builds credibility (see Module 08).</li>
+        <li><strong>"How would you extend it?"</strong> — Cross-check the cyclone trend against IPCC AR6 projections; tie rainfall to specific dam-yield numbers; turn the readiness scores into a client-facing gap-closure roadmap.</li>
+      </ul>`
+    },
+    { h: "“Did you write the code yourself?”", body:
+      `<p>Answer this one cleanly and without apology, because honesty here is a strength, not a weakness — and increasingly the expected answer.</p>
+      <div class="callout sample"><b>The honest, confident answer</b>"It was a collaborative build — I used AI tooling to do the data wrangling and charting, the way most analysts now work. What I own is the domain side: choosing the questions, the datasets and the baselines, interpreting what the trends mean, and framing the findings against AASB S2. The tool produced the plot; I produced the <em>judgement</em> about whether it's a defensible risk statement. That division — human owns the domain interpretation, tooling accelerates the mechanics — is exactly how I'd expect to work in a consulting team."</div>
+      <div class="callout c-green"><b>Why this lands</b>You're not learning to be a software engineer; you're learning to be a climate-risk professional who is fluent with modern tools. Consultancies increasingly value people who can direct AI tooling and supply the domain judgement it lacks. Stated plainly, this is a differentiator, not a confession.</div>`
+    },
+    { h: "Pivoting to your background", body:
+      `<p>Your <span class="kt">Marine Engineering</span> + <span class="kt">Master of Environment and Climate Emergency</span> combination is unusual and you should use it deliberately. Marine engineering means you're comfortable with physical systems, real-world asset constraints, and quantitative rigour — exactly the lens physical-risk work needs (a cyclone hitting a port is an engineering problem as much as a climate one). The Master's supplies the climate-science and policy framing. Together they say: <em>"I can connect the climate data to the asset and to the disclosure — the whole chain, not just one box of it."</em></p>
+      <div class="callout c-mango"><b>One-line bridge to keep ready</b>"My marine engineering background means I think in terms of real assets and physical constraints, and my climate master's gives me the science and the disclosure framing — so I can take a hazard like a cyclone and follow it all the way through to what a company has to say about it under AASB S2."</div>`
+    }
+  ],
+  quiz: [
+    { q: "What is the recommended structure for pitching each project?", opts: ["Tools used → libraries → code → output", "What it analyses → WA relevance → AASB S2 connection → your contribution", "Your contribution → salary expectations → tools", "A list of every statistic you calculated"], ans: 1, fb: "Correct. Lead with what it analyses and why it matters to a WA client, tie it to AASB S2, then state your contribution. Interviewers care that you understand the client value, not which library drew the chart — always close the loop back to the standard and a real client." },
+    { q: "The best way to answer 'did you write the code yourself?' is to:", opts: ["Claim you wrote every line unaided", "Avoid the question and change topic", "Honestly explain it was a collaborative AI-assisted build where you own the domain interpretation and findings", "Say the project isn't really yours"], ans: 2, fb: "Correct. Be honest and confident: AI tooling handled the mechanics; you own the questions, datasets, interpretation and the AASB S2 framing. That division — human judgement + tool acceleration — is how modern consulting teams work, so it's a differentiator, not a confession." },
+    { q: "How should you position your Marine Engineering + Climate Master's background?", opts: ["As unrelated to climate risk work", "As a combination that lets you connect climate data to real assets and to the disclosure — the whole chain", "As a reason you need extra training before being useful", "As evidence you should be a software developer"], ans: 1, fb: "Correct. Marine engineering gives you the physical-systems/asset lens; the climate master's gives the science and disclosure framing. Together they let you follow a hazard from data to asset to AASB S2 disclosure — the full chain, which is rare and valuable." }
+  ]
+},
+/* ===================== MODULE 07 ===================== */
+{
+  id: 6,
+  titleNav: "07 · WA's Climate in Context",
+  title: 'WA’s Climate Story: The Data in <span class="accent">Context</span>',
+  intro: "Your three projects aren't isolated curiosities — they're three samples from a single, well-documented picture of a state that is unusually exposed to physical climate risk. This module zooms out so you can place your portfolio inside WA's broader climate story and cite the authoritative sources behind it.",
+  objectives: [
+    "Summarise WA's main documented climate trends: temperature, rainfall, cyclones, fire weather",
+    "Explain why WA is disproportionately exposed to physical climate risk",
+    "Name the authoritative sources (BOM, CSIRO, IPCC AR6) and what each provides",
+    "Locate your three projects within this broader documented picture"
+  ],
+  sections: [
+    { h: "WA's documented trends", body:
+      `<p>The big, agreed-upon trends for Western Australia, drawn from BOM/CSIRO <em>State of the Climate</em> and IPCC AR6 regional findings:</p>
+      <ul class="body-list">
+        <li><strong>Temperature.</strong> Australia has warmed ~1.5°C since 1910; WA shares this, with more frequent and intense heat extremes — a chronic stressor on remote operations, infrastructure, and health.</li>
+        <li><strong>Rainfall (south-west).</strong> The sustained cool-season decline of ~15–20% since the 1970s (your Project 2) — among the clearest regional drying signals globally.</li>
+        <li><strong>Rainfall (north).</strong> In contrast, parts of northern WA have seen <em>increasing</em> wet-season rainfall — a reminder that "WA's climate" is really several regional stories.</li>
+        <li><strong>Cyclones.</strong> No clear trend in frequency, but a shift toward higher intensity among the strongest systems (your Project 1), consistent with the global AR6 assessment.</li>
+        <li><strong>Fire weather.</strong> A lengthening fire season and more dangerous fire-weather days, especially in the drying south-west — an acute hazard compounding the chronic one.</li>
+      </ul>`
+    },
+    { h: "Why WA is so exposed", body:
+      `<p>WA is disproportionately exposed for reasons that are geographic <em>and</em> economic:</p>
+      <ul class="body-list">
+        <li><strong>Geography.</strong> A vast state spanning the tropical, cyclone-prone north and the drying Mediterranean south-west — it carries nearly every physical hazard type at once.</li>
+        <li><strong>Economic concentration.</strong> Its economy leans heavily on resources, energy, and agriculture — sectors with fixed, high-value, location-bound assets that can't simply relocate away from a hazard.</li>
+        <li><strong>Remoteness.</strong> Critical infrastructure (ports, mines, power, water) is often remote, with long supply lines and limited redundancy, so a single event cascades further.</li>
+      </ul>
+      <div class="figure">
+        <svg class="fig-svg" viewBox="0 0 800 380" role="img" aria-label="Schematic map of WA hazard regions">
+          <g font-family="'Inter',sans-serif">
+            <text x="400" y="28" text-anchor="middle" font-size="13" font-weight="700" font-family="'Bricolage Grotesque',sans-serif" fill="#1A1614">WA hazard regions (schematic)</text>
+            <!-- crude WA outline -->
+            <path d="M250,55 L470,55 L500,120 L520,210 L500,300 L430,345 L330,345 L300,300 L275,210 L250,120 Z" fill="#F4ECD8" stroke="#1A1614" stroke-width="2"/>
+            <!-- north / cyclone -->
+            <ellipse cx="380" cy="100" rx="95" ry="42" fill="#FF5C39" opacity="0.78"/>
+            <text x="380" y="98" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Kimberley / Pilbara</text>
+            <text x="380" y="114" text-anchor="middle" fill="#fff" font-size="9.5">cyclones · extreme heat</text>
+            <!-- mid / gascoyne -->
+            <ellipse cx="360" cy="190" rx="70" ry="30" fill="#FFC234" opacity="0.85"/>
+            <text x="360" y="188" text-anchor="middle" fill="#3a2c00" font-size="10" font-weight="700">Gascoyne</text>
+            <text x="360" y="203" text-anchor="middle" fill="#3a2c00" font-size="9">cyclone tail · drought</text>
+            <!-- south west / rainfall -->
+            <ellipse cx="370" cy="300" rx="80" ry="40" fill="#1FA9C7" opacity="0.82"/>
+            <text x="370" y="295" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">South West</text>
+            <text x="370" y="311" text-anchor="middle" fill="#eaffff" font-size="9.5">rainfall decline · bushfire</text>
+            <!-- perth dot -->
+            <circle cx="350" cy="320" r="5" fill="#2E3192"/>
+            <text x="358" y="335" font-size="9" fill="#2E3192" font-weight="600">Perth — urban heat, water</text>
+            <text x="400" y="368" text-anchor="middle" font-size="9" fill="#6B6259">Not to scale — illustrates which hazard dominates where, and where each project sits.</text>
+          </g>
+        </svg>
+        <figcaption>Fig 7.1 — North = cyclone (Project 1); South West = rainfall decline &amp; fire (Project 2); Perth metro = urban heat &amp; water security.</figcaption>
+      </div>`
+    },
+    { h: "The authoritative sources", body:
+      `<div class="terms-grid">
+        <dl class="term-card"><dt>BOM</dt><dd>Bureau of Meteorology — the primary observational record: rainfall stations, the tropical cyclone database, temperature. The raw evidence base for Projects 1 &amp; 2.</dd></dl>
+        <dl class="term-card"><dt>CSIRO</dt><dd>Co-author (with BOM) of the biennial <em>State of the Climate</em> reports — the authoritative national synthesis of observed and projected change.</dd></dl>
+        <dl class="term-card"><dt>IPCC AR6</dt><dd>The Sixth Assessment Report of the Intergovernmental Panel on Climate Change — the global scientific consensus, including regional findings used to frame forward-looking statements.</dd></dl>
+        <dl class="term-card"><dt>State summaries</dt><dd>IPCC / CSIRO regional and WA-specific climate projections — useful for tying global findings to local assets.</dd></dl>
+      </div>
+      <div class="callout c-blue"><b>Why naming sources matters</b>In a disclosure context, a risk statement is only as credible as the source behind it. Being able to say "BOM observations, framed against IPCC AR6 projections, synthesised in the BOM/CSIRO State of the Climate" instantly signals you know where defensible climate evidence comes from.</div>`
+    },
+    { h: "Where your portfolio fits", body:
+      `<p>Step back and the portfolio reads as a deliberate cross-section of WA's exposure: an <strong>acute northern hazard</strong> (cyclones), a <strong>chronic southern hazard</strong> (rainfall decline), and the <strong>disclosure machinery</strong> that forces companies to confront both. You've sampled the two dominant physical hazards of the state and the regulatory response to them — which is exactly the territory a WA climate-risk consultant operates in every day.</p>
+      <div class="callout c-green"><b>The portfolio-level pitch</b>"My three projects are a cross-section of WA's physical climate risk — an acute hazard in the north, a chronic one in the south, and the AASB S2 disclosure work that ties them to corporate accountability. They're built from the same authoritative sources — BOM, CSIRO, IPCC AR6 — that a consultancy would stand behind in a client report."</div>`
+    }
+  ],
+  quiz: [
+    { q: "Which statement about WA's documented rainfall trends is correct?", opts: ["All of WA is getting wetter", "The south-west is drying in the cool season while parts of the north have seen increasing wet-season rain", "WA rainfall shows no trend anywhere", "Only Perth is affected by rainfall change"], ans: 1, fb: "Correct. 'WA's climate' is really several regional stories: a strong cool-season drying in the south-west (Project 2) alongside increasing wet-season rainfall in parts of the north. Knowing it's regionally split signals real familiarity with the data." },
+    { q: "Why is WA disproportionately exposed to physical climate risk?", opts: ["It has the highest population density in Australia", "It spans nearly every hazard type and its economy relies on fixed, remote, high-value resource assets", "It has no climate monitoring stations", "Its assets can easily relocate away from hazards"], ans: 1, fb: "Correct. WA spans the cyclone-prone tropical north and the drying south-west (so it carries almost every hazard), and its resource/energy/agriculture economy depends on fixed, often remote, location-bound assets with limited redundancy — a high-exposure combination." },
+    { q: "Which best describes the role of the BOM/CSIRO State of the Climate and IPCC AR6 in your work?", opts: ["They are optional background reading with no role in disclosure", "They are the authoritative sources that make a risk statement defensible", "They replace the need for any historical data analysis", "They only cover the eastern states"], ans: 1, fb: "Correct. A disclosure risk statement is only as credible as its sources. BOM observations, the BOM/CSIRO State of the Climate synthesis, and IPCC AR6 projections are the authoritative evidence base a consultancy stands behind — naming them signals you know where defensible climate evidence comes from." }
+  ]
+},
+/* ===================== MODULE 08 — REFERENCES ===================== */
+{
+  id: 7,
+  type: 'ref',
+  titleNav: "08 · References",
+  title: '<span class="accent">References</span> &amp; Data Sources',
+  intro: "Every dataset, standard, and key paper behind this briefing, annotated with what it contributes and where its limits are — in Chicago 17th (author–date) style. The data-quality caveat at the end is itself part of the literacy: knowing the limits of your evidence is what makes a risk statement defensible.",
+  objectives: [],
+  sections: [
+    { h: "Datasets & Observational Records", body:
+      `<p class="ref-group-label" style="margin-top:0">Datasets &amp; Observational Records</p>
+      <div class="ref-item" style="border-left-color:var(--sea)">
+        <div class="ref-citation">Knapp, Kenneth R., Michael C. Kruk, David H. Levinson, Howard J. Diamond, and Charles J. Neumann. 2010. "The International Best Track Archive for Climate Stewardship (IBTrACS): Unifying Tropical Cyclone Data." <em>Bulletin of the American Meteorological Society</em> 91 (3): 363–376.</div>
+        <div class="ref-annotation">The foundational reference for IBTrACS, the merged global "best track" cyclone archive used in Project 1. It standardises records from multiple national agencies into one dataset. Its great strength is global coverage; its limitation is that it inherits the differing methods and reliability of each contributing agency, especially for intensity in the pre-satellite era.</div>
+        <a class="ref-link" href="https://doi.org/10.1175/2009BAMS2755.1" target="_blank" rel="noopener">→ DOI: 10.1175/2009BAMS2755.1</a>
+      </div>
+      <div class="ref-item" style="border-left-color:var(--sea)">
+        <div class="ref-citation">Bureau of Meteorology. n.d. <em>Tropical Cyclone Database (Best Track Data)</em>. Melbourne: Australian Government Bureau of Meteorology.</div>
+        <div class="ref-annotation">BOM's official record of tropical cyclones in the Australian region, the primary national source feeding IBTrACS for the South Indian Ocean basin in Project 1. Authoritative for Australian-region storms, but intensity estimates before the modern satellite era (pre-~1990) carry larger uncertainty and the analysis methods have changed over time.</div>
+        <a class="ref-link" href="http://www.bom.gov.au/cyclone/tropical-cyclone-knowledge-centre/databases/" target="_blank" rel="noopener">→ Source (BOM)</a>
+      </div>
+      <div class="ref-item" style="border-left-color:var(--sea)">
+        <div class="ref-citation">Huang, Boyin, Peter W. Thorne, Viva F. Banzon, et al. 2017. "Extended Reconstructed Sea Surface Temperature, Version 5 (ERSSTv5): Upgrades, Validations, and Intercomparisons." <em>Journal of Climate</em> 30 (20): 8179–8205.</div>
+        <div class="ref-annotation">NOAA's ERSSTv5 reconstructs global sea-surface temperature back to 1854 and underpins analysis of the ocean warming that fuels cyclone intensification and modulates regional rainfall. Robust for large-scale, long-term trends; less reliable at fine spatial scales and in sparsely observed early periods, where interpolation dominates.</div>
+        <a class="ref-link" href="https://doi.org/10.1175/JCLI-D-16-0836.1" target="_blank" rel="noopener">→ DOI: 10.1175/JCLI-D-16-0836.1</a>
+      </div>
+      <div class="ref-item" style="border-left-color:var(--sea)">
+        <div class="ref-citation">Bureau of Meteorology. n.d. <em>Climate Data Online: Rainfall Station Records</em>. Melbourne: Australian Government Bureau of Meteorology.</div>
+        <div class="ref-annotation">The long-term rainfall station network behind Project 2's SW WA decline analysis — among the longest continuous instrumental records in Australia. Highly reliable for the south-west's dense network, though station moves, gaps, and changing instrumentation require care, and homogenised products (e.g. ACORN-SAT for temperature) address some of these issues.</div>
+        <a class="ref-link" href="http://www.bom.gov.au/climate/data/" target="_blank" rel="noopener">→ Source (BOM CDO)</a>
+      </div>`
+    },
+    { h: "Standards & Disclosure", body:
+      `<p class="ref-group-label">Standards &amp; Disclosure</p>
+      <div class="ref-item" style="border-left-color:var(--indigo)">
+        <div class="ref-citation">Australian Accounting Standards Board. 2024. <em>AASB S2 Climate-related Disclosures</em>. Melbourne: AASB.</div>
+        <div class="ref-annotation">The primary standard at the centre of this entire portfolio — Australia's mandatory climate disclosure requirement, structured around the four pillars (governance, strategy, risk management, metrics &amp; targets). The authoritative text for Project 3. As a new standard, interpretation and assurance practice are still maturing, and phase-in dates differ by entity group.</div>
+        <a class="ref-link" href="https://www.aasb.gov.au/" target="_blank" rel="noopener">→ Source (AASB)</a>
+      </div>
+      <div class="ref-item" style="border-left-color:var(--indigo)">
+        <div class="ref-citation">International Sustainability Standards Board. 2023. <em>IFRS S2 Climate-related Disclosures</em>. London: IFRS Foundation.</div>
+        <div class="ref-annotation">The international standard AASB S2 adopts, itself built on the TCFD recommendations. Essential context for why AASB S2 is internationally aligned and why prior TCFD/IFRS reporting signals readiness. Like AASB S2, it is recent, so comparable cross-company application is still developing.</div>
+        <a class="ref-link" href="https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/" target="_blank" rel="noopener">→ Source (IFRS)</a>
+      </div>`
+    },
+    { h: "Climate Science Synthesis", body:
+      `<p class="ref-group-label">Climate Science Synthesis</p>
+      <div class="ref-item" style="border-left-color:var(--tomato)">
+        <div class="ref-citation">IPCC. 2021. <em>Climate Change 2021: The Physical Science Basis. Contribution of Working Group I to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change</em>. Edited by Valérie Masson-Delmotte et al. Cambridge: Cambridge University Press.</div>
+        <div class="ref-annotation">The global scientific consensus (AR6 WGI) on observed and projected climate change, including the assessment that the proportion of intense tropical cyclones has likely increased while total frequency has not — the framing behind Project 1. The Summary for Policymakers is freely available and sufficient for most disclosure framing.</div>
+        <a class="ref-link" href="https://doi.org/10.1017/9781009157896" target="_blank" rel="noopener">→ DOI: 10.1017/9781009157896</a>
+      </div>
+      <div class="ref-item" style="border-left-color:var(--tomato)">
+        <div class="ref-citation">Bureau of Meteorology and CSIRO. 2024. <em>State of the Climate 2024</em>. Melbourne: Bureau of Meteorology and CSIRO.</div>
+        <div class="ref-annotation">The biennial authoritative national synthesis of Australia's observed and projected climate — temperature rise, the south-west rainfall decline, fire weather, and oceans. The single best source for placing all three projects in WA's documented climate story (Module 07). Freely available and regularly updated, though necessarily high-level rather than asset-specific.</div>
+        <a class="ref-link" href="http://www.bom.gov.au/state-of-the-climate/" target="_blank" rel="noopener">→ Source (BOM/CSIRO)</a>
+      </div>`
+    },
+    { h: "Peer-reviewed: SW WA Rainfall", body:
+      `<p class="ref-group-label">Peer-reviewed: SW WA Rainfall Decline</p>
+      <div class="ref-item" style="border-left-color:var(--forest)">
+        <div class="ref-citation">Feng, Jing, Jianping Li, and Yun Li. 2010. "Is There a Relationship between the SAM and Southwest Western Australian Winter Rainfall?" <em>Journal of Climate</em> 23 (22): 6082–6089.</div>
+        <div class="ref-annotation">Examines how the Southern Annular Mode relates to the south-west's winter rainfall, part of the body of work disentangling the drivers of the decline. Useful for the attribution nuance in Project 2 — illustrating that large-scale circulation modes, not just greenhouse warming alone, shape the regional signal. Findings are specific to the cool season and the south-west.</div>
+        <a class="ref-link" href="https://doi.org/10.1175/2010JCLI3667.1" target="_blank" rel="noopener">→ DOI: 10.1175/2010JCLI3667.1</a>
+      </div>
+      <div class="ref-item" style="border-left-color:var(--forest)">
+        <div class="ref-citation">Bates, Bryson C., Pandora Hope, Brad Ryan, Ian Smith, and Steven Charles. 2008. "Key Findings from the Indian Ocean Climate Initiative and Their Impact on Policy Development in Australia." <em>Climatic Change</em> 89 (3–4): 339–354.</div>
+        <div class="ref-annotation">Summarises the Indian Ocean Climate Initiative — the dedicated research program that documented and investigated the SW WA rainfall decline. A keystone reference for understanding both the strength of the evidence base and the role of the Indian Ocean and circulation changes. Now over a decade old; subsequent work has reinforced and refined its conclusions.</div>
+        <a class="ref-link" href="https://doi.org/10.1007/s10584-007-9390-9" target="_blank" rel="noopener">→ DOI: 10.1007/s10584-007-9390-9</a>
+      </div>
+      <div class="ref-item" style="border-left-color:var(--forest)">
+        <div class="ref-citation">Delworth, Thomas L., and Fanrong Zeng. 2014. "Regional Rainfall Decline in Australia Attributed to Anthropogenic Greenhouse Gases and Ozone Levels." <em>Nature Geoscience</em> 7 (8): 583–587.</div>
+        <div class="ref-annotation">A modelling study attributing a substantial part of the south-west's rainfall decline to anthropogenic greenhouse gases and ozone-driven circulation changes. Central to the "human-caused warming is a primary driver" half of the attribution nuance. As a model-based attribution, it carries the usual structural-uncertainty caveats of climate models.</div>
+        <a class="ref-link" href="https://doi.org/10.1038/ngeo2201" target="_blank" rel="noopener">→ DOI: 10.1038/ngeo2201</a>
+      </div>`
+    },
+    { h: "WA Season Context", body:
+      `<p class="ref-group-label">WA Season Context</p>
+      <div class="ref-item" style="border-left-color:var(--mawar)">
+        <div class="ref-citation">Bureau of Meteorology. 2026. <em>Australian Tropical Cyclone Season Summary 2025–26</em>. Melbourne: Australian Government Bureau of Meteorology.</div>
+        <div class="ref-annotation">BOM's official seasonal summary providing the 2025–26 WA season context used in Project 1, including the Cyclone Narelle event framing. Authoritative for event tracks and intensities; damage-cost figures are typically preliminary at season's end and revised as insurance and recovery data mature.</div>
+        <a class="ref-link" href="http://www.bom.gov.au/cyclone/tropical-cyclone-knowledge-centre/history/past-tropical-cyclones/" target="_blank" rel="noopener">→ Source (BOM)</a>
+      </div>
+      <div class="ref-item" style="border-left-color:var(--mawar)">
+        <div class="ref-citation">Wikipedia contributors. 2026. "2025–26 Australian Region Cyclone Season." <em>Wikipedia, The Free Encyclopedia</em>.</div>
+        <div class="ref-annotation">A useful starting overview consolidating the season's events, naming, and impact estimates for orientation. As a tertiary, crowd-edited source it must be cross-checked against the BOM summary above before any figure is used in a client-facing deliverable — included here for transparency about where season-level orientation came from.</div>
+        <a class="ref-link" href="https://en.wikipedia.org/wiki/2025%E2%80%9326_Australian_region_cyclone_season" target="_blank" rel="noopener">→ Source (Wikipedia)</a>
+      </div>
+      <div class="ref-caveat">
+        <b>Data Quality Caveats for This Briefing</b>
+        Three limits should be stated plainly whenever these projects are presented. First, <strong>pre-satellite cyclone data is weaker</strong>: intensity estimates in IBTrACS and the BOM record before roughly 1990 rely on sparser observations and older methods, so apparent early-record trends partly reflect changing measurement rather than the storms themselves — any cyclone-intensity trend must be caveated accordingly, and the strongest signal sits in the better-observed recent decades. Second, <strong>IBTrACS intensity is heterogeneous</strong>: it merges agencies that estimate intensity differently, so cross-period and cross-basin comparisons carry uncertainty that a careful analyst flags rather than hides. Third, <strong>corporate sustainability disclosures are self-reported</strong>: a readiness score in Project 3 reflects what a company chose to publish, not an independent audit of its actual practices — high-quality disclosure is not the same as high-quality risk management, and the score is a triage judgement, not assurance. Naming these limits is not a weakness in the work; in a disclosure context it is precisely what makes a risk statement defensible.
+      </div>`
+    }
+  ],
+  quiz: []
+}
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const SK = 'climate_esg_v1';
+function loadState() {
+  try { const r = localStorage.getItem(SK); if (r) return JSON.parse(r); } catch(e) {}
+  return { cur: 0, done: [], answers: {}, view: 'module' };
+}
+function save(s) { try { localStorage.setItem(SK, JSON.stringify(s)); } catch(e) {} }
+
+let S = loadState();
+const contentModuleCount = MODS.filter(m => m.quiz && m.quiz.length).length;
+const mcl = document.getElementById('module-count');
+if (mcl) mcl.textContent = 'Portfolio Briefing · ' + MODS.length + ' Modules';
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+function renderSidebar() {
+  const nav = document.getElementById('module-nav');
+  nav.innerHTML = MODS.map(m => {
+    const isActive = S.cur === m.id && S.view === 'module';
+    const isDone = S.done.includes(m.id);
+    let cls = 'nav-item';
+    if (isActive) cls += ' active';
+    if (isDone) cls += ' done';
+    const dot = isDone ? '✓' : (m.id + 1);
+    return `<button class="${cls}" onclick="goTo(${m.id})"><span class="nav-dot">${dot}</span><span>${m.titleNav}</span></button>`;
+  }).join('');
+  const pct = Math.round(S.done.length / MODS.length * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = S.done.length + ' / ' + MODS.length;
+}
+
+function renderModule(id) {
+  const m = MODS[id];
+  const ans = S.answers[id] || {};
+  const allDone = m.quiz.every((_, i) => ans[i] !== undefined);
+  const isDone = S.done.includes(id);
+
+  const sects = m.sections.map(s => `<div class="section"><h2>${s.h}</h2>${s.body}</div>`).join('');
+
+  const qs = m.quiz.map((q, qi) => {
+    const picked = ans[qi];
+    const answered = picked !== undefined;
+    const opts = q.opts.map((o, oi) => {
+      let cls = 'opt';
+      if (answered) { if (oi === q.ans) cls += ' correct'; else if (oi === picked) cls += ' wrong'; }
+      const ltr = String.fromCharCode(65 + oi);
+      return `<button class="${cls}" onclick="answer(${id},${qi},${oi})" ${answered ? 'disabled' : ''}><span class="opt-letter">${ltr}</span>${o}</button>`;
+    }).join('');
+    const fbCls = answered ? ('feedback show ' + (picked === q.ans ? 'ok' : 'bad')) : 'feedback';
+    return `<div class="quiz-q"><p><span class="qn">Q${qi+1}.</span>${q.q}</p><div class="options">${opts}</div><div class="${fbCls}">${answered ? q.fb : ''}</div></div>`;
+  }).join('');
+
+  const btnLabel = isDone ? '✓ Module Completed' : (allDone ? 'Mark as Complete →' : 'Answer all questions to continue');
+  const prev = id > 0 ? `<button class="nav-btn" onclick="goTo(${id-1})">← Previous</button>` : '';
+  const next = id < MODS.length - 1 ? `<button class="nav-btn primary" onclick="goTo(${id+1})">Next Module →</button>` : '';
+  const fin = (id === MODS.length - 1 && isDone) ? `<button class="nav-btn primary" onclick="showDone()">View Completion →</button>` : '';
+
+  const objectivesBlock = m.type === 'ref' ? '' :
+    `<div class="objectives"><h3>Learning Objectives</h3><ol>${m.objectives.map(o=>`<li>${o}</li>`).join('')}</ol></div>`;
+
+  const bottomBlock = m.type === 'ref'
+    ? `<div style="margin-top:40px;padding-top:24px;border-top:1.5px solid var(--line)">
+        <button class="complete-btn" onclick="complete(${id})" ${isDone?'disabled':''}>${isDone ? '✓ Completed' : 'Mark as Complete →'}</button>
+        <div class="nav-btns" style="margin-top:16px">${prev}${fin}</div>
+      </div>`
+    : `<div class="quiz-section">
+        <div class="quiz-head"><h2>Knowledge Check</h2><span class="quiz-badge">${m.quiz.length} Questions</span></div>
+        ${qs}
+        <button class="complete-btn" onclick="complete(${id})" ${isDone||!allDone?'disabled':''}>${btnLabel}</button>
+        <div class="nav-btns">${prev}${next}${fin}</div>
+      </div>`;
+
+  document.getElementById('main').innerHTML = `
+    <div class="eyebrow">Module ${m.type === 'ref' ? '08' : String(id+1).padStart(2,'0')} of ${MODS.length}</div>
+    <h1 class="mod-title">${m.title}</h1>
+    <p class="mod-intro">${m.intro}</p>
+    ${objectivesBlock}
+    ${sects}
+    ${bottomBlock}`;
+  document.getElementById('main').scrollTop = 0;
+}
+
+function showDone() {
+  S.view = 'done'; save(S);
+  let correct = 0, total = 0;
+  MODS.forEach(m => {
+    const ans = S.answers[m.id] || {};
+    m.quiz.forEach((q, i) => { total++; if (ans[i] === q.ans) correct++; });
+  });
+  const pct = total ? Math.round(correct / total * 100) : 0;
+  document.getElementById('main').innerHTML = `
+    <div class="done-screen">
+      <div class="done-badge">🎓</div>
+      <h1>Briefing Complete</h1>
+      <p>You've worked through all ${contentModuleCount} content modules of the Climate Risk &amp; ESG Data portfolio briefing. You can now speak to each project, its WA relevance, and its AASB S2 connection — go into that interview and own it.</p>
+      <div class="score-grid">
+        <div class="score-card"><div class="score-num">${S.done.length}</div><div class="score-lbl">Modules</div></div>
+        <div class="score-card"><div class="score-num">${correct}</div><div class="score-lbl">Correct</div></div>
+        <div class="score-card"><div class="score-num">${total}</div><div class="score-lbl">Questions</div></div>
+        <div class="score-card"><div class="score-num">${pct}%</div><div class="score-lbl">Score</div></div>
+      </div>
+      <button class="complete-btn" onclick="reset()">Start Over</button>
+    </div>`;
+}
+
+/* ACTIONS */
+function goTo(id) { S.cur = id; S.view = 'module'; save(S); renderSidebar(); renderModule(id); }
+function answer(modId, qi, oi) { if (!S.answers[modId]) S.answers[modId] = {}; S.answers[modId][qi] = oi; save(S); renderModule(modId); }
+function complete(id) { if (!S.done.includes(id)) S.done.push(id); save(S); renderSidebar(); renderModule(id); }
+function reset() { S = { cur: 0, done: [], answers: {}, view: 'module' }; save(S); renderSidebar(); renderModule(0); }
+
+/* INIT */
+renderSidebar();
+if (S.view === 'done') showDone();
+else renderModule(S.cur);
+</script>
+</body>
+</html>
