@@ -34,6 +34,23 @@
     "duration": "Game"
   },
   {
+    "id": "robot-rapi-game",
+    "n": "G3",
+    "title": "Robot Rapi 🤖✨",
+    "blurb": "A 3D file-organization game — help a friendly robot tidy its data warehouse. Tap files into the right folders, learn folders-inside-folders and clear naming, then clean up a messy computer. Play together, kids to grown-ups. Runs right in the browser.",
+    "category": "Play",
+    "tags": [
+      "Game",
+      "Digital Skills",
+      "Family",
+      "3D"
+    ],
+    "primitive": "slab",
+    "accent": "indigo",
+    "path": "courses/games/robot-rapi-v1.html",
+    "duration": "Game"
+  },
+  {
     "id": "perth-transport-report",
     "n": "R2",
     "title": "Car City or Transit Shift?",

@@ -17,6 +17,17 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-06-17
+
+- ✅ **NEW 3D game: "Robot Rapi 🤖✨"** (`courses/games/robot-rapi-v1.html`, id `robot-rapi-game`, manifest `n:"G3"`) — Adhi asked for **a 3D game so Rayyan can learn how to organize files**. Built a single self-contained HTML file that teaches **digital file organization** disguised as helping a robot tidy its data warehouse.
+  - **Decision (via AskUserQuestion):** Adhi chose **family game (front door only)** over a Rayyan star-adventure, and theme **"Robot Rapi"** over the train-depot / librarian alternatives. So it's wired like Ular Tangga / Penyelamat Bumi — manifest + sitemap, **NOT** in the kid star ladder.
+  - **Engine:** vendored **Three.js r128 + OrbitControls** (no new deps) + a **tap-to-pick `Raycaster`** — the first 3D game here to do object picking (Ular/Eco are dice-button only). Tap detection rejects orbit-drags (movement/time threshold) so rotating the camera never mis-fires a pick. CanvasTexture for file-icon + folder-label faces, a tween engine, sparkle/confetti particles, a watching robot mascot that cheers.
+  - **Mechanic (no-fail, per v3 rule):** tap a file → it lifts + a glowing ring; tap a folder → it arcs in with a clunk + sparkle and the ✨ Kerapian (tidiness) meter rises; wrong folder = gentle shake + "coba folder lain", no "Salah!", no lives.
+  - **6 levels:** (1) berkas vs folder → (2) sort by type 📷🎵🎬 → (3) read clear file names → (4) sub-folders / paths (`Foto › Liburan`) → (5) **find** a file by opening folders (different mechanic: tap folder → contents pop up → tap the target) → (6) **BOSS** clean a messy computer to 100% → 🏆 + 3D confetti. ⭐ stars-by-attempts saved local-only (`robotRapiProgress`), 🗂️ level-select with unlock gating, WebAudio SFX + 🔇 mute (persisted), WebGL fallback screen. Bahasa Indonesia UI, real tech words kept (Berkas/Folder).
+  - **Wired (family game = front door only):** `assets/courses.json` (Play · "Digital Skills"/Family/3D · indigo · slab); `sitemap.xml` (+ also back-filled the previously-missing eco-board & ular-tangga URLs, a plan-v4 staleness fix); `index.html` static hero fallback corrected to **18 courses** (it was a stale "15"; live count is manifest-derived = `entries − tools − research`). **Intentionally not** added to `rayyan.html`/`kids.html`/`sumStars`/`auth.js`/`dashboard.html`/`sw.js` (Adhi's "front door only" choice → does not count toward Rayyan's stars).
+  - Syntax-checked the inline JS (`node --check`, clean). 🧪 Needs a **real-device WebGL/touch pass** (tap-pick accuracy on a tablet, emoji-on-canvas rendering, load time) — same caveat as the other two 3D games.
+  - ⚠️ **Note for Adhi:** because it's front-door only, Rayyan won't reach it from his own hub (`rayyan.html`/`kids.html`) — it lives under **Play** on the index. Say the word and I'll *also* wire it into the kids world (and/or turn it into a tracked star-adventure) in a follow-up step.
+
 ## 2026-06-14
 
 - ✅ **NEW adult course: "AASB S2 Decoded: Climate-related Disclosures"** (`courses/aasb-s2/aasb-s2-climate-disclosures-v1.html`, id `aasb-s2-climate`, manifest `n:"15"`). Adhi dropped the full **AASB S2 September 2024** legislative standard (59-page PDF) into `dropzone/` and asked for a *fun-to-read* course that covers **the same things as the PDF — no shortcuts**, OK to be big, build in parts.
