@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Robot Rapi 🤖✨ · Learn with Adhi</title>
+  <meta name="description" content="Bantu robot merapikan gudang datanya! Pilah berkas (file) ke folder yang tepat dalam dunia 3D — belajar mengatur berkas sambil bermain. Bisa dimainkan langsung di browser.">
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%232E3192"/><text y=".9em" font-size="62" x="18">📦</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #E84BA0;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --tomato:  #FF5C39;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --line:    rgba(26,22,20,0.14);
+      --muted:   #6B6259;
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--fb);
+      background: #161d33;
+      color: var(--ink);
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    canvas { display: block; }
+
+    #scene { position: fixed; inset: 0; z-index: 0; touch-action: none; }
+
+    /* ---- top bar ---- */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(22,29,51,0.92), rgba(22,29,51,0));
+      pointer-events: none;
+    }
+    .topbar > * { pointer-events: auto; }
+    .home {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--paper); color: var(--ink);
+      border: 2px solid var(--ink); border-radius: 12px;
+      padding: 8px 12px; font-weight: 800; font-size: 14px;
+      box-shadow: 3px 3px 0 var(--ink); text-decoration: none;
+    }
+    .title {
+      font-family: var(--fd); color: #fff; font-weight: 800;
+      font-size: 18px; letter-spacing: .3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.5);
+    }
+    .spacer { flex: 1; }
+    .iconbtn {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: var(--paper); color: var(--ink);
+      border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+      font-size: 20px; display: grid; place-items: center;
+    }
+
+    /* ---- instruction banner ---- */
+    .banner {
+      position: fixed; top: 62px; left: 50%; transform: translateX(-50%); z-index: 9;
+      display: flex; align-items: center; gap: 10px;
+      background: var(--paper); border: 2px solid var(--ink);
+      border-radius: 14px; padding: 9px 16px; box-shadow: 4px 4px 0 var(--ink);
+      font-weight: 800; max-width: 92vw; text-align: center; font-size: 15px;
+      transition: transform .18s;
+    }
+    .banner.pop { transform: translateX(-50%) scale(1.06); }
+
+    /* ---- tidiness meter ---- */
+    .meterwrap {
+      position: fixed; top: 112px; left: 50%; transform: translateX(-50%); z-index: 9;
+      width: min(420px, 88vw);
+      background: var(--paper); border: 2px solid var(--ink);
+      border-radius: 999px; box-shadow: 3px 3px 0 var(--ink);
+      padding: 5px 8px; display: flex; align-items: center; gap: 8px;
+    }
+    .meterwrap.hidden { display: none; }
+    .meterwrap .lbl { font-weight: 800; font-size: 12px; flex: none; }
+    .meterbar { flex: 1; height: 14px; border-radius: 999px; background: #e7dcc6; border: 1.5px solid var(--ink); overflow: hidden; }
+    .meterfill { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, var(--forest), var(--sea)); transition: width .35s ease; }
+    .meterwrap .pct { font-weight: 800; font-size: 12px; flex: none; min-width: 34px; text-align: right; }
+
+    /* ---- bottom hint ---- */
+    .hint {
+      position: fixed; bottom: calc(14px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); z-index: 9;
+      background: rgba(26,22,20,0.82); color: #fff;
+      border-radius: 12px; padding: 9px 16px; font-weight: 700; font-size: 13.5px;
+      max-width: 92vw; text-align: center; backdrop-filter: blur(3px);
+      transition: opacity .25s;
+    }
+    .hint.hidden { opacity: 0; pointer-events: none; }
+
+    /* ---- modal (intro + win) ---- */
+    .modal {
+      position: fixed; inset: 0; z-index: 40;
+      background: rgba(14,18,38,0.80); backdrop-filter: blur(4px);
+      display: grid; place-items: center; padding: 18px;
+    }
+    .modal.hidden { display: none; }
+    .card {
+      background: var(--paper); border: 3px solid var(--ink); border-radius: 22px;
+      box-shadow: 8px 8px 0 var(--ink); padding: 24px 22px; width: min(460px, 94vw);
+      text-align: center; max-height: 92vh; overflow-y: auto;
+    }
+    .card .big { font-size: 56px; line-height: 1; margin-bottom: 6px; }
+    .card h2 { font-family: var(--fd); font-size: 25px; margin-bottom: 6px; }
+    .card .lvl-tag { font-weight: 800; color: var(--indigo); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+    .card p { font-size: 15.5px; line-height: 1.5; color: #41382f; margin-bottom: 16px; }
+    .card .stars { font-size: 38px; letter-spacing: 4px; margin: 6px 0 14px; }
+    .btn {
+      font-family: var(--fd); font-size: 20px; font-weight: 800;
+      background: var(--mango); color: var(--ink);
+      border: 3px solid var(--ink); border-radius: 16px;
+      padding: 13px 30px; box-shadow: 5px 5px 0 var(--ink);
+      transition: transform .08s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--ink); }
+    .btn.alt { background: var(--paper); font-size: 15px; padding: 10px 18px; box-shadow: 4px 4px 0 var(--ink); margin-top: 10px; }
+    .btn.sea { background: var(--sea); color: #fff; }
+
+    /* ---- level select grid ---- */
+    .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 4px 0 6px; }
+    .lvl {
+      background: #fff; border: 2.5px solid var(--ink); border-radius: 14px;
+      padding: 10px 6px 8px; box-shadow: 3px 3px 0 var(--ink);
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      transition: transform .08s;
+    }
+    .lvl:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+    .lvl .e { font-size: 26px; }
+    .lvl .nm { font-size: 11px; font-weight: 800; line-height: 1.15; }
+    .lvl .st { font-size: 11px; color: var(--mango); letter-spacing: 1px; min-height: 14px; }
+    .lvl.locked { opacity: .45; }
+    .lvl.locked .e::after { content: ' 🔒'; }
+
+    /* ---- WebGL fallback ---- */
+    .fallback {
+      position: fixed; inset: 0; z-index: 60; display: none;
+      place-items: center; padding: 26px; background: #161d33; color: var(--paper);
+      text-align: center; flex-direction: column; gap: 14px;
+    }
+    .fallback.show { display: grid; }
+    .fallback a { color: var(--mango); font-weight: 800; }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+
+  <div class="topbar">
+    <a class="home" href="../../index.html">← Keluar</a>
+    <div class="title">Robot Rapi 🤖</div>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="levelsBtn" title="Pilih level" aria-label="Pilih level">🗂️</button>
+    <button class="iconbtn" id="soundBtn" title="Suara" aria-label="Suara">🔊</button>
+  </div>
+
+  <div class="banner" id="banner">Ayo bantu robot merapikan!</div>
+
+  <div class="meterwrap" id="meterwrap">
+    <span class="lbl">✨ Kerapian</span>
+    <div class="meterbar"><div class="meterfill" id="meterfill"></div></div>
+    <span class="pct" id="meterpct">0%</span>
+  </div>
+
+  <div class="hint" id="hint">Tap sebuah berkas, lalu tap foldernya.</div>
+
+  <!-- Intro / level start -->
+  <div class="modal" id="introModal">
+    <div class="card">
+      <div class="big" id="introEmoji">🤖</div>
+      <div class="lvl-tag" id="introTag">Level 1</div>
+      <h2 id="introTitle">Berkas &amp; Folder</h2>
+      <p id="introText">Yuk mulai!</p>
+      <button class="btn" id="introStart">Mulai ▶</button>
+      <div><button class="btn alt" id="introPick">🗂️ Pilih level lain</button></div>
+    </div>
+  </div>
+
+  <!-- Win / level complete -->
+  <div class="modal hidden" id="winModal">
+    <div class="card">
+      <div class="big" id="winEmoji">🎉</div>
+      <h2 id="winTitle">Folder rapi!</h2>
+      <div class="stars" id="winStars">⭐⭐⭐</div>
+      <p id="winText">Kerja bagus!</p>
+      <button class="btn sea" id="winNext">Lanjut ▶</button>
+      <div><button class="btn alt" id="winReplay">↻ Ulangi level</button></div>
+    </div>
+  </div>
+
+  <!-- Level select -->
+  <div class="modal hidden" id="levelModal">
+    <div class="card">
+      <div class="big">🗂️</div>
+      <h2>Pilih Level</h2>
+      <p>Rapikan satu per satu untuk membuka level berikutnya!</p>
+      <div class="levels" id="levelGrid"></div>
+      <button class="btn alt" id="levelClose">Tutup</button>
+    </div>
+  </div>
+
+  <div class="fallback" id="fallback">
+    <div style="font-size:52px">🤖</div>
+    <h2 style="font-family:var(--fd);font-size:24px">Mesin 3D tidak bisa dijalankan</h2>
+    <p style="max-width:340px;line-height:1.5">Perangkat ini belum mendukung grafik 3D (WebGL), atau halaman gagal dimuat. Coba buka di browser lain atau saat ada koneksi internet.</p>
+    <a href="../../index.html">← Kembali</a>
+  </div>
+
+  <script src="../../assets/js/vendor/three.min.js"></script>
+  <script src="../../assets/js/vendor/OrbitControls.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var fb = document.getElementById('fallback');
+    if (typeof THREE === 'undefined') { fb.classList.add('show'); return; }
+
+    /* ============================================================
+       SOUND — tiny WebAudio SFX, respects a mute toggle
+       ============================================================ */
+    var AX = (function () {
+      var ctx = null, on = true;
+      try { on = localStorage.getItem('robotRapiMuted') !== '1'; } catch (_) {}
+      function ac() {
+        if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) {} }
+        if (ctx && ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+      function tone(freq, t0, dur, type, vol) {
+        if (!on) return;
+        var c = ac(); if (!c) return;
+        var o = c.createOscillator(), g = c.createGain();
+        o.type = type || 'sine'; o.frequency.value = freq;
+        var start = c.currentTime + t0;
+        g.gain.setValueAtTime(0.0001, start);
+        g.gain.exponentialRampToValueAtTime(vol || 0.16, start + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+        o.connect(g); g.connect(c.destination);
+        o.start(start); o.stop(start + dur + 0.02);
+      }
+      return {
+        pick:    function () { tone(620, 0, 0.06, 'sine', 0.12); tone(880, 0.04, 0.06, 'sine', 0.1); },
+        place:   function () { tone(523, 0, 0.09, 'triangle', 0.16); tone(784, 0.08, 0.16, 'triangle', 0.15); tone(1047, 0.18, 0.18, 'triangle', 0.12); },
+        open:    function () { tone(440, 0, 0.08, 'sine', 0.12); tone(660, 0.07, 0.12, 'sine', 0.12); },
+        wrong:   function () { tone(330, 0, 0.12, 'square', 0.1); tone(247, 0.1, 0.18, 'square', 0.1); },
+        sparkle: function () { tone(1320, 0, 0.05, 'sine', 0.08); tone(1760, 0.05, 0.06, 'sine', 0.07); },
+        win:     function () { var n = [523, 659, 784, 1047, 1319]; n.forEach(function (f, i) { tone(f, i * 0.12, 0.32, 'triangle', 0.16); }); },
+        set: function (v) { on = v; try { localStorage.setItem('robotRapiMuted', on ? '0' : '1'); } catch (_) {} if (on) ac(); },
+        isOn: function () { return on; }
+      };
+    })();
+
+    /* ============================================================
+       CONTENT — file types + the 6 levels (Bahasa Indonesia)
+       ============================================================ */
+    var TYPES = {
+      foto:    { emoji: '📷', label: 'Foto',     color: '#1FA9C7' },
+      musik:   { emoji: '🎵', label: 'Musik',    color: '#E84BA0' },
+      video:   { emoji: '🎬', label: 'Video',    color: '#FF5C39' },
+      dokumen: { emoji: '📄', label: 'Dokumen',  color: '#FFC234' },
+      game:    { emoji: '🎮', label: 'Game',     color: '#1F9D55' }
+    };
+
+    // Each level: { e, tag, title, text, mode:'sort'|'find', folders:[], files:[], target? }
+    // folder accept: 'any' | {type} | {type, sub}
+    var LEVELS = [
+      {
+        e: '🤖', tag: 'Level 1', title: 'Berkas & Folder', mode: 'sort',
+        text: 'Berkas (file) itu satu benda di komputer. Folder adalah kotak untuk menyimpannya. Tap satu berkas, lalu tap folder untuk menyimpannya!',
+        folders: [ { label: 'Folderku', emoji: '📁', color: '#2E3192', accept: 'any' } ],
+        files: [ { type: 'foto' }, { type: 'musik' }, { type: 'dokumen' } ]
+      },
+      {
+        e: '🗂️', tag: 'Level 2', title: 'Pilah Sesuai Jenis', mode: 'sort',
+        text: 'Sekarang ada banyak folder. Foto masuk ke folder Foto, musik ke folder Musik. Cocokkan setiap berkas dengan foldernya!',
+        folders: [
+          { label: 'Foto', color: TYPES.foto.color, accept: { type: 'foto' } },
+          { label: 'Musik', color: TYPES.musik.color, accept: { type: 'musik' } },
+          { label: 'Video', color: TYPES.video.color, accept: { type: 'video' } }
+        ],
+        files: [ { type: 'foto' }, { type: 'video' }, { type: 'musik' }, { type: 'foto' }, { type: 'video' } ]
+      },
+      {
+        e: '🏷️', tag: 'Level 3', title: 'Beri Nama yang Jelas', mode: 'sort',
+        text: 'Nama berkas yang jelas membantu kita tahu isinya. Baca nama di tiap berkas, lalu simpan di folder yang tepat!',
+        folders: [
+          { label: 'Foto', color: TYPES.foto.color, accept: { type: 'foto' } },
+          { label: 'Musik', color: TYPES.musik.color, accept: { type: 'musik' } },
+          { label: 'Video', color: TYPES.video.color, accept: { type: 'video' } },
+          { label: 'Dokumen', color: TYPES.dokumen.color, accept: { type: 'dokumen' } }
+        ],
+        files: [
+          { type: 'foto', name: 'foto_kereta' },
+          { type: 'dokumen', name: 'surat_nenek' },
+          { type: 'musik', name: 'lagu_pagi' },
+          { type: 'video', name: 'video_ultah' },
+          { type: 'foto', name: 'foto_raya' }
+        ]
+      },
+      {
+        e: '📂', tag: 'Level 4', title: 'Folder di Dalam Folder', mode: 'sort',
+        text: 'Folder bisa berisi folder lagi — namanya sub-folder! "Foto › Liburan" artinya folder Liburan ada di dalam folder Foto. Ikuti jalurnya!',
+        folders: [
+          { label: 'Foto › Liburan', color: TYPES.foto.color, accept: { type: 'foto', sub: 'liburan' } },
+          { label: 'Foto › Sekolah', color: '#157d97', accept: { type: 'foto', sub: 'sekolah' } },
+          { label: 'Video › Lucu', color: TYPES.video.color, accept: { type: 'video', sub: 'lucu' } },
+          { label: 'Video › Belajar', color: '#c43e1f', accept: { type: 'video', sub: 'belajar' } }
+        ],
+        files: [
+          { type: 'foto', sub: 'liburan', name: 'pantai' },
+          { type: 'video', sub: 'lucu', name: 'kucing_lucu' },
+          { type: 'foto', sub: 'sekolah', name: 'kelasku' },
+          { type: 'video', sub: 'belajar', name: 'cara_menanam' },
+          { type: 'foto', sub: 'liburan', name: 'gunung' }
+        ]
+      },
+      {
+        e: '🔍', tag: 'Level 5', title: 'Temukan Berkas!', mode: 'find',
+        text: 'Karena foldernya rapi, kita bisa menemukan apa pun dengan cepat! Tap folder untuk membukanya, lalu temukan berkas yang dicari.',
+        target: { type: 'foto', name: 'foto_kereta' },
+        folders: [
+          { label: 'Musik', color: TYPES.musik.color, contents: [ { type: 'musik', name: 'lagu_pagi' }, { type: 'musik', name: 'lagu_tidur' } ] },
+          { label: 'Foto', color: TYPES.foto.color, contents: [ { type: 'foto', name: 'foto_raya' }, { type: 'foto', name: 'foto_kereta' } ] },
+          { label: 'Dokumen', color: TYPES.dokumen.color, contents: [ { type: 'dokumen', name: 'tugas' }, { type: 'dokumen', name: 'surat_nenek' } ] }
+        ]
+      },
+      {
+        e: '🧹', tag: 'Level 6 · BOS', title: 'Komputer Berantakan!', mode: 'sort',
+        text: 'Komputer ini SANGAT berantakan! Rapikan semua berkas ke foldernya sampai meter Kerapian penuh 100%. Kamu pasti bisa! 💪',
+        folders: [
+          { label: 'Foto', color: TYPES.foto.color, accept: { type: 'foto' } },
+          { label: 'Musik', color: TYPES.musik.color, accept: { type: 'musik' } },
+          { label: 'Video', color: TYPES.video.color, accept: { type: 'video' } },
+          { label: 'Dokumen', color: TYPES.dokumen.color, accept: { type: 'dokumen' } },
+          { label: 'Game', color: TYPES.game.color, accept: { type: 'game' } }
+        ],
+        files: [
+          { type: 'foto' }, { type: 'musik' }, { type: 'game' }, { type: 'dokumen' },
+          { type: 'video' }, { type: 'foto' }, { type: 'musik' }, { type: 'game' },
+          { type: 'video' }, { type: 'dokumen' }
+        ]
+      }
+    ];
+
+    /* ============================================================
+       PROGRESS — local only (this is a family game, not a star course)
+       ============================================================ */
+    var PROG = (function () {
+      var d = { levels: {}, totalStars: 0 };
+      try { var s = JSON.parse(localStorage.getItem('robotRapiProgress') || '{}'); if (s && s.levels) d = s; } catch (_) {}
+      return d;
+    })();
+    function saveStars(idx, stars) {
+      var prev = (PROG.levels[idx] || {}).stars || 0;
+      if (stars > prev) { PROG.levels[idx] = { stars: stars }; }
+      var tot = 0; for (var k in PROG.levels) tot += PROG.levels[k].stars || 0;
+      PROG.totalStars = tot;
+      try { localStorage.setItem('robotRapiProgress', JSON.stringify(PROG)); } catch (_) {}
+    }
+    function unlocked(idx) { return idx === 0 || !!(PROG.levels[idx - 1] && PROG.levels[idx - 1].stars > 0); }
+
+    /* ============================================================
+       3D SETUP
+       ============================================================ */
+    var scene, camera, renderer, controls, clock, raycaster, robot;
+    var ok3d = true;
+    try {
+      var host = document.getElementById('scene');
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color('#161d33');
+      scene.fog = new THREE.Fog('#161d33', 16, 34);
+
+      camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 120);
+      camera.position.set(0, 7.2, 9.2);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      if (THREE.sRGBEncoding) renderer.outputEncoding = THREE.sRGBEncoding;
+      host.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.target.set(0, 0.6, -0.4);
+      controls.enableDamping = true; controls.dampingFactor = 0.09;
+      controls.enablePan = false;
+      controls.minDistance = 7; controls.maxDistance = 16;
+      controls.minPolarAngle = 0.35; controls.maxPolarAngle = 1.25;
+      controls.update();
+
+      raycaster = new THREE.Raycaster();
+      clock = new THREE.Clock();
+    } catch (e) { ok3d = false; }
+    if (!ok3d) { fb.classList.add('show'); return; }
+
+    // lights
+    scene.add(new THREE.AmbientLight(0xffffff, 0.66));
+    scene.add(new THREE.HemisphereLight(0xcfe4ff, 0x2a2440, 0.5));
+    var sun = new THREE.DirectionalLight(0xffffff, 0.92);
+    sun.position.set(7, 14, 6); sun.castShadow = true;
+    sun.shadow.mapSize.set(1024, 1024);
+    var sc = sun.shadow.camera; sc.left = -12; sc.right = 12; sc.top = 12; sc.bottom = -12; sc.near = 1; sc.far = 45;
+    scene.add(sun);
+
+    // floor (warm desk) + back wall
+    var floor = new THREE.Mesh(
+      new THREE.BoxGeometry(26, 0.5, 22),
+      new THREE.MeshStandardMaterial({ color: '#caa06a', roughness: 0.95 }));
+    floor.position.y = -0.25; floor.receiveShadow = true; scene.add(floor);
+    var wall = new THREE.Mesh(
+      new THREE.PlaneGeometry(26, 14),
+      new THREE.MeshStandardMaterial({ color: '#2b3358', roughness: 1 }));
+    wall.position.set(0, 6.8, -7); wall.receiveShadow = true; scene.add(wall);
+
+    function shade(hex, amt) {
+      var c = new THREE.Color(hex);
+      c.r = Math.max(0, Math.min(1, c.r + amt));
+      c.g = Math.max(0, Math.min(1, c.g + amt));
+      c.b = Math.max(0, Math.min(1, c.b + amt));
+      return '#' + c.getHexString();
+    }
+
+    /* ---- the watching robot mascot ---- */
+    (function buildRobot() {
+      robot = new THREE.Group();
+      var metal = new THREE.MeshStandardMaterial({ color: '#9fb4d6', roughness: 0.5, metalness: 0.3 });
+      var body = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.2, 0.8), metal); body.position.y = 0.95; body.castShadow = true; robot.add(body);
+      var head = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.8, 0.8), metal); head.position.y = 1.95; head.castShadow = true; robot.add(head);
+      var eyeMat = new THREE.MeshStandardMaterial({ color: '#1FA9C7', emissive: '#1FA9C7', emissiveIntensity: 0.7 });
+      var e1 = new THREE.Mesh(new THREE.SphereGeometry(0.13, 16, 12), eyeMat); e1.position.set(-0.22, 1.98, 0.42); robot.add(e1);
+      var e2 = e1.clone(); e2.position.x = 0.22; robot.add(e2);
+      var ant = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.4), metal); ant.position.set(0, 2.5, 0); robot.add(ant);
+      var ball = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 10), new THREE.MeshStandardMaterial({ color: '#FFC234', emissive: '#FFC234', emissiveIntensity: 0.5 })); ball.position.set(0, 2.74, 0); robot.add(ball);
+      var armG = new THREE.BoxGeometry(0.24, 0.7, 0.24);
+      var aL = new THREE.Mesh(armG, metal); aL.position.set(-0.72, 0.95, 0); robot.add(aL);
+      var aR = new THREE.Mesh(armG, metal); aR.position.set(0.72, 0.95, 0); robot.add(aR);
+      robot.position.set(-4.6, 0, -3.6);
+      robot.rotation.y = 0.5;
+      robot.userData.baseY = 0;
+      scene.add(robot);
+    })();
+
+    /* ============================================================
+       TEXTURES — draw emoji + label onto canvas → texture
+       ============================================================ */
+    function fileTexture(emoji, name, color) {
+      var s = 220, cv = document.createElement('canvas'); cv.width = cv.height = s;
+      var x = cv.getContext('2d');
+      x.fillStyle = shade(color, 0.16); x.fillRect(0, 0, s, s);
+      x.strokeStyle = 'rgba(0,0,0,0.18)'; x.lineWidth = 8; x.strokeRect(4, 4, s - 8, s - 8);
+      x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.font = (name ? 96 : 120) + 'px sans-serif';
+      x.fillText(emoji, s / 2, name ? s * 0.40 : s * 0.5);
+      if (name) {
+        x.fillStyle = 'rgba(255,255,255,0.92)'; x.fillRect(14, s * 0.66, s - 28, s * 0.24);
+        x.fillStyle = '#1A1614'; x.font = '700 28px Inter, sans-serif';
+        var t = name.length > 12 ? name.slice(0, 11) + '…' : name;
+        x.fillText(t, s / 2, s * 0.78);
+      }
+      var tx = new THREE.CanvasTexture(cv); tx.anisotropy = 4; return tx;
+    }
+    function folderTexture(label, color) {
+      var w = 320, h = 200, cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+      var x = cv.getContext('2d');
+      x.fillStyle = color; x.fillRect(0, 0, w, h);
+      // folder tab
+      x.fillStyle = shade(color, -0.16); x.fillRect(20, 14, 120, 30);
+      x.textAlign = 'center'; x.textBaseline = 'middle';
+      x.font = '74px sans-serif'; x.fillText('📁', w / 2, h * 0.40);
+      x.fillStyle = '#fff'; x.font = '800 30px Inter, sans-serif';
+      var parts = label.split(' › ');
+      if (parts.length > 1) {
+        x.font = '700 21px Inter, sans-serif';
+        x.fillStyle = 'rgba(255,255,255,0.85)'; x.fillText(parts[0] + ' ›', w / 2, h * 0.74);
+        x.fillStyle = '#fff'; x.font = '800 28px Inter, sans-serif'; x.fillText(parts[1], w / 2, h * 0.90);
+      } else {
+        x.fillText(label, w / 2, h * 0.80);
+      }
+      var tx = new THREE.CanvasTexture(cv); tx.anisotropy = 4; return tx;
+    }
+
+    /* ============================================================
+       MESH BUILDERS
+       ============================================================ */
+    function makeFile(def) {
+      var t = TYPES[def.type];
+      var body = new THREE.MeshStandardMaterial({ color: shade(t.color, 0.05), roughness: 0.65 });
+      var top = new THREE.MeshStandardMaterial({ map: fileTexture(t.emoji, def.name, t.color), roughness: 0.55 });
+      var mats = [body, body, top, body, body, body]; // py (index 2) = top face
+      var m = new THREE.Mesh(new THREE.BoxGeometry(1.15, 0.5, 1.15), mats);
+      m.castShadow = true; m.receiveShadow = true;
+      m.userData = { kind: 'file', type: def.type, sub: def.sub || null, name: def.name || null, baseY: 0.26 };
+      return m;
+    }
+    function makeFolder(def) {
+      var base = new THREE.MeshStandardMaterial({ color: def.color, roughness: 0.72 });
+      var dark = new THREE.MeshStandardMaterial({ color: shade(def.color, -0.22), roughness: 0.8 });
+      var front = new THREE.MeshStandardMaterial({ map: folderTexture(def.label, def.color), roughness: 0.6 });
+      var mats = [base, base, base, dark, front, base]; // pz (index 4) = front face
+      var m = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.3, 1.5), mats);
+      m.castShadow = true; m.receiveShadow = true;
+      m.userData = { kind: 'folder', accept: def.accept || null, label: def.label, baseX: 0 };
+      return m;
+    }
+
+    /* ============================================================
+       TWEEN ENGINE
+       ============================================================ */
+    var tweens = [];
+    function tween(o) { o.t = 0; tweens.push(o); return o; }
+    function easeOut(p) { return 1 - Math.pow(1 - p, 3); }
+    function updateTweens(dt) {
+      for (var i = tweens.length - 1; i >= 0; i--) {
+        var tw = tweens[i]; tw.t += dt;
+        var p = Math.min(tw.t / tw.dur, 1);
+        tw.update(tw.ease ? tw.ease(p) : p, p);
+        if (p >= 1) { tweens.splice(i, 1); if (tw.onDone) tw.onDone(); }
+      }
+    }
+
+    /* ============================================================
+       SPARKLES + CONFETTI
+       ============================================================ */
+    var sparkles = [];
+    function sparkleAt(pos) {
+      AX.sparkle();
+      for (var i = 0; i < 10; i++) {
+        var m = new THREE.Mesh(new THREE.SphereGeometry(0.07, 8, 6),
+          new THREE.MeshBasicMaterial({ color: ['#FFC234', '#fff', '#1FA9C7'][i % 3] }));
+        m.position.copy(pos); m.position.y += 0.8;
+        var a = Math.random() * Math.PI * 2;
+        m.userData.v = new THREE.Vector3(Math.cos(a) * 1.6, 2.2 + Math.random() * 1.4, Math.sin(a) * 1.6);
+        m.userData.life = 0.7; scene.add(m); sparkles.push(m);
+      }
+    }
+    var confetti = [];
+    function confettiBurst() {
+      var cols = ['#FF5C39', '#FFC234', '#1F9D55', '#1FA9C7', '#E84BA0', '#2E3192'];
+      for (var i = 0; i < 90; i++) {
+        var m = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 0.32),
+          new THREE.MeshBasicMaterial({ color: cols[i % cols.length], side: THREE.DoubleSide }));
+        m.position.set((Math.random() - 0.5) * 8, 8 + Math.random() * 3, -1 + (Math.random() - 0.5) * 4);
+        m.userData.v = new THREE.Vector3((Math.random() - 0.5) * 2.4, -(1.6 + Math.random() * 2), (Math.random() - 0.5) * 2.4);
+        m.userData.rot = new THREE.Vector3((Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8);
+        m.userData.life = 3.4; scene.add(m); confetti.push(m);
+      }
+    }
+    function updateParticles(dt) {
+      for (var i = sparkles.length - 1; i >= 0; i--) {
+        var s = sparkles[i]; s.userData.life -= dt;
+        s.position.addScaledVector(s.userData.v, dt);
+        s.userData.v.y -= 7 * dt;
+        var sc = Math.max(0, s.userData.life / 0.7); s.scale.setScalar(sc);
+        if (s.userData.life <= 0) { scene.remove(s); sparkles.splice(i, 1); }
+      }
+      for (var j = confetti.length - 1; j >= 0; j--) {
+        var c = confetti[j]; c.userData.life -= dt;
+        c.position.addScaledVector(c.userData.v, dt);
+        c.rotation.x += c.userData.rot.x * dt; c.rotation.y += c.userData.rot.y * dt; c.rotation.z += c.userData.rot.z * dt;
+        if (c.userData.life <= 0 || c.position.y < -1) { scene.remove(c); confetti.splice(j, 1); }
+      }
+    }
+    function robotCheer() {
+      tween({ dur: 0.5, ease: function (p) { return Math.sin(p * Math.PI); },
+        update: function (e) { robot.position.y = e * 0.5; robot.rotation.z = Math.sin(e * Math.PI * 2) * 0.12; },
+        onDone: function () { robot.position.y = 0; robot.rotation.z = 0; } });
+    }
+
+    /* ============================================================
+       GAME STATE
+       ============================================================ */
+    var G = {
+      idx: 0, mode: 'sort', state: 'menu',
+      files: [], folders: [], openFolder: null, openContents: [],
+      selected: null, ring: null, total: 0, placed: 0, wrongTaps: 0, busy: false
+    };
+
+    // selection ring
+    G.ring = new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.07, 10, 28),
+      new THREE.MeshBasicMaterial({ color: '#FFC234' }));
+    G.ring.rotation.x = Math.PI / 2; G.ring.visible = false; scene.add(G.ring);
+
+    function clearLevel() {
+      G.files.forEach(function (f) { scene.remove(f); });
+      G.folders.forEach(function (f) { scene.remove(f); if (f.userData.contents) f.userData.contents.forEach(function (c) { scene.remove(c); }); });
+      G.files = []; G.folders = []; G.selected = null; G.openFolder = null; G.openContents = [];
+      G.ring.visible = false;
+    }
+
+    function layoutFolders(defs) {
+      var n = defs.length, spacing = Math.min(2.45, 10 / Math.max(n, 1));
+      var x0 = -(n - 1) / 2 * spacing;
+      for (var i = 0; i < n; i++) {
+        var f = makeFolder(defs[i]);
+        f.position.set(x0 + i * spacing, 0.65, -3.2);
+        f.userData.baseX = f.position.x;
+        if (defs[i].contents) {
+          f.userData.contents = defs[i].contents.map(function (cd) {
+            var c = makeFile(cd); c.userData.kind = 'content'; c.userData.parentFolder = f;
+            c.visible = false; scene.add(c); return c;
+          });
+        }
+        scene.add(f); G.folders.push(f);
+      }
+    }
+
+    function scatterFiles(defs) {
+      // loose grid in the front area, with jitter
+      var n = defs.length, cols = Math.min(5, Math.max(2, Math.ceil(Math.sqrt(n))));
+      var rows = Math.ceil(n / cols);
+      for (var i = 0; i < n; i++) {
+        var f = makeFile(defs[i]);
+        var col = i % cols, row = Math.floor(i / cols);
+        var gx = (col - (cols - 1) / 2) * 1.9 + (Math.random() - 0.5) * 0.5;
+        var gz = 1.1 + row * 1.7 + (Math.random() - 0.5) * 0.4;
+        f.position.set(gx, 0.26, gz);
+        f.rotation.y = (Math.random() - 0.5) * 0.5;
+        scene.add(f); G.files.push(f);
+      }
+    }
+
+    /* ============================================================
+       UI HELPERS
+       ============================================================ */
+    var $ = function (id) { return document.getElementById(id); };
+    function setBanner(txt) { var b = $('banner'); b.textContent = txt; b.classList.add('pop'); setTimeout(function () { b.classList.remove('pop'); }, 200); }
+    function setHint(txt) { var h = $('hint'); if (!txt) { h.classList.add('hidden'); } else { h.textContent = txt; h.classList.remove('hidden'); } }
+    function setMeter(show, pct) {
+      var w = $('meterwrap');
+      if (!show) { w.classList.add('hidden'); return; }
+      w.classList.remove('hidden');
+      $('meterfill').style.width = pct + '%'; $('meterpct').textContent = pct + '%';
+    }
+
+    /* ============================================================
+       LEVEL FLOW
+       ============================================================ */
+    function showIntro(idx) {
+      G.idx = idx; G.state = 'intro';
+      var L = LEVELS[idx];
+      $('introEmoji').textContent = L.e;
+      $('introTag').textContent = L.tag;
+      $('introTitle').textContent = L.title;
+      $('introText').textContent = L.text;
+      $('introModal').classList.remove('hidden');
+      $('winModal').classList.add('hidden');
+      $('levelModal').classList.add('hidden');
+    }
+
+    function startLevel(idx) {
+      clearLevel();
+      G.idx = idx; var L = LEVELS[idx];
+      G.mode = L.mode; G.state = 'playing';
+      G.placed = 0; G.wrongTaps = 0; G.busy = false;
+      $('introModal').classList.add('hidden');
+      $('winModal').classList.add('hidden');
+      $('levelModal').classList.add('hidden');
+
+      layoutFolders(L.folders.map(function (d) { return d; }));
+
+      if (L.mode === 'find') {
+        var tt = TYPES[L.target.type];
+        setBanner('Cari: ' + tt.emoji + ' ' + L.target.name);
+        setHint('Tap folder untuk membukanya, lalu tap berkas yang dicari.');
+        setMeter(false);
+        G.total = 1;
+      } else {
+        scatterFiles(L.files.map(function (d) { return d; }));
+        G.total = G.files.length;
+        setBanner(idx === LEVELS.length - 1 ? 'Penuhi Kerapian sampai 100%!' : 'Pilah semua berkas ke foldernya!');
+        setHint('Tap sebuah berkas, lalu tap foldernya.');
+        setMeter(true, 0);
+      }
+    }
+
+    function updateProgress() {
+      if (G.mode === 'sort') {
+        var pct = Math.round(G.placed / G.total * 100);
+        setMeter(true, pct);
+      }
+    }
+
+    function starsForLevel() {
+      if (G.wrongTaps === 0) return 3;
+      if (G.wrongTaps <= 2) return 2;
+      return 1;
+    }
+
+    function levelComplete() {
+      G.state = 'done';
+      var stars = starsForLevel();
+      saveStars(G.idx, stars);
+      var last = G.idx === LEVELS.length - 1;
+      AX.win();
+      if (last) confettiBurst();
+      setTimeout(function () {
+        $('winEmoji').textContent = last ? '🏆' : '✅';
+        $('winTitle').textContent = last ? 'Komputer Bersih!' : 'Folder rapi!';
+        $('winStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+        $('winText').textContent = last
+          ? 'Kamu jagoan rapi! Semua berkas sudah di tempatnya. Total bintang: ' + PROG.totalStars + ' ⭐'
+          : (stars === 3 ? 'Sempurna, tanpa salah! 🌟' : 'Kerja bagus! Coba tanpa salah untuk 3 bintang.');
+        var nextBtn = $('winNext');
+        nextBtn.textContent = last ? '🗂️ Pilih level' : 'Lanjut ▶';
+        nextBtn.dataset.last = last ? '1' : '0';
+        $('winModal').classList.remove('hidden');
+      }, last ? 700 : 450);
+    }
+
+    /* ============================================================
+       INTERACTIONS
+       ============================================================ */
+    function selectFile(f) {
+      if (G.selected === f) return;
+      deselect();
+      G.selected = f;
+      AX.pick();
+      tween({ dur: 0.18, ease: easeOut, from: f.position.y, update: function (e) { f.position.y = f.userData.baseY + e * 0.55; } });
+      G.ring.position.set(f.position.x, 0.06, f.position.z);
+      G.ring.visible = true;
+    }
+    function deselect() {
+      if (G.selected) {
+        var f = G.selected;
+        tween({ dur: 0.16, update: function (e) { f.position.y = f.userData.baseY + (1 - e) * 0.55; } });
+      }
+      G.selected = null; G.ring.visible = false;
+    }
+    function matches(file, folder) {
+      var a = folder.userData.accept;
+      if (!a) return false;
+      if (a === 'any') return true;
+      if (a.type !== file.userData.type) return false;
+      if (a.sub && a.sub !== file.userData.sub) return false;
+      return true;
+    }
+    function placeFile(file, folder) {
+      G.busy = true; G.ring.visible = false;
+      var start = file.position.clone();
+      var end = new THREE.Vector3(folder.position.x, folder.position.y + 0.9, folder.position.z + 0.2);
+      tween({
+        dur: 0.5, ease: easeOut,
+        update: function (e) {
+          file.position.lerpVectors(start, end, e);
+          file.position.y += Math.sin(e * Math.PI) * 1.4;
+          file.scale.setScalar(1 - e * 0.7);
+          file.rotation.y += 0.3;
+        },
+        onDone: function () {
+          scene.remove(file);
+          var i = G.files.indexOf(file); if (i >= 0) G.files.splice(i, 1);
+          G.placed++;
+          AX.place(); sparkleAt(folder.position); robotCheer();
+          // folder bounce
+          tween({ dur: 0.3, ease: function (p) { return Math.sin(p * Math.PI); }, update: function (e) { folder.scale.setScalar(1 + e * 0.12); }, onDone: function () { folder.scale.setScalar(1); } });
+          updateProgress();
+          G.busy = false; G.selected = null;
+          if (G.placed >= G.total) levelComplete();
+        }
+      });
+    }
+    function shakeFolder(folder) {
+      AX.wrong();
+      var bx = folder.userData.baseX;
+      tween({ dur: 0.36, update: function (e) { folder.position.x = bx + Math.sin(e * Math.PI * 4) * 0.18 * (1 - e); }, onDone: function () { folder.position.x = bx; } });
+      setHint('Hmm, bukan folder itu. Coba folder lain! 🙂');
+    }
+
+    // find mode: open a folder to reveal its contents
+    function openFolderUI(folder) {
+      if (G.openFolder === folder) { closeFolder(); return; }
+      closeFolder();
+      G.openFolder = folder; AX.open();
+      var cs = folder.userData.contents || [];
+      var n = cs.length, x0 = folder.position.x - (n - 1) / 2 * 1.45;
+      G.openContents = [];
+      cs.forEach(function (c, i) {
+        c.visible = true; c.scale.setScalar(1);
+        var tx = x0 + i * 1.45, tz = folder.position.z + 1.5;
+        c.position.set(folder.position.x, folder.position.y + 0.2, folder.position.z);
+        var startp = c.position.clone(), endp = new THREE.Vector3(tx, 1.0, tz);
+        tween({ dur: 0.35, ease: easeOut, update: function (e) { c.position.lerpVectors(startp, endp, e); c.position.y += Math.sin(e * Math.PI) * 0.5; } });
+        G.openContents.push(c);
+      });
+      setHint('Tap berkas yang kamu cari. Bukan di sini? Buka folder lain.');
+    }
+    function closeFolder() {
+      if (!G.openFolder) return;
+      G.openContents.forEach(function (c) { c.visible = false; });
+      G.openContents = []; G.openFolder = null;
+    }
+    function tapContent(c) {
+      var L = LEVELS[G.idx];
+      if (c.userData.type === L.target.type && c.userData.name === L.target.name) {
+        G.busy = true;
+        var start = c.position.clone(), end = new THREE.Vector3(0, 2.2, 2.5);
+        tween({ dur: 0.6, ease: easeOut, update: function (e) { c.position.lerpVectors(start, end, e); c.rotation.y += 0.3; c.scale.setScalar(1 + e * 0.4); },
+          onDone: function () { scene.remove(c); sparkleAt(new THREE.Vector3(0, 1.6, 2.5)); robotCheer(); G.placed = 1; levelComplete(); } });
+        setBanner('Ketemu! 🎉');
+      } else {
+        G.wrongTaps++; AX.wrong();
+        var by = c.position.y;
+        tween({ dur: 0.3, update: function (e) { c.position.y = by + Math.sin(e * Math.PI) * 0.3; } });
+        setHint('Bukan ini — coba cari lagi! 🔍');
+      }
+    }
+
+    /* ============================================================
+       TAP DETECTION (vs orbit drag) + raycast
+       ============================================================ */
+    var down = null;
+    renderer.domElement.addEventListener('pointerdown', function (ev) {
+      down = { x: ev.clientX, y: ev.clientY, t: performance.now() };
+    });
+    renderer.domElement.addEventListener('pointerup', function (ev) {
+      if (!down) return;
+      var dx = ev.clientX - down.x, dy = ev.clientY - down.y;
+      var moved = Math.sqrt(dx * dx + dy * dy);
+      var dt = performance.now() - down.t;
+      down = null;
+      if (moved > 12 || dt > 600) return;        // it was a drag/orbit, not a tap
+      if (G.state !== 'playing' || G.busy) return;
+      handleTap(ev.clientX, ev.clientY);
+    });
+
+    function pickAt(cx, cy) {
+      var r = renderer.domElement.getBoundingClientRect();
+      var m = new THREE.Vector2(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
+      raycaster.setFromCamera(m, camera);
+      var targets;
+      if (G.mode === 'find') { targets = G.folders.concat(G.openContents); }
+      else { targets = G.files.concat(G.folders); }
+      var hits = raycaster.intersectObjects(targets, false);
+      return hits.length ? hits[0].object : null;
+    }
+
+    function handleTap(cx, cy) {
+      var obj = pickAt(cx, cy);
+      if (!obj) { if (G.mode === 'sort') deselect(); return; }
+      var k = obj.userData.kind;
+      if (G.mode === 'find') {
+        if (k === 'folder') openFolderUI(obj);
+        else if (k === 'content') tapContent(obj);
+        return;
+      }
+      // sort mode
+      if (k === 'file') { selectFile(obj); }
+      else if (k === 'folder') {
+        if (!G.selected) { setHint('Tap dulu sebuah berkas, baru tap folder ini.'); return; }
+        if (matches(G.selected, obj)) { placeFile(G.selected, obj); }
+        else { G.wrongTaps++; shakeFolder(obj); deselect(); }
+      }
+    }
+
+    /* ============================================================
+       LEVEL SELECT UI
+       ============================================================ */
+    function buildLevelGrid() {
+      var g = $('levelGrid'); g.innerHTML = '';
+      LEVELS.forEach(function (L, i) {
+        var open = unlocked(i);
+        var st = (PROG.levels[i] || {}).stars || 0;
+        var d = document.createElement('button');
+        d.className = 'lvl' + (open ? '' : ' locked');
+        d.innerHTML = '<span class="e">' + L.e + '</span><span class="nm">' + L.title + '</span>' +
+          '<span class="st">' + (st ? '⭐'.repeat(st) : (open ? '' : '')) + '</span>';
+        if (open) d.addEventListener('click', function () { showIntro(i); });
+        g.appendChild(d);
+      });
+    }
+
+    /* ============================================================
+       BUTTON WIRING
+       ============================================================ */
+    $('introStart').addEventListener('click', function () { AX.set(AX.isOn()); startLevel(G.idx); });
+    $('introPick').addEventListener('click', function () { buildLevelGrid(); $('introModal').classList.add('hidden'); $('levelModal').classList.remove('hidden'); G.state = 'menu'; });
+    $('winNext').addEventListener('click', function () {
+      if ($('winNext').dataset.last === '1') { buildLevelGrid(); $('winModal').classList.add('hidden'); $('levelModal').classList.remove('hidden'); G.state = 'menu'; }
+      else { showIntro(Math.min(G.idx + 1, LEVELS.length - 1)); }
+    });
+    $('winReplay').addEventListener('click', function () { startLevel(G.idx); });
+    $('levelsBtn').addEventListener('click', function () { buildLevelGrid(); $('levelModal').classList.remove('hidden'); G.state = 'menu'; });
+    $('levelClose').addEventListener('click', function () {
+      $('levelModal').classList.add('hidden');
+      if (G.state === 'menu' && G.files.length === 0 && G.folders.length === 0) showIntro(G.idx);
+      else G.state = 'playing';
+    });
+    var sBtn = $('soundBtn');
+    sBtn.textContent = AX.isOn() ? '🔊' : '🔇';
+    sBtn.addEventListener('click', function () { AX.set(!AX.isOn()); sBtn.textContent = AX.isOn() ? '🔊' : '🔇'; });
+
+    /* ============================================================
+       RENDER LOOP
+       ============================================================ */
+    function onResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    window.addEventListener('resize', onResize);
+
+    var ringPulse = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+      var dt = Math.min(clock.getDelta(), 0.05);
+      updateTweens(dt);
+      updateParticles(dt);
+      controls.update();
+      // bob selected file's ring + gentle idle on robot eyes
+      if (G.ring.visible) { ringPulse += dt * 4; G.ring.scale.setScalar(1 + Math.sin(ringPulse) * 0.06); G.ring.rotation.z += dt * 1.2; }
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // greet on the level-1 intro; the 🗂️ level-select offers any unlocked level
+    showIntro(0);
+  })();
+  </script>
+</body>
+</html>
