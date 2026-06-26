@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kereta Raya 🚂 · Learn with Adhi</title>
+  <meta name="description" content="Kereta 3D untuk Raya! Muat gerbong sesuai warna & bentuk, naikkan penumpang sambil menghitung, lalu jalankan keretanya berkeliling — semua dibacakan dengan suara, tanpa perlu membaca.">
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%23FF5C39"/><text y=".9em" font-size="64" x="16">🚂</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #E84BA0;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --tomato:  #FF5C39;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --line:    rgba(26,22,20,0.14);
+      --muted:   #6B6259;
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--fb);
+      background: #8fd3e8;
+      color: var(--ink);
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    canvas { display: block; }
+
+    #scene { position: fixed; inset: 0; z-index: 0; touch-action: none; }
+
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(20,40,60,0.55), rgba(20,40,60,0));
+      pointer-events: none;
+    }
+    .topbar > * { pointer-events: auto; }
+    .home {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--paper); color: var(--ink);
+      border: 2px solid var(--ink); border-radius: 12px;
+      padding: 8px 12px; font-weight: 800; font-size: 14px;
+      box-shadow: 3px 3px 0 var(--ink); text-decoration: none;
+    }
+    .title { font-family: var(--fd); color: #fff; font-weight: 800; font-size: 18px; letter-spacing: .3px; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
+    .spacer { flex: 1; }
+    .iconbtn {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--paper); color: var(--ink);
+      border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+      font-size: 21px; display: grid; place-items: center;
+    }
+
+    .cue {
+      position: fixed; top: 64px; left: 50%; transform: translateX(-50%); z-index: 9;
+      display: none; align-items: center; gap: 12px;
+      background: var(--paper); border: 3px solid var(--ink);
+      border-radius: 18px; padding: 10px 18px; box-shadow: 5px 5px 0 var(--ink); max-width: 92vw;
+    }
+    .cue.show { display: flex; }
+    .cue.pop { animation: cuepop .4s; }
+    @keyframes cuepop { 0%{transform:translateX(-50%) scale(.7)} 60%{transform:translateX(-50%) scale(1.12)} 100%{transform:translateX(-50%) scale(1)} }
+    .cue .swatch { width: 44px; height: 44px; border-radius: 12px; border: 3px solid var(--ink); flex: none; box-shadow: inset -4px -4px 0 rgba(0,0,0,.15); }
+    .cue .cue-emoji { font-size: 42px; line-height: 1; flex: none; }
+    .cue .cue-num { font-family: var(--fd); font-weight: 800; font-size: 34px; color: var(--tomato); min-width: 40px; text-align: center; }
+    .cue .cue-text { font-family: var(--fd); font-weight: 800; font-size: 22px; line-height: 1.05; }
+
+    .dots {
+      position: fixed; top: 124px; left: 50%; transform: translateX(-50%); z-index: 9;
+      display: none; gap: 7px; align-items: center;
+      background: rgba(20,40,60,0.35); border-radius: 999px; padding: 6px 12px; backdrop-filter: blur(3px);
+    }
+    .dots.show { display: flex; }
+    .dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #fff; background: transparent; transition: transform .2s; }
+    .dot.on { background: var(--mango); transform: scale(1.18); }
+
+    .bottombar {
+      position: fixed; bottom: calc(14px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); z-index: 9;
+      display: flex; align-items: center; gap: 10px; max-width: 94vw;
+    }
+    .hint { background: rgba(26,22,20,0.82); color: #fff; border-radius: 12px; padding: 10px 16px; font-weight: 700; font-size: 13.5px; text-align: center; backdrop-filter: blur(3px); }
+    .speakbtn { background: var(--mango); color: var(--ink); border: 2px solid var(--ink); border-radius: 12px; box-shadow: 3px 3px 0 var(--ink); padding: 9px 14px; font-weight: 800; font-size: 14px; flex: none; }
+    .speakbtn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+
+    .modal { position: fixed; inset: 0; z-index: 40; background: rgba(20,40,60,0.78); backdrop-filter: blur(4px); display: grid; place-items: center; padding: 18px; }
+    .modal.hidden { display: none; }
+    .card { background: var(--paper); border: 3px solid var(--ink); border-radius: 24px; box-shadow: 8px 8px 0 var(--ink); padding: 26px 22px; width: min(440px, 94vw); text-align: center; max-height: 92vh; overflow-y: auto; }
+    .card .big { font-size: 60px; line-height: 1; margin-bottom: 6px; }
+    .card h2 { font-family: var(--fd); font-size: 26px; margin-bottom: 6px; }
+    .card .lvl-tag { font-weight: 800; color: var(--tomato); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+    .card p { font-size: 15.5px; line-height: 1.5; color: #41382f; margin-bottom: 18px; }
+    .card .stars { font-size: 42px; letter-spacing: 5px; margin: 8px 0 16px; }
+    .btn { font-family: var(--fd); font-size: 21px; font-weight: 800; background: var(--mango); color: var(--ink); border: 3px solid var(--ink); border-radius: 16px; padding: 14px 32px; box-shadow: 5px 5px 0 var(--ink); transition: transform .08s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--ink); }
+    .btn.alt { background: var(--paper); font-size: 15px; padding: 10px 18px; box-shadow: 4px 4px 0 var(--ink); margin-top: 10px; }
+    .btn.go { background: var(--tomato); color: #fff; }
+
+    .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 4px 0 6px; }
+    .lvl { background: #fff; border: 2.5px solid var(--ink); border-radius: 14px; padding: 12px 6px 9px; box-shadow: 3px 3px 0 var(--ink); display: flex; flex-direction: column; align-items: center; gap: 4px; transition: transform .08s; }
+    .lvl:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+    .lvl .e { font-size: 30px; }
+    .lvl .nm { font-size: 11.5px; font-weight: 800; line-height: 1.15; }
+    .lvl .st { font-size: 12px; color: var(--mango); letter-spacing: 1px; min-height: 15px; }
+
+    .fallback { position: fixed; inset: 0; z-index: 60; display: none; place-items: center; padding: 26px; background: #8fd3e8; color: #14283c; text-align: center; flex-direction: column; gap: 14px; }
+    .fallback.show { display: grid; }
+    .fallback a { color: var(--tomato); font-weight: 800; }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+
+  <div class="topbar">
+    <a class="home" href="../../raya.html">← Keluar</a>
+    <div class="title">Kereta Raya 🚂</div>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="levelsBtn" title="Pilih main" aria-label="Pilih main">🚉</button>
+    <button class="iconbtn" id="soundBtn" title="Suara" aria-label="Suara">🔊</button>
+  </div>
+
+  <div class="cue" id="cue">
+    <span class="swatch" id="cueSwatch" style="display:none"></span>
+    <span class="cue-emoji" id="cueEmoji" style="display:none">🚂</span>
+    <span class="cue-num" id="cueNum" style="display:none">0</span>
+    <span class="cue-text" id="cueText">Muat keretanya!</span>
+  </div>
+
+  <div class="dots" id="dots"></div>
+
+  <div class="bottombar">
+    <button class="speakbtn" id="speakBtn">🔊 Dengar</button>
+    <div class="hint" id="hint">Sentuh muatan, lalu sentuh gerbongnya!</div>
+  </div>
+
+  <div class="modal" id="introModal">
+    <div class="card">
+      <div class="big" id="introEmoji">🚂</div>
+      <div class="lvl-tag" id="introTag">Level 1</div>
+      <h2 id="introTitle">Muat Keretanya!</h2>
+      <p id="introText">Yuk isi gerbong kereta!</p>
+      <button class="btn" id="introStart">Mulai ▶</button>
+      <div><button class="btn alt" id="introPick">🚉 Pilih main lain</button></div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="winModal">
+    <div class="card">
+      <div class="big" id="winEmoji">🎉</div>
+      <h2 id="winTitle">Hebat, Raya!</h2>
+      <div class="stars" id="winStars">⭐⭐⭐</div>
+      <p id="winText">Keretanya jalan!</p>
+      <button class="btn go" id="winNext">Lanjut ▶</button>
+      <div><button class="btn alt" id="winReplay">↻ Main lagi</button></div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="levelModal">
+    <div class="card">
+      <div class="big">🚉</div>
+      <h2>Pilih Main</h2>
+      <p>Pilih petualangan kereta yang kamu suka!</p>
+      <div class="levels" id="levelGrid"></div>
+      <button class="btn alt" id="levelClose">Tutup</button>
+    </div>
+  </div>
+
+  <div class="fallback" id="fallback">
+    <div style="font-size:54px">🚂</div>
+    <h2 style="font-family:var(--fd);font-size:24px">Kereta 3D tidak bisa dibuka</h2>
+    <p style="max-width:340px;line-height:1.5">Perangkat ini belum mendukung grafik 3D (WebGL), atau halaman gagal dimuat. Coba buka di browser lain atau saat ada internet.</p>
+    <a href="../../raya.html">← Kembali</a>
+  </div>
+
+  <script src="../../assets/js/vendor/three.min.js"></script>
+  <script src="../../assets/js/vendor/OrbitControls.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var fb = document.getElementById('fallback');
+    if (typeof THREE === 'undefined') { fb.classList.add('show'); return; }
+    var $ = function (id) { return document.getElementById(id); };
+
+    /* ============================================================
+       SOUND — WebAudio SFX (mute toggle) + Web Speech read-aloud
+       ============================================================ */
+    var AX = (function () {
+      var ctx = null, on = true;
+      try { on = localStorage.getItem('rayaKeretaMuted') !== '1'; } catch (_) {}
+      function ac() {
+        if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) {} }
+        if (ctx && ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+      function tone(freq, t0, dur, type, vol) {
+        if (!on) return;
+        var c = ac(); if (!c) return;
+        var o = c.createOscillator(), g = c.createGain();
+        o.type = type || 'sine'; o.frequency.value = freq;
+        var start = c.currentTime + t0;
+        g.gain.setValueAtTime(0.0001, start);
+        g.gain.exponentialRampToValueAtTime(vol || 0.16, start + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+        o.connect(g); g.connect(c.destination);
+        o.start(start); o.stop(start + dur + 0.02);
+      }
+      return {
+        tap:     function () { tone(700, 0, 0.06, 'sine', 0.12); tone(980, 0.05, 0.07, 'sine', 0.1); },
+        load:    function () { tone(523, 0, 0.09, 'triangle', 0.16); tone(784, 0.08, 0.16, 'triangle', 0.14); tone(1047, 0.18, 0.16, 'triangle', 0.12); },
+        soft:    function () { tone(300, 0, 0.1, 'sine', 0.08); tone(250, 0.09, 0.14, 'sine', 0.08); },
+        sparkle: function () { tone(1320, 0, 0.05, 'sine', 0.08); tone(1760, 0.05, 0.06, 'sine', 0.07); },
+        whistle: function () { tone(520, 0, 0.5, 'sine', 0.16); tone(680, 0.06, 0.55, 'sine', 0.12); tone(440, 0.3, 0.5, 'sine', 0.12); },
+        win:     function () { [523, 659, 784, 1047, 1319].forEach(function (f, i) { tone(f, i * 0.12, 0.34, 'triangle', 0.16); }); },
+        set: function (v) { on = v; try { localStorage.setItem('rayaKeretaMuted', on ? '0' : '1'); } catch (_) {} if (on) ac(); },
+        prime: function () { ac(); },
+        isOn: function () { return on; }
+      };
+    })();
+
+    var Suara = {
+      on: 'speechSynthesis' in window, voice: null, u: null,
+      pickVoice: function () { if (!this.on) return; try { this.voice = speechSynthesis.getVoices().find(function (v) { return v.lang && v.lang.toLowerCase().indexOf('id') === 0; }) || null; } catch (_) {} },
+      speak: function (text, rate) {
+        if (!this.on || !text || !AX.isOn()) return;
+        try {
+          speechSynthesis.cancel();
+          var u = new SpeechSynthesisUtterance(text);
+          u.lang = 'id-ID'; u.rate = rate || 0.9; u.pitch = 1.15;
+          if (!this.voice) this.pickVoice();
+          if (this.voice) u.voice = this.voice;
+          this.u = u;
+          setTimeout(function () { try { speechSynthesis.resume(); speechSynthesis.speak(u); } catch (_) {} }, 80);
+        } catch (_) {}
+      }
+    };
+    if (Suara.on) { try { speechSynthesis.onvoiceschanged = function () { Suara.pickVoice(); }; Suara.pickVoice(); } catch (_) {} }
+    function cleanSay(t) { return String(t || '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}→]/gu, '').replace(/\s+/g, ' ').trim(); }
+    function say(t, rate) { Suara.speak(cleanSay(t), rate); }
+
+    /* ============================================================
+       CONTENT
+       ============================================================ */
+    var COLORS = {
+      merah:  { hex: '#FF4D4D', name: 'merah' },
+      kuning: { hex: '#FFD23F', name: 'kuning' },
+      biru:   { hex: '#3FA9F5', name: 'biru' },
+      hijau:  { hex: '#43CF6B', name: 'hijau' },
+      oranye: { hex: '#FF9A3F', name: 'oranye' },
+      ungu:   { hex: '#B06BE8', name: 'ungu' }
+    };
+    var NUM = ['nol', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh'];
+    var SHAPES = {
+      bulat:   { emoji: '🔵', name: 'bulat' },
+      kotak:   { emoji: '🟥', name: 'kotak' },
+      bintang: { emoji: '⭐', name: 'bintang' }
+    };
+    var ANIMALS = {
+      kucing:  { emoji: '🐱', name: 'kucing',  color: '#FFB066', ear: 'point' },
+      anjing:  { emoji: '🐶', name: 'anjing',  color: '#C9A06A', ear: 'flop' },
+      kelinci: { emoji: '🐰', name: 'kelinci', color: '#F4F0EA', ear: 'long' },
+      beruang: { emoji: '🐻', name: 'beruang', color: '#9A6B43', ear: 'round' },
+      burung:  { emoji: '🐦', name: 'burung',  color: '#5BC0EB', ear: 'none' }
+    };
+
+    function boxes(colors) { return colors.map(function (c) { return { kind: 'box', color: c }; }); }
+    function shapeCargo(list) { return list.map(function (s) { return { kind: 'shape', shape: s, color: 'oranye' }; }); }
+    function animalsOf(list) { return list.map(function (a) { return { kind: 'animal', animal: a }; }); }
+
+    // Levels. mode: 'free' | 'color' | 'shape' | 'count' | 'find' | 'boss'
+    var LEVELS = [
+      {
+        e: '🚂', tag: 'Level 1', title: 'Muat Keretanya!', mode: 'free', big: false,
+        intro: 'Selamat datang di stasiun Raya! Sentuh muatan, lalu sentuh gerbong untuk memasukkannya. Isi semua gerbong! 🚂',
+        wagons: [{ color: 'merah' }, { color: 'kuning' }, { color: 'biru' }],
+        cargo: boxes(['hijau', 'oranye', 'ungu', 'merah', 'biru']),
+        cue: { text: 'Muat keretanya!' }, hint: 'Sentuh sebuah muatan, lalu sentuh gerbong mana saja.'
+      },
+      {
+        e: '🎨', tag: 'Level 2', title: 'Kereta Warna', mode: 'color', big: false,
+        intro: 'Setiap gerbong punya warna. Masukkan muatan ke gerbong yang warnanya SAMA! Gerbong yang cocok akan berkedip. 🎨',
+        wagons: [{ color: 'merah' }, { color: 'kuning' }, { color: 'biru' }],
+        cargo: boxes(['merah', 'biru', 'kuning', 'merah', 'biru', 'kuning']),
+        cue: { text: 'Cocokkan warna!' }, hint: 'Sentuh muatan → sentuh gerbong dengan warna yang sama.'
+      },
+      {
+        e: '🔢', tag: 'Level 3', title: 'Hitung Penumpang', mode: 'count', big: false,
+        intro: 'Banyak teman mau naik kereta! Sentuh satu per satu untuk menaikkan mereka — ayo kita hitung bersama! 🐱🐶🐰',
+        wagons: [{ color: 'hijau' }],
+        cargo: animalsOf(['kucing', 'anjing', 'kelinci', 'beruang', 'burung']),
+        cue: { num: true, text: 'Ayo hitung!' }, hint: 'Sentuh tiap penumpang dan hitung bersama.'
+      },
+      {
+        e: '🐾', tag: 'Level 4', title: 'Siapa Naik?', mode: 'find', big: false,
+        intro: 'Dengarkan siapa yang dipanggil, lalu sentuh hewan itu untuk menaikkannya ke kereta! Lihat gambar di atas. 🐾',
+        wagons: [{ color: 'ungu' }],
+        cargo: animalsOf(['kucing', 'anjing', 'kelinci', 'beruang', 'burung']),
+        rounds: ['kucing', 'anjing', 'kelinci', 'beruang', 'burung']
+      },
+      {
+        e: '🔷', tag: 'Level 5', title: 'Muatan Bentuk', mode: 'shape', big: false,
+        intro: 'Sekarang cocokkan BENTUK! Muatan bulat ke gerbong bulat, kotak ke kotak, bintang ke bintang. Gerbong yang cocok berkedip. 🔵🟥⭐',
+        wagons: [{ shape: 'bulat' }, { shape: 'kotak' }, { shape: 'bintang' }],
+        cargo: shapeCargo(['bulat', 'kotak', 'bintang', 'bulat', 'kotak', 'bintang']),
+        cue: { text: 'Cocokkan bentuk!' }, hint: 'Sentuh muatan → sentuh gerbong dengan bentuk yang sama.'
+      },
+      {
+        e: '🎉', tag: 'Level 6 · JALAN', title: 'Jalan-Jalan!', mode: 'boss', big: true,
+        intro: 'Kereta penuh warna siap jalan-jalan! Masukkan setiap muatan ke gerbong warna yang sama, lalu kita berkeliling jauuuh! 🎉🚂',
+        wagons: [{ color: 'merah' }, { color: 'kuning' }, { color: 'biru' }, { color: 'hijau' }],
+        cargo: boxes(['merah', 'kuning', 'biru', 'hijau', 'merah', 'kuning', 'biru', 'hijau']),
+        cue: { text: 'Cocokkan warna!' }, hint: 'Sentuh muatan → sentuh gerbong dengan warna yang sama.'
+      }
+    ];
+
+    /* ============================================================
+       PROGRESS — standard {totalStars, progress:{<id>:{stars}}}
+       ============================================================ */
+    var PKEY = 'rayaKereta';
+    var PROG = (function () {
+      try { var s = JSON.parse(localStorage.getItem(PKEY) || '{}'); if (s && typeof s === 'object') return { totalStars: s.totalStars || 0, progress: s.progress || {} }; } catch (_) {}
+      return { totalStars: 0, progress: {} };
+    })();
+    function saveStars(idx, stars) {
+      var id = 'l' + idx;
+      var prev = (PROG.progress[id] || {}).stars || 0;
+      if (stars > prev) PROG.progress[id] = { stars: stars };
+      var tot = 0; for (var k in PROG.progress) tot += PROG.progress[k].stars || 0;
+      PROG.totalStars = tot;
+      try {
+        localStorage.setItem(PKEY, JSON.stringify(PROG));
+        var d = JSON.parse(localStorage.getItem(PKEY) || '{}'); d.lastPlayed = new Date().toISOString().slice(0, 10);
+        localStorage.setItem(PKEY, JSON.stringify(d));
+      } catch (_) {}
+    }
+
+    /* ============================================================
+       3D SETUP
+       ============================================================ */
+    var scene, camera, renderer, controls, clock, raycaster;
+    var ok3d = true;
+    try {
+      var host = $('scene');
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color('#8fd3e8');
+      scene.fog = new THREE.Fog('#8fd3e8', 24, 60);
+
+      camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 200);
+      camera.position.set(0, 5, 14);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      if (THREE.sRGBEncoding) renderer.outputEncoding = THREE.sRGBEncoding;
+      host.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.target.set(0, 1.2, 0);
+      controls.enableDamping = true; controls.dampingFactor = 0.08;
+      controls.enablePan = false;
+      controls.minDistance = 7; controls.maxDistance = 30;
+      controls.minPolarAngle = 0.6; controls.maxPolarAngle = 1.45;
+      controls.rotateSpeed = 0.5;
+      controls.update();
+
+      raycaster = new THREE.Raycaster();
+      clock = new THREE.Clock();
+    } catch (e) { ok3d = false; }
+    if (!ok3d) { fb.classList.add('show'); return; }
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.82));
+    scene.add(new THREE.HemisphereLight(0xddf3ff, 0x6b8e4e, 0.6));
+    var sun = new THREE.DirectionalLight(0xffffff, 0.85);
+    sun.position.set(6, 14, 8); scene.add(sun);
+
+    function darken(hex, amt) {
+      var c = new THREE.Color(hex);
+      c.r = Math.max(0, Math.min(1, c.r + amt)); c.g = Math.max(0, Math.min(1, c.g + amt)); c.b = Math.max(0, Math.min(1, c.b + amt));
+      return '#' + c.getHexString();
+    }
+
+    // ---- world: grass, long track, station platform, scenery ----
+    var wheels = [];            // all wheel meshes (spun during the ride)
+    var scenery = [];           // trees/clouds (parallax during ride; decorative)
+    (function buildWorld() {
+      var grass = new THREE.Mesh(new THREE.PlaneGeometry(400, 80),
+        new THREE.MeshStandardMaterial({ color: '#6fbf5a', roughness: 1 }));
+      grass.rotation.x = -Math.PI / 2; grass.position.y = -0.02; scene.add(grass);
+
+      // rails + sleepers along X at z=0
+      var railMat = new THREE.MeshStandardMaterial({ color: '#8a8f99', roughness: 0.6, metalness: 0.3 });
+      [-0.5, 0.5].forEach(function (zz) {
+        var rail = new THREE.Mesh(new THREE.BoxGeometry(400, 0.12, 0.12), railMat);
+        rail.position.set(0, 0.12, zz); scene.add(rail);
+      });
+      var tieMat = new THREE.MeshStandardMaterial({ color: '#7a5230', roughness: 1 });
+      for (var i = -80; i <= 80; i++) {
+        var tie = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.08, 1.5), tieMat);
+        tie.position.set(i * 1.2, 0.06, 0); scene.add(tie);
+      }
+
+      // station platform behind the track (z negative, away from camera)
+      var plat = new THREE.Mesh(new THREE.BoxGeometry(16, 0.5, 2.4),
+        new THREE.MeshStandardMaterial({ color: '#d9c7a6', roughness: 1 }));
+      plat.position.set(0, 0.25, -2.4); scene.add(plat);
+      // a little station house
+      var house = new THREE.Group();
+      var wall = new THREE.Mesh(new THREE.BoxGeometry(3, 1.8, 1.4), new THREE.MeshStandardMaterial({ color: '#f3d9b0', roughness: 1 }));
+      wall.position.y = 1.4; house.add(wall);
+      var roof = new THREE.Mesh(new THREE.ConeGeometry(2.6, 1.1, 4), new THREE.MeshStandardMaterial({ color: '#c0392b', roughness: 1 }));
+      roof.position.y = 2.85; roof.rotation.y = Math.PI / 4; house.add(roof);
+      house.position.set(-5, 0.5, -3.4); scene.add(house);
+
+      // scenery: trees + clouds + hills spread along the track
+      function tree(x, z, s) {
+        var g = new THREE.Group();
+        var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.24, 1.1, 7), new THREE.MeshStandardMaterial({ color: '#8a5a2b', roughness: 1 }));
+        trunk.position.y = 0.55; g.add(trunk);
+        var leaf = new THREE.Mesh(new THREE.SphereGeometry(0.9, 12, 10), new THREE.MeshStandardMaterial({ color: darken('#2e8b3d', (Math.random() - 0.5) * 0.1), roughness: 1 }));
+        leaf.position.y = 1.7; leaf.scale.y = 1.15; g.add(leaf);
+        g.position.set(x, 0, z); g.scale.setScalar(s); scene.add(g); scenery.push(g);
+      }
+      for (var t = -36; t <= 36; t += 6) { tree(t + (Math.random() - 0.5) * 2, -5.5 - Math.random() * 2, 0.8 + Math.random() * 0.5); }
+      for (var t2 = -34; t2 <= 36; t2 += 9) { tree(t2 + (Math.random() - 0.5) * 2, 4.5 + Math.random() * 2, 0.7 + Math.random() * 0.4); }
+      // distant hills
+      for (var h = -40; h <= 40; h += 16) {
+        var hill = new THREE.Mesh(new THREE.SphereGeometry(6, 16, 12), new THREE.MeshStandardMaterial({ color: '#7fc06a', roughness: 1 }));
+        hill.position.set(h, -3.5, -12); hill.scale.set(1.6, 0.8, 1); scene.add(hill);
+      }
+      // clouds
+      function cloud(x, y) {
+        var g = new THREE.Group();
+        var m = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1 });
+        [[0, 0, 1], [0.9, -0.1, 0.75], [-0.9, -0.05, 0.7], [0.4, 0.35, 0.65]].forEach(function (p) {
+          var s = new THREE.Mesh(new THREE.SphereGeometry(0.8 * p[2], 10, 8), m); s.position.set(p[0], p[1], 0); g.add(s);
+        });
+        g.position.set(x, y, -10); g.scale.setScalar(1.4); scene.add(g); scenery.push(g);
+      }
+      for (var c = -30; c <= 30; c += 12) cloud(c + Math.random() * 4, 8 + Math.random() * 2);
+    })();
+
+    function eyePair(group, fy, fz, sep, r) {
+      [-1, 1].forEach(function (s) {
+        var w = new THREE.Mesh(new THREE.SphereGeometry(r, 12, 10), new THREE.MeshStandardMaterial({ color: '#fff' }));
+        w.position.set(s * sep, fy, fz); group.add(w);
+        var p = new THREE.Mesh(new THREE.SphereGeometry(r * 0.55, 10, 8), new THREE.MeshStandardMaterial({ color: '#1A1614' }));
+        p.position.set(s * sep, fy, fz + r * 0.6); group.add(p);
+      });
+    }
+    function wheelAt(group, x, z, r) {
+      var w = new THREE.Mesh(new THREE.CylinderGeometry(r, r, 0.18, 16),
+        new THREE.MeshStandardMaterial({ color: '#2b2b2b', roughness: 0.7 }));
+      w.rotation.x = Math.PI / 2; w.position.set(x, r, z); group.add(w); wheels.push(w);
+      var hub = new THREE.Mesh(new THREE.CylinderGeometry(r * 0.35, r * 0.35, 0.2, 8), new THREE.MeshStandardMaterial({ color: '#c0c0c0' }));
+      hub.rotation.x = Math.PI / 2; hub.position.set(x, r, z + 0.01); group.add(hub);
+    }
+    function addHit(group, radius, cx, cy, cz) {
+      var hit = new THREE.Mesh(new THREE.SphereGeometry(radius, 12, 10),
+        new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }));
+      hit.position.set(cx || 0, cy || 0, cz || 0);
+      group.add(hit); group.userData.hit = hit; hit.userData.owner = group;
+    }
+
+    /* ---- the locomotive (cute KAI-ish engine) ---- */
+    var engine = null;
+    function buildEngine() {
+      var g = new THREE.Group();
+      var red = new THREE.MeshStandardMaterial({ color: '#E23B2E', roughness: 0.5 });
+      var dark = new THREE.MeshStandardMaterial({ color: '#34495e', roughness: 0.6 });
+      var boiler = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 2.4, 18), red);
+      boiler.rotation.z = Math.PI / 2; boiler.position.set(0.3, 1.0, 0); g.add(boiler);
+      var cab = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.5, 1.5), red);
+      cab.position.set(-1.3, 1.2, 0); g.add(cab);
+      var base = new THREE.Mesh(new THREE.BoxGeometry(3.4, 0.5, 1.5), dark);
+      base.position.set(-0.2, 0.5, 0); g.add(base);
+      var chimney = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.26, 0.7, 14), dark);
+      chimney.position.set(1.1, 1.9, 0); g.add(chimney);
+      var dome = new THREE.Mesh(new THREE.SphereGeometry(0.28, 12, 10), new THREE.MeshStandardMaterial({ color: '#FFC234' }));
+      dome.position.set(0.2, 1.85, 0); g.add(dome);
+      var cowcatcher = new THREE.Mesh(new THREE.ConeGeometry(0.6, 0.9, 4), dark);
+      cowcatcher.rotation.z = -Math.PI / 2; cowcatcher.position.set(1.7, 0.55, 0); g.add(cowcatcher);
+      var light = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.15, 12), new THREE.MeshStandardMaterial({ color: '#FFF7C0', emissive: '#FFE680', emissiveIntensity: 0.6 }));
+      light.rotation.z = Math.PI / 2; light.position.set(1.55, 1.2, 0); g.add(light);
+      // friendly face on the front
+      eyePair(g, 1.25, 0.72, 0.26, 0.16);
+      var smile = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.05, 8, 16, Math.PI), new THREE.MeshStandardMaterial({ color: '#1A1614' }));
+      smile.position.set(0, 0.95, 0.74); smile.rotation.z = Math.PI; g.add(smile);
+      wheelAt(g, 1.0, 0.55, 0.42); wheelAt(g, 1.0, -0.55, 0.42);
+      wheelAt(g, -0.4, 0.55, 0.42); wheelAt(g, -0.4, -0.55, 0.42);
+      wheelAt(g, -1.5, 0.55, 0.34); wheelAt(g, -1.5, -0.55, 0.34);
+      return g;
+    }
+
+    /* ---- a wagon (open-top container) ---- */
+    function makeWagon(def) {
+      var g = new THREE.Group();
+      var col = def.color ? COLORS[def.color].hex : '#c98a3a';
+      var bodyMat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.55 });
+      var floor = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.3, 1.5), new THREE.MeshStandardMaterial({ color: darken(col, -0.18), roughness: 0.7 }));
+      floor.position.y = 0.65; g.add(floor);
+      // four low walls
+      var wt = 0.16, wh = 0.7, wy = 1.0;
+      var fw = new THREE.Mesh(new THREE.BoxGeometry(2.0, wh, wt), bodyMat); fw.position.set(0, wy, 0.67); g.add(fw);
+      var bw = new THREE.Mesh(new THREE.BoxGeometry(2.0, wh, wt), bodyMat); bw.position.set(0, wy, -0.67); g.add(bw);
+      var lw = new THREE.Mesh(new THREE.BoxGeometry(wt, wh, 1.5), bodyMat); lw.position.set(0.95, wy, 0); g.add(lw);
+      var rw = new THREE.Mesh(new THREE.BoxGeometry(wt, wh, 1.5), bodyMat); rw.position.set(-0.95, wy, 0); g.add(rw);
+      // shape badge on the side (for the shape-match level) — a flat symbol facing the camera
+      if (def.shape) {
+        var badge = makeShapeBadge(def.shape);
+        badge.position.set(0, 1.05, 0.76); g.add(badge);
+      }
+      wheelAt(g, 0.6, 0.55, 0.34); wheelAt(g, 0.6, -0.55, 0.34);
+      wheelAt(g, -0.6, 0.55, 0.34); wheelAt(g, -0.6, -0.55, 0.34);
+      addHit(g, 1.25, 0, 1.0, 0);
+      g.userData.kind = 'wagon';
+      g.userData.color = def.color || null;
+      g.userData.shape = def.shape || null;
+      g.userData.bodyMat = bodyMat;
+      g.userData.baseColor = new THREE.Color(col);
+      g.userData.glow = false;
+      g.userData.loadCount = 0;
+      g.userData.slots = [
+        [-0.55, 1.05, 0.34], [0, 1.05, 0.34], [0.55, 1.05, 0.34],
+        [-0.55, 1.05, -0.34], [0, 1.05, -0.34], [0.55, 1.05, -0.34]
+      ];
+      return g;
+    }
+    function makeShapeBadge(shape) {
+      var g = new THREE.Group();
+      var white = new THREE.Mesh(new THREE.CircleGeometry(0.42, 24), new THREE.MeshStandardMaterial({ color: '#fff', roughness: 0.9 }));
+      g.add(white);
+      var mat = new THREE.MeshStandardMaterial({ color: '#FF7A1A', roughness: 0.6 });
+      var s;
+      if (shape === 'bulat') { s = new THREE.Mesh(new THREE.CircleGeometry(0.26, 24), new THREE.MeshStandardMaterial({ color: '#3FA9F5' })); }
+      else if (shape === 'kotak') { s = new THREE.Mesh(new THREE.PlaneGeometry(0.44, 0.44), new THREE.MeshStandardMaterial({ color: '#FF4D4D' })); }
+      else { s = makeStarShape(0.3, new THREE.MeshStandardMaterial({ color: '#FFC234' })); }
+      s.position.z = 0.01; g.add(s);
+      return g;
+    }
+    function makeStarShape(r, mat) {
+      var shape = new THREE.Shape();
+      for (var i = 0; i < 10; i++) {
+        var ang = (i / 10) * Math.PI * 2 - Math.PI / 2;
+        var rad = i % 2 === 0 ? r : r * 0.45;
+        var x = Math.cos(ang) * rad, y = Math.sin(ang) * rad;
+        if (i === 0) shape.moveTo(x, y); else shape.lineTo(x, y);
+      }
+      shape.closePath();
+      return new THREE.Mesh(new THREE.ShapeGeometry(shape), mat);
+    }
+
+    /* ---- cargo + passengers (tappable) ---- */
+    function makeCargo(def) {
+      var g = new THREE.Group();
+      if (def.kind === 'animal') return makeAnimal(def);
+      var col = COLORS[def.color] ? COLORS[def.color].hex : '#FF9A3F';
+      if (def.kind === 'shape') {
+        if (def.shape === 'bulat') {
+          var ball = new THREE.Mesh(new THREE.SphereGeometry(0.42, 16, 12), new THREE.MeshStandardMaterial({ color: '#3FA9F5', roughness: 0.5 }));
+          g.add(ball);
+        } else if (def.shape === 'kotak') {
+          var cube = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.7, 0.7), new THREE.MeshStandardMaterial({ color: '#FF4D4D', roughness: 0.6 }));
+          g.add(cube);
+        } else {
+          var star = makeStar3D('#FFC234'); g.add(star);
+        }
+        g.userData.shape = def.shape;
+      } else {
+        var crate = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.62, 0.72),
+          new THREE.MeshStandardMaterial({ color: col, roughness: 0.6 }));
+        g.add(crate);
+        // simple cross strap
+        var strapMat = new THREE.MeshStandardMaterial({ color: darken(col, -0.2), roughness: 0.7 });
+        var s1 = new THREE.Mesh(new THREE.BoxGeometry(0.76, 0.12, 0.1), strapMat); s1.position.z = 0.37; g.add(s1);
+        var s2 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.12, 0.76), strapMat); s2.position.x = 0; g.add(s2);
+        g.userData.color = def.color;
+      }
+      addHit(g, 0.85, 0, 0.1, 0);
+      g.userData.kind = 'cargo';
+      return g;
+    }
+    function makeStar3D(hex) {
+      var shape = new THREE.Shape();
+      for (var i = 0; i < 10; i++) {
+        var ang = (i / 10) * Math.PI * 2 - Math.PI / 2;
+        var rad = i % 2 === 0 ? 0.45 : 0.2;
+        var x = Math.cos(ang) * rad, y = Math.sin(ang) * rad;
+        if (i === 0) shape.moveTo(x, y); else shape.lineTo(x, y);
+      }
+      shape.closePath();
+      var geo = new THREE.ExtrudeGeometry(shape, { depth: 0.2, bevelEnabled: false });
+      geo.center();
+      return new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: hex, roughness: 0.5 }));
+    }
+    function makeAnimal(def) {
+      var g = new THREE.Group();
+      var info = ANIMALS[def.animal];
+      var mat = new THREE.MeshStandardMaterial({ color: info.color, roughness: 0.7 });
+      var body = new THREE.Mesh(new THREE.SphereGeometry(0.34, 14, 12), mat); body.position.y = 0.3; body.scale.y = 1.1; g.add(body);
+      var head = new THREE.Mesh(new THREE.SphereGeometry(0.34, 16, 14), mat); head.position.y = 0.78; g.add(head);
+      // ears
+      if (info.ear === 'point') { [-1, 1].forEach(function (s) { var e = new THREE.Mesh(new THREE.ConeGeometry(0.14, 0.26, 6), mat); e.position.set(s * 0.18, 1.06, 0); g.add(e); }); }
+      else if (info.ear === 'long') { [-1, 1].forEach(function (s) { var e = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.08, 0.5, 8), mat); e.position.set(s * 0.14, 1.15, 0); g.add(e); }); }
+      else if (info.ear === 'round') { [-1, 1].forEach(function (s) { var e = new THREE.Mesh(new THREE.SphereGeometry(0.14, 10, 8), mat); e.position.set(s * 0.26, 1.04, 0); g.add(e); }); }
+      else if (info.ear === 'flop') { [-1, 1].forEach(function (s) { var e = new THREE.Mesh(new THREE.SphereGeometry(0.13, 10, 8), mat); e.position.set(s * 0.3, 0.86, 0); e.scale.set(0.7, 1.4, 0.7); g.add(e); }); }
+      // snout / beak
+      if (def.animal === 'burung') { var beak = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.24, 6), new THREE.MeshStandardMaterial({ color: '#FF9A3F' })); beak.rotation.x = Math.PI / 2; beak.position.set(0, 0.74, 0.34); g.add(beak); }
+      else { var snout = new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 8), new THREE.MeshStandardMaterial({ color: darken(info.color, -0.1) })); snout.position.set(0, 0.7, 0.3); g.add(snout); }
+      eyePair(g, 0.86, 0.3, 0.13, 0.08);
+      addHit(g, 0.8, 0, 0.6, 0);
+      g.userData.kind = 'cargo';
+      g.userData.animal = def.animal;
+      return g;
+    }
+
+    /* ============================================================
+       TWEENS + PARTICLES
+       ============================================================ */
+    var tweens = [];
+    function tween(o) { o.t = 0; tweens.push(o); return o; }
+    function easeOut(p) { return 1 - Math.pow(1 - p, 3); }
+    function updateTweens(dt) {
+      for (var i = tweens.length - 1; i >= 0; i--) {
+        var tw = tweens[i]; tw.t += dt;
+        var p = Math.min(tw.t / tw.dur, 1);
+        tw.update(tw.ease ? tw.ease(p) : p, p);
+        if (p >= 1) { tweens.splice(i, 1); if (tw.onDone) tw.onDone(); }
+      }
+    }
+    var sparkles = [];
+    function sparkleAt(pos) {
+      AX.sparkle();
+      for (var i = 0; i < 12; i++) {
+        var m = new THREE.Mesh(new THREE.SphereGeometry(0.07, 8, 6),
+          new THREE.MeshBasicMaterial({ color: ['#FFC234', '#fff', '#FF5C39', '#3FA9F5'][i % 4] }));
+        m.position.copy(pos);
+        var a = Math.random() * Math.PI * 2, sp = 1.2 + Math.random() * 1.6;
+        m.userData.v = new THREE.Vector3(Math.cos(a) * sp, 1.8 + Math.random() * 1.6, Math.sin(a) * sp);
+        m.userData.life = 0.8; scene.add(m); sparkles.push(m);
+      }
+    }
+    var confetti = [];
+    function confettiBurst(atX) {
+      var cols = ['#FF5C39', '#FFC234', '#1F9D55', '#1FA9C7', '#E84BA0', '#B06BE8'];
+      for (var i = 0; i < 120; i++) {
+        var m = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 0.32),
+          new THREE.MeshBasicMaterial({ color: cols[i % cols.length], side: THREE.DoubleSide }));
+        m.position.set((atX || 0) + (Math.random() - 0.5) * 10, 8 + Math.random() * 3, (Math.random() - 0.5) * 5);
+        m.userData.v = new THREE.Vector3((Math.random() - 0.5) * 2.4, -(1.4 + Math.random() * 2), (Math.random() - 0.5) * 2.4);
+        m.userData.rot = new THREE.Vector3((Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8);
+        m.userData.life = 3.6; scene.add(m); confetti.push(m);
+      }
+    }
+    function updateParticles(dt) {
+      for (var i = sparkles.length - 1; i >= 0; i--) {
+        var s = sparkles[i]; s.userData.life -= dt;
+        s.position.addScaledVector(s.userData.v, dt); s.userData.v.y -= 6 * dt;
+        s.scale.setScalar(Math.max(0, s.userData.life / 0.8));
+        if (s.userData.life <= 0) { scene.remove(s); sparkles.splice(i, 1); }
+      }
+      for (var j = confetti.length - 1; j >= 0; j--) {
+        var c = confetti[j]; c.userData.life -= dt;
+        c.position.addScaledVector(c.userData.v, dt);
+        c.rotation.x += c.userData.rot.x * dt; c.rotation.y += c.userData.rot.y * dt; c.rotation.z += c.userData.rot.z * dt;
+        if (c.userData.life <= 0 || c.position.y < -1) { scene.remove(c); confetti.splice(j, 1); }
+      }
+    }
+
+    /* ============================================================
+       GAME STATE
+       ============================================================ */
+    var train = new THREE.Group(); scene.add(train);
+    engine = buildEngine(); engine.position.set(4.2, 0, 0); train.add(engine);
+
+    var G = { idx: 0, state: 'menu', mode: 'free', wagons: [], cargo: [], cargoHits: [], wagonHits: [],
+      selected: null, ring: null, need: 0, got: 0, roundIdx: 0, roundNeed: 0, roundGot: 0, busy: false, riding: false };
+
+    // selection ring
+    G.ring = new THREE.Mesh(new THREE.TorusGeometry(0.7, 0.06, 10, 28), new THREE.MeshBasicMaterial({ color: '#FFC234' }));
+    G.ring.rotation.x = Math.PI / 2; G.ring.visible = false; scene.add(G.ring);
+
+    var DEFAULT_CAM = { x: 0, y: 5, z: 14, tx: 0, ty: 1.2, tz: 0 };
+
+    function clearLevel() {
+      G.wagons.forEach(function (w) { train.remove(w); });
+      G.cargo.forEach(function (c) { train.remove(c); scene.remove(c); });
+      G.wagons = []; G.cargo = []; G.cargoHits = []; G.wagonHits = [];
+      G.selected = null; G.ring.visible = false;
+      train.position.set(0, 0, 0); G.riding = false;
+      controls.enabled = true;
+    }
+
+    function fitCamera() {
+      // frame the whole train (engine + wagons) for ANY screen aspect — so no
+      // wagon ever sits off-screen on a narrow portrait phone.
+      var box = new THREE.Box3().setFromObject(train);
+      var minX = box.min.x, maxX = box.max.x;
+      if (!isFinite(minX)) { minX = -6; maxX = 5; }
+      var cx = (minX + maxX) / 2, halfW = (maxX - minX) / 2 + 1.4;
+      var fovV = camera.fov * Math.PI / 180;
+      var distW = halfW / (Math.tan(fovV / 2) * camera.aspect);
+      var distH = 2.0 / Math.tan(fovV / 2);
+      var dist = Math.max(distW, distH, 8); dist = Math.min(dist, 30);
+      DEFAULT_CAM = { x: cx, y: dist * 0.34 + 1.0, z: dist, tx: cx, ty: 1.2, tz: 0 };
+      camera.position.set(DEFAULT_CAM.x, DEFAULT_CAM.y, DEFAULT_CAM.z);
+      controls.target.set(DEFAULT_CAM.tx, DEFAULT_CAM.ty, DEFAULT_CAM.tz);
+      controls.minDistance = Math.max(6, dist - 5); controls.maxDistance = dist + 8;
+      controls.update();
+    }
+
+    function spawnLevel(L) {
+      // wagons trail behind the engine (engine front at x≈4.2)
+      var n = L.wagons.length, x0 = 1.6, spacing = 2.35;
+      L.wagons.forEach(function (def, i) {
+        var w = makeWagon(def);
+        w.position.set(x0 - i * spacing, 0, 0);
+        train.add(w); G.wagons.push(w); G.wagonHits.push(w.userData.hit);
+      });
+      // cargo on the platform/foreground (z>0, toward camera), spread across the framed width
+      var box = new THREE.Box3().setFromObject(train);
+      var cx = (box.min.x + box.max.x) / 2, span = Math.max(4, (box.max.x - box.min.x) * 0.9);
+      L.cargo.forEach(function (def, i) {
+        var c = makeCargo(def);
+        var t = L.cargo.length > 1 ? (i / (L.cargo.length - 1) - 0.5) : 0;
+        c.position.set(cx + t * span, 0.55, 2.4 + (i % 2) * 0.7);
+        c.userData.home = c.position.clone();
+        scene.add(c); G.cargo.push(c); G.cargoHits.push(c.userData.hit);
+      });
+      fitCamera();
+    }
+
+    /* ============================================================
+       UI HELPERS
+       ============================================================ */
+    function setHint(t) { $('hint').textContent = t; }
+    function setCue(cue) {
+      var sw = $('cueSwatch'), em = $('cueEmoji'), nm = $('cueNum'), tx = $('cueText'), box = $('cue');
+      sw.style.display = 'none'; em.style.display = 'none'; nm.style.display = 'none';
+      if (cue.swatch) { sw.style.display = ''; sw.style.background = cue.swatch; }
+      if (cue.emoji) { em.style.display = ''; em.textContent = cue.emoji; }
+      if (cue.num) { nm.style.display = ''; nm.textContent = '0'; }
+      tx.textContent = cue.text || '';
+      box.classList.add('show'); box.classList.remove('pop'); void box.offsetWidth; box.classList.add('pop');
+    }
+    function setDots(n) {
+      var box = $('dots');
+      if (!n) { box.classList.remove('show'); box.innerHTML = ''; return; }
+      box.classList.add('show'); box.innerHTML = '';
+      for (var i = 0; i < n; i++) { var d = document.createElement('div'); d.className = 'dot'; box.appendChild(d); }
+    }
+    function fillDots(n) { var ds = $('dots').children; for (var i = 0; i < ds.length; i++) ds[i].className = 'dot' + (i < n ? ' on' : ''); }
+
+    /* ============================================================
+       LEVEL FLOW
+       ============================================================ */
+    function showIntro(idx) {
+      G.idx = idx; G.state = 'intro';
+      var L = LEVELS[idx];
+      $('introEmoji').textContent = L.e; $('introTag').textContent = L.tag;
+      $('introTitle').textContent = L.title; $('introText').textContent = L.intro;
+      $('introModal').classList.remove('hidden'); $('winModal').classList.add('hidden'); $('levelModal').classList.add('hidden');
+    }
+
+    function startLevel(idx) {
+      clearLevel();
+      G.idx = idx; var L = LEVELS[idx];
+      G.mode = L.mode; G.state = 'playing'; G.got = 0; G.busy = false; G.roundIdx = -1;
+      $('introModal').classList.add('hidden'); $('winModal').classList.add('hidden'); $('levelModal').classList.add('hidden');
+      spawnLevel(L);
+      G.need = L.cargo.length;
+      if (L.mode === 'find') {
+        setDots(0);
+        nextRound();
+      } else {
+        setCue(L.cue || { text: L.title });
+        setHint(L.hint || '');
+        setDots(G.need);
+        if (L.cue) { var c = L.cue; setTimeout(function () { say(modeIntroLine(L)); }, 250); }
+      }
+    }
+    function modeIntroLine(L) {
+      if (L.mode === 'color' || L.mode === 'boss') return 'Masukkan tiap muatan ke gerbong yang warnanya sama!';
+      if (L.mode === 'shape') return 'Masukkan tiap muatan ke gerbong yang bentuknya sama!';
+      if (L.mode === 'count') return 'Sentuh tiap penumpang untuk naik, lalu kita hitung!';
+      return 'Sentuh muatan, lalu sentuh gerbongnya!';
+    }
+
+    // ---- find mode rounds (animals) ----
+    function activeCargo(matchFn) {
+      var n = 0; G.cargo.forEach(function (c) { if (!c.userData.loaded && (!matchFn || matchFn(c.userData))) n++; }); return n;
+    }
+    function nextRound() {
+      var L = LEVELS[G.idx];
+      G.roundIdx++;
+      if (G.roundIdx >= L.rounds.length) { finishLevel(); return; }
+      var animal = L.rounds[G.roundIdx];
+      G.roundNeed = activeCargo(function (d) { return d.animal === animal; });
+      if (G.roundNeed === 0) { nextRound(); return; }
+      G.roundGot = 0; G.curAnimal = animal;
+      var info = ANIMALS[animal];
+      setCue({ emoji: info.emoji, text: 'Naikkan ' + info.name });
+      setHint('Sentuh ' + info.name + ' untuk naik kereta ' + info.emoji);
+      setDots(G.roundNeed);
+      setTimeout(function () { say('Naikkan ' + info.name + '!'); }, 250);
+    }
+
+    function finishLevel() {
+      G.state = 'done'; G.busy = true; G.selected = null; G.ring.visible = false;
+      $('cue').classList.remove('show'); setDots(0);
+      var L = LEVELS[G.idx];
+      AX.win();
+      setTimeout(function () { say('Keretanya berangkat! Tut tut!'); }, 200);
+      departRide(L.big, function () {
+        saveStars(G.idx, 3);
+        var last = G.idx === LEVELS.length - 1;
+        $('winEmoji').textContent = last ? '🏆' : '🎉';
+        $('winTitle').textContent = last ? 'Masinis Hebat!' : 'Hebat, Raya!';
+        $('winStars').textContent = '⭐⭐⭐';
+        $('winText').textContent = last
+          ? 'Keretamu jalan-jalan jauh sekali! Kamu dapat ' + PROG.totalStars + ' bintang. 🌟'
+          : 'Keretanya jalan! Tut tut tuuut! 🚂';
+        var nextBtn = $('winNext');
+        nextBtn.textContent = last ? '🚉 Pilih main' : 'Lanjut ▶';
+        nextBtn.dataset.last = last ? '1' : '0';
+        $('winModal').classList.remove('hidden');
+        say(last ? 'Masinis hebat! Kamu dapat bintang!' : 'Hebat, Raya! Keretanya jalan!');
+      });
+    }
+
+    // ---- the scenic departure ride (camera follows the train along the track) ----
+    function departRide(big, done) {
+      G.riding = true; controls.enabled = false;
+      AX.whistle();
+      var dist = big ? 26 : 13, dur = big ? 4.2 : 2.6;
+      var sx = train.position.x, cpx = camera.position.x, ctx = controls.target.x;
+      if (big) setTimeout(function () { confettiBurst(camera.position.x); }, 1200);
+      // a couple of toots along the way
+      setTimeout(function () { AX.whistle(); }, big ? 2600 : 1500);
+      tween({
+        dur: dur,
+        ease: function (p) { return p < 0.22 ? (p / 0.22) * (p / 0.22) * 0.484 : 0.484 + (p - 0.22) / 0.78 * 0.516; },
+        update: function (e) {
+          var d = e * dist;
+          train.position.x = sx + d;
+          camera.position.x = cpx + d;
+          controls.target.x = ctx + d;
+        },
+        onDone: function () { G.riding = false; done && done(); }
+      });
+    }
+
+    /* ============================================================
+       INTERACTIONS
+       ============================================================ */
+    function setGlow(on, cargoData) {
+      G.wagons.forEach(function (w) {
+        var match = on && cargoData && wagonMatches(w.userData, cargoData);
+        w.userData.glow = match;
+        if (!match) { w.userData.bodyMat.emissive && w.userData.bodyMat.emissive.setRGB(0, 0, 0); }
+      });
+    }
+    function wagonMatches(wd, cd) {
+      var L = LEVELS[G.idx];
+      if (L.mode === 'free') return true;
+      if (L.mode === 'color' || L.mode === 'boss') return wd.color === cd.color;
+      if (L.mode === 'shape') return wd.shape === cd.shape;
+      return true;
+    }
+
+    function selectCargo(c) {
+      if (G.selected === c) return;
+      deselect();
+      G.selected = c; AX.tap();
+      tween({ dur: 0.18, ease: easeOut, update: function (e) { c.position.y = c.userData.home.y + e * 0.6; } });
+      G.ring.position.set(c.position.x, 0.12, c.position.z);
+      G.ring.visible = true;
+      setGlow(true, c.userData);
+    }
+    function deselect() {
+      if (G.selected) { var c = G.selected; var hy = c.userData.home.y; tween({ dur: 0.16, update: function (e) { c.position.y = hy + (1 - e) * 0.6; } }); }
+      G.selected = null; G.ring.visible = false; setGlow(false, null);
+    }
+
+    function loadInto(c, w, opts) {
+      G.busy = true; G.ring.visible = false; setGlow(false, null);
+      var slot = w.userData.slots[Math.min(w.userData.loadCount, w.userData.slots.length - 1)];
+      w.userData.loadCount++;
+      var start = c.position.clone();
+      // world target = wagon position + local slot (train at origin during play → local==world)
+      var end = new THREE.Vector3(w.position.x + slot[0], slot[1], w.position.z + slot[2]);
+      tween({
+        dur: 0.5, ease: easeOut,
+        update: function (e) {
+          c.position.lerpVectors(start, end, e);
+          c.position.y += Math.sin(e * Math.PI) * 1.3;
+          c.rotation.y += 0.2;
+        },
+        onDone: function () {
+          c.userData.loaded = true;
+          scene.remove(c); train.add(c); c.position.copy(end);
+          AX.load(); sparkleAt(end.clone()); bounce(w);
+          G.got++; fillDots(opts && opts.roundDots ? G.roundGot : G.got);
+          if (opts && opts.count) { say(NUM[Math.min(G.got, 10)] + (G.got >= G.need ? '! Ada ' + NUM[Math.min(G.need, 10)] + ' penumpang!' : '')); $('cueNum').textContent = G.got; }
+          G.selected = null;
+          var doneNow = opts && opts.roundDots ? (G.roundGot >= G.roundNeed) : (G.got >= G.need);
+          setTimeout(function () {
+            G.busy = false;
+            if (opts && opts.roundDots) { if (G.roundGot >= G.roundNeed) nextRound(); }
+            else if (G.got >= G.need) finishLevel();
+          }, doneNow ? 450 : 80);
+        }
+      });
+    }
+    function bounce(w) {
+      var bx = w.position.x;
+      tween({ dur: 0.3, ease: function (p) { return Math.sin(p * Math.PI); }, update: function (e) { w.scale.y = 1 + e * 0.12; }, onDone: function () { w.scale.y = 1; } });
+    }
+    function bumpWagon(w) {
+      AX.soft();
+      var bx = w.position.x;
+      tween({ dur: 0.36, update: function (e) { w.position.x = bx + Math.sin(e * Math.PI * 4) * 0.12 * (1 - e); }, onDone: function () { w.position.x = bx; } });
+      say('Hmm, bukan gerbong itu. Cari yang cocok ya!');
+      setHint('Coba gerbong yang berkedip / cocok ya! 🙂');
+    }
+    function wiggle(c) {
+      AX.soft();
+      var hy = c.userData.home.y;
+      tween({ dur: 0.4, update: function (e) { c.rotation.z = Math.sin(e * Math.PI * 4) * 0.3 * (1 - e); c.position.y = hy + Math.sin(e * Math.PI) * 0.2; }, onDone: function () { c.rotation.z = 0; c.position.y = hy; } });
+    }
+
+    function tapCargoSort(c) { selectCargo(c); }
+    function tapWagon(w) {
+      if (!G.selected) { setHint('Sentuh dulu sebuah muatan, baru sentuh gerbong.'); return; }
+      var L = LEVELS[G.idx];
+      if (wagonMatches(w.userData, G.selected.userData)) loadInto(G.selected, w, {});
+      else { bumpWagon(w); deselect(); }
+    }
+    function tapBoardCount(c) {
+      var w = G.wagons[0];
+      loadInto(c, w, { count: true });
+    }
+    function tapBoardFind(c) {
+      if (c.userData.animal === G.curAnimal) { G.roundGot++; loadInto(c, G.wagons[0], { roundDots: true }); }
+      else wiggle(c);
+    }
+
+    /* ============================================================
+       TAP DETECTION + raycast
+       ============================================================ */
+    var down = null;
+    renderer.domElement.addEventListener('pointerdown', function (ev) { down = { x: ev.clientX, y: ev.clientY, t: performance.now() }; });
+    renderer.domElement.addEventListener('pointerup', function (ev) {
+      if (!down) return;
+      var dx = ev.clientX - down.x, dy = ev.clientY - down.y;
+      var moved = Math.sqrt(dx * dx + dy * dy), dt = performance.now() - down.t;
+      down = null;
+      if (moved > 14 || dt > 700) return;
+      if (G.state !== 'playing' || G.busy || G.riding) return;
+      handleTap(ev.clientX, ev.clientY);
+    });
+    function pick(cx, cy, targets) {
+      var r = renderer.domElement.getBoundingClientRect();
+      var m = new THREE.Vector2(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
+      raycaster.setFromCamera(m, camera);
+      var hits = raycaster.intersectObjects(targets, false);
+      return hits.length ? hits[0].object.userData.owner : null;
+    }
+    function handleTap(cx, cy) {
+      var L = LEVELS[G.idx];
+      if (L.mode === 'count') {
+        var cargoHits = G.cargoHits.filter(function (h) { return !h.userData.owner.userData.loaded; });
+        var c = pick(cx, cy, cargoHits); if (c) { AX.tap(); tapBoardCount(c); }
+        return;
+      }
+      if (L.mode === 'find') {
+        var ch = G.cargoHits.filter(function (h) { return !h.userData.owner.userData.loaded; });
+        var c2 = pick(cx, cy, ch); if (c2) { AX.tap(); tapBoardFind(c2); }
+        return;
+      }
+      // sort modes (free / color / shape / boss): cargo OR wagon.
+      // Once a cargo is held, prefer wagon hits — the foreground cargo can sit
+      // between the camera and a wagon, so this keeps "tap a wagon" reliable.
+      var cargoHits2 = G.cargoHits.filter(function (h) { return !h.userData.owner.userData.loaded; });
+      if (G.selected) {
+        var w = pick(cx, cy, G.wagonHits);
+        if (w) { tapWagon(w); return; }
+        var c = pick(cx, cy, cargoHits2);
+        if (c) tapCargoSort(c); else deselect();
+      } else {
+        var hit = pick(cx, cy, cargoHits2.concat(G.wagonHits));
+        if (!hit) return;
+        if (hit.userData.kind === 'cargo') tapCargoSort(hit);
+        else setHint('Sentuh dulu sebuah muatan, baru sentuh gerbong.');
+      }
+    }
+
+    /* ============================================================
+       LEVEL SELECT
+       ============================================================ */
+    function buildLevelGrid() {
+      var g = $('levelGrid'); g.innerHTML = '';
+      LEVELS.forEach(function (L, i) {
+        var st = (PROG.progress['l' + i] || {}).stars || 0;
+        var d = document.createElement('button');
+        d.className = 'lvl';
+        d.innerHTML = '<span class="e">' + L.e + '</span><span class="nm">' + L.title + '</span>' +
+          '<span class="st">' + (st ? '⭐'.repeat(st) : '') + '</span>';
+        d.addEventListener('click', function () { showIntro(i); });
+        g.appendChild(d);
+      });
+    }
+
+    /* ============================================================
+       BUTTON WIRING
+       ============================================================ */
+    $('introStart').addEventListener('click', function () { AX.prime(); startLevel(G.idx); });
+    $('introPick').addEventListener('click', function () { AX.prime(); buildLevelGrid(); $('introModal').classList.add('hidden'); $('levelModal').classList.remove('hidden'); G.state = 'menu'; });
+    $('winNext').addEventListener('click', function () {
+      if ($('winNext').dataset.last === '1') { buildLevelGrid(); $('winModal').classList.add('hidden'); $('levelModal').classList.remove('hidden'); G.state = 'menu'; }
+      else { showIntro(Math.min(G.idx + 1, LEVELS.length - 1)); }
+    });
+    $('winReplay').addEventListener('click', function () { startLevel(G.idx); });
+    $('levelsBtn').addEventListener('click', function () { buildLevelGrid(); $('levelModal').classList.remove('hidden'); G.state = 'menu'; });
+    $('levelClose').addEventListener('click', function () {
+      $('levelModal').classList.add('hidden');
+      if (G.cargo.length === 0) showIntro(G.idx); else G.state = 'playing';
+    });
+    $('speakBtn').addEventListener('click', function () {
+      AX.prime();
+      if (G.state === 'playing') {
+        var L = LEVELS[G.idx];
+        if (L.mode === 'find') { var info = ANIMALS[G.curAnimal]; if (info) say('Naikkan ' + info.name + '!'); }
+        else say(modeIntroLine(L));
+      } else say(LEVELS[G.idx].intro);
+    });
+    var sBtn = $('soundBtn');
+    sBtn.textContent = AX.isOn() ? '🔊' : '🔇';
+    sBtn.addEventListener('click', function () {
+      AX.set(!AX.isOn()); sBtn.textContent = AX.isOn() ? '🔊' : '🔇';
+      if (!AX.isOn() && Suara.on) { try { speechSynthesis.cancel(); } catch (_) {} }
+    });
+
+    /* ============================================================
+       RENDER LOOP
+       ============================================================ */
+    function onResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      if (G.state === 'playing' && !G.riding) fitCamera();
+    }
+    window.addEventListener('resize', onResize);
+
+    var ringPulse = 0, glowPulse = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+      var dt = Math.min(clock.getDelta(), 0.05);
+      updateTweens(dt);
+      updateParticles(dt);
+      // selection ring follows the lifted cargo
+      if (G.ring.visible && G.selected) { ringPulse += dt * 4; G.ring.position.x = G.selected.position.x; G.ring.position.z = G.selected.position.z; G.ring.scale.setScalar(1 + Math.sin(ringPulse) * 0.06); G.ring.rotation.z += dt * 1.2; }
+      // pulse the matching wagon(s) while a cargo is held
+      glowPulse += dt * 5;
+      var gv = (Math.sin(glowPulse) * 0.5 + 0.5) * 0.5;
+      G.wagons.forEach(function (w) {
+        if (!w.userData.bodyMat.emissive) return;
+        if (w.userData.glow) w.userData.bodyMat.emissive.copy(w.userData.baseColor).multiplyScalar(gv);
+        else w.userData.bodyMat.emissive.setRGB(0, 0, 0);
+      });
+      // spin wheels while riding
+      if (G.riding) { for (var i = 0; i < wheels.length; i++) wheels[i].rotation.y -= dt * 6; }
+      // gentle cloud drift
+      for (var s = 0; s < scenery.length; s++) { /* static; parallax comes from camera move */ }
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    showIntro(0);
+  })();
+  </script>
+</body>
+</html>
