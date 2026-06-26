@@ -12,7 +12,7 @@
    (see the wiring checklist in CLAUDE.md). Bump CACHE_VERSION when
    removing/renaming files so old entries get cleaned up. */
 
-const CACHE_VERSION = 'lwa-v1';
+const CACHE_VERSION = 'lwa-v2';
 
 const PRECACHE = [
   /* hubs */
@@ -51,6 +51,10 @@ const PRECACHE = [
   '/courses/learning/raya-tracing-v1.html',
   /* Raya – games */
   '/courses/games/raya-find-it-v1.html',
+  '/courses/games/raya-akuarium-v1.html',
+  /* vendored Three.js (the Akuarium 3D game depends on these) */
+  '/assets/js/vendor/three.min.js',
+  '/assets/js/vendor/OrbitControls.js',
   /* Kenney sprites (runner games, medal cabinet, space boss) */
   '/assets/img/kenney/platformer/cactus.png',
   '/assets/img/kenney/platformer/rock.png',
