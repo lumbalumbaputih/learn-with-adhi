@@ -180,7 +180,7 @@
     <div class="hero-stats">
       <div class="stat-pill">⭐ <span id="totalStars">0</span> bintang terkumpul</div>
       <div class="stat-pill">📚 7 kursus tersedia</div>
-      <div class="stat-pill">🎮 1 game seru</div>
+      <div class="stat-pill">🎮 2 game seru</div>
     </div>
   </section>
 
@@ -197,7 +197,7 @@
   <section class="section">
     <div class="section-hdr">
       <h2 class="section-title">🎮 Ayo Main!</h2>
-      <div class="section-sub">1 game</div>
+      <div class="section-sub">2 game</div>
     </div>
     <div class="grid-1" id="gameGrid"></div>
   </section>
@@ -285,6 +285,16 @@
 
   const GAMES = [
     {
+      emoji: '🐠',
+      title: 'Akuarium Raya',
+      thumbBg: '#D7F0FA',
+      blurb: 'Masuk ke akuarium 3D! Sentuh ikan & teman laut, hitung, cocokkan warna, cari yang besar & kecil — semua dibacakan dengan suara. Tidak perlu membaca!',
+      href: 'courses/games/raya-akuarium-v1.html',
+      progressKey: 'rayaAkuarium',
+      totalChapters: 6,
+      type: 'game',
+    },
+    {
       emoji: '🔍',
       title: 'Cari Bersama Raya',
       thumbBg: '#FCE8F3',
@@ -338,12 +348,15 @@
           <div class="card-title">${g.title}</div>
           <div class="card-blurb">${g.blurb}</div>
           <div class="card-foot">
+            ${g.progressKey ? `<div class="card-prog">${progText(g.progressKey, g.totalChapters)}</div>` : ''}
             <div class="card-cta">Main →</div>
           </div>
         </div>
       </a>`).join('');
 
-    const totalStars = COURSES.reduce((s, c) => s + getProgress(c.progressKey, c.totalChapters).stars, 0);
+    const totalStars =
+      COURSES.reduce((s, c) => s + getProgress(c.progressKey, c.totalChapters).stars, 0) +
+      GAMES.reduce((s, g) => s + (g.progressKey ? getProgress(g.progressKey, g.totalChapters).stars : 0), 0);
     document.getElementById('totalStars').textContent = totalStars;
   }
 

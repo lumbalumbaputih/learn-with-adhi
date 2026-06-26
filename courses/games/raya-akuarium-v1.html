@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Akuarium Raya 🐠 · Learn with Adhi</title>
+  <meta name="description" content="Akuarium ajaib 3D untuk Raya! Sentuh ikan dan teman-teman laut, hitung, cocokkan warna, cari yang besar & kecil — semua dibacakan dengan suara, tanpa perlu membaca.">
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%231FA9C7"/><text y=".9em" font-size="64" x="16">🐠</text></svg>'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink:    #E84BA0;
+      --mango:   #FFC234;
+      --forest:  #1F9D55;
+      --sea:     #1FA9C7;
+      --tomato:  #FF5C39;
+      --indigo:  #2E3192;
+      --ink:     #1A1614;
+      --paper:   #FBF4E6;
+      --line:    rgba(26,22,20,0.14);
+      --muted:   #6B6259;
+      --fd: 'Bricolage Grotesque', 'Arial Black', sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--fb);
+      background: #07314a;
+      color: var(--ink);
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    canvas { display: block; }
+
+    #scene { position: fixed; inset: 0; z-index: 0; touch-action: none; }
+
+    /* ---- top bar ---- */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(7,49,74,0.92), rgba(7,49,74,0));
+      pointer-events: none;
+    }
+    .topbar > * { pointer-events: auto; }
+    .home {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--paper); color: var(--ink);
+      border: 2px solid var(--ink); border-radius: 12px;
+      padding: 8px 12px; font-weight: 800; font-size: 14px;
+      box-shadow: 3px 3px 0 var(--ink); text-decoration: none;
+    }
+    .title {
+      font-family: var(--fd); color: #fff; font-weight: 800;
+      font-size: 18px; letter-spacing: .3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.5);
+    }
+    .spacer { flex: 1; }
+    .iconbtn {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--paper); color: var(--ink);
+      border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+      font-size: 21px; display: grid; place-items: center;
+    }
+
+    /* ---- cue chip (what to look for) — visual, for a non-reader ---- */
+    .cue {
+      position: fixed; top: 64px; left: 50%; transform: translateX(-50%); z-index: 9;
+      display: none; align-items: center; gap: 12px;
+      background: var(--paper); border: 3px solid var(--ink);
+      border-radius: 18px; padding: 10px 18px; box-shadow: 5px 5px 0 var(--ink);
+      max-width: 92vw;
+    }
+    .cue.show { display: flex; }
+    .cue.pop { animation: cuepop .4s; }
+    @keyframes cuepop { 0%{transform:translateX(-50%) scale(.7)} 60%{transform:translateX(-50%) scale(1.12)} 100%{transform:translateX(-50%) scale(1)} }
+    .cue .swatch { width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--ink); flex: none; box-shadow: inset -4px -4px 0 rgba(0,0,0,.15); }
+    .cue .cue-emoji { font-size: 42px; line-height: 1; flex: none; }
+    .cue .cue-text { font-family: var(--fd); font-weight: 800; font-size: 22px; line-height: 1.05; }
+    .cue .cue-num { font-family: var(--fd); font-weight: 800; font-size: 34px; color: var(--sea); min-width: 40px; text-align: center; }
+
+    /* ---- collected dots ---- */
+    .dots {
+      position: fixed; top: 124px; left: 50%; transform: translateX(-50%); z-index: 9;
+      display: none; gap: 7px; align-items: center;
+      background: rgba(7,49,74,0.4); border-radius: 999px; padding: 6px 12px; backdrop-filter: blur(3px);
+    }
+    .dots.show { display: flex; }
+    .dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #fff; background: transparent; transition: transform .2s; }
+    .dot.on { background: var(--mango); transform: scale(1.18); }
+
+    /* ---- bottom hint / speak button ---- */
+    .bottombar {
+      position: fixed; bottom: calc(14px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); z-index: 9;
+      display: flex; align-items: center; gap: 10px; max-width: 94vw;
+    }
+    .hint {
+      background: rgba(26,22,20,0.82); color: #fff;
+      border-radius: 12px; padding: 10px 16px; font-weight: 700; font-size: 13.5px;
+      text-align: center; backdrop-filter: blur(3px);
+    }
+    .speakbtn {
+      background: var(--mango); color: var(--ink);
+      border: 2px solid var(--ink); border-radius: 12px; box-shadow: 3px 3px 0 var(--ink);
+      padding: 9px 14px; font-weight: 800; font-size: 14px; flex: none;
+    }
+    .speakbtn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+
+    /* ---- modal ---- */
+    .modal {
+      position: fixed; inset: 0; z-index: 40;
+      background: rgba(4,30,46,0.82); backdrop-filter: blur(4px);
+      display: grid; place-items: center; padding: 18px;
+    }
+    .modal.hidden { display: none; }
+    .card {
+      background: var(--paper); border: 3px solid var(--ink); border-radius: 24px;
+      box-shadow: 8px 8px 0 var(--ink); padding: 26px 22px; width: min(440px, 94vw);
+      text-align: center; max-height: 92vh; overflow-y: auto;
+    }
+    .card .big { font-size: 60px; line-height: 1; margin-bottom: 6px; }
+    .card h2 { font-family: var(--fd); font-size: 26px; margin-bottom: 6px; }
+    .card .lvl-tag { font-weight: 800; color: var(--sea); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+    .card p { font-size: 15.5px; line-height: 1.5; color: #41382f; margin-bottom: 18px; }
+    .card .stars { font-size: 42px; letter-spacing: 5px; margin: 8px 0 16px; }
+    .btn {
+      font-family: var(--fd); font-size: 21px; font-weight: 800;
+      background: var(--mango); color: var(--ink);
+      border: 3px solid var(--ink); border-radius: 16px;
+      padding: 14px 32px; box-shadow: 5px 5px 0 var(--ink);
+      transition: transform .08s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--ink); }
+    .btn.alt { background: var(--paper); font-size: 15px; padding: 10px 18px; box-shadow: 4px 4px 0 var(--ink); margin-top: 10px; }
+    .btn.sea { background: var(--sea); color: #fff; }
+
+    /* ---- level select grid ---- */
+    .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 4px 0 6px; }
+    .lvl {
+      background: #fff; border: 2.5px solid var(--ink); border-radius: 14px;
+      padding: 12px 6px 9px; box-shadow: 3px 3px 0 var(--ink);
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      transition: transform .08s;
+    }
+    .lvl:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+    .lvl .e { font-size: 30px; }
+    .lvl .nm { font-size: 11.5px; font-weight: 800; line-height: 1.15; }
+    .lvl .st { font-size: 12px; color: var(--mango); letter-spacing: 1px; min-height: 15px; }
+
+    /* ---- WebGL fallback ---- */
+    .fallback {
+      position: fixed; inset: 0; z-index: 60; display: none;
+      place-items: center; padding: 26px; background: #07314a; color: var(--paper);
+      text-align: center; flex-direction: column; gap: 14px;
+    }
+    .fallback.show { display: grid; }
+    .fallback a { color: var(--mango); font-weight: 800; }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+
+  <div class="topbar">
+    <a class="home" href="../../raya.html">← Keluar</a>
+    <div class="title">Akuarium Raya 🐠</div>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="levelsBtn" title="Pilih level" aria-label="Pilih level">🐚</button>
+    <button class="iconbtn" id="soundBtn" title="Suara" aria-label="Suara">🔊</button>
+  </div>
+
+  <div class="cue" id="cue">
+    <span class="swatch" id="cueSwatch" style="display:none"></span>
+    <span class="cue-emoji" id="cueEmoji" style="display:none">🐠</span>
+    <span class="cue-num" id="cueNum" style="display:none">0</span>
+    <span class="cue-text" id="cueText">Sentuh ikannya!</span>
+  </div>
+
+  <div class="dots" id="dots"></div>
+
+  <div class="bottombar">
+    <button class="speakbtn" id="speakBtn">🔊 Dengar</button>
+    <div class="hint" id="hint">Sentuh ikan yang berenang!</div>
+  </div>
+
+  <!-- Intro / level start -->
+  <div class="modal" id="introModal">
+    <div class="card">
+      <div class="big" id="introEmoji">🐠</div>
+      <div class="lvl-tag" id="introTag">Level 1</div>
+      <h2 id="introTitle">Sentuh Ikannya!</h2>
+      <p id="introText">Yuk main di akuarium!</p>
+      <button class="btn" id="introStart">Mulai ▶</button>
+      <div><button class="btn alt" id="introPick">🐚 Pilih main lain</button></div>
+    </div>
+  </div>
+
+  <!-- Win / level complete -->
+  <div class="modal hidden" id="winModal">
+    <div class="card">
+      <div class="big" id="winEmoji">🎉</div>
+      <h2 id="winTitle">Hebat, Raya!</h2>
+      <div class="stars" id="winStars">⭐⭐⭐</div>
+      <p id="winText">Kerja bagus!</p>
+      <button class="btn sea" id="winNext">Lanjut ▶</button>
+      <div><button class="btn alt" id="winReplay">↻ Main lagi</button></div>
+    </div>
+  </div>
+
+  <!-- Level select -->
+  <div class="modal hidden" id="levelModal">
+    <div class="card">
+      <div class="big">🐚</div>
+      <h2>Pilih Main</h2>
+      <p>Pilih petualangan akuarium yang kamu suka!</p>
+      <div class="levels" id="levelGrid"></div>
+      <button class="btn alt" id="levelClose">Tutup</button>
+    </div>
+  </div>
+
+  <div class="fallback" id="fallback">
+    <div style="font-size:54px">🐠</div>
+    <h2 style="font-family:var(--fd);font-size:24px">Akuarium 3D tidak bisa dibuka</h2>
+    <p style="max-width:340px;line-height:1.5">Perangkat ini belum mendukung grafik 3D (WebGL), atau halaman gagal dimuat. Coba buka di browser lain atau saat ada internet.</p>
+    <a href="../../raya.html">← Kembali</a>
+  </div>
+
+  <script src="../../assets/js/vendor/three.min.js"></script>
+  <script src="../../assets/js/vendor/OrbitControls.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var fb = document.getElementById('fallback');
+    if (typeof THREE === 'undefined') { fb.classList.add('show'); return; }
+    var $ = function (id) { return document.getElementById(id); };
+
+    /* ============================================================
+       SOUND — WebAudio SFX (mute toggle) + Web Speech read-aloud
+       ============================================================ */
+    var AX = (function () {
+      var ctx = null, on = true;
+      try { on = localStorage.getItem('rayaAkuariumMuted') !== '1'; } catch (_) {}
+      function ac() {
+        if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) {} }
+        if (ctx && ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+      function tone(freq, t0, dur, type, vol) {
+        if (!on) return;
+        var c = ac(); if (!c) return;
+        var o = c.createOscillator(), g = c.createGain();
+        o.type = type || 'sine'; o.frequency.value = freq;
+        var start = c.currentTime + t0;
+        g.gain.setValueAtTime(0.0001, start);
+        g.gain.exponentialRampToValueAtTime(vol || 0.16, start + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+        o.connect(g); g.connect(c.destination);
+        o.start(start); o.stop(start + dur + 0.02);
+      }
+      return {
+        tap:     function () { tone(680, 0, 0.06, 'sine', 0.12); tone(960, 0.05, 0.07, 'sine', 0.1); },
+        bloop:   function () { tone(420, 0, 0.07, 'sine', 0.12); tone(620, 0.06, 0.1, 'sine', 0.11); },
+        happy:   function () { tone(660, 0, 0.09, 'triangle', 0.15); tone(880, 0.08, 0.14, 'triangle', 0.14); tone(1175, 0.18, 0.16, 'triangle', 0.12); },
+        soft:    function () { tone(300, 0, 0.1, 'sine', 0.08); tone(250, 0.09, 0.14, 'sine', 0.08); },
+        sparkle: function () { tone(1320, 0, 0.05, 'sine', 0.08); tone(1760, 0.05, 0.06, 'sine', 0.07); },
+        win:     function () { [523, 659, 784, 1047, 1319].forEach(function (f, i) { tone(f, i * 0.12, 0.34, 'triangle', 0.16); }); },
+        set: function (v) { on = v; try { localStorage.setItem('rayaAkuariumMuted', on ? '0' : '1'); } catch (_) {} if (on) ac(); },
+        prime: function () { ac(); },
+        isOn: function () { return on; }
+      };
+    })();
+
+    // Read-aloud (Web Speech API, id-ID) — same hardened pattern as Raya's courses
+    var Suara = {
+      on: 'speechSynthesis' in window, voice: null, u: null,
+      pickVoice: function () { if (!this.on) return; try { this.voice = speechSynthesis.getVoices().find(function (v) { return v.lang && v.lang.toLowerCase().indexOf('id') === 0; }) || null; } catch (_) {} },
+      speak: function (text, rate) {
+        if (!this.on || !text || !AX.isOn()) return;
+        try {
+          speechSynthesis.cancel();
+          var u = new SpeechSynthesisUtterance(text);
+          u.lang = 'id-ID'; u.rate = rate || 0.9; u.pitch = 1.15;
+          if (!this.voice) this.pickVoice();
+          if (this.voice) u.voice = this.voice;
+          this.u = u; // keep a reference — Chrome GCs unreferenced utterances mid-speech
+          setTimeout(function () { try { speechSynthesis.resume(); speechSynthesis.speak(u); } catch (_) {} }, 80);
+        } catch (_) {}
+      }
+    };
+    if (Suara.on) { try { speechSynthesis.onvoiceschanged = function () { Suara.pickVoice(); }; Suara.pickVoice(); } catch (_) {} }
+    function cleanSay(t) { return String(t || '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{2B00}-\u{2BFF}\u{2190}-\u{21FF}→]/gu, '').replace(/\s+/g, ' ').trim(); }
+    function say(t, rate) { Suara.speak(cleanSay(t), rate); }
+
+    /* ============================================================
+       CONTENT — colors, creatures, numbers, levels (Bahasa Indonesia)
+       ============================================================ */
+    var COLORS = {
+      merah:  { hex: '#FF4D4D', name: 'merah' },
+      kuning: { hex: '#FFD23F', name: 'kuning' },
+      biru:   { hex: '#3FA9F5', name: 'biru' },
+      hijau:  { hex: '#43CF6B', name: 'hijau' },
+      oranye: { hex: '#FF9A3F', name: 'oranye' },
+      ungu:   { hex: '#B06BE8', name: 'ungu' },
+      pink:   { hex: '#FF6FB5', name: 'pink' }
+    };
+    var NUM = ['nol', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh'];
+    var CREATURE = {
+      ikan:        { emoji: '🐠', name: 'ikan' },
+      gurita:      { emoji: '🐙', name: 'gurita' },
+      kepiting:    { emoji: '🦀', name: 'kepiting' },
+      'kura-kura': { emoji: '🐢', name: 'kura-kura' },
+      bintang:     { emoji: '⭐', name: 'bintang laut' }
+    };
+
+    // A "spawn" describes one creature: { creature, color, size }
+    function fishSet(colors, size) { return colors.map(function (c) { return { creature: 'ikan', color: c, size: size || 'normal' }; }); }
+
+    // Each level = { e, tag, title, intro, hint, spawns:[], rounds:[] }
+    // A round = { say, hint, cue:{swatch?,emoji?,text}, match:fn(d)->bool, countSpeak?:bool, party?:bool }
+    var LEVELS = [
+      {
+        e: '🐠', tag: 'Level 1', title: 'Sentuh Ikannya!',
+        intro: 'Selamat datang di Akuarium Raya! Sentuh setiap ikan yang berenang — lihat apa yang terjadi! 🐠',
+        spawns: fishSet(['merah', 'kuning', 'biru', 'hijau']),
+        rounds: [{
+          say: 'Sentuh ikannya, Raya!', hint: 'Sentuh setiap ikan yang berenang 🐠',
+          cue: { text: 'Sentuh ikannya!' },
+          match: function () { return true; }
+        }]
+      },
+      {
+        e: '🔢', tag: 'Level 2', title: 'Ayo Hitung!',
+        intro: 'Ada berapa ikan di akuarium? Ayo kita hitung sama-sama — sentuh satu per satu! 🐟',
+        spawns: fishSet(['oranye', 'pink', 'biru', 'kuning', 'hijau']),
+        rounds: [{
+          say: 'Ayo hitung ikannya! Sentuh satu per satu.', hint: 'Sentuh tiap ikan dan hitung bersama 🔢',
+          cue: { num: true, text: 'Ayo hitung!' },
+          match: function () { return true; }, countSpeak: true
+        }]
+      },
+      {
+        e: '🎨', tag: 'Level 3', title: 'Cari Warna!',
+        intro: 'Lihat warna di atas, lalu sentuh ikan dengan warna yang sama! Mari kita mulai. 🎨',
+        spawns: fishSet(['merah', 'merah', 'kuning', 'kuning', 'biru', 'biru']),
+        rounds: [
+          { color: 'merah' }, { color: 'kuning' }, { color: 'biru' }
+        ].map(function (r) {
+          var c = COLORS[r.color];
+          return {
+            say: 'Cari ikan warna ' + c.name + '!',
+            hint: 'Sentuh ikan yang warnanya sama dengan lingkaran di atas',
+            cue: { swatch: c.hex, text: 'Warna ' + c.name },
+            match: function (d) { return d.color === r.color; }
+          };
+        })
+      },
+      {
+        e: '📏', tag: 'Level 4', title: 'Besar & Kecil',
+        intro: 'Ada ikan besar dan ikan kecil! Sentuh yang besar dulu, lalu yang kecil. 🐳🐟',
+        spawns: fishSet(['kuning', 'biru', 'pink'], 'big').concat(fishSet(['merah', 'hijau', 'oranye'], 'small')),
+        rounds: [
+          { say: 'Sentuh ikan yang BESAR!', hint: 'Sentuh ikan-ikan yang paling besar 🐳', cue: { emoji: '🐳', text: 'Yang BESAR' }, match: function (d) { return d.size === 'big'; } },
+          { say: 'Sekarang sentuh ikan yang KECIL!', hint: 'Sentuh ikan-ikan yang paling kecil 🐟', cue: { emoji: '🐟', text: 'Yang kecil' }, match: function (d) { return d.size === 'small'; } }
+        ]
+      },
+      {
+        e: '🐙', tag: 'Level 5', title: 'Teman Laut',
+        intro: 'Banyak teman laut datang! Cari sesuai gambar di atas — gurita, kepiting, kura-kura, dan bintang laut! 🐙🦀🐢',
+        spawns: [
+          { creature: 'gurita', color: 'ungu' },
+          { creature: 'kepiting', color: 'merah' },
+          { creature: 'kura-kura', color: 'hijau' },
+          { creature: 'bintang', color: 'oranye' },
+          { creature: 'ikan', color: 'biru' },
+          { creature: 'ikan', color: 'kuning' }
+        ],
+        rounds: [
+          'gurita', 'kepiting', 'kura-kura', 'bintang', 'ikan'
+        ].map(function (cr) {
+          var info = CREATURE[cr];
+          return {
+            say: 'Cari ' + info.name + '!',
+            hint: 'Sentuh ' + info.name + ' — lihat gambar di atas ' + info.emoji,
+            cue: { emoji: info.emoji, text: 'Cari ' + info.name },
+            match: function (d) { return d.creature === cr; }
+          };
+        })
+      },
+      {
+        e: '🎉', tag: 'Level 6 · PESTA', title: 'Pesta Akuarium!',
+        intro: 'Pesta besar di akuarium! Hitung ikan, cari warna, cari teman laut — lalu sentuh semuanya untuk pesta! 🎉',
+        spawns: fishSet(['merah', 'biru', 'kuning']).concat([
+          { creature: 'gurita', color: 'ungu' },
+          { creature: 'bintang', color: 'oranye' },
+          { creature: 'kura-kura', color: 'hijau' }
+        ]),
+        rounds: [
+          { say: 'Ayo hitung semua ikan!', hint: 'Sentuh tiap ikan dan hitung 🔢', cue: { num: true, text: 'Hitung ikan' }, match: function (d) { return d.creature === 'ikan'; }, countSpeak: true },
+          { say: 'Sekarang cari gurita!', hint: 'Sentuh si gurita 🐙', cue: { emoji: '🐙', text: 'Cari gurita' }, match: function (d) { return d.creature === 'gurita'; } },
+          { say: 'Cari bintang laut dan kura-kura — sentuh semuanya untuk pesta!', hint: 'Sentuh teman laut yang tersisa! 🎉', cue: { emoji: '🎉', text: 'Pesta!' }, match: function () { return true; }, party: true }
+        ]
+      }
+    ];
+
+    /* ============================================================
+       PROGRESS — standard {totalStars, progress:{<id>:{stars}}} shape
+       (matches getProgress() on raya.html / kids.html / dashboard)
+       ============================================================ */
+    var PKEY = 'rayaAkuarium';
+    var PROG = (function () {
+      try { var s = JSON.parse(localStorage.getItem(PKEY) || '{}'); if (s && typeof s === 'object') return { totalStars: s.totalStars || 0, progress: s.progress || {} }; } catch (_) {}
+      return { totalStars: 0, progress: {} };
+    })();
+    function saveStars(idx, stars) {
+      var id = 'l' + idx;
+      var prev = (PROG.progress[id] || {}).stars || 0;
+      if (stars > prev) PROG.progress[id] = { stars: stars };
+      var tot = 0; for (var k in PROG.progress) tot += PROG.progress[k].stars || 0;
+      PROG.totalStars = tot;
+      try {
+        localStorage.setItem(PKEY, JSON.stringify(PROG));
+        // plan-v4 C2: stamp recency for the parent dashboard "active this week"
+        var d = JSON.parse(localStorage.getItem(PKEY) || '{}'); d.lastPlayed = new Date().toISOString().slice(0, 10);
+        localStorage.setItem(PKEY, JSON.stringify(d));
+      } catch (_) {}
+    }
+
+    /* ============================================================
+       3D SETUP
+       ============================================================ */
+    var scene, camera, renderer, controls, clock, raycaster;
+    var ok3d = true;
+    try {
+      var host = $('scene');
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color('#0a4a6e');
+      scene.fog = new THREE.Fog('#0a4a6e', 14, 30);
+
+      camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 120);
+      camera.position.set(0, 2.4, 10);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      if (THREE.sRGBEncoding) renderer.outputEncoding = THREE.sRGBEncoding;
+      host.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.target.set(0, 2, 0);
+      controls.enableDamping = true; controls.dampingFactor = 0.08;
+      controls.enablePan = false;
+      controls.minDistance = 7.5; controls.maxDistance = 12;
+      controls.minPolarAngle = 0.7; controls.maxPolarAngle = 1.5;
+      controls.rotateSpeed = 0.5;
+      controls.update();
+
+      raycaster = new THREE.Raycaster();
+      clock = new THREE.Clock();
+    } catch (e) { ok3d = false; }
+    if (!ok3d) { fb.classList.add('show'); return; }
+
+    // lights — bright & friendly underwater
+    scene.add(new THREE.AmbientLight(0xffffff, 0.78));
+    scene.add(new THREE.HemisphereLight(0xbfeaff, 0x0a3a55, 0.6));
+    var sun = new THREE.DirectionalLight(0xffffff, 0.85);
+    sun.position.set(4, 12, 8); scene.add(sun);
+
+    function darken(hex, amt) {
+      var c = new THREE.Color(hex);
+      c.r = Math.max(0, c.r + amt); c.g = Math.max(0, c.g + amt); c.b = Math.max(0, c.b + amt);
+      return '#' + c.getHexString();
+    }
+
+    // sandy floor + a few rocks + seaweed (decor only, not tappable)
+    var weeds = [];
+    (function buildTank() {
+      var floor = new THREE.Mesh(
+        new THREE.CylinderGeometry(11, 11, 0.6, 40),
+        new THREE.MeshStandardMaterial({ color: '#e9d6a3', roughness: 1 }));
+      floor.position.y = -0.4; scene.add(floor);
+      var rockMat = new THREE.MeshStandardMaterial({ color: '#8a8f99', roughness: 1 });
+      [[-4, -1], [3.5, -1.5], [-2, 1.6], [5, 0.5], [-5, 0.4]].forEach(function (p, i) {
+        var r = new THREE.Mesh(new THREE.DodecahedronGeometry(0.5 + (i % 3) * 0.18), rockMat);
+        r.position.set(p[0], -0.05, p[1]); r.rotation.set(i, i * 1.3, 0); r.scale.y = 0.7; scene.add(r);
+      });
+      var weedMat = new THREE.MeshStandardMaterial({ color: '#1f9d55', roughness: 1 });
+      var weedMat2 = new THREE.MeshStandardMaterial({ color: '#43cf6b', roughness: 1 });
+      for (var i = 0; i < 9; i++) {
+        var x = -6 + i * 1.5 + (i % 2 ? 0.4 : -0.3);
+        var h = 1.6 + (i % 3) * 0.7;
+        var w = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.18, h, 7), i % 2 ? weedMat2 : weedMat);
+        w.position.set(x, h / 2 - 0.2, -2.4 - (i % 2)); w.userData.weed = (i + 1) * 0.6; scene.add(w);
+        weeds.push(w);
+      }
+    })();
+
+    /* ============================================================
+       CREATURE BUILDERS — friendly low-poly sea life
+       Every creature gets a transparent oversized hit-sphere (big,
+       toddler-forgiving tap target) registered for raycasting.
+       ============================================================ */
+    function eyePair(group, fx, fy, fz, sep, r) {
+      [-1, 1].forEach(function (s) {
+        var w = new THREE.Mesh(new THREE.SphereGeometry(r, 12, 10), new THREE.MeshStandardMaterial({ color: '#fff' }));
+        w.position.set(s * sep, fy, fz); group.add(w);
+        var p = new THREE.Mesh(new THREE.SphereGeometry(r * 0.55, 10, 8), new THREE.MeshStandardMaterial({ color: '#1A1614' }));
+        p.position.set(s * sep, fy, fz + r * 0.65); group.add(p);
+      });
+    }
+    function addHit(group, radius) {
+      var hit = new THREE.Mesh(new THREE.SphereGeometry(radius, 12, 10),
+        new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }));
+      group.add(hit); group.userData.hit = hit; hit.userData.owner = group;
+    }
+
+    function makeFish(d) {
+      var g = new THREE.Group();
+      var col = COLORS[d.color].hex;
+      var body = new THREE.Mesh(new THREE.SphereGeometry(0.5, 18, 14),
+        new THREE.MeshStandardMaterial({ color: col, roughness: 0.5 }));
+      body.scale.set(0.78, 0.92, 1.45); g.add(body);
+      var tail = new THREE.Mesh(new THREE.ConeGeometry(0.42, 0.6, 5),
+        new THREE.MeshStandardMaterial({ color: darken(col, -0.08), roughness: 0.55 }));
+      tail.position.set(0, 0, -0.95); tail.rotation.x = -Math.PI / 2; g.add(tail);
+      var fin = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.4, 4),
+        new THREE.MeshStandardMaterial({ color: darken(col, 0.12), roughness: 0.55 }));
+      fin.position.set(0, 0.42, 0.05); g.add(fin);
+      g.userData.tail = tail;
+      eyePair(g, 0, 0.16, 0.62, 0.24, 0.13);
+      addHit(g, 1.0);
+      return g;
+    }
+    function makeOctopus(d) {
+      var g = new THREE.Group();
+      var col = COLORS[d.color].hex;
+      var mat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.5 });
+      var head = new THREE.Mesh(new THREE.SphereGeometry(0.6, 18, 14), mat);
+      head.scale.set(1, 1.1, 1); head.position.y = 0.2; g.add(head);
+      var legs = [];
+      for (var i = 0; i < 6; i++) {
+        var a = (i / 6) * Math.PI * 2;
+        var leg = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.95, 7), mat);
+        leg.position.set(Math.cos(a) * 0.42, -0.45, Math.sin(a) * 0.42);
+        leg.rotation.x = Math.PI; leg.rotation.z = Math.cos(a) * 0.4; leg.rotation.x += Math.sin(a) * 0.2;
+        g.add(leg); legs.push(leg);
+      }
+      g.userData.legs = legs;
+      eyePair(g, 0, 0.32, 0.5, 0.22, 0.14);
+      addHit(g, 1.05);
+      return g;
+    }
+    function makeCrab(d) {
+      var g = new THREE.Group();
+      var col = COLORS[d.color].hex;
+      var mat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.55 });
+      var body = new THREE.Mesh(new THREE.SphereGeometry(0.55, 18, 12), mat);
+      body.scale.set(1.25, 0.7, 0.95); g.add(body);
+      [-1, 1].forEach(function (s) {
+        var claw = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 10), mat);
+        claw.position.set(s * 0.78, 0.05, 0.3); claw.scale.set(1, 0.8, 1.3); g.add(claw);
+        for (var i = 0; i < 3; i++) {
+          var leg = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.5, 6), mat);
+          leg.position.set(s * (0.5 + i * 0.16), -0.25, -0.2 - i * 0.16);
+          leg.rotation.z = s * 0.9; g.add(leg);
+        }
+      });
+      eyePair(g, 0, 0.32, 0.3, 0.18, 0.12);
+      addHit(g, 1.05);
+      return g;
+    }
+    function makeTurtle(d) {
+      var g = new THREE.Group();
+      var shell = new THREE.Mesh(new THREE.SphereGeometry(0.6, 18, 14, 0, Math.PI * 2, 0, Math.PI / 2),
+        new THREE.MeshStandardMaterial({ color: '#2e8b57', roughness: 0.6 }));
+      shell.scale.set(1.1, 0.85, 1.3); g.add(shell);
+      var belly = new THREE.Mesh(new THREE.CircleGeometry(0.62, 20),
+        new THREE.MeshStandardMaterial({ color: '#cbe8a0', roughness: 0.8, side: THREE.DoubleSide }));
+      belly.rotation.x = -Math.PI / 2; belly.scale.set(1.1, 1.3, 1); g.add(belly);
+      var skin = new THREE.MeshStandardMaterial({ color: '#3cb371', roughness: 0.6 });
+      var head = new THREE.Mesh(new THREE.SphereGeometry(0.26, 14, 12), skin);
+      head.position.set(0, 0.05, 0.78); g.add(head);
+      [[-0.5, 0.45], [0.5, 0.45], [-0.5, -0.45], [0.5, -0.45]].forEach(function (p) {
+        var fl = new THREE.Mesh(new THREE.SphereGeometry(0.2, 12, 10), skin);
+        fl.position.set(p[0], -0.05, p[1]); fl.scale.set(1.3, 0.4, 0.8); g.add(fl);
+      });
+      eyePair(g, 0, 0.12, 0.92, 0.1, 0.07);
+      addHit(g, 1.05);
+      return g;
+    }
+    function makeStarfish(d) {
+      var g = new THREE.Group();
+      var col = COLORS[d.color].hex;
+      var mat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.6 });
+      var center = new THREE.Mesh(new THREE.SphereGeometry(0.28, 14, 12), mat);
+      center.scale.set(1, 1, 0.6); g.add(center);
+      for (var i = 0; i < 5; i++) {
+        var a = (i / 5) * Math.PI * 2 - Math.PI / 2;
+        var arm = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.62, 8), mat);
+        arm.position.set(Math.cos(a) * 0.42, Math.sin(a) * 0.42, 0);
+        arm.rotation.z = a - Math.PI / 2; arm.scale.z = 0.5; g.add(arm);
+      }
+      // two little eyes on the front face
+      [-1, 1].forEach(function (s) {
+        var w = new THREE.Mesh(new THREE.SphereGeometry(0.07, 10, 8), new THREE.MeshStandardMaterial({ color: '#fff' }));
+        w.position.set(s * 0.1, 0.02, 0.18); g.add(w);
+        var p = new THREE.Mesh(new THREE.SphereGeometry(0.04, 8, 6), new THREE.MeshStandardMaterial({ color: '#1A1614' }));
+        p.position.set(s * 0.1, 0.02, 0.23); g.add(p);
+      });
+      addHit(g, 0.95);
+      return g;
+    }
+    function makeCreature(d) {
+      var g;
+      if (d.creature === 'gurita') g = makeOctopus(d);
+      else if (d.creature === 'kepiting') g = makeCrab(d);
+      else if (d.creature === 'kura-kura') g = makeTurtle(d);
+      else if (d.creature === 'bintang') g = makeStarfish(d);
+      else g = makeFish(d);
+      var sc = d.size === 'big' ? 1.32 : d.size === 'small' ? 0.66 : 1;
+      g.scale.multiplyScalar(sc);
+      g.userData.kind = 'creature';
+      g.userData.creature = d.creature;
+      g.userData.color = d.color;
+      g.userData.size = d.size || 'normal';
+      g.userData.baseScale = sc;
+      g.userData.collected = false;
+      g.userData.tapped = false;
+      // swim params
+      g.userData.s = {
+        heading: Math.random() * Math.PI * 2,
+        speed: 0.6 + Math.random() * 0.5,
+        phase: Math.random() * Math.PI * 2,
+        bobAmp: 0.12 + Math.random() * 0.12,
+        bobFreq: 1.2 + Math.random() * 0.8,
+        turn: 0
+      };
+      return g;
+    }
+
+    /* ============================================================
+       TWEEN ENGINE
+       ============================================================ */
+    var tweens = [];
+    function tween(o) { o.t = 0; tweens.push(o); return o; }
+    function easeOut(p) { return 1 - Math.pow(1 - p, 3); }
+    function updateTweens(dt) {
+      for (var i = tweens.length - 1; i >= 0; i--) {
+        var tw = tweens[i]; tw.t += dt;
+        var p = Math.min(tw.t / tw.dur, 1);
+        tw.update(tw.ease ? tw.ease(p) : p, p);
+        if (p >= 1) { tweens.splice(i, 1); if (tw.onDone) tw.onDone(); }
+      }
+    }
+
+    /* ============================================================
+       PARTICLES — sparkles, bubbles, confetti
+       ============================================================ */
+    var sparkles = [];
+    function sparkleAt(pos) {
+      AX.sparkle();
+      for (var i = 0; i < 12; i++) {
+        var m = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 6),
+          new THREE.MeshBasicMaterial({ color: ['#FFC234', '#fff', '#1FA9C7', '#FF6FB5'][i % 4] }));
+        m.position.copy(pos);
+        var a = Math.random() * Math.PI * 2, sp = 1.2 + Math.random() * 1.6;
+        m.userData.v = new THREE.Vector3(Math.cos(a) * sp, 1.6 + Math.random() * 1.6, Math.sin(a) * sp);
+        m.userData.life = 0.8; scene.add(m); sparkles.push(m);
+      }
+    }
+    // ambient bubbles
+    var bubbles = [];
+    (function makeBubbles() {
+      var bmat = new THREE.MeshBasicMaterial({ color: '#bff0ff', transparent: true, opacity: 0.5 });
+      for (var i = 0; i < 26; i++) {
+        var b = new THREE.Mesh(new THREE.SphereGeometry(0.05 + Math.random() * 0.09, 8, 6), bmat);
+        b.position.set((Math.random() - 0.5) * 12, Math.random() * 6, (Math.random() - 0.5) * 7);
+        b.userData.sp = 0.4 + Math.random() * 0.7; scene.add(b); bubbles.push(b);
+      }
+    })();
+    var confetti = [];
+    function confettiBurst() {
+      var cols = ['#FF5C39', '#FFC234', '#1F9D55', '#1FA9C7', '#E84BA0', '#B06BE8'];
+      for (var i = 0; i < 110; i++) {
+        var m = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 0.32),
+          new THREE.MeshBasicMaterial({ color: cols[i % cols.length], side: THREE.DoubleSide }));
+        m.position.set((Math.random() - 0.5) * 9, 7 + Math.random() * 3, -1 + (Math.random() - 0.5) * 5);
+        m.userData.v = new THREE.Vector3((Math.random() - 0.5) * 2.4, -(1.4 + Math.random() * 2), (Math.random() - 0.5) * 2.4);
+        m.userData.rot = new THREE.Vector3((Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8);
+        m.userData.life = 3.6; scene.add(m); confetti.push(m);
+      }
+    }
+    function updateParticles(dt) {
+      for (var i = sparkles.length - 1; i >= 0; i--) {
+        var s = sparkles[i]; s.userData.life -= dt;
+        s.position.addScaledVector(s.userData.v, dt); s.userData.v.y -= 6 * dt;
+        s.scale.setScalar(Math.max(0, s.userData.life / 0.8));
+        if (s.userData.life <= 0) { scene.remove(s); sparkles.splice(i, 1); }
+      }
+      for (var b = 0; b < bubbles.length; b++) {
+        var bb = bubbles[b]; bb.position.y += bb.userData.sp * dt;
+        bb.position.x += Math.sin(bb.position.y * 2 + b) * 0.003;
+        if (bb.position.y > 6.2) { bb.position.y = -0.2; bb.position.x = (Math.random() - 0.5) * 12; }
+      }
+      for (var j = confetti.length - 1; j >= 0; j--) {
+        var c = confetti[j]; c.userData.life -= dt;
+        c.position.addScaledVector(c.userData.v, dt);
+        c.rotation.x += c.userData.rot.x * dt; c.rotation.y += c.userData.rot.y * dt; c.rotation.z += c.userData.rot.z * dt;
+        if (c.userData.life <= 0 || c.position.y < -1) { scene.remove(c); confetti.splice(j, 1); }
+      }
+    }
+
+    /* ============================================================
+       GAME STATE
+       ============================================================ */
+    var G = { idx: 0, state: 'menu', creatures: [], hits: [], roundIdx: 0, need: 0, got: 0, busy: false };
+
+    function clearLevel() {
+      G.creatures.forEach(function (c) { scene.remove(c); });
+      G.creatures = []; G.hits = [];
+    }
+
+    // Play-area bounds, fitted to what the camera can actually SEE.
+    // (On a narrow portrait phone the horizontal FOV is small, so creatures
+    //  must stay well inside ±BX or they'd swim off-screen — untappable.)
+    var BX = 2.0, BZ = 1.8;
+    function computeBounds() {
+      var camDist = camera.position.distanceTo(controls.target);
+      var nearPlane = Math.max(2.5, camDist - BZ);          // nearest (closest, smallest) creature plane
+      var halfH = Math.tan((camera.fov * Math.PI / 180) / 2) * nearPlane;
+      var halfW = halfH * camera.aspect;
+      BX = Math.max(1.15, Math.min(halfW - 1.0, 7));         // 1.0 margin for creature size
+    }
+
+    // gentle scatter inside the visible tank
+    function spawnLevel(L) {
+      computeBounds();
+      var defs = L.spawns;
+      defs.forEach(function (d, i) {
+        var c = makeCreature(d);
+        var col = (i % 3) - 1;                                // -1, 0, 1 columns
+        var row = Math.floor(i / 3);
+        var x = col * BX * 0.62 + (Math.random() - 0.5) * 0.4;
+        var y = 1.6 + (i % 3) * 0.7 + row * 0.25;
+        var z = -1.0 + (i % 2) * 1.6 + (Math.random() - 0.5) * 0.5;
+        c.position.set(
+          Math.max(-BX, Math.min(BX, x)), y,
+          Math.max(-BZ, Math.min(BZ, z)));
+        c.userData.s.baseY = c.position.y;
+        c.userData.s.heading = Math.random() * Math.PI * 2;
+        scene.add(c); G.creatures.push(c); G.hits.push(c.userData.hit);
+      });
+    }
+
+    /* ============================================================
+       UI HELPERS
+       ============================================================ */
+    function setHint(t) { $('hint').textContent = t; }
+    function setCue(cue) {
+      var sw = $('cueSwatch'), em = $('cueEmoji'), nm = $('cueNum'), tx = $('cueText'), box = $('cue');
+      sw.style.display = 'none'; em.style.display = 'none'; nm.style.display = 'none';
+      if (cue.swatch) { sw.style.display = ''; sw.style.background = cue.swatch; }
+      if (cue.emoji) { em.style.display = ''; em.textContent = cue.emoji; }
+      if (cue.num) { nm.style.display = ''; nm.textContent = '0'; }
+      tx.textContent = cue.text || '';
+      box.classList.add('show'); box.classList.remove('pop'); void box.offsetWidth; box.classList.add('pop');
+    }
+    function setDots(n) {
+      var box = $('dots');
+      if (!n) { box.classList.remove('show'); box.innerHTML = ''; return; }
+      box.classList.add('show'); box.innerHTML = '';
+      for (var i = 0; i < n; i++) { var d = document.createElement('div'); d.className = 'dot'; box.appendChild(d); }
+    }
+    function fillDots(n) {
+      var ds = $('dots').children;
+      for (var i = 0; i < ds.length; i++) ds[i].className = 'dot' + (i < n ? ' on' : '');
+    }
+
+    /* ============================================================
+       LEVEL FLOW
+       ============================================================ */
+    function showIntro(idx) {
+      G.idx = idx; G.state = 'intro';
+      var L = LEVELS[idx];
+      $('introEmoji').textContent = L.e;
+      $('introTag').textContent = L.tag;
+      $('introTitle').textContent = L.title;
+      $('introText').textContent = L.intro;
+      $('introModal').classList.remove('hidden');
+      $('winModal').classList.add('hidden');
+      $('levelModal').classList.add('hidden');
+    }
+
+    function startLevel(idx) {
+      clearLevel();
+      G.idx = idx; G.state = 'playing'; G.roundIdx = -1; G.busy = false;
+      $('introModal').classList.add('hidden');
+      $('winModal').classList.add('hidden');
+      $('levelModal').classList.add('hidden');
+      spawnLevel(LEVELS[idx]);
+      nextRound();
+    }
+
+    function countRemaining(matchFn) {
+      var n = 0; G.creatures.forEach(function (c) { if (!c.userData.collected && matchFn(c.userData)) n++; }); return n;
+    }
+
+    function nextRound() {
+      var L = LEVELS[G.idx];
+      G.roundIdx++;
+      if (G.roundIdx >= L.rounds.length) { levelComplete(); return; }
+      var r = L.rounds[G.roundIdx];
+      // skip a round that has nothing to collect (defensive)
+      G.need = countRemaining(r.match);
+      if (G.need === 0) { nextRound(); return; }
+      G.got = 0;
+      setCue(r.cue);
+      setHint(r.hint);
+      setDots(G.need);
+      AX.bloop();
+      setTimeout(function () { say(r.say); }, 250);
+    }
+
+    function levelComplete() {
+      G.state = 'done';
+      var stars = 3; // no-fail format → always full stars (per plan-v3 rule)
+      saveStars(G.idx, stars);
+      var last = G.idx === LEVELS.length - 1;
+      $('cue').classList.remove('show'); setDots(0);
+      AX.win(); confettiBurst();
+      var praise = ['Hebat sekali, Raya!', 'Pintar! Kamu jagoan akuarium!', 'Wah, keren! Bintang untukmu!', 'Yeay! Kamu hebat!'];
+      var pr = praise[Math.floor(Math.random() * praise.length)];
+      setTimeout(function () { say(last ? 'Pesta akuarium selesai! Kamu hebat sekali, Raya!' : pr); }, 350);
+      setTimeout(function () {
+        $('winEmoji').textContent = last ? '🏆' : '🎉';
+        $('winTitle').textContent = last ? 'Juara Akuarium!' : 'Hebat, Raya!';
+        $('winStars').textContent = '⭐⭐⭐';
+        $('winText').textContent = last
+          ? 'Semua teman laut sudah kamu temukan! Kamu dapat ' + PROG.totalStars + ' bintang. 🌟'
+          : pr;
+        var nextBtn = $('winNext');
+        nextBtn.textContent = last ? '🐚 Pilih main' : 'Lanjut ▶';
+        nextBtn.dataset.last = last ? '1' : '0';
+        $('winModal').classList.remove('hidden');
+      }, last ? 800 : 550);
+    }
+
+    /* ============================================================
+       INTERACTIONS
+       ============================================================ */
+    function collect(c, r) {
+      c.userData.collected = true;
+      G.got++;
+      fillDots(G.got);
+      AX.happy(); sparkleAt(c.position.clone());
+      if (r.countSpeak) { say(NUM[Math.min(G.got, 10)] + (G.got >= G.need ? '! Ada ' + NUM[Math.min(G.need, 10)] + ' ikan!' : '')); $('cueNum').textContent = G.got; }
+      // happy pop, then float up & shrink away
+      var base = c.userData.baseScale, y0 = c.position.y;
+      tween({
+        dur: 0.5, ease: easeOut,
+        update: function (e) {
+          c.scale.setScalar(Math.max(0.001, base * (1 + Math.sin(e * Math.PI) * 0.35 - e * 0.9)));
+          c.position.y = y0 + e * 1.4;
+          c.rotation.y += 0.25;
+        },
+        onDone: function () { scene.remove(c); }
+      });
+      var roundDone = G.got >= G.need;
+      G.busy = true;
+      setTimeout(function () { G.busy = false; if (roundDone) nextRound(); }, roundDone ? 700 : 120);
+    }
+
+    function freePlayTap(c) {
+      // level 1: every tap delights; count distinct fish, no removal
+      AX.happy(); sparkleAt(c.position.clone());
+      say(CREATURE[c.userData.creature].name + (c.userData.color ? ', warna ' + COLORS[c.userData.color].name : '') + '!');
+      // wiggle/spin
+      tween({ dur: 0.6, ease: easeOut, update: function (e) { c.rotation.y = c.userData.s.heading + e * Math.PI * 2; } });
+      var base = c.userData.baseScale;
+      tween({ dur: 0.35, ease: function (p) { return Math.sin(p * Math.PI); }, update: function (e) { c.scale.setScalar(base * (1 + e * 0.3)); }, onDone: function () { c.scale.setScalar(base); } });
+      if (!c.userData.tapped) {
+        c.userData.tapped = true; G.got++; fillDots(G.got);
+        if (G.got >= G.need) { G.busy = true; setTimeout(function () { G.busy = false; nextRound(); }, 700); }
+      }
+    }
+
+    function wrongTap(c, r) {
+      // NO-FAIL: gentle wiggle + an encouraging spoken redirect. Never "Salah!".
+      AX.soft();
+      var h = c.userData.s.heading;
+      tween({ dur: 0.4, update: function (e) { c.rotation.z = Math.sin(e * Math.PI * 4) * 0.3 * (1 - e); }, onDone: function () { c.rotation.z = 0; } });
+      var lines;
+      if (r.cue && r.cue.swatch) lines = 'Itu warna lain. Cari yang seperti lingkaran di atas ya!';
+      else if (r.match && LEVELS[G.idx].title === 'Besar & Kecil') lines = 'Coba yang lain ya, Raya!';
+      else lines = 'Coba yang lain ya! Lihat gambar di atas.';
+      say(lines);
+      setHint('Coba lagi ya — lihat petunjuk di atas! 🙂');
+    }
+
+    function onTapCreature(c) {
+      var L = LEVELS[G.idx];
+      var r = L.rounds[G.roundIdx];
+      if (!r) return;
+      if (r.match === undefined) return;
+      // free-play round (level 1) — match always true but we delight & count taps
+      if (G.idx === 0) { freePlayTap(c); return; }
+      if (r.match(c.userData)) collect(c, r);
+      else wrongTap(c, r);
+    }
+
+    /* ============================================================
+       TAP DETECTION (vs orbit drag) + raycast
+       ============================================================ */
+    var down = null;
+    renderer.domElement.addEventListener('pointerdown', function (ev) { down = { x: ev.clientX, y: ev.clientY, t: performance.now() }; });
+    renderer.domElement.addEventListener('pointerup', function (ev) {
+      if (!down) return;
+      var dx = ev.clientX - down.x, dy = ev.clientY - down.y;
+      var moved = Math.sqrt(dx * dx + dy * dy), dt = performance.now() - down.t;
+      down = null;
+      if (moved > 14 || dt > 700) return;          // was a drag/orbit, not a tap
+      if (G.state !== 'playing' || G.busy) return;
+      handleTap(ev.clientX, ev.clientY);
+    });
+
+    function handleTap(cx, cy) {
+      var r = renderer.domElement.getBoundingClientRect();
+      var m = new THREE.Vector2(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
+      raycaster.setFromCamera(m, camera);
+      var active = G.hits.filter(function (h) { return !h.userData.owner.userData.collected; });
+      var hits = raycaster.intersectObjects(active, false);
+      if (!hits.length) return;
+      AX.tap();
+      onTapCreature(hits[0].object.userData.owner);
+    }
+
+    /* ============================================================
+       LEVEL SELECT
+       ============================================================ */
+    function buildLevelGrid() {
+      var g = $('levelGrid'); g.innerHTML = '';
+      LEVELS.forEach(function (L, i) {
+        var st = (PROG.progress['l' + i] || {}).stars || 0;
+        var d = document.createElement('button');
+        d.className = 'lvl';
+        d.innerHTML = '<span class="e">' + L.e + '</span><span class="nm">' + L.title + '</span>' +
+          '<span class="st">' + (st ? '⭐'.repeat(st) : '') + '</span>';
+        d.addEventListener('click', function () { showIntro(i); });
+        g.appendChild(d);
+      });
+    }
+
+    /* ============================================================
+       BUTTON WIRING
+       ============================================================ */
+    $('introStart').addEventListener('click', function () { AX.prime(); startLevel(G.idx); });
+    $('introPick').addEventListener('click', function () { AX.prime(); buildLevelGrid(); $('introModal').classList.add('hidden'); $('levelModal').classList.remove('hidden'); G.state = 'menu'; });
+    $('winNext').addEventListener('click', function () {
+      if ($('winNext').dataset.last === '1') { buildLevelGrid(); $('winModal').classList.add('hidden'); $('levelModal').classList.remove('hidden'); G.state = 'menu'; }
+      else { showIntro(Math.min(G.idx + 1, LEVELS.length - 1)); }
+    });
+    $('winReplay').addEventListener('click', function () { startLevel(G.idx); });
+    $('levelsBtn').addEventListener('click', function () { buildLevelGrid(); $('levelModal').classList.remove('hidden'); G.state = 'menu'; });
+    $('levelClose').addEventListener('click', function () {
+      $('levelModal').classList.add('hidden');
+      if (G.creatures.length === 0) showIntro(G.idx); else G.state = 'playing';
+    });
+    $('speakBtn').addEventListener('click', function () {
+      AX.prime();
+      if (G.state === 'playing') { var r = LEVELS[G.idx].rounds[G.roundIdx]; if (r) say(r.say); }
+      else say(LEVELS[G.idx].intro);
+    });
+    var sBtn = $('soundBtn');
+    sBtn.textContent = AX.isOn() ? '🔊' : '🔇';
+    sBtn.addEventListener('click', function () {
+      AX.set(!AX.isOn());
+      sBtn.textContent = AX.isOn() ? '🔊' : '🔇';
+      if (!AX.isOn() && Suara.on) { try { speechSynthesis.cancel(); } catch (_) {} }
+    });
+
+    /* ============================================================
+       RENDER LOOP — creatures swim, weeds sway, idle camera drift
+       ============================================================ */
+    function swim(c, dt) {
+      var s = c.userData.s;
+      s.phase += dt;
+      // gentle wandering turn
+      s.heading += Math.sin(s.phase * 0.6) * 0.4 * dt;
+      // steer back toward center if near the edge of the visible tank
+      var px = c.position.x, pz = c.position.z;
+      if (Math.abs(px) > BX || Math.abs(pz) > BZ) {
+        var toCenter = Math.atan2(-px, -pz);
+        var diff = Math.atan2(Math.sin(toCenter - s.heading), Math.cos(toCenter - s.heading));
+        s.heading += diff * Math.min(1, dt * 2.2);
+      }
+      var fx = Math.sin(s.heading), fz = Math.cos(s.heading);
+      c.position.x += fx * s.speed * dt;
+      c.position.z += fz * s.speed * dt;
+      c.position.y = (s.baseY || 1.6) + Math.sin(s.phase * s.bobFreq) * s.bobAmp;
+      c.rotation.y = s.heading;
+      // tail/leg wiggle
+      if (c.userData.tail) c.userData.tail.rotation.y = Math.sin(s.phase * 6) * 0.4;
+      if (c.userData.legs) c.userData.legs.forEach(function (l, i) { l.rotation.z += 0; l.position.y = -0.45 + Math.sin(s.phase * 4 + i) * 0.05; });
+    }
+
+    function onResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      computeBounds();
+    }
+    window.addEventListener('resize', onResize);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      var dt = Math.min(clock.getDelta(), 0.05);
+      updateTweens(dt);
+      updateParticles(dt);
+      for (var i = 0; i < G.creatures.length; i++) { if (!G.creatures[i].userData.collected) swim(G.creatures[i], dt); }
+      for (var w = 0; w < weeds.length; w++) { weeds[w].rotation.z = Math.sin(performance.now() * 0.001 + weeds[w].userData.weed) * 0.12; }
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // open on the level-1 intro; 🐚 lets a parent/kid jump to any level
+    showIntro(0);
+  })();
+  </script>
+</body>
+</html>
