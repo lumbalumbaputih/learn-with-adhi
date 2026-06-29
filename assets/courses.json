@@ -345,6 +345,22 @@
     "duration": "~3 days"
   },
   {
+    "id": "direct-cash-transfers",
+    "n": "16",
+    "title": "The Cash Experiment: Economics of Direct Giving",
+    "blurb": "What actually happens when you give poor people money unconditionally? A deep dive into the Egger et al. 2022 Kenya RCT, the $2.50 local multiplier, zero-inflation result, and what global UBI pilots reveal about poverty, agency, and development.",
+    "category": "Research",
+    "tags": [
+      "Intermediate",
+      "Economics",
+      "Development"
+    ],
+    "primitive": "dot",
+    "accent": "sea",
+    "path": "courses/economics/direct-cash-transfers-v1.html",
+    "duration": "~4 days"
+  },
+  {
     "id": "aasb-s2-climate",
     "n": "15",
     "title": "AASB S2 Decoded: Climate-related Disclosures",

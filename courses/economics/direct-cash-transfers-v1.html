@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="direct-cash-transfers">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cash Experiment: Economics of Direct Giving · Learn with Adhi</title>
+<meta name="description" content="What actually happens when you just give poor people money? A deep dive into the randomised trials, multiplier effects, and political economics behind direct cash transfers.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/economics/direct-cash-transfers-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Cash Experiment: Economics of Direct Giving">
+<meta property="og:description" content="What actually happens when you just give poor people money? The evidence is surprising.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-sea-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"The Cash Experiment: Economics of Direct Giving","description":"What actually happens when you just give poor people money? A deep dive into randomised trials, multiplier effects, and the political economics of direct cash transfers.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#2D6FB3; --acc-dim:#1e5a96; --acc-bg:rgba(45,111,179,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:620px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout.tomato{border-left-color:#E03E2D;background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.mango{border-left-color:#D97706;background:rgba(217,119,6,.08)}
+.callout strong{font-weight:600}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:#fff;border-radius:12px;padding:18px 20px;text-align:center}
+.stat-num{font-family:var(--fd);font-size:32px;font-weight:800;color:var(--acc);line-height:1;margin-bottom:6px}
+.stat-label{font-size:11px;color:rgba(255,255,255,.65);line-height:1.4}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── REFERENCES ── */
+.ref-item{border-left:3px solid var(--acc);padding:16px 18px;margin:16px 0;border-radius:0 10px 10px 0;background:var(--paper-2)}
+.ref-citation{font-size:13px;font-style:italic;margin-bottom:8px;line-height:1.55}
+.ref-annotation{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:11px;color:var(--acc);text-decoration:none}
+.ref-link:hover{text-decoration:underline}
+
+/* ── DONE BUTTON ── */
+.done-btn{margin-top:40px;padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#1e3a8a);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  .stat-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 7 modules done</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Why Aid So Often Fails</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">The Kenya Experiment</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">The Multiplier: $1 In, $2.50 Out</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">What People Actually Buy</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Objections & Real Limits</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">The Bigger Picture</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7">
+      <span class="nav-num">REF</span>
+      <span class="nav-title">Sources & Further Reading</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">The Cash Experiment</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – WHY AID FAILS
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 07</div>
+  <h1 class="mod-title">Why Aid So <span class="acc">Often Fails</span></h1>
+  <p class="mod-lede">Hundreds of billions of dollars have flowed into poverty reduction over the past 70 years. Some of it worked. A surprising amount didn't — and understanding why is the starting point for everything that follows.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The core logic problems with traditional aid programs</li>
+      <li>Why "earmarking" feels sensible but often backfires</li>
+      <li>How poverty shrinks cognitive bandwidth — and what that means for policy</li>
+      <li>The difference between helping people and treating people as capable agents</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Paternalism Problem</h2>
+  <p>The default assumption behind most aid programs is that poor people need to be guided toward the right choices. Give them food, not cash — they might spend it on alcohol. Give them training, not wages — they might waste the money. Give them a plan, not capital — they might not know how to invest.</p>
+  <p>This assumption is almost never stated out loud, because it sounds awful when you say it. But it's embedded in the structure of most interventions: the earmarked voucher, the conditional cash transfer, the in-kind food basket, the prescribed curriculum. Each of these says, implicitly: <em>we don't trust you to decide what you need.</em></p>
+
+  <div class="callout">
+    <strong>The irony:</strong> the paternalism isn't just ethically uncomfortable — it's often economically inefficient. When you give someone a bed net instead of the cash to buy one, you've made a decision about their highest-value use of $10. You might be wrong. The person you're helping almost certainly knows more about their own situation than you do.
+  </div>
+
+  <h3 class="sub">The Four Classic Failure Modes</h3>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🎯</div>
+      <h4>Targeting errors</h4>
+      <p>Complex eligibility criteria exclude many who qualify and include some who don't. Administrative costs eat into the budget. The deserving poor are often the hardest to reach.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🔒</div>
+      <h4>Earmarking mismatch</h4>
+      <p>In-kind goods (food, tools, bed nets) may not match actual need. A family that needs school fees doesn't benefit from surplus grain. Fungibility is a feature, not a bug.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">📋</div>
+      <h4>Conditionality overhead</h4>
+      <p>Conditional cash transfers (CCTs) require compliance — school attendance, health check-ups. This shifts burden to the recipient and often excludes the most vulnerable.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">💸</div>
+      <h4>High delivery costs</h4>
+      <p>Traditional programs spend 30–60 cents of every aid dollar on administration, logistics, and staff. GiveDirectly's overhead runs below 10 cents on the dollar.</p>
+    </div>
+  </div>
+
+  <h2 class="sh">Poverty as a Tax on Bandwidth</h2>
+  <p>In 2013, economists Sendhil Mullainathan and psychologist Eldar Shafir published <em>Scarcity: Why Having Too Little Means So Much</em>. Their key finding: poverty isn't just a shortage of money. It's a shortage of mental capacity.</p>
+  <p>When your mind is consumed by an immediate problem — how to pay the rent, where the next meal comes from — your capacity for everything else shrinks. Planning horizons collapse. Willpower depletes. IQ-equivalent test performance drops by a measurable margin equivalent to losing a full night's sleep, simply from being primed to think about money stress.</p>
+
+  <div class="callout mango">
+    <strong>What this means for policy:</strong> programs that add complexity, conditions, and paperwork to the lives of people already stretched thin by scarcity are fighting against their own purpose. The cognitive overhead of navigating a bureaucratic aid program is itself a cost that falls hardest on those least able to bear it.
+  </div>
+
+  <h3 class="sub">The "Deserving Poor" Frame Is Backwards</h3>
+  <p>A persistent instinct in aid design is to distinguish deserving from undeserving recipients — to build systems that reward the right behaviour and withhold resources from those who might misuse them. This produces systems that are expensive to operate, humiliating to navigate, and still leaky.</p>
+  <p>The evidence from cash transfer programs suggests a different frame: assume competence. Treat recipients as economic agents who understand their own constraints better than any external program designer does. The constraint isn't character — it's capital.</p>
+
+  <!-- SVG: Aid delivery cost comparison -->
+  <div class="demo-box">
+    <div class="demo-label">Aid delivery: how much reaches recipients per $1 donated</div>
+    <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto">
+      <!-- Bars -->
+      <!-- Traditional food aid: ~40c reaches recipient -->
+      <rect x="40" y="60" width="168" height="28" fill="#E03E2D" rx="4"/>
+      <rect x="208" y="60" width="252" height="28" fill="#eee" rx="4"/>
+      <text x="36" y="52" font-family="JetBrains Mono,monospace" font-size="11" fill="#6B6259">Traditional food aid</text>
+      <text x="212" y="79" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">60c overhead / 40c recipient</text>
+
+      <!-- NGO program: ~55c reaches recipient -->
+      <rect x="40" y="110" width="126" height="28" fill="#D97706" rx="4"/>
+      <rect x="166" y="110" width="294" height="28" fill="#eee" rx="4"/>
+      <text x="36" y="102" font-family="JetBrains Mono,monospace" font-size="11" fill="#6B6259">Typical NGO program</text>
+      <text x="170" y="129" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">45c overhead / 55c recipient</text>
+
+      <!-- GiveDirectly: ~91c reaches recipient -->
+      <rect x="40" y="160" width="364" height="28" fill="#2D6FB3" rx="4"/>
+      <rect x="404" y="160" width="56" height="28" fill="#eee" rx="4"/>
+      <text x="36" y="152" font-family="JetBrains Mono,monospace" font-size="11" fill="#6B6259">GiveDirectly (direct cash)</text>
+      <text x="44" y="179" font-family="Inter,sans-serif" font-size="11" fill="#fff" font-weight="600">91c → recipient</text>
+    </svg>
+    <div class="demo-caption">Illustrative delivery efficiency. GiveDirectly 2023 annual report reports ~8.8% overhead.</div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check</div>
+    <div class="q-card">
+      <div class="q-text">1. Why does earmarking (giving goods instead of cash) often reduce the real value of aid?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Fraud is a concern in some programs, but it's not the main economic problem with earmarking.">Recipients are more likely to sell in-kind goods fraudulently</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. The aid designer assumes they know the recipient's highest-value need, but the recipient almost always knows better. Money is fungible and lets the person meet their actual priority.">The aid designer substitutes their own judgment for the recipient's knowledge of their own needs</button>
+        <button class="q-option" data-correct="false" data-explanation="In-kind goods are often more expensive to deliver, not cheaper — another strike against them.">In-kind goods are cheaper to deliver than cash</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">2. The Mullainathan & Shafir "bandwidth" finding suggests that:</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The finding is about everyone who faces scarcity, not a permanent trait — it's situational.">Poor people have inherently lower cognitive capacity</button>
+        <button class="q-option" data-correct="false" data-explanation="While true, this isn't the bandwidth finding itself — it's more specific than that.">Complex aid programs require financial literacy training</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Financial stress consumes working memory and executive function, producing measurable performance drops — not from character, but from circumstance.">Financial stress consumes mental resources, impairing planning and decision-making capacity</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">3. Which of these is the most accurate description of GiveDirectly's efficiency advantage?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="GiveDirectly does operate in lower-cost regions, but the main efficiency gain is structural — cash is cheap to deliver.">They operate in very low-cost countries where salaries are minimal</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Cash is extraordinarily cheap to deliver relative to goods or services. Mobile money infrastructure in Kenya makes it even cheaper. There's no supply chain, no warehouse, no in-kind procurement.">Cash has near-zero marginal delivery cost compared to goods or services, so overhead is structurally much lower</button>
+        <button class="q-option" data-correct="false" data-explanation="GiveDirectly does thorough verification and monitoring — that's part of what makes it credible.">They skip recipient verification to cut costs</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="1">Mark module complete →</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – THE KENYA EXPERIMENT
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 07</div>
+  <h1 class="mod-title">The <span class="acc">Kenya</span> Experiment</h1>
+  <p class="mod-lede">In 2014, a charity called GiveDirectly began giving unconditional cash to poor households in rural Kenya. By 2019, the experiment had grown large enough to run one of the most rigorous studies in development economics. Here's what they did and why the design matters.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How GiveDirectly works and who gets the money</li>
+      <li>Why randomised controlled trials (RCTs) are the gold standard for this question</li>
+      <li>The specific design of the Egger et al. 2022 <em>Econometrica</em> study</li>
+      <li>Why 653 villages and 10,500 households matters for statistical power</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">GiveDirectly: The Basic Model</h2>
+  <p>GiveDirectly was founded in 2009 by four Harvard and MIT economics PhD students — Paul Niehaus, Michael Faye, Rohit Wajarkur, and Jeremy Shapiro — who noticed something obvious in their research: virtually all aid programs assume something more complex than "give people money" will work better. But the evidence base for that assumption was thin.</p>
+  <p>Their model is simple to the point of being radical:</p>
+  <ol class="nl">
+    <li>Identify extremely poor households in sub-Saharan Africa using satellite imagery, census data, and community targeting (typically in the poorest 20% by asset ownership)</li>
+    <li>Verify eligibility through mobile surveys and in-person checks</li>
+    <li>Send cash directly to recipients via M-Pesa (Kenya's mobile money platform) — no intermediaries, no conditions</li>
+    <li>Recipients decide how to spend it</li>
+  </ol>
+
+  <div class="callout green">
+    <strong>M-Pesa as infrastructure:</strong> Kenya's mobile money system — launched by Safaricom in 2007 — is what makes this scale possible. By the time GiveDirectly launched, over 70% of Kenyan adults had M-Pesa accounts. Cash transfers that would have required physical distribution infrastructure became as simple as a text message.
+  </div>
+
+  <h2 class="sh">Why RCTs Matter Here</h2>
+  <p>Development economics has a long history of programs that seemed to work — until someone ran a proper controlled trial and found the effect disappeared or was much smaller than claimed. The randomised controlled trial (RCT), borrowed from clinical medicine, is the best tool we have for distinguishing "this happened after the program" from "this happened <em>because of</em> the program."</p>
+
+  <!-- SVG: RCT design diagram -->
+  <div class="demo-box">
+    <div class="demo-label">Randomised controlled trial design — the counterfactual logic</div>
+    <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto">
+      <!-- Population pool -->
+      <rect x="200" y="10" width="160" height="40" rx="8" fill="#2D6FB3"/>
+      <text x="280" y="35" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#fff" font-weight="600">Population</text>
+
+      <!-- Arrow down split -->
+      <line x1="280" y1="50" x2="280" y2="70" stroke="#6B6259" stroke-width="1.5"/>
+      <line x1="280" y1="70" x2="120" y2="70" stroke="#6B6259" stroke-width="1.5"/>
+      <line x1="280" y1="70" x2="440" y2="70" stroke="#6B6259" stroke-width="1.5"/>
+      <line x1="120" y1="70" x2="120" y2="90" stroke="#6B6259" stroke-width="1.5"/>
+      <line x1="440" y1="70" x2="440" y2="90" stroke="#6B6259" stroke-width="1.5"/>
+      <text x="280" y="65" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6B6259">RANDOM ASSIGNMENT</text>
+
+      <!-- Treatment -->
+      <rect x="40" y="90" width="160" height="40" rx="8" fill="#1F9D55"/>
+      <text x="120" y="115" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#fff" font-weight="600">Treatment group</text>
+      <text x="120" y="148" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">Receives cash transfer</text>
+
+      <!-- Control -->
+      <rect x="360" y="90" width="160" height="40" rx="8" fill="#6B6259"/>
+      <text x="440" y="115" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#fff" font-weight="600">Control group</text>
+      <text x="440" y="148" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">No transfer (for now)</text>
+
+      <!-- Outcome comparison -->
+      <line x1="120" y1="158" x2="120" y2="178" stroke="#6B6259" stroke-width="1.5"/>
+      <line x1="440" y1="158" x2="440" y2="178" stroke="#6B6259" stroke-width="1.5"/>
+      <line x1="120" y1="178" x2="440" y2="178" stroke="#6B6259" stroke-width="1.5"/>
+      <line x1="280" y1="178" x2="280" y2="198" stroke="#6B6259" stroke-width="1.5"/>
+      <rect x="190" y="198" width="180" height="18" rx="4" fill="#FFC234"/>
+      <text x="280" y="211" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#1A1614" font-weight="600">Difference = causal effect</text>
+    </svg>
+    <div class="demo-caption">Random assignment ensures both groups are statistically identical before the transfer. Any outcome difference afterward is attributable to the cash, not pre-existing differences.</div>
+  </div>
+
+  <h2 class="sh">The Egger et al. 2022 Study</h2>
+  <p>The landmark study — Dennis Egger, Johannes Haushofer, Edward Miguel, Paul Niehaus, and Michael Walker, published in <em>Econometrica</em> in 2022 — was large enough to answer a question smaller studies couldn't: what happens to the <em>local economy</em>, not just the individual recipient?</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">10,500</div>
+      <div class="stat-label">Households received<br>$1,000 USD each</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">653</div>
+      <div class="stat-label">Villages across<br>rural western Kenya</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$10.5M</div>
+      <div class="stat-label">Total cash injected<br>into the local economy</div>
+    </div>
+  </div>
+
+  <p>The study randomised at the <em>village</em> level — some villages received transfers, others didn't. This design was crucial: it let the researchers measure spillover effects on non-recipient households and businesses in the same local economy, something individual-level randomisation can't do.</p>
+
+  <div class="callout">
+    <strong>Why $1,000?</strong> In the study villages, median annual household consumption was roughly $700. A $1,000 transfer — paid in installments — represented more than a year of typical household spending. Large enough to shift behavior, invest, and produce meaningful economic signal.
+  </div>
+
+  <h3 class="sub">What They Measured</h3>
+  <p>Beyond the obvious (what did recipients spend money on), the study tracked broader economic outcomes across both treatment and control villages: enterprise revenue, employment, asset prices, consumer prices (to detect inflation), and the incomes of <em>non-recipient</em> households who just happened to live near recipients.</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check</div>
+    <div class="q-card">
+      <div class="q-text">1. Why did the Egger et al. study randomise at the village level rather than the individual level?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Logistically village-level randomisation is similar complexity — that's not the reason.">It was logistically simpler to target whole villages</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Village-level randomisation allows researchers to measure spillover effects — what happens to local businesses and non-recipient households — which individual randomisation would miss entirely.">It allowed measurement of spillover effects on the broader local economy</button>
+        <button class="q-option" data-correct="false" data-explanation="Statistical power is actually easier to achieve with individual randomisation — villages add complexity.">Individual randomisation doesn't provide enough statistical power</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">2. What made M-Pesa critical to GiveDirectly's model?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="M-Pesa isn't free — there are transaction fees — but they're small. That's not the key reason.">It eliminated all transaction costs</button>
+        <button class="q-option" data-correct="false" data-explanation="M-Pesa is a mobile money service, not a cryptocurrency — there's no blockchain involved.">It provided blockchain-based verification of transfers</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. With 70%+ adult penetration before GiveDirectly launched, M-Pesa meant cash could be delivered digitally to most recipients without physical infrastructure. This is what made scale possible.">It provided near-universal digital payment infrastructure for recipients in rural Kenya</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">3. The $1,000 transfer amount was significant because:</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct. At roughly 1.4× median annual household consumption in the study villages, $1,000 was large enough to enable real investment decisions — not just smooth short-term consumption.">It exceeded median annual household consumption in the study villages</button>
+        <button class="q-option" data-correct="false" data-explanation="$1,000 is not the globally recognised poverty threshold — that's typically ~$2.15/day. The figure was chosen relative to local context.">It matched the international extreme-poverty threshold exactly</button>
+        <button class="q-option" data-correct="false" data-explanation="The installment structure was used for other reasons — the size was chosen relative to local consumption levels.">It was the maximum amount transferable via M-Pesa per month</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="2">Mark module complete →</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – THE MULTIPLIER
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 07</div>
+  <h1 class="mod-title">The <span class="acc">Multiplier:</span> $1 In, $2.50 Out</h1>
+  <p class="mod-lede">The most striking finding from Kenya wasn't what recipients did with their money. It was what happened to the economy around them. Every dollar transferred generated roughly $2.50 in local economic activity — with near-zero inflation.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What a fiscal multiplier is and why it's usually less than 1</li>
+      <li>How the local multiplier differs from the national one</li>
+      <li>The $2.50 finding: what it means and why it's higher than expected</li>
+      <li>Why near-zero inflation is the crucial accompanying result</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">What Is a Multiplier?</h2>
+  <p>In macroeconomics, the "multiplier" describes how an initial injection of spending ripples through an economy. When a household spends $100, the recipient of that spending earns $100 — and then spends some of it in turn, generating further income for others, and so on. The total economic activity generated exceeds the original injection by the "multiplier" factor.</p>
+  <p>In rich-country macroeconomics, government fiscal multipliers are typically estimated between 0.6 and 1.5 — often below 1, meaning each dollar of government spending generates less than a dollar of additional GDP, partly because it crowds out private activity or leaks out of the local economy through imports.</p>
+
+  <!-- SVG: Money circulation diagram -->
+  <div class="demo-box">
+    <div class="demo-label">How the local multiplier works: a simplified flow</div>
+    <svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto">
+      <!-- Nodes -->
+      <circle cx="280" cy="40" r="36" fill="#2D6FB3"/>
+      <text x="280" y="36" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#fff" font-weight="600">Recipient</text>
+      <text x="280" y="50" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="rgba(255,255,255,.8)">gets $1,000</text>
+
+      <circle cx="100" cy="160" r="34" fill="#1F9D55"/>
+      <text x="100" y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#fff" font-weight="600">Merchant</text>
+      <text x="100" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="rgba(255,255,255,.8)">earns revenue</text>
+
+      <circle cx="280" cy="230" r="34" fill="#1F9D55"/>
+      <text x="280" y="226" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#fff" font-weight="600">Miller</text>
+      <text x="280" y="240" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="rgba(255,255,255,.8)">reopens, hires</text>
+
+      <circle cx="460" cy="160" r="34" fill="#1F9D55"/>
+      <text x="460" y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#fff" font-weight="600">Landlord</text>
+      <text x="460" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="rgba(255,255,255,.8)">earns rent</text>
+
+      <!-- Arrows: recipient → each -->
+      <line x1="252" y1="66" x2="122" y2="134" stroke="#FFC234" stroke-width="2" marker-end="url(#arr)"/>
+      <line x1="280" y1="76" x2="280" y2="196" stroke="#FFC234" stroke-width="2" marker-end="url(#arr)"/>
+      <line x1="308" y1="66" x2="438" y2="134" stroke="#FFC234" stroke-width="2" marker-end="url(#arr)"/>
+
+      <!-- Arrows: merchants spend back -->
+      <line x1="130" y1="175" x2="248" y2="222" stroke="#2D6FB3" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arr2)"/>
+      <line x1="436" y1="175" x2="312" y2="222" stroke="#2D6FB3" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arr2)"/>
+
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#FFC234"/>
+        </marker>
+        <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#2D6FB3"/>
+        </marker>
+      </defs>
+
+      <text x="280" y="275" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6B6259">Yellow = initial spending · Blue dashed = secondary circulation</text>
+    </svg>
+    <div class="demo-caption">The recipient buys grain from the merchant. The merchant pays the miller. The miller hires a worker. Each transaction generates income for the next actor. ~80% of the initial transfer stays in the local market.</div>
+  </div>
+
+  <h2 class="sh">Why 2.5x in Rural Kenya?</h2>
+  <p>The Egger et al. result — ~$2.50 in local economic activity per $1 transferred — is substantially higher than typical government fiscal multipliers. Three structural factors explain this:</p>
+
+  <h3 class="sub">1. High marginal propensity to consume</h3>
+  <p>In rich countries, an additional dollar of income for a wealthy household might be saved, invested abroad, or spent on imports. A poor household in rural Kenya has a near-100% marginal propensity to spend locally — they have immediate unmet needs and limited access to savings or investment products. Almost every dollar of the transfer becomes someone else's income quickly.</p>
+
+  <h3 class="sub">2. Local market constraints were already slack</h3>
+  <p>The study villages had underutilised productive capacity. The miller had closed because there wasn't enough demand. The merchant stocked less because turnover was low. The trader made fewer trips because the market was thin. Injecting demand into a slack local economy can activate latent capacity without generating inflation — you're filling existing supply gaps rather than bidding up prices.</p>
+
+  <h3 class="sub">3. Near-zero leakage to imports</h3>
+  <p>The goods and services poor Kenyan households buy — grain, cooking fuel, school fees, local repairs, livestock — are mostly locally produced. When spending is concentrated in a geographically defined local market, the money circulates within that market before leaking out. The study found roughly 80% of the initial transfer stayed within the local economic area through at least one additional round of spending.</p>
+
+  <div class="callout green">
+    <strong>The near-zero inflation finding is as important as the multiplier.</strong> A common objection to cash transfers is that injecting money into a poor, supply-constrained economy will just bid up prices, hurting non-recipients and eroding the real value of the transfer. The Kenya data showed essentially zero price inflation in treatment villages — confirming the slack-supply explanation and demolishing the most common economic objection to cash.
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">2.5×</div>
+      <div class="stat-label">Local economic activity generated<br>per $1 transferred</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">~0%</div>
+      <div class="stat-label">Consumer price inflation<br>in treatment villages</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">~80%</div>
+      <div class="stat-label">Share of transfer spending<br>retained in local market</div>
+    </div>
+  </div>
+
+  <h2 class="sh">Non-Recipient Households Also Won</h2>
+  <p>Perhaps the most surprising finding: households in treatment villages who <em>did not receive</em> a transfer saw their incomes rise anyway. Merchants earned more. Farm workers got hired. Local service providers had more customers. The transfer didn't just benefit the targeted poor — it raised living standards across the local economy by thickening the market.</p>
+
+  <div class="callout">
+    <strong>This is the "capitalism triggered by force" effect.</strong> The quote from the screenshot you started with is economically precise: the transfer doesn't work because it's charity — it works because it injects demand-side capital into a market that was too thin to self-sustain. The mechanism is entirely standard market economics. The trigger is the transfer.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check</div>
+    <div class="q-card">
+      <div class="q-text">1. Why is the local multiplier in rural Kenya higher than typical government fiscal multipliers in rich countries?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Corruption levels don't explain the multiplier magnitude — the multiplier is about how spending circulates, not leakage via theft.">Kenyan officials are less likely to divert funds</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Poor households have a near-100% marginal propensity to spend locally, and local markets had slack capacity to absorb demand without inflation. Both conditions are unusual in rich-country contexts.">High marginal propensity to spend locally, combined with slack productive capacity in local markets</button>
+        <button class="q-option" data-correct="false" data-explanation="The cost of living is lower, but that's a purchasing power observation — it doesn't explain the multiplier mechanism.">Living costs are much lower so the same dollar goes further</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">2. What does "slack productive capacity" mean in this context, and why does it matter?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Agricultural land availability is one narrow example, but slack capacity is a broader concept across all local production.">There is unused agricultural land available for cultivation</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Businesses that were operating below capacity (or had closed) could absorb new demand without raising prices or needing new capital. This is why inflation was near-zero despite a large demand injection.">Local businesses had underutilised capacity that could absorb new demand without price increases</button>
+        <button class="q-option" data-correct="false" data-explanation="Labour slack is one component, but the concept applies to all productive capacity — physical capital, stock, production capacity — not just labour.">Workers were unemployed and available to be hired immediately</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">3. Why is the finding that non-recipient households also gained income significant?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The study compared recipient and non-recipient households within treatment villages — the design was robust against this concern.">It suggests the study's control group was contaminated</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. It shows the mechanism is market thickening — more spending creates more local demand, which benefits everyone in the local economy, not just the direct recipients. The transfer has positive externalities.">It shows cash transfers have positive externalities for the whole local economy, not just targeted recipients</button>
+        <button class="q-option" data-correct="false" data-explanation="The study doesn't suggest this — the gains to non-recipients were real economic gains from increased local market activity.">It implies recipients were sharing their transfers informally</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="3">Mark module complete →</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – WHAT PEOPLE ACTUALLY BUY
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 07</div>
+  <h1 class="mod-title">What People <span class="acc">Actually Buy</span></h1>
+  <p class="mod-lede">The most common objection to cash transfers is also the most durable: "they'll waste it." It's worth taking seriously — and then looking at what actually happens when you measure it.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What the data actually shows about spending patterns after cash transfers</li>
+      <li>Why the "wasted on alcohol and tobacco" assumption is empirically weak</li>
+      <li>How recipients make investment vs. consumption decisions</li>
+      <li>The dignity and agency argument alongside the economic one</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Data on Spending</h2>
+  <p>Multiple studies across different cash transfer programs — Kenya, Mexico's Oportunidades, Brazil's Bolsa Família, Uganda, Ecuador, and elsewhere — have tracked how recipients spend the money. The pattern is remarkably consistent.</p>
+
+  <!-- SVG: Spending breakdown bar -->
+  <div class="demo-box">
+    <div class="demo-label">Typical cash transfer spending allocation (GiveDirectly Kenya recipients)</div>
+    <svg viewBox="0 0 540 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:540px;display:block;margin:0 auto">
+      <!-- Y axis labels -->
+      <text x="10" y="28" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">Food</text>
+      <text x="10" y="68" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">Assets/Livestock</text>
+      <text x="10" y="108" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">Home/Shelter</text>
+      <text x="10" y="148" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">Education/Health</text>
+      <text x="10" y="188" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">Alcohol/Tobacco</text>
+
+      <!-- Bars (start at x=140) -->
+      <!-- Food: ~36% -->
+      <rect x="140" y="14" width="180" height="22" rx="4" fill="#2D6FB3"/>
+      <text x="326" y="29" font-family="JetBrains Mono,monospace" font-size="11" fill="#2D6FB3" font-weight="600"> 36%</text>
+      <!-- Assets: ~28% -->
+      <rect x="140" y="54" width="140" height="22" rx="4" fill="#2D6FB3"/>
+      <text x="286" y="69" font-family="JetBrains Mono,monospace" font-size="11" fill="#2D6FB3" font-weight="600"> 28%</text>
+      <!-- Home: ~18% -->
+      <rect x="140" y="94" width="90" height="22" rx="4" fill="#2D6FB3"/>
+      <text x="236" y="109" font-family="JetBrains Mono,monospace" font-size="11" fill="#2D6FB3" font-weight="600"> 18%</text>
+      <!-- Education/health: ~12% -->
+      <rect x="140" y="134" width="60" height="22" rx="4" fill="#1F9D55"/>
+      <text x="206" y="149" font-family="JetBrains Mono,monospace" font-size="11" fill="#1F9D55" font-weight="600"> 12%</text>
+      <!-- Alcohol: ~1% -->
+      <rect x="140" y="174" width="5" height="22" rx="2" fill="#E03E2D"/>
+      <text x="152" y="189" font-family="JetBrains Mono,monospace" font-size="11" fill="#E03E2D" font-weight="600"> ~1%</text>
+    </svg>
+    <div class="demo-caption">Approximate GiveDirectly Kenya recipient spending allocation. Food, productive assets, and shelter account for the vast majority. Alcohol and tobacco are statistically indistinguishable from zero in most studies. (Evans & Popova 2017; GiveDirectly internal data.)</div>
+  </div>
+
+  <h3 class="sub">The Alcohol & Tobacco Finding</h3>
+  <p>Evans and Popova (2014, updated 2017) conducted a systematic review of 19 studies examining whether cash transfers increase spending on alcohol, tobacco, and gambling. Their finding was unambiguous: across almost all studies, in almost all contexts, cash transfers <em>do not</em> increase "temptation good" spending. Several studies found slight decreases, likely because recipients now had better alternatives.</p>
+
+  <div class="callout tomato">
+    <strong>Where does the assumption come from?</strong> The "they'll waste it on alcohol" fear appears to be projection from middle-class intuitions about what they themselves might do with a windfall, combined with moral frameworks that treat poverty as a character failure. It is not grounded in data. It persists because it's emotionally compelling and politically convenient for those who prefer more controlling aid designs.
+  </div>
+
+  <h2 class="sh">Investment vs. Consumption</h2>
+  <p>A key finding across multiple programs is that recipients distinguish between consumption and investment — often more shrewdly than external advisors expect. When a transfer is large enough to enable it, households frequently:</p>
+
+  <ul class="bl">
+    <li>Purchase productive assets (livestock, small business inventory, tools) that generate future income</li>
+    <li>Repair or improve housing — which is both welfare and an asset</li>
+    <li>Pay down debt at high interest rates, effectively earning the interest rate as a risk-free return</li>
+    <li>Build savings buffers that reduce the scarcity-tax on cognitive bandwidth</li>
+  </ul>
+
+  <p>These are textbook investment decisions. The constraint on making them before the transfer wasn't preference — it was capital. Poor people, in aggregate, are not unusually present-biased or financially unsophisticated. They are capital-constrained in ways that force suboptimal choices.</p>
+
+  <h2 class="sh">The Dignity Argument</h2>
+  <p>Beyond the economic evidence, there's a case from human dignity that stands independently. Unconditional cash treats the recipient as a capable adult who understands their own situation. Every condition, restriction, and monitoring mechanism says the opposite. The psychological evidence suggests this matters: people with more control over their circumstances have better mental health outcomes, make better long-run decisions, and report higher life satisfaction — separate from the monetary value of the transfer itself.</p>
+
+  <div class="callout green">
+    <strong>The GiveDirectly recipients were asked what they would change about the program.</strong> The most common response: "nothing." The second most common: "give us more money." Neither group asked for conditions, guidance, or supervision.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check</div>
+    <div class="q-card">
+      <div class="q-text">1. What did Evans & Popova's systematic review of 19 cash transfer studies find about alcohol and tobacco spending?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The review found no significant increases, and several studies found slight decreases.">Alcohol and tobacco spending increased in most studies</button>
+        <button class="q-option" data-correct="false" data-explanation="Results were not mixed — they were notably consistent in the other direction.">Results were mixed, with increases in some countries and decreases in others</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Across 19 studies in multiple countries, cash transfers did not increase temptation good spending. Several studies found slight decreases.">Cash transfers did not increase alcohol or tobacco spending — and sometimes reduced it</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">2. Why might paying down high-interest debt be a rational "investment" decision after receiving a cash transfer?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Debt elimination improves credit scores in some systems, but that's a secondary effect — the primary logic is the interest rate.">It improves the recipient's credit score for future borrowing</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Eliminating debt at, say, 30% annual interest is equivalent to earning a 30% guaranteed return — better than most investment alternatives available to a poor household.">The interest rate saved is equivalent to a guaranteed investment return at that same rate</button>
+        <button class="q-option" data-correct="false" data-explanation="Social relationships matter, but the core financial logic is the interest rate arbitrage.">It removes social obligation to lenders within the community</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">3. The "dignity argument" for unconditional cash holds that:</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Dignity is not primarily about political rights — it's about agency and self-determination.">Poor people deserve political representation before economic support</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Unconditional cash affirms recipient competence and autonomy. Conditions and monitoring deny it. The evidence suggests this autonomy also produces better economic and wellbeing outcomes, separately from the monetary value.">Treating recipients as capable decision-makers — without conditions — has value both morally and in terms of outcomes</button>
+        <button class="q-option" data-correct="false" data-explanation="The dignity argument is not about cultural relativism — it's about assuming competence rather than requiring its demonstration.">Cultural norms must be respected before any economic intervention</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="4">Mark module complete →</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – OBJECTIONS & REAL LIMITS
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 07</div>
+  <h1 class="mod-title">Objections &amp; <span class="acc">Real Limits</span></h1>
+  <p class="mod-lede">The evidence for direct cash transfers is strong — but "strong" doesn't mean "without limit." There are real questions about scale, inflation, labour supply, and what cash simply cannot fix. Taking these seriously makes the case more defensible, not less.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why near-zero inflation at village scale might not hold nationally</li>
+      <li>The work disincentive question — and what the evidence actually shows</li>
+      <li>Conditional vs. unconditional: when conditions might legitimately add value</li>
+      <li>What structural poverty problems cash transfers cannot solve</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Objection 1: Inflation at Scale</h2>
+  <p>The Kenya study found near-zero inflation at the village level. But that result is specific to a context where: (a) supply capacity was slack, (b) the transfers were concentrated in a small share of the overall economy, and (c) most goods were imported into the village from a larger market.</p>
+  <p>Scale the program up to the national level — say, a universal basic income for all Kenyan households — and the dynamics change. If demand rises uniformly across the whole economy while supply is fixed in the short run, prices rise. The inflation zero-result is partly a function of the program being small relative to the economy it sits in.</p>
+
+  <div class="callout mango">
+    <strong>The honest answer:</strong> we don't yet have a national-scale cash transfer large enough to test this rigorously. GiveDirectly's ongoing "basic income" pilot in Kenya covers around 20,000 people across hundreds of villages — large by research standards, but tiny relative to Kenya's 55 million population. The inflation dynamics at true national scale remain genuinely uncertain.
+  </div>
+
+  <h3 class="sub">The Supply-Side Response</h3>
+  <p>The pessimistic view assumes supply is fixed. The optimistic view: supply responds. If demand rises for grain, farmers plant more. If demand rises for construction services, more people train as builders. In the medium to long run, supply-side responses can absorb demand increases without sustained inflation. The Kenya evidence is consistent with this — no inflation over a multi-year follow-up period — but it's still only one context.</p>
+
+  <h2 class="sh">Objection 2: Work Disincentives</h2>
+  <p>Standard economic theory predicts that giving people money should reduce their labour supply — the "income effect." If you have $1,000, you might work fewer hours because you need fewer dollars from labour.</p>
+  <p>The empirical evidence from cash transfer programs is mostly reassuring. Most studies find small or no reductions in labour supply. Some find increases — because the transfer provides enough capital to invest in a small business or farm that generates more income than the wage labour it replaced. The GiveDirectly Kenya data found recipients worked the same number of hours, but on better activities (their own enterprises rather than wage labour).</p>
+
+  <!-- SVG: Labour supply findings across studies -->
+  <div class="demo-box">
+    <div class="demo-label">Labour supply effects across cash transfer programs (direction of finding)</div>
+    <svg viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:540px;display:block;margin:0 auto">
+      <!-- Center axis -->
+      <line x1="270" y1="20" x2="270" y2="160" stroke="#6B6259" stroke-width="1.5" stroke-dasharray="4"/>
+      <text x="150" y="16" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#E03E2D">FEWER HOURS</text>
+      <text x="390" y="16" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#1F9D55">MORE / SAME HOURS</text>
+
+      <!-- Programs -->
+      <text x="60" y="48" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">GiveDirectly Kenya</text>
+      <rect x="270" y="40" width="80" height="14" rx="3" fill="#1F9D55"/>
+      <text x="358" y="51" font-family="Inter,sans-serif" font-size="10" fill="#1F9D55">+same/more</text>
+
+      <text x="60" y="82" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">Stockton SEED (US)</text>
+      <rect x="270" y="74" width="60" height="14" rx="3" fill="#1F9D55"/>
+      <text x="338" y="85" font-family="Inter,sans-serif" font-size="10" fill="#1F9D55">+same</text>
+
+      <text x="60" y="116" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">Finland UBI pilot</text>
+      <rect x="230" y="108" width="40" height="14" rx="3" fill="#FFC234"/>
+      <text x="278" y="119" font-family="Inter,sans-serif" font-size="10" fill="#D97706">±small effect</text>
+
+      <text x="60" y="150" font-family="Inter,sans-serif" font-size="11" fill="#6B6259">US EITC (earned income)</text>
+      <rect x="235" y="142" width="35" height="14" rx="3" fill="#FFC234"/>
+      <text x="278" y="153" font-family="Inter,sans-serif" font-size="10" fill="#D97706">±mixed</text>
+    </svg>
+    <div class="demo-caption">Most studies find no significant labour supply reduction. The income effect predicted by theory is small or absent in practice — possibly because poor households are already working near-maximum hours and transfers enable quality shifts, not quantity reductions.</div>
+  </div>
+
+  <h2 class="sh">Objection 3: When Conditions Might Help</h2>
+  <p>The case against conditions is strong for general welfare transfers. But there are situations where conditionality has a legitimate rationale:</p>
+
+  <ul class="bl">
+    <li><strong>Positive externalities:</strong> if a behaviour (childhood vaccination, school attendance) has benefits to society beyond the individual, a subsidy conditional on that behaviour can correct the under-provision. This is the logic behind Mexico's Oportunidades and Brazil's Bolsa Família.</li>
+    <li><strong>Commitment devices:</strong> some recipients themselves prefer commitment structures — committing their own future resources to particular uses (savings programs, etc.) when present-bias might otherwise derail their intentions.</li>
+    <li><strong>Political economy:</strong> unconditional transfers are much harder to defend politically than conditional ones. A condition (attend school, see a doctor) gives the program a visible story that makes it defensible against "they'll waste it" attacks. This isn't an economic argument, but it's a real constraint on what programs can be implemented.</li>
+  </ul>
+
+  <h2 class="sh">What Cash Cannot Fix</h2>
+  <p>Direct cash transfers address capital constraints. They don't address:</p>
+
+  <ul class="bl">
+    <li><strong>Structural discrimination:</strong> cash given to a marginalised group doesn't change the labour market or social structures that limit their opportunities</li>
+    <li><strong>Missing markets:</strong> if there's no local health clinic, cash doesn't create one — it lets people travel to a clinic that may be far away</li>
+    <li><strong>Public goods:</strong> roads, schools, clean water — these require coordinated investment that individual transfers can't produce</li>
+    <li><strong>Political and legal security:</strong> recipients in conflict zones or without property rights can have cash-funded assets seized</li>
+    <li><strong>Relative poverty:</strong> if a transfer raises everyone's income equally, it may reduce absolute poverty while leaving relative poverty unchanged</li>
+  </ul>
+
+  <div class="callout">
+    <strong>The right framing:</strong> cash transfers are not a complete theory of development. They are one highly cost-effective tool that works for a specific and important problem — capital constraints on poor households. Used alongside investments in public goods and institutional reform, they're powerful. Used as a substitute for those investments, they hit their limits quickly.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check</div>
+    <div class="q-card">
+      <div class="q-text">1. The near-zero inflation finding from the Kenya study might not hold at national scale because:</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Currency pegs are not the mechanism — the issue is supply-demand dynamics across the whole economy.">National currencies don't have the same peg mechanisms as village economies</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. At village scale, supply comes from outside the village and can absorb increased local demand. At national scale, the supply response must come from within the economy and may be slower or incomplete.">At national scale, increased demand cannot be absorbed by importing from an adjacent larger market</button>
+        <button class="q-option" data-correct="false" data-explanation="Wealthier recipients are not the reason — the inflation dynamic is about aggregate supply and demand, not who receives the money.">Wealthier recipients at national scale have higher marginal propensity to import</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">2. Why does the empirical evidence on work disincentives mostly diverge from the theoretical prediction?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct. The income effect predicts reduced work, but poor households often can't reduce hours (survival requires near-maximum effort), and transfers enable investment in better work rather than less work.">Poor households were already working near maximum hours; transfers enabled shifts to better activities rather than fewer hours</button>
+        <button class="q-option" data-correct="false" data-explanation="Pride is a real factor in some cultural contexts but it's not the main economic explanation.">Recipients feel social pressure not to reduce work due to community expectations</button>
+        <button class="q-option" data-correct="false" data-explanation="Monitoring of labour supply does happen in some programs, but most cash transfer studies have no such monitoring — and still find no disincentive effect.">Work requirements were embedded in the programs studied</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">3. Which of these is the strongest example of a problem that direct cash transfers genuinely cannot solve?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Cash can and does raise educational attainment — by enabling school fees, transport, and replacing child labour income.">Low school enrollment in poor communities</button>
+        <button class="q-option" data-correct="false" data-explanation="Cash does improve access to healthcare by enabling people to pay for transport, fees, and medicines.">Lack of access to basic healthcare</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Public goods like roads require coordinated investment that individual cash transfers cannot produce — no single recipient has an incentive to fund infrastructure that benefits everyone.">A community's lack of road infrastructure connecting it to markets</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="5">Mark module complete →</button>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – THE BIGGER PICTURE
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 07</div>
+  <h1 class="mod-title">The <span class="acc">Bigger Picture</span></h1>
+  <p class="mod-lede">Kenya isn't the only data point. From Finland to Stockton, California, to long-running experiments in Namibia and India, the cash transfer evidence base is growing. Here's what the broader picture shows — and what it means for how you think about poverty and development.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How UBI experiments in rich countries compare to cash transfers in poor ones</li>
+      <li>The effective altruism framework and where GiveDirectly fits</li>
+      <li>The political economy of cash vs. conditional transfers</li>
+      <li>Concrete things you can do with this knowledge</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">UBI Experiments: A Global Map</h2>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🇫🇮</div>
+      <h4>Finland (2017–2018)</h4>
+      <p>2,000 unemployed people received €560/month unconditionally. Result: small positive effects on wellbeing and modest employment increases vs. control group. No significant labour supply reduction.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🇺🇸</div>
+      <h4>Stockton SEED (2019–2021)</h4>
+      <p>125 residents received $500/month. Recipients were more likely to move to full-time employment (from 28% to 40%), not less. Mental health improved. The "won't work" prediction failed.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🇰🇪</div>
+      <h4>GiveDirectly Kenya Basic Income</h4>
+      <p>Ongoing since 2017: ~20,000 people in 200+ villages receive 75 cents/day for 12 years. One of the longest-running UBI pilots anywhere. Early results consistent with the 2022 study.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🇮🇳</div>
+      <h4>SEWA Pilot, India (2011–2012)</h4>
+      <p>Rural Madhya Pradesh: unconditional cash improved nutrition, school attendance, livestock ownership, and business investment. Near-zero alcohol/tobacco increase. Sanitation improved.</p>
+    </div>
+  </div>
+
+  <!-- SVG: Timeline of major experiments -->
+  <div class="demo-box">
+    <div class="demo-label">Major cash transfer / UBI experiments — a timeline</div>
+    <svg viewBox="0 0 540 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:540px;display:block;margin:0 auto">
+      <!-- Timeline axis -->
+      <line x1="40" y1="65" x2="520" y2="65" stroke="#6B6259" stroke-width="1.5"/>
+      <!-- Year markers -->
+      <text x="40" y="82" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" text-anchor="middle">1997</text>
+      <text x="148" y="82" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" text-anchor="middle">2009</text>
+      <text x="220" y="82" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" text-anchor="middle">2014</text>
+      <text x="295" y="82" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" text-anchor="middle">2017</text>
+      <text x="375" y="82" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" text-anchor="middle">2019</text>
+      <text x="490" y="82" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259" text-anchor="middle">2022</text>
+
+      <!-- Events above line -->
+      <circle cx="40" cy="65" r="5" fill="#1F9D55"/>
+      <text x="40" y="50" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#1F9D55">Mexico</text>
+      <text x="40" y="40" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#1F9D55">Oportunidades</text>
+
+      <circle cx="148" cy="65" r="5" fill="#2D6FB3"/>
+      <text x="148" y="50" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2D6FB3">GiveDirectly</text>
+      <text x="148" y="40" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2D6FB3">founded</text>
+
+      <circle cx="220" cy="65" r="5" fill="#2D6FB3"/>
+      <text x="220" y="50" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2D6FB3">Kenya</text>
+      <text x="220" y="40" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2D6FB3">RCT begins</text>
+
+      <circle cx="295" cy="65" r="5" fill="#D97706"/>
+      <text x="295" y="50" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#D97706">Finland UBI</text>
+      <text x="295" y="40" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#D97706">pilot</text>
+
+      <circle cx="375" cy="65" r="5" fill="#D97706"/>
+      <text x="375" y="50" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#D97706">Stockton</text>
+      <text x="375" y="40" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#D97706">SEED</text>
+
+      <circle cx="490" cy="65" r="5" fill="#2D6FB3"/>
+      <text x="490" y="50" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2D6FB3">Egger et al.</text>
+      <text x="490" y="40" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2D6FB3">Econometrica</text>
+
+      <text x="280" y="115" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6B6259">Green = conditional · Blue = unconditional cash · Orange = rich-country UBI</text>
+    </svg>
+  </div>
+
+  <h2 class="sh">Effective Altruism and the "Best Use of a Dollar" Question</h2>
+  <p>The effective altruism (EA) movement — which seeks to identify the most cost-effective ways to improve welfare — has grappled seriously with GiveDirectly. The organisation is both a top-rated charity by GiveWell (which applies rigorous cost-effectiveness analysis) and a useful benchmark: if you're going to argue for a different charity or program, you need to argue it produces more welfare per dollar than just giving the money directly to a poor person.</p>
+  <p>This is a surprisingly high bar. Most programs don't clear it once you account for delivery overhead. The ones that do — deworming, vitamin A supplementation, certain malaria interventions — tend to address specific market failures that cash can't directly fix (e.g. you can't buy malaria prevention individually; it requires mosquito net distribution at scale).</p>
+
+  <div class="callout">
+    <strong>GiveDirectly as a benchmark:</strong> "Does this program deliver more value per dollar than giving the money directly to the beneficiary?" should be the default question for evaluating any aid intervention. Most interventions have never seriously asked it. The ones that have, have mostly improved their programs as a result.
+  </div>
+
+  <h2 class="sh">The Political Economy</h2>
+  <p>The most interesting tension in this space isn't empirical — it's political. Cash transfers that work well are politically fragile. They can be portrayed as "handouts," stigmatised by both left (who prefer public services) and right (who prefer conditionality). Conditional cash transfers have proven more politically durable precisely because they have a visible accountability story: "we only pay people who do X."</p>
+  <p>Brazil's Bolsa Família — a conditional cash transfer that reached 14 million families and is widely credited with major poverty reduction — succeeded partly because its conditions made it politically defensible. The conditions (school attendance, health check-ups) had modest independent effect, but they may have been essential to the program's survival through multiple administrations. This is an uncomfortable tradeoff: some conditions reduce efficiency but increase political sustainability.</p>
+
+  <h2 class="sh">What You Can Do</h2>
+  <p>Knowing this changes how you evaluate aid and giving. A few concrete implications:</p>
+
+  <ul class="bl">
+    <li><strong>If you donate to development charities,</strong> ask whether they have stronger evidence of impact than direct cash. GiveWell's top-rated charities clear this bar; most don't.</li>
+    <li><strong>If you work in policy,</strong> the default question for any proposed intervention should be "does this beat the cash equivalent?" If it can't answer that question, it probably shouldn't be funded.</li>
+    <li><strong>If you encounter the "they'll waste it" argument,</strong> you now have the systematic review to respond with: 19 studies, across multiple countries, found no evidence of increased alcohol or tobacco spending.</li>
+    <li><strong>Think about what cash can't fix.</strong> Cash is one tool. Public goods, institutional reform, infrastructure — these are complementary, not alternatives. The case for cash doesn't require dismissing public investment.</li>
+  </ul>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check</div>
+    <div class="q-card">
+      <div class="q-text">1. The Stockton SEED experiment found that recipients of $500/month were:</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The opposite — recipients became more likely to find full-time employment.">Less likely to seek full-time employment</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Full-time employment rose from 28% to 40% among recipients vs. no change in the control group. The unconditional income enabled risk-taking in job searching that welfare conditions often prevent.">More likely to transition to full-time employment than the control group</button>
+        <button class="q-option" data-correct="false" data-explanation="The income did improve mental health, but the employment finding was the opposite direction.">Significantly happier but no different in employment outcomes</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">2. Why do some development economists argue that GiveDirectly should be treated as a "benchmark" for evaluating other programs?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct. If an alternative program can't demonstrably produce more welfare per dollar than giving the money directly to the beneficiary, it's hard to justify the alternative over direct transfers.">Any alternative intervention must justify why it delivers more welfare per dollar than just giving the money to beneficiaries</button>
+        <button class="q-option" data-correct="false" data-explanation="GiveDirectly's overhead is low but not zero. The benchmark logic is about cost-effectiveness, not zero overhead.">GiveDirectly has zero overhead so all other programs must match that efficiency</button>
+        <button class="q-option" data-correct="false" data-explanation="GiveDirectly isn't the largest — programs like Bolsa Família are far larger. Size isn't the reason.">GiveDirectly is the largest development program ever run and thus defines the reference case</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">3. Brazil's Bolsa Família included school attendance conditions that had modest independent effect. Why might this design choice still be defensible?</div>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Conditions don't really reduce fraud — they add monitoring overhead. That's not the political economy argument.">Conditions reduce the risk of fraud and diversion</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct. Political durability matters for real-world impact. A program that could be cancelled after one election has far less cumulative impact than one that survives. Conditions provided the accountability narrative that made Bolsa Família politically defensible across administrations.">Conditions gave the program political durability across administrations by providing an accountability narrative</button>
+        <button class="q-option" data-correct="false" data-explanation="The conditions were not strictly enforced — compliance was monitored but enforcement was light. That's not the reason for their value.">The conditions were strictly enforced, which improved measurable outcomes significantly</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <button class="done-btn" data-module="6">Mark module complete →</button>
+
+  <div id="completion-banner">
+    <h2>Course complete 🎉</h2>
+    <p>You've worked through the evidence on direct cash transfers — from why traditional aid often fails to the mechanics of the multiplier and what UBI experiments worldwide are showing. Head to the References module for the full reading list.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">Every claim in this course traces back to a source. Here they are, annotated — with notes on what each contributes and any caveats about scope or methodology.</p>
+
+  <h3 class="sub">Primary Research</h3>
+
+  <div class="ref-item" style="border-left-color:#2D6FB3">
+    <div class="ref-citation">Egger, Dennis, Johannes Haushofer, Edward Miguel, Paul Niehaus, and Michael Walker. "General Equilibrium Effects of Cash Transfers: Experimental Evidence from Kenya." <em>Econometrica</em> 90, no. 6 (2022): 2603–2643.</div>
+    <div class="ref-annotation">The landmark study at the core of this course. Randomised 653 Kenyan villages to receive $1,000 transfers to 10,500 households. Measured both individual outcomes and local general equilibrium effects (spillovers to non-recipients, price effects, enterprise impacts). Finds a ~$2.50 local multiplier and near-zero inflation. The village-level randomisation is the methodological advance that makes this more than a standard RCT. Caveat: single context (western Kenya), so external validity to other settings remains to be established.</div>
+    <a class="ref-link" href="https://doi.org/10.3982/ECTA17945" target="_blank" rel="noopener">→ DOI: 10.3982/ECTA17945</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:#2D6FB3">
+    <div class="ref-citation">Evans, David K., and Anna Popova. "Cash Transfers and Temptation Goods." <em>Economic Development and Cultural Change</em> 65, no. 2 (2017): 189–221.</div>
+    <div class="ref-annotation">Systematic review of 19 quantitative studies examining whether cash transfers increase spending on alcohol, tobacco, and gambling ("temptation goods"). Finding: no statistically significant increases across the evidence base; several programs found modest decreases. This is the most rigorous meta-analytic answer to the "they'll waste it on alcohol" objection. Caveat: most studies rely on self-reported expenditure data, which may undercount temptation goods in contexts with social stigma around reporting.</div>
+    <a class="ref-link" href="https://doi.org/10.1086/686745" target="_blank" rel="noopener">→ DOI: 10.1086/686745</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:#2D6FB3">
+    <div class="ref-citation">Banerjee, Abhijit, Paul Niehaus, and Tavneet Suri. "Universal Basic Income in the Developing World." <em>Annual Review of Economics</em> 11 (2019): 959–983.</div>
+    <div class="ref-annotation">Authoritative review of the UBI evidence base in low-income settings by three leading development economists. Covers both cash transfers and UBI-specific pilots. Synthesises the consumption, investment, labour supply, and wellbeing evidence. Useful framework for distinguishing what's known from what remains uncertain. Caveat: written before the 2022 Egger et al. general equilibrium result, so it doesn't include the local multiplier evidence.</div>
+    <a class="ref-link" href="https://doi.org/10.1146/annurev-economics-080218-030229" target="_blank" rel="noopener">→ DOI: 10.1146/annurev-economics-080218-030229</a>
+  </div>
+
+  <h3 class="sub">Cognitive & Behavioural Evidence</h3>
+
+  <div class="ref-item" style="border-left-color:#D97706">
+    <div class="ref-citation">Mullainathan, Sendhil, and Eldar Shafir. <em>Scarcity: Why Having Too Little Means So Much.</em> New York: Times Books / Henry Holt, 2013.</div>
+    <div class="ref-annotation">The foundational book on "bandwidth tax" — the cognitive cost of scarcity. Presents the experimental evidence that financial worry consumes working memory and executive function, producing measurable impairments equivalent to losing a night's sleep or a meaningful drop in IQ. Not specific to cash transfers, but provides the psychological framework for why complex, conditional aid programs impose hidden costs on recipients. Caveat: some of the specific experimental results (particularly sugar cane farmer studies) have not fully replicated, though the core bandwidth concept has broader support.</div>
+    <a class="ref-link" href="https://scholar.google.com/scholar?q=Scarcity+Mullainathan+Shafir+2013" target="_blank" rel="noopener">→ Google Scholar</a>
+  </div>
+
+  <h3 class="sub">UBI / Rich-Country Pilots</h3>
+
+  <div class="ref-item" style="border-left-color:#1F9D55">
+    <div class="ref-citation">Kangas, Olli, Signe Jauhiainen, Miska Simanainen, and Minna Ylikännö, eds. <em>The Basic Income Experiment 2017–2018 in Finland: Final Report.</em> Helsinki: Ministry of Social Affairs and Health, 2020.</div>
+    <div class="ref-annotation">Official final report of Finland's two-year UBI experiment. 2,000 unemployed citizens received €560/month unconditionally. Key findings: modest improvement in wellbeing and mental health; small positive employment effect (recipients more likely to work than control group by year 2). No significant reduction in labour supply. Caveat: participants were drawn only from the unemployed population, limiting generalisability to employed workers who might respond differently to an unconditional income.</div>
+    <a class="ref-link" href="https://julkaisut.valtioneuvosto.fi/handle/10024/162219" target="_blank" rel="noopener">→ Finnish Government Publications</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:#1F9D55">
+    <div class="ref-citation">West, Stacia, Amy Castro Baker, Sukhi Samra, and Donna Coltrera. "Preliminary Analysis: SEED's First Year." Stockton Economic Empowerment Demonstration, 2021.</div>
+    <div class="ref-annotation">Primary report from Stockton's $500/month guaranteed income pilot (SEED). 125 recipients vs. 200-person control group. Key findings: full-time employment rose from 28% to 40% among recipients; mental health and physical health improved; spending concentrated on necessities. Documents the counterintuitive result that unconditional income enabled more labour market participation, not less. Caveat: relatively small sample in a single US city with specific demographic and economic characteristics.</div>
+    <a class="ref-link" href="https://www.stocktondemonstration.org/research" target="_blank" rel="noopener">→ SEED Research Page</a>
+  </div>
+
+  <h3 class="sub">Development Economics & Policy Context</h3>
+
+  <div class="ref-item" style="border-left-color:#E03E2D">
+    <div class="ref-citation">Banerjee, Abhijit V., and Esther Duflo. <em>Poor Economics: A Radical Rethinking of the Way to Fight Global Poverty.</em> New York: PublicAffairs, 2011.</div>
+    <div class="ref-annotation">The accessible synthesis of RCT-based development economics by the 2019 Nobel laureates. Not a cash-transfer book per se — it covers a wide range of interventions — but it's the essential background for understanding why RCTs transformed development economics and what the evidence base looked like before the cash transfer literature matured. Caveat: pre-dates most of the GiveDirectly evidence and doesn't engage with the general equilibrium multiplier question.</div>
+    <a class="ref-link" href="https://scholar.google.com/scholar?q=Poor+Economics+Banerjee+Duflo" target="_blank" rel="noopener">→ Google Scholar</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:#E03E2D">
+    <div class="ref-citation">GiveWell. "GiveDirectly." GiveWell Top Charities Analysis, updated 2024.</div>
+    <div class="ref-annotation">GiveWell's detailed cost-effectiveness analysis and charity evaluation of GiveDirectly. Includes delivery cost breakdowns, evidence review, and comparison to alternative top charities. Useful for understanding how direct transfers compare to other high-evidence interventions (malaria nets, deworming). Caveat: GiveWell's methodology involves significant modelling assumptions; their cost-effectiveness estimates should be read as relative comparisons rather than absolute figures.</div>
+    <a class="ref-link" href="https://www.givewell.org/charities/give-directly" target="_blank" rel="noopener">→ GiveWell GiveDirectly page</a>
+  </div>
+
+  <div class="callout tomato">
+    <strong>Data quality note:</strong> The strongest evidence base (Kenya RCTs) comes from a single lower-income country context. Results may not generalise directly to different economic structures, governance environments, or cultural settings. The rich-country UBI pilots (Finland, Stockton) are encouraging but small-scale. National-scale inflation effects remain genuinely untested. The spending-on-vices literature relies partly on self-reported data. This course presents the evidence accurately, but you should hold the conclusions with appropriate uncertainty about external validity.
+  </div>
+
+  <button class="done-btn" data-module="7">Mark as complete →</button>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'direct-cash-transfers';
+const TOTAL = 7;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed ✓'; btn.disabled = true; }
+  }
+  if (count >= TOTAL) {
+    const banner = document.getElementById('completion-banner');
+    if (banner) banner.style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+function goto(m) {
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
