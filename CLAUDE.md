@@ -487,6 +487,212 @@ biggest build, so it goes after the format patterns are proven.*
 
 ---
 
+## Adult Course Standard
+
+Every adult course on this site follows the **sidebar layout** introduced in `design-principles-course-v1.html` and confirmed in `aasb-s2-climate-disclosures-v1.html`. This is the canonical pattern — the older `ai-capability-course.html` (single-scroll, DM Serif fonts) is legacy and should not be replicated.
+
+### File & wiring
+- **One self-contained HTML file**, vanilla HTML/CSS/JS, no build tools, no frameworks.
+- File path: `courses/<category>/<slug>-v1.html` (e.g. `courses/design/design-principles-course-v1.html`).
+- **Only wiring point:** add an entry to `assets/courses.json`. The index hub derives everything else (chips, counts, featured panel) from the manifest. Adult courses are NOT wired into `rayyan.html`, `kids.html`, `auth.js`, `dashboard.html`, or `sw.js`.
+- `courses.json` entry shape:
+  ```json
+  {
+    "id": "kebab-case-id",
+    "n": "NN",
+    "title": "Course Title",
+    "blurb": "One or two sentences – what you learn and why it matters.",
+    "category": "Foundations | Life | Practice | Research | Tools | Play",
+    "tags": ["Beginner|Intermediate", "Topic"],
+    "primitive": "arc | dot | blade | eye | slab | wave | plus",
+    "accent": "tomato | mango | forest | sea | mawar | indigo | ink",
+    "path": "courses/<category>/<slug>-v1.html",
+    "duration": "~N days | ~N weeks | Series | Tool | Report | Game",
+    "featured": true   // optional, only one course at a time
+  }
+  ```
+
+### HTML boilerplate
+```html
+<!DOCTYPE html>
+<html lang="en" data-course-id="<id-matching-courses-json>">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Title · Learn with Adhi</title>
+<meta name="description" content="...">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/.../...html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="...">
+<meta property="og:description" content="...">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-<accent>-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"...","description":"...","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+```
+
+### CSS design tokens (copy verbatim, change only `--acc`/`--acc-dim`/`--acc-bg`)
+```css
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08); /* change per course accent */
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+```
+Accent colours by design-system token:
+| Token | Hex | Use for |
+|---|---|---|
+| `--tomato` | `#E03E2D` / `rgba(224,62,45,…)` | AI, urgent, action |
+| `--mango` | `#D97706` / `rgba(217,119,6,…)` | Tools, practical |
+| `--forest` | `#1F9D55` / `rgba(31,157,85,…)` | Climate, sustainability |
+| `--sea` | `#2D6FB3` / `rgba(45,111,179,…)` | Travel, calm, research |
+| `--mawar` | `#7C3AED` / `rgba(124,58,237,…)` | Design, creative |
+| `--indigo` | `#1C5DDC` / `rgba(28,93,220,…)` | Tech, coding |
+| `--ink` | `#1A1614` | Default / no colour |
+
+### Layout structure
+```
+<body>
+  <aside id="sidebar">               <!-- fixed dark sidebar, 268px wide -->
+    .sb-logo (← back link + "COURSE" label)
+    .sb-prog (progress bar + "X / N modules" text)
+    <nav> (.nav-item × N with data-module="N") </nav>
+    .sb-footer (← Back to all courses)
+  </aside>
+  <div id="mob-header"> (hamburger + course short title) </div>
+  <div id="overlay"></div>
+  <main id="main">
+    <section id="module-1" class="module-section"> … </section>
+    <section id="module-2" class="module-section"> … </section>
+    …
+  </main>
+</body>
+```
+
+### Module content structure (repeat for each module)
+```html
+<section id="module-N" class="module-section">
+  <div class="mod-eyebrow">Module 0N / 0T</div>
+  <h1 class="mod-title">Title with <span class="acc">Coloured Word</span></h1>
+  <p class="mod-lede">1–2 sentence hook — what and why.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list"><li>…</li></ul>
+  </div>
+  <!-- Content sections -->
+  <h2 class="sh">Section heading</h2>
+  <h3 class="sub">Sub-heading</h3>
+  <p>Body text (max-width 680px).</p>
+  <ul class="bl"> / <ol class="nl">   <!-- bullet / numbered lists -->
+  <div class="callout">…</div>        <!-- purple; add class gold or green to vary -->
+  <div class="demo-box">…</div>       <!-- interactive demo or visual example -->
+  <div class="concept-grid">…</div>   <!-- 3–4 concept cards -->
+  <!-- Quiz at module end -->
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check</div>
+    <div class="q-card"> … </div>
+  </div>
+  <!-- Checklist (action step or reflection) -->
+  <div class="checklist"> … </div>
+  <!-- Resources -->
+  <div class="resource-grid"> … </div>
+  <!-- Module done button -->
+  <button class="done-btn" onclick="markDone(N)">Mark module complete →</button>
+  <!-- Completion banner on LAST module only -->
+  <div id="completion-banner" style="display:none">…</div>
+</section>
+```
+
+### Module count
+- **Default: 6 modules** (mirrors the kids' 6-chapter pattern; keeps the commitment manageable).
+- Allowed: 5–8 modules for topics that genuinely need it (e.g. the 8-expedition Proof series). Never inflate for bulk.
+- Module 6 (or last) = **capstone / synthesis** — the "so what do I do with this" module, not just more content.
+
+### Progress & localStorage
+- `data-course-id` on `<html>` is the storage key namespace.
+- Shape: `{ completedModules: [1,3,5], courseCompleted: false }`
+- `markDone(n)` saves the module, updates sidebar nav (add `.done`), fills the progress bar, shows completion banner when all modules done, and sets `lwa:completed:<course-id>` (drives the "✓ Read" pill on `index.html`).
+- JS pattern (copy from `design-principles-course-v1.html` — it is the reference implementation).
+
+### Content quality bar
+- **Teach the real thing, not a watered-down version.** Adult learners can handle nuance; condescension loses them faster than complexity.
+- **Every concept needs a "so what."** Theory without application is dead weight. End every section with a concrete use or decision it unlocks.
+- **Show, don't just tell.** Use `.demo-box` for visual/interactive examples wherever the concept has a shape (contrast, ratios, timelines, formulas). Inline CSS mini-widgets > walls of text.
+- **Callouts for the non-obvious.** `.callout` = a surprising implication, a common misconception, or a nuance that changes how you use the concept. Not a summary repeat.
+- **Quizzes test understanding, not recall.** Questions should require the learner to apply the idea, not just echo back a definition. 3–4 questions per module is the right density.
+- **Module length:** aim for 8–15 minutes of reading per module (roughly 1 200–2 000 words of prose + demos). More than 20 min = split it.
+- **Language:** plain English (or Bahasa Indonesia if the audience is explicitly Indonesian). No jargon without definition. No passive voice.
+
+### Tone
+Warm but direct. First-person plural ("we") for shared discovery. Address the reader as a capable adult who's just new to this topic. No corporate hedging ("it may be argued that…"), no over-explaining the obvious. Write as Adhi would explain it to a smart friend over coffee.
+
+---
+
+### Mandatory structure (every course, no exceptions)
+
+#### Chrome & navigation
+- **Sidebar** with: Adhi logo mark (links to `index.html`), module list with numbered nav items + ✓ marks, overall progress bar that fills as quizzes are completed (not just "Mark done" clicks), and a "← Back to all courses" footer link.
+- **Prev / Next buttons** at the bottom of every module section — never leave the reader stranded.
+
+#### Module header (every module must have all four)
+1. Eyebrow label — `MODULE XX / XX` in monospace uppercase muted text
+2. `h1.mod-title` with **one accent-coloured word** wrapped in `<span class="acc">`
+3. `p.mod-lede` — 1–2 sentence hook
+4. `div.mod-objectives` — "What you'll learn" bullet list (3–5 items)
+
+#### Per-module content requirements
+- **At least one SVG diagram** per module. Must carry real quantitative or structural information (a labelled flow, a scaled bar, a timeline with dates, a cause-effect map). Purely decorative SVGs don't count. Inline SVG in the HTML, not an `<img>` tag.
+- **Stat cards** for key numbers — always 3-per-row, dark background (`var(--ink)`), white text, the number large in `var(--acc)`, a short label below. Use a `.stat-row` / `.stat-card` pattern.
+- **Colour-coded callout boxes** — four variants, never interchanged:
+  | Class | Colour | Use for |
+  |---|---|---|
+  | `.callout` (default) | `--acc` (course accent) | Key insight or definition |
+  | `.callout.tomato` | `--tomato` `#E03E2D` | Warning, risk, critical caveat |
+  | `.callout.green` | `--green` `#1F9D55` | Positive outcome, solution, good practice |
+  | `.callout.blue` | `--sea` `#2D6FB3` | Factual / data point, neutral finding |
+  | `.callout.mango` | `--mango` / `#D97706` | Nuance, context, "it depends" |
+- **Inline 3-question quiz** per module — instant feedback (correct/wrong highlight + explanation), running score display (e.g. "2 / 3 correct"). Questions must test *application*, not recall. Quiz completion (≥ 2/3 correct) is what advances the overall progress bar.
+
+#### References module (mandatory — always the last sidebar item)
+Every course ends with a **References** module. It is a real module in the sidebar (numbered last, e.g. `MODULE 07 / 07`), not a footer footnote.
+
+Structure:
+```html
+<section id="module-refs" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">Every claim in this course traces back to a source. Here they are, annotated.</p>
+
+  <!-- One .ref-item per source -->
+  <div class="ref-item" style="border-left-color: var(--acc)">
+    <div class="ref-citation">Author Last, First. "Title." <em>Journal/Publisher</em> Vol (Year): pages. DOI/URL.</div>
+    <div class="ref-annotation">2–3 sentences: what this source contributes, and any caveats (bias, methodology limits, data vintage).</div>
+    <a class="ref-link" href="…" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <!-- Closing data-quality callout -->
+  <div class="callout tomato">
+    <strong>Data quality note:</strong> [Course-specific caveats about the reliability, vintage, or geographic scope of the evidence base.]
+  </div>
+</section>
+```
+
+Rules:
+- **Citation format:** Chicago 17th edition (Author Last, First. *Title*. Publisher, Year. DOI or URL).
+- **Annotation:** 2–3 sentences — what it contributes + any caveats (methodology limits, data vintage, potential bias). No annotation = the ref doesn't ship.
+- **"→ Source" link:** DOI for peer-reviewed papers; direct URL for grey literature/reports; Google Scholar or publisher page for books. Every ref-item must have one.
+- **Colour-code by topic group** using left-border colours (reuse the callout colour set — pick one colour per thematic group within the course and apply it consistently to that group's ref-items).
+- **Closing data-quality callout** (`.callout.tomato`) flagging caveats specific to this course's evidence base (e.g. "Most studies are US/EU; Indonesian data is sparse").
+
+---
+
 ## Technical Stack
 - Pure HTML + CSS + Vanilla JS, single-file per course
 - No build tools, no frameworks
