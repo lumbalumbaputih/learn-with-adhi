@@ -635,6 +635,64 @@ Warm but direct. First-person plural ("we") for shared discovery. Address the re
 
 ---
 
+### Mandatory structure (every course, no exceptions)
+
+#### Chrome & navigation
+- **Sidebar** with: Adhi logo mark (links to `index.html`), module list with numbered nav items + ✓ marks, overall progress bar that fills as quizzes are completed (not just "Mark done" clicks), and a "← Back to all courses" footer link.
+- **Prev / Next buttons** at the bottom of every module section — never leave the reader stranded.
+
+#### Module header (every module must have all four)
+1. Eyebrow label — `MODULE XX / XX` in monospace uppercase muted text
+2. `h1.mod-title` with **one accent-coloured word** wrapped in `<span class="acc">`
+3. `p.mod-lede` — 1–2 sentence hook
+4. `div.mod-objectives` — "What you'll learn" bullet list (3–5 items)
+
+#### Per-module content requirements
+- **At least one SVG diagram** per module. Must carry real quantitative or structural information (a labelled flow, a scaled bar, a timeline with dates, a cause-effect map). Purely decorative SVGs don't count. Inline SVG in the HTML, not an `<img>` tag.
+- **Stat cards** for key numbers — always 3-per-row, dark background (`var(--ink)`), white text, the number large in `var(--acc)`, a short label below. Use a `.stat-row` / `.stat-card` pattern.
+- **Colour-coded callout boxes** — four variants, never interchanged:
+  | Class | Colour | Use for |
+  |---|---|---|
+  | `.callout` (default) | `--acc` (course accent) | Key insight or definition |
+  | `.callout.tomato` | `--tomato` `#E03E2D` | Warning, risk, critical caveat |
+  | `.callout.green` | `--green` `#1F9D55` | Positive outcome, solution, good practice |
+  | `.callout.blue` | `--sea` `#2D6FB3` | Factual / data point, neutral finding |
+  | `.callout.mango` | `--mango` / `#D97706` | Nuance, context, "it depends" |
+- **Inline 3-question quiz** per module — instant feedback (correct/wrong highlight + explanation), running score display (e.g. "2 / 3 correct"). Questions must test *application*, not recall. Quiz completion (≥ 2/3 correct) is what advances the overall progress bar.
+
+#### References module (mandatory — always the last sidebar item)
+Every course ends with a **References** module. It is a real module in the sidebar (numbered last, e.g. `MODULE 07 / 07`), not a footer footnote.
+
+Structure:
+```html
+<section id="module-refs" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">Every claim in this course traces back to a source. Here they are, annotated.</p>
+
+  <!-- One .ref-item per source -->
+  <div class="ref-item" style="border-left-color: var(--acc)">
+    <div class="ref-citation">Author Last, First. "Title." <em>Journal/Publisher</em> Vol (Year): pages. DOI/URL.</div>
+    <div class="ref-annotation">2–3 sentences: what this source contributes, and any caveats (bias, methodology limits, data vintage).</div>
+    <a class="ref-link" href="…" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <!-- Closing data-quality callout -->
+  <div class="callout tomato">
+    <strong>Data quality note:</strong> [Course-specific caveats about the reliability, vintage, or geographic scope of the evidence base.]
+  </div>
+</section>
+```
+
+Rules:
+- **Citation format:** Chicago 17th edition (Author Last, First. *Title*. Publisher, Year. DOI or URL).
+- **Annotation:** 2–3 sentences — what it contributes + any caveats (methodology limits, data vintage, potential bias). No annotation = the ref doesn't ship.
+- **"→ Source" link:** DOI for peer-reviewed papers; direct URL for grey literature/reports; Google Scholar or publisher page for books. Every ref-item must have one.
+- **Colour-code by topic group** using left-border colours (reuse the callout colour set — pick one colour per thematic group within the course and apply it consistently to that group's ref-items).
+- **Closing data-quality callout** (`.callout.tomato`) flagging caveats specific to this course's evidence base (e.g. "Most studies are US/EU; Indonesian data is sparse").
+
+---
+
 ## Technical Stack
 - Pure HTML + CSS + Vanilla JS, single-file per course
 - No build tools, no frameworks
