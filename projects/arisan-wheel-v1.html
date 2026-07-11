@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌸 Roda Arisan TMR 2026/2027</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root{
+    --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+    --muted:#6B6259; --line:rgba(26,22,20,0.14); --line-s:rgba(26,22,20,0.22);
+    --pink:#E85D8A; --pink-dim:#C84471; --gold:#FFC234; --green:#1F9D55; --red:#E03E2D;
+    --fd:'Segoe UI',system-ui,sans-serif; --fb:'Segoe UI',system-ui,sans-serif; --fm:ui-monospace,monospace;
+    --ease:cubic-bezier(0.16,1,0.3,1);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:var(--fb); background:var(--paper); color:var(--ink);
+    background-image:radial-gradient(circle at 10% 10%, rgba(232,93,138,0.10), transparent 40%),
+                      radial-gradient(circle at 90% 20%, rgba(255,194,52,0.12), transparent 40%);
+    min-height:100vh; padding:20px 14px 60px;
+  }
+  .wrap{max-width:640px; margin:0 auto}
+  header{text-align:center; margin-bottom:18px}
+  h1{font-family:var(--fd); font-size:clamp(24px,6vw,34px); margin:6px 0 4px; letter-spacing:-0.02em}
+  .sub{color:var(--muted); font-size:14px; margin:0}
+  .stats{display:flex; justify-content:center; gap:10px; margin:16px 0; flex-wrap:wrap}
+  .stat{
+    background:var(--ink); color:var(--paper); border-radius:14px; padding:10px 18px;
+    text-align:center; min-width:100px;
+  }
+  .stat b{display:block; font-size:22px; font-family:var(--fd); color:var(--gold)}
+  .stat span{font-size:11px; opacity:.85}
+
+  .wheel-stage{position:relative; width:min(92vw,420px); aspect-ratio:1; margin:10px auto 18px}
+  .pointer{
+    position:absolute; top:-6px; left:50%; transform:translateX(-50%); z-index:5;
+    width:0; height:0; border-left:16px solid transparent; border-right:16px solid transparent;
+    border-top:28px solid var(--ink); filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));
+  }
+  .pointer::after{
+    content:''; position:absolute; top:-28px; left:-13px; width:0; height:0;
+    border-left:13px solid transparent; border-right:13px solid transparent; border-top:22px solid var(--red);
+  }
+  #wheelSvg{
+    width:100%; height:100%; border-radius:50%; display:block;
+    border:6px solid var(--ink); box-shadow:0 10px 30px rgba(26,22,20,.25);
+    background:var(--paper-2);
+  }
+  #wheelG{transform-origin:250px 250px; transition:transform 5.5s cubic-bezier(0.12,0.67,0.15,1);}
+  .hub{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:17%; aspect-ratio:1; border-radius:50%; background:var(--ink);
+    border:4px solid var(--gold); display:flex; align-items:center; justify-content:center;
+    font-size:22px; z-index:4;
+  }
+
+  .spin-btn{
+    display:block; width:100%; max-width:340px; margin:6px auto 0; padding:16px 20px;
+    font-family:var(--fd); font-weight:800; font-size:19px; letter-spacing:.02em;
+    background:var(--pink); color:#fff; border:3px solid var(--ink); border-radius:16px;
+    cursor:pointer; box-shadow:4px 4px 0 var(--ink); transition:transform .15s var(--ease), box-shadow .15s var(--ease);
+  }
+  .spin-btn:hover:not(:disabled){transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--ink)}
+  .spin-btn:active:not(:disabled){transform:translate(1px,1px); box-shadow:2px 2px 0 var(--ink)}
+  .spin-btn:disabled{opacity:.5; cursor:not-allowed; box-shadow:2px 2px 0 var(--ink)}
+
+  .toolbar{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:16px 0}
+  .toolbar button{
+    font-family:var(--fb); font-size:13px; font-weight:600; padding:9px 14px;
+    border:2px solid var(--ink); border-radius:10px; background:#fff; color:var(--ink); cursor:pointer;
+  }
+  .toolbar button:hover{background:var(--paper-2)}
+  .toolbar button.danger{color:var(--red); border-color:var(--red)}
+
+  .card{
+    background:#fff; border:2px solid var(--ink); border-radius:16px; padding:16px 18px; margin-top:18px;
+  }
+  .card h2{font-family:var(--fd); font-size:17px; margin:0 0 10px}
+  .round{margin-bottom:12px}
+  .round-label{font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--pink-dim); margin-bottom:6px}
+  .winner-row{
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+    padding:7px 10px; border-radius:8px; font-size:14.5px; background:var(--paper);
+    border:1px solid var(--line); margin-bottom:5px;
+  }
+  .winner-row .name{font-weight:700}
+  .winner-row .unit{font-family:var(--fm); font-size:12px; color:var(--muted)}
+  .empty-note{color:var(--muted); font-size:13.5px; text-align:center; padding:8px 0}
+
+  details.manage{margin-top:14px}
+  details.manage summary{cursor:pointer; font-weight:700; font-size:13.5px; color:var(--muted); padding:6px 0}
+  .manage-list{max-height:300px; overflow:auto; margin-top:8px; border:1px solid var(--line); border-radius:10px}
+  .manage-item{
+    display:flex; align-items:center; gap:8px; padding:7px 10px; font-size:13.5px;
+    border-bottom:1px solid var(--line);
+  }
+  .manage-item:last-child{border-bottom:none}
+  .manage-item.picked{opacity:.55; text-decoration:line-through}
+  .manage-item input{width:16px; height:16px}
+
+  /* Winner overlay */
+  #overlay{
+    position:fixed; inset:0; background:rgba(26,22,20,.55); display:none;
+    align-items:center; justify-content:center; z-index:50; padding:20px;
+  }
+  #overlay.show{display:flex}
+  .win-card{
+    background:#fff; border:3px solid var(--ink); border-radius:20px; padding:32px 24px;
+    text-align:center; max-width:340px; box-shadow:8px 8px 0 var(--gold);
+    animation:pop .35s var(--ease);
+  }
+  @keyframes pop{from{transform:scale(.85); opacity:0}to{transform:scale(1); opacity:1}}
+  .win-card .emoji{font-size:52px; margin-bottom:6px}
+  .win-card h3{font-family:var(--fd); font-size:15px; color:var(--muted); margin:0 0 4px; text-transform:uppercase; letter-spacing:.04em}
+  .win-card .win-name{font-family:var(--fd); font-size:28px; margin:4px 0}
+  .win-card .win-unit{font-family:var(--fm); font-size:15px; color:var(--pink-dim); margin-bottom:18px}
+  .win-card button{
+    padding:12px 26px; font-weight:800; font-size:15px; background:var(--ink); color:#fff;
+    border:none; border-radius:12px; cursor:pointer;
+  }
+
+  canvas#confetti{position:fixed; inset:0; pointer-events:none; z-index:60}
+
+  footer{text-align:center; color:var(--muted); font-size:12px; margin-top:26px; line-height:1.6}
+
+  @media print{
+    body{background:#fff}
+    .wheel-stage,.spin-btn,.toolbar,.pointer,details.manage,footer,.stats{display:none !important}
+    .card{border:1px solid #000; box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+
+<div class="wrap">
+  <header>
+    <h1>🌸 Roda Arisan TMR 🌸</h1>
+    <p class="sub">Tirta Mas Residence · Tahun ke-11 (2026/2027) · 50 peserta, 5 pemenang tiap putaran</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><b id="statRemain">50</b><span>Belum dapat</span></div>
+    <div class="stat"><b id="statWon">0</b><span>Sudah dapat</span></div>
+    <div class="stat"><b id="statRound">1</b><span>Putaran ke-</span></div>
+  </div>
+
+  <div class="wheel-stage">
+    <div class="pointer"></div>
+    <svg id="wheelSvg" viewBox="0 0 500 500">
+      <g id="wheelG"></g>
+    </svg>
+    <div class="hub">🎡</div>
+  </div>
+
+  <button class="spin-btn" id="spinBtn">🎡 PUTAR RODA!</button>
+
+  <div class="toolbar">
+    <button id="undoBtn">↩️ Batalkan pilihan terakhir</button>
+    <button id="copyBtn">📋 Salin hasil (untuk WA)</button>
+    <button id="printBtn">🖨️ Cetak daftar</button>
+    <button id="resetBtn" class="danger">🗑️ Reset semua</button>
+  </div>
+
+  <div class="card">
+    <h2>🏆 Daftar Pemenang</h2>
+    <div id="winnersBox"><div class="empty-note">Belum ada yang menang — putar roda untuk mulai!</div></div>
+  </div>
+
+  <details class="manage">
+    <summary>⚙️ Kelola peserta manual (koreksi / tandai sudah menang tanpa memutar roda)</summary>
+    <div class="manage-list" id="manageList"></div>
+  </details>
+
+  <footer>
+    Data pemenang disimpan hanya di browser ini (localStorage). Kalau ganti perangkat atau hapus data browser,
+    riwayat akan hilang — pakai tombol "Salin hasil" atau "Cetak" tiap selesai putaran untuk menyimpan catatan.
+  </footer>
+</div>
+
+<div id="overlay">
+  <div class="win-card">
+    <div class="emoji">🎉</div>
+    <h3>Selamat kepada</h3>
+    <div class="win-name" id="winName">—</div>
+    <div class="win-unit" id="winUnit">—</div>
+    <button id="continueBtn">Lanjutkan →</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var PARTICIPANTS = [
+    {name:"Ibu Deni (RT)", unit:"E18"},
+    {name:"Icha", unit:"C25"},
+    {name:"Hera", unit:"G29"},
+    {name:"Susy", unit:"A3"},
+    {name:"Roos Adin", unit:"B3"},
+    {name:"Yen", unit:"C3"},
+    {name:"Ferry", unit:"F1"},
+    {name:"Ria", unit:"J1"},
+    {name:"Indah Razaad", unit:"F11"},
+    {name:"Asih", unit:"E6"},
+    {name:"Bu Cyril", unit:"E10"},
+    {name:"Bu Rizka", unit:"K5"},
+    {name:"Bu Mega", unit:"A18"},
+    {name:"Bu Yuli", unit:"C11A"},
+    {name:"Bu Ros", unit:"A8"},
+    {name:"Ita", unit:"A2a"},
+    {name:"Emma", unit:"B9"},
+    {name:"Bu Ine", unit:"H3"},
+    {name:"Ina Affiat", unit:"C5"},
+    {name:"Vira", unit:"A5"},
+    {name:"Dasmi", unit:"F23"},
+    {name:"Elsye", unit:"E16"},
+    {name:"Herti", unit:"M3"},
+    {name:"Wati", unit:"C1"},
+    {name:"Teti", unit:"C19"},
+    {name:"Sarah", unit:"A9"},
+    {name:"Endah", unit:"F19"},
+    {name:"Sashie", unit:"B12A"},
+    {name:"Fitry", unit:"A2"},
+    {name:"Sekar", unit:"M5"},
+    {name:"Dian", unit:"I1/3"},
+    {name:"Furry", unit:"A1"},
+    {name:"Indri", unit:"E2a"},
+    {name:"Bu Piah", unit:"F9"},
+    {name:"Lita", unit:"M8"},
+    {name:"Bu Komar", unit:"D7"},
+    {name:"Asti", unit:"L7"},
+    {name:"Bu Sinta", unit:"I2/5"},
+    {name:"Bu Mia", unit:"D3"},
+    {name:"Bu Indah", unit:"F24"},
+    {name:"Bu Piesca", unit:"I2/6"},
+    {name:"Bu Tya", unit:"F16"},
+    {name:"Bu Lia", unit:"B18"},
+    {name:"Bu Anna", unit:"G3"},
+    {name:"Bu Vivi", unit:"G5"},
+    {name:"Bu Nana", unit:"F10"},
+    {name:"Bu Dewi", unit:"G27"},
+    {name:"Bu Resty", unit:"N1"},
+    {name:"Bu Chitra", unit:"I3-5"},
+    {name:"Hayyin", unit:"I3/2A"}
+  ];
+
+  var STORAGE_KEY = "arisanTMR_2026_2027_winners";
+  var COLORS = ["#E85D8A","#FFC234","#2D6FB3","#1F9D55","#D97706","#7C3AED","#E03E2D","#1C5DDC"];
+  var WINNERS_PER_ROUND = 5;
+
+  var winners = loadWinners(); // array of {name, unit, round, ts}
+  var spinning = false;
+  var cx = 250, cy = 250, r = 240;
+
+  var svgG = document.getElementById("wheelG");
+  var spinBtn = document.getElementById("spinBtn");
+  var overlay = document.getElementById("overlay");
+  var winNameEl = document.getElementById("winName");
+  var winUnitEl = document.getElementById("winUnit");
+  var continueBtn = document.getElementById("continueBtn");
+
+  var pendingWinner = null; // holds the participant object mid-spin, added to winners on "Lanjutkan"
+
+  function loadWinners(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+  function saveWinners(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(winners));
+  }
+  function isPicked(p){
+    return winners.some(function(w){ return w.name === p.name && w.unit === p.unit; });
+  }
+  function remaining(){
+    return PARTICIPANTS.filter(function(p){ return !isPicked(p); });
+  }
+
+  function polar(angleDeg, radius){
+    var rad = (angleDeg - 90) * Math.PI / 180; // -90 so angle 0 = top
+    return { x: cx + radius * Math.cos(rad), y: cy + radius * Math.sin(rad) };
+  }
+  function arcPath(startAngle, endAngle){
+    var p1 = polar(startAngle, r);
+    var p2 = polar(endAngle, r);
+    var largeArc = (endAngle - startAngle) > 180 ? 1 : 0;
+    return "M"+cx+","+cy+" L"+p1.x.toFixed(2)+","+p1.y.toFixed(2)+
+           " A"+r+","+r+" 0 "+largeArc+" 1 "+p2.x.toFixed(2)+","+p2.y.toFixed(2)+" Z";
+  }
+
+  function renderWheel(){
+    var rem = remaining();
+    var n = rem.length;
+    svgG.innerHTML = "";
+    if(n === 0){
+      spinBtn.disabled = true;
+      spinBtn.textContent = "🎉 Semua peserta sudah dapat arisan!";
+      return;
+    }
+    spinBtn.disabled = spinning;
+    spinBtn.textContent = "🎡 PUTAR RODA!";
+    var seg = 360 / n;
+    var fontSize = n > 30 ? 9 : n > 18 ? 11 : n > 10 ? 13 : 16;
+
+    rem.forEach(function(p, i){
+      var start = i * seg, end = (i+1) * seg, mid = start + seg/2;
+      var path = document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d", arcPath(start, end));
+      path.setAttribute("fill", COLORS[i % COLORS.length]);
+      path.setAttribute("stroke", "#1A1614");
+      path.setAttribute("stroke-width", "1.5");
+      svgG.appendChild(path);
+
+      var textPos = polar(mid, r * 0.62);
+      var text = document.createElementNS("http://www.w3.org/2000/svg","text");
+      text.setAttribute("x", textPos.x);
+      text.setAttribute("y", textPos.y);
+      text.setAttribute("fill", "#1A1614");
+      text.setAttribute("font-size", fontSize);
+      text.setAttribute("font-weight", "700");
+      text.setAttribute("text-anchor", "middle");
+      text.setAttribute("dominant-baseline", "middle");
+      text.setAttribute("transform", "rotate("+mid+" "+textPos.x+" "+textPos.y+")");
+      text.textContent = p.name.length > 14 ? p.name.slice(0,13)+"…" : p.name;
+      svgG.appendChild(text);
+    });
+  }
+
+  function secureRandomInt(maxExclusive){
+    var range = maxExclusive;
+    var maxUint = 0xFFFFFFFF;
+    var limit = Math.floor(maxUint / range) * range;
+    var buf = new Uint32Array(1);
+    var val;
+    do{
+      crypto.getRandomValues(buf);
+      val = buf[0];
+    } while(val >= limit);
+    return val % range;
+  }
+
+  var cumulativeRotation = 0;
+  function spin(){
+    if(spinning) return;
+    var rem = remaining();
+    if(rem.length === 0) return;
+    spinning = true;
+    spinBtn.disabled = true;
+
+    var n = rem.length;
+    var seg = 360 / n;
+    var winIndex = secureRandomInt(n);
+    var mid = winIndex * seg + seg/2;
+
+    var extraSpins = 6 + Math.floor(Math.random()*3); // 6-8 full turns
+    var curMod = ((cumulativeRotation % 360) + 360) % 360;
+    var targetMod = ((360 - mid) % 360 + 360) % 360;
+    var delta = ((targetMod - curMod) % 360 + 360) % 360;
+    cumulativeRotation += extraSpins * 360 + delta;
+
+    svgG.style.transform = "rotate("+cumulativeRotation+"deg)";
+    pendingWinner = rem[winIndex];
+
+    setTimeout(function(){
+      showWinner(pendingWinner);
+    }, 5600);
+  }
+
+  function showWinner(p){
+    winNameEl.textContent = p.name;
+    winUnitEl.textContent = "Unit " + p.unit;
+    overlay.classList.add("show");
+    burstConfetti();
+  }
+
+  function confirmWinner(){
+    if(!pendingWinner) return;
+    var round = Math.floor(winners.length / WINNERS_PER_ROUND) + 1;
+    winners.push({ name: pendingWinner.name, unit: pendingWinner.unit, round: round, ts: Date.now() });
+    saveWinners();
+    pendingWinner = null;
+    overlay.classList.remove("show");
+    spinning = false;
+    renderWheel();
+    renderWinners();
+    renderManageList();
+    renderStats();
+  }
+
+  function undoLast(){
+    if(winners.length === 0) return;
+    if(!confirm("Batalkan pemenang terakhir? Orang ini akan dikembalikan ke roda.")) return;
+    winners.pop();
+    saveWinners();
+    renderWheel();
+    renderWinners();
+    renderManageList();
+    renderStats();
+  }
+
+  function resetAll(){
+    if(!confirm("Reset SEMUA data pemenang? Ini tidak bisa dibatalkan.")) return;
+    if(!confirm("Yakin? Semua riwayat 50 peserta akan dihapus dari browser ini.")) return;
+    winners = [];
+    saveWinners();
+    renderWheel();
+    renderWinners();
+    renderManageList();
+    renderStats();
+  }
+
+  function renderStats(){
+    document.getElementById("statRemain").textContent = 50 - winners.length;
+    document.getElementById("statWon").textContent = winners.length;
+    document.getElementById("statRound").textContent = Math.min(Math.floor(winners.length / WINNERS_PER_ROUND) + 1, 10);
+  }
+
+  function renderWinners(){
+    var box = document.getElementById("winnersBox");
+    if(winners.length === 0){
+      box.innerHTML = '<div class="empty-note">Belum ada yang menang — putar roda untuk mulai!</div>';
+      return;
+    }
+    var byRound = {};
+    winners.forEach(function(w){
+      byRound[w.round] = byRound[w.round] || [];
+      byRound[w.round].push(w);
+    });
+    var html = "";
+    Object.keys(byRound).sort(function(a,b){return a-b;}).forEach(function(rnd){
+      html += '<div class="round"><div class="round-label">Putaran ke-'+rnd+'</div>';
+      byRound[rnd].forEach(function(w){
+        var d = new Date(w.ts);
+        html += '<div class="winner-row"><span class="name">🌸 '+escapeHtml(w.name)+'</span><span class="unit">'+escapeHtml(w.unit)+'</span></div>';
+      });
+      html += '</div>';
+    });
+    box.innerHTML = html;
+  }
+
+  function renderManageList(){
+    var list = document.getElementById("manageList");
+    list.innerHTML = "";
+    PARTICIPANTS.forEach(function(p){
+      var picked = isPicked(p);
+      var row = document.createElement("label");
+      row.className = "manage-item" + (picked ? " picked" : "");
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = picked;
+      cb.addEventListener("change", function(){
+        if(cb.checked){
+          if(!isPicked(p)){
+            var round = Math.floor(winners.length / WINNERS_PER_ROUND) + 1;
+            winners.push({name:p.name, unit:p.unit, round:round, ts:Date.now()});
+          }
+        } else {
+          winners = winners.filter(function(w){ return !(w.name===p.name && w.unit===p.unit); });
+        }
+        saveWinners();
+        renderWheel();
+        renderWinners();
+        renderManageList();
+        renderStats();
+      });
+      var label = document.createElement("span");
+      label.textContent = p.name + " — " + p.unit;
+      row.appendChild(cb);
+      row.appendChild(label);
+      list.appendChild(row);
+    });
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function copyResults(){
+    if(winners.length === 0){
+      alert("Belum ada pemenang untuk disalin.");
+      return;
+    }
+    var byRound = {};
+    winners.forEach(function(w){
+      byRound[w.round] = byRound[w.round] || [];
+      byRound[w.round].push(w);
+    });
+    var text = "🌸 Hasil Arisan TMR 2026/2027 🌸\n\n";
+    Object.keys(byRound).sort(function(a,b){return a-b;}).forEach(function(rnd){
+      text += "Putaran ke-"+rnd+":\n";
+      byRound[rnd].forEach(function(w, i){
+        text += (i+1)+". "+w.name+" – "+w.unit+"\n";
+      });
+      text += "\n";
+    });
+    text += "Selamat kepada para pemenang! 💖";
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        alert("Hasil disalin ke clipboard! Tinggal paste ke WA. ✅");
+      }).catch(function(){ fallbackCopy(text); });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand("copy"); alert("Hasil disalin ke clipboard!"); }
+    catch(e){ prompt("Salin manual teks berikut:", text); }
+    document.body.removeChild(ta);
+  }
+
+  // --- confetti ---
+  var confettiCanvas = document.getElementById("confetti");
+  var confettiCtx = confettiCanvas.getContext("2d");
+  function resizeConfetti(){
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resizeConfetti);
+  resizeConfetti();
+
+  function burstConfetti(){
+    var particles = [];
+    var colors = COLORS;
+    for(var i=0;i<130;i++){
+      particles.push({
+        x: confettiCanvas.width/2,
+        y: confettiCanvas.height*0.35,
+        vx: (Math.random()-0.5) * 12,
+        vy: (Math.random()-1.3) * 12,
+        size: 4 + Math.random()*5,
+        color: colors[Math.floor(Math.random()*colors.length)],
+        rot: Math.random()*360,
+        vrot: (Math.random()-0.5) * 12,
+        life: 0
+      });
+    }
+    var start = Date.now();
+    function frame(){
+      var elapsed = Date.now() - start;
+      confettiCtx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+      particles.forEach(function(pt){
+        pt.vy += 0.35;
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.rot += pt.vrot;
+        confettiCtx.save();
+        confettiCtx.translate(pt.x, pt.y);
+        confettiCtx.rotate(pt.rot * Math.PI/180);
+        confettiCtx.fillStyle = pt.color;
+        confettiCtx.fillRect(-pt.size/2, -pt.size/2, pt.size, pt.size);
+        confettiCtx.restore();
+      });
+      if(elapsed < 2200){
+        requestAnimationFrame(frame);
+      } else {
+        confettiCtx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  spinBtn.addEventListener("click", spin);
+  continueBtn.addEventListener("click", confirmWinner);
+  document.getElementById("undoBtn").addEventListener("click", undoLast);
+  document.getElementById("resetBtn").addEventListener("click", resetAll);
+  document.getElementById("copyBtn").addEventListener("click", copyResults);
+  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+
+  renderWheel();
+  renderWinners();
+  renderManageList();
+  renderStats();
+})();
+</script>
+</body>
+</html>
