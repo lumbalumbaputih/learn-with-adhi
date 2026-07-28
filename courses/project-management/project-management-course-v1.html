@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="project-management">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Management: A Builder's Guide · Learn with Adhi</title>
+<meta name="description" content="Learn the real mechanics of project management — the triple constraint, the 5-phase lifecycle, WBS and critical path, RACI, risk registers, and Agile vs. Waterfall — through one continuous analogy: building a house.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-management/project-management-course-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Project Management: A Builder's Guide">
+<meta property="og:description" content="The real mechanics of project management, taught through one continuous analogy: building a house.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Project Management: A Builder's Guide","description":"The real mechanics of project management, taught through one continuous analogy: building a house.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#D97706; --acc-dim:#B45F04; --acc-bg:rgba(217,119,6,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES (RACI, risk register) ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+.raci-a{color:var(--tomato);font-weight:800}
+.raci-r{color:var(--green);font-weight:800}
+.raci-c{color:var(--sea);font-weight:800}
+.raci-i{color:var(--muted);font-weight:800}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:20px 0}
+.resource-card{border:1px solid var(--line-s);border-radius:12px;padding:16px 18px;background:var(--paper-2)}
+.resource-card .rc-type{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.resource-card h4{font-size:14px;font-weight:700;margin-bottom:4px;color:var(--ink)}
+.resource-card p{font-size:12px;color:var(--muted);margin:0}
+
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#f0a63f);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 7 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">What Is a Project, Really?</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">The 5-Phase Lifecycle</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">WBS &amp; the Critical Path</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Stakeholders &amp; RACI</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Risk &amp; Change Control</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Waterfall, Agile &amp; Your Toolkit</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7">
+      <span class="nav-num">07</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">Project Management</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – WHAT IS A PROJECT, REALLY?
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 07</div>
+  <h1 class="mod-title">What Is a <span class="acc">Project</span>, Really?</h1>
+  <p class="mod-lede">Every course on project management should start with one honest confession: most of what goes wrong on projects isn't a technical failure. It's a failure to agree, up front, on what you're trading against what. This module gives you the one idea everything else builds on.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What separates a "project" from ordinary, ongoing operations</li>
+      <li>The Triple Constraint (Scope, Time, Cost) and where Quality sits</li>
+      <li>Why "fast, cheap, good — pick two" is a law, not a cliché</li>
+      <li>How often real projects miss their original targets, and why</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Projects vs. Operations</h2>
+  <p>A <strong>project</strong> is a temporary endeavor with a defined start, a defined end, and a unique result. <strong>Operations</strong> are the ongoing, repetitive work that keeps something running once it exists.</p>
+  <p>Building a house is a project: it starts when you buy the land, it ends when you get the keys, and no two houses are built in exactly the same sequence of decisions. Living in the house afterwards — mowing the lawn, paying the bills, fixing the odd leaky tap — is operations. It never "finishes." It just continues.</p>
+  <p>This distinction matters because the two need different management styles entirely. Operations are managed by process and routine — you optimize for repeatability. Projects are managed by planning and adaptation — you optimize for hitting a one-time, unique target under uncertainty. Apply operations thinking to a project (or vice versa) and things break in predictable ways.</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">⏳</div>
+      <h4>Temporary</h4>
+      <p>Has a start and an end. The end can be "goal achieved," "goal impossible," or "goal no longer needed" — all three still close the project.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🏠</div>
+      <h4>Unique Result</h4>
+      <p>Even a "standard" house design is built on a unique block, with a unique crew, on a unique schedule. No two projects are identical in execution.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🧩</div>
+      <h4>Progressive Elaboration</h4>
+      <p>You don't know every detail on day one. Plans get more precise as the project moves forward and more information becomes available.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🎯</div>
+      <h4>Defined End State</h4>
+      <p>Someone can point to a specific outcome and say "that's done." If nobody can define "done," you don't have a project yet — you have a wish.</p>
+    </div>
+  </div>
+
+  <h2 class="sh">The Triple Constraint</h2>
+  <p>Every project is bounded by three variables that are locked together: <strong>Scope</strong> (what you're delivering), <strong>Time</strong> (when it's due), and <strong>Cost</strong> (what it costs). Pull on any one of them, and the other two move — there is no way around this, only trade-offs you make deliberately or trade-offs that happen to you.</p>
+  <p>Construction crews have said it for generations: <em>"Fast, cheap, good — pick two."</em> Want it fast and cheap? The quality of the finish suffers. Want it fast and good? You'll pay a premium for extra crews and overtime. Want it cheap and good? It's going to take longer, because quality at a low price usually means smaller crews working carefully.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The Triple Constraint — Scope, Time, Cost, and Quality at the center</div>
+    <svg class="demo-svg" viewBox="0 0 400 260" role="img" aria-label="Triangle diagram with Scope at the top vertex, Time at bottom-left, Cost at bottom-right, and Quality in the center">
+      <polygon points="200,25 45,225 355,225" fill="none" stroke="var(--acc)" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="200" cy="158" r="34" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="2"/>
+      <text x="200" y="153" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--ink)">Quality</text>
+      <text x="200" y="168" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">the result</text>
+      <text x="200" y="12" text-anchor="middle" font-family="var(--fd)" font-size="15" font-weight="800" fill="var(--ink)">Scope</text>
+      <text x="200" y="248" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">what's included</text>
+      <text x="45" y="245" text-anchor="middle" font-family="var(--fd)" font-size="15" font-weight="800" fill="var(--ink)">Time</text>
+      <text x="45" y="258" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">the deadline</text>
+      <text x="355" y="245" text-anchor="middle" font-family="var(--fd)" font-size="15" font-weight="800" fill="var(--ink)">Cost</text>
+      <text x="355" y="258" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">the budget</text>
+    </svg>
+    <div class="demo-caption">Push in on any one vertex — add scope, cut the schedule, slash the budget — and the triangle can only stay the same size by giving ground somewhere else. Quality is what survives (or doesn't) inside the shape you drew.</div>
+  </div>
+
+  <p>The practical use of this diagram is as a script for a hard conversation. When your client, boss, or spouse says "can we add the extra bedroom without moving the move-in date or the budget?" — the honest answer is always "pick which side of the triangle bends." Something always gives: scope shrinks elsewhere, the date slips, or the budget grows. A project manager's job is making that trade-off visible and deliberate, instead of letting it happen silently as burnout, rushed work, or a nasty surprise near the end.</p>
+
+  <div class="callout mango">
+    <strong>The nuance:</strong> the triangle isn't static. A skilled team occasionally finds a genuine efficiency — a better tool, a smarter sequence — that improves one side without touching the others. That's real, but rare. Never plan on it happening; treat it as a bonus if it does.
+  </div>
+
+  <h2 class="sh">How Often Do Real Projects Hit Their Targets?</h2>
+  <p>Less often than most people assume — which is exactly why the discipline exists. The numbers below come from two different eras and industries (see the References module for full context and caveats), but they tell a consistent story: <strong>plans are cheap; hitting the plan is the hard part.</strong></p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">16%</div>
+      <div class="stat-lbl">of IT projects in the landmark 1994 Standish Group CHAOS survey were delivered on time, on budget, with the full agreed scope</div>
+      <div class="stat-sub">Standish CHAOS Report, 1994</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">189%</div>
+      <div class="stat-lbl">average cost overrun, as a percentage of the original estimate, across the same "challenged" projects</div>
+      <div class="stat-sub">Standish CHAOS Report, 1994</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">11.4%</div>
+      <div class="stat-lbl">of every dollar invested was wasted on poor project performance, across industries, in a large 2020 practitioner survey</div>
+      <div class="stat-sub">PMI Pulse of the Profession, 2020</div>
+    </div>
+  </div>
+
+  <div class="callout blue">
+    <strong>Read these as "projects fail more often than intuition suggests," not as a precise universal rate.</strong> The 1994 figure describes software projects specifically, uses a strict definition of success, and has been academically critiqued for making failure look worse than typical benchmarks would. The PMI figure is multi-industry, self-reported, and has trended down in more recent editions of the same survey (see Module 7 References for both sources and the critique).
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">Which of these is a <em>project</em> rather than an <em>operation</em>?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Mowing the lawn every fortnight is repetitive, ongoing work with no defined end — that's operations.">Mowing the lawn every fortnight</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Renovating the kitchen has a defined start, a defined end (the new kitchen is finished), and a unique result — it's a project. Once it's done, using the kitchen every day becomes operations again.">Renovating the kitchen</button>
+        <button class="q-option" data-correct="false" data-explanation="Paying the monthly electricity bill is a recurring process with no unique end state — operations.">Paying the monthly electricity bill</button>
+        <button class="q-option" data-correct="false" data-explanation="Restocking the pantry weekly is a routine, repeatable task — operations, not a project.">Restocking the pantry every week</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Your builder says: "I can finish two weeks earlier if you're willing to pay for a second crew." Which side of the Triple Constraint is being traded against which?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Scope (what's being built) isn't mentioned at all in this trade — the design stays the same.">Scope is being traded for Quality</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Time is being bought with Cost — a shorter schedule in exchange for a bigger budget (the second crew). Classic Triple Constraint trade-off.">Time is being traded for Cost</button>
+        <button class="q-option" data-correct="false" data-explanation="Quality isn't the variable in this specific offer — the builder isn't proposing to change the finish standard.">Quality is being traded for Scope</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Based on this module, what's the most defensible takeaway from the CHAOS Report and PMI statistics?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The exact percentages come from specific surveys, specific years, and specific industries — treating them as a fixed, precise, universal rate overstates what the data can support.">Exactly 16% of all projects, in every industry, always succeed</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! The specific numbers vary by era, industry, and methodology (and are contested), but the consistent, defensible signal across sources is that projects miss their original targets often enough that disciplined planning is worth the effort.">Projects miss their original scope, time, or cost targets often enough that having a discipline for managing the trade-offs is worth it</button>
+        <button class="q-option" data-correct="false" data-explanation="The data doesn't support this claim — the trend across more recent PMI surveys has actually been improving (11.4% → 9.4% → 5.2% in later editions), which argues against IT-specific projects being uniquely doomed.">Only IT projects fail; other industries don't have this problem</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – THE 5-PHASE LIFECYCLE
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 07</div>
+  <h1 class="mod-title">The 5-Phase <span class="acc">Lifecycle</span></h1>
+  <p class="mod-lede">Every project — a house, a product launch, a wedding, a career pivot — moves through the same five process groups. Not always in five neat, separate blocks, but always in this order of emphasis. Once you can see the phases, you can always answer "what should we be doing right now?"</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The five phases: Initiate, Plan, Execute, Monitor &amp; Control, Close</li>
+      <li>What a project charter is, and why "no charter" is a warning sign</li>
+      <li>Why Monitor &amp; Control isn't a separate late stage — it runs the whole time</li>
+      <li>What "closing" a project actually requires, even a cancelled one</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Five Phases, Mapped to Building a House</h2>
+  <ul class="bl">
+    <li><strong>Initiate</strong> — decide the house is worth building, confirm you (or your sponsor) can actually pay for it, and get the deed and the permit. If this phase is skipped, everything downstream is built on an assumption nobody agreed to.</li>
+    <li><strong>Plan</strong> — draw the blueprints, get them approved, order materials, and build the schedule. This is where the Triple Constraint gets turned into specific, checkable numbers.</li>
+    <li><strong>Execute</strong> — pour the foundation, frame the walls, run the wiring. This is where most of the budget and most of the visible progress happens.</li>
+    <li><strong>Monitor &amp; Control</strong> — the building inspector's visits, the weekly site walk, comparing actual progress against the plan and course-correcting. This isn't a phase that happens after Execute — it runs alongside Plan and Execute the entire time.</li>
+    <li><strong>Close</strong> — the final walkthrough, the punch list of last small fixes, and handing over the keys.</li>
+  </ul>
+
+  <div class="demo-box">
+    <div class="demo-label">The five phases over time — note that Monitor &amp; Control overlaps everything else</div>
+    <svg class="demo-svg" viewBox="0 0 520 210" role="img" aria-label="Timeline showing five overlapping project phases">
+      <text x="10" y="26" font-family="var(--fb)" font-size="11" fill="var(--ink)">Initiate</text>
+      <rect x="110" y="14" width="70" height="20" rx="5" fill="var(--acc)"/>
+      <text x="10" y="56" font-family="var(--fb)" font-size="11" fill="var(--ink)">Plan</text>
+      <rect x="170" y="44" width="110" height="20" rx="5" fill="var(--acc)"/>
+      <text x="10" y="86" font-family="var(--fb)" font-size="11" fill="var(--ink)">Execute</text>
+      <rect x="260" y="74" width="200" height="20" rx="5" fill="var(--acc)"/>
+      <text x="10" y="116" font-family="var(--fb)" font-size="11" fill="var(--ink)">Close</text>
+      <rect x="440" y="104" width="60" height="20" rx="5" fill="var(--acc)"/>
+      <text x="10" y="168" font-family="var(--fb)" font-size="11" fill="var(--ink)">Monitor &amp;</text>
+      <text x="10" y="180" font-family="var(--fb)" font-size="11" fill="var(--ink)">Control</text>
+      <rect x="170" y="148" width="330" height="26" rx="6" fill="none" stroke="var(--sea)" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <text x="335" y="165" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--sea)">runs alongside Plan → Execute → Close</text>
+      <line x1="10" y1="196" x2="510" y2="196" stroke="var(--line-s)" stroke-width="1.5"/>
+      <text x="10" y="207" font-family="var(--fm)" font-size="9" fill="var(--muted)">project start</text>
+      <text x="500" y="207" text-anchor="end" font-family="var(--fm)" font-size="9" fill="var(--muted)">handover</text>
+    </svg>
+    <div class="demo-caption">The bars overlap on purpose: Planning is still being refined while early Execution starts, and Monitor &amp; Control (the dashed box) is a continuous activity, not a phase you enter once and leave.</div>
+  </div>
+
+  <h2 class="sh">The Project Charter — Your Deed and Permit</h2>
+  <p>The <strong>project charter</strong> is the single document produced during Initiate that authorizes the project to exist. It answers, in one place, the questions that cause the most damage when they're left ambiguous:</p>
+  <ul class="bl">
+    <li><strong>Why:</strong> the business or personal case for doing this at all</li>
+    <li><strong>Who:</strong> the sponsor (who has final authority and pays for it) and the project manager (who runs it day to day)</li>
+    <li><strong>What:</strong> a high-level description of scope — and just as importantly, what's explicitly <em>out</em> of scope</li>
+    <li><strong>Boundaries:</strong> the rough budget range, target dates, and known constraints or assumptions</li>
+  </ul>
+  <div class="callout tomato">
+    <strong>Warning sign:</strong> if nobody can hand you a one-page answer to "why are we doing this, who's the sponsor, and what's explicitly out of scope," you don't have a project — you have an in-progress argument waiting to happen. Get the charter written before Execute starts, even if it's informal.
+  </div>
+
+  <h2 class="sh">Closing — the Phase Everyone Skips</h2>
+  <p>Close isn't just "stop working." A proper close includes: confirming the deliverable meets the agreed scope, formally releasing the team and any contractors, archiving what was learned (a short "lessons learned" note is enough), and getting a formal sign-off from the sponsor. This applies even when a project is cancelled partway through — a cancelled project still needs a close, so the reasons and lessons aren't lost the next time someone proposes the same idea.</p>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">Halfway through building the house, the crew notices the concrete slab is curing two days slower than planned because of unexpected rain. Comparing actual progress to the plan and deciding whether to adjust the schedule is an activity from which phase?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Plan happens up front — this is a comparison against an existing plan, which is a different activity.">Plan</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Comparing actual vs. planned progress and deciding on a course correction is exactly what Monitor & Control does — and it's happening while Execute is still underway, which is the point of the overlap diagram.">Monitor & Control</button>
+        <button class="q-option" data-correct="false" data-explanation="Close happens at the very end, once the deliverable is finished and accepted — not mid-construction.">Close</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A friend asks you to help plan their wedding, but nobody has agreed on a budget ceiling, who has final say on the guest list, or what "done" looks like. What should happen before real planning starts?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is exactly what a charter is for — even an informal one. Without it, planning proceeds on unstated assumptions that will surface as conflict later.">Write a short charter that names the sponsor (final decision-maker), the budget range, and what's in/out of scope</button>
+        <button class="q-option" data-correct="false" data-explanation="Jumping straight to a detailed day-of schedule without agreeing on budget and decision rights just moves the ambiguity downstream, where it's more expensive to fix.">Skip straight to building a detailed hour-by-hour schedule</button>
+        <button class="q-option" data-correct="false" data-explanation="Booking the venue before scope and budget boundaries are agreed risks locking in a decision that conflicts with constraints nobody has stated yet.">Book the venue immediately to secure the date</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A project is cancelled halfway through because the market shifted and the product is no longer needed. Does it still need a formal Close?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Close applies to cancelled projects too — releasing the team, documenting why it stopped, and capturing lessons learned prevents the same mistake (or the same unviable idea) from being repeated blind next time.">Yes — releasing resources and capturing lessons learned matters even for a cancelled project</button>
+        <button class="q-option" data-correct="false" data-explanation="Walking away without a formal close means the reasons for cancellation, and anything learned, are lost — likely to be rediscovered the hard way on a future project.">No — if it's cancelled, there's nothing left to close</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – WBS & THE CRITICAL PATH
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 07</div>
+  <h1 class="mod-title">WBS &amp; the <span class="acc">Critical Path</span></h1>
+  <p class="mod-lede">This is the single most useful technical skill in this course. Once you can find the critical path in any plan, you always know exactly which delays matter and which don't — and you stop wasting attention on the wrong fire.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How to break a project down into a Work Breakdown Structure (WBS)</li>
+      <li>What a dependency is, and how tasks chain into a network</li>
+      <li>How to find the critical path — and what "float" (slack) actually means</li>
+      <li>A simple three-point estimating technique for guessing durations honestly</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Work Breakdown Structure</h2>
+  <p>A <strong>Work Breakdown Structure (WBS)</strong> takes one big, unmanageable goal — "build the house" — and decomposes it into smaller and smaller pieces until each piece is a <em>work package</em>: a task small enough that one person or crew can estimate it, own it, and report on it honestly. "Build the house" is not assignable to anyone. "Pour the foundation slab" is.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">A simplified 3-level WBS</div>
+    <svg class="demo-svg" viewBox="0 0 520 250" role="img" aria-label="Work breakdown structure tree: Build the House splits into three phases, each splitting into two work packages">
+      <rect x="190" y="10" width="140" height="38" rx="8" fill="var(--ink)"/>
+      <text x="260" y="34" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--paper)">Build the House</text>
+      <line x1="260" y1="48" x2="260" y2="66" stroke="var(--line-s)" stroke-width="2"/>
+      <line x1="80" y1="66" x2="440" y2="66" stroke="var(--line-s)" stroke-width="2"/>
+      <line x1="80" y1="66" x2="80" y2="80" stroke="var(--line-s)" stroke-width="2"/>
+      <line x1="260" y1="66" x2="260" y2="80" stroke="var(--line-s)" stroke-width="2"/>
+      <line x1="440" y1="66" x2="440" y2="80" stroke="var(--line-s)" stroke-width="2"/>
+      <rect x="16" y="80" width="128" height="34" rx="7" fill="var(--acc)"/>
+      <text x="80" y="101" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="#fff">Foundation &amp; Frame</text>
+      <rect x="196" y="80" width="128" height="34" rx="7" fill="var(--acc)"/>
+      <text x="260" y="101" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="#fff">Systems</text>
+      <rect x="376" y="80" width="128" height="34" rx="7" fill="var(--acc)"/>
+      <text x="440" y="101" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="#fff">Finishing</text>
+      <line x1="80" y1="114" x2="80" y2="128" stroke="var(--line-s)" stroke-width="1.5"/>
+      <line x1="260" y1="114" x2="260" y2="128" stroke="var(--line-s)" stroke-width="1.5"/>
+      <line x1="440" y1="114" x2="440" y2="128" stroke="var(--line-s)" stroke-width="1.5"/>
+      <line x1="40" y1="128" x2="120" y2="128" stroke="var(--line-s)" stroke-width="1.5"/>
+      <line x1="220" y1="128" x2="300" y2="128" stroke="var(--line-s)" stroke-width="1.5"/>
+      <line x1="400" y1="128" x2="480" y2="128" stroke="var(--line-s)" stroke-width="1.5"/>
+      <rect x="4" y="140" width="80" height="34" rx="6" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="44" y="159" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Slab &amp;</text>
+      <text x="44" y="170" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">footings</text>
+      <rect x="96" y="140" width="80" height="34" rx="6" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="136" y="159" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Wall &amp; roof</text>
+      <text x="136" y="170" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">framing</text>
+      <rect x="184" y="140" width="80" height="34" rx="6" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="224" y="159" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Electrical</text>
+      <text x="224" y="170" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">rough-in</text>
+      <rect x="276" y="140" width="80" height="34" rx="6" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="316" y="159" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Plumbing</text>
+      <text x="316" y="170" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">rough-in</text>
+      <rect x="364" y="140" width="80" height="34" rx="6" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="404" y="159" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Drywall &amp;</text>
+      <text x="404" y="170" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">paint</text>
+      <rect x="456" y="140" width="80" height="34" rx="6" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="496" y="159" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Fixtures &amp;</text>
+      <text x="496" y="170" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">flooring</text>
+      <text x="260" y="205" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">Level 1: the goal · Level 2: phases · Level 3: work packages — assignable, estimable tasks</text>
+    </svg>
+    <div class="demo-caption">Keep decomposing until each bottom-level box could realistically be assigned to one person or crew with a duration you'd trust. Too coarse ("build the house") and nobody's accountable; too fine ("screw #47 into hinge") and you've wasted planning time on noise.</div>
+  </div>
+
+  <h2 class="sh">The Critical Path — the Dominoes That Must Fall in Order</h2>
+  <p>Once your WBS gives you a list of tasks, the next question is: <em>which order do they have to happen in, and which one delay actually delays the whole project?</em> That's the <strong>critical path</strong>: the longest chain of dependent tasks from start to finish. Delay any task on that chain, and the whole project finishes later by the same amount. Delay a task <em>not</em> on that chain, and — as long as the delay is smaller than its <strong>float</strong> (the spare time it has before it would start affecting the critical path) — the finish date doesn't move at all.</p>
+  <p>Think of it as a row of dominoes standing in a line: you can't hang the drywall before the electrical wiring passes inspection, which can't happen before the framing is up, which can't happen before the foundation has cured. Delay any domino <em>in that line</em> and the whole row falls late. But painting the garden fence can happen almost any time in that same window — delay it a week, and moving day doesn't budge.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">A critical path network diagram (5 sequential tasks + 1 task with float)</div>
+    <svg class="demo-svg" viewBox="0 0 720 220" role="img" aria-label="Network diagram showing five critical-path tasks in sequence totalling 22 days, and one landscaping task with 8 days of float that does not affect the finish date">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--acc)"/>
+        </marker>
+      </defs>
+      <rect x="10" y="20" width="110" height="56" rx="8" fill="#fff" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="65" y="45" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="var(--ink)">Site Prep</text>
+      <text x="65" y="62" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--acc-dim)">2 days</text>
+
+      <rect x="150" y="20" width="110" height="56" rx="8" fill="#fff" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="205" y="45" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="var(--ink)">Foundation</text>
+      <text x="205" y="62" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--acc-dim)">5 days</text>
+
+      <rect x="290" y="20" width="110" height="56" rx="8" fill="#fff" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="345" y="45" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="var(--ink)">Framing</text>
+      <text x="345" y="62" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--acc-dim)">6 days</text>
+
+      <rect x="430" y="20" width="110" height="56" rx="8" fill="#fff" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="485" y="40" text-anchor="middle" font-family="var(--fd)" font-size="10.5" font-weight="700" fill="var(--ink)">Systems</text>
+      <text x="485" y="53" text-anchor="middle" font-family="var(--fd)" font-size="10.5" font-weight="700" fill="var(--ink)">Rough-in</text>
+      <text x="485" y="67" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--acc-dim)">3 days</text>
+
+      <rect x="570" y="20" width="110" height="56" rx="8" fill="#fff" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="625" y="45" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="var(--ink)">Finishing</text>
+      <text x="625" y="62" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--acc-dim)">6 days</text>
+
+      <line x1="120" y1="48" x2="148" y2="48" stroke="var(--acc)" stroke-width="3" marker-end="url(#arrow)"/>
+      <line x1="260" y1="48" x2="288" y2="48" stroke="var(--acc)" stroke-width="3" marker-end="url(#arrow)"/>
+      <line x1="400" y1="48" x2="428" y2="48" stroke="var(--acc)" stroke-width="3" marker-end="url(#arrow)"/>
+      <line x1="540" y1="48" x2="568" y2="48" stroke="var(--acc)" stroke-width="3" marker-end="url(#arrow)"/>
+
+      <rect x="285" y="145" width="150" height="42" rx="8" fill="var(--paper-2)" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="360" y="163" text-anchor="middle" font-family="var(--fd)" font-size="10.5" font-weight="700" fill="var(--muted)">Landscaping design</text>
+      <text x="360" y="178" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">3 days · float: 8 days</text>
+
+      <polyline points="205,76 205,110 360,110 360,145" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <polyline points="360,187 360,205 625,205 625,76" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    </svg>
+    <div class="demo-caption">Critical path (solid, orange): Site Prep → Foundation → Framing → Systems Rough-in → Finishing = <strong>22 days</strong>. Slip any one of those five and the house is late by the same amount. Landscaping (dashed, gray) has 8 days of float — it can slip a full extra week and moving day still doesn't move.</div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>The "path of least resistance" trap:</strong> teams instinctively watch whichever task looks the busiest or most stressful that week — but that's not the same as watching the critical path. A calm-looking task with zero float is a bigger threat to your deadline than a chaotic-looking task with two weeks of slack. Track float, not vibes.
+  </div>
+
+  <h2 class="sh">Estimating Durations Honestly: Three-Point Estimating</h2>
+  <p>Nobody knows exactly how long a task will take — but a single number pretends to. Three-point estimating asks for three numbers instead: an <strong>optimistic</strong> case (O), a <strong>most likely</strong> case (M), and a <strong>pessimistic</strong> case (P), then blends them with more weight on the middle guess:</p>
+  <div class="demo-box">
+    <div class="demo-label">The PERT formula, worked example — "how long to frame the house?"</div>
+    <p style="margin-bottom:6px"><strong>Expected duration = (O + 4M + P) ÷ 6</strong></p>
+    <p style="margin-bottom:0">Optimistic: 4 days · Most likely: 6 days · Pessimistic: 14 days (a supply delay)</p>
+    <p>(4 + 4×6 + 14) ÷ 6 = (4 + 24 + 14) ÷ 6 = 42 ÷ 6 = <strong>7 days</strong></p>
+    <div class="demo-caption">Notice the answer (7 days) is pulled toward the most-likely case but nudged upward by the tail risk of a bad outcome — a more honest single number than "probably 6 days" on its own.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">Using the network diagram above, Framing runs 3 days late due to a crew shortage. What happens to the overall 22-day finish date?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Framing sits on the critical path (zero float) — any delay there passes straight through to the finish date. The project now finishes 3 days late.">The finish date slips by 3 days — Framing is on the critical path</button>
+        <button class="q-option" data-correct="false" data-explanation="Framing has zero float in this example — it's on the critical path, so it cannot absorb a delay without pushing the finish date.">Nothing changes — Framing has enough float to absorb it</button>
+        <button class="q-option" data-correct="false" data-explanation="Delays don't shrink the project — without other changes (like adding a crew to a downstream task), a critical-path delay pushes the finish date out, it doesn't reduce total duration.">The finish date moves 3 days earlier</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Landscaping design (3 days, 8 days of float) starts 5 days late because the designer was on holiday. What's the impact on the 22-day critical path?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A 5-day delay is well within its 8 days of float — it can absorb the slip without touching the critical path or the finish date at all.">None — 5 days is less than its 8 days of float, so the finish date is unaffected</button>
+        <button class="q-option" data-correct="false" data-explanation="The finish date only slips when a delay exceeds a task's float. 5 days < 8 days of float, so nothing changes yet.">The finish date slips by 5 days</button>
+        <button class="q-option" data-correct="false" data-explanation="It's not fully safe forever — if the delay grows past 8 days, it would start eating into the critical path. But at exactly 5 days, it's still within budget.">It's completely irrelevant no matter how long the delay grows</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Using three-point estimating, a task has Optimistic = 2 days, Most Likely = 3 days, Pessimistic = 10 days. What's the PERT expected duration?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="3 days is just the Most Likely estimate on its own — the PERT formula deliberately blends in the optimistic and pessimistic cases too.">3 days (just use the Most Likely estimate)</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! (2 + 4×3 + 10) ÷ 6 = (2 + 12 + 10) ÷ 6 = 24 ÷ 6 = 4 days. The wide pessimistic tail nudges the expected duration above the most-likely guess.">4 days — (2 + 4×3 + 10) ÷ 6</button>
+        <button class="q-option" data-correct="false" data-explanation="That's the simple average of the three numbers (2+3+10)÷3 = 5, not the PERT-weighted formula, which gives extra weight to the most-likely case.">5 days (simple average of the three numbers)</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – STAKEHOLDERS & RACI
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 07</div>
+  <h1 class="mod-title">Stakeholders &amp; <span class="acc">RACI</span></h1>
+  <p class="mod-lede">Most project failures that get blamed on "bad planning" are actually people failures: nobody knew who could say yes, or three people thought they were each in charge. A project manager is a conductor, not a soloist — you don't play every instrument, but you know every part and keep everyone in tempo.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How to map stakeholders by power and interest, and manage each quadrant differently</li>
+      <li>How to build and read a RACI matrix</li>
+      <li>The single most common RACI mistake — and why it quietly wrecks projects</li>
+      <li>How to set a communication cadence that matches each stakeholder's needs</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Power / Interest Grid</h2>
+  <p>Not every stakeholder needs the same attention. Plot each one on two axes — how much <strong>power</strong> they have to affect the project, and how much <strong>interest</strong> they have in its outcome — and a sensible engagement strategy falls out automatically.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Power / Interest grid, with house-build examples plotted</div>
+    <svg class="demo-svg" viewBox="0 0 420 400" role="img" aria-label="Power versus interest grid with four quadrants and four example stakeholders plotted">
+      <line x1="60" y1="30" x2="60" y2="340" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="60" y1="340" x2="380" y2="340" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="220" y1="30" x2="220" y2="340" stroke="var(--line-s)" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <line x1="60" y1="185" x2="380" y2="185" stroke="var(--line-s)" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+      <text x="20" y="185" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)" transform="rotate(-90 20 185)">POWER →</text>
+      <text x="220" y="362" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">INTEREST →</text>
+
+      <text x="120" y="55" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="var(--muted)">Keep Satisfied</text>
+      <text x="300" y="55" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="var(--acc-dim)">Manage Closely</text>
+      <text x="120" y="325" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="var(--muted)">Monitor</text>
+      <text x="300" y="325" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="700" fill="var(--muted)">Keep Informed</text>
+
+      <circle cx="300" cy="80" r="7" fill="var(--tomato)"/>
+      <text x="300" y="100" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">Homeowner</text>
+      <text x="300" y="112" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">(sponsor)</text>
+
+      <circle cx="120" cy="95" r="7" fill="var(--sea)"/>
+      <text x="120" y="115" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">Building</text>
+      <text x="120" y="127" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">inspector</text>
+
+      <circle cx="300" cy="280" r="7" fill="var(--green)"/>
+      <text x="300" y="300" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">Next-door</text>
+      <text x="300" y="312" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">neighbor</text>
+
+      <circle cx="120" cy="290" r="7" fill="var(--muted)"/>
+      <text x="120" y="310" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">Hardware</text>
+      <text x="120" y="322" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">store</text>
+    </svg>
+    <div class="demo-caption">High power + high interest (Homeowner) → manage closely, weekly decisions. High power + low interest (Inspector) → keep satisfied, don't surprise them. Low power + high interest (Neighbor) → keep informed so complaints don't escalate. Low power + low interest (Hardware store) → monitor, minimal effort.</div>
+  </div>
+
+  <h2 class="sh">RACI — One "A" Per Task, No Exceptions</h2>
+  <p>A RACI matrix names, for every key task, exactly who is:</p>
+  <ul class="bl">
+    <li><span class="raci-r">Responsible</span> — does the work</li>
+    <li><span class="raci-a">Accountable</span> — owns the outcome and has final sign-off (exactly <strong>one</strong> person, always)</li>
+    <li><span class="raci-c">Consulted</span> — gives input before the decision, two-way conversation</li>
+    <li><span class="raci-i">Informed</span> — told after the fact, one-way notification</li>
+  </ul>
+
+  <div class="demo-box">
+    <div class="demo-label">RACI matrix — house-build example</div>
+    <table class="pm-table">
+      <thead><tr><th>Task</th><th>Homeowner</th><th>Architect</th><th>Contractor</th><th>Painter</th></tr></thead>
+      <tbody>
+        <tr><td>Approve blueprint</td><td class="raci-a">A</td><td class="raci-r">R</td><td class="raci-c">C</td><td class="raci-i">I</td></tr>
+        <tr><td>Choose paint colour</td><td class="raci-a">A</td><td class="raci-i">I</td><td class="raci-c">C</td><td class="raci-r">R</td></tr>
+        <tr><td>Schedule inspections</td><td class="raci-i">I</td><td class="raci-i">I</td><td class="raci-a raci-r">A/R</td><td>–</td></tr>
+        <tr><td>Sign final handover</td><td class="raci-a">A</td><td class="raci-i">I</td><td class="raci-r">R</td><td class="raci-i">I</td></tr>
+      </tbody>
+    </table>
+    <div class="demo-caption">Read a column at a time to see each person's total load; read a row at a time to see if a task has more than one "A" — if it does, that's the bug to fix before it causes a fight.</div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>The classic mistake:</strong> giving two people the "A" on the same task feels collaborative, but it means neither of them actually has to decide — each assumes the other will. When a decision stalls or a mistake happens, trace it back and you'll usually find a task with zero A's or two.
+  </div>
+
+  <h2 class="sh">Matching Communication to the Stakeholder</h2>
+  <p>Not every stakeholder needs the same update at the same frequency. A sponsor in the "Manage Closely" quadrant typically wants a short weekly status; a "Keep Informed" neighbor is well served by a one-line heads-up text before noisy work starts; a "Monitor" quadrant vendor needs nothing beyond the purchase order. Matching cadence to quadrant keeps you from either drowning people in updates they didn't ask for, or leaving a powerful stakeholder blindsided.</p>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">The city council has high power over the project (they issue permits) but almost no personal interest in this specific house beyond compliance. Which quadrant, and which strategy?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! High power, low interest → Keep Satisfied: don't surprise them, meet requirements cleanly, but they don't need weekly deep-dive updates.">Keep Satisfied — meet requirements cleanly, avoid surprising them</button>
+        <button class="q-option" data-correct="false" data-explanation="Manage Closely is for high power AND high interest — the council has power but low personal interest here.">Manage Closely — give them weekly detailed updates</button>
+        <button class="q-option" data-correct="false" data-explanation="Monitor is for low power, low interest — but the council has high power (permit authority), so ignoring them is risky.">Monitor — minimal effort, they don't matter much</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">On the RACI matrix, "Schedule inspections" lists the Contractor as both A and R, with everyone else Informed. What does this tell you?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! It's common and fine for the same person to be both Accountable and Responsible for a task — one person owns it and does it. What matters is that there's still only ONE accountable person.">This is a valid, common pattern — one person can hold both roles as long as there's only one A</button>
+        <button class="q-option" data-correct="false" data-explanation="A/R on the same person is not a data-entry mistake — it's a legitimate, common RACI pattern for tasks with a single clear owner-doer.">This is an error and needs to be split across two people</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Two team members are both marked "A" on the same task. What's the most likely real-world consequence?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Double accountability doesn't create redundancy — it usually creates the opposite: each person assumes the other has it covered.">Extra safety — two people double-checking the decision</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! With two A's, each person can reasonably assume the other has final ownership. The decision stalls, or gets made twice in conflicting ways, until someone forces a single owner.">The decision stalls, because each person assumes the other one will make the final call</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – RISK & CHANGE CONTROL
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 07</div>
+  <h1 class="mod-title">Risk &amp; <span class="acc">Change Control</span></h1>
+  <p class="mod-lede">You don't cancel the build because rain is possible. You also don't ignore the forecast. Risk management is about deciding, in advance and with a clear head, how you'll respond to each thing that might go wrong — before it's actually going wrong and everyone's stressed.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The difference between a risk (might happen) and an issue (is happening)</li>
+      <li>How to plot risks on a probability × impact matrix</li>
+      <li>The four risk response strategies: avoid, mitigate, transfer, accept</li>
+      <li>What change control is, and how "scope creep" actually happens</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Risk vs. Issue</h2>
+  <p>A <strong>risk</strong> is uncertain — it might happen, and you plan for it in advance. An <strong>issue</strong> is a risk that already happened (or a problem that showed up with no warning) — it needs to be dealt with now, not planned for later. Confusing the two is common: teams often "manage" issues reactively that a five-minute risk conversation, months earlier, would have already had an answer for.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">A probability × impact risk matrix, with four example risks plotted</div>
+    <svg class="demo-svg" viewBox="0 0 440 400" role="img" aria-label="Five by five probability versus impact heat matrix with four example risks plotted">
+      <g>
+        <rect x="60" y="30" width="62" height="62" fill="#2E7D46"/><rect x="122" y="30" width="62" height="62" fill="#5A9C3F"/><rect x="184" y="30" width="62" height="62" fill="#C9A227"/><rect x="246" y="30" width="62" height="62" fill="#D9772E"/><rect x="308" y="30" width="62" height="62" fill="#C0392B"/>
+        <rect x="60" y="92" width="62" height="62" fill="#3D8A50"/><rect x="122" y="92" width="62" height="62" fill="#8CA83B"/><rect x="184" y="92" width="62" height="62" fill="#D9A22E"/><rect x="246" y="92" width="62" height="62" fill="#D9772E"/><rect x="308" y="92" width="62" height="62" fill="#C0392B"/>
+        <rect x="60" y="154" width="62" height="62" fill="#4E9A55"/><rect x="122" y="154" width="62" height="62" fill="#A8B23B"/><rect x="184" y="154" width="62" height="62" fill="#D9A22E"/><rect x="246" y="154" width="62" height="62" fill="#D97A2E"/><rect x="308" y="154" width="62" height="62" fill="#C0392B"/>
+        <rect x="60" y="216" width="62" height="62" fill="#5DA85B"/><rect x="122" y="216" width="62" height="62" fill="#B8B93B"/><rect x="184" y="216" width="62" height="62" fill="#D9A22E"/><rect x="246" y="216" width="62" height="62" fill="#D9772E"/><rect x="308" y="216" width="62" height="62" fill="#C0392B"/>
+        <rect x="60" y="278" width="62" height="62" fill="#6DB460"/><rect x="122" y="278" width="62" height="62" fill="#93B440"/><rect x="184" y="278" width="62" height="62" fill="#C9A227"/><rect x="246" y="278" width="62" height="62" fill="#D9772E"/><rect x="308" y="278" width="62" height="62" fill="#C0392B"/>
+      </g>
+      <line x1="60" y1="30" x2="60" y2="340" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="60" y1="340" x2="370" y2="340" stroke="var(--ink)" stroke-width="2"/>
+      <text x="20" y="185" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--ink)" transform="rotate(-90 20 185)">PROBABILITY →</text>
+      <text x="215" y="362" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--ink)">IMPACT →</text>
+
+      <circle cx="215" cy="185" r="8" fill="#fff" stroke="var(--ink)" stroke-width="2"/>
+      <text x="215" y="120" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#fff" font-weight="700">Bad weather</text>
+      <text x="215" y="132" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#fff" font-weight="700">delays a pour</text>
+
+      <circle cx="339" cy="247" r="8" fill="#fff" stroke="var(--ink)" stroke-width="2"/>
+      <text x="339" y="222" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff" font-weight="700">Site sits on</text>
+      <text x="339" y="234" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff" font-weight="700">unstable soil</text>
+
+      <circle cx="277" cy="247" r="8" fill="#fff" stroke="var(--ink)" stroke-width="2"/>
+      <text x="277" y="270" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--ink)" font-weight="700">Supplier</text>
+      <text x="277" y="282" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--ink)" font-weight="700">goes bust</text>
+
+      <circle cx="153" cy="123" r="8" fill="#fff" stroke="var(--ink)" stroke-width="2"/>
+      <text x="153" y="145" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff" font-weight="700">Owner changes</text>
+      <text x="153" y="157" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff" font-weight="700">paint colour</text>
+    </svg>
+    <div class="demo-caption">Green (bottom-left) = low probability, low impact — barely worth a line in the register. Red (top-right) = high probability, high impact — needs a response plan today, not a note. Unstable soil sits in the danger zone even at low probability, because the impact (a condemned build site) is catastrophic.</div>
+  </div>
+
+  <h2 class="sh">The Four Risk Responses</h2>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🚫</div>
+      <h4>Avoid</h4>
+      <p>Change the plan so the risk can't happen at all. Unstable soil at this site? Choose a different block entirely.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🛡️</div>
+      <h4>Mitigate</h4>
+      <p>Reduce the probability or the impact. Known-windy site? Add extra roof bracing before it becomes a problem.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">📄</div>
+      <h4>Transfer</h4>
+      <p>Shift the consequence to someone else. Buy builder's insurance — if the supplier goes bust, the policy absorbs the loss, not you.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🤷</div>
+      <h4>Accept</h4>
+      <p>Small, low-impact risk — note it in the register and move on. A rainy afternoon delaying paint drying isn't worth a mitigation plan.</p>
+    </div>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">A minimal risk register</div>
+    <table class="pm-table">
+      <thead><tr><th>Risk</th><th>Probability</th><th>Impact</th><th>Response</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td>Site sits on unstable soil</td><td>Low</td><td>Catastrophic</td><td class="hl">Avoid — different block</td><td>Homeowner</td></tr>
+        <tr><td>Key supplier goes bust</td><td>Low</td><td>High</td><td class="hl">Transfer — insurance</td><td>Contractor</td></tr>
+        <tr><td>Bad weather delays a pour</td><td>Medium</td><td>Medium</td><td class="hl">Mitigate — buffer days</td><td>Contractor</td></tr>
+        <tr><td>Owner changes paint colour</td><td>High</td><td>Low</td><td class="hl">Accept</td><td>Homeowner</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="sh">Change Control — Every Change Is a Mini Triple-Constraint Negotiation</h2>
+  <p>A <strong>change request</strong> is any proposal to alter the agreed scope, schedule, or budget after the plan is locked. The discipline isn't "say no to every change" — it's making sure every approved change comes with an honest, explicit adjustment to at least one other side of the Triple Constraint (Module 1). "While you're at it, can we also add a balcony?" isn't a small favor — it's a scope change that needs a matching time or cost adjustment, agreed on paper, before work starts.</p>
+  <div class="callout tomato">
+    <strong>Scope creep</strong> is what happens when small, well-meaning additions get waved through without going through change control. No single addition looks big enough to fight about — but the accumulated, ungoverned total is exactly how "on-time, on-budget" projects quietly become late and over-budget.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">A contractor discovers the concrete supplier just declared bankruptcy, mid-pour. Is this a risk or an issue?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! It has already happened — this needs an immediate response (find a new supplier fast), not a plan for something that might occur. That's an issue.">An issue — it has already happened and needs immediate response</button>
+        <button class="q-option" data-correct="false" data-explanation="A risk is something that might happen in the future. This has already occurred — that makes it an issue, not a risk.">A risk — it might affect the schedule</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Using the four response strategies, buying builder's insurance in case a supplier goes bankrupt is an example of which one?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Avoid would mean changing the plan so the risk can't happen at all (e.g., only using suppliers with a financial guarantee) — insurance doesn't prevent the bankruptcy.">Avoid</button>
+        <button class="q-option" data-correct="false" data-explanation="Mitigate reduces the probability or impact directly (e.g., using two suppliers so one failing doesn't stop the job) — insurance doesn't reduce the chance or the direct disruption.">Mitigate</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Transfer shifts the financial consequence to a third party — that's exactly what insurance does. The risk can still happen, but someone else absorbs the cost.">Transfer</button>
+        <button class="q-option" data-correct="false" data-explanation="Accept means doing nothing extra and just noting the risk — buying insurance is an active, deliberate response, not passive acceptance.">Accept</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Over six weeks, the homeowner asks for "just one more small thing" four separate times — a bigger window, an extra powerpoint, upgraded tiles, a wider doorway — each approved verbally on-site without updating the budget or schedule. What's happening?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! None of these individually looks worth a fight, but approving scope changes without a matching budget/schedule adjustment — every time — is the textbook definition of scope creep. The project will finish late and over budget with no single moment anyone can point to as 'the' cause.">Scope creep — small additions are bypassing change control and accumulating unaccounted cost and time</button>
+        <button class="q-option" data-correct="false" data-explanation="These are real scope additions, not risk events — they've already been requested and agreed to, not just possibilities.">This is just risk management working as intended</button>
+        <button class="q-option" data-correct="false" data-explanation="Nothing here is inherently unreasonable of the homeowner to want — the failure is procedural: no change control process to capture the cost/time impact, not the requests themselves.">This is normal and doesn't need any process — customers are always right</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – WATERFALL, AGILE & YOUR TOOLKIT
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 07</div>
+  <h1 class="mod-title">Waterfall, Agile &amp; <span class="acc">Your Toolkit</span></h1>
+  <p class="mod-lede">Everything so far assumed you plan up front and follow the plan — that's Waterfall, and it's exactly how you build a physical house, because concrete genuinely has to cure before you can frame the walls. But when the "concrete" is just code or a design file, changing your mind is cheap — and that's where Agile comes from.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The real difference between Waterfall and Agile — and why physics, not preference, decides which fits</li>
+      <li>The basic Scrum cycle: backlog, sprint, standup, review, retrospective</li>
+      <li>Why most real-world projects are a deliberate hybrid of both</li>
+      <li>A personal starter checklist to run your next project</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Two Shapes, Not Two Ideologies</h2>
+  <p><strong>Waterfall</strong> is sequential: fully plan, then design, then build, then test, then deploy — one pass, in order, like water cascading down a fixed set of steps. It works best when the cost of change goes up sharply once you've started — physical construction, regulatory filings, anything where "undo" is expensive or impossible.</p>
+  <p><strong>Agile</strong> (most commonly practiced as Scrum) works in short, repeating loops: plan a small slice, build it, get feedback, adjust, repeat. It works best when the cost of change stays low — software, design work, anything where "undo" mostly costs you the time you spent, not torn-out concrete.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Waterfall (cascading steps) vs. Agile (repeating loop)</div>
+    <svg class="demo-svg" viewBox="0 0 600 260" role="img" aria-label="Waterfall shown as five descending cascading steps; Agile shown as a repeating four-stage loop">
+      <text x="150" y="20" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--ink)">Waterfall</text>
+      <rect x="10" y="34" width="70" height="26" rx="5" fill="var(--sea)"/><text x="45" y="51" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff">Initiate</text>
+      <rect x="45" y="66" width="70" height="26" rx="5" fill="var(--sea)"/><text x="80" y="83" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff">Design</text>
+      <rect x="80" y="98" width="70" height="26" rx="5" fill="var(--sea)"/><text x="115" y="115" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff">Build</text>
+      <rect x="115" y="130" width="70" height="26" rx="5" fill="var(--sea)"/><text x="150" y="147" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff">Test</text>
+      <rect x="150" y="162" width="70" height="26" rx="5" fill="var(--sea)"/><text x="185" y="179" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff">Deploy</text>
+      <text x="115" y="215" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">one pass — change is expensive</text>
+      <text x="115" y="228" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">once the concrete is poured</text>
+
+      <text x="460" y="20" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--ink)">Agile</text>
+      <circle cx="460" cy="130" r="80" fill="none" stroke="var(--acc)" stroke-width="3"/>
+      <circle cx="460" cy="50" r="26" fill="var(--acc)"/><text x="460" y="55" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#fff">Plan</text>
+      <circle cx="540" cy="130" r="26" fill="var(--acc)"/><text x="540" y="135" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#fff">Build</text>
+      <circle cx="460" cy="210" r="26" fill="var(--acc)"/><text x="460" y="215" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#fff">Review</text>
+      <circle cx="380" cy="130" r="26" fill="var(--acc)"/><text x="380" y="135" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff">Adjust</text>
+      <text x="460" y="245" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">repeats every 1–2 weeks —</text>
+      <text x="460" y="258" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">cheap to change the next room's design</text>
+    </svg>
+    <div class="demo-caption">Same underlying activities — plan, build, check, adjust — arranged two different ways. Waterfall front-loads all the planning because changing course later is expensive. Agile spreads planning across many small cycles because changing course later is cheap.</div>
+  </div>
+
+  <div class="callout mango">
+    <strong>The nuance — real construction actually proves the point:</strong> you can't Agile your way through pouring a foundation; physics enforces the sequence. That's exactly why software, where the "material" is just text in a file, is where Agile took off — the cost-of-change curve is fundamentally different. Choose your approach based on how expensive "undo" is, not based on which one sounds more modern.
+  </div>
+
+  <h2 class="sh">The Scrum Cycle</h2>
+  <p>Scrum is the most common way teams run Agile in practice. A backlog of desired work is groomed and prioritized; a small slice is pulled into a time-boxed <strong>sprint</strong> (typically 1–2 weeks); the team checks in daily; and the sprint ends with a review of what was built and a retrospective on how the team worked, before the cycle repeats.</p>
+  <ol class="nl">
+    <li><strong>Product Backlog</strong> — the full, prioritized list of everything that could be built</li>
+    <li><strong>Sprint Planning</strong> — pull a small, achievable slice into this cycle's sprint</li>
+    <li><strong>Daily Standup</strong> — a short daily sync: what I did, what I'll do, what's blocking me</li>
+    <li><strong>Sprint Review</strong> — show the finished slice to stakeholders, gather real feedback</li>
+    <li><strong>Retrospective</strong> — the team reflects on how it worked together, and adjusts before the next sprint</li>
+  </ol>
+
+  <h2 class="sh">Hybrid Is Normal</h2>
+  <p>Most real projects blend both deliberately: a Waterfall skeleton of fixed milestones and budget approval gates (because the sponsor needs predictability), with Agile execution happening inside each phase (because the team benefits from short feedback loops). Choosing "pure Waterfall" or "pure Agile" as an ideology, rather than picking per-project based on the actual cost of change, is a common and avoidable mistake.</p>
+
+  <h2 class="sh">Your PM Starter Toolkit</h2>
+  <p>Before calling any project "under control," you should be able to tick every box below. If you can't, that's your next move — not a footnote.</p>
+  <div class="checklist" id="pm-checklist">
+    <div class="check-item"><input type="checkbox" id="c1"><label for="c1">I can state my project's Triple Constraint (scope, time, cost priority) in one sentence</label></div>
+    <div class="check-item"><input type="checkbox" id="c2"><label for="c2">A one-page charter exists — why, sponsor, what's in/out of scope</label></div>
+    <div class="check-item"><input type="checkbox" id="c3"><label for="c3">I have a WBS broken down to work packages someone can actually own</label></div>
+    <div class="check-item"><input type="checkbox" id="c4"><label for="c4">I know my critical path and which tasks have zero float</label></div>
+    <div class="check-item"><input type="checkbox" id="c5"><label for="c5">Every key task has exactly one Accountable person (no zero, no two)</label></div>
+    <div class="check-item"><input type="checkbox" id="c6"><label for="c6">I've mapped stakeholders on the power/interest grid, not just made a contact list</label></div>
+    <div class="check-item"><input type="checkbox" id="c7"><label for="c7">I have a risk register with at least 5 entries and a response for each</label></div>
+    <div class="check-item"><input type="checkbox" id="c8"><label for="c8">There's a real change-control step — new scope requires a matching time/cost adjustment</label></div>
+    <div class="check-item"><input type="checkbox" id="c9"><label for="c9">I've deliberately chosen Waterfall, Agile, or a hybrid — not defaulted to one out of habit</label></div>
+    <div class="check-item"><input type="checkbox" id="c10"><label for="c10">Communication cadence is matched to each stakeholder's quadrant, not one-size-fits-all</label></div>
+    <div class="check-item"><input type="checkbox" id="c11"><label for="c11">I know what "done" and formal close looks like before I start</label></div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 6</div>
+
+    <div class="q-card">
+      <p class="q-text">You're renovating a bathroom (plumbing must be roughed-in before tiling, which must happen before fixtures go in) versus designing a company's new logo (drafts can be revised endlessly at low cost). Which approach fits each?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The bathroom has a hard, physical, expensive-to-reverse sequence — Waterfall. The logo can iterate cheaply on feedback — Agile fits well.">Bathroom renovation → Waterfall; Logo design → Agile</button>
+        <button class="q-option" data-correct="false" data-explanation="This is backwards — the bathroom's physical dependencies (plumbing before tiling) make late changes expensive, which is exactly when Waterfall's up-front planning pays off.">Bathroom renovation → Agile; Logo design → Waterfall</button>
+        <button class="q-option" data-correct="false" data-explanation="They genuinely differ in how expensive it is to change course midway — that's precisely the variable that should drive the choice.">Both should use the same approach — the method doesn't really matter</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Put the Scrum cycle in the correct order.</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="A retrospective happening before any planning or building doesn't fit the cycle — there's nothing yet to reflect on.">Retrospective → Sprint Planning → Daily Standup → Sprint Review</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Plan the sprint from the backlog, work it with daily standups, review the finished slice with stakeholders, then reflect in the retrospective before the next cycle.">Sprint Planning → Daily Standup → Sprint Review → Retrospective</button>
+        <button class="q-option" data-correct="false" data-explanation="Reviewing work with stakeholders before any planning or building has happened doesn't make sense — there's nothing built yet to review.">Sprint Review → Sprint Planning → Retrospective → Daily Standup</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A construction company sets fixed budget-approval milestones every quarter (Waterfall-style gates) but lets each site team run 2-week planning cycles with daily huddles inside each quarter (Agile-style execution). What is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is a deliberate hybrid — a predictable Waterfall skeleton for the sponsor's budget governance, with Agile-style short feedback loops for the team's actual day-to-day execution. This is how most mature organizations actually run large projects.">A hybrid approach — Waterfall skeleton, Agile execution inside it</button>
+        <button class="q-option" data-correct="false" data-explanation="It has real Agile elements (2-week cycles, daily huddles) layered inside it — calling it pure Waterfall misses that.">Pure Waterfall with extra meetings</button>
+        <button class="q-option" data-correct="false" data-explanation="It's not confused — the quarterly gates serve a real governance purpose (budget approval) that pure Agile intentionally avoids; combining both is a legitimate, common design choice.">A mistake — they should pick one method and be consistent</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">Every history, statistic, and named framework in this course traces back to a source. Here they are, annotated and grouped by theme, with the caveats you need to interpret them honestly.</p>
+
+  <div class="ref-group-label">Origins &amp; History</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Kelley, James E., Jr. "Origins of CPM – A Personal History." Project Management Institute. Accessed 2026.</div>
+    <div class="ref-annotation">A first-person account by one of the two originators of the Critical Path Method. Morgan Walker of DuPont and James Kelley of Remington Rand began the work in 1956 to fix cost overruns on chemical-plant shutdown scheduling; the method was trialled in 1957 and formally published in 1959. This is the direct historical root of Module 3's critical path and network diagram technique.</div>
+    <a class="ref-link" href="https://www.pmi.org/learning/library/origins-cpm-personal-history-3762" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Weaver, Patrick. "Henry L Gantt, 1861–1919: Debunking the Myths." <em>PM World Journal</em> 1, no. 5 (December 2012).</div>
+    <div class="ref-annotation">A well-sourced correction to the popular Gantt-chart origin story: Henry Gantt refined and popularized the bar-chart schedule between 1910–1915, but Polish engineer Karol Adamiecki had designed a similar "harmonogram" as early as 1896. Gantt's version spread in the English-speaking world largely because he published in English; Adamiecki published in Polish and Russian.</div>
+    <a class="ref-link" href="https://pmworldlibrary.net/wp-content/uploads/2013/01/PMWJ5-Dec2012-WEAVER-Henry-Gantt-Debunking-Myths-Featured-Paper.pdf" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Wikipedia contributors. "Karol Adamiecki." <em>Wikipedia, The Free Encyclopedia</em>. Accessed 2026.</div>
+    <div class="ref-annotation">Background on the Polish engineer credited with the earlier harmonogram scheduling chart referenced above. Included as an accessible starting point; the Weaver (2012) article above is the more rigorous source on the Gantt/Adamiecki priority question.</div>
+    <a class="ref-link" href="https://en.wikipedia.org/wiki/Karol_Adamiecki" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Standards &amp; Frameworks</div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Project Management Institute. <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide)</em>. 7th ed. Newtown Square, PA: Project Management Institute, 2021.</div>
+    <div class="ref-annotation">The field's most widely used standard, underlying most of the vocabulary in this course (charter, WBS, risk register). Caveat: the 7th edition shifted toward principles-based guidance rather than the strict five-process-group model. This course deliberately teaches the classic five-phase framing (Initiate/Plan/Execute/Monitor & Control/Close) from earlier editions because it's the clearer teaching scaffold for a first course — PMI's own standards still reference it as foundational.</div>
+    <a class="ref-link" href="https://www.pmi.org/pmbok-guide-standards" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Beck, Kent, Mike Beedle, Arie van Bennekum, Alistair Cockburn, Ward Cunningham, Martin Fowler, James Grenning, Jim Highsmith, Andrew Hunt, Ron Jeffries, Jon Kern, Brian Marick, Robert C. Martin, Steve Mellor, Ken Schwaber, Jeff Sutherland, and Dave Thomas. "Manifesto for Agile Software Development." 2001.</div>
+    <div class="ref-annotation">Written by seventeen software practitioners meeting at The Lodge at Snowbird, Utah, February 11–13, 2001, representing Extreme Programming, Scrum, and other "lightweight" methods of the era. Four values and twelve principles that underpin Module 6's Agile framing and the entire modern Scrum ecosystem.</div>
+    <a class="ref-link" href="https://agilemanifesto.org/history.html" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Schwaber, Ken, and Jeff Sutherland. "The Scrum Guide." 2020.</div>
+    <div class="ref-annotation">The authoritative, co-authored definition of Scrum's roles and events — backlog, sprint, daily scrum, sprint review, retrospective — written by two of Scrum's original co-creators. Source for the Scrum cycle described in Module 6.</div>
+    <a class="ref-link" href="https://scrumguides.org" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Evidence, Caveats &amp; Further Reading</div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">The Standish Group International. "The CHAOS Report." 1994.</div>
+    <div class="ref-annotation">The landmark, widely-cited 1994 survey of IT project outcomes behind Module 1's stat cards: 16.2% of surveyed projects succeeded outright (on time, on budget, full scope), 52.7% were "challenged" (completed but over budget, over time, or reduced in scope), and 31.1% were cancelled. Challenged projects ran 189% over their original cost estimate on average, and large-company projects delivered only 42% of originally specified features on average.</div>
+    <a class="ref-link" href="https://cs.franklin.edu/~smithw/ITEC495_Resources/chaos%20report.pdf" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Eveleens, J. Laurenz, and Chris Verhoef. "The Rise and Fall of the CHAOS Report Figures." <em>IEEE Software</em> 27, no. 1 (January 2010): 30–36.</div>
+    <div class="ref-annotation">An important methodological critique of the CHAOS Report above: it argues Standish's definition of "success" (exact original scope, on the exact original budget and date) is far stricter than the benchmark most industries actually use, which inflates the apparent failure rate. Read alongside the 1994 report, not instead of it — the critique doesn't claim projects rarely fail, only that the specific percentages shouldn't be treated as precise.</div>
+    <a class="ref-link" href="https://www.cs.vu.nl/~x/the_rise_and_fall_of_the_chaos_report_figures.pdf" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Project Management Institute. <em>Pulse of the Profession®: Ahead of the Curve — Forging a Future-Focused Culture</em>. Newtown Square, PA: PMI, 2020.</div>
+    <div class="ref-annotation">Source of the "11.4% of every dollar wasted" figure in Module 1 — a large, multi-industry, self-reported practitioner survey (distinct methodology from the software-specific CHAOS Report). The same PMI survey series reported this figure trending down in later editions — 9.4% in 2021, 5.2% in 2023 — so it should be read as illustrative of scale and direction, not a fixed constant.</div>
+    <a class="ref-link" href="https://www.pmi.org/learning/library/forging-future-focused-culture-11908" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Kerzner, Harold. <em>Project Management: A Systems Approach to Planning, Scheduling, and Controlling</em>. Hoboken, NJ: Wiley.</div>
+    <div class="ref-annotation">The standard comprehensive project management textbook, now in many editions, for readers who want to go deeper than this course into earned value management, formal resource levelling, and quantitative risk analysis.</div>
+    <a class="ref-link" href="https://www.wiley.com" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the statistics in Module 1 come from different eras, industries, and methodologies — the 1994 CHAOS figures describe software projects specifically under a strict success definition that has been academically challenged; the PMI figure is a broader, self-reported multi-industry survey that has since trended downward across newer editions. Treat both as evidence that project failure is common enough to justify the discipline in this course, not as a precise, fixed, universal failure rate. No large-scale Indonesia-specific project-outcome dataset is cited here — these figures are drawn from global, primarily US/software-industry and multi-industry survey sources.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Course Complete! 🏗️</h2>
+    <p>You now have the same mental toolkit professional project managers use — the Triple Constraint, the 5-phase lifecycle, WBS and critical path, RACI, risk registers, and when to choose Waterfall vs. Agile. Go build something.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="7">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'project-management';
+const TOTAL = 7;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
