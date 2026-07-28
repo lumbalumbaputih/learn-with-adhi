@@ -361,6 +361,21 @@
     "duration": "~4 days"
   },
   {
+    "id": "project-management",
+    "n": "17",
+    "title": "Project Management: A Builder's Guide",
+    "blurb": "The real mechanics of project management — the Triple Constraint, the 5-phase lifecycle, WBS and critical path, RACI, risk registers, and Agile vs. Waterfall — taught through one continuous analogy: building a house.",
+    "category": "Practice",
+    "tags": [
+      "Beginner",
+      "Career"
+    ],
+    "primitive": "eye",
+    "accent": "mango",
+    "path": "courses/project-management/project-management-course-v1.html",
+    "duration": "~4 days"
+  },
+  {
     "id": "aasb-s2-climate",
     "n": "15",
     "title": "AASB S2 Decoded: Climate-related Disclosures",
