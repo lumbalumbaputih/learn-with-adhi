@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="pmbok8-part7">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Approaches & the Exam Bridge · PMBOK 8, Field-Tested · Learn with Adhi</title>
+<meta name="description" content="Part 7 (capstone) of PMBOK 8, Field-Tested: predictive vs. adaptive vs. hybrid in practice, a tailoring workshop, the artifact library, the PMP/CAPM exam bridge, and a full worked capstone case study across all 7 domains.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-management/pmbok8-part7-capstone-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Delivery Approaches & the Exam Bridge · PMBOK 8, Field-Tested">
+<meta property="og:description" content="Tailoring, the artifact library, the exam bridge, and a full worked capstone case study.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"PMBOK 8, Field-Tested — Part 7: Delivery Approaches & the Exam Bridge","description":"Tailoring, the artifact library, the exam bridge, and a full worked capstone case study.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#1C5DDC; --acc-dim:#154BB3; --acc-bg:rgba(28,93,220,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#5b8cff);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="pmbok8-hub.html">← Series map · Part 7 of 7</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 7 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Predictive, Adaptive, Hybrid</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Tailoring Workshop</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Artifacts &amp; Documents</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">The Exam Bridge</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Capstone Case Study</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Comprehensive Review</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7">
+      <span class="nav-num">07</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">PMBOK 8 · Part 7</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – PREDICTIVE, ADAPTIVE, HYBRID
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 07</div>
+  <h1 class="mod-title">Predictive, Adaptive, <span class="acc">Hybrid</span></h1>
+  <p class="mod-lede">Part 1 introduced the three life-cycle shapes in theory. Here's what they actually look like running: Scrum and Kanban as the two dominant adaptive frameworks, and how all seven domains from this series show up differently depending which shape you're in.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The basic mechanics of Scrum and Kanban</li>
+      <li>How each of the 7 domains looks different under predictive vs. adaptive delivery</li>
+      <li>Why "we're doing Agile" is not, by itself, a complete answer to how a project runs</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Scrum, Briefly</h2>
+  <p>Scrum organizes work into fixed-length <strong>sprints</strong> (commonly one to four weeks): a planning session sets the sprint's scope from a prioritized <strong>backlog</strong>, daily short standups surface blockers, a sprint review demonstrates what shipped, and a retrospective captures what to improve next time. A <strong>Product Owner</strong> owns the backlog's priority; a <strong>Scrum Master</strong> owns the process and removes obstacles — deliberately separate from who owns technical delivery.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">One sprint's internal cycle</div>
+    <svg class="demo-svg" viewBox="0 0 400 400" role="img" aria-label="Four boxes arranged in a cycle labeled Sprint Planning, Daily Standups repeated, Sprint Review, and Retrospective, connected by arrows moving clockwise back to Planning">
+      <g font-family="var(--fb)" font-size="11" font-weight="700" fill="#fff">
+        <rect x="140" y="20" width="120" height="60" rx="10" fill="var(--sea)"/><text x="200" y="46" text-anchor="middle">Sprint</text><text x="200" y="62" text-anchor="middle">Planning</text>
+        <rect x="290" y="170" width="110" height="60" rx="10" fill="var(--forest)"/><text x="345" y="196" text-anchor="middle">Daily</text><text x="345" y="212" text-anchor="middle">Standups</text>
+        <rect x="140" y="320" width="120" height="60" rx="10" fill="var(--mango)"/><text x="200" y="346" text-anchor="middle">Sprint</text><text x="200" y="362" text-anchor="middle">Review</text>
+        <rect x="0" y="170" width="100" height="60" rx="10" fill="var(--tomato)"/><text x="50" y="205" text-anchor="middle">Retro</text>
+      </g>
+      <g stroke="var(--ink)" stroke-width="2.5" fill="none" marker-end="url(#arrowsp)">
+        <path d="M260 55 C 320 70, 345 120, 345 170"/>
+        <path d="M345 230 C 345 280, 300 320, 260 345"/>
+        <path d="M140 355 C 80 335, 50 280, 50 230"/>
+        <path d="M50 170 C 55 110, 100 65, 140 50"/>
+      </g>
+      <defs><marker id="arrowsp" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+      <text x="200" y="205" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--muted)">repeats each sprint</text>
+    </svg>
+    <div class="demo-caption">This whole cycle recurs every sprint — recall Part 1, Module 3: all 5 Focus Areas (Initiating…Closing) happen inside every iteration, at a small scale.</div>
+  </div>
+
+  <h2 class="sh">Kanban, Briefly</h2>
+  <p>Kanban skips fixed sprints in favor of continuous flow: work items move across a visual board (To Do → In Progress → Done, or finer stages), with <strong>WIP limits</strong> (work-in-progress caps per column) preventing overload. There's no sprint boundary — work is pulled as capacity frees up, not batched into fixed cycles.</p>
+
+  <h2 class="sh">The Same 7 Domains, Different Shape</h2>
+  <table class="pm-table">
+    <thead><tr><th>Domain</th><th>Predictive</th><th>Adaptive (Scrum/Kanban)</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Governance</td><td>Charter authorizes the whole project up front</td><td>Charter may authorize a shorter horizon; re-chartered or extended each release</td></tr>
+      <tr><td class="hl">Scope</td><td>WBS fixed early, changes go through formal control</td><td>A living, re-prioritized backlog — "scope control" happens every planning session</td></tr>
+      <tr><td class="hl">Schedule</td><td>Network diagram, critical path calculated once</td><td>Sprint velocity and burn-down; the "schedule" is really a release cadence</td></tr>
+      <tr><td class="hl">Finance</td><td>Cost baseline set against the full WBS</td><td>Budget often set per release/quarter; EVM still applies, measured per iteration</td></tr>
+      <tr><td class="hl">Stakeholders</td><td>Formal engagement checkpoints at milestones</td><td>Continuous engagement — the Product Owner is a standing stakeholder conduit</td></tr>
+      <tr><td class="hl">Resources</td><td>Resource plan set against the full schedule</td><td>A stable team's capacity per sprint, not per-task assignment</td></tr>
+      <tr><td class="hl">Risk</td><td>Formal risk register reviewed at gates</td><td>Risk surfaces continuously in daily standups, resolved faster but more informally</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout mango">
+    <strong>It depends, still:</strong> "we're doing Agile" doesn't answer how governance, finance, or risk actually work on your project — those decisions still have to be made explicitly, just inside a different rhythm. Tailoring (Module 2) applies exactly as much to an adaptive project as a predictive one.
+  </div>
+
+  <div class="callout blue">
+    <strong>See also:</strong> the site's companion <a href="project-management-course-v1.html#module-6">Project Management: A Builder's Guide</a> covers Waterfall vs. Agile as a first introduction — this module builds on that with the domain-by-domain mapping specific to the 8th-edition standard.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A team member says "we don't need a risk register because we're doing Scrum." What does this module say about that claim?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Risk still needs managing under Scrum — it just surfaces continuously (daily standups) rather than through periodic formal gates. The domain doesn't disappear, its rhythm changes.">It's a misunderstanding — risk still needs managing, it just surfaces continuously in daily standups instead of at formal review gates</button>
+        <button class="q-option" data-correct="false" data-explanation="The table explicitly shows risk still applies under adaptive delivery — the domain doesn't vanish, only its cadence and formality change.">It's correct — Scrum eliminates the need to manage risk formally</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">In Kanban, what replaces the fixed-length sprint as the mechanism that prevents the team from being overloaded?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Kanban has no sprint boundary — WIP (work-in-progress) limits per column are what cap how much is in flight at once, preventing overload directly rather than through a time-boxed batch.">WIP limits — capping how much work can be in progress in each column at once</button>
+        <button class="q-option" data-correct="false" data-explanation="Kanban specifically has no fixed sprint boundary — that's the defining difference from Scrum described in the module.">A longer sprint, typically extended to 6-8 weeks</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the Product Owner and Scrum Master role split matter, according to this module?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module explicitly separates backlog-priority ownership (Product Owner) from process-and-obstacle ownership (Scrum Master) — deliberately distinct roles, not two names for the same job.">It deliberately separates who owns backlog priority from who owns the team's process and obstacles — two distinct concerns</button>
+        <button class="q-option" data-correct="false" data-explanation="The module describes these as genuinely distinct roles with different responsibilities, not interchangeable titles for the same function.">The two roles are functionally identical, just named differently for different organizations</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – TAILORING WORKSHOP
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 07</div>
+  <h1 class="mod-title">Tailoring <span class="acc">Workshop</span></h1>
+  <p class="mod-lede">Every part of this series has said "it depends, tailor it" — this module turns that into an actual decision workflow you can run on a real project, instead of a vague principle to nod along with.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>A concrete set of diagnostic questions for choosing a life cycle</li>
+      <li>How tailoring extends beyond life cycle to process formality and documentation depth</li>
+      <li>Why the answer is allowed to be "hybrid, and here's exactly where the line is"</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Diagnostic Questions</h2>
+  <div class="demo-box">
+    <div class="demo-label">A tailoring decision flow</div>
+    <svg class="demo-svg" viewBox="0 0 640 260" role="img" aria-label="A flowchart: is scope well understood and stable, if yes go toward predictive, if no ask is late change costly, if yes go toward hybrid, if no go toward adaptive">
+      <rect x="20" y="100" width="150" height="60" rx="10" fill="var(--ink)"/>
+      <text x="95" y="122" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">Is scope well</text>
+      <text x="95" y="136" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">understood &amp; stable?</text>
+
+      <rect x="480" y="20" width="130" height="50" rx="10" fill="var(--forest)"/>
+      <text x="545" y="50" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Predictive</text>
+
+      <rect x="250" y="190" width="150" height="60" rx="10" fill="var(--ink)"/>
+      <text x="325" y="212" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">Is late change</text>
+      <text x="325" y="226" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">very costly?</text>
+
+      <rect x="480" y="110" width="130" height="50" rx="10" fill="var(--mango)"/>
+      <text x="545" y="140" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Hybrid</text>
+
+      <rect x="480" y="200" width="130" height="50" rx="10" fill="var(--sea)"/>
+      <text x="545" y="230" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Adaptive</text>
+
+      <g stroke="var(--ink)" stroke-width="2" fill="none" marker-end="url(#arrowtw)">
+        <path d="M170 120 L480 50"/>
+        <path d="M120 160 L300 190"/>
+        <path d="M400 210 L480 145"/>
+        <path d="M400 235 L480 230"/>
+      </g>
+      <text x="300" y="90" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--forest)">yes</text>
+      <text x="185" y="180" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--tomato)">no</text>
+      <text x="450" y="165" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--mango)">yes</text>
+      <text x="450" y="255" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--sea)">no</text>
+
+      <defs><marker id="arrowtw" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">A simplified version — real tailoring weighs several factors together (Part 1, Module 3's table), but a decision tree like this beats deciding by gut feeling or defaulting to whatever the last project used.</div>
+  </div>
+
+  <h2 class="sh">Tailoring Beyond Life Cycle</h2>
+  <p>Choosing predictive/adaptive/hybrid is the biggest tailoring decision, but not the only one. The same "match the effort to the actual stakes" logic (Part 1) applies to: how formal the change control process needs to be (Part 3), how detailed the WBS needs to go (Part 4), whether EVM gets tracked weekly or monthly (Part 5), and how many stakeholders genuinely need "Manage Closely" attention versus "Monitor" (Part 6).</p>
+
+  <div class="callout green">
+    <strong>Good practice:</strong> write the tailoring decision down, with the reasoning, not just the conclusion. "We chose hybrid because construction has a hard permit gate but the platform's UX is genuinely undecided" is a decision someone can revisit and defend later — "we're doing hybrid" alone isn't.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A project has well-understood, stable scope, but late changes are also cheap to make (nothing physically irreversible is at stake). Following the decision flow, what's the likely fit?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Well-understood, stable scope leads toward the 'yes' branch to Predictive — the flow's first question is decisive here regardless of change cost, since scope is already stable and unlikely to actually need late changes.">Predictive — stable, well-understood scope is the decisive factor here</button>
+        <button class="q-option" data-correct="false" data-explanation="The flow's first branch (well-understood, stable scope) already points to Predictive — the low cost of late change doesn't override that when scope isn't actually expected to change much.">Adaptive — low cost of change always overrides scope clarity</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module recommend writing down the reasoning behind a tailoring decision, not just the conclusion ("we're doing hybrid")?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Recorded reasoning lets someone later evaluate whether the original logic still holds — echoing Part 1's tailoring principle that the decision should be revisited, not fixed forever.">Because the reasoning lets someone revisit and defend (or update) the decision later, rather than treating it as an unquestionable given</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't a compliance requirement — it's a practical point about making a decision genuinely revisitable and defensible over time.">Because PMI requires written justification for every tailoring choice</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Does tailoring only apply to the choice of life cycle (predictive/adaptive/hybrid)?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module explicitly extends tailoring to change-control formality, WBS depth, EVM tracking frequency, and stakeholder engagement effort — the life-cycle choice is the biggest tailoring decision, not the only one.">No — the same logic applies to process formality, documentation depth, and engagement effort across every domain</button>
+        <button class="q-option" data-correct="false" data-explanation="The module explicitly lists several other tailoring decisions beyond life cycle — change control formality, WBS depth, EVM cadence, and stakeholder effort.">Yes — every other process should be run at full, uniform formality regardless of the life cycle chosen</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – ARTIFACTS & DOCUMENTS
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 07</div>
+  <h1 class="mod-title">Artifacts &amp; <span class="acc">Documents</span></h1>
+  <p class="mod-lede">Six parts' worth of techniques produce a specific set of real documents. Here they are, gathered in one place, in roughly the order you'd actually create them.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The core artifact set this series has built, and which part/module each comes from</li>
+      <li>A compact RACI template — the one artifact this series hadn't built yet</li>
+      <li>How the artifacts chain together, each one feeding the next</li>
+    </ul>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">The artifact chain, in creation order</div>
+    <svg class="demo-svg" viewBox="0 0 640 140" role="img" aria-label="A chain of six artifacts in order: Charter, WBS, Schedule Network Diagram, Cost Baseline, Risk Register, Stakeholder Register">
+      <g font-family="var(--fb)" font-size="8.5" font-weight="700" fill="#fff">
+        <rect x="0" y="40" width="100" height="46" rx="8" fill="var(--acc)"/><text x="50" y="60" text-anchor="middle">Charter</text><text x="50" y="72" text-anchor="middle" font-size="7.5">Part 3</text>
+        <rect x="110" y="40" width="100" height="46" rx="8" fill="var(--forest)"/><text x="160" y="60" text-anchor="middle">WBS</text><text x="160" y="72" text-anchor="middle" font-size="7.5">Part 4</text>
+        <rect x="220" y="40" width="100" height="46" rx="8" fill="var(--sea)"/><text x="270" y="58" text-anchor="middle">Network</text><text x="270" y="70" text-anchor="middle">Diagram</text>
+        <rect x="330" y="40" width="100" height="46" rx="8" fill="var(--mango)"/><text x="380" y="58" text-anchor="middle">Cost</text><text x="380" y="70" text-anchor="middle">Baseline</text>
+        <rect x="440" y="40" width="100" height="46" rx="8" fill="#8B5CF6"/><text x="490" y="58" text-anchor="middle">Risk</text><text x="490" y="70" text-anchor="middle">Register</text>
+        <rect x="550" y="40" width="90" height="46" rx="8" fill="var(--tomato)"/><text x="595" y="58" text-anchor="middle">Stakeholder</text><text x="595" y="70" text-anchor="middle">Register</text>
+      </g>
+      <g stroke="var(--ink)" stroke-width="2" fill="none" marker-end="url(#arrowart)">
+        <path d="M100 63 L110 63"/><path d="M210 63 L220 63"/><path d="M320 63 L330 63"/><path d="M430 63 L440 63"/><path d="M540 63 L550 63"/>
+      </g>
+      <defs><marker id="arrowart" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Not a strict pipeline in practice — the Risk and Stakeholder registers start early and evolve throughout — but this is roughly the order each artifact first takes real shape.</div>
+  </div>
+
+  <table class="pm-table">
+    <thead><tr><th>Artifact</th><th>From</th><th>Captures</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Charter</td><td>Part 3, Module 1</td><td>Authorization, sponsor, high-level scope/budget/timeline, success criteria</td></tr>
+      <tr><td class="hl">WBS</td><td>Part 4, Module 2</td><td>Full scope, decomposed to work packages, 100% rule</td></tr>
+      <tr><td class="hl">Network diagram / schedule</td><td>Part 4, Modules 4–5</td><td>Activity sequence, dependencies, the critical path</td></tr>
+      <tr><td class="hl">Cost baseline</td><td>Part 5, Modules 1–2</td><td>Time-phased budget, contingency and management reserve</td></tr>
+      <tr><td class="hl">Risk register</td><td>Part 6, Modules 4–6</td><td>Identified risks, RBS category, probability/impact, response strategy, trigger</td></tr>
+      <tr><td class="hl">Stakeholder register</td><td>Part 6, Modules 1–3</td><td>Power/interest position, current/desired engagement, communication needs</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sh">RACI — the One This Series Hadn't Built Yet</h2>
+  <p>A RACI matrix names, for each key decision or task, who's Responsible (does the work), Accountable (owns the outcome — exactly one person), Consulted (gives input beforehand), and Informed (told after). It's not one of PMBOK 8's named artifacts, but it's a near-universal practical tool for exactly the kind of ambiguity Part 3's Governance domain exists to prevent.</p>
+
+  <table class="pm-table">
+    <thead><tr><th>Decision</th><th>PM</th><th>Sponsor</th><th>Architect</th></tr></thead>
+    <tbody>
+      <tr><td>Approve platform architecture</td><td>C</td><td>I</td><td>A/R</td></tr>
+      <tr><td>Approve budget change &gt;$10k</td><td>R</td><td>A</td><td>I</td></tr>
+    </tbody>
+  </table>
+  <div class="callout blue">
+    <strong>Going deeper:</strong> the site's companion <a href="project-management-course-v1.html#module-4">Project Management: A Builder's Guide</a> covers RACI in full depth, including the classic "two A's on one task" trap. This module keeps it brief since it's already taught well there — no need to duplicate it.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the artifact chain diagram show the Risk and Stakeholder registers starting relatively early rather than strictly at the end?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Per Part 6, both registers are living documents that begin early and evolve throughout the project — they aren't a final step that only happens after everything else is locked down.">Because both are living documents that start early and evolve continuously throughout the project, not a final step</button>
+        <button class="q-option" data-correct="false" data-explanation="The diagram's caption explicitly says this isn't a strict pipeline — the registers don't wait for every other artifact to finish first.">Because PMI requires them to be completed before the WBS is finalized</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">In the RACI example, the architect is listed as both "A" and "R" for approving the platform architecture. Per the Builder's Guide's coverage of RACI, is this a problem?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! One person holding both A and R for a single task is a valid, common pattern — the actual trap is TWO people both marked A on the same task, which this example avoids (only the architect is A here).">No — one person holding both roles for a task is valid, as long as there's still only one A for that task</button>
+        <button class="q-option" data-correct="false" data-explanation="A/R on the same person for a task is not the trap — the trap is two different people both being marked A for the same task, which isn't what's shown here.">Yes — A and R must always be assigned to two different people</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does this module keep its RACI coverage brief and point to the Builder's Guide instead of teaching it in full depth again?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The Builder's Guide already teaches RACI in depth (including its classic trap) — repeating that fully here would be pure duplication rather than adding value.">Because the Builder's Guide already covers RACI in full depth, and repeating it here would be pure duplication</button>
+        <button class="q-option" data-correct="false" data-explanation="RACI is treated as a genuinely useful practical tool here — it's cross-linked for depth, not omitted for lack of relevance.">Because RACI isn't actually relevant to PMBOK 8 projects</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – THE EXAM BRIDGE
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 07</div>
+  <h1 class="mod-title">The Exam <span class="acc">Bridge</span></h1>
+  <p class="mod-lede">Everything in this module has already been taught earlier in the series — this is where it gets consolidated for exam use: every formula in one table, PMI's stated exam structure, and the actual technique for reading a situational question.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>PMI's Exam Content Outline structure, as publicly reported</li>
+      <li>Every formula taught in this series, consolidated in one table</li>
+      <li>A technique for approaching "what should the PM do FIRST/NEXT/BEST" questions</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Exam Content Outline (ECO)</h2>
+  <p>PMI's PMP exam has, at time of writing, been publicly organized around three domains: <strong>People</strong>, <strong>Process</strong>, and <strong>Business Environment</strong>. Rather than assert specific weightings here — PMI updates these figures periodically, and this course's structural claims are already flagged as corroborated-but-unverified against the paywalled standard — confirm the current ECO percentages directly from PMI's own published exam content outline before using them to plan study time.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The three ECO domains — deliberately unweighted here</div>
+    <svg class="demo-svg" viewBox="0 0 560 150" role="img" aria-label="Three equal boxes labeled People, Process, and Business Environment, representing the three ECO domains without asserting specific percentage weightings">
+      <g font-family="var(--fb)" font-size="12" font-weight="700" fill="#fff">
+        <rect x="20" y="30" width="160" height="80" rx="10" fill="var(--sea)"/><text x="100" y="75" text-anchor="middle">People</text>
+        <rect x="200" y="30" width="160" height="80" rx="10" fill="var(--forest)"/><text x="280" y="75" text-anchor="middle">Process</text>
+        <rect x="380" y="30" width="160" height="80" rx="10" fill="var(--mango)"/><text x="460" y="68" text-anchor="middle">Business</text><text x="460" y="84" text-anchor="middle">Environment</text>
+      </g>
+      <text x="280" y="135" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">equal box widths — no weighting implied, confirm current % against pmi.org</text>
+    </svg>
+    <div class="demo-caption">Three named domains, no asserted percentages — check PMI's own current exam content outline for the actual weighting before planning study time around it.</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">9</div>
+      <div class="stat-lbl">Formulas taught across this series, consolidated below</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">7</div>
+      <div class="stat-lbl">Performance domains, all covered across Parts 3–6</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">6</div>
+      <div class="stat-lbl">Principles, all covered in Part 2</div>
+    </div>
+  </div>
+
+  <h2 class="sh">The Formula Cheat-Sheet</h2>
+  <table class="pm-table">
+    <thead><tr><th>Metric</th><th>Formula</th><th>Taught in</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">PERT expected duration</td><td>(O + 4M + P) ÷ 6</td><td>Part 4, Module 5</td></tr>
+      <tr><td class="hl">Cost Variance (CV)</td><td>EV − AC</td><td>Part 5, Module 3</td></tr>
+      <tr><td class="hl">Schedule Variance (SV)</td><td>EV − PV</td><td>Part 5, Module 3</td></tr>
+      <tr><td class="hl">Cost Performance Index (CPI)</td><td>EV ÷ AC</td><td>Part 5, Module 3</td></tr>
+      <tr><td class="hl">Schedule Performance Index (SPI)</td><td>EV ÷ PV</td><td>Part 5, Module 3</td></tr>
+      <tr><td class="hl">Estimate at Completion (EAC)</td><td>BAC ÷ CPI</td><td>Part 5, Module 3</td></tr>
+      <tr><td class="hl">Estimate to Complete (ETC)</td><td>EAC − AC</td><td>Part 5, Module 3</td></tr>
+      <tr><td class="hl">Communication channels</td><td>n(n − 1) ÷ 2</td><td>Part 6, Module 2</td></tr>
+      <tr><td class="hl">Expected Monetary Value (EMV)</td><td>Σ (probability × impact)</td><td>Part 6, Module 5</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sh">Reading a Situational Question</h2>
+  <p>PMP-style scenario questions typically ask what the PM should do <strong>FIRST</strong>, <strong>NEXT</strong>, or <strong>BEST</strong>. A practical technique:</p>
+  <ol class="nl">
+    <li><strong>Identify what's actually being tested</strong> — which domain or principle does the scenario turn on, underneath the story details?</li>
+    <li><strong>Eliminate options that skip a step</strong> — an option that jumps straight to escalating or replanning, without first investigating or communicating, is usually wrong even if it's eventually the right move.</li>
+    <li><strong>Favor the proactive, leadership-oriented option</strong> — per Part 2's principles, PMI's own framing consistently rewards the PM who addresses root cause and empowers the team over the PM who dictates or avoids.</li>
+    <li><strong>Among plausible options, pick the most complete one</strong> — the option that addresses the underlying cause, not just the symptom described in the scenario.</li>
+  </ol>
+
+  <div class="callout tomato">
+    <strong>Caveat, honestly stated:</strong> this technique is widely reported test-prep guidance, cross-consistent with how this series' own principles (Part 2) and processes are framed — but it is not a verified, official PMI statement about how questions are scored. Treat it as a useful heuristic, not a guarantee.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A situational question describes a stalled decision and offers "escalate to the sponsor immediately" as one option, with no other option mentioning any prior investigation. Per the technique in this module, what's the likely issue with jumping straight to escalation?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The technique specifically flags options that skip a step (like escalating before investigating or attempting resolution) as usually the wrong choice, even when escalation might eventually be warranted.">It likely skips a step — investigating or attempting to resolve first is usually favored over immediate escalation</button>
+        <button class="q-option" data-correct="false" data-explanation="The technique doesn't claim escalation is always correct — it specifically warns against options that skip earlier steps like investigation.">Escalating immediately is always the correct first move in PMP scenario questions</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Using the formula cheat-sheet, what's EAC if BAC = $200,000 and CPI = 0.8?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! EAC = BAC ÷ CPI = 200,000 ÷ 0.8 = $250,000.">$250,000 — 200,000 ÷ 0.8</button>
+        <button class="q-option" data-correct="false" data-explanation="This would be BAC × CPI, not BAC ÷ CPI — the formula divides, and a CPI below 1 (over budget) should increase the projected final cost above BAC, not decrease it.">$160,000 — 200,000 × 0.8</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does this module explicitly avoid stating specific ECO percentage weightings for the PMP exam?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Consistent with this series' sourcing honesty throughout — since PMI updates these figures periodically and the underlying standard is paywalled, asserting a specific unverified percentage risks stating something false with unwarranted confidence.">Because PMI updates these figures periodically, and this course avoids asserting a specific number it can't currently verify — consistent with its sourcing honesty elsewhere</button>
+        <button class="q-option" data-correct="false" data-explanation="The ECO's three domains are named because they're understood to be genuinely useful structural information — the omission is specifically about unverified precise percentages, not the domain names themselves.">Because the three domain names themselves aren't useful information for exam preparation</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – CAPSTONE CASE STUDY
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 07</div>
+  <h1 class="mod-title">Capstone <span class="acc">Case Study</span></h1>
+  <p class="mod-lede">One project, every domain, start to finish. This is the Fairview Public Library → Community Tech Hub case that's threaded through Parts 3–6 — now assembled into the single continuous story it was always building toward.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How all 7 domains actually interact across a single project's real timeline</li>
+      <li>Where each artifact and technique from this series shows up in one coherent story</li>
+      <li>What "the standard, applied" looks like end to end, not as 7 separate topics</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Full Story</h2>
+  <p>A city Library Services director sponsors the renovation of the aging Fairview branch into a community tech hub — a maker-lab, digital-literacy classes, and a new membership platform — funded by city budget plus a $2.4M philanthropic grant with a hard 14-month deadline (<strong>Governance, Part 3, Module 1</strong>: charter and business case).</p>
+  <p>Requirements are elicited through interviews, workshops, and direct observation — including watching actual seniors struggle with a mock sign-up flow, surfacing the need for a paper fallback option (<strong>Scope, Part 4, Module 1</strong>). The WBS splits the work into Construction, Platform, and Programs branches (<strong>Part 4, Module 2</strong>), and a proposed unrequested dashboard widget gets caught and rejected as gold-plating during scope control (<strong>Part 4, Module 3</strong>).</p>
+  <p>Backend and Frontend platform builds run in parallel on the network diagram, with Integration Testing and Launch on the critical path — 25 days end to end — while a PERT estimate covers Integration Testing's uncertainty (<strong>Part 4, Modules 4–5</strong>). Construction is contracted fixed-price; platform development runs cost-reimbursable given genuinely evolving scope (<strong>Governance, Part 3, Module 3</strong>).</p>
+  <p>At a mid-project check-in, Earned Value Management shows CPI 0.91 and SPI 0.83 — over budget and behind schedule (<strong>Finance, Part 5, Module 3</strong>) — triggering fast-tracking on a soft dependency to recover schedule (<strong>Part 4, Module 6</strong>) and a specialist's resource leveling that pushes the platform's finish date by a few days (<strong>Resources, Part 5, Module 4</strong>). The team itself moves through visible Storming over design authority in week two, resolved through deliberate Collaborate-style conflict work rather than the PM dictating a decision (<strong>Part 5, Modules 5–6</strong>).</p>
+  <p>Meanwhile, the power/interest grid keeps the philanthropic funder in "Manage Closely" and neighboring businesses in "Keep Informed" — until construction noise complaints push them toward Resistant, triggering an adjusted engagement plan (<strong>Stakeholders, Part 6, Modules 1–3</strong>). The Risk Breakdown Structure organizes identified risks across four categories; the 5×5 matrix prioritizes a possible budget overrun over a low-turnout risk; and an EMV analysis on a sourcing decision favors the guaranteed fixed-price option ($80,000) over a riskier alternative (EMV $82,000) (<strong>Risk, Part 6, Modules 4–5</strong>). The permit-delay risk — Mitigated by an early application with buffer — carries a week-6 monitoring trigger that never fires (<strong>Part 6, Module 6</strong>).</p>
+  <p>A mid-project change request (an added accessibility feature) goes through the CCB, gets approved, and updates the baseline formally rather than sliding in as scope creep (<strong>Governance, Part 3, Module 5</strong>). At month 14, the renovated library and new platform are formally accepted, contracts are closed, the team disbands (their Adjourning, per Tuckman), a lessons-learned session captures what to do differently next time, and library operations staff receive a documented handover (<strong>Governance, Part 3, Module 6</strong>).</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The project timeline, domain by domain</div>
+    <svg class="demo-svg" viewBox="0 0 680 160" role="img" aria-label="A horizontal timeline from month 0 to month 14, marked with labels for Charter, Requirements and WBS, Mid-project EVM check-in, Change request, and Closure, each tagged with the relevant domain">
+      <line x1="30" y1="80" x2="650" y2="80" stroke="var(--ink)" stroke-width="3"/>
+      <g font-family="var(--fb)" font-size="8.5" font-weight="700" fill="var(--ink)">
+        <circle cx="50" cy="80" r="7" fill="var(--acc)"/><text x="50" y="60" text-anchor="middle">Charter</text><text x="50" y="105" text-anchor="middle" font-size="7.5" fill="var(--muted)">Governance</text>
+        <circle cx="190" cy="80" r="7" fill="var(--forest)"/><text x="190" y="60" text-anchor="middle">Requirements</text><text x="190" y="72" text-anchor="middle" font-size="7">&amp; WBS</text><text x="190" y="105" text-anchor="middle" font-size="7.5" fill="var(--muted)">Scope</text>
+        <circle cx="360" cy="80" r="7" fill="var(--mango)"/><text x="360" y="60" text-anchor="middle">EVM Check-in</text><text x="360" y="105" text-anchor="middle" font-size="7.5" fill="var(--muted)">Finance</text>
+        <circle cx="480" cy="80" r="7" fill="var(--mawar)"/><text x="480" y="60" text-anchor="middle">Change Request</text><text x="480" y="105" text-anchor="middle" font-size="7.5" fill="var(--muted)">Governance</text>
+        <circle cx="620" cy="80" r="7" fill="var(--tomato)"/><text x="620" y="60" text-anchor="middle">Closure</text><text x="620" y="105" text-anchor="middle" font-size="7.5" fill="var(--muted)">Governance</text>
+      </g>
+      <text x="50" y="130" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">Month 0</text>
+      <text x="620" y="130" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">Month 14</text>
+    </svg>
+    <div class="demo-caption">Stakeholders and Risk aren't marked as single points because they're continuous — running underneath the whole timeline, from Module 1's power/interest grid to Module 6's closure.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">The mid-project EVM check-in shows CPI 0.91 and SPI 0.83. Which single domain does this number belong to most directly, even though the underlying causes might trace back to other domains?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! CPI and SPI are Earned Value metrics, squarely Finance domain territory (Part 5) — even though root causes might trace to Resources (over-allocation) or Scope (unplanned work), the metric itself is a Finance measurement.">Finance — CPI and SPI are Earned Value metrics, even if the root cause traces elsewhere</button>
+        <button class="q-option" data-correct="false" data-explanation="Risk is about uncertainty and potential future events — CPI and SPI are performance measurements of work already done, which is Finance domain territory.">Risk — because being off-plan is inherently a risk event</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the capstone story show the accessibility change request going through the CCB rather than just being added directly by the team?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This directly applies Part 3's change control process and Part 4's scope-creep-vs-approved-change distinction — even a good, well-intentioned change has to go through the process to update the baseline formally.">To keep the change traceable and formally reflected in the baseline, rather than becoming an instance of the scope creep pattern from Part 4</button>
+        <button class="q-option" data-correct="false" data-explanation="The story doesn't suggest the team was untrustworthy — it demonstrates applying the change control discipline consistently, which is good practice regardless of who's proposing the change.">Because the team wasn't trusted to make good decisions on their own</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why are Stakeholders and Risk shown as continuous threads under the timeline rather than single points, unlike Charter or Closure?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Per Part 6, both stakeholder engagement and risk monitoring are ongoing activities throughout a project's life — not single events at a fixed point, unlike chartering (once, at the start) or closure (once, at the end).">Because managing stakeholders and monitoring risk are ongoing activities throughout the project, not single events at a fixed point in time</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't primarily a visual-design choice — it reflects the substantive fact that these two domains involve continuous activity across the whole project, as established in Part 6.">It's purely a stylistic choice in the diagram with no substantive meaning</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – COMPREHENSIVE REVIEW
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 07</div>
+  <h1 class="mod-title">Comprehensive <span class="acc">Review</span></h1>
+  <p class="mod-lede">One last, denser pass — mixed scenario questions spanning every domain from this series, still testing application, not memorized recall. If you can work through these confidently, you've genuinely internalized the standard, not just read about it.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Whether you can identify the right domain and technique for a mixed, realistic scenario</li>
+      <li>How the 6 principles, 7 domains, and 5 focus areas fit together one more time, as a recap</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Architecture, Revisited</h2>
+  <div class="demo-box">
+    <div class="demo-label">Everything this series covered, in one stack</div>
+    <svg class="demo-svg" viewBox="0 0 680 220" role="img" aria-label="A recap stack: top band 6 Principles from Part 2, middle band 7 Performance Domains from Parts 3 through 6 each marked with a checkmark, bottom band 5 Focus Areas woven throughout, all marked complete">
+      <rect x="20" y="10" width="640" height="46" rx="10" fill="var(--acc)" opacity="0.9"/>
+      <text x="340" y="38" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#fff">✓ 6 PRINCIPLES — Part 2</text>
+
+      <g font-family="var(--fb)" font-size="9" font-weight="700" fill="#fff">
+        <rect x="20" y="80" width="88" height="42" rx="6" fill="var(--sea)"/><text x="64" y="105" text-anchor="middle">✓ Gov.</text>
+        <rect x="112" y="80" width="88" height="42" rx="6" fill="var(--forest)"/><text x="156" y="105" text-anchor="middle">✓ Scope</text>
+        <rect x="204" y="80" width="88" height="42" rx="6" fill="var(--mango)"/><text x="248" y="105" text-anchor="middle">✓ Sched.</text>
+        <rect x="296" y="80" width="88" height="42" rx="6" fill="var(--tomato)"/><text x="340" y="105" text-anchor="middle">✓ Finance</text>
+        <rect x="388" y="80" width="88" height="42" rx="6" fill="var(--mawar)"/><text x="432" y="105" text-anchor="middle">✓ Stake.</text>
+        <rect x="480" y="80" width="88" height="42" rx="6" fill="var(--acc-dim)"/><text x="524" y="105" text-anchor="middle">✓ Resour.</text>
+        <rect x="572" y="80" width="88" height="42" rx="6" fill="#8B5CF6"/><text x="616" y="105" text-anchor="middle">✓ Risk</text>
+      </g>
+      <text x="340" y="150" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">✓ 7 PERFORMANCE DOMAINS — Parts 3–6, all covered</text>
+
+      <rect x="20" y="165" width="640" height="40" rx="10" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <text x="340" y="190" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--ink)">✓ 5 FOCUS AREAS — woven through every domain above, Part 7</text>
+    </svg>
+    <div class="demo-caption">The map from Part 1, Module 6 — now with every layer actually covered.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Comprehensive Scenario Review</div>
+
+    <div class="q-card">
+      <p class="q-text">A team member proposes adding a well-intentioned but unrequested feature "because it would clearly be better for users." What should happen next?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is a textbook gold-plating scenario (Part 4, Module 3) — good intentions don't exempt it from going through change control, which formally assesses impact before any baseline update.">It should go through change control for impact assessment before being added — good intent doesn't exempt it from the process</button>
+        <button class="q-option" data-correct="false" data-explanation="Adding it directly without assessment is exactly the gold-plating pattern Part 4 warned against, regardless of how beneficial it might genuinely be.">It should be added immediately since it clearly benefits users</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A stakeholder with high power and high interest hasn't been updated in three weeks. What quadrant were they in, and what's the risk?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! High power + high interest is Manage Closely, per Part 6, Module 1 — going three weeks without engagement on that quadrant risks exactly the kind of drift Module 3's monitoring lesson warned about.">Manage Closely — this quadrant needs frequent engagement, and three weeks of silence risks their position shifting unfavorably</button>
+        <button class="q-option" data-correct="false" data-explanation="Monitor is the low power/low interest quadrant, needing minimal effort — a high power/high interest stakeholder is Manage Closely, which needs frequent attention, not the opposite.">Monitor — minimal engagement is appropriate for this stakeholder</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A risk with 70% probability and a $40,000 impact is compared to a risk with 20% probability and a $90,000 impact. Which has the higher EMV?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! First risk: 0.7 × 40,000 = $28,000. Second risk: 0.2 × 90,000 = $18,000. The first (higher probability, lower impact) actually has the higher EMV.">The first risk — EMV $28,000 vs. $18,000</button>
+        <button class="q-option" data-correct="false" data-explanation="0.2 × 90,000 = $18,000, which is lower than the first risk's $28,000 — the higher raw impact doesn't automatically mean higher EMV once probability is factored in.">The second risk — its higher dollar impact means higher EMV</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A PM discovers two team members are both marked "A" on the same RACI task, and separately notices the schedule assumes a specialist who's also fully booked on another project that month. Which PMBOK 8 principle most directly explains why catching cross-cutting issues like the second one matters?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Catching a resourcing conflict that spans the schedule and resource plans is exactly Part 2's Holistic View principle in action — checking connections beyond your own immediate task.">Adopt a Holistic View — checking connections across plans, not just within one</button>
+        <button class="q-option" data-correct="false" data-explanation="Embed Quality is about building correctness into deliverables early — this scenario is about cross-plan consistency (schedule vs. resourcing), which is Holistic View territory.">Embed Quality — the schedule itself needs to be technically correct</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A project's CPI is 1.15 and SPI is 0.95. What does this combination suggest?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! CPI above 1 means earning more value per dollar spent than planned (under budget); SPI below 1 means behind the planned pace — an efficient team that's nonetheless running slightly behind schedule.">The project is under budget for the work completed, but slightly behind the planned schedule pace</button>
+        <button class="q-option" data-correct="false" data-explanation="CPI above 1 indicates being under budget (efficient spending), not over budget — the two indexes measure different things and shouldn't be read as agreeing by default.">The project is both over budget and ahead of schedule</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team debates whether a decision belongs to Governance or Scope. The decision is: "should we accept a vendor's proposal to substitute a cheaper material that technically still meets the original spec?" Which domain, and why?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A substitution that still meets the original spec doesn't change what's being delivered (Scope) — it's a sourcing/vendor management decision, squarely Governance (Part 3, Module 3).">Governance — this is a sourcing decision about the vendor relationship, not a change to what's being delivered</button>
+        <button class="q-option" data-correct="false" data-explanation="Since the substitute material still meets the original spec, the deliverable itself isn't changing — this is a vendor/sourcing question, which is Governance, not Scope.">Scope — any change to materials is automatically a scope change requiring the WBS to be redrawn</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">The final part's sources cover Agile frameworks (stable, independent of PMBOK) and exam-preparation guidance (explicitly hedged, since it concerns an evolving, non-public exam structure) — the same honesty standard carried through every part of this series.</p>
+
+  <div class="ref-group-label">The Standard Itself</div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Project Management Institute. <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide) — Eighth Edition, and The Standard for Project Management</em>. Newtown Square, PA: Project Management Institute, 2025/2026.</div>
+    <div class="ref-annotation">The primary source for this entire series. Paywalled — not reproduced or quoted verbatim at any point across all 7 parts.</div>
+    <a class="ref-link" href="https://www.pmi.org/standards/pmbok" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Agile Frameworks (edition-stable, independently verifiable)</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Schwaber, Ken, and Jeff Sutherland. "The Scrum Guide." 2020.</div>
+    <div class="ref-annotation">The authoritative definition of Scrum's roles and events, used in Module 1. Also cited by the site's companion "Project Management: A Builder's Guide" course.</div>
+    <a class="ref-link" href="https://scrumguides.org" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Anderson, David J. <em>Kanban: Successful Evolutionary Change for Your Technology Business</em>. Sequim, WA: Blue Hole Press, 2010.</div>
+    <div class="ref-annotation">The foundational text formalizing Kanban's application to knowledge work, source for Module 1's WIP-limit and continuous-flow description.</div>
+    <a class="ref-link" href="https://www.bluepapers.com" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Exam-Preparation Guidance (explicitly hedged — verify against PMI directly)</div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Project Management Institute. "PMP Exam Content Outline." pmi.org.</div>
+    <div class="ref-annotation">PMI's own published structure for the PMP exam (People / Process / Business Environment domains, as publicly reported) — this is the authoritative source to check for current weightings before Module 4's exam-bridge content is used for real study planning, since PMI updates this document periodically.</div>
+    <a class="ref-link" href="https://www.pmi.org/certifications/project-management-pmp" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Independent Analysis (secondary source for the domain framing, all parts)</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">BrainBOK. "PMBOK Guide 7th vs 8th Edition: 6 Principles, 7 Domains, 40 Processes." brainbok.com, 2026.</div>
+    <div class="ref-annotation">The single most-relied-on secondary source across this entire series for the 6/7/5/40 structural claims — cross-checked against Learning Tree, Project Management Academy, and Mudassir Iqbal's analysis cited in earlier parts.</div>
+    <a class="ref-link" href="https://www.brainbok.com/blog/pmp/pmbok-guide-7th-vs-8th-edition-what-has-changed" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note, for the whole series:</strong> PMBOK 8 is a paywalled PMI standard with no source copy in this course's materials — every structural claim across all 7 parts (principle/domain/process names and counts, release and exam-alignment dates) is corroborated across multiple independent secondary sources, not quoted from the standard directly. The capstone case study (Module 5) and every named person/organization within it (the Fairview library, its funder, its staff) are entirely fictional, constructed for teaching. Treat this series as a strong practitioner-level foundation — verify specific process names, exact ECO weightings, and anything cited for certification purposes against PMI's official materials directly.
+  </div>
+
+  <div id="completion-banner">
+    <h2>The Series Is Complete! 🎓</h2>
+    <p>Six principles, seven performance domains, five focus areas, the formulas, the artifacts, and one project run end to end. You now have the current 8th-edition standard applied, not just summarized — practitioner-ready, and current for the PMP/CAPM exam as of July 2026. Go build something worth the discipline.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="7">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'pmbok8-part7';
+const TOTAL = 7;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
