@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PMBOK 8, Field-Tested · Learn with Adhi</title>
+<meta name="description" content="A 7-part series on the current 8th-edition PMBOK Guide: the 6 principles, 7 performance domains, and 40 processes of the standard, taught practitioner-first and exam-aware, threaded through one running case study.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-management/pmbok8-hub.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PMBOK 8, Field-Tested">
+<meta property="og:description" content="7 parts, one standard: the current 8th-edition PMBOK Guide, taught practitioner-first and exam-aware.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#171310; --paper:#FBF4E6; --paper2:#F3EAD6; --muted:#6B6259; --line:rgba(23,19,16,.12);
+  --gold:#FFC234; --indigo:#5B8CFF;
+  --p1:#5B8CFF; --p2:#8B5CF6; --p3:#2D6FB3; --p4:#0E8B8B; --p5:#1F9D55; --p6:#E8930C; --p7:#E84B3C;
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--ink);color:var(--paper);font-size:16px;line-height:1.7}
+::selection{background:var(--gold);color:var(--ink)}
+
+header{padding:72px 24px 30px;text-align:center;position:relative;overflow:hidden}
+.eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+h1{font-family:var(--fd);font-weight:800;font-size:clamp(36px,7vw,72px);letter-spacing:-.04em;line-height:.98}
+h1 em{font-style:normal;color:var(--gold)}
+.sub{color:rgba(251,244,230,.7);max-width:640px;margin:22px auto 0;font-size:clamp(14.5px,2vw,17px)}
+.sub a{color:var(--gold)}
+.totals{font-family:var(--fm);font-size:12px;color:rgba(251,244,230,.55);margin-top:24px;letter-spacing:.08em}
+
+/* ── ARCHITECTURE STRIP ── */
+#arch{max-width:960px;margin:44px auto 0;padding:0 20px}
+.arch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.arch-card{background:#221c16;border:1.5px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center}
+.arch-num{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--gold)}
+.arch-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(251,244,230,.55);margin-top:4px}
+@media(max-width:640px){.arch-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ── ON-RAMP CARD ── */
+#onramp{max-width:880px;margin:40px auto 0;padding:0 18px}
+.oc{display:flex;align-items:center;gap:18px;background:#221c16;border:2px solid var(--gold);border-radius:16px;padding:18px 22px;text-decoration:none;color:var(--paper);transition:transform .15s}
+.oc:hover{transform:translate(-3px,-3px)}
+.oc-icon{font-size:30px;flex-shrink:0}
+.oc-t{font-family:var(--fd);font-weight:800;font-size:16px}
+.oc-s{font-size:13px;color:rgba(251,244,230,.65);margin-top:3px}
+
+/* ── ROUTE ── */
+#route{max-width:880px;margin:40px auto 0;padding:0 18px 60px;position:relative}
+.route-label{font-family:var(--fm);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(251,244,230,.5);text-align:center;margin-bottom:26px}
+.spine{position:absolute;left:50%;top:56px;bottom:110px;width:4px;background:repeating-linear-gradient(180deg,rgba(251,244,230,.25) 0 10px,transparent 10px 20px);transform:translateX(-50%)}
+.part{display:flex;align-items:stretch;margin:30px 0;position:relative}
+.part:nth-child(even){flex-direction:row-reverse}
+.part-card{width:calc(50% - 42px);background:#221c16;border:2.5px solid var(--cc);border-radius:20px;padding:22px 24px;position:relative;transition:transform .18s var(--ease),box-shadow .18s;text-decoration:none;color:var(--paper);display:block}
+a.part-card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--cc)}
+.part-card.locked{opacity:.55;border-style:dashed}
+.part-knot{position:absolute;left:50%;top:30px;transform:translateX(-50%);width:46px;height:46px;border-radius:50%;background:var(--cc);border:3.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:20px;z-index:2;box-shadow:0 0 0 3px var(--cc)}
+.part-n{font-family:var(--fm);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cc);font-weight:700}
+.part-t{font-family:var(--fd);font-weight:800;font-size:clamp(18px,2.4vw,22px);letter-spacing:-.02em;line-height:1.15;margin:6px 0 8px}
+.part-b{font-size:13px;color:rgba(251,244,230,.65);line-height:1.65}
+.part-dom{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.4);margin-top:10px;letter-spacing:.03em}
+.part-prog{margin-top:13px}
+.part-bar{height:7px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.part-fill{height:100%;background:var(--cc);border-radius:99px;transition:width .6s var(--ease)}
+.part-pct{font-family:var(--fm);font-size:10.5px;color:rgba(251,244,230,.55);margin-top:5px}
+.part-status{display:inline-block;font-family:var(--fm);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;border:1.5px solid;border-radius:99px;padding:3px 10px;margin-top:12px}
+.st-open{color:var(--gold);border-color:var(--gold)}
+.st-done{color:#7BE3A4;border-color:#7BE3A4}
+.st-soon{color:rgba(251,244,230,.45);border-color:rgba(251,244,230,.3)}
+
+.foot{padding:30px 24px 60px;text-align:center;font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.4);letter-spacing:.08em}
+.foot a{color:rgba(251,244,230,.7)}
+
+@media(max-width:720px){
+  .spine{left:24px}
+  .part,.part:nth-child(even){flex-direction:row}
+  .part-card{width:calc(100% - 64px);margin-left:64px}
+  .part-knot{left:24px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">A 7-part series · the current standard</div>
+  <h1>PMBOK 8, <em>Field-Tested</em></h1>
+  <p class="sub">The full 8th-edition PMBOK Guide — 6 principles, 7 performance domains, 5 focus areas, 40 processes — taught practitioner-first, with the formulas and scenario practice that also happen to be exam-current for the PMP/CAPM. One running case study (relaunching a public library as a community tech hub) threads all 7 parts together.</p>
+  <div class="totals" id="totals">— / 7 PARTS COMPLETE</div>
+</header>
+
+<div id="arch">
+  <div class="arch-grid">
+    <div class="arch-card"><div class="arch-num">6</div><div class="arch-lbl">Principles</div></div>
+    <div class="arch-card"><div class="arch-num">7</div><div class="arch-lbl">Performance Domains</div></div>
+    <div class="arch-card"><div class="arch-num">5</div><div class="arch-lbl">Focus Areas</div></div>
+    <div class="arch-card"><div class="arch-num">40</div><div class="arch-lbl">Processes</div></div>
+  </div>
+</div>
+
+<div id="onramp">
+  <a class="oc" href="project-management-course-v1.html">
+    <div class="oc-icon">🏗️</div>
+    <div>
+      <div class="oc-t">New to project management? Start with the Builder's Guide</div>
+      <div class="oc-s">A friendlier ~4-day intro — the Triple Constraint, WBS, RACI, risk — taught through building a house. Come back here for the full standard once the basics click.</div>
+    </div>
+  </a>
+</div>
+
+<div id="route">
+  <div class="route-label">The Route — 7 Parts</div>
+  <div class="spine"></div>
+</div>
+
+<div class="foot">PMBOK 8, FIELD-TESTED · <a href="../../index.html">LEARN WITH ADHI</a> · Based on Project Management Institute, <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide) and The Standard for Project Management</em>, 8th ed. · ∎</div>
+
+<script>
+const PARTS=[
+  {n:1,icon:'🗺️',cc:'var(--p1)',title:'Foundations & the Value Delivery System',dom:'What a project is · portfolios → programs → projects → products · life cycles · roles',total:7,id:'pmbok8-part1',
+   href:'pmbok8-part1-foundations-v1.html',
+   blurb:'What actually counts as a project, how portfolios/programs/projects/operations fit together, predictive vs. adaptive vs. hybrid life cycles, and the architecture of PMBOK 8 itself — your map for the other 6 parts.'},
+  {n:2,icon:'🧭',cc:'var(--p2)',title:'The Six Principles',dom:'Holistic View · Value · Quality · Accountable Leadership · Sustainability · Empowered Culture',total:7,id:'pmbok8-part2',
+   blurb:'The mindset layer PMI consolidated from 12 principles down to 6 — the behaviors that sit above every process and decide how well the processes actually work.'},
+  {n:3,icon:'🏛️',dom:'Governance domain · charter, integration, sourcing, quality, change control, closing',cc:'var(--p3)',title:'Governance',total:7,id:'pmbok8-part3',
+   blurb:'The biggest domain (old "Integration Management" territory): starting a project right, keeping every plan aligned, procurement, executing with quality built in, controlling change, and closing cleanly.'},
+  {n:4,icon:'📐',cc:'var(--p4)',title:'Scope & Schedule',dom:'Requirements · WBS · network diagrams · critical path & PERT · schedule control',total:7,id:'pmbok8-part4',
+   blurb:'What you\'re actually building and by when: requirements, the WBS, network diagrams, the critical path, three-point estimating, and keeping a schedule honest as reality intrudes.'},
+  {n:5,icon:'💰',cc:'var(--p5)',title:'Finance & Resources',dom:'Estimating · budgeting · Earned Value Management · team acquisition & leadership',total:7,id:'pmbok8-part5',
+   blurb:'The money and the people: cost estimating, the budget baseline, Earned Value Management (CPI, SPI, EAC — the exam-heaviest module here), building a team, and keeping it motivated.'},
+  {n:6,icon:'🤝',cc:'var(--p6)',title:'Stakeholders & Risk',dom:'Power/interest grid · engagement & comms · qualitative/quantitative risk analysis',total:7,id:'pmbok8-part6',
+   blurb:'Managing the humans and the uncertainty: stakeholder analysis, a communications plan that fits each audience, risk identification, and quantifying risk with EMV and decision trees.'},
+  {n:7,icon:'🎓',cc:'var(--p7)',title:'Delivery Approaches & the Exam Bridge',dom:'Agile/hybrid in practice · tailoring · artifact library · ECO mapping · capstone case',total:7,id:'pmbok8-part7',
+   blurb:'Choosing predictive, adaptive, or hybrid; a tailoring workshop; the artifact library; the PMP/CAPM exam bridge; and a capstone that runs the whole standard through one project, start to finish.'},
+];
+const route=document.getElementById('route');
+let doneCount=0;
+PARTS.forEach(p=>{
+  let done_n=0;
+  try{ done_n=Object.values(JSON.parse(localStorage.getItem(p.id+':done')||'{}')).filter(Boolean).length; }catch(_){ }
+  const pct=Math.min(100,Math.round(done_n/p.total*100));
+  const done=pct>=100; if(done) doneCount++;
+  const open=!!p.href;
+  const el=document.createElement('div'); el.className='part'; el.style.setProperty('--cc',p.cc);
+  const tag = done?'<span class="part-status st-done">✓ Complete</span>'
+            : open?'<span class="part-status st-open">● Open — start now</span>'
+                  :'<span class="part-status st-soon">Being built…</span>';
+  const inner=`
+    <div class="part-n">Part ${p.n} of 7</div>
+    <div class="part-t">${p.title}</div>
+    <div class="part-b">${p.blurb}</div>
+    <div class="part-dom">${p.dom}</div>
+    ${open?`<div class="part-prog"><div class="part-bar"><div class="part-fill" style="width:${pct}%"></div></div><div class="part-pct">${done_n} / ${p.total} modules done</div></div>`:''}
+    ${tag}`;
+  el.innerHTML=`<div class="part-knot">${p.icon}</div>`;
+  if(open){
+    const a=document.createElement('a'); a.className='part-card'; a.href=p.href; a.innerHTML=inner; el.appendChild(a);
+  } else {
+    const d=document.createElement('div'); d.className='part-card locked'; d.innerHTML=inner; el.appendChild(d);
+  }
+  route.appendChild(el);
+});
+document.getElementById('totals').textContent=`${doneCount} / 7 PARTS COMPLETE`;
+if (doneCount>=7){
+  try{ const s=new Set(JSON.parse(localStorage.getItem('lwa:completed')||'[]')); s.add('pmbok8-guide'); localStorage.setItem('lwa:completed',JSON.stringify([...s])); }catch(_){}
+}
+</script>
+</body>
+</html>
