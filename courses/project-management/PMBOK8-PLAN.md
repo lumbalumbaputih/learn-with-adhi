@@ -174,14 +174,13 @@ quote, per §1.4's sourcing rule.)
 7. Build an Empowered Culture + a "the six working together" synthesis table
 8. References
 
-**Part 3 — Governance** (`pmbok8-part3-governance-v1.html`)
-1. Starting a Project: chartering, the business case, initiating
-2. Integration: aligning plans across domains (the "system" view — this is where the Holistic
-   View principle becomes concrete)
-3. Sourcing & Procurement
-4. Executing & Quality Assurance
-5. Change Control & Performance Monitoring
-6. Closing a Project or Phase
+**Part 3 — Governance** ✅ shipped 2026-08-04 (`pmbok8-part3-governance-v1.html`, 7 modules)
+1. Starting a Project: business case, the charter, what it must contain
+2. Integration Across Plans: the six subsidiary plans, Holistic View made mechanical
+3. Sourcing & Procurement: make-or-buy, the three contract types and their risk allocation
+4. Executing & Quality Assurance: directing the work, the PDCA cycle
+5. Change Control & Monitoring: the CCB process, four change types, deliberate monitoring
+6. Closing a Project: the closing sequence, lessons learned, handoff to operations
 7. References
 
 **Part 4 — Scope & Schedule** (`pmbok8-part4-scope-schedule-v1.html`)
@@ -256,8 +255,8 @@ split — the 5–8 range in the Adult Course Standard is the hard constraint, n
 ## 6. Build order / status
 1. ✅ Hub + Part 1 (Foundations & the Value Delivery System) — shipped 2026-08-04.
 2. ✅ Part 2 (Six Principles) — shipped 2026-08-04.
-3. ⏳ Part 3 (Governance) — next.
-4. ⏳ Part 4 (Scope & Schedule)
+3. ✅ Part 3 (Governance) — shipped 2026-08-04.
+4. ⏳ Part 4 (Scope & Schedule) — next.
 5. ⏳ Part 5 (Finance & Resources)
 6. ⏳ Part 6 (Stakeholders & Risk)
 7. ⏳ Part 7 (Delivery Approaches & Exam Bridge)
