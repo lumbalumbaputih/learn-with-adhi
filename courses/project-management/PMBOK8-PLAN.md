@@ -201,26 +201,25 @@ quote, per §1.4's sourcing rule.)
 6. Leading the Team: Maslow/Herzberg/McGregor, 5 conflict-resolution styles, monitoring resourcing
 7. References
 
-**Part 6 — Stakeholders & Risk** (`pmbok8-part6-stakeholders-risk-v1.html`)
-1. Identifying & Analyzing Stakeholders (power/interest grid — can cross-reference Part 1's
-   library case for a fresh worked example distinct from the Builder's Guide's house example)
-2. Engagement & Communications Planning
-3. Managing & Monitoring Engagement and Communications
-4. Risk Planning & Identification
-5. Qualitative & Quantitative Risk Analysis (probability/impact matrix, EMV, decision trees)
-6. Risk Response Planning & Monitoring
+**Part 6 — Stakeholders & Risk** ✅ shipped 2026-08-04 (`pmbok8-part6-stakeholders-risk-v1.html`, 7 modules)
+1. Identifying Stakeholders: systematic identification, the power/interest grid (Fairview case)
+2. Engagement & Comms Planning: current vs. desired engagement, the n(n-1)/2 channels formula
+3. Managing & Monitoring: sender/receiver/noise model, managing vs. monitoring engagement
+4. Risk Planning & Identification: elicitation techniques, the Risk Breakdown Structure
+5. Risk Analysis & EMV: 5x5 probability/impact matrix, a worked EMV decision-tree example
+6. Risk Response: threat strategies (Avoid/Mitigate/Transfer/Accept) mirrored by opportunity
+   strategies (Exploit/Enhance/Share/Accept), monitoring risk
 7. References
 
-**Part 7 — Delivery Approaches & the Exam Bridge** (`pmbok8-part7-capstone-v1.html`)
-1. Predictive vs. Adaptive vs. Hybrid in Practice (Agile/Scrum/Kanban basics mapped onto the 7
-   domains — reuses/cross-links the Builder's Guide's Agile module rather than duplicating it)
-2. Tailoring Workshop (how to choose an approach for a given project)
-3. Artifacts & Documents Library (charter/WBS/RACI/risk register templates, summarized)
-4. The PMP/CAPM Exam Bridge (ECO mapping, formula cheat-sheet, situational-question technique)
-5. Capstone Case Study: the library relaunch worked end-to-end across all 7 domains
-6. Comprehensive Scenario Review (a denser mixed quiz section, still framed as application not
-   recall)
-7. References
+**Part 7 — Delivery Approaches & the Exam Bridge** ✅ shipped 2026-08-04 (`pmbok8-part7-capstone-v1.html`, 7 modules) — **series complete**
+1. Predictive, Adaptive, Hybrid: Scrum/Kanban mechanics, all 7 domains mapped to each shape
+2. Tailoring Workshop: a diagnostic decision-flow, tailoring beyond life cycle
+3. Artifacts & Documents: the full artifact chain + a compact RACI template
+4. The Exam Bridge: ECO domains (unweighted, hedged), the full formula cheat-sheet, situational-
+   question technique
+5. Capstone Case Study: the Fairview library case run end-to-end across all 7 domains
+6. Comprehensive Review: a denser 6-question mixed scenario quiz + an architecture recap
+7. References (includes a series-wide data-quality note)
 
 Adjust module counts ±1 at build time if a part's real content naturally wants a different
 split — the 5–8 range in the Adult Course Standard is the hard constraint, not exactly 7.
@@ -256,10 +255,10 @@ split — the 5–8 range in the Adult Course Standard is the hard constraint, n
 3. ✅ Part 3 (Governance) — shipped 2026-08-04.
 4. ✅ Part 4 (Scope & Schedule) — shipped 2026-08-04.
 5. ✅ Part 5 (Finance & Resources) — shipped 2026-08-04.
-6. ⏳ Part 6 (Stakeholders & Risk) — next.
-7. ⏳ Part 7 (Delivery Approaches & Exam Bridge)
+6. ✅ Part 6 (Stakeholders & Risk) — shipped 2026-08-04.
+7. ✅ Part 7 (Delivery Approaches & Exam Bridge) — shipped 2026-08-04. **The series is complete.**
 
-Each ships as its own SOP step: build → verify → update `CLAUDE.md` "What's Already Built" +
-`PROGRESS.md` → commit → push. This doc is the source of truth for what's left — a future
-session can start straight at whichever part is next without re-reading this whole plan's
-derivation, just the "Part-by-part module plan" entry for that part.
+Each shipped as its own SOP step: build → verify → update `PROGRESS.md` → commit → push. Any
+future session extending this series (e.g. building the stretch idea in `assets/courses.json`'s
+description, or a PMBOK 9 update someday) should read this doc's §1–§2 conventions before
+touching any file — they're what keep all 7 parts + hub visually and structurally consistent.

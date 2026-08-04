@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="pmbok8-part6">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stakeholders & Risk · PMBOK 8, Field-Tested · Learn with Adhi</title>
+<meta name="description" content="Part 6 of PMBOK 8, Field-Tested: the Stakeholders and Risk domains — stakeholder analysis, engagement and communications planning, risk identification, qualitative and quantitative risk analysis with EMV, and risk response strategies.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-management/pmbok8-part6-stakeholders-risk-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stakeholders & Risk · PMBOK 8, Field-Tested">
+<meta property="og:description" content="Stakeholder analysis, engagement and communications, risk identification, EMV, and risk response strategies.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"PMBOK 8, Field-Tested — Part 6: Stakeholders & Risk","description":"Stakeholder analysis, engagement and communications, risk identification, EMV, and risk response strategies.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#1C5DDC; --acc-dim:#154BB3; --acc-bg:rgba(28,93,220,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#5b8cff);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="pmbok8-hub.html">← Series map · Part 6 of 7</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 7 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Identifying Stakeholders</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Engagement &amp; Comms Planning</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Managing &amp; Monitoring</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Risk Planning &amp; ID</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Risk Analysis &amp; EMV</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Risk Response</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7">
+      <span class="nav-num">07</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">PMBOK 8 · Part 6</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – IDENTIFYING STAKEHOLDERS
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 07</div>
+  <h1 class="mod-title">Identifying <span class="acc">Stakeholders</span></h1>
+  <p class="mod-lede">A stakeholder is anyone who can affect the project or be affected by it — a wider net than "the people on the team." Missing one doesn't make them disappear; it just means you meet them later, usually at a worse moment.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How to identify stakeholders systematically, not just the obvious ones</li>
+      <li>The power/interest grid, and a matching strategy for each quadrant</li>
+      <li>Why stakeholder analysis has to be revisited, not done once at kickoff</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Finding Stakeholders Systematically</h2>
+  <p>Beyond the obvious (sponsor, team, customer), systematic identification checks: who has budget authority nearby, who's affected by the project's side effects (noise, disruption, changed processes), who has regulatory or oversight power, and who was a stakeholder on a similar past project. A quick technique: walk the org chart and the neighborhood, not just the requirements document.</p>
+
+  <h2 class="sh">The Power/Interest Grid</h2>
+  <p>Once identified, not every stakeholder needs the same attention. Plotting each on two axes — <strong>power</strong> to affect the project, and <strong>interest</strong> in its outcome — turns a long list into four clear engagement strategies.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Power/interest grid — Fairview library case</div>
+    <svg class="demo-svg" viewBox="0 0 440 400" role="img" aria-label="Power versus interest grid with four quadrants and four example stakeholders plotted: the philanthropic funder at high power high interest, the city council at high power lower interest, neighboring businesses at low power high interest, and general library patrons at low power low interest">
+      <line x1="70" y1="30" x2="70" y2="340" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="70" y1="340" x2="400" y2="340" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="235" y1="30" x2="235" y2="340" stroke="var(--line-s)" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <line x1="70" y1="185" x2="400" y2="185" stroke="var(--line-s)" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+      <text x="30" y="185" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)" transform="rotate(-90 30 185)">POWER →</text>
+      <text x="235" y="362" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">INTEREST →</text>
+
+      <text x="135" y="55" text-anchor="middle" font-family="var(--fd)" font-size="10.5" font-weight="700" fill="var(--muted)">Keep Satisfied</text>
+      <text x="317" y="55" text-anchor="middle" font-family="var(--fd)" font-size="10.5" font-weight="700" fill="var(--acc-dim)">Manage Closely</text>
+      <text x="135" y="325" text-anchor="middle" font-family="var(--fd)" font-size="10.5" font-weight="700" fill="var(--muted)">Monitor</text>
+      <text x="317" y="325" text-anchor="middle" font-family="var(--fd)" font-size="10.5" font-weight="700" fill="var(--muted)">Keep Informed</text>
+
+      <circle cx="317" cy="80" r="7" fill="var(--tomato)"/>
+      <text x="317" y="100" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Philanthropic</text>
+      <text x="317" y="112" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Funder</text>
+
+      <circle cx="135" cy="95" r="7" fill="var(--sea)"/>
+      <text x="135" y="115" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">City Council</text>
+
+      <circle cx="317" cy="280" r="7" fill="var(--forest)"/>
+      <text x="317" y="300" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Neighboring</text>
+      <text x="317" y="312" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Businesses</text>
+
+      <circle cx="135" cy="290" r="7" fill="var(--muted)"/>
+      <text x="135" y="310" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">General</text>
+      <text x="135" y="322" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Patrons</text>
+    </svg>
+    <div class="demo-caption">The funder (high power + high interest) gets weekly attention. Neighboring businesses (low power, high interest — the renovation disrupts their foot traffic) get kept informed so frustration doesn't escalate into real opposition.</div>
+  </div>
+
+  <div class="callout mango">
+    <strong>It depends, and it's dynamic:</strong> a stakeholder's position on this grid isn't fixed. A neighboring business that starts as "Keep Informed" can become "Manage Closely" fast if construction noise triggers a formal complaint to the city council — reassess the grid at major milestones, not just once at kickoff.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A local news outlet has no formal power over the project but strong interest in covering it. Midway through, they publish a critical story that pressures the city council. What does this suggest about "low power" stakeholders?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A stakeholder with low direct power can still exert real influence indirectly — by shaping opinion or pressuring a stakeholder who does have direct power (the council). This is exactly why 'Keep Informed' stakeholders shouldn't be ignored.">Low direct power doesn't mean zero influence — they can indirectly pressure a high-power stakeholder</button>
+        <button class="q-option" data-correct="false" data-explanation="This scenario is a clear counter-example — the outlet had real effect despite low direct power, showing the grid's quadrants describe a starting engagement strategy, not a guarantee of irrelevance.">Low power stakeholders can always be safely ignored regardless of their interest level</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module recommend reassessing the power/interest grid "at major milestones," not just once at kickoff?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Stakeholder positions genuinely shift as a project proceeds — the neighboring-business example shows how quickly a low-engagement quadrant can become high-stakes. A stale, kickoff-only grid misses this.">Because a stakeholder's actual power and interest can shift significantly as the project proceeds, and a stale grid misses that</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't a compliance-driven documentation requirement — it's a substantive point that the underlying reality the grid represents actually changes over time.">Because PMI requires the grid to be redrawn on a fixed monthly schedule</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">The city council has high power (permit and budget authority) but so far only moderate personal interest in this specific project. Which quadrant and strategy fit best?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! High power with lower personal interest is exactly the Keep Satisfied quadrant — don't surprise them, meet their requirements cleanly, without demanding the same weekly attention a high-interest stakeholder needs.">Keep Satisfied — meet their requirements cleanly, avoid surprises, without weekly deep-dive engagement</button>
+        <button class="q-option" data-correct="false" data-explanation="Monitor is for low power AND low interest — the council's high power means ignoring them is risky even with moderate interest.">Monitor — minimal effort is sufficient given their moderate interest</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – ENGAGEMENT & COMMS PLANNING
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 07</div>
+  <h1 class="mod-title">Engagement &amp; <span class="acc">Comms Planning</span></h1>
+  <p class="mod-lede">Knowing where a stakeholder sits on the grid is only step one. This module plans two related but distinct things: how to move a stakeholder's actual engagement, and how information physically flows so the right people know the right things.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How to assess a stakeholder's current vs. desired engagement level</li>
+      <li>What a communications management plan actually specifies</li>
+      <li>The communication-channels formula, and why team size matters more than people expect</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Current vs. Desired Engagement</h2>
+  <p>Beyond power and interest, it helps to name where a stakeholder actually stands today, and where you need them to be: <strong>Unaware → Resistant → Neutral → Supportive → Leading</strong>. The gap between current and desired is what an engagement plan is actually trying to close.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Closing the engagement gap — neighboring businesses</div>
+    <svg class="demo-svg" viewBox="0 0 600 130" role="img" aria-label="A ladder of five engagement levels from Unaware to Leading, with a marker showing the neighboring businesses currently at Resistant and a target marker at Neutral, connected by an arrow showing the gap to close">
+      <line x1="30" y1="70" x2="570" y2="70" stroke="var(--line-s)" stroke-width="3"/>
+      <g font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--muted)">
+        <text x="60" y="95" text-anchor="middle">Unaware</text>
+        <text x="195" y="95" text-anchor="middle">Resistant</text>
+        <text x="330" y="95" text-anchor="middle">Neutral</text>
+        <text x="465" y="95" text-anchor="middle">Supportive</text>
+        <text x="565" y="95" text-anchor="middle">Leading</text>
+      </g>
+      <circle cx="195" cy="70" r="9" fill="var(--tomato)"/>
+      <text x="195" y="45" text-anchor="middle" font-family="var(--fb)" font-size="9" font-weight="700" fill="var(--tomato)">Current</text>
+      <circle cx="330" cy="70" r="9" fill="var(--forest)"/>
+      <text x="330" y="45" text-anchor="middle" font-family="var(--fb)" font-size="9" font-weight="700" fill="var(--forest)">Target</text>
+      <path d="M204 70 L321 70" stroke="var(--ink)" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arroweng)"/>
+      <defs><marker id="arroweng" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Neighboring businesses start Resistant (worried about lost foot traffic); the realistic near-term target is Neutral, not Leading — an honest, achievable gap.</div>
+  </div>
+
+  <h2 class="sh">The Communications Management Plan</h2>
+  <p>Where the engagement plan is strategy, the communications plan is mechanics: for each audience, what information, in what format, through which channel, how often, and who's responsible for sending it. A sponsor's weekly status email and a construction crew's daily safety briefing are both "communication," but they're entirely different plans.</p>
+
+  <div class="callout blue">
+    <strong>The channels formula:</strong> the number of potential communication channels in a group of <em>n</em> people is <strong>n(n − 1) ÷ 2</strong>. A 6-person core team has 6 × 5 ÷ 2 = <strong>15</strong> potential channels. Add 4 more people (to 10) and it jumps to 10 × 9 ÷ 2 = <strong>45</strong> — team size grows communication complexity much faster than people intuitively expect, which is exactly why larger teams need more deliberate communication structure, not just more meetings.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A project team grows from 8 people to 12. Using n(n−1)÷2, roughly how much do potential communication channels increase?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="8 people gives 8×7÷2 = 28 channels; 12 people gives 12×11÷2 = 66 channels — that's more than double, not the same 50% increase as headcount.">From 28 to about 42 — roughly the same 50% increase as headcount</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! 8×7÷2 = 28 channels at 8 people; 12×11÷2 = 66 channels at 12 people — more than double, even though headcount only grew 50%. This is exactly why channel complexity grows faster than team size.">From 28 to 66 — more than double, even though headcount only grew 50%</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module distinguish "engagement level" (Unaware…Leading) from the power/interest grid covered in Module 1?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The power/interest grid tells you how much and what kind of attention a stakeholder needs; engagement level tells you their actual current stance and what stance you're aiming for — two different, complementary pieces of information.">The grid tells you how much attention a stakeholder needs; engagement level tells you their actual current stance and the target you're working toward</button>
+        <button class="q-option" data-correct="false" data-explanation="These aren't the same measurement under two names — engagement level (stance) and power/interest (attention priority) capture different information about a stakeholder.">They're the same thing, just described with different words for variety</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A communications plan says "the sponsor gets a weekly status email," but doesn't specify format, channel, or who's responsible for sending it. What's missing?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module describes the plan as needing to specify information, format, channel, frequency, AND ownership for each audience — this example only nails down audience and frequency, leaving the rest ambiguous.">Format, channel specifics, and a named owner responsible for actually sending it — all part of what a communications plan needs to specify</button>
+        <button class="q-option" data-correct="false" data-explanation="The example already specifies frequency (weekly) — the gaps are in format, channel, and ownership, not frequency.">Nothing — frequency and audience are the only things a communications plan needs</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – MANAGING & MONITORING
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 07</div>
+  <h1 class="mod-title">Managing &amp; <span class="acc">Monitoring</span></h1>
+  <p class="mod-lede">A plan is not the same as the thing actually happening. This module covers executing the engagement and communications plans for real, and checking — deliberately, per Part 3's monitoring discipline — whether they're actually working.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The difference between sending a message and it actually landing</li>
+      <li>What "managing" engagement looks like day to day</li>
+      <li>How to monitor whether engagement and communication are working</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Sent ≠ Received ≠ Understood</h2>
+  <p>Communication has a sender, a message, a channel, a receiver, and — critically — <strong>noise</strong> that can distort it along the way: jargon the receiver doesn't share, a channel they don't check, a moment they're distracted. A status email being sent is not the same as it being read, and being read is not the same as being understood the way you intended.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The communication model, with noise and feedback</div>
+    <svg class="demo-svg" viewBox="0 0 600 180" role="img" aria-label="A sender box sends a message through a channel affected by noise to a receiver box, with a feedback loop returning from receiver to sender confirming or correcting understanding">
+      <rect x="20" y="60" width="110" height="50" rx="10" fill="var(--sea)"/>
+      <text x="75" y="90" text-anchor="middle" font-family="var(--fb)" font-size="11" font-weight="700" fill="#fff">Sender</text>
+
+      <rect x="470" y="60" width="110" height="50" rx="10" fill="var(--forest)"/>
+      <text x="525" y="90" text-anchor="middle" font-family="var(--fb)" font-size="11" font-weight="700" fill="#fff">Receiver</text>
+
+      <path d="M130 80 L470 80" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrowc1)"/>
+      <text x="300" y="70" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--ink)">Message via Channel</text>
+      <rect x="230" y="30" width="140" height="24" rx="6" fill="var(--tomato)" opacity="0.85"/>
+      <text x="300" y="46" text-anchor="middle" font-family="var(--fb)" font-size="9" font-weight="700" fill="#fff">NOISE distorts it</text>
+
+      <path d="M470 130 C 350 155, 250 155, 130 130" stroke="var(--mango)" stroke-width="2" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowc2)"/>
+      <text x="300" y="160" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#B45F04">Feedback confirms (or corrects) understanding</text>
+
+      <defs>
+        <marker id="arrowc1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker>
+        <marker id="arrowc2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--mango)"/></marker>
+      </defs>
+    </svg>
+    <div class="demo-caption">Without the feedback loop, a sender has no way of knowing whether "sent" ever became "understood."</div>
+  </div>
+
+  <h2 class="sh">Managing Engagement, Day to Day</h2>
+  <p>Managing engagement means actively working relationships: addressing a stakeholder's concerns before they harden into opposition, clarifying expectations before a misunderstanding compounds, and adjusting tactics as a stakeholder's position shifts (Module 1's dynamic grid). It's relationship work, not a one-time send-and-forget plan execution.</p>
+
+  <h2 class="sh">Monitoring: Is It Actually Working?</h2>
+  <p>Monitoring checks the plan against reality: is a target stakeholder's engagement level actually moving toward the desired state (Module 2), or stuck? Are status reports landing with the right people, or getting buried? Recall Part 3's core monitoring lesson — comparing plan to actual on a defined cadence — applied here to relationships and information flow instead of schedule and cost.</p>
+
+  <div class="callout tomato">
+    <strong>The trap:</strong> treating "we sent the weekly update" as proof engagement is on track. A perfectly executed communications plan can still fail if nobody's actually reading it, or if what's being sent isn't what a resistant stakeholder actually needs to hear to move toward Neutral.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">A PM confirms the weekly status email was sent to every stakeholder on the list, and considers communications "on track." What's missing from this check?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Sent is not the same as received or understood — without a feedback loop or engagement check, there's no evidence the communication actually landed the way it was intended.">Confirmation that the message was actually received and understood, not just sent — a feedback loop</button>
+        <button class="q-option" data-correct="false" data-explanation="Delivery-receipt confirmation of the email being sent doesn't confirm understanding — the module's point is specifically that 'sent' and 'understood' are different things.">Nothing — sending on schedule is the definition of on-track communication</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">How does "managing engagement" differ from simply executing the communications plan on schedule?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Managing engagement is active relationship work — addressing concerns, adjusting tactics as a stakeholder's position shifts — not just mechanically sending scheduled communications regardless of whether they're landing.">Managing engagement is active relationship work — addressing concerns and adjusting tactics — not just mechanically sending scheduled messages</button>
+        <button class="q-option" data-correct="false" data-explanation="The module explicitly distinguishes these — treating them as identical misses the relationship-work dimension the module emphasizes.">They're the same activity, just described differently</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A resistant stakeholder's engagement level hasn't moved toward Neutral despite weeks of scheduled updates. What does the monitoring discipline from Part 3 suggest here?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Monitoring means comparing plan to actual and reacting when there's a gap — if the plan isn't moving the needle, that's a signal to adjust the approach (per Module 1's dynamic engagement point), not to keep repeating what isn't working.">Compare the plan against actual results and adjust the approach — repeating an ineffective tactic isn't monitoring, it's just repetition</button>
+        <button class="q-option" data-correct="false" data-explanation="Continuing an approach that isn't moving the stakeholder, without checking whether it's actually working, is precisely what the monitoring discipline warns against.">Keep sending the same updates — engagement naturally improves with enough repetition</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – RISK PLANNING & IDENTIFICATION
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 07</div>
+  <h1 class="mod-title">Risk Planning &amp; <span class="acc">Identification</span></h1>
+  <p class="mod-lede">A risk that isn't written down doesn't stop existing — it just stops being managed. This module is about finding risks systematically, before they find you, and organizing them so nothing important gets lost in a disorganized list.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What a risk management plan sets up before identification even starts</li>
+      <li>Techniques for identifying risk systematically</li>
+      <li>How a Risk Breakdown Structure organizes risks by source</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Planning Before Identifying</h2>
+  <p>Before hunting for risks, a risk management plan sets the ground rules: how risk will be categorized, who's involved in identifying and responding to it, and what threshold makes a risk worth tracking formally versus ignoring as noise. Skipping this means every risk conversation re-litigates its own rules.</p>
+
+  <h2 class="sh">Identifying Risk</h2>
+  <ul class="bl">
+    <li><strong>Brainstorming and workshops</strong> — pull knowledge out of the people closest to the work, same as Part 4's requirements elicitation.</li>
+    <li><strong>Checklists</strong> — from past, similar projects; fast, but only catches what's been seen before.</li>
+    <li><strong>Assumption analysis</strong> — every plan rests on assumptions; testing which ones are shaky surfaces risk directly.</li>
+    <li><strong>Reviewing past projects</strong> — what actually went wrong last time, not just what was worried about.</li>
+  </ul>
+
+  <h2 class="sh">The Risk Breakdown Structure</h2>
+  <p>A Risk Breakdown Structure (RBS) organizes identified risks hierarchically by source — the same decomposition logic as the WBS (Part 4), applied to where risk comes from instead of what work needs doing.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Risk Breakdown Structure — Fairview project</div>
+    <svg class="demo-svg" viewBox="0 0 640 260" role="img" aria-label="An RBS tree: root node Project Risk splits into four categories, Technical, External, Organizational, and Project Management, each with two example risks">
+      <rect x="260" y="10" width="120" height="44" rx="8" fill="var(--acc)"/>
+      <text x="320" y="37" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Project Risk</text>
+
+      <g font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">
+        <rect x="20" y="100" width="140" height="40" rx="8" fill="var(--forest)"/><text x="90" y="125" text-anchor="middle">Technical</text>
+        <rect x="180" y="100" width="140" height="40" rx="8" fill="var(--sea)"/><text x="250" y="125" text-anchor="middle">External</text>
+        <rect x="340" y="100" width="140" height="40" rx="8" fill="var(--mango)"/><text x="410" y="125" text-anchor="middle">Organizational</text>
+        <rect x="500" y="100" width="120" height="40" rx="8" fill="var(--mawar)"/><text x="560" y="120" text-anchor="middle" font-size="8.5">Project</text><text x="560" y="132" text-anchor="middle" font-size="8.5">Management</text>
+      </g>
+
+      <g font-family="var(--fb)" font-size="8.5" fill="var(--ink)">
+        <rect x="10" y="180" width="80" height="44" rx="6" fill="var(--paper-2)" stroke="var(--forest)" stroke-width="1.5"/><text x="50" y="198" text-anchor="middle">Platform</text><text x="50" y="210" text-anchor="middle">integration bugs</text>
+        <rect x="100" y="180" width="80" height="44" rx="6" fill="var(--paper-2)" stroke="var(--forest)" stroke-width="1.5"/><text x="140" y="198" text-anchor="middle">Accessibility</text><text x="140" y="210" text-anchor="middle">retrofit failure</text>
+
+        <rect x="185" y="180" width="80" height="44" rx="6" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="1.5"/><text x="225" y="198" text-anchor="middle">Permit</text><text x="225" y="210" text-anchor="middle">delay</text>
+        <rect x="275" y="180" width="80" height="44" rx="6" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="1.5"/><text x="315" y="198" text-anchor="middle">Vendor</text><text x="315" y="210" text-anchor="middle">default</text>
+
+        <rect x="345" y="180" width="80" height="44" rx="6" fill="var(--paper-2)" stroke="var(--mango)" stroke-width="1.5"/><text x="385" y="198" text-anchor="middle">Staff</text><text x="385" y="210" text-anchor="middle">turnover</text>
+        <rect x="435" y="180" width="80" height="44" rx="6" fill="var(--paper-2)" stroke="var(--mango)" stroke-width="1.5"/><text x="475" y="198" text-anchor="middle">Funding</text><text x="475" y="210" text-anchor="middle">reallocated</text>
+
+        <rect x="505" y="180" width="80" height="44" rx="6" fill="var(--paper-2)" stroke="var(--mawar)" stroke-width="1.5"/><text x="545" y="198" text-anchor="middle">Poor</text><text x="545" y="210" text-anchor="middle">estimating</text>
+        <rect x="590" y="180" width="30" height="44" rx="6" fill="var(--paper-2)" stroke="var(--mawar)" stroke-width="1.5" opacity="0.3"/>
+      </g>
+
+      <g stroke="var(--line-s)" stroke-width="1.5" fill="none">
+        <path d="M320 54 L90 100"/><path d="M320 54 L250 100"/><path d="M320 54 L410 100"/><path d="M320 54 L560 100"/>
+      </g>
+    </svg>
+    <div class="demo-caption">Same 100%-coverage discipline as the WBS: every identified risk should trace to a category, and the categories should cover the realistic universe of risk sources.</div>
+  </div>
+
+  <div class="callout blue">
+    <strong>Connects to Part 5:</strong> once identified, a risk gets a place in the risk register — the living document that ultimately justifies the contingency reserve (Part 5, Module 2). Identification and budgeting aren't separate conversations; they feed each other directly.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A team relies only on a checklist from a previous, similar project to identify risks for this one. What's the main limitation?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Checklists are fast but only capture risks that were already seen before — they can't surface something genuinely new to this specific project, which is why the module recommends combining techniques.">It only catches risks that have already been seen before — it won't surface something genuinely new to this project</button>
+        <button class="q-option" data-correct="false" data-explanation="Checklists are actually the fastest of the techniques listed — the limitation is coverage (only catching known risks), not speed.">Checklists are the slowest of all the identification techniques</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A risk register lists "vendor default" under the External category, but nobody checked whether the RBS's four categories actually cover every realistic risk source for this project. What discipline is missing?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Just like the WBS's 100% rule (Part 4), an RBS should capture the full realistic universe of risk sources — an unchecked category set risks missing whole classes of risk nobody thought to categorize.">The same 100%-coverage discipline as the WBS — checking that the categories actually cover the realistic risk universe</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't about formatting consistency — it's about substantive coverage of risk sources, mirroring the WBS's 100% rule from Part 4.">Formatting consistency across risk register entries</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module connect risk identification directly to Part 5's contingency reserve?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Contingency reserve is specifically set aside for identified risks in the register — identification and budgeting are directly linked, not separate workstreams that happen to both mention 'risk.'">Because contingency reserve is specifically set aside for risks that have already been identified and entered in the register</button>
+        <button class="q-option" data-correct="false" data-explanation="This connection isn't coincidental terminology — contingency reserve is functionally defined by, and sized from, the identified risks in the register.">The connection is coincidental — the two modules just happen to both use the word 'risk'</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – RISK ANALYSIS & EMV
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 07</div>
+  <h1 class="mod-title">Risk Analysis &amp; <span class="acc">EMV</span></h1>
+  <p class="mod-lede">Not every identified risk deserves the same response effort. Qualitative analysis sorts risks fast, by feel; quantitative analysis — specifically Expected Monetary Value — puts an actual number on a decision, and sometimes flips what "feels right" on its head.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How a probability/impact matrix prioritizes risks quickly</li>
+      <li>The Expected Monetary Value formula, worked through a real decision</li>
+      <li>Why EMV can favor a "safe-looking" option that isn't actually cheapest, or vice versa</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Qualitative Analysis: The Probability/Impact Matrix</h2>
+  <div class="demo-box">
+    <div class="demo-label">5×5 probability/impact matrix, Fairview risks plotted</div>
+    <svg class="demo-svg" viewBox="0 0 460 400" role="img" aria-label="A five by five probability versus impact heat matrix with four risks plotted: permit delay at moderate probability moderate impact, vendor default at low probability high impact, senior program low turnout at high probability low impact, and budget overrun at moderate probability high impact">
+      <g>
+        <rect x="70" y="30" width="360" height="300" fill="none" stroke="var(--ink)" stroke-width="2"/>
+        <rect x="70" y="30" width="72" height="60" fill="rgba(31,157,85,.25)"/><rect x="142" y="30" width="72" height="60" fill="rgba(31,157,85,.25)"/><rect x="214" y="30" width="72" height="60" fill="rgba(255,194,52,.3)"/><rect x="286" y="30" width="72" height="60" fill="rgba(255,194,52,.3)"/><rect x="358" y="30" width="72" height="60" fill="rgba(224,62,45,.28)"/>
+        <rect x="70" y="90" width="72" height="60" fill="rgba(31,157,85,.25)"/><rect x="142" y="90" width="72" height="60" fill="rgba(255,194,52,.3)"/><rect x="214" y="90" width="72" height="60" fill="rgba(255,194,52,.3)"/><rect x="286" y="90" width="72" height="60" fill="rgba(224,62,45,.28)"/><rect x="358" y="90" width="72" height="60" fill="rgba(224,62,45,.28)"/>
+        <rect x="70" y="150" width="72" height="60" fill="rgba(255,194,52,.3)"/><rect x="142" y="150" width="72" height="60" fill="rgba(255,194,52,.3)"/><rect x="214" y="150" width="72" height="60" fill="rgba(224,62,45,.28)"/><rect x="286" y="150" width="72" height="60" fill="rgba(224,62,45,.28)"/><rect x="358" y="150" width="72" height="60" fill="rgba(224,62,45,.4)"/>
+        <rect x="70" y="210" width="72" height="60" fill="rgba(255,194,52,.3)"/><rect x="142" y="210" width="72" height="60" fill="rgba(224,62,45,.28)"/><rect x="214" y="210" width="72" height="60" fill="rgba(224,62,45,.28)"/><rect x="286" y="210" width="72" height="60" fill="rgba(224,62,45,.4)"/><rect x="358" y="210" width="72" height="60" fill="rgba(224,62,45,.4)"/>
+        <rect x="70" y="270" width="72" height="60" fill="rgba(224,62,45,.28)"/><rect x="142" y="270" width="72" height="60" fill="rgba(224,62,45,.28)"/><rect x="214" y="270" width="72" height="60" fill="rgba(224,62,45,.4)"/><rect x="286" y="270" width="72" height="60" fill="rgba(224,62,45,.4)"/><rect x="358" y="270" width="72" height="60" fill="rgba(224,62,45,.5)"/>
+      </g>
+      <text x="250" y="352" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">IMPACT →</text>
+      <text x="40" y="180" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)" transform="rotate(-90 40 180)">PROBABILITY →</text>
+
+      <circle cx="250" cy="240" r="8" fill="var(--ink)"/><text x="250" y="264" text-anchor="middle" font-family="var(--fb)" font-size="9" font-weight="700">Permit Delay</text>
+      <circle cx="394" cy="120" r="8" fill="var(--ink)"/><text x="394" y="108" text-anchor="middle" font-family="var(--fb)" font-size="9" font-weight="700">Vendor Default</text>
+      <circle cx="106" cy="300" r="8" fill="var(--ink)"/><text x="106" y="322" text-anchor="middle" font-family="var(--fb)" font-size="9" font-weight="700">Low Turnout</text>
+      <circle cx="322" cy="285" r="8" fill="var(--ink)"/><text x="322" y="360" text-anchor="middle" font-family="var(--fb)" font-size="9" font-weight="700">Budget Overrun</text>
+    </svg>
+    <div class="demo-caption">Fast triage: "Budget Overrun" (moderate-high probability, high impact) demands more attention right now than "Low Turnout" (high probability, low impact) — even though the latter is more likely to happen at all.</div>
+  </div>
+
+  <h2 class="sh">Quantitative Analysis: Expected Monetary Value</h2>
+  <p><strong>Expected Monetary Value (EMV)</strong> multiplies each possible outcome's probability by its dollar impact, then sums across outcomes — turning "how risky does this feel" into an actual comparable number.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">$80,000</div>
+      <div class="stat-lbl">Option A — fixed-price contractor, guaranteed cost, no variance</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">60% · $70,000</div>
+      <div class="stat-lbl">Option B — favorable outcome probability &amp; cost</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">40% · $100,000</div>
+      <div class="stat-lbl">Option B — unfavorable outcome probability &amp; cost</div>
+    </div>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">Decision tree — Option A vs. Option B</div>
+    <svg class="demo-svg" viewBox="0 0 560 220" role="img" aria-label="A decision tree: a decision node splits into Option A leading directly to a guaranteed 80,000 dollar cost, and Option B leading to a chance node splitting into 60 percent probability of 70,000 dollars and 40 percent probability of 100,000 dollars">
+      <rect x="10" y="90" width="70" height="40" rx="8" fill="var(--ink)"/>
+      <text x="45" y="115" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="#fff">Decide</text>
+
+      <rect x="150" y="30" width="110" height="40" rx="8" fill="var(--forest)"/>
+      <text x="205" y="55" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="#fff">Option A</text>
+      <text x="330" y="50" font-family="var(--fb)" font-size="10" font-weight="700" fill="var(--forest)">Guaranteed: $80,000</text>
+
+      <rect x="150" y="150" width="110" height="40" rx="8" fill="var(--sea)"/>
+      <text x="205" y="175" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="#fff">Option B</text>
+      <circle cx="330" cy="170" r="20" fill="var(--mango)"/>
+      <text x="330" y="174" text-anchor="middle" font-family="var(--fb)" font-size="9" font-weight="700" fill="#fff">chance</text>
+
+      <text x="470" y="130" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--forest)">60% → $70,000</text>
+      <text x="470" y="205" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--tomato)">40% → $100,000</text>
+
+      <g stroke="var(--ink)" stroke-width="2" fill="none" marker-end="url(#arrowdt)">
+        <path d="M80 105 L150 50"/>
+        <path d="M80 115 L150 170"/>
+        <path d="M350 155 L440 130"/>
+        <path d="M350 185 L440 205"/>
+      </g>
+      <defs><marker id="arrowdt" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Option B's EMV = (0.6 × $70,000) + (0.4 × $100,000) = $42,000 + $40,000 = <strong>$82,000</strong> — actually $2,000 more, on average, than Option A's guaranteed $80,000. The "flexible" option isn't automatically the cheaper one.</div>
+  </div>
+
+  <div class="callout">
+    <strong>The real lesson:</strong> EMV doesn't tell you what will happen on this specific project — it tells you what the average outcome would be if you faced this exact decision many times. A risk-averse sponsor might still prefer Option A's certainty even if an even-cheaper Option B existed; EMV informs the decision, it doesn't automatically make it.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">A different decision has Option C: 80% chance of $30,000, 20% chance of $60,000. What's its EMV?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! (0.8 × 30,000) + (0.2 × 60,000) = 24,000 + 12,000 = $36,000.">$36,000 — (0.8 × 30,000) + (0.2 × 60,000)</button>
+        <button class="q-option" data-correct="false" data-explanation="This would be the simple average of the two outcomes (30,000+60,000)/2 = 45,000, ignoring the probability weighting entirely — EMV must weight each outcome by its actual probability.">$45,000 — the simple average of the two possible outcomes</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module say Option B's flexible structure ($70k or $100k) isn't automatically the "better deal" compared to Option A's guaranteed $80,000, even before calculating EMV?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The whole point of calculating EMV is that intuition ('flexible sounds like it could be cheaper') isn't reliable — only the actual probability-weighted calculation reveals that B averages out $2,000 more expensive than A.">Because intuition about which option 'feels' cheaper isn't reliable — only the actual probability-weighted calculation reveals which is really better on average</button>
+        <button class="q-option" data-correct="false" data-explanation="The 60% figure isn't inherently untrustworthy — the module's point is that even with the probabilities taken at face value, the calculation still favors A, contrary to what casual intuition might suggest.">Because the 60% probability estimate is always unreliable in real projects</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A sponsor chooses the guaranteed Option A even after seeing that Option B's EMV is only $2,000 higher. Is this an irrational decision?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! EMV describes the average outcome across many repetitions — it doesn't capture risk tolerance for a single, one-off decision. A sponsor reasonably preferring certainty (especially for a small EMV difference) isn't being irrational; EMV informs the decision, it doesn't dictate it.">Not necessarily — EMV describes the average across many repetitions, and reasonably preferring certainty over a small expected-value difference isn't irrational for a one-off decision</button>
+        <button class="q-option" data-correct="false" data-explanation="The module explicitly states EMV informs a decision but doesn't automatically make it — a rational, risk-averse preference for certainty is a legitimate response, not an error.">Yes — a rational decision-maker must always choose whichever option has the lower EMV</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – RISK RESPONSE
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 07</div>
+  <h1 class="mod-title">Risk <span class="acc">Response</span></h1>
+  <p class="mod-lede">Risk isn't only downside. PMBOK has long treated "positive risk" — opportunity — as a mirror category deserving its own strategies, not just an afterthought to threat management. This module covers both, plus the ongoing discipline of watching them.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Four response strategies for threats, and four mirror strategies for opportunities</li>
+      <li>How to choose the right strategy for a given risk</li>
+      <li>What monitoring risk actually involves after a response is chosen</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Four Strategies Each, Mirrored</h2>
+  <div class="demo-box">
+    <div class="demo-label">Threat strategies and their opportunity mirror</div>
+    <svg class="demo-svg" viewBox="0 0 560 260" role="img" aria-label="Two parallel columns: Threats with strategies Avoid, Mitigate, Transfer, Accept; and Opportunities with mirror strategies Exploit, Enhance, Share, Accept">
+      <text x="150" y="24" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--tomato)">Threats</text>
+      <text x="410" y="24" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--forest)">Opportunities</text>
+
+      <g font-family="var(--fb)" font-size="10" font-weight="700" fill="#fff">
+        <rect x="60" y="40" width="180" height="36" rx="8" fill="var(--tomato)"/><text x="150" y="63" text-anchor="middle">Avoid — eliminate it</text>
+        <rect x="320" y="40" width="180" height="36" rx="8" fill="var(--forest)"/><text x="410" y="63" text-anchor="middle">Exploit — guarantee it happens</text>
+
+        <rect x="60" y="90" width="180" height="36" rx="8" fill="var(--tomato)" opacity="0.85"/><text x="150" y="113" text-anchor="middle">Mitigate — reduce it</text>
+        <rect x="320" y="90" width="180" height="36" rx="8" fill="var(--forest)" opacity="0.85"/><text x="410" y="113" text-anchor="middle">Enhance — boost it</text>
+
+        <rect x="60" y="140" width="180" height="36" rx="8" fill="var(--tomato)" opacity="0.7"/><text x="150" y="163" text-anchor="middle">Transfer — shift it</text>
+        <rect x="320" y="140" width="180" height="36" rx="8" fill="var(--forest)" opacity="0.7"/><text x="410" y="163" text-anchor="middle">Share — split it</text>
+
+        <rect x="60" y="190" width="180" height="36" rx="8" fill="var(--tomato)" opacity="0.55"/><text x="150" y="213" text-anchor="middle">Accept — absorb it</text>
+        <rect x="320" y="190" width="180" height="36" rx="8" fill="var(--forest)" opacity="0.55"/><text x="410" y="213" text-anchor="middle">Accept — welcome it</text>
+      </g>
+    </svg>
+    <div class="demo-caption">Every threat strategy has a genuine positive-risk mirror — "Transfer" a threat via insurance or a fixed-price contract; "Share" an opportunity via a joint venture that splits the upside too.</div>
+  </div>
+
+  <table class="pm-table">
+    <thead><tr><th>Threat strategy</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Avoid</td><td>Change the plan to remove the risk entirely — e.g. redesign to eliminate a permit-triggering feature</td></tr>
+      <tr><td class="hl">Mitigate</td><td>Reduce probability or impact — e.g. submit the permit application earlier, with buffer</td></tr>
+      <tr><td class="hl">Transfer</td><td>Shift the risk to another party — e.g. a fixed-price contract (Part 3) shifts cost-overrun risk to the vendor</td></tr>
+      <tr><td class="hl">Accept</td><td>Do nothing proactive, but budget the contingency reserve (Part 5) for it if it happens</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sh">Monitoring Risk</h2>
+  <p>Choosing a response isn't the end. Monitoring means watching for a risk's trigger conditions, checking whether the response is actually working, reviewing whether identified risks are still relevant, and — just as important — catching new risks that emerge as the project proceeds. A risk register frozen at kickoff is already going stale by the time execution really gets underway.</p>
+
+  <div class="callout green">
+    <strong>Good practice, Fairview case:</strong> the permit-delay risk (Mitigate: submit early with buffer) gets a monitoring trigger — "if approval hasn't come through by week 6, escalate to the city relationship contact" — rather than just hoping it resolves. A named trigger turns a vague worry into an actionable check.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 6</div>
+
+    <div class="q-card">
+      <p class="q-text">A team redesigns a construction plan specifically to remove the need for a permit that was proving hard to obtain. Which threat strategy is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Changing the plan to eliminate the risk entirely — no permit needed at all — is Avoid, the strongest response, removing the risk rather than reducing or shifting it.">Avoid — the plan was changed to eliminate the risk entirely</button>
+        <button class="q-option" data-correct="false" data-explanation="Mitigate would reduce the probability or impact of the permit risk (e.g. applying earlier) — this scenario removes the risk entirely by redesigning around it, which is Avoid.">Mitigate — the risk's probability was reduced</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team identifies a chance to win a matching grant if a specific milestone finishes early, and actively restructures the schedule to make that milestone happen. Which opportunity strategy is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Actively restructuring to guarantee the opportunity happens is Exploit — the strongest positive-risk response, mirroring Avoid on the threat side.">Exploit — actively restructuring the plan to guarantee the opportunity happens</button>
+        <button class="q-option" data-correct="false" data-explanation="Enhance would boost the probability or impact of an opportunity that's already somewhat likely — actively guaranteeing it happens through restructuring is the stronger Exploit strategy.">Enhance — boosting the probability of an opportunity already likely to occur</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module say a risk register "frozen at kickoff" is already going stale during execution?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! New risks emerge and existing ones' status changes as a project proceeds — a register that's never revisited misses this, exactly the same 'monitoring is ongoing, not one-time' lesson from Part 3.">Because new risks emerge and existing ones change status as the project proceeds — a register that's never revisited misses both</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't about a fixed expiration date on risk documents — it's about the substantive fact that the actual risk landscape keeps changing throughout the project.">Because risk registers technically expire after a fixed number of weeks</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">The power/interest grid, EMV, decision trees, and Tuckman-adjacent engagement models predate and outlive any single PMBOK edition, as with earlier parts of this series. The domain framing itself carries the same sourcing caveat as Parts 1–5.</p>
+
+  <div class="ref-group-label">The Standard Itself</div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Project Management Institute. <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide) — Eighth Edition, and The Standard for Project Management</em>. Newtown Square, PA: Project Management Institute, 2025/2026.</div>
+    <div class="ref-annotation">The primary source for the Stakeholders and Risk domains covered in this part. Paywalled — not reproduced or quoted verbatim here.</div>
+    <a class="ref-link" href="https://www.pmi.org/standards/pmbok" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Foundational Techniques (edition-stable, independently verifiable)</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Mitchell, Ronald K., Bradley R. Agle, and Donna J. Wood. "Toward a Theory of Stakeholder Identification and Salience." <em>Academy of Management Review</em> 22, no. 4 (1997): 853–886.</div>
+    <div class="ref-annotation">The academic foundation for stakeholder salience (power, legitimacy, urgency) referenced briefly in Module 1 — a management-theory source independent of PMBOK, underlying the power/interest grid's simpler two-axis practical form used across the project-management field.</div>
+    <a class="ref-link" href="https://doi.org/10.2307/259247" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Shannon, Claude E., and Warren Weaver. <em>The Mathematical Theory of Communication</em>. Urbana: University of Illinois Press, 1949.</div>
+    <div class="ref-annotation">The originating source of the sender-message-channel-noise-receiver communication model used in Module 3, developed for telecommunications and widely adapted into general communication theory since — not project-management-specific.</div>
+    <a class="ref-link" href="https://www.press.uillinois.edu" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Raiffa, Howard. <em>Decision Analysis: Introductory Lectures on Choices under Uncertainty</em>. Reading, MA: Addison-Wesley, 1968.</div>
+    <div class="ref-annotation">A foundational decision-analysis text behind the Expected Monetary Value and decision-tree technique in Module 5 — general decision theory, not specific to project management or any PMBOK edition.</div>
+    <a class="ref-link" href="https://www.pearson.com" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Independent Analysis (secondary source for the domain framing)</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">BrainBOK. "PMBOK Guide 7th vs 8th Edition: 6 Principles, 7 Domains, 40 Processes." brainbok.com, 2026.</div>
+    <div class="ref-annotation">Source for the Stakeholders and Risk domains' approximate process groupings used to structure this part's module sequence.</div>
+    <a class="ref-link" href="https://www.brainbok.com/blog/pmp/pmbok-guide-7th-vs-8th-edition-what-has-changed" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the domain framing is corroborated secondary-source paraphrase, not verbatim PMI text — verify against the official standard for professional or certification use. The power/interest grid, communication model, EMV, decision trees, and threat/opportunity response strategies are independently documented, well-established techniques, unaffected by which PMBOK edition is current. The Fairview risk register entries and probability/impact figures in Module 5 are illustrative, constructed for this course, not drawn from a real audited project.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 6 Complete! 🤝</h2>
+    <p>The humans and the uncertainty: stakeholder identification and the power/interest grid, engagement and communications planning, managing and monitoring both for real, risk identification and the RBS, qualitative and quantitative analysis with a worked EMV decision, and threat/opportunity response strategies. Part 7 — the capstone — brings every domain from this series together into one worked project.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="7">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'pmbok8-part6';
+const TOTAL = 7;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
