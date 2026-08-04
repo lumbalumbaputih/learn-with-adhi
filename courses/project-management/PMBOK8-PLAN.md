@@ -183,13 +183,13 @@ quote, per §1.4's sourcing rule.)
 6. Closing a Project: the closing sequence, lessons learned, handoff to operations
 7. References
 
-**Part 4 — Scope & Schedule** (`pmbok8-part4-scope-schedule-v1.html`)
-1. Requirements: eliciting & analyzing what's actually needed
-2. Defining Scope & Building the WBS
-3. Validating & Controlling Scope (scope creep, change requests)
-4. Schedule Management & Network Diagrams
-5. The Critical Path & PERT (three-point estimating)
-6. Monitoring & Controlling the Schedule (schedule variance, fast-tracking vs. crashing)
+**Part 4 — Scope & Schedule** ✅ shipped 2026-08-04 (`pmbok8-part4-scope-schedule-v1.html`, 7 modules)
+1. Requirements: elicitation techniques, functional vs. non-functional, traceability
+2. Defining Scope & the WBS: scope statement, progressive decomposition, the 100% rule
+3. Validating & Controlling Scope: scope creep vs. gold-plating, validate scope ≠ QC
+4. Network Diagrams: dependency types, Precedence Diagramming Method
+5. Critical Path & PERT: float, the PERT formula worked through a real example
+6. Monitoring the Schedule: schedule variance (preview), fast-tracking vs. crashing
 7. References
 
 **Part 5 — Finance & Resources** (`pmbok8-part5-finance-resources-v1.html`)
@@ -256,8 +256,8 @@ split — the 5–8 range in the Adult Course Standard is the hard constraint, n
 1. ✅ Hub + Part 1 (Foundations & the Value Delivery System) — shipped 2026-08-04.
 2. ✅ Part 2 (Six Principles) — shipped 2026-08-04.
 3. ✅ Part 3 (Governance) — shipped 2026-08-04.
-4. ⏳ Part 4 (Scope & Schedule) — next.
-5. ⏳ Part 5 (Finance & Resources)
+4. ✅ Part 4 (Scope & Schedule) — shipped 2026-08-04.
+5. ⏳ Part 5 (Finance & Resources) — next.
 6. ⏳ Part 6 (Stakeholders & Risk)
 7. ⏳ Part 7 (Delivery Approaches & Exam Bridge)
 

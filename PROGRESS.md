@@ -30,7 +30,9 @@ Each course/feature ships as its own commit. Update this file as each lands.
   - Files: `courses/project-management/pmbok8-part2-principles-v1.html` (new), `courses/project-management/pmbok8-hub.html`, `courses/project-management/PMBOK8-PLAN.md`.
 - ✅ **Part 3 — Governance** shipped (`pmbok8-part3-governance-v1.html`, 7 modules: starting a project (business case + charter), integration across the six subsidiary plans, sourcing & procurement (contract types + risk allocation), executing & quality assurance (PDCA cycle), change control & monitoring (CCB process), closing a project, + References). 6 SVG diagrams (charter flow, subsidiary-plan hub-and-spoke, contract-risk spectrum, PDCA cycle, change-control flow, closing sequence), a contract-type stat-row, all 4 callout variants, 18 scenario quiz questions (verified). Wired into `pmbok8-hub.html`; `PMBOK8-PLAN.md` updated.
   - Files: `courses/project-management/pmbok8-part3-governance-v1.html` (new), `courses/project-management/pmbok8-hub.html`, `courses/project-management/PMBOK8-PLAN.md`.
-  - 🔜 Next: Part 4 (Scope & Schedule), then Parts 5–7 per `PMBOK8-PLAN.md` §3, one per step.
+- ✅ **Part 4 — Scope & Schedule** shipped (`pmbok8-part4-scope-schedule-v1.html`, 7 modules: requirements elicitation, defining scope & the WBS (100% rule), validating & controlling scope (scope creep vs. gold-plating), network diagrams (dependency types), the critical path & PERT (worked three-point-estimate example), monitoring the schedule (fast-tracking vs. crashing), + References). 6 SVG diagrams (requirements funnel, WBS tree, scope-change branching, network diagram, critical-path-with-float, fast-track/crash comparison), a PERT-inputs stat-row, all 4 callout variants, 18 scenario quiz questions incl. a worked PERT calculation (verified). Wired into `pmbok8-hub.html`; `PMBOK8-PLAN.md` updated.
+  - Files: `courses/project-management/pmbok8-part4-scope-schedule-v1.html` (new), `courses/project-management/pmbok8-hub.html`, `courses/project-management/PMBOK8-PLAN.md`.
+  - 🔜 Next: Part 5 (Finance & Resources), then Parts 6–7 per `PMBOK8-PLAN.md` §3, one per step.
 
 ## 2026-07-28
 

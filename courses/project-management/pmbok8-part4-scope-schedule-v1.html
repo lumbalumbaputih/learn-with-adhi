@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="pmbok8-part4">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scope & Schedule · PMBOK 8, Field-Tested · Learn with Adhi</title>
+<meta name="description" content="Part 4 of PMBOK 8, Field-Tested: the Scope and Schedule domains — requirements, the WBS, validating and controlling scope, network diagrams, the critical path, PERT estimating, and schedule compression.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-management/pmbok8-part4-scope-schedule-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scope & Schedule · PMBOK 8, Field-Tested">
+<meta property="og:description" content="Requirements, the WBS, network diagrams, the critical path, PERT estimating, and schedule compression.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"PMBOK 8, Field-Tested — Part 4: Scope & Schedule","description":"Requirements, the WBS, network diagrams, the critical path, PERT estimating, and schedule compression.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#1C5DDC; --acc-dim:#154BB3; --acc-bg:rgba(28,93,220,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#5b8cff);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="pmbok8-hub.html">← Series map · Part 4 of 7</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 7 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Requirements</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Defining Scope &amp; the WBS</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Validating &amp; Controlling Scope</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Network Diagrams</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Critical Path &amp; PERT</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Monitoring the Schedule</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7">
+      <span class="nav-num">07</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">PMBOK 8 · Part 4</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – REQUIREMENTS
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 07</div>
+  <h1 class="mod-title">Requirements</h1>
+  <p class="mod-lede">Wait — no accent word this time. Everything downstream in this part depends on getting this one right: the WBS, the schedule, even the budget in Part 5, all trace back to what was actually <span class="acc">required</span>, not what someone assumed was obvious.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The main techniques for eliciting requirements, and when to use each</li>
+      <li>Functional vs. non-functional requirements — and why missing the second kind is the more common failure</li>
+      <li>Why traceability matters once a project is underway</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Eliciting Requirements</h2>
+  <p>Requirements don't arrive fully formed — they have to be actively drawn out, and different techniques surface different kinds of need.</p>
+  <table class="pm-table">
+    <thead><tr><th>Technique</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Interviews</td><td>Deep, individual insight — especially from a stakeholder who won't speak up in a group</td></tr>
+      <tr><td class="hl">Workshops</td><td>Fast convergence when multiple stakeholders need to agree in real time</td></tr>
+      <tr><td class="hl">Surveys</td><td>Broad input from a large or dispersed group, at the cost of depth</td></tr>
+      <tr><td class="hl">Observation</td><td>What people actually do, not what they say they do — catches needs people don't think to mention</td></tr>
+      <tr><td class="hl">Prototyping</td><td>Reactions to something concrete, when people struggle to describe what they want in the abstract</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout blue">
+    <strong>Fairview case:</strong> the "seniors need a paper fallback for sign-up, not everyone has an email" requirement from Part 2's Embed Quality example wasn't volunteered in a workshop — it surfaced through <strong>observation</strong>, watching actual seniors try the mock-up. No interview or survey question happened to ask about it directly.
+  </div>
+
+  <h2 class="sh">Functional vs. Non-Functional Requirements</h2>
+  <p><strong>Functional requirements</strong> describe what the system or deliverable does — "members can search the catalog," "the sign-up form collects a name and address." <strong>Non-functional requirements</strong> describe how well it does it, or under what constraints — response time, accessibility standards, how many concurrent users it must support, language support. Functional requirements are usually easy to elicit because stakeholders describe them naturally. Non-functional requirements are the ones that get missed — and missing them is what produces a system that technically works but fails in practice.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">From broad stakeholder needs to defined requirements</div>
+    <svg class="demo-svg" viewBox="0 0 560 220" role="img" aria-label="A narrowing funnel diagram: a wide top band labeled Stakeholder Needs, narrowing through a middle band labeled Elicited Input, to a narrow bottom band labeled Defined, Traceable Requirements">
+      <polygon points="40,20 520,20 400,100 160,100" fill="var(--sea)" opacity="0.85"/>
+      <text x="280" y="65" text-anchor="middle" font-family="var(--fb)" font-size="12" font-weight="700" fill="#fff">Stakeholder Needs (broad, informal)</text>
+
+      <polygon points="160,110 400,110 320,170 240,170" fill="var(--mango)" opacity="0.85"/>
+      <text x="280" y="145" text-anchor="middle" font-family="var(--fb)" font-size="11" font-weight="700" fill="#fff">Elicited Input</text>
+
+      <rect x="220" y="180" width="120" height="34" rx="8" fill="var(--acc)"/>
+      <text x="280" y="202" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">Defined Requirements</text>
+    </svg>
+    <div class="demo-caption">The narrowing isn't loss — it's the deliberate work of turning broad input into something specific enough to design and build against.</div>
+  </div>
+
+  <h2 class="sh">Traceability</h2>
+  <p>A requirements traceability matrix links each requirement to the deliverable(s) that satisfy it, and later to the test or acceptance criteria that confirm it. Its real value shows up mid-project: when a scope change is proposed, tracing which requirements it affects (Part 3's change control) turns a vague debate into a specific, checkable list.</p>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A stakeholder says the new platform must "support many people at once during peak enrollment week." Functional or non-functional requirement?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Functional requirements describe what the system does (e.g. 'members can enroll online') — this statement is about a performance constraint, not a capability.">Functional — it describes what the platform must be able to do</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! This describes a performance constraint (concurrent load capacity), not a specific capability — a textbook non-functional requirement, and exactly the kind that's easy to overlook.">Non-functional — it describes a performance constraint, not a specific capability</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team relies entirely on a stakeholder survey to gather requirements for a new physical space's accessibility needs, and misses a mobility issue that only becomes obvious when watching someone actually navigate the space. What technique would likely have caught it?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Observation catches needs people don't think to mention explicitly — exactly the gap a survey (self-reported, abstract) tends to miss.">Observation — watching actual use surfaces needs people don't think to report themselves</button>
+        <button class="q-option" data-correct="false" data-explanation="A broader survey with more questions still relies on people accurately self-reporting a need they may not consciously notice — it doesn't reliably close this specific gap the way direct observation does.">A longer survey with more questions</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Midway through the project, someone proposes removing a feature. Why does a requirements traceability matrix make that conversation easier?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Traceability turns 'will this cause problems?' from a guess into a specific, checkable list of exactly which requirements and deliverables the change touches.">It shows exactly which requirements and deliverables the removal would affect, instead of relying on memory or guesswork</button>
+        <button class="q-option" data-correct="false" data-explanation="A traceability matrix doesn't determine who has approval authority — that's a governance/change-control question (Part 3). It's about visibility into dependencies, not authorization.">It automatically decides whether the sponsor should approve the change</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – DEFINING SCOPE & THE WBS
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 07</div>
+  <h1 class="mod-title">Defining Scope &amp; <span class="acc">the WBS</span></h1>
+  <p class="mod-lede">Requirements describe needs. Scope turns them into a defined boundary — what's in, what's explicitly out — and the Work Breakdown Structure turns that boundary into something you can actually plan, schedule, and assign.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What a scope statement has to nail down, including what's excluded</li>
+      <li>How to build a WBS by progressive decomposition</li>
+      <li>The 100% rule, and why it's the WBS's single most important discipline</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Scope Statement</h2>
+  <p>A scope statement translates the charter's high-level boundary (Part 3, Module 1) into specifics: the deliverables, the acceptance criteria for each, and — just as important — explicit exclusions. "We are not renovating the parking structure" prevents a whole category of scope-creep argument three months later.</p>
+
+  <h2 class="sh">Building the WBS</h2>
+  <p>The <strong>Work Breakdown Structure</strong> decomposes the total scope into progressively smaller pieces, until you reach <strong>work packages</strong> — pieces small enough to estimate, assign, and track reliably. Each level breaks its parent down further; nothing is invented at a lower level that wasn't already implied above it.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">WBS — Fairview Community Tech Hub</div>
+    <svg class="demo-svg" viewBox="0 0 640 260" role="img" aria-label="A WBS tree: root node Community Tech Hub splits into three phases, Construction, Platform, and Programs, each of which splits into two work packages">
+      <rect x="260" y="10" width="120" height="44" rx="8" fill="var(--acc)"/>
+      <text x="320" y="37" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Community Tech Hub</text>
+
+      <rect x="40" y="100" width="150" height="40" rx="8" fill="var(--forest)"/>
+      <text x="115" y="125" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">1. Construction</text>
+      <rect x="245" y="100" width="150" height="40" rx="8" fill="var(--sea)"/>
+      <text x="320" y="125" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">2. Platform</text>
+      <rect x="450" y="100" width="150" height="40" rx="8" fill="var(--mango)"/>
+      <text x="525" y="125" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">3. Programs</text>
+
+      <g font-family="var(--fb)" font-size="9" fill="var(--ink)">
+        <rect x="20" y="180" width="90" height="46" rx="6" fill="var(--paper-2)" stroke="var(--forest)" stroke-width="1.5"/><text x="65" y="200" text-anchor="middle">1.1 Maker-lab</text><text x="65" y="213" text-anchor="middle">buildout</text>
+        <rect x="120" y="180" width="90" height="46" rx="6" fill="var(--paper-2)" stroke="var(--forest)" stroke-width="1.5"/><text x="165" y="200" text-anchor="middle">1.2 Accessibility</text><text x="165" y="213" text-anchor="middle">retrofit</text>
+
+        <rect x="230" y="180" width="90" height="46" rx="6" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="1.5"/><text x="275" y="200" text-anchor="middle">2.1 Membership</text><text x="275" y="213" text-anchor="middle">sign-up flow</text>
+        <rect x="330" y="180" width="90" height="46" rx="6" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="1.5"/><text x="375" y="200" text-anchor="middle">2.2 Catalog</text><text x="375" y="213" text-anchor="middle">search</text>
+
+        <rect x="435" y="180" width="90" height="46" rx="6" fill="var(--paper-2)" stroke="var(--mango)" stroke-width="1.5"/><text x="480" y="200" text-anchor="middle">3.1 Digital-lit.</text><text x="480" y="213" text-anchor="middle">curriculum</text>
+        <rect x="535" y="180" width="90" height="46" rx="6" fill="var(--paper-2)" stroke="var(--mango)" stroke-width="1.5"/><text x="580" y="200" text-anchor="middle">3.2 Staff</text><text x="580" y="213" text-anchor="middle">training</text>
+      </g>
+
+      <g stroke="var(--line-s)" stroke-width="1.5" fill="none">
+        <path d="M320 54 L115 100"/><path d="M320 54 L320 100"/><path d="M320 54 L525 100"/>
+        <path d="M115 140 L65 180"/><path d="M115 140 L165 180"/>
+        <path d="M320 140 L275 180"/><path d="M320 140 L375 180"/>
+        <path d="M525 140 L480 180"/><path d="M525 140 L580 180"/>
+      </g>
+    </svg>
+    <div class="demo-caption">Six work packages, three phases, one project — every branch narrower than its parent, nothing added that the level above didn't already imply.</div>
+  </div>
+
+  <h2 class="sh">The 100% Rule</h2>
+  <p>A correctly built WBS captures 100% of the project's scope — no more, no less — at every level. A child node's combined scope must fully account for its parent's scope; nothing extra is smuggled in at a lower level, and nothing from the parent is left uncovered. This single discipline is what makes the WBS trustworthy as the foundation for the schedule (Modules 4–6) and the budget (Part 5).</p>
+
+  <div class="callout tomato">
+    <strong>The trap:</strong> a work package that "sounds reasonable" but wasn't actually implied by any requirement or scope statement item. That's scope invented at the WBS level — a preview of the "gold-plating" trap covered fully in Module 3.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A WBS's "Platform" branch includes a work package for a mobile app, but nothing in the charter, scope statement, or requirements ever mentioned a mobile app. What does the 100% rule say about this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The 100% rule works both ways — a child node shouldn't include scope that wasn't implied by its parent. An unrequested work package is scope invented at the WBS level, violating the rule just as surely as a missing piece would.">It violates the rule — a work package shouldn't include scope that wasn't implied by anything above it</button>
+        <button class="q-option" data-correct="false" data-explanation="The 100% rule isn't just about not missing scope — it also means not adding scope that wasn't implied by the parent. Extra, unrequested scope violates it too.">It's fine, as long as the total scope captured is still 100% or more</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module say the WBS is "the foundation for the schedule and the budget"?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Work packages are the pieces small enough to estimate, sequence, and assign a cost to — Modules 4–6's scheduling work and Part 5's budgeting work both build directly on the WBS's work packages.">Because work packages are the pieces small enough to sequence into a schedule and estimate a cost against, and both later steps build on them</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't about a mandatory document ordering rule — it's a substantive dependency: scheduling and budgeting need work packages small enough to estimate, and the WBS is what produces them.">Because PMI requires the WBS to be created before any other document</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">The scope statement explicitly says "we are not renovating the parking structure." Three months in, a stakeholder argues the parking structure "should obviously be included." What does an explicit exclusion in the scope statement do here?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! An explicit exclusion converts a vague later argument into a documented decision — the stakeholder now has to formally request a scope change through Part 3's change control process, rather than relying on an ambiguous 'obviously' claim.">It converts the disagreement into a formal change request, since the exclusion was already documented rather than left ambiguous</button>
+        <button class="q-option" data-correct="false" data-explanation="An explicit written exclusion is exactly what removes the ambiguity a memory-based dispute would otherwise create — it doesn't make the topic more of a memory contest.">It has no effect — the scope statement's wording doesn't change how the disagreement gets resolved</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – VALIDATING & CONTROLLING SCOPE
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 07</div>
+  <h1 class="mod-title">Validating &amp; <span class="acc">Controlling Scope</span></h1>
+  <p class="mod-lede">Two different failure modes threaten a well-defined scope after the WBS is built: scope creep (uncontrolled, unapproved additions) and gold-plating (the team's own well-meaning extras). Both erode the boundary Module 2 worked to set — from opposite directions.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The difference between validating scope and quality control — they check different things</li>
+      <li>Scope creep vs. gold-plating, and why the second one feels harmless and isn't</li>
+      <li>How the scope baseline connects back to Part 3's change control process</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Validating Scope ≠ Quality Control</h2>
+  <p>These two are easy to confuse, but they check different things. <strong>Quality control</strong> (Part 3, Module 4) asks: is this deliverable correct — does it meet the specifications? <strong>Validating scope</strong> asks: does the customer or sponsor formally accept this deliverable as satisfying what was agreed? A deliverable can pass quality control (it's built exactly to spec) and still fail scope validation if the spec itself turns out to not be what the sponsor actually wanted — which is exactly why both checks exist, and why one doesn't substitute for the other.</p>
+
+  <h2 class="sh">Scope Creep vs. Gold-Plating</h2>
+  <table class="pm-table">
+    <thead><tr><th></th><th>Who adds it</th><th>How it happens</th><th>Why it's a problem</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Scope creep</td><td>Stakeholders</td><td>Small, informal requests accepted one at a time, without going through change control</td><td>Budget and schedule silently no longer match the actual work being done</td></tr>
+      <tr><td class="hl">Gold-plating</td><td>The project team</td><td>Adding unrequested extras the team thinks would be nice</td><td>Spends budget/time on something nobody asked for or agreed to pay for, however well-intentioned</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">Two paths a scope change can take</div>
+    <svg class="demo-svg" viewBox="0 0 600 220" role="img" aria-label="A diagram showing the scope baseline branching into two paths: an approved change that goes through change control and updates the baseline, and an uncontrolled addition that bypasses the process and leads to scope creep">
+      <rect x="230" y="16" width="140" height="44" rx="10" fill="var(--acc)"/>
+      <text x="300" y="43" text-anchor="middle" font-family="var(--fb)" font-size="11" font-weight="700" fill="#fff">Scope Baseline</text>
+
+      <rect x="70" y="110" width="160" height="48" rx="10" fill="var(--forest)"/>
+      <text x="150" y="130" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="#fff">Requested Change</text>
+      <text x="150" y="145" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="#fff">→ through change control</text>
+
+      <rect x="370" y="110" width="160" height="48" rx="10" fill="var(--tomato)"/>
+      <text x="450" y="130" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="#fff">Informal Addition</text>
+      <text x="450" y="145" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="#fff">→ bypasses the process</text>
+
+      <rect x="70" y="180" width="160" height="34" rx="8" fill="var(--paper-2)" stroke="var(--forest)" stroke-width="1.5"/>
+      <text x="150" y="201" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--forest)">Baseline Updated</text>
+
+      <rect x="370" y="180" width="160" height="34" rx="8" fill="var(--paper-2)" stroke="var(--tomato)" stroke-width="1.5"/>
+      <text x="450" y="201" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--tomato)">Scope Creep</text>
+
+      <g stroke="var(--ink)" stroke-width="2" fill="none" marker-end="url(#arrow7)">
+        <path d="M270 60 L165 110"/>
+        <path d="M330 60 L435 110"/>
+        <path d="M150 158 L150 180"/>
+        <path d="M450 158 L450 180"/>
+      </g>
+      <defs><marker id="arrow7" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Same starting point, same-sized change — the only difference is whether it goes through the process from Part 3, Module 5.</div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>Why gold-plating feels harmless:</strong> nobody's angry about it, nobody filed a complaint — the team just added something they thought was an improvement. But it still consumed budget and time that weren't allocated to it, and it still changed the deliverable without the sponsor's agreement. Good intentions don't exempt it from scope control.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">A developer adds an extra dashboard widget nobody requested, believing it improves the product. Sponsor approval was never sought. What is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is the team adding unrequested extras of its own accord — the defining pattern of gold-plating, distinct from scope creep, which comes from stakeholder requests.">Gold-plating — the team added unrequested scope on its own initiative</button>
+        <button class="q-option" data-correct="false" data-explanation="Scope creep comes from stakeholder requests accepted informally — this example is the team's own initiative, which is gold-plating, not scope creep.">Scope creep — a stakeholder informally requested this addition</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A deliverable is built exactly to the agreed specification and passes every quality control check, but the sponsor still refuses to formally accept it. What does this scenario illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Quality control checks conformance to spec; validating scope checks whether the sponsor actually agrees the deliverable satisfies what was needed. A deliverable can pass the first and still fail the second — exactly this scenario.">Quality control and validating scope check different things — passing one doesn't guarantee passing the other</button>
+        <button class="q-option" data-correct="false" data-explanation="This scenario is specifically designed to show these two checks are distinct — treating them as interchangeable is exactly the misunderstanding the module warns against.">They're the same check, so this scenario shouldn't be possible</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does an informally-accepted small request eventually cause the budget and schedule to "no longer match the actual work," even if no single request seemed significant?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Each informal addition individually seems small, but bypassing change control means none of them triggers a re-assessment of the schedule/cost baselines (Part 3, Module 2's integration lesson) — they accumulate invisibly.">Because each addition bypasses the impact assessment that change control would otherwise trigger, so the accumulated effect on schedule and cost stays invisible</button>
+        <button class="q-option" data-correct="false" data-explanation="The issue isn't accounting precision — it's that informal additions never get impact-assessed against the baselines at all, however precisely time is tracked.">Because time tracking software isn't precise enough to catch small additions</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – NETWORK DIAGRAMS
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 07</div>
+  <h1 class="mod-title"><span class="acc">Network</span> Diagrams</h1>
+  <p class="mod-lede">Work packages from the WBS become activities. Activities need an order. A network diagram is what turns "here's everything that needs doing" into "here's what depends on what" — the structure the critical path (Module 5) is calculated from.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How to sequence activities using dependency relationships</li>
+      <li>The four dependency types, and why finish-to-start dominates in practice</li>
+      <li>How to read a simple network diagram</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">From Work Packages to Sequenced Activities</h2>
+  <p>Each WBS work package (Module 2) typically breaks down further into one or more schedule activities. Sequencing asks: what has to finish before this can start? What can run in parallel? A network diagram (technically, the <strong>Precedence Diagramming Method</strong>) represents activities as nodes and dependencies as connecting arrows.</p>
+
+  <h3 class="sub">Four dependency types</h3>
+  <table class="pm-table">
+    <thead><tr><th>Type</th><th>Means</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Finish-to-Start (FS)</td><td>B can't start until A finishes</td><td>Can't install fixtures until framing is done — by far the most common</td></tr>
+      <tr><td class="hl">Start-to-Start (SS)</td><td>B can't start until A starts</td><td>Testing can begin once development begins, run alongside it</td></tr>
+      <tr><td class="hl">Finish-to-Finish (FF)</td><td>B can't finish until A finishes</td><td>Documentation can't be finalized until development is finalized</td></tr>
+      <tr><td class="hl">Start-to-Finish (SF)</td><td>B can't finish until A starts</td><td>Rare — e.g. the old system can't be shut down until the new one starts</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">A simple network diagram — platform build</div>
+    <svg class="demo-svg" viewBox="0 0 640 200" role="img" aria-label="A network diagram: Requirements Sign-off leads to two parallel branches, Backend Build and Frontend Build, which both feed into Integration Testing, which leads to Launch">
+      <g font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">
+        <rect x="10" y="80" width="120" height="46" rx="8" fill="var(--sea)"/><text x="70" y="100" text-anchor="middle">Requirements</text><text x="70" y="113" text-anchor="middle">Sign-off</text>
+
+        <rect x="180" y="20" width="120" height="46" rx="8" fill="var(--forest)"/><text x="240" y="40" text-anchor="middle">Backend</text><text x="240" y="53" text-anchor="middle">Build</text>
+        <rect x="180" y="140" width="120" height="46" rx="8" fill="var(--forest)"/><text x="240" y="160" text-anchor="middle">Frontend</text><text x="240" y="173" text-anchor="middle">Build</text>
+
+        <rect x="360" y="80" width="130" height="46" rx="8" fill="var(--mango)"/><text x="425" y="100" text-anchor="middle">Integration</text><text x="425" y="113" text-anchor="middle">Testing</text>
+
+        <rect x="540" y="80" width="90" height="46" rx="8" fill="var(--acc)"/><text x="585" y="107" text-anchor="middle">Launch</text>
+      </g>
+      <g stroke="var(--ink)" stroke-width="2" fill="none" marker-end="url(#arrow8)">
+        <path d="M130 95 L180 47"/>
+        <path d="M130 111 L180 160"/>
+        <path d="M300 47 L370 95"/>
+        <path d="M300 160 L370 111"/>
+        <path d="M490 103 L540 103"/>
+      </g>
+      <defs><marker id="arrow8" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">All finish-to-start here: Backend and Frontend can run in parallel once Requirements is signed off, but both must finish before Integration Testing starts.</div>
+  </div>
+
+  <div class="callout">
+    <strong>Why this matters beyond the diagram:</strong> once activities are sequenced, you can calculate the shortest possible project duration and identify which activities have zero room to slip — that's the critical path, covered next.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">Software testing is scheduled to begin the same day development begins, running alongside it rather than waiting for development to finish. Which dependency type is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Finish-to-Start would mean testing can't start until development finishes — but this scenario has them starting together, which is Start-to-Start.">Finish-to-Start (FS)</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Start-to-Start means B can't start until A starts — exactly the pattern of testing beginning alongside, not after, development.">Start-to-Start (SS)</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">In the demo network diagram, why can Backend Build and Frontend Build both start at the same point, right after Requirements Sign-off?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Since neither Backend nor Frontend depends on the other, both only need Requirements Sign-off to finish first — the diagram places them as parallel branches from the same predecessor.">Neither depends on the other — both only depend on Requirements Sign-off finishing first, so they can proceed in parallel</button>
+        <button class="q-option" data-correct="false" data-explanation="The diagram doesn't specify staffing arrangements — the parallel structure reflects dependency logic (neither depends on the other), not a resourcing decision.">Because the same team works on both simultaneously by policy</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why must Integration Testing wait for BOTH Backend Build and Frontend Build to finish, not just one?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Integration testing needs both halves of the system present to test how they work together — a finish-to-start dependency from each of the two predecessor activities.">Integration testing needs both halves of the system present to test them together — a finish-to-start dependency from each</button>
+        <button class="q-option" data-correct="false" data-explanation="Team size isn't the driver in this diagram — the dependency logic (needing both halves to test integration) is what requires both predecessors to finish.">Because the project only has one QA tester available</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – CRITICAL PATH & PERT
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 07</div>
+  <h1 class="mod-title">Critical Path &amp; <span class="acc">PERT</span></h1>
+  <p class="mod-lede">Two of the most exam-tested techniques in all of project management, and both genuinely useful in practice: finding the sequence of activities that actually determines your project's minimum duration, and estimating each activity's duration without pretending you know it for certain.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What the critical path is, and why activities off it have "float"</li>
+      <li>The PERT three-point estimating formula, worked through a real example</li>
+      <li>Why the critical path can shift as a project proceeds</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Critical Path</h2>
+  <p>The <strong>critical path</strong> is the longest sequence of dependent activities through the network diagram — and it directly sets the project's minimum possible duration. Any delay on a critical-path activity delays the whole project, day for day. Activities <em>not</em> on the critical path have <strong>float</strong> (or slack): room to slip without affecting the finish date.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Critical path highlighted, with float on the side branch</div>
+    <svg class="demo-svg" viewBox="0 0 640 200" role="img" aria-label="A network diagram with durations: Requirements 5 days, then Backend Build 12 days (critical path, highlighted) parallel to Frontend Build 7 days with 5 days of float, both feeding Integration Testing 6 days, then Launch 2 days. Total critical path duration 25 days.">
+      <g font-family="var(--fb)" font-size="9" font-weight="700" fill="#fff">
+        <rect x="10" y="80" width="110" height="46" rx="8" fill="var(--acc)"/><text x="65" y="100" text-anchor="middle">Requirements</text><text x="65" y="113" text-anchor="middle">5 days</text>
+
+        <rect x="170" y="20" width="110" height="46" rx="8" fill="var(--acc)"/><text x="225" y="40" text-anchor="middle">Backend Build</text><text x="225" y="53" text-anchor="middle">12 days</text>
+        <rect x="170" y="140" width="110" height="46" rx="8" fill="var(--muted)"/><text x="225" y="160" text-anchor="middle">Frontend Build</text><text x="225" y="173" text-anchor="middle">7 days</text>
+
+        <rect x="340" y="80" width="120" height="46" rx="8" fill="var(--acc)"/><text x="400" y="100" text-anchor="middle">Integration</text><text x="400" y="113" text-anchor="middle">6 days</text>
+
+        <rect x="520" y="80" width="90" height="46" rx="8" fill="var(--acc)"/><text x="565" y="100" text-anchor="middle">Launch</text><text x="565" y="113" text-anchor="middle">2 days</text>
+      </g>
+      <g stroke="var(--acc)" stroke-width="3" fill="none" marker-end="url(#arrowcp)">
+        <path d="M120 95 L170 47"/>
+        <path d="M280 47 L350 95"/>
+        <path d="M460 103 L520 103"/>
+      </g>
+      <g stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowfloat)">
+        <path d="M120 111 L170 160"/>
+        <path d="M280 160 L350 111"/>
+      </g>
+      <text x="225" y="200" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">Frontend Build has 5 days of float — Backend takes 5 days longer</text>
+      <defs>
+        <marker id="arrowcp" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--acc)"/></marker>
+        <marker id="arrowfloat" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--muted)"/></marker>
+      </defs>
+    </svg>
+    <div class="demo-caption">Critical path (solid, blue): Requirements → Backend → Integration → Launch = 25 days. Frontend Build could run up to 5 days late without moving the launch date.</div>
+  </div>
+
+  <h2 class="sh">PERT: Estimating Without Pretending Certainty</h2>
+  <p>Three-point (PERT) estimating asks for three numbers per activity instead of one guess: an <strong>Optimistic</strong> (O) duration if everything goes right, a <strong>Most Likely</strong> (M) duration under normal conditions, and a <strong>Pessimistic</strong> (P) duration if things go wrong. The weighted formula favors the most-likely case while still accounting for the tails:</p>
+
+  <div class="callout blue" style="font-family:var(--fm);font-size:15px;text-align:center;max-width:400px">
+    Expected Duration = (O + 4M + P) ÷ 6
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">6 days</div>
+      <div class="stat-lbl">Optimistic (O) — everything goes right</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">9 days</div>
+      <div class="stat-lbl">Most Likely (M) — normal conditions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">18 days</div>
+      <div class="stat-lbl">Pessimistic (P) — things go wrong</div>
+    </div>
+  </div>
+
+  <p>Worked example, the platform's Integration Testing activity: <strong>(6 + 4×9 + 18) ÷ 6 = (6 + 36 + 18) ÷ 6 = 60 ÷ 6 = 10 days.</strong> Note the expected value (10) leans toward the most-likely estimate (9) but is pulled upward slightly by the wide pessimistic tail (18) — that's the formula doing its job.</p>
+
+  <div class="callout mango">
+    <strong>It depends, and it moves:</strong> the critical path isn't fixed once at kickoff — if a non-critical activity (like Frontend Build above) runs long enough to eat all its float, it can become the new critical path. Recalculate after any significant schedule change, not just once.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">An activity has O = 4 days, M = 6 days, P = 14 days. What's the PERT expected duration?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="This would be the simple average of the three numbers (4+6+14)/3 = 8, not the weighted PERT formula, which gives most-likely 4× the weight.">8 days — the simple average of the three estimates</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! (4 + 4×6 + 14) ÷ 6 = (4 + 24 + 14) ÷ 6 = 42 ÷ 6 = 7 days.">7 days — (4 + 4×6 + 14) ÷ 6 = 42 ÷ 6</button>
+        <button class="q-option" data-correct="false" data-explanation="6 days is just the Most Likely estimate on its own — the PERT formula blends it with the Optimistic and Pessimistic estimates, weighted toward but not equal to M alone.">6 days — just use the Most Likely estimate</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Frontend Build (7 days, 5 days of float) unexpectedly slips to 13 days, while Backend Build stays on its original 12-day estimate. What happens to the critical path?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Frontend now takes 13 days versus Backend's 12 — Frontend has become the longer (and thus critical) path, exactly the 'the critical path can shift' point the module makes.">Frontend Build becomes part of the new critical path, since it now takes longer than Backend Build</button>
+        <button class="q-option" data-correct="false" data-explanation="The critical path is determined by which path is actually longest at any given point — it isn't fixed permanently at the original network diagram, especially once float gets consumed and exceeded.">Nothing changes — the critical path was fixed at kickoff and doesn't get recalculated</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the PERT formula weight the Most Likely estimate four times as heavily as the Optimistic and Pessimistic estimates?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The formula is designed to center the estimate on the most probable outcome while still letting the extreme tails pull it slightly — rather than either ignoring the tails entirely or weighting all three equally.">To produce an estimate centered on the most probable outcome, while still letting the extreme cases pull it slightly in their direction</button>
+        <button class="q-option" data-correct="false" data-explanation="The weighting isn't a data-collection-difficulty adjustment — it's a deliberate statistical choice about how much influence each estimate should have on the final expected value.">Because Most Likely estimates are easier to collect than the other two</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – MONITORING THE SCHEDULE
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 07</div>
+  <h1 class="mod-title">Monitoring the <span class="acc">Schedule</span></h1>
+  <p class="mod-lede">A schedule is a prediction, and predictions drift. This module covers catching that drift on purpose (schedule variance, previewing Part 5's full Earned Value treatment) and the two standard levers for pulling a late schedule back — each with a different cost.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What schedule variance measures, in plain terms (Part 5 covers the full formula)</li>
+      <li>Fast-tracking vs. crashing — what each does and what each costs</li>
+      <li>Why picking the wrong compression technique for the situation backfires</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Schedule Variance, Briefly</h2>
+  <p><strong>Schedule variance</strong> compares how much work was actually planned to be done by now against how much has actually been accomplished — a negative variance means the project is behind. Part 5's Earned Value Management module covers the full calculation (SV = EV − PV) alongside its cost counterpart; here, the point is simpler: monitoring means checking this on a defined cadence, not discovering you're six weeks behind at the six-week mark.</p>
+
+  <h2 class="sh">Two Ways to Compress a Late Schedule</h2>
+  <table class="pm-table">
+    <thead><tr><th>Technique</th><th>What it does</th><th>Primary cost</th><th>When it works</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Fast-tracking</td><td>Runs sequential activities in parallel instead</td><td>Increased risk of rework if the parallel activities turn out to depend on each other after all</td><td>When activities only had a soft, not a hard, dependency</td></tr>
+      <tr><td class="hl">Crashing</td><td>Adds resources to shorten an activity's duration</td><td>Increased direct cost (more staff, overtime), with diminishing returns</td><td>When the activity is genuinely resource-constrained, not dependency-constrained</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">Fast-tracking vs. crashing, visually</div>
+    <svg class="demo-svg" viewBox="0 0 620 200" role="img" aria-label="Two panels: fast-tracking shows two sequential activity bars overlapping in time instead of running end to end; crashing shows one activity bar shrinking in duration with an added-resource icon">
+      <text x="150" y="20" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--forest)">Fast-Tracking</text>
+      <rect x="30" y="34" width="120" height="26" fill="var(--forest)" opacity="0.85"/>
+      <rect x="110" y="66" width="120" height="26" fill="var(--forest)" opacity="0.5"/>
+      <text x="150" y="112" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">activities overlap → time saved, risk added</text>
+
+      <text x="470" y="20" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--tomato)">Crashing</text>
+      <rect x="360" y="34" width="220" height="26" fill="var(--tomato)" opacity="0.3"/>
+      <rect x="360" y="34" width="130" height="26" fill="var(--tomato)" opacity="0.85"/>
+      <text x="425" y="52" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff">+ resources</text>
+      <text x="470" y="90" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">same scope, shorter duration → cost added</text>
+    </svg>
+    <div class="demo-caption">Fast-tracking trades time for risk. Crashing trades time for money. Neither is free, and picking the wrong one for the situation makes things worse, not better.</div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>The trap:</strong> fast-tracking two activities that turn out to have a hard dependency after all — say, running "finalize the accessibility retrofit design" in parallel with "order the materials" because it seemed independent, then discovering the design change means the wrong materials were ordered. The schedule looks compressed right up until the rework wipes out the gain and adds more delay than the technique saved.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 6</div>
+
+    <div class="q-card">
+      <p class="q-text">A project is 2 weeks behind. The bottleneck activity is genuinely resource-constrained — one specialist is doing work that could be split among three. Which technique fits?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Fast-tracking addresses dependency structure (running sequential work in parallel) — it doesn't help when the constraint is a single resource doing work that could be parallelized with more staff.">Fast-tracking — run more activities in parallel</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! A genuinely resource-constrained bottleneck (one person doing splittable work) is exactly what crashing (adding resources) is meant to address.">Crashing — add resources to the bottleneck activity</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team fast-tracks two activities that seemed independent, but discovers mid-way that one depended on a decision from the other after all — causing rework that adds more delay than was saved. What does this illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Fast-tracking's core risk is exactly this — parallelizing activities that turn out to have a real dependency causes rework, which can cost more time than the technique saved.">Fast-tracking's core risk: activities assumed independent can turn out to have a real dependency, and the resulting rework can cost more than was saved</button>
+        <button class="q-option" data-correct="false" data-explanation="This scenario isn't about staffing headcount — it's specifically about a dependency that was misjudged when the activities were parallelized, the defining risk of fast-tracking.">It shows crashing doesn't work when a project doesn't have enough staff</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does this module recommend checking schedule variance "on a defined cadence" rather than only when something feels off?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This directly echoes Part 3's monitoring lesson and the cost-of-quality logic from Part 2 — catching drift early, on a regular schedule, is cheaper and gives more compression options than discovering a large deviation all at once.">Because catching drift early gives more (and cheaper) options to correct it, versus discovering a large deviation all at once</button>
+        <button class="q-option" data-correct="false" data-explanation="The recommendation isn't primarily about record-keeping for its own sake — it's about catching schedule drift while it's still small enough to correct cheaply.">Because PMI requires a specific documented cadence for certification purposes</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">The Scope and Schedule domains lean heavily on techniques (WBS, network diagrams, critical path, PERT) that predate and outlive any single PMBOK edition — those are cited on their own merits, separate from the PMBOK-specific domain framing.</p>
+
+  <div class="ref-group-label">The Standard Itself</div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Project Management Institute. <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide) — Eighth Edition, and The Standard for Project Management</em>. Newtown Square, PA: Project Management Institute, 2025/2026.</div>
+    <div class="ref-annotation">The primary source for the Scope and Schedule domains covered in this part. Paywalled — not reproduced or quoted verbatim here.</div>
+    <a class="ref-link" href="https://www.pmi.org/standards/pmbok" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Foundational Techniques (edition-stable, independently verifiable)</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Malcolm, D. G., J. H. Roseboom, C. E. Clark, and W. Fazar. "Application of a Technique for Research and Development Program Evaluation." <em>Operations Research</em> 7, no. 5 (1959): 646–669.</div>
+    <div class="ref-annotation">The original paper describing the Program Evaluation and Review Technique (PERT), developed for the U.S. Navy's Polaris missile program in the late 1950s — the source of the three-point estimating formula used in Module 5. A general operations-research technique, not specific to any PMBOK edition.</div>
+    <a class="ref-link" href="https://pubsonline.informs.org/doi/10.1287/opre.7.5.646" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Kelley, James E., Jr. "Origins of CPM – A Personal History." Project Management Institute. Accessed 2026.</div>
+    <div class="ref-annotation">A first-person account of the Critical Path Method's development at DuPont and Remington Rand in the late 1950s, used as background for Module 5's critical path treatment. Also cited by the site's companion "Project Management: A Builder's Guide" course.</div>
+    <a class="ref-link" href="https://www.pmi.org/learning/library/origins-cpm-personal-history-3762" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Independent Analysis (secondary source for the domain framing)</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">BrainBOK. "PMBOK Guide 7th vs 8th Edition: 6 Principles, 7 Domains, 40 Processes." brainbok.com, 2026.</div>
+    <div class="ref-annotation">Source for the Scope and Schedule domains' approximate process groupings used to structure this part's module sequence (requirements/scope definition/scope control; schedule planning/development/control).</div>
+    <a class="ref-link" href="https://www.brainbok.com/blog/pmp/pmbok-guide-7th-vs-8th-edition-what-has-changed" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the domain framing (which processes belong to Scope vs. Schedule) is corroborated secondary-source paraphrase, not verbatim PMI text — verify against the official standard for professional or certification use. The WBS 100% rule, PERT formula, and critical path method themselves are well-established, independently documented techniques, unaffected by which PMBOK edition is current.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 4 Complete! 📐</h2>
+    <p>What you're building, and by when: requirements elicitation, the WBS and its 100% rule, validating and controlling scope, network diagrams, the critical path, PERT estimating, and schedule compression. Part 5 — Finance &amp; Resources — is where the money and the people get planned.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="7">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'pmbok8-part4';
+const TOTAL = 7;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
