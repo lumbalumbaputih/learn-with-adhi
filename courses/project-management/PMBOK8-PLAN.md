@@ -192,15 +192,13 @@ quote, per §1.4's sourcing rule.)
 6. Monitoring the Schedule: schedule variance (preview), fast-tracking vs. crashing
 7. References
 
-**Part 5 — Finance & Resources** (`pmbok8-part5-finance-resources-v1.html`)
-1. Cost Estimating & the Cost Baseline
-2. Budgeting & the S-Curve
-3. Earned Value Management (PV/EV/AC, CPI/SPI, CV/SV, EAC/ETC — the exam-heaviest module in the
-   series; needs the most worked-number examples)
-4. Resource Planning & Estimating
-5. Acquiring & Building the Team
-6. Leading the Team (motivation theory — Maslow/Herzberg/McGregor — conflict resolution, Tuckman's
-   stages) & Monitoring Resourcing
+**Part 5 — Finance & Resources** ✅ shipped 2026-08-04 (`pmbok8-part5-finance-resources-v1.html`, 7 modules)
+1. Cost Estimating: analogous/parametric/bottom-up, the time-phased cost baseline
+2. Budgeting & the S-Curve: cumulative-spend shape, contingency vs. management reserve
+3. Earned Value Management: PV/EV/AC, CV/SV, CPI/SPI, EAC/ETC — a full worked numeric example
+4. Resource Planning: leveling vs. smoothing, why over-allocation hides
+5. Acquiring & Building the Team: acquisition routes, Tuckman's five stages
+6. Leading the Team: Maslow/Herzberg/McGregor, 5 conflict-resolution styles, monitoring resourcing
 7. References
 
 **Part 6 — Stakeholders & Risk** (`pmbok8-part6-stakeholders-risk-v1.html`)
@@ -257,8 +255,8 @@ split — the 5–8 range in the Adult Course Standard is the hard constraint, n
 2. ✅ Part 2 (Six Principles) — shipped 2026-08-04.
 3. ✅ Part 3 (Governance) — shipped 2026-08-04.
 4. ✅ Part 4 (Scope & Schedule) — shipped 2026-08-04.
-5. ⏳ Part 5 (Finance & Resources) — next.
-6. ⏳ Part 6 (Stakeholders & Risk)
+5. ✅ Part 5 (Finance & Resources) — shipped 2026-08-04.
+6. ⏳ Part 6 (Stakeholders & Risk) — next.
 7. ⏳ Part 7 (Delivery Approaches & Exam Bridge)
 
 Each ships as its own SOP step: build → verify → update `CLAUDE.md` "What's Already Built" +
