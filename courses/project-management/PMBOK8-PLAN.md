@@ -201,14 +201,14 @@ quote, per §1.4's sourcing rule.)
 6. Leading the Team: Maslow/Herzberg/McGregor, 5 conflict-resolution styles, monitoring resourcing
 7. References
 
-**Part 6 — Stakeholders & Risk** (`pmbok8-part6-stakeholders-risk-v1.html`)
-1. Identifying & Analyzing Stakeholders (power/interest grid — can cross-reference Part 1's
-   library case for a fresh worked example distinct from the Builder's Guide's house example)
-2. Engagement & Communications Planning
-3. Managing & Monitoring Engagement and Communications
-4. Risk Planning & Identification
-5. Qualitative & Quantitative Risk Analysis (probability/impact matrix, EMV, decision trees)
-6. Risk Response Planning & Monitoring
+**Part 6 — Stakeholders & Risk** ✅ shipped 2026-08-04 (`pmbok8-part6-stakeholders-risk-v1.html`, 7 modules)
+1. Identifying Stakeholders: systematic identification, the power/interest grid (Fairview case)
+2. Engagement & Comms Planning: current vs. desired engagement, the n(n-1)/2 channels formula
+3. Managing & Monitoring: sender/receiver/noise model, managing vs. monitoring engagement
+4. Risk Planning & Identification: elicitation techniques, the Risk Breakdown Structure
+5. Risk Analysis & EMV: 5x5 probability/impact matrix, a worked EMV decision-tree example
+6. Risk Response: threat strategies (Avoid/Mitigate/Transfer/Accept) mirrored by opportunity
+   strategies (Exploit/Enhance/Share/Accept), monitoring risk
 7. References
 
 **Part 7 — Delivery Approaches & the Exam Bridge** (`pmbok8-part7-capstone-v1.html`)
@@ -256,8 +256,8 @@ split — the 5–8 range in the Adult Course Standard is the hard constraint, n
 3. ✅ Part 3 (Governance) — shipped 2026-08-04.
 4. ✅ Part 4 (Scope & Schedule) — shipped 2026-08-04.
 5. ✅ Part 5 (Finance & Resources) — shipped 2026-08-04.
-6. ⏳ Part 6 (Stakeholders & Risk) — next.
-7. ⏳ Part 7 (Delivery Approaches & Exam Bridge)
+6. ✅ Part 6 (Stakeholders & Risk) — shipped 2026-08-04.
+7. ⏳ Part 7 (Delivery Approaches & Exam Bridge) — next, final part.
 
 Each ships as its own SOP step: build → verify → update `CLAUDE.md` "What's Already Built" +
 `PROGRESS.md` → commit → push. This doc is the source of truth for what's left — a future
