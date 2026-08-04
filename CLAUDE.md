@@ -491,6 +491,8 @@ biggest build, so it goes after the format patterns are proven.*
 
 Every adult course on this site follows the **sidebar layout** introduced in `design-principles-course-v1.html` and confirmed in `aasb-s2-climate-disclosures-v1.html`. This is the canonical pattern — the older `ai-capability-course.html` (single-scroll, DM Serif fonts) is legacy and should not be replicated.
 
+**Multi-part series precedent:** for a course too big for one file, follow `courses/math-thinking/` (Proof Expedition: `EXPEDITION-PLAN.md` + hub + one file per part) — this pattern was reused for `courses/project-management/` (PMBOK 8, Field-Tested: `PMBOK8-PLAN.md` + `pmbok8-hub.html` + `pmbok8-partN-*.html`, started 2026-08-04, hub + Part 1 shipped). A series' own `<SLUG>-PLAN.md` is the source of truth for its build status and remaining parts — check it before continuing a series rather than re-deriving the plan. Only the hub gets a manifest entry in `assets/courses.json`; individual parts are reached through the hub only.
+
 ### File & wiring
 - **One self-contained HTML file**, vanilla HTML/CSS/JS, no build tools, no frameworks.
 - File path: `courses/<category>/<slug>-v1.html` (e.g. `courses/design/design-principles-course-v1.html`).

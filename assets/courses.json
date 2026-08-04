@@ -376,6 +376,22 @@
     "duration": "~4 days"
   },
   {
+    "id": "pmbok8-guide",
+    "n": "18",
+    "title": "PMBOK 8, Field-Tested",
+    "blurb": "The full current standard, deep and practitioner-first: the 6 principles, 7 performance domains, and 40 processes of the 8th edition PMBOK Guide — with the formulas and scenario practice that also happen to be exam-current for the PMP/CAPM. A 7-part series threaded through one running case study.",
+    "category": "Practice",
+    "tags": [
+      "Intermediate",
+      "Career",
+      "PMP"
+    ],
+    "primitive": "slab",
+    "accent": "indigo",
+    "path": "courses/project-management/pmbok8-hub.html",
+    "duration": "Series"
+  },
+  {
     "id": "aasb-s2-climate",
     "n": "15",
     "title": "AASB S2 Decoded: Climate-related Disclosures",

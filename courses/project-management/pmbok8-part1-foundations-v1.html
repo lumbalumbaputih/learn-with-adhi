@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="pmbok8-part1">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundations & the Value Delivery System · PMBOK 8, Field-Tested · Learn with Adhi</title>
+<meta name="description" content="Part 1 of PMBOK 8, Field-Tested: what a project actually is, the value delivery system, project life cycles, organizational structures, what changed from PMBOK 7, and the architecture of the 8th-edition standard.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-management/pmbok8-part1-foundations-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Foundations & the Value Delivery System · PMBOK 8, Field-Tested">
+<meta property="og:description" content="What a project actually is, the value delivery system, life cycles, org structures, and the architecture of PMBOK 8.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"PMBOK 8, Field-Tested — Part 1: Foundations & the Value Delivery System","description":"What a project actually is, the value delivery system, life cycles, org structures, and the architecture of PMBOK 8.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#1C5DDC; --acc-dim:#154BB3; --acc-bg:rgba(28,93,220,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#5b8cff);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="pmbok8-hub.html">← Series map · Part 1 of 7</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 7 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">What Is a Project, Really?</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">The Value Delivery System</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Life Cycles &amp; Tailoring</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Roles &amp; Org Structures</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">PMBOK 7 → PMBOK 8</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">The Architecture of PMBOK 8</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7">
+      <span class="nav-num">07</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">PMBOK 8 · Part 1</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – WHAT IS A PROJECT, REALLY?
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 07</div>
+  <h1 class="mod-title">What Is a <span class="acc">Project</span>, Really?</h1>
+  <p class="mod-lede">PMBOK 8 opens with a system, not a checklist: portfolios, programs, projects, and operations, all pointed at one goal — value. Before any of the standard's 7 performance domains make sense, you need the vocabulary that separates a project from everything else an organization does.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The exact boundary between a project and operations — and why blurring it breaks both</li>
+      <li>How a program differs from "a really big project"</li>
+      <li>Why a portfolio is a decision about which projects even get to exist</li>
+      <li>The running case this whole series is built around</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Projects vs. Operations</h2>
+  <p>A <strong>project</strong> is a temporary endeavor undertaken to create a unique product, service, or result. It has a start, an end, and a purpose that — once achieved, proven impossible, or made unnecessary — closes the project out. <strong>Operations</strong> are the ongoing, repetitive work that sustains value once a project has delivered it: running the factory line, staffing the help desk, keeping the lights on.</p>
+  <p>The two need opposite management instincts. Operations are managed for repeatability — you want Tuesday to look like Monday, because consistency is the point. Projects are managed for a one-time, uncertain target — you plan, learn, and adapt as you go, because by definition nobody has built <em>this exact thing</em> before. Apply operations thinking to a project (freeze the plan, resist change) and you build the wrong thing efficiently. Apply project thinking to operations (reinvent the process every week) and you never stabilize.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Temporary vs. continuous — the structural difference</div>
+    <svg class="demo-svg" viewBox="0 0 640 200" role="img" aria-label="Diagram contrasting a project as a line with a start flag and end flag against operations as a continuous repeating cycle with no end">
+      <text x="20" y="34" font-family="var(--fd)" font-size="13" font-weight="700" fill="var(--ink)">Project</text>
+      <line x1="120" y1="40" x2="560" y2="40" stroke="var(--acc)" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="120" cy="40" r="7" fill="var(--acc)"/>
+      <circle cx="560" cy="40" r="7" fill="var(--acc)"/>
+      <text x="120" y="64" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--muted)">START</text>
+      <text x="560" y="64" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--muted)">END</text>
+      <text x="340" y="26" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--acc-dim)" font-weight="600">unique result, defined finish</text>
+
+      <text x="20" y="134" font-family="var(--fd)" font-size="13" font-weight="700" fill="var(--ink)">Operations</text>
+      <path d="M 120 140 L 200 140 L 200 118 L 260 118 L 260 140 L 320 140 L 320 118 L 380 118 L 380 140 L 440 140 L 440 118 L 500 118 L 500 140 L 560 140" fill="none" stroke="var(--mango)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="580" y="140" font-family="var(--fd)" font-size="16" fill="var(--mango)">→</text>
+      <text x="340" y="176" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="#B45F04" font-weight="600">repeats indefinitely, no defined finish</text>
+    </svg>
+    <div class="demo-caption">A project is a line with two ends. Operations are a cycle with none — the arrow means "keeps going."</div>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">⏳</div>
+      <h4>Temporary</h4>
+      <p>Has a start and an end. The end can be "goal achieved," "goal impossible," or "goal no longer needed" — all three legitimately close a project.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🎯</div>
+      <h4>Unique</h4>
+      <p>Even a project that looks routine (the 50th store opening) has unique conditions — different site, different team, different constraints.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🧩</div>
+      <h4>Progressively Elaborated</h4>
+      <p>You don't know every detail at the start. Scope, requirements, and plans get more specific as the project proceeds and more is learned.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🔁</div>
+      <h4>Operations, By Contrast</h4>
+      <p>Ongoing, repetitive, and optimized for stability. Success looks like sameness, not novelty.</p>
+    </div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>The tell:</strong> if a piece of work has no realistic end date — if it "just continues" no matter how it's staffed or funded — it's operations, not a project, no matter how big the team or how exciting the launch felt on day one. Calling ongoing work a "project" is how organizations end up with permanent teams that never get proper operational funding or governance.
+  </div>
+
+  <h2 class="sh">Programs: Coordinated for a Reason Projects Alone Can't Deliver</h2>
+  <p>A <strong>program</strong> is a group of related projects, subsidiary programs, and program-level activities, managed in a coordinated way to obtain benefits not available from managing them individually. The key word is <em>coordinated</em> — a program isn't just a folder that several projects happen to sit in. It exists because the projects interact: they share resources, their outputs combine into something bigger, or sequencing one wrong delays the rest.</p>
+  <p>Picture a city's public-transit modernization effort: a new ticketing system project, a fleet-electrification project, a route-redesign project, and a driver-retraining project. Each could, in theory, run alone. But run them as a coordinated program and you catch the interactions early — the new ticketing hardware has to fit the new buses, the route redesign changes which depots need chargers first, and retraining has to track both. That coordination is the entire reason programs exist.</p>
+
+  <h2 class="sh">Portfolios: Choosing Which Programs and Projects Even Happen</h2>
+  <p>A <strong>portfolio</strong> is a collection of projects, programs, subsidiary portfolios, and operations managed as a group to achieve strategic objectives. Where program management asks "how do we coordinate these related efforts," portfolio management asks a more fundamental question: <strong>which efforts should we be funding at all?</strong></p>
+  <p>This is the difference between doing projects right (project and program management) and doing the right projects (portfolio management). A portfolio manager looks across every candidate initiative in an organization and prioritizes, funds, pauses, or kills them based on strategic fit, risk tolerance, and capacity — regardless of whether any individual project is well-run. A brilliantly executed project that shouldn't have been funded in the first place is still a portfolio failure.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The nesting, from strategy down to a single task</div>
+    <svg class="demo-svg" viewBox="0 0 640 210" role="img" aria-label="Nested rectangles showing Portfolio containing Programs, containing Projects, containing Operations, from largest strategic scope to smallest daily scope">
+      <rect x="20" y="20" width="600" height="170" rx="14" fill="none" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="36" y="42" font-family="var(--fm)" font-size="10" letter-spacing="0.08em" fill="var(--acc-dim)">PORTFOLIO — strategic objectives</text>
+
+      <rect x="48" y="56" width="280" height="118" rx="12" fill="none" stroke="var(--sea)" stroke-width="2"/>
+      <text x="62" y="76" font-family="var(--fm)" font-size="9.5" letter-spacing="0.06em" fill="var(--sea)">PROGRAM — coordinated benefits</text>
+
+      <rect x="66" y="90" width="120" height="72" rx="10" fill="none" stroke="var(--forest)" stroke-width="2"/>
+      <text x="76" y="108" font-family="var(--fm)" font-size="9" fill="var(--forest)">PROJECT</text>
+      <text x="76" y="126" font-family="var(--fb)" font-size="9.5" fill="var(--muted)">unique,</text>
+      <text x="76" y="139" font-family="var(--fb)" font-size="9.5" fill="var(--muted)">temporary</text>
+
+      <rect x="196" y="90" width="120" height="72" rx="10" fill="none" stroke="var(--mango)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="206" y="108" font-family="var(--fm)" font-size="9" fill="var(--mango)">OPERATIONS</text>
+      <text x="206" y="126" font-family="var(--fb)" font-size="9.5" fill="var(--muted)">ongoing,</text>
+      <text x="206" y="139" font-family="var(--fb)" font-size="9.5" fill="var(--muted)">sustains value</text>
+
+      <text x="360" y="76" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">another program…</text>
+      <rect x="360" y="90" width="240" height="84" rx="12" fill="none" stroke="var(--line-s)" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="480" y="136" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--muted)">(more projects &amp;</text>
+      <text x="480" y="150" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--muted)">operations nest here)</text>
+    </svg>
+    <div class="demo-caption">A portfolio doesn't just hold projects — it holds programs and operations too, all judged against the same strategic bar.</div>
+  </div>
+
+  <h2 class="sh">Where Products Fit</h2>
+  <p>A project's <strong>deliverable</strong> is what the project hands over. The <strong>product</strong> is what that deliverable becomes in the world — and the product's life almost always outlives the project that created it. A construction project ends at handover; the building it produced then spends decades in operations. A software project ends at launch; the product it produced then spends years being maintained, extended, and eventually retired.</p>
+  <p>This distinction matters for PMBOK 8 specifically because the standard is built around a <strong>value delivery system</strong> — it deliberately keeps the product's ongoing life in view, not just the moment of project closure. We'll build that system out in full in Module 2.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Meet the case — this series' running example</div>
+    <p style="margin-bottom:8px"><strong>Fairview Public Library → Community Tech Hub.</strong> A mid-sized city library, underused and running a 1990s-era catalog system, is being relaunched: renovated space, a maker-lab and coding-club wing, digital-literacy classes for seniors, and a new membership platform. It's funded by a mix of city budget and a philanthropic grant with a hard 14-month deadline.</p>
+    <p style="margin-bottom:0">It's a genuinely mixed project — construction, IT, staffing, and community-program design all at once — which is exactly why it works as a thread through all 7 domains in this series. Parts 3–7 will keep returning to it.</p>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A hospital's IT department maintains the electronic health records system every day — patching, monitoring, responding to tickets — with no planned end date. Is this a project?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="It has staff, a budget, and clear work — but none of that makes it temporary. No planned end date is the disqualifying feature.">Yes — it has a dedicated team, a budget, and clearly defined work</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! No matter how much it looks like 'project work' day to day, ongoing maintenance with no defined end is operations. If the hospital later runs a project to replace the whole EHR system, that replacement effort — with a start and an end — would be the project.">No — it's operations. It's ongoing and repetitive, with no defined end</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">An organization is running three related projects — a new CRM rollout, a sales-process redesign, and a customer-data-migration effort — because the CRM only delivers its promised value if all three land together and stay in sync. What's the best description of this grouping?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="A portfolio is about choosing which initiatives to fund based on strategy — it doesn't imply the coordinated, interdependent management described here.">A portfolio — a collection judged against strategic objectives</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! These projects are coordinated because they interact and jointly produce a benefit (a working, adopted CRM) that none of them could deliver alone. That coordination-for-shared-benefit is exactly what defines a program.">A program — coordinated because the benefit only exists if they're managed together</button>
+        <button class="q-option" data-correct="false" data-explanation="Operations is ongoing, repetitive, sustaining work — these are three temporary, related efforts with defined outcomes, which is program territory, not operations.">Operations — ongoing coordinated work</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A well-run project delivers exactly what was asked, on time and on budget — but two years later, the organization realizes it should never have funded that project over three competing alternatives. Whose failure is this, in PMBOK terms?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Project management answers 'are we doing this project right' — and by the scenario's own description, this one was. That's not where the failure occurred.">Project management — the project manager should have delivered differently</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Portfolio management answers 'are we doing the right projects.' A perfectly executed project that shouldn't have been prioritized over stronger alternatives is a portfolio-level failure, not a project-level one — the selection and prioritization process broke down, not the execution.">Portfolio management — the prioritization decision was wrong, regardless of execution quality</button>
+        <button class="q-option" data-correct="false" data-explanation="Program management is about coordinating related projects for shared benefit — this scenario is about a single project's funding priority, which is a portfolio question.">Program management — the projects weren't coordinated properly</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – THE VALUE DELIVERY SYSTEM
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 07</div>
+  <h1 class="mod-title">The Value <span class="acc">Delivery</span> System</h1>
+  <p class="mod-lede">PMBOK 8 doesn't treat a project as an island. It sits inside a system — portfolios, programs, projects, and operations, wrapped in organizational governance, sitting inside an environment — whose entire purpose is producing value, not just outputs.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How portfolios, programs, projects, and operations connect into one system</li>
+      <li>What organizational governance actually does inside that system</li>
+      <li>The difference between an output, an outcome, a benefit, and value — and why conflating them causes "successful" projects that helped nobody</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The System, End to End</h2>
+  <p>Strategy sets direction. A portfolio translates strategy into a funded set of programs, projects, and operations. Programs coordinate related projects for shared benefit. Projects create deliverables. Deliverables become products, services, or results that transition into operations, which sustain the value and generate the information that feeds the next round of strategy. It's a loop, not a line — and PMBOK 8 draws it that way deliberately.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The value delivery system, in one loop</div>
+    <svg class="demo-svg" viewBox="0 0 680 320" role="img" aria-label="Flow diagram: Strategy feeds Portfolio, which feeds Programs and Projects, which produce Deliverables that become Products in Operations, which feed information back into Strategy. Organizational Governance oversees the whole loop, and Environment surrounds it.">
+      <rect x="10" y="10" width="660" height="300" rx="18" fill="none" stroke="var(--line-s)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="26" y="30" font-family="var(--fm)" font-size="9.5" letter-spacing="0.1em" fill="var(--muted)">INTERNAL &amp; EXTERNAL ENVIRONMENT</text>
+
+      <rect x="40" y="120" width="110" height="56" rx="10" fill="var(--acc)" opacity="0.12" stroke="var(--acc)" stroke-width="2"/>
+      <text x="95" y="144" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--acc-dim)">Strategy</text>
+      <text x="95" y="160" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">why we act</text>
+
+      <rect x="195" y="120" width="110" height="56" rx="10" fill="var(--sea)" opacity="0.12" stroke="var(--sea)" stroke-width="2"/>
+      <text x="250" y="144" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--sea)">Portfolio</text>
+      <text x="250" y="160" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">what gets funded</text>
+
+      <rect x="350" y="70" width="120" height="52" rx="10" fill="var(--forest)" opacity="0.12" stroke="var(--forest)" stroke-width="2"/>
+      <text x="410" y="92" text-anchor="middle" font-family="var(--fd)" font-size="11.5" font-weight="700" fill="var(--forest)">Programs</text>
+      <text x="410" y="108" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="var(--muted)">coordinated benefit</text>
+
+      <rect x="350" y="175" width="120" height="52" rx="10" fill="var(--forest)" opacity="0.12" stroke="var(--forest)" stroke-width="2"/>
+      <text x="410" y="197" text-anchor="middle" font-family="var(--fd)" font-size="11.5" font-weight="700" fill="var(--forest)">Projects</text>
+      <text x="410" y="213" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="var(--muted)">deliverables</text>
+
+      <rect x="520" y="120" width="120" height="56" rx="10" fill="var(--mango)" opacity="0.14" stroke="var(--mango)" stroke-width="2"/>
+      <text x="580" y="144" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="700" fill="#B45F04">Operations</text>
+      <text x="580" y="160" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">sustains value</text>
+
+      <path d="M150 148 L195 148" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrow1)"/>
+      <path d="M305 138 L350 106" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrow1)"/>
+      <path d="M305 158 L350 201" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrow1)"/>
+      <path d="M470 96 L520 138" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrow1)"/>
+      <path d="M470 201 L520 158" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrow1)"/>
+      <path d="M580 176 C 580 250, 95 250, 95 176" fill="none" stroke="var(--acc-dim)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow2)"/>
+      <text x="337" y="268" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--acc-dim)" font-style="italic">information flows back, shaping the next round of strategy</text>
+
+      <rect x="230" y="20" width="220" height="30" rx="8" fill="var(--ink)"/>
+      <text x="340" y="40" text-anchor="middle" font-family="var(--fm)" font-size="9.5" letter-spacing="0.06em" fill="var(--paper)">ORGANIZATIONAL GOVERNANCE — oversees it all</text>
+
+      <defs>
+        <marker id="arrow1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker>
+        <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--acc-dim)"/></marker>
+      </defs>
+    </svg>
+    <div class="demo-caption">Programs and Projects both sit between Portfolio and Operations — a portfolio can fund a project directly, or route it through a program when coordination is needed.</div>
+  </div>
+
+  <h2 class="sh">Organizational Governance</h2>
+  <p><strong>Organizational governance</strong> is the framework of authority, decision rights, and oversight that keeps every level of the system — portfolio, program, project, operations — aligned to the same strategic intent. It's what decides who can approve a charter, who can kill a struggling project, who resolves a conflict between two competing programs for the same budget, and what "done" is allowed to mean.</p>
+  <p>In practice this shows up as steering committees, investment review boards, a PMO's gatekeeping authority, and stage-gate approval processes. Without governance, a portfolio's strategic choices and a project team's daily decisions can quietly drift apart — the team optimizes for what feels locally sensible, while nobody is checking that it still serves the strategy that justified funding it in the first place.</p>
+
+  <h2 class="sh">From Outputs to Outcomes</h2>
+  <p>PMBOK 8 draws a sharp line between four things that are easy to blur:</p>
+  <ul class="bl">
+    <li><strong>Output</strong> — the tangible thing the project produces (the renovated library building, the new membership platform).</li>
+    <li><strong>Outcome</strong> — the change in the world the output causes (more residents have hands-on tech access; senior citizens report higher digital confidence).</li>
+    <li><strong>Benefit</strong> — the measurable gain the outcome creates for stakeholders (fewer digital-exclusion complaints to the city council; a measurable jump in library membership among under-25s).</li>
+    <li><strong>Value</strong> — the net worth of all that, weighed against what it cost. Value is what ultimately justifies having funded the project at all.</li>
+  </ul>
+  <div class="callout">
+    <strong>Why this matters:</strong> a project can hit every output on schedule and on budget — the building's done, the platform launched — and still be a value failure if nobody uses the maker-lab and membership doesn't move. Confirming the output shipped is easy. Confirming it produced value is the harder, more important question, and it's the one PMBOK 8's "Focus on Value" principle (Part 2 of this series) is built entirely around.
+  </div>
+
+  <div class="callout blue">
+    <strong>Fairview case, mapped:</strong> Output = the renovated building and new platform. Outcome = residents actually using the maker-lab and digital-literacy classes. Benefit = a measurable rise in library card sign-ups and a drop in the city's digital-divide survey score. Value = whether all of that was worth the $2.4M grant and the 14 months of disruption — the question the philanthropic funder will ask at renewal time.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A city council keeps approving individual road projects without ever checking whether they still match the city's 10-year transport strategy. Which part of the value delivery system is broken?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is exactly what organizational governance exists to catch — keeping every level's decisions aligned to strategic intent. Without it, individually reasonable approvals can drift away from the strategy that was supposed to justify them.">Organizational governance — nothing is checking alignment between decisions and strategy</button>
+        <button class="q-option" data-correct="false" data-explanation="This describes a governance gap, not a portfolio-selection gap — the projects may well have been sensibly selected once; the problem is nothing is re-checking alignment over time.">Portfolio management — the projects were poorly selected</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't described as a coordination failure between related projects — it's a strategic-alignment failure, which is governance's job to catch.">Program management — the projects aren't being coordinated</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team proudly reports: "We shipped the new employee onboarding portal on time and under budget." Which of the four value-delivery terms does this sentence actually describe?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This describes the output — the tangible thing produced. It says nothing yet about whether new hires actually use it, ramp up faster, or whether the organization got any real benefit or value from it.">Output — it says nothing about outcome, benefit, or value</button>
+        <button class="q-option" data-correct="false" data-explanation="An outcome would be a described change in the world — e.g. 'new hires now reach full productivity two weeks faster.' The sentence doesn't claim that.">Outcome — the change the portal caused in new-hire behavior</button>
+        <button class="q-option" data-correct="false" data-explanation="Value is the net worth of the whole effort weighed against its cost — that requires evidence of use and benefit, which this sentence doesn't provide.">Value — the net worth of the investment</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Two programs are competing for the same limited specialist engineering staff next quarter. Who resolves that, and using what?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Individual project managers typically don't have the authority or the cross-program visibility to arbitrate a resourcing conflict between two different programs — that's above their scope.">Whichever project manager asks for the staff first, on a first-come basis</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is a cross-program resourcing conflict tied to strategic priority — exactly the kind of decision organizational governance (a steering committee, PMO, or portfolio review board) exists to arbitrate, using the strategic objectives set at the portfolio level.">Organizational governance, using the portfolio's strategic priorities as the tiebreaker</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – LIFE CYCLES & TAILORING
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 07</div>
+  <h1 class="mod-title">Life Cycles &amp; <span class="acc">Tailoring</span></h1>
+  <p class="mod-lede">Not every project should be run the same way. PMBOK 8 recognizes three broad life-cycle shapes — predictive, adaptive, and hybrid — and its central instruction is to tailor: pick the shape (and the depth of process) that fits the actual project in front of you, not the one you're most comfortable with.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What a predictive (waterfall-style) life cycle actually assumes about a project</li>
+      <li>What an adaptive (agile-style) life cycle actually assumes instead</li>
+      <li>Why most real projects end up hybrid, and what that looks like</li>
+      <li>What "tailoring" means as PMBOK 8's central operating instruction</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Predictive Life Cycles</h2>
+  <p>A <strong>predictive</strong> life cycle plans the project mostly up front: scope, cost, and schedule are defined early and change flows through a formal change-control process. It fits work where requirements are well understood, the physical or regulatory constraints are firm, and the cost of changing course late is high — construction, infrastructure, regulated manufacturing.</p>
+
+  <h2 class="sh">Adaptive Life Cycles</h2>
+  <p>An <strong>adaptive</strong> life cycle (the umbrella term that includes Agile, Scrum, and Kanban-style approaches) plans in short, repeating cycles, delivering working increments and revising direction based on what was learned. It fits work where requirements are genuinely unclear at the start, customer feedback needs to shape the product, and the cost of being early-but-wrong is higher than the cost of iterating.</p>
+
+  <h2 class="sh">Hybrid Life Cycles</h2>
+  <p>Most real projects are <strong>hybrid</strong>: a predictive backbone (fixed milestones, a regulatory approval gate, a hard funding deadline) with adaptive pockets inside it (an iterative build-and-feedback loop for the parts genuinely uncertain). PMBOK 8 treats this as completely normal — it doesn't ask you to pick one pure model and force-fit the whole project into it.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Three life-cycle shapes, same total duration</div>
+    <svg class="demo-svg" viewBox="0 0 640 240" role="img" aria-label="Three horizontal timelines: a predictive life cycle shown as a single long linear bar with sequential phases, an adaptive life cycle shown as repeating short loops, and a hybrid life cycle shown as a linear planning phase followed by repeating loops">
+      <text x="20" y="24" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--forest)">Predictive</text>
+      <rect x="20" y="32" width="150" height="26" fill="var(--forest)" opacity="0.75"/>
+      <rect x="170" y="32" width="150" height="26" fill="var(--forest)" opacity="0.55"/>
+      <rect x="320" y="32" width="150" height="26" fill="var(--forest)" opacity="0.35"/>
+      <rect x="470" y="32" width="150" height="26" fill="var(--forest)" opacity="0.2"/>
+      <text x="345" y="50" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff">one pass: plan → build → verify → close</text>
+
+      <text x="20" y="94" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--sea)">Adaptive</text>
+      <g>
+        <rect x="20" y="102" width="72" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="98" y="102" width="72" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="176" y="102" width="72" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="254" y="102" width="72" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="332" y="102" width="72" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="410" y="102" width="72" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="488" y="102" width="72" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="566" y="102" width="54" height="26" fill="var(--sea)" opacity="0.6"/>
+      </g>
+      <text x="320" y="145" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--sea)">repeating short iterations, each shippable</text>
+
+      <text x="20" y="180" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--acc)">Hybrid</text>
+      <rect x="20" y="188" width="170" height="26" fill="var(--acc)" opacity="0.7"/>
+      <text x="105" y="205" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="#fff">fixed planning phase</text>
+      <g>
+        <rect x="196" y="188" width="60" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="260" y="188" width="60" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="324" y="188" width="60" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="388" y="188" width="60" height="26" fill="var(--sea)" opacity="0.6"/>
+        <rect x="452" y="188" width="60" height="26" fill="var(--sea)" opacity="0.6"/>
+      </g>
+      <rect x="516" y="188" width="104" height="26" fill="var(--acc)" opacity="0.4"/>
+      <text x="568" y="205" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="var(--acc-dim)">fixed close-out</text>
+    </svg>
+    <div class="demo-caption">Same total timeline, three different internal shapes. Hybrid mixes a predictive frame with an adaptive core — the most common real-world pattern.</div>
+  </div>
+
+  <table class="pm-table">
+    <thead><tr><th>Factor</th><th>Favors Predictive</th><th>Favors Adaptive</th></tr></thead>
+    <tbody>
+      <tr><td>Requirements clarity</td><td>Well understood up front</td><td>Genuinely unclear, will emerge</td></tr>
+      <tr><td>Cost of late change</td><td>High (concrete is poured)</td><td>Low (code can be revised)</td></tr>
+      <tr><td>Customer involvement</td><td>Periodic sign-off gates</td><td>Continuous, iteration by iteration</td></tr>
+      <tr><td>Regulatory/contractual constraint</td><td>Fixed scope, fixed price common</td><td>Less common, but not impossible</td></tr>
+      <tr><td>Delivery cadence</td><td>One release at the end</td><td>Frequent incremental releases</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sh">Tailoring: The Standard's Central Instruction</h2>
+  <p>PMBOK 8's 40 processes are explicitly <strong>non-prescriptive</strong> — they describe common practice, not a mandatory checklist. The standard's actual instruction, repeated throughout, is to <strong>tailor</strong>: choose the life cycle, and the depth and formality of each process, to fit the project's size, risk, regulatory environment, and team. A two-week internal tool doesn't need the same change-control rigor as a hospital's electronic health-records migration, even though both are, technically, projects.</p>
+  <p>This also determines how the standard's <strong>5 Focus Areas</strong> (Initiating, Planning, Executing, Monitoring & Controlling, Closing — the renamed process groups you'll meet fully in Module 6) actually play out. In a predictive project, they largely happen once, in sequence. In an adaptive project, all five recur inside every iteration — you're initiating, planning, executing, monitoring, and closing out a small slice of the product every one to four weeks.</p>
+
+  <div class="callout mango">
+    <strong>It depends, on purpose:</strong> there's no scoring rubric that spits out "your project is 73% adaptive." Tailoring is a judgment call, made explicitly and revisited as the project proceeds — not a one-time checkbox. A project that starts predictive because requirements seemed fixed can (and should) shift toward adaptive mid-flight if that assumption turns out to be wrong.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">A team is building a mobile app feature where the product owner genuinely isn't sure what users will want until they can try early versions. Which life cycle fits best?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Predictive life cycles assume requirements are well understood up front — the opposite of this scenario, where the team explicitly doesn't know what users want yet.">Predictive — lock the requirements early and build to spec</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Genuinely unclear requirements plus a low cost of revising code (compared to concrete or steel) is the textbook case for an adaptive life cycle — short iterations, real user feedback, evolving direction.">Adaptive — short iterations with real user feedback shaping direction</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A bridge-replacement project has a fixed environmental-approval gate, a firm contracted budget, and needs an adaptive process only for the design of one experimental pedestrian-lighting feature. What's this project's overall shape?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A firm predictive frame (approvals, budget, fixed schedule) with one genuinely uncertain adaptive pocket inside it (the lighting feature) is exactly the hybrid pattern — the most common shape for real infrastructure projects with an innovative component.">Hybrid — a predictive frame with one adaptive pocket for the uncertain part</button>
+        <button class="q-option" data-correct="false" data-explanation="Pure adaptive would mean the whole project — including the fixed approval gate and contracted budget — is run in iterative, evolving cycles, which contradicts the fixed elements described.">Pure adaptive — the whole project should iterate since one part is uncertain</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A junior PM insists every project must follow all 40 PMBOK 8 processes at full formality, because "that's what the standard says." What's wrong with this reasoning?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The 40 processes are explicitly non-prescriptive — the standard's actual instruction is to tailor them to the project's size, risk, and context, not to apply all of them at maximum formality regardless of fit.">The processes are non-prescriptive — tailoring depth and formality to the project is the standard's actual instruction</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't primarily a resourcing problem — it's a misunderstanding of what the standard is actually asking for (tailored judgment, not uniform mandatory compliance).">Nothing is wrong — full compliance just requires more staff and time</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – ROLES & ORG STRUCTURES
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 07</div>
+  <h1 class="mod-title">Roles &amp; <span class="acc">Organizational Structures</span></h1>
+  <p class="mod-lede">The exact same person, doing the exact same job, has wildly different authority depending on the org chart they sit inside. Understanding that spectrum is often more useful, day to day, than knowing any individual process.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The core project roles PMBOK 8 assumes, and what each is actually accountable for</li>
+      <li>The three PMO types, and what each is empowered to do</li>
+      <li>The functional-to-projectized spectrum, and how it predicts a PM's real authority</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Core Roles</h2>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🧭</div>
+      <h4>Project Manager</h4>
+      <p>Accountable for leading the project team to meet objectives — plans, coordinates, removes obstacles, and is the point of escalation when things go sideways.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">💼</div>
+      <h4>Sponsor</h4>
+      <p>Provides resources and authority, owns the business case, and is the project's champion at the governance level. Signs off on the charter and major changes.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🏢</div>
+      <h4>PMO</h4>
+      <p>The Project Management Office — a structure that standardizes practice, provides governance, and (depending on type) can range from purely advisory to directly running projects.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">👥</div>
+      <h4>Project Team</h4>
+      <p>The people doing the work. In adaptive settings, often includes a Product Owner (owns the backlog and priorities) distinct from the PM/Scrum Master (owns the process).</p>
+    </div>
+  </div>
+
+  <h2 class="sh">The Three PMO Types</h2>
+  <table class="pm-table">
+    <thead><tr><th>Type</th><th>Degree of control</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Supportive</td><td>Low</td><td>Templates, best practices, training, a library of lessons learned. Advisory only.</td></tr>
+      <tr><td class="hl">Controlling</td><td>Moderate</td><td>Requires compliance — specific frameworks or methodologies must be adopted, and it checks.</td></tr>
+      <tr><td class="hl">Directive</td><td>High</td><td>Directly manages projects — the PMs report into the PMO, not into a business unit.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sh">Organizational Structures &amp; PM Authority</h2>
+  <p>An organization's structure — how it groups people and reports up — largely predicts how much real authority a project manager holds, independent of that PM's individual skill.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The functional-to-projectized spectrum</div>
+    <svg class="demo-svg" viewBox="0 0 640 150" role="img" aria-label="Horizontal gradient bar showing project manager authority increasing from low in functional organizations, through weak matrix, balanced matrix, strong matrix, to high in projectized organizations">
+      <defs>
+        <linearGradient id="authgrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--mango)"/>
+          <stop offset="50%" stop-color="var(--sea)"/>
+          <stop offset="100%" stop-color="var(--acc)"/>
+        </linearGradient>
+      </defs>
+      <rect x="20" y="40" width="600" height="34" rx="17" fill="url(#authgrad)"/>
+      <line x1="140" y1="30" x2="140" y2="84" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <line x1="260" y1="30" x2="260" y2="84" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <line x1="380" y1="30" x2="380" y2="84" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <line x1="500" y1="30" x2="500" y2="84" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+      <text x="80" y="104" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="600" fill="var(--ink)">Functional</text>
+      <text x="200" y="104" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="600" fill="var(--ink)">Weak Matrix</text>
+      <text x="320" y="104" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="600" fill="var(--ink)">Balanced Matrix</text>
+      <text x="440" y="104" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="600" fill="var(--ink)">Strong Matrix</text>
+      <text x="560" y="104" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="600" fill="var(--ink)">Projectized</text>
+
+      <text x="20" y="126" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">LOW PM AUTHORITY</text>
+      <text x="620" y="126" text-anchor="end" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">HIGH PM AUTHORITY</text>
+    </svg>
+    <div class="demo-caption">Same job title, five very different amounts of real authority — functional managers hold the power on the left; the PM holds it on the right.</div>
+  </div>
+
+  <table class="pm-table">
+    <thead><tr><th></th><th>Functional</th><th>Weak Matrix</th><th>Balanced Matrix</th><th>Strong Matrix</th><th>Projectized</th></tr></thead>
+    <tbody>
+      <tr><td>PM's title</td><td>Coordinator</td><td>Coordinator</td><td>Project Manager</td><td>Project Manager</td><td>Project Manager</td></tr>
+      <tr><td>PM authority</td><td>Little/none</td><td>Limited</td><td>Low to moderate</td><td>Moderate to high</td><td>High to total</td></tr>
+      <tr><td>Who controls budget</td><td>Functional manager</td><td>Functional manager</td><td>Mixed</td><td>Project manager</td><td>Project manager</td></tr>
+      <tr><td>PM availability</td><td>Part-time</td><td>Part-time</td><td>Full-time</td><td>Full-time</td><td>Full-time</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tomato">
+    <strong>The classic trap:</strong> accepting a "Project Manager" job title without asking which structure you're walking into. The exact same title in a functional organization might come with almost no real authority to assign work or approve spend — while the sponsor and functional managers quietly retain the actual power. Ask about the structure before you accept the accountability.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A company's PMO requires every project over $50,000 to use its standard risk-register template and pass a monthly compliance check, but doesn't run the projects itself. Which PMO type is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Supportive PMOs are advisory only — templates and best practices offered, not required with compliance checks.">Supportive</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Requiring compliance with specific frameworks and actively checking it — without directly running the projects — is the defining trait of a controlling PMO.">Controlling</button>
+        <button class="q-option" data-correct="false" data-explanation="A directive PMO would directly manage the projects, with PMs reporting into the PMO itself — not merely checking compliance from outside.">Directive</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A project manager reports that functional department heads still control which staff get assigned to the project and can pull them back to "real work" at any time. Which structure is this most consistent with?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! In a functional (or weak matrix) organization, functional managers retain control over staff assignment and can reclaim resources — the PM has to negotiate rather than direct.">Functional or weak matrix — functional managers retain resourcing control</button>
+        <button class="q-option" data-correct="false" data-explanation="In a projectized organization, staff are typically dedicated to the project full-time and report to the PM, not to a functional manager who can pull them back.">Projectized — staff are dedicated to the PM full-time</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does organizational structure matter to a project manager independent of that PM's individual competence?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Structure sets the baseline authority, budget control, and staffing power a PM starts with — a highly skilled PM in a functional org still has to negotiate for resources that a mediocre PM in a projectized org gets by default.">It sets the baseline authority and resource control the PM has, regardless of skill</button>
+        <button class="q-option" data-correct="false" data-explanation="Structure isn't primarily about credentialing or certification requirements — it's about where formal authority and resource control actually sit in the organization.">It determines which professional certifications the PM needs to hold</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – PMBOK 7 → PMBOK 8
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 07</div>
+  <h1 class="mod-title">PMBOK 7 <span class="acc">→</span> PMBOK 8</h1>
+  <p class="mod-lede">If you learned PMBOK from an older edition — or if your organization's playbook still talks about "12 principles" or "8 performance domains" — this module is the bridge. Nothing you learned is wrong. The map was redrawn.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Exactly what changed between the 7th and 8th editions, in numbers</li>
+      <li>Why PMI consolidated 12 principles down to 6</li>
+      <li>Why processes came back after the 7th edition moved away from them</li>
+      <li>What stayed the same underneath the restructuring</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Short Version</h2>
+  <p>PMI released the 8th edition of <em>A Guide to the Project Management Body of Knowledge (PMBOK Guide) and The Standard for Project Management</em> in late 2025/early 2026, with the PMP exam formally aligning to it on <strong>July 9, 2026</strong>. Three numbers summarize the restructuring:</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">12 → 6</div>
+      <div class="stat-lbl">Principles consolidated into fewer, more memorable behaviors</div>
+      <div class="stat-sub">PMBOK 7 → PMBOK 8</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">8 → 7</div>
+      <div class="stat-lbl">Performance domains, now closer to traditional knowledge areas</div>
+      <div class="stat-sub">PMBOK 7 → PMBOK 8</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">49 → 40</div>
+      <div class="stat-lbl">Processes reintroduced — non-prescriptive, not a rigid checklist</div>
+      <div class="stat-sub">PMBOK 6 ITTO model → PMBOK 8</div>
+    </div>
+  </div>
+
+  <h2 class="sh">Why Consolidate the Principles?</h2>
+  <p>The 7th edition (2021) was a genuine departure — it moved away from PMBOK 6's process-heavy model toward 12 principles and 8 outcome-based performance domains, trusting practitioners to apply judgment rather than follow a script. Practitioner feedback (PMI ran a large global survey, reportedly tens of thousands of respondents) found the 12 principles overlapped in practice and were hard to hold in working memory. PMBOK 8 merges them into 6, organized around 3 mindset dimensions: <strong>Proactive</strong> (Holistic View, Embed Quality), <strong>Ownership</strong> (Accountable Leader, Empowered Culture), and <strong>Value-Driven</strong> (Focus on Value, Sustainability). Part 2 of this series covers all 6 in depth.</p>
+
+  <h2 class="sh">Why Bring Processes Back?</h2>
+  <p>The 7th edition's near-total removal of prescriptive process guidance was popular with experienced practitioners who found PMBOK 6's 49-process ITTO (Inputs-Tools-Techniques-Outputs) model rigid, but it left newer practitioners and trainers without a practical "how do I actually do this" scaffold. PMBOK 8's 40 processes are a middle path: structured enough to teach and apply directly, explicitly labeled non-prescriptive so they don't regress into a mandatory checklist. This is also why this series can be practitioner-first <em>and</em> exam-aware without contradiction — the processes give concrete technique (network diagrams, EVM, risk matrices) while the principles keep the judgment layer intact.</p>
+
+  <h2 class="sh">What Stayed the Same</h2>
+  <ul class="bl">
+    <li>The value delivery system (Module 2) — portfolios, programs, projects, operations, all pointed at value — carries forward essentially unchanged.</li>
+    <li>Tailoring remains the central instruction — the standard still refuses to be a one-size-fits-all checklist.</li>
+    <li>Core techniques that predate PMBOK entirely — the critical path method, Earned Value Management, RACI matrices, stakeholder grids — remain exactly as valid as they were under any prior edition. They're tools, not standard-specific trivia.</li>
+  </ul>
+
+  <div class="callout blue">
+    <strong>Fact-check yourself:</strong> the PMP exam realigned to PMBOK 8 on July 9, 2026. If you're studying for a certification, confirm which edition your specific exam window covers — PMI publishes exam content outline updates alongside major standard revisions, and the transition window is exactly when confusion is highest.
+  </div>
+
+  <div class="callout mango">
+    <strong>Both were real:</strong> if a colleague, a textbook, or your organization's internal wiki still says "8 performance domains" or references 12 principles by name, they're not wrong — they're describing the 7th edition, which was the live standard from 2021 until PMBOK 8 replaced it. Expect both vocabularies to coexist in the field for years.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">A PMP candidate studying from a 2022 prep book keeps seeing "12 principles" while this course says 6. What's the most accurate explanation?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The prep book reflects PMBOK 7 (2021), which had 12 principles. PMBOK 8 consolidated them into 6 organized around 3 mindset dimensions. Both counts are/were accurate for their respective editions.">The prep book reflects the 7th edition; this course teaches the 8th, which consolidated the same ideas into 6 principles</button>
+        <button class="q-option" data-correct="false" data-explanation="Neither source is simply wrong — they describe two different, both-genuine editions of the standard, not a factual error on either side.">One of the two sources is simply incorrect and should be disregarded</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why did PMI reintroduce 40 processes in PMBOK 8 after PMBOK 7 had moved almost entirely away from prescriptive process guidance?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The reintroduction isn't a full reversal to PMBOK 6's rigid 49-process ITTO model — the 40 processes are explicitly non-prescriptive, a deliberate middle path, not an abandonment of PMBOK 7's principles-based philosophy.">PMI abandoned the principles-based approach entirely and returned fully to PMBOK 6</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Feedback indicated PMBOK 7's pure-principles approach left many practitioners without a practical 'how' — PMBOK 8's 40 non-prescriptive processes restore concrete technique while keeping the judgment-driven, non-checklist philosophy intact.">Practitioners wanted more concrete, practical guidance than pure principles provided — the 40 processes restore that without becoming a rigid checklist</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Does a technique like the critical path method or a RACI matrix need to be relearned because of the PMBOK 7→8 change?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! These are general project-management techniques that predate any specific PMBOK edition and remain valid regardless of which edition's principles/domains/processes framing is layered on top.">No — these are general techniques that predate PMBOK and aren't tied to any one edition's structure</button>
+        <button class="q-option" data-correct="false" data-explanation="These techniques are not owned by or specific to a particular PMBOK edition's numbering — they're standalone project-management tools that remain valid across editions.">Yes — every technique is specific to whichever edition introduced it and must be relearned each time</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – THE ARCHITECTURE OF PMBOK 8
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 07</div>
+  <h1 class="mod-title">The Architecture of <span class="acc">PMBOK 8</span></h1>
+  <p class="mod-lede">Four layers, stacked. Once you can see how principles, domains, focus areas, and processes relate, the rest of this series is just filling in the layers one at a time — which is exactly what Parts 2 through 7 do.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How the 6 principles, 7 domains, 5 focus areas, and 40 processes relate to each other</li>
+      <li>Why that relationship (not memorizing each layer in isolation) is the actual exam-and-practice skill</li>
+      <li>Exactly how this series' 7 parts map onto the standard</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Four Layers, One System</h2>
+  <ul class="bl">
+    <li><strong>Principles</strong> (6) — the mindset layer. They guide behavior everywhere, in every domain, on every project. They don't tell you what to do; they tell you how to decide.</li>
+    <li><strong>Performance Domains</strong> (7) — where the actual work happens. Governance, Scope, Schedule, Finance, Stakeholders, Resources, Risk. Every domain is active on every project, to a tailored degree.</li>
+    <li><strong>Focus Areas</strong> (5) — when work happens across a project's life: Initiating, Planning, Executing, Monitoring & Controlling, Closing. Recall from Module 3: these recur once per project (predictive) or once per iteration (adaptive).</li>
+    <li><strong>Processes</strong> (~40) — the concrete "how," distributed across the 7 domains, each one a piece of common practice you can tailor up or down.</li>
+  </ul>
+
+  <div class="demo-box">
+    <div class="demo-label">The stack — this series' roadmap</div>
+    <svg class="demo-svg" viewBox="0 0 680 300" role="img" aria-label="A three-band stack diagram: top band is the 6 Principles spanning the full width, middle band is split into 7 blocks for the Performance Domains, bottom band is split into 5 blocks for the Focus Areas with a note that 40 processes are distributed across the domains above">
+      <rect x="20" y="20" width="640" height="60" rx="12" fill="var(--acc)" opacity="0.85"/>
+      <text x="340" y="45" text-anchor="middle" font-family="var(--fd)" font-size="14" font-weight="800" fill="#fff">6 PRINCIPLES — the mindset layer</text>
+      <text x="340" y="65" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="rgba(255,255,255,.85)">guide behavior across everything below</text>
+
+      <text x="340" y="98" text-anchor="middle" font-family="var(--fd)" font-size="20" fill="var(--muted)">↓</text>
+
+      <g font-family="var(--fb)" font-size="8.5" fill="#fff">
+        <rect x="20" y="106" width="88" height="50" rx="8" fill="var(--sea)"/><text x="64" y="128" text-anchor="middle" font-weight="700">Gov-</text><text x="64" y="140" text-anchor="middle" font-weight="700">ernance</text>
+        <rect x="112" y="106" width="88" height="50" rx="8" fill="var(--forest)"/><text x="156" y="132" text-anchor="middle" font-weight="700">Scope</text>
+        <rect x="204" y="106" width="88" height="50" rx="8" fill="var(--mango)"/><text x="248" y="132" text-anchor="middle" font-weight="700">Schedule</text>
+        <rect x="296" y="106" width="88" height="50" rx="8" fill="var(--tomato)"/><text x="340" y="132" text-anchor="middle" font-weight="700">Finance</text>
+        <rect x="388" y="106" width="88" height="50" rx="8" fill="var(--mawar)"/><text x="432" y="128" text-anchor="middle" font-weight="700">Stake-</text><text x="432" y="140" text-anchor="middle" font-weight="700">holders</text>
+        <rect x="480" y="106" width="88" height="50" rx="8" fill="var(--acc-dim)"/><text x="524" y="132" text-anchor="middle" font-weight="700">Resources</text>
+        <rect x="572" y="106" width="88" height="50" rx="8" fill="#8B5CF6"/><text x="616" y="132" text-anchor="middle" font-weight="700">Risk</text>
+      </g>
+      <text x="340" y="178" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">7 PERFORMANCE DOMAINS — where the work happens</text>
+
+      <text x="340" y="204" text-anchor="middle" font-family="var(--fd)" font-size="20" fill="var(--muted)">↓</text>
+
+      <g font-family="var(--fb)" font-size="8.5" fill="var(--ink)">
+        <rect x="20" y="212" width="120" height="40" rx="8" fill="none" stroke="var(--ink)" stroke-width="1.5"/><text x="80" y="236" text-anchor="middle">Initiating</text>
+        <rect x="150" y="212" width="120" height="40" rx="8" fill="none" stroke="var(--ink)" stroke-width="1.5"/><text x="210" y="236" text-anchor="middle">Planning</text>
+        <rect x="280" y="212" width="120" height="40" rx="8" fill="none" stroke="var(--ink)" stroke-width="1.5"/><text x="340" y="236" text-anchor="middle">Executing</text>
+        <rect x="410" y="212" width="140" height="40" rx="8" fill="none" stroke="var(--ink)" stroke-width="1.5"/><text x="480" y="230" text-anchor="middle">Monitoring &amp;</text><text x="480" y="242" text-anchor="middle">Controlling</text>
+        <rect x="560" y="212" width="100" height="40" rx="8" fill="none" stroke="var(--ink)" stroke-width="1.5"/><text x="610" y="236" text-anchor="middle">Closing</text>
+      </g>
+      <text x="340" y="272" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">5 FOCUS AREAS — ~40 processes distributed across the domains above, active within each</text>
+    </svg>
+    <div class="demo-caption">Read top to bottom: principles shape how you act in every domain; domains are where 40 tailorable processes live; focus areas describe when those processes fire across the project's life.</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">6</div>
+      <div class="stat-lbl">Principles — the mindset that shapes every decision</div>
+      <div class="stat-sub">Part 2</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">7</div>
+      <div class="stat-lbl">Performance domains — where the work actually happens</div>
+      <div class="stat-sub">Parts 3–6</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">40</div>
+      <div class="stat-lbl">Processes, non-prescriptive, distributed across the 7 domains</div>
+      <div class="stat-sub">Woven through Parts 3–6</div>
+    </div>
+  </div>
+
+  <h2 class="sh">How This Series Maps to the Standard</h2>
+  <table class="pm-table">
+    <thead><tr><th>Part</th><th>Covers</th><th>Layer(s)</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Part 1 (this part)</td><td>Foundations &amp; the value delivery system</td><td>The system these layers sit inside</td></tr>
+      <tr><td class="hl">Part 2</td><td>The Six Principles</td><td>Principles</td></tr>
+      <tr><td class="hl">Part 3</td><td>Governance</td><td>Domain: Governance</td></tr>
+      <tr><td class="hl">Part 4</td><td>Scope &amp; Schedule</td><td>Domains: Scope, Schedule</td></tr>
+      <tr><td class="hl">Part 5</td><td>Finance &amp; Resources</td><td>Domains: Finance, Resources</td></tr>
+      <tr><td class="hl">Part 6</td><td>Stakeholders &amp; Risk</td><td>Domains: Stakeholders, Risk</td></tr>
+      <tr><td class="hl">Part 7</td><td>Delivery approaches &amp; the exam bridge</td><td>Focus Areas in practice, tailoring, capstone</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout green">
+    <strong>Good practice:</strong> when you hit a real decision on a real project, ask which layer you're actually operating in. "Should I even do this?" is a principles/governance question. "What exactly are we building?" is Scope. "By when, and in what order?" is Schedule. Sorting a messy real situation into the right domain is most of what makes the standard useful day to day — more useful, honestly, than memorizing any single process by name.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 6</div>
+
+    <div class="q-card">
+      <p class="q-text">A project manager is deciding whether to escalate a stalled decision to the sponsor, or push the team to just make a call themselves and move faster. Which layer of the architecture is this decision primarily operating in?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is a judgment call about leadership behavior and empowerment — 'Be an Accountable Leader' and 'Build an Empowered Culture' territory — which is the mindset layer, not a specific domain's technical process.">Principles — it's a judgment call about leadership and empowerment, not a specific technical process</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't about the mechanics of scheduling the work — it's a leadership judgment call about who should decide, which sits at the principles layer.">The Schedule domain — it's about how fast the work moves</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team building the Fairview library's new membership platform needs to decide the exact order in which they'll build the catalog search, the sign-up flow, and the maker-lab booking system. Which layer are they operating in?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Sequencing and ordering work is squarely the Schedule domain — this will be covered in depth in Part 4.">The Schedule domain — sequencing and ordering the work</button>
+        <button class="q-option" data-correct="false" data-explanation="Governance is about chartering, alignment, and oversight authority — deciding the build order of features is a scheduling decision, not a governance one.">The Governance domain — it's about project authority</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does PMBOK 8 keep the 5 Focus Areas (Initiating…Closing) separate from the 7 Performance Domains, instead of merging them into one list?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Domains answer 'what kind of work' (scope, schedule, risk...) while Focus Areas answer 'when in the project's life' that work happens — and as Module 3 showed, the same domain's work can recur across Focus Areas differently depending on whether the life cycle is predictive or adaptive. Merging them would lose that independent, cross-cutting relationship.">Domains describe what kind of work happens; Focus Areas describe when it happens — they're independent, cross-cutting dimensions, not the same list</button>
+        <button class="q-option" data-correct="false" data-explanation="They aren't legacy naming from an older edition kept for nostalgia — Focus Areas were specifically renamed and restructured in PMBOK 8 itself, and they serve a genuinely different purpose from the domains.">It's just legacy terminology PMI kept out of habit from older editions</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">PMBOK 8 is a paywalled PMI standard — no copy of it lives in this course's source materials. Every structural claim in this part (principle/domain/process names and counts, release and exam-alignment dates) is corroborated across multiple independent sources rather than quoted from the standard directly. Here they are, annotated.</p>
+
+  <div class="ref-group-label">The Standard Itself</div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Project Management Institute. <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide) — Eighth Edition, and The Standard for Project Management</em>. Newtown Square, PA: Project Management Institute, 2025/2026.</div>
+    <div class="ref-annotation">The primary source this entire series is built around. It is a paywalled, purchasable standard — this course does not reproduce or quote it verbatim, and readers pursuing certification should treat the official standard as authoritative over any secondary summary, including this one.</div>
+    <a class="ref-link" href="https://www.pmi.org/standards/pmbok" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Independent Analysis of the 8th Edition (secondary sources, cross-corroborated)</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">BrainBOK. "PMBOK Guide 7th vs 8th Edition: 6 Principles, 7 Domains, 40 Processes." brainbok.com, 2026.</div>
+    <div class="ref-annotation">The most detailed public breakdown found of the principle, domain, and process-count changes, including the per-domain process distribution used as a teaching reference throughout this series. Cross-checked against the other sources below before being treated as reliable.</div>
+    <a class="ref-link" href="https://www.brainbok.com/blog/pmp/pmbok-guide-7th-vs-8th-edition-what-has-changed" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Learning Tree. "PMBOK Guide 8th Edition Key Changes (2026 Update)." learningtree.com, 2026.</div>
+    <div class="ref-annotation">Independent confirmation of the release timeline and the July 9, 2026 PMP exam alignment date, plus the exact wording of the 6 principles used in Module 5 and Part 2.</div>
+    <a class="ref-link" href="https://www.learningtree.com/blog/pmbok-guide-8th-edition-whats-new/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Project Management Academy. "PMBOK® 7 vs PMBOK® 8: Key Differences &amp; 2026 Updates." projectmanagementacademy.net, 2026.</div>
+    <div class="ref-annotation">A PMI-authorized training provider's account of the same changes, used to corroborate the domain list (Governance, Scope, Schedule, Finance, Stakeholders, Resources, Risk) and the Focus Area renaming from the old Process Groups.</div>
+    <a class="ref-link" href="https://projectmanagementacademy.net/resources/blog/pmbok-7-vs-pmbok-8-differences/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Foundational Definitions (stable across editions)</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Project Management Institute. "What is Project Management?" pmi.org.</div>
+    <div class="ref-annotation">PMI's own plain-language definitions of a project, program, and portfolio — the basis for Module 1's definitions, and stable in substance across every PMBOK edition to date.</div>
+    <a class="ref-link" href="https://www.pmi.org/about/what-is-project-management" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> because the standard itself is paywalled, the exact wording of individual process names and their precise per-domain grouping in this part (and across this series) should be treated as pedagogical paraphrase, corroborated across multiple independent training-provider sources, not a verbatim quotation of PMI's text. If you're citing this course's content in a professional or certification-exam context, verify specific process names and groupings against the official PMBOK 8 standard directly.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 1 Complete! 🗺️</h2>
+    <p>You now have the vocabulary and the map: what a project actually is, how the value delivery system works, how life cycles and tailoring shape a project's shape, how org structure predicts a PM's real authority, what changed from PMBOK 7, and how the whole standard's architecture fits together. Part 2 — The Six Principles — is next.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="7">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'pmbok8-part1';
+const TOTAL = 7;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
