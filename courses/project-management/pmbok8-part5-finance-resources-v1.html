@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="pmbok8-part5">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance & Resources · PMBOK 8, Field-Tested · Learn with Adhi</title>
+<meta name="description" content="Part 5 of PMBOK 8, Field-Tested: the Finance and Resources domains — cost estimating, budgeting and the S-curve, Earned Value Management (CPI, SPI, EAC), resource planning, building a team, and leading it.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-management/pmbok8-part5-finance-resources-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Finance & Resources · PMBOK 8, Field-Tested">
+<meta property="og:description" content="Cost estimating, budgeting, Earned Value Management, resource planning, and leading a team.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"PMBOK 8, Field-Tested — Part 5: Finance & Resources","description":"Cost estimating, budgeting, Earned Value Management, resource planning, and leading a team.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#1C5DDC; --acc-dim:#154BB3; --acc-bg:rgba(28,93,220,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#5b8cff);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="pmbok8-hub.html">← Series map · Part 5 of 7</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 7 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Cost Estimating</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Budgeting &amp; the S-Curve</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Earned Value Management</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Resource Planning</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Acquiring &amp; Building the Team</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Leading the Team</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7">
+      <span class="nav-num">07</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">PMBOK 8 · Part 5</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – COST ESTIMATING
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 07</div>
+  <h1 class="mod-title">Cost <span class="acc">Estimating</span></h1>
+  <p class="mod-lede">Every number in this part traces back to an estimate of what each work package will cost. Three techniques trade accuracy against effort, and knowing which one you're using — and being honest about its precision — matters more than the number itself.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The three main cost-estimating techniques, and the accuracy/effort tradeoff between them</li>
+      <li>What a cost baseline is, and why it has to be time-phased, not just a single total</li>
+      <li>Why the estimating technique should match how much is actually known yet</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Three Estimating Techniques</h2>
+  <table class="pm-table">
+    <thead><tr><th>Technique</th><th>How it works</th><th>Tradeoff</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Analogous</td><td>Compares to a similar past project's actual cost, scaled for size/complexity</td><td>Fast, low effort — but only as accurate as the analogy really is</td></tr>
+      <tr><td class="hl">Parametric</td><td>Cost = rate × quantity (cost per square meter × area; cost per hour × hours)</td><td>More accurate than analogous when the rate is well established, still fast</td></tr>
+      <tr><td class="hl">Bottom-up</td><td>Estimate each work package individually, sum them into the total</td><td>Most accurate — and by far the most time-consuming</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">Accuracy vs. effort — the tradeoff</div>
+    <svg class="demo-svg" viewBox="0 0 560 160" role="img" aria-label="Three horizontal bars of increasing width and darkness representing Analogous, Parametric, and Bottom-up estimating, illustrating that accuracy increases with effort">
+      <text x="20" y="30" font-family="var(--fb)" font-size="11" font-weight="700" fill="var(--ink)">Analogous</text>
+      <rect x="150" y="14" width="90" height="24" rx="6" fill="var(--sea)" opacity="0.5"/>
+      <text x="440" y="30" text-anchor="end" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">fast, rough</text>
+
+      <text x="20" y="80" font-family="var(--fb)" font-size="11" font-weight="700" fill="var(--ink)">Parametric</text>
+      <rect x="150" y="64" width="220" height="24" rx="6" fill="var(--sea)" opacity="0.72"/>
+      <text x="440" y="80" text-anchor="end" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">moderate</text>
+
+      <text x="20" y="130" font-family="var(--fb)" font-size="11" font-weight="700" fill="var(--ink)">Bottom-up</text>
+      <rect x="150" y="114" width="380" height="24" rx="6" fill="var(--sea)" opacity="0.95"/>
+      <text x="500" y="130" text-anchor="end" font-family="var(--fm)" font-size="9.5" fill="#fff">most accurate, most effort</text>
+    </svg>
+    <div class="demo-caption">More effort buys more accuracy — but bottom-up on every single line item of a small project can cost more (in time) than the precision is worth.</div>
+  </div>
+
+  <h2 class="sh">The Cost Baseline</h2>
+  <p>Individual estimates get aggregated by work package and time-phased into a <strong>cost baseline</strong> — an approved budget spread across the project's timeline, not just one final number. Time-phasing matters because it's what makes Module 3's Earned Value comparison possible: you need to know what <em>should</em> have been spent by a given date, not just what the total is allowed to be.</p>
+
+  <div class="callout mango">
+    <strong>It depends, on project stage:</strong> analogous estimates are normal (and honest) early, when little is known. As the WBS and requirements firm up, shifting to bottom-up for at least the highest-risk or highest-cost work packages is worth the extra effort — you don't need bottom-up precision on every line, just the ones that matter most.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A team estimates a new platform build by comparing it to a similar system built two years ago, scaled up for size. Which technique is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Comparing to a similar past project and scaling is the definition of analogous estimating.">Analogous — comparing to a similar past project</button>
+        <button class="q-option" data-correct="false" data-explanation="Bottom-up would mean estimating each individual work package and summing them — this scenario is a single scaled comparison, which is analogous.">Bottom-up — summing individual work-package estimates</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why can't a cost baseline just be a single total dollar figure for the whole project?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Time-phasing (spreading the budget across the timeline) is exactly what lets Module 3's Earned Value comparison work — you need to know what should have been spent by a given date, not just the eventual total.">Because Earned Value Management (Module 3) needs to know what should have been spent by a specific date, not just the eventual total</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't about accounting software compatibility — it's about what information the baseline needs to carry to support performance measurement later in the project.">Because most accounting software can't process single-total budgets</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team spends three weeks doing a full bottom-up estimate for a two-week, low-budget internal tool. What does this module's "it depends" guidance say about that choice?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module's tailoring guidance is explicit: bottom-up precision isn't free, and applying it everywhere — even to low-stakes, small work — can cost more in estimating time than the precision is worth.">It's likely a poor tradeoff — bottom-up's extra accuracy may not be worth more estimating effort than the project itself takes to build</button>
+        <button class="q-option" data-correct="false" data-explanation="The module explicitly argues against blanket bottom-up estimating everywhere — it recommends reserving that effort for higher-risk or higher-cost work.">It's always correct — bottom-up should be used for every project regardless of size</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – BUDGETING & THE S-CURVE
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 07</div>
+  <h1 class="mod-title">Budgeting &amp; <span class="acc">the S-Curve</span></h1>
+  <p class="mod-lede">Spending on a project is never a straight line — it starts slow, accelerates through the middle, and tapers at the end. That shape has a name, and reserves sit above it for exactly the situations a baseline can't predict.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why cumulative project spending forms an S-shaped curve</li>
+      <li>The difference between contingency reserve and management reserve</li>
+      <li>Why confusing the two reserves causes real governance problems</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Why Spending Forms an S-Curve</h2>
+  <p>Early in a project, only planning and setup activities are running — spending is low. As execution ramps up, multiple work packages run in parallel and cumulative spending climbs steeply. As the project approaches closure, fewer activities remain and spending tapers off. Plotted cumulatively over time, this produces a recognizable S shape — flat, then steep, then flat again.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Cumulative budget over time, with reserves above the baseline</div>
+    <svg class="demo-svg" viewBox="0 0 600 260" role="img" aria-label="An S-curve of cumulative budget over time, rising slowly at first, steeply in the middle, and tapering at the end, with a contingency reserve band and a management reserve band shown above the baseline curve">
+      <line x1="50" y1="220" x2="570" y2="220" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="50" y1="20" x2="50" y2="220" stroke="var(--ink)" stroke-width="2"/>
+      <text x="310" y="245" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--muted)">TIME</text>
+      <text x="25" y="120" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--muted)" transform="rotate(-90 25 120)">CUMULATIVE $</text>
+
+      <path d="M50 220 C 150 218, 220 190, 280 120 C 340 55, 450 30, 570 22" fill="none" stroke="var(--acc)" stroke-width="3.5"/>
+      <text x="480" y="45" font-family="var(--fb)" font-size="10" font-weight="700" fill="var(--acc-dim)">Cost Baseline</text>
+
+      <path d="M50 210 C 150 205, 220 175, 280 100 C 340 32, 450 10, 570 5" fill="none" stroke="var(--mango)" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="480" y="25" font-family="var(--fb)" font-size="9" font-weight="700" fill="#B45F04">+ Contingency Reserve</text>
+
+      <path d="M50 205 C 150 195, 220 155, 280 75 C 340 5, 450 -15, 550 -20" fill="none" stroke="var(--tomato)" stroke-width="2" stroke-dasharray="2 4" transform="translate(0,20)"/>
+      <text x="475" y="16" font-family="var(--fb)" font-size="9" font-weight="700" fill="var(--tomato)">+ Management Reserve</text>
+    </svg>
+    <div class="demo-caption">The baseline is what's planned; contingency sits just above it for known risks within the PM's control; management reserve sits highest, for unknowns the PM typically can't tap without sponsor approval.</div>
+  </div>
+
+  <h2 class="sh">Two Kinds of Reserve</h2>
+  <ul class="bl">
+    <li><strong>Contingency reserve</strong> — set aside for identified risks that made it into the risk register (Part 6 covers risk in depth). "We know a permit delay is plausible; we've budgeted for it." Usually within the project manager's authority to use.</li>
+    <li><strong>Management reserve</strong> — set aside for the genuinely unknown-unknowns, things nobody identified as a specific risk. Typically held above the project budget, released only with sponsor or governance approval (Part 3's governance layer, in practice).</li>
+  </ul>
+
+  <div class="callout tomato">
+    <strong>The trap:</strong> a PM who quietly spends management reserve without escalating, treating it like their own contingency fund. Beyond being a governance violation (Part 3), it removes the sponsor's visibility into how much true risk buffer is left — exactly the information they need for their own next-level portfolio decisions (Part 1).
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">Why does cumulative project spending typically form an S-curve rather than a straight line?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Fewer activities running early and late, with peak parallel execution in the middle, is exactly what produces the flat-steep-flat S shape.">Because spending is slow during early planning, accelerates as more work packages run in parallel, then tapers as the project nears closure</button>
+        <button class="q-option" data-correct="false" data-explanation="The S-curve shape reflects the actual pace of work across the project's life, not an accounting reporting artifact.">Because accounting systems always round spending figures at month-end</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A risk register already lists "permit approval may be delayed by 2 weeks" as an identified risk, with funds set aside for it. Which reserve does this draw from?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! An identified, named risk with funds already earmarked for it is exactly what contingency reserve is for — as opposed to management reserve, held for unidentified unknowns.">Contingency reserve — it's for identified risks already in the risk register</button>
+        <button class="q-option" data-correct="false" data-explanation="Management reserve is held for unidentified unknowns, typically outside the PM's direct authority — a named, already-identified risk draws from contingency reserve instead.">Management reserve — it's for any unplanned cost</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A PM spends from the management reserve without escalating to the sponsor, treating it as routine budget flexibility. What's the actual problem with this, beyond it being against the rules?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Management reserve visibility is exactly the information a sponsor needs for their own governance and portfolio-level decisions (Parts 1 and 3) — spending it quietly removes that visibility, not just breaks a procedural rule.">It removes the sponsor's visibility into how much true risk buffer remains, undermining governance and future portfolio decisions</button>
+        <button class="q-option" data-correct="false" data-explanation="The concern isn't primarily about paperwork volume — it's about the loss of decision-relevant information at the governance level.">It just creates extra paperwork to reconcile later</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – EARNED VALUE MANAGEMENT
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 07</div>
+  <h1 class="mod-title">Earned Value <span class="acc">Management</span></h1>
+  <p class="mod-lede">The single most exam-tested technique in project management — and genuinely useful, because it's the only method here that measures cost and schedule performance together, in a way "we're 60% through the timeline" alone never can.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The three core EVM numbers — Planned Value, Earned Value, Actual Cost</li>
+      <li>How to calculate and interpret cost/schedule variance and performance indexes</li>
+      <li>How to forecast a final cost using Estimate at Completion</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Three Numbers, One Snapshot</h2>
+  <ul class="bl">
+    <li><strong>PV (Planned Value)</strong> — the budgeted cost of the work that <em>should</em> have been done by now, per the baseline.</li>
+    <li><strong>EV (Earned Value)</strong> — the budgeted cost of the work <em>actually</em> completed by now. Not what was spent — what was <em>earned</em>, valued at its planned cost.</li>
+    <li><strong>AC (Actual Cost)</strong> — what was actually spent to get that work done.</li>
+  </ul>
+  <p>All three numbers matter together. PV alone tells you the plan. AC alone tells you spending. Only EV lets you compare "value of work done" against both of the others — which is exactly what makes cost and schedule performance measurable in the same terms.</p>
+
+  <h2 class="sh">Worked Example: the Fairview Platform Build</h2>
+  <p>At a check-in, the platform work package has a Budget at Completion (BAC) of $100,000:</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">$60,000</div>
+      <div class="stat-lbl">PV — value of work planned to be done by now</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$50,000</div>
+      <div class="stat-lbl">EV — value of work actually completed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$55,000</div>
+      <div class="stat-lbl">AC — actual money spent so far</div>
+    </div>
+  </div>
+
+  <table class="pm-table">
+    <thead><tr><th>Metric</th><th>Formula</th><th>Result</th><th>Reading</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Cost Variance (CV)</td><td>EV − AC</td><td>50,000 − 55,000 = <strong>−$5,000</strong></td><td>Over budget for the work completed</td></tr>
+      <tr><td class="hl">Schedule Variance (SV)</td><td>EV − PV</td><td>50,000 − 60,000 = <strong>−$10,000</strong></td><td>Behind schedule</td></tr>
+      <tr><td class="hl">Cost Performance Index (CPI)</td><td>EV ÷ AC</td><td>50,000 ÷ 55,000 ≈ <strong>0.91</strong></td><td>Earning only $0.91 of value per $1 spent</td></tr>
+      <tr><td class="hl">Schedule Performance Index (SPI)</td><td>EV ÷ PV</td><td>50,000 ÷ 60,000 ≈ <strong>0.83</strong></td><td>Progressing at 83% of the planned pace</td></tr>
+      <tr><td class="hl">Estimate at Completion (EAC)</td><td>BAC ÷ CPI</td><td>100,000 ÷ 0.909 = <strong>$110,000</strong></td><td>If this cost trend continues, expect to finish $10,000 over the original budget</td></tr>
+      <tr><td class="hl">Estimate to Complete (ETC)</td><td>EAC − AC</td><td>110,000 − 55,000 = <strong>$55,000</strong></td><td>Roughly this much more needs to be spent to finish</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">PV, EV, and AC — one snapshot, three bars</div>
+    <svg class="demo-svg" viewBox="0 0 400 220" role="img" aria-label="Three bars: Planned Value at 60,000, Earned Value at 50,000, and Actual Cost at 55,000, showing the project is both behind schedule and over budget for the work completed">
+      <line x1="40" y1="190" x2="380" y2="190" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="60" y="70" width="80" height="120" fill="var(--sea)"/><text x="100" y="60" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="var(--sea)">PV $60k</text>
+      <rect x="170" y="90" width="80" height="100" fill="var(--forest)"/><text x="210" y="80" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="var(--forest)">EV $50k</text>
+      <rect x="280" y="80" width="80" height="110" fill="var(--tomato)"/><text x="320" y="70" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="var(--tomato)">AC $55k</text>
+    </svg>
+    <div class="demo-caption">EV below PV = behind schedule. EV below AC = over budget for what's actually been earned. Both are true here at once.</div>
+  </div>
+
+  <div class="callout blue">
+    <strong>Reading the story, not just the numbers:</strong> CPI &lt; 1 and SPI &lt; 1 together tell a specific story — the team is spending more than the value it's producing, <em>and</em> producing that value more slowly than planned. That's a worse position than either problem alone, and it's the kind of pattern a single "% complete" figure would never surface.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">A different work package has PV = $40,000, EV = $44,000, AC = $40,000. What does the CPI tell you?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! CPI = EV ÷ AC = 44,000 ÷ 40,000 = 1.1. A CPI above 1 means more value is being earned per dollar spent than planned — the team is under budget for the work completed.">CPI = 44,000 ÷ 40,000 = 1.1 — the team is earning more value than it's spending, i.e. under budget</button>
+        <button class="q-option" data-correct="false" data-explanation="CPI compares EV to AC, not PV to AC — using PV instead of EV in the numerator gives the wrong ratio and the wrong metric (that combination isn't a standard EVM index).">CPI = 40,000 ÷ 40,000 = 1.0 — exactly on budget</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">In this same work package (PV $40,000, EV $44,000, AC $40,000), what does the SPI tell you?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! SPI = EV ÷ PV = 44,000 ÷ 40,000 = 1.1. An SPI above 1 means more value has been earned than was planned by this point — the work is ahead of schedule.">SPI = 44,000 ÷ 40,000 = 1.1 — the project is ahead of schedule</button>
+        <button class="q-option" data-correct="false" data-explanation="SPI compares EV to PV, not AC to PV — that would be a different (non-standard) ratio and gives a misleading answer here.">SPI = 40,000 ÷ 40,000 = 1.0 — exactly on schedule</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why is a project with CPI = 0.91 and SPI = 0.83 in a worse position than one with only SPI = 0.83 and a CPI of exactly 1.0?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! With CPI below 1 as well, the project isn't just behind schedule — it's also burning budget inefficiently for the work it has completed, compounding the problem rather than just being slow but on-budget.">Because it's not just behind schedule — it's also spending inefficiently for the work it has completed, compounding the shortfall</button>
+        <button class="q-option" data-correct="false" data-explanation="The two scenarios describe genuinely different underlying situations (cost efficiency differs) — they aren't mathematically equivalent, which is exactly why EVM tracks both indexes separately.">There's no real difference — both scenarios are mathematically equivalent once schedule catches up</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – RESOURCE PLANNING
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 07</div>
+  <h1 class="mod-title">Resource <span class="acc">Planning</span></h1>
+  <p class="mod-lede">A schedule that assumes a specialist is available 150% of the time isn't a schedule — it's a wish. Resource planning is where the network diagram from Part 4 meets the reality of who's actually free when.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What resource planning actually has to account for beyond headcount</li>
+      <li>The difference between resource leveling and resource smoothing</li>
+      <li>Why over-allocation is often invisible until you actually check</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Planning Beyond Headcount</h2>
+  <p>Resource planning identifies what each activity needs — not just "a developer," but which skillset, for how long, and when they're actually available (accounting for other project commitments, leave, and organizational calendars). This is where Part 3's integration discipline gets tested directly: a schedule and a resource plan that were written without talking to each other will conflict, exactly as Part 3, Module 2 warned.</p>
+
+  <h2 class="sh">Resource Leveling vs. Resource Smoothing</h2>
+  <table class="pm-table">
+    <thead><tr><th></th><th>What it does</th><th>Effect on finish date</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Resource leveling</td><td>Adjusts the schedule (start/end dates) to resolve over-allocation</td><td>Can push the finish date out</td></tr>
+      <tr><td class="hl">Resource smoothing</td><td>Adjusts activities only within their existing float</td><td>Never changes the finish date — but can only resolve over-allocation the float allows</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">Before and after leveling</div>
+    <svg class="demo-svg" viewBox="0 0 600 220" role="img" aria-label="Two panels: before leveling shows a resource usage bar chart with one week exceeding maximum capacity; after leveling shows the same total work spread more evenly across an extended timeline, staying under the capacity line">
+      <text x="150" y="20" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--tomato)">Before Leveling</text>
+      <line x1="30" y1="60" x2="270" y2="60" stroke="var(--tomato)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="275" y="64" font-family="var(--fm)" font-size="8" fill="var(--tomato)">max capacity</text>
+      <rect x="40" y="80" width="40" height="50" fill="var(--sea)"/>
+      <rect x="90" y="30" width="40" height="100" fill="var(--tomato)"/>
+      <rect x="140" y="70" width="40" height="60" fill="var(--sea)"/>
+      <rect x="190" y="90" width="40" height="40" fill="var(--sea)"/>
+      <text x="110" y="145" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="var(--muted)">wk1&#160;&#160;&#160;&#160;wk2*&#160;&#160;&#160;wk3&#160;&#160;&#160;wk4</text>
+
+      <text x="470" y="20" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--forest)">After Leveling</text>
+      <line x1="350" y1="60" x2="590" y2="60" stroke="var(--forest)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <rect x="360" y="80" width="35" height="50" fill="var(--forest)"/>
+      <rect x="405" y="75" width="35" height="55" fill="var(--forest)"/>
+      <rect x="450" y="80" width="35" height="50" fill="var(--forest)"/>
+      <rect x="495" y="85" width="35" height="45" fill="var(--forest)"/>
+      <rect x="540" y="90" width="35" height="40" fill="var(--forest)"/>
+      <text x="465" y="145" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="var(--muted)">work spread across 5 weeks — finish date pushed out</text>
+    </svg>
+    <div class="demo-caption">Week 2 (marked *) exceeded capacity before leveling. After leveling, the same total work fits under the line — but takes longer to finish.</div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>Why over-allocation hides:</strong> a schedule built from a network diagram alone (Part 4) can look perfectly reasonable — every dependency respected, every duration realistic — while quietly assuming one person is 130% booked for a week. Nothing in the diagram itself flags it. Only a deliberate resource check catches it.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A PM needs to resolve a specialist's over-allocation without pushing the project's finish date out at all. Which technique fits, and what's the constraint?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Resource smoothing keeps the finish date fixed by only shifting activities within their existing float — but that means it can only resolve over-allocation that the available float actually covers.">Resource smoothing — but it can only resolve over-allocation that existing float can absorb</button>
+        <button class="q-option" data-correct="false" data-explanation="Resource leveling can push the finish date out — it's the technique to use when the finish date is flexible, not when it must stay fixed.">Resource leveling — it always keeps the finish date fixed</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A network diagram (Part 4) shows a perfectly valid dependency sequence, but a specialist is quietly booked on two different critical-path activities in the same week. Why didn't the network diagram catch this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A network diagram only encodes activity sequencing and dependencies — it doesn't track who's assigned to what. Resource over-allocation is exactly the kind of gap a dedicated resource check (not the schedule diagram itself) is needed to catch.">Because a network diagram only encodes activity dependencies, not who's assigned to each activity or their availability</button>
+        <button class="q-option" data-correct="false" data-explanation="The network diagram (Part 4) was built correctly per its own purpose — it's simply not designed to track resource assignment, which is a separate planning step covered in this module.">Because the network diagram in Part 4 was built incorrectly</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module connect resource planning back to Part 3's integration lesson?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A schedule and resource plan written in isolation from each other is exactly the kind of cross-plan inconsistency Part 3, Module 2 warned about — resource over-allocation is a concrete instance of that general failure mode.">Because a schedule and a resource plan written without checking each other produce exactly the kind of cross-plan inconsistency Part 3 warned about</button>
+        <button class="q-option" data-correct="false" data-explanation="The connection isn't about document formatting — it's a substantive point about cross-plan consistency, echoing Part 3's core integration lesson.">Because both documents should use the same font and template</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – ACQUIRING & BUILDING THE TEAM
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 07</div>
+  <h1 class="mod-title">Acquiring &amp; <span class="acc">Building the Team</span></h1>
+  <p class="mod-lede">Assembling a team is the easy part. Turning a group of individuals into a team that actually performs well together follows a predictable, and mostly unavoidable, sequence.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The main ways a team gets acquired (pre-assignment, negotiation, virtual teams)</li>
+      <li>Tuckman's five stages of team development</li>
+      <li>Why "storming" is a normal, necessary stage — not a sign something's broken</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Acquiring the Team</h2>
+  <p>Team members arrive by a few common routes: <strong>pre-assignment</strong> (named in the charter or contract before the project even starts), <strong>negotiation</strong> (the PM negotiates with functional managers for specific people — recall Part 1's org-structure spectrum, since this negotiation looks very different in a functional org vs. a projectized one), and increasingly, <strong>virtual teams</strong> spread across locations, which need deliberate extra attention to communication (Part 6 covers this in depth).</p>
+
+  <h2 class="sh">Tuckman's Stages of Team Development</h2>
+  <div class="demo-box">
+    <div class="demo-label">Team performance across the five stages</div>
+    <svg class="demo-svg" viewBox="0 0 620 220" role="img" aria-label="A line chart of team performance across five stages: Forming (low), Storming (a dip below forming), Norming (rising), Performing (peak), Adjourning (decline as the project ends)">
+      <line x1="40" y1="190" x2="590" y2="190" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M60 150 C 100 155, 130 175, 160 180 C 220 190, 280 130, 340 90 C 400 55, 460 40, 520 45 C 550 48, 570 70, 580 100" fill="none" stroke="var(--acc)" stroke-width="3"/>
+
+      <g font-family="var(--fb)" font-size="9.5" font-weight="700" fill="var(--ink)">
+        <text x="60" y="205" text-anchor="middle">Forming</text>
+        <text x="165" y="205" text-anchor="middle">Storming</text>
+        <text x="280" y="205" text-anchor="middle">Norming</text>
+        <text x="440" y="205" text-anchor="middle">Performing</text>
+        <text x="565" y="205" text-anchor="middle">Adjourning</text>
+      </g>
+      <text x="20" y="105" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)" transform="rotate(-90 20 105)">PERFORMANCE</text>
+    </svg>
+    <div class="demo-caption">The dip at Storming is normal — conflict over roles, working style, and authority surfaces here, and skipping past it rarely works.</div>
+  </div>
+
+  <table class="pm-table">
+    <thead><tr><th>Stage</th><th>What's happening</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Forming</td><td>Polite, cautious. People are figuring out the team and their place in it.</td></tr>
+      <tr><td class="hl">Storming</td><td>Conflict surfaces — over roles, working style, authority. Uncomfortable, but necessary.</td></tr>
+      <tr><td class="hl">Norming</td><td>The team settles into working agreements and starts trusting each other.</td></tr>
+      <tr><td class="hl">Performing</td><td>High trust, high autonomy — the team operates effectively with minimal oversight.</td></tr>
+      <tr><td class="hl">Adjourning</td><td>The team disbands at project closure (Part 3, Module 6) — a real transition, not just an administrative event.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout green">
+    <strong>Good practice:</strong> a leader who recognizes Storming for what it is — normal friction, not a crisis — and creates space to work through it (structured retrospectives, explicit role clarification) moves a team through it faster than one who either suppresses the conflict or panics at the first sign of it.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">Two weeks into a new team's formation, visible tension emerges over who has final say on design decisions. A junior PM worries the team is "falling apart." What does Tuckman's model say?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is Storming — a normal, expected stage where role and authority conflicts surface. It's not a sign of failure; suppressing or panicking at it is more likely to cause harm than the conflict itself.">This is normal Storming — conflict over roles and authority is an expected stage, not a sign the team is failing</button>
+        <button class="q-option" data-correct="false" data-explanation="Tuckman's model treats this friction as an expected, necessary stage, not evidence of a team-building failure that requires disbanding the group.">The team should be disbanded and reformed with different people</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the model suggest Adjourning is "a real transition, not just an administrative event"?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Team members have typically built genuine working relationships and trust by the Performing stage — dissolving that at Adjourning is a real social/professional transition worth acknowledging, echoing Part 3's closure module.">Because team members have typically built real working relationships and trust by the Performing stage, and losing that has genuine impact worth acknowledging</button>
+        <button class="q-option" data-correct="false" data-explanation="The point isn't about paperwork burden — it's about the genuine social and professional transition of a high-trust team dissolving.">Because closing out timesheets and paperwork takes longer than people expect</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A PM in a strong matrix organization (Part 1) negotiates directly with a functional manager for a specific specialist. In a projectized organization, would this negotiation likely look different?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Per Part 1's org-structure spectrum, a projectized organization gives the PM much higher authority and typically dedicated full-time staff — the negotiation dynamic with a functional manager largely doesn't exist in the same way it does in a matrix org.">Yes — a projectized PM typically has much higher authority and often dedicated staff, so the negotiation dynamic is very different</button>
+        <button class="q-option" data-correct="false" data-explanation="Part 1 established that organizational structure directly predicts a PM's resourcing authority — the negotiation would very plausibly play out differently, not identically, across structures.">No — team acquisition works identically regardless of organizational structure</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – LEADING THE TEAM
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 07</div>
+  <h1 class="mod-title">Leading the <span class="acc">Team</span></h1>
+  <p class="mod-lede">Part 2 argued leadership is a behavior, not a title. This module gets practical about it: what actually motivates people, how to handle conflict without dodging it, and keeping an eye on whether resourcing is holding up as planned.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Three classic motivation theories, and the one practical lesson each contributes</li>
+      <li>Five conflict-resolution styles, mapped by assertiveness and cooperativeness</li>
+      <li>What "monitoring resourcing" means day to day</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Motivation Theory, Briefly</h2>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🔺</div>
+      <h4>Maslow's Hierarchy</h4>
+      <p>People need lower needs (safety, belonging) reasonably met before higher ones (esteem, growth) motivate them well. A team worried about job security won't respond much to "growth opportunity" framing.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">⚖️</div>
+      <h4>Herzberg's Two-Factor</h4>
+      <p>Hygiene factors (fair pay, safe conditions) prevent dissatisfaction but don't motivate on their own. Motivators (meaningful work, recognition, growth) are what actually drive engagement.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🔄</div>
+      <h4>McGregor's Theory X/Y</h4>
+      <p>Theory X assumes people avoid work and need control. Theory Y assumes people are self-motivated given the right conditions. A leader's assumption becomes somewhat self-fulfilling — ties directly to Part 2's Empowered Culture.</p>
+    </div>
+  </div>
+
+  <h2 class="sh">Conflict-Resolution Styles</h2>
+  <div class="demo-box">
+    <div class="demo-label">Five styles, by assertiveness and cooperativeness</div>
+    <svg class="demo-svg" viewBox="0 0 420 400" role="img" aria-label="A grid with assertiveness on one axis and cooperativeness on the other, plotting five conflict resolution styles: Avoid at low-low, Accommodate at low assertiveness high cooperativeness, Compete at high assertiveness low cooperativeness, Compromise in the middle, and Collaborate at high-high">
+      <line x1="60" y1="30" x2="60" y2="340" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="60" y1="340" x2="380" y2="340" stroke="var(--ink)" stroke-width="2"/>
+      <text x="20" y="185" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)" transform="rotate(-90 20 185)">ASSERTIVENESS →</text>
+      <text x="220" y="362" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">COOPERATIVENESS →</text>
+
+      <circle cx="120" cy="290" r="8" fill="var(--muted)"/>
+      <text x="120" y="315" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="var(--ink)">Avoid</text>
+
+      <circle cx="120" cy="90" r="8" fill="var(--tomato)"/>
+      <text x="120" y="72" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="var(--ink)">Compete</text>
+
+      <circle cx="320" cy="290" r="8" fill="var(--sea)"/>
+      <text x="320" y="315" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="var(--ink)">Accommodate</text>
+
+      <circle cx="220" cy="185" r="8" fill="var(--mango)"/>
+      <text x="220" y="165" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="var(--ink)">Compromise</text>
+
+      <circle cx="320" cy="90" r="8" fill="var(--forest)"/>
+      <text x="320" y="72" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="var(--ink)">Collaborate</text>
+    </svg>
+    <div class="demo-caption">Collaborate (high on both) usually produces the best outcome but costs the most time — knowing when Compromise or even Avoid is the right call for a low-stakes issue is part of the skill.</div>
+  </div>
+
+  <table class="pm-table">
+    <thead><tr><th>Style</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Avoid</td><td>Trivial issues, or when emotions need to cool before engaging</td></tr>
+      <tr><td class="hl">Accommodate</td><td>When the relationship matters more than this particular issue</td></tr>
+      <tr><td class="hl">Compete</td><td>Urgent decisions where there's no time for consensus</td></tr>
+      <tr><td class="hl">Compromise</td><td>Both sides have valid, roughly equal claims and time is limited</td></tr>
+      <tr><td class="hl">Collaborate</td><td>High-stakes issues where a genuinely better solution exists if both sides dig in together</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sh">Monitoring Resourcing</h2>
+  <p>Leading the team isn't only about people dynamics — it includes watching whether the resource plan (Module 4) is still holding up: is anyone quietly over-allocated again, has someone's availability changed, does the team's actual capacity still match what the schedule assumes. This closes the loop back to Part 3's monitoring discipline, applied specifically to people.</p>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 6</div>
+
+    <div class="q-card">
+      <p class="q-text">A team member is highly skilled but visibly worried about job security after recent layoffs elsewhere in the organization. A manager tries to motivate them with talk of "exciting growth opportunities." What does Maslow's hierarchy suggest about this approach?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Maslow's hierarchy suggests lower needs (safety) generally need to be reasonably addressed before higher-level motivators (growth, esteem) land effectively — growth talk is unlikely to resonate while safety concerns are unaddressed.">It's likely to land poorly — safety concerns typically need addressing before growth-oriented motivation is effective</button>
+        <button class="q-option" data-correct="false" data-explanation="Maslow's model specifically predicts the opposite — higher-level motivators like growth tend to be less effective when a more basic need (safety) is unmet.">It's the ideal approach — growth opportunities are always the strongest motivator</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Two team members disagree over a low-stakes formatting convention that doesn't affect functionality. Which conflict style is probably most efficient here?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Collaborate is the highest-effort style, best reserved for high-stakes issues where a genuinely better solution is worth the time investment — not a low-stakes formatting preference.">Collaborate — dig in together to find the ideal shared solution</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! For a genuinely trivial, low-stakes issue, a quick style like Compromise (or even Avoid) is more efficient than investing heavy collaborative effort in something that doesn't materially matter.">Compromise (or even Avoid) — the issue is too low-stakes to justify heavy collaborative effort</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module say "monitoring resourcing" connects leading the team back to Part 3's monitoring discipline?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Part 3 established monitoring as a deliberate, ongoing comparison of plan to reality — here it's applied specifically to whether the resource plan (Module 4) still holds, rather than assuming it stays valid indefinitely.">Because it's the same deliberate plan-vs-reality comparison discipline from Part 3, applied specifically to people and availability</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't a documentation-formatting requirement — it's a substantive point that resourcing needs the same ongoing, deliberate monitoring as schedule and scope.">Because both modules happen to use the same document template</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">Earned Value Management, PERT-adjacent estimating, Tuckman's model, and the classic motivation theories all predate PMBOK and are cited independently of any specific edition. The domain framing itself follows the same sourcing caveat as the rest of this series.</p>
+
+  <div class="ref-group-label">The Standard Itself</div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Project Management Institute. <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide) — Eighth Edition, and The Standard for Project Management</em>. Newtown Square, PA: Project Management Institute, 2025/2026.</div>
+    <div class="ref-annotation">The primary source for the Finance and Resources domains covered in this part. Paywalled — not reproduced or quoted verbatim here.</div>
+    <a class="ref-link" href="https://www.pmi.org/standards/pmbok" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Foundational Techniques (edition-stable, independently verifiable)</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Fleming, Quentin W., and Joel M. Koppelman. <em>Earned Value Project Management</em>. 4th ed. Newtown Square, PA: Project Management Institute, 2010.</div>
+    <div class="ref-annotation">The standard reference text on Earned Value Management, the technique behind Module 3's entire worked example (PV, EV, AC, CV, SV, CPI, SPI, EAC, ETC). EVM predates and is independent of any specific PMBOK edition's principles/domains framing.</div>
+    <a class="ref-link" href="https://www.pmi.org" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Tuckman, Bruce W. "Developmental Sequence in Small Groups." <em>Psychological Bulletin</em> 63, no. 6 (1965): 384–399.</div>
+    <div class="ref-annotation">The original paper proposing the Forming-Storming-Norming-Performing sequence used in Module 5 ("Adjourning" was added in a later 1977 revision with Mary Ann Jensen). A general organizational-behavior model, not specific to project management or any PMBOK edition.</div>
+    <a class="ref-link" href="https://doi.org/10.1037/h0022100" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Maslow, A. H. "A Theory of Human Motivation." <em>Psychological Review</em> 50, no. 4 (1943): 370–396; Herzberg, Frederick. "One More Time: How Do You Motivate Employees?" <em>Harvard Business Review</em> 46, no. 1 (1968): 53–62; McGregor, Douglas. <em>The Human Side of Enterprise</em>. New York: McGraw-Hill, 1960.</div>
+    <div class="ref-annotation">The three classic motivation theories summarized in Module 6 — foundational organizational-psychology texts, cited together as they're conventionally taught alongside each other in project management education.</div>
+    <a class="ref-link" href="https://www.apa.org" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Independent Analysis (secondary source for the domain framing)</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">BrainBOK. "PMBOK Guide 7th vs 8th Edition: 6 Principles, 7 Domains, 40 Processes." brainbok.com, 2026.</div>
+    <div class="ref-annotation">Source for the Finance and Resources domains' approximate process groupings used to structure this part's module sequence.</div>
+    <a class="ref-link" href="https://www.brainbok.com/blog/pmp/pmbok-guide-7th-vs-8th-edition-what-has-changed" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the domain framing is corroborated secondary-source paraphrase, not verbatim PMI text. The EVM formulas, PERT-adjacent estimating techniques, Tuckman's model, and the three motivation theories are independently documented, well-established techniques unaffected by which PMBOK edition is current — but the worked numeric example in Module 3 is illustrative, constructed for this course, not drawn from a real audited project.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 5 Complete! 💰</h2>
+    <p>The money and the people: cost estimating, budgeting and reserves, full Earned Value Management with a worked example, resource planning, building a team through Tuckman's stages, and leading it with real motivation and conflict technique. Part 6 — Stakeholders &amp; Risk — covers the humans outside the team and the uncertainty ahead.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="7">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'pmbok8-part5';
+const TOTAL = 7;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

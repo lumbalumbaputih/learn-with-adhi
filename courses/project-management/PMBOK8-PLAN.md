@@ -183,24 +183,22 @@ quote, per §1.4's sourcing rule.)
 6. Closing a Project: the closing sequence, lessons learned, handoff to operations
 7. References
 
-**Part 4 — Scope & Schedule** (`pmbok8-part4-scope-schedule-v1.html`)
-1. Requirements: eliciting & analyzing what's actually needed
-2. Defining Scope & Building the WBS
-3. Validating & Controlling Scope (scope creep, change requests)
-4. Schedule Management & Network Diagrams
-5. The Critical Path & PERT (three-point estimating)
-6. Monitoring & Controlling the Schedule (schedule variance, fast-tracking vs. crashing)
+**Part 4 — Scope & Schedule** ✅ shipped 2026-08-04 (`pmbok8-part4-scope-schedule-v1.html`, 7 modules)
+1. Requirements: elicitation techniques, functional vs. non-functional, traceability
+2. Defining Scope & the WBS: scope statement, progressive decomposition, the 100% rule
+3. Validating & Controlling Scope: scope creep vs. gold-plating, validate scope ≠ QC
+4. Network Diagrams: dependency types, Precedence Diagramming Method
+5. Critical Path & PERT: float, the PERT formula worked through a real example
+6. Monitoring the Schedule: schedule variance (preview), fast-tracking vs. crashing
 7. References
 
-**Part 5 — Finance & Resources** (`pmbok8-part5-finance-resources-v1.html`)
-1. Cost Estimating & the Cost Baseline
-2. Budgeting & the S-Curve
-3. Earned Value Management (PV/EV/AC, CPI/SPI, CV/SV, EAC/ETC — the exam-heaviest module in the
-   series; needs the most worked-number examples)
-4. Resource Planning & Estimating
-5. Acquiring & Building the Team
-6. Leading the Team (motivation theory — Maslow/Herzberg/McGregor — conflict resolution, Tuckman's
-   stages) & Monitoring Resourcing
+**Part 5 — Finance & Resources** ✅ shipped 2026-08-04 (`pmbok8-part5-finance-resources-v1.html`, 7 modules)
+1. Cost Estimating: analogous/parametric/bottom-up, the time-phased cost baseline
+2. Budgeting & the S-Curve: cumulative-spend shape, contingency vs. management reserve
+3. Earned Value Management: PV/EV/AC, CV/SV, CPI/SPI, EAC/ETC — a full worked numeric example
+4. Resource Planning: leveling vs. smoothing, why over-allocation hides
+5. Acquiring & Building the Team: acquisition routes, Tuckman's five stages
+6. Leading the Team: Maslow/Herzberg/McGregor, 5 conflict-resolution styles, monitoring resourcing
 7. References
 
 **Part 6 — Stakeholders & Risk** (`pmbok8-part6-stakeholders-risk-v1.html`)
@@ -256,9 +254,9 @@ split — the 5–8 range in the Adult Course Standard is the hard constraint, n
 1. ✅ Hub + Part 1 (Foundations & the Value Delivery System) — shipped 2026-08-04.
 2. ✅ Part 2 (Six Principles) — shipped 2026-08-04.
 3. ✅ Part 3 (Governance) — shipped 2026-08-04.
-4. ⏳ Part 4 (Scope & Schedule) — next.
-5. ⏳ Part 5 (Finance & Resources)
-6. ⏳ Part 6 (Stakeholders & Risk)
+4. ✅ Part 4 (Scope & Schedule) — shipped 2026-08-04.
+5. ✅ Part 5 (Finance & Resources) — shipped 2026-08-04.
+6. ⏳ Part 6 (Stakeholders & Risk) — next.
 7. ⏳ Part 7 (Delivery Approaches & Exam Bridge)
 
 Each ships as its own SOP step: build → verify → update `CLAUDE.md` "What's Already Built" +
