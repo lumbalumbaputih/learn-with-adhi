@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="pmbok8-part2">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Six Principles · PMBOK 8, Field-Tested · Learn with Adhi</title>
+<meta name="description" content="Part 2 of PMBOK 8, Field-Tested: the six principles PMI consolidated from twelve — Holistic View, Value, Quality, Accountable Leadership, Sustainability, and Empowered Culture — as decision-making lenses, not a checklist.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-management/pmbok8-part2-principles-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Six Principles · PMBOK 8, Field-Tested">
+<meta property="og:description" content="The mindset layer above every domain: Holistic View, Value, Quality, Accountable Leadership, Sustainability, Empowered Culture.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"PMBOK 8, Field-Tested — Part 2: The Six Principles","description":"The mindset layer above every domain: Holistic View, Value, Quality, Accountable Leadership, Sustainability, Empowered Culture.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#1C5DDC; --acc-dim:#154BB3; --acc-bg:rgba(28,93,220,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#5b8cff);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="pmbok8-hub.html">← Series map · Part 2 of 7</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 8 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">The Mindset Layer</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Adopt a Holistic View</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Focus on Value</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Embed Quality</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Be an Accountable Leader</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Integrate Sustainability</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7">
+      <span class="nav-num">07</span>
+      <span class="nav-title">Build an Empowered Culture</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="8">
+      <span class="nav-num">08</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">PMBOK 8 · Part 2</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – THE MINDSET LAYER
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 08</div>
+  <h1 class="mod-title">The <span class="acc">Mindset</span> Layer</h1>
+  <p class="mod-lede">Principles don't tell you what to do. They tell you how to decide when the standard's 40 processes don't have a clean answer — which, on a real project, is most of the time. PMBOK 8 organizes its six into three mindset dimensions, and that grouping is worth understanding before the principles themselves.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why principles sit "above" the 7 domains rather than inside them</li>
+      <li>The three mindset dimensions PMBOK 8 groups its six principles into</li>
+      <li>How to actually use a principle as a decision lens, not a checklist item</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Why Six, Not Twelve</h2>
+  <p>Part 1, Module 5 covered the numbers: PMBOK 7 (2021) had 12 principles; PMBOK 8 consolidated them into 6. The reasoning is worth repeating here because it explains how to actually use them. PMI's consolidation drew on a large global practitioner survey — reported at roughly 48,000 respondents — which found the original 12 overlapped enough in practice that practitioners struggled to hold them all in working memory and apply them consistently. Fewer, more distinct principles beat more, blurrier ones.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">12 → 6</div>
+      <div class="stat-lbl">Principles merged into fewer, more distinct behaviors</div>
+      <div class="stat-sub">PMBOK 7 → 8</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">~48,000</div>
+      <div class="stat-lbl">Practitioners in the global survey PMI drew on for the consolidation</div>
+      <div class="stat-sub">reported figure</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3</div>
+      <div class="stat-lbl">Mindset dimensions the six principles now group into</div>
+      <div class="stat-sub">this module</div>
+    </div>
+  </div>
+
+  <h2 class="sh">Three Mindset Dimensions</h2>
+  <p>PMBOK 8 clusters its six principles into three pairs, each pair answering a different question about how you show up on a project:</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The six principles, grouped by mindset dimension</div>
+    <svg class="demo-svg" viewBox="0 0 640 220" role="img" aria-label="Three columns: Proactive dimension containing Adopt a Holistic View and Embed Quality; Ownership dimension containing Be an Accountable Leader and Build an Empowered Culture; Value-Driven dimension containing Focus on Value and Integrate Sustainability">
+      <rect x="20" y="20" width="186" height="180" rx="14" fill="var(--sea)" opacity="0.10" stroke="var(--sea)" stroke-width="2"/>
+      <text x="113" y="44" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--sea)">Proactive</text>
+      <text x="113" y="60" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">see ahead, build it in</text>
+      <rect x="34" y="78" width="158" height="46" rx="8" fill="#fff" stroke="var(--sea)" stroke-width="1.5"/>
+      <text x="113" y="98" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">Adopt a Holistic</text>
+      <text x="113" y="112" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">View</text>
+      <rect x="34" y="134" width="158" height="46" rx="8" fill="#fff" stroke="var(--sea)" stroke-width="1.5"/>
+      <text x="113" y="154" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">Embed Quality</text>
+
+      <rect x="227" y="20" width="186" height="180" rx="14" fill="var(--forest)" opacity="0.10" stroke="var(--forest)" stroke-width="2"/>
+      <text x="320" y="44" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--forest)">Ownership</text>
+      <text x="320" y="60" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">who's accountable, who decides</text>
+      <rect x="241" y="78" width="158" height="46" rx="8" fill="#fff" stroke="var(--forest)" stroke-width="1.5"/>
+      <text x="320" y="98" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">Be an Accountable</text>
+      <text x="320" y="112" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">Leader</text>
+      <rect x="241" y="134" width="158" height="46" rx="8" fill="#fff" stroke="var(--forest)" stroke-width="1.5"/>
+      <text x="320" y="150" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">Build an Empowered</text>
+      <text x="320" y="164" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">Culture</text>
+
+      <rect x="434" y="20" width="186" height="180" rx="14" fill="var(--mango)" opacity="0.12" stroke="var(--mango)" stroke-width="2"/>
+      <text x="527" y="44" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#B45F04">Value-Driven</text>
+      <text x="527" y="60" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">why any of this is worth doing</text>
+      <rect x="448" y="78" width="158" height="46" rx="8" fill="#fff" stroke="var(--mango)" stroke-width="1.5"/>
+      <text x="527" y="98" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">Focus on Value</text>
+      <rect x="448" y="134" width="158" height="46" rx="8" fill="#fff" stroke="var(--mango)" stroke-width="1.5"/>
+      <text x="527" y="150" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">Integrate</text>
+      <text x="527" y="164" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="600" fill="var(--ink)">Sustainability</text>
+    </svg>
+    <div class="demo-caption">Modules 2–7 take these six in turn — two Proactive, two Ownership, two Value-Driven.</div>
+  </div>
+
+  <h2 class="sh">How to Use a Principle</h2>
+  <p>A principle isn't a task on a plan — it's a lens you hold up to a decision that the 40 processes don't fully resolve. Take a mundane example: a team debating whether to add a "nice to have" feature to the Fairview library's membership platform two weeks before launch.</p>
+  <ul class="bl">
+    <li><strong>Focus on Value</strong> asks: does this feature move the needle on the outcomes we actually promised the funder, or does it just feel good to ship?</li>
+    <li><strong>Embed Quality</strong> asks: can we build this without weakening the quality of what's already tested and stable?</li>
+    <li><strong>Adopt a Holistic View</strong> asks: how does this ripple into the launch-week staff training, the support team's workload, the other half-finished features waiting on the same developers?</li>
+  </ul>
+  <p>Three different lenses on the same one decision — and PMBOK 8 expects you to hold more than one at a time, not pick your favorite and ignore the rest.</p>
+
+  <div class="callout">
+    <strong>The core distinction:</strong> the 7 performance domains (Parts 3–6) tell you <em>what work</em> to do. The 6 principles tell you <em>how to decide</em> when that work gets ambiguous, contested, or politically loaded — which is most of the time that actually matters.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A project manager is trying to decide whether to escalate a stalled scope disagreement to the sponsor or let the team resolve it themselves. Is this primarily a "principles" question or a "performance domain" question?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! There's no process that tells you exactly when to escalate versus empower a team to decide — that's a judgment call shaped by principles like Accountable Leadership and Empowered Culture, not a specific domain's technical process.">Principles — there's no single process that tells you exactly when to escalate vs. empower</button>
+        <button class="q-option" data-correct="false" data-explanation="While scope is a real domain (Part 4), the specific question here isn't about defining or measuring scope — it's about who should make the call, which is a leadership/principles question.">The Scope domain — it's fundamentally a scope-definition question</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Which mindset dimension does "Integrate Sustainability" belong to, and why?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Ownership pairs Accountable Leadership with Empowered Culture — both about who decides and who's accountable, not about long-term worth.">Ownership — because sustainability requires someone to own it</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Value-Driven pairs Focus on Value with Integrate Sustainability — both ultimately ask 'is this worth doing, accounting for its full cost, including long-term and non-financial cost?'">Value-Driven — it's paired with Focus on Value because both ask whether something is truly worth doing</button>
+        <button class="q-option" data-correct="false" data-explanation="Proactive pairs Holistic View with Embed Quality — about seeing ahead and building things in early, not about long-term worth per se.">Proactive — because sustainability requires planning ahead</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team treats "Focus on Value" as a one-time checkbox ticked at project kickoff, then never revisits it. What's the problem with this approach?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Principles are meant to be held up as an ongoing lens on live decisions — value can (and does) shift as a project proceeds, and a principle applied once at kickoff and forgotten stops doing its job.">Principles are decision lenses meant to be applied continuously, not one-time checklist items ticked off once</button>
+        <button class="q-option" data-correct="false" data-explanation="The issue isn't documentation format — it's treating an ongoing decision-making lens as a single point-in-time task, regardless of how it's recorded.">Nothing is wrong, as long as it's documented in the charter</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – ADOPT A HOLISTIC VIEW
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 08</div>
+  <h1 class="mod-title">Adopt a <span class="acc">Holistic View</span></h1>
+  <p class="mod-lede">A project is never actually isolated, no matter how cleanly its charter is scoped. It sits inside an organization, a market, a community, and a web of other projects competing for the same people and money. This principle asks you to see — and manage — those connections deliberately, not by accident when they blow up.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What "systems thinking" means in practical, non-academic terms</li>
+      <li>The categories of interdependency a holistic view forces you to check</li>
+      <li>How ignoring this principle produces "successful" projects that damage the wider organization</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Project Doesn't Exist in Isolation</h2>
+  <p>Every project sits inside a system: the organization's strategy, its other in-flight projects competing for the same specialists, the community and market it touches, the regulatory environment, and the operations that will eventually inherit whatever the project produces. A holistic view means actively scanning these connections, not just the tasks inside your own WBS.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">A project's system of connections</div>
+    <svg class="demo-svg" viewBox="0 0 620 320" role="img" aria-label="A central project node connected by bidirectional arrows to five surrounding nodes: organizational strategy, other competing projects, the community and market, vendors and suppliers, and operations that will inherit the deliverable">
+      <circle cx="310" cy="160" r="58" fill="var(--acc)" opacity="0.9"/>
+      <text x="310" y="155" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#fff">Your</text>
+      <text x="310" y="172" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#fff">Project</text>
+
+      <g font-family="var(--fb)" font-size="9.5" fill="var(--ink)">
+        <circle cx="310" cy="40" r="46" fill="none" stroke="var(--sea)" stroke-width="2"/>
+        <text x="310" y="36" text-anchor="middle" font-weight="700" fill="var(--sea)">Org</text>
+        <text x="310" y="49" text-anchor="middle" font-weight="700" fill="var(--sea)">Strategy</text>
+
+        <circle cx="80" cy="90" r="46" fill="none" stroke="var(--forest)" stroke-width="2"/>
+        <text x="80" y="86" text-anchor="middle" font-weight="700" fill="var(--forest)">Other</text>
+        <text x="80" y="99" text-anchor="middle" font-weight="700" fill="var(--forest)">Projects</text>
+
+        <circle cx="80" cy="240" r="46" fill="none" stroke="var(--mango)" stroke-width="2"/>
+        <text x="80" y="236" text-anchor="middle" font-weight="700" fill="#B45F04">Community</text>
+        <text x="80" y="249" text-anchor="middle" font-weight="700" fill="#B45F04">&amp; Market</text>
+
+        <circle cx="540" cy="90" r="46" fill="none" stroke="var(--mawar)" stroke-width="2"/>
+        <text x="540" y="86" text-anchor="middle" font-weight="700" fill="var(--mawar)">Vendors &amp;</text>
+        <text x="540" y="99" text-anchor="middle" font-weight="700" fill="var(--mawar)">Suppliers</text>
+
+        <circle cx="540" cy="240" r="46" fill="none" stroke="var(--tomato)" stroke-width="2"/>
+        <text x="540" y="236" text-anchor="middle" font-weight="700" fill="var(--tomato)">Future</text>
+        <text x="540" y="249" text-anchor="middle" font-weight="700" fill="var(--tomato)">Operations</text>
+      </g>
+
+      <g stroke="var(--ink)" stroke-width="1.5" opacity="0.6" fill="none">
+        <line x1="290" y1="106" x2="292" y2="84"/>
+        <line x1="264" y1="128" x2="118" y2="104"/>
+        <line x1="264" y1="192" x2="118" y2="216"/>
+        <line x1="356" y1="128" x2="502" y2="104"/>
+        <line x1="356" y1="192" x2="502" y2="216"/>
+      </g>
+    </svg>
+    <div class="demo-caption">Five connections a holistic view keeps checking — none of them show up in a typical WBS, but every one of them can sink a "well-executed" project.</div>
+  </div>
+
+  <div class="callout blue">
+    <strong>Fairview case:</strong> the library renovation looks self-contained — until you notice construction noise will disrupt the neighboring small-business strip during peak season, the new IT platform shares a vendor contract with two other city departments' projects, and the philanthropic funder's other grantee (a jobs program) is expecting to co-host classes in the new maker-lab space. None of that is "in scope" on paper. All of it is a holistic view's job to surface early.
+  </div>
+
+  <div class="callout tomato">
+    <strong>What ignoring this looks like:</strong> a "successfully delivered" project that quietly broke a dependency nobody checked — the new system that works perfectly but wasn't cleared with the department it now competes with for server budget; the on-time construction that alienated the neighbors who'll now oppose the next city project. Local success, systemic cost.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A project team hits every milestone in its charter, but the finished system turns out to duplicate a tool another department already built last year. Which principle would have caught this earlier?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Scanning for other in-flight and existing organizational work — 'other projects' in the systems diagram — is exactly what a holistic view is meant to catch before it becomes a wasted rebuild.">Adopt a Holistic View — checking for existing/overlapping organizational work before building</button>
+        <button class="q-option" data-correct="false" data-explanation="Embed Quality is about the built-in quality of what you produce, not about scanning the wider organization for overlapping efforts.">Embed Quality — the tool's own build quality was the issue</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A construction project schedules noisy work during a neighboring business's busiest season without checking, causing a formal complaint. Which system connection was missed?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is exactly the community/market connection a holistic view is meant to actively scan, not just the internal WBS.">Community &amp; market — the project's effect on its surrounding neighborhood</button>
+        <button class="q-option" data-correct="false" data-explanation="This scenario doesn't describe a vendor or supplier issue — it's about the project's external impact on the surrounding community.">Vendors &amp; suppliers — a procurement timing issue</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why can a project be a "local success" (on time, on budget, meets its charter) and still be a systemic failure?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A charter only captures the project's own boundary. A holistic view catches costs and conflicts that fall outside that boundary but still damage the wider organization or community — the exact gap a narrow, charter-only focus misses.">Because the charter only defines the project's own boundary, and damage outside that boundary doesn't show up in charter-based success metrics</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't primarily a documentation-quality problem — even a well-written charter, by design, only covers the project's own scope, not its ripple effects on the wider system.">It can't — a well-written charter always prevents this</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – FOCUS ON VALUE
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 08</div>
+  <h1 class="mod-title">Focus on <span class="acc">Value</span></h1>
+  <p class="mod-lede">Part 1 drew the line between output, outcome, benefit, and value once. This principle is what makes you keep checking it — continuously, not just at kickoff — because the honest answer to "is this still worth doing" can change mid-project, and most teams only ever ask it once.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why "focus on value" has to be a running question, not a kickoff formality</li>
+      <li>How to weigh competing definitions of value across different stakeholders</li>
+      <li>A concrete technique for stress-testing a feature or scope decision against value</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Value Is a Question You Keep Asking</h2>
+  <p>Most projects establish a business case once, get it approved, and then treat "why are we doing this" as settled. But markets shift, budgets get cut, a competitor ships first, or the assumption behind the original business case turns out to be wrong three months in. Focus on Value means re-asking the value question at every major decision point — not to second-guess everything endlessly, but to catch the moment when a project that made sense at kickoff stops making sense.</p>
+
+  <h2 class="sh">Whose Value, Exactly?</h2>
+  <p>Value isn't a single number everyone agrees on. The library's funder defines value as measurable digital-inclusion outcomes. The city council defines it as constituent satisfaction and re-election optics. The library staff define it as a workable, sustainable workload. A construction contractor defines it partly as a healthy margin. None of these are wrong — but if you don't name them explicitly, "focus on value" quietly becomes "focus on whichever stakeholder is loudest," which is a much worse principle.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Stress-testing a scope decision against value</div>
+    <table class="pm-table">
+      <thead><tr><th>Proposed addition</th><th>Whose value does it serve?</th><th>Cost to add now</th><th>Decision</th></tr></thead>
+      <tbody>
+        <tr><td>3D printer in maker-lab</td><td>Funder's digital-inclusion metric; staff excitement</td><td>Low — fits existing budget line</td><td class="hl">Keep</td></tr>
+        <tr><td>Rooftop community garden</td><td>Council's optics; not in funder's outcome metrics</td><td>High — new structural review needed</td><td class="hl">Defer to Phase 2</td></tr>
+        <tr><td>Extra self-checkout kiosk</td><td>Staff workload relief; minor funder relevance</td><td>Moderate — delays platform testing by a week</td><td class="hl">Negotiate: swap for a lower-value platform feature</td></tr>
+      </tbody>
+    </table>
+    <div class="demo-caption">Naming whose value a decision serves turns a vague "is this worth it?" into an answerable question.</div>
+  </div>
+
+  <div class="callout mango">
+    <strong>It depends, honestly:</strong> there's no formula that outputs "add this feature, skip that one." The point of the exercise above isn't precision — it's making the tradeoff, and whose interests it serves, visible enough to argue about openly instead of deciding by momentum or whoever's in the room.
+  </div>
+
+  <div class="callout tomato">
+    <strong>The trap:</strong> "value" is also the easiest word to weaponize. Any stakeholder can justify almost anything by asserting it "adds value" without specifying to whom, measured how. If a value claim can't name the specific stakeholder and the specific outcome it improves, treat it as unverified, not settled.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">Three months into a project, the market shifts and the original business case's core assumption no longer holds — but the team keeps executing the original plan because "it was approved." What does Focus on Value actually call for here?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Focus on Value is a continuous question, not a one-time approval. When a founding assumption breaks, the principle calls for re-raising the value question to the sponsor/governance level — not silently continuing because a stale approval exists.">Re-raise the value question to the sponsor or governance level, since the original justification may no longer hold</button>
+        <button class="q-option" data-correct="false" data-explanation="Treating initial approval as permanently settled is exactly the failure mode this principle exists to prevent — value has to be re-checked, not assumed forever.">Nothing — an approved business case doesn't need to be revisited once work has started</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A stakeholder insists a feature "obviously adds value" but can't say to whom or what metric it improves. How should this claim be treated?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! An unspecified value claim — no named stakeholder, no named outcome — is exactly the pattern this module warns against. It needs to be made specific before it can be weighed against other priorities.">As unverified — ask them to name the specific stakeholder and outcome before weighing it against other priorities</button>
+        <button class="q-option" data-correct="false" data-explanation="Accepting an unspecified value claim at face value is precisely how 'focus on value' degrades into 'focus on whoever's loudest.'">As settled — if a stakeholder says it adds value, that's sufficient justification</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does this module insist on naming "whose value" a decision serves, rather than treating value as one shared number everyone agrees on?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Different legitimate stakeholders (funder, council, staff, contractor) can define value differently and all be right from their own vantage point — naming whose value is at stake turns a vague debate into a specific, arguable tradeoff.">Because different stakeholders can legitimately define value differently, and naming whose value is at stake makes the tradeoff explicit instead of hidden</button>
+        <button class="q-option" data-correct="false" data-explanation="The point isn't to rank stakeholders by importance — it's to make explicit that value is multi-dimensional, so competing claims can be argued honestly instead of assumed to be the same thing.">Because some stakeholders' opinions don't count and should be filtered out</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – EMBED QUALITY
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 08</div>
+  <h1 class="mod-title">Embed <span class="acc">Quality</span></h1>
+  <p class="mod-lede">Quality that's inspected in at the end is quality that's already too expensive. This principle asks you to build correctness, fitness for purpose, and standards compliance into the work itself from the first day — not to catch defects later, but to make them rarer in the first place.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why the cost of a defect escalates the later it's caught</li>
+      <li>The difference between quality control (inspecting) and quality assurance (preventing)</li>
+      <li>What "embedding" quality looks like day to day, not just at a final review</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Prevention Beats Inspection</h2>
+  <p>It's a well-established rule of thumb in quality management, not a PMI-specific formula: the cost of fixing a defect rises the later it's caught. A requirements misunderstanding caught in a planning conversation costs a conversation. The same misunderstanding caught after the feature ships costs a rebuild, a support burden, and — depending on what it is — real damage to trust.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Cost escalates the later a defect is caught</div>
+    <svg class="demo-svg" viewBox="0 0 560 220" role="img" aria-label="A staircase bar chart with four increasingly tall bars labeled Prevention, Appraisal, Internal Failure, and External Failure, illustrating that catching a defect later costs progressively more">
+      <rect x="40" y="164" width="100" height="30" fill="var(--forest)"/>
+      <text x="90" y="184" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#fff" font-weight="600">Prevention</text>
+
+      <rect x="170" y="134" width="100" height="60" fill="var(--sea)"/>
+      <text x="220" y="168" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#fff" font-weight="600">Appraisal</text>
+
+      <rect x="300" y="90" width="100" height="104" fill="var(--mango)"/>
+      <text x="350" y="145" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff" font-weight="600">Internal</text>
+      <text x="350" y="158" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff" font-weight="600">Failure</text>
+
+      <rect x="430" y="34" width="100" height="160" fill="var(--tomato)"/>
+      <text x="480" y="112" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff" font-weight="600">External</text>
+      <text x="480" y="125" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff" font-weight="600">Failure</text>
+
+      <line x1="30" y1="194" x2="540" y2="194" stroke="var(--ink)" stroke-width="2"/>
+      <text x="285" y="212" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="var(--muted)">caught earlier ————————————————→ caught later (or by the customer)</text>
+    </svg>
+    <div class="demo-caption">Heights are illustrative, not exact multipliers — the point is the direction: prevention is reliably cheaper than any form of catching a defect after the fact.</div>
+  </div>
+
+  <h2 class="sh">Quality Assurance vs. Quality Control</h2>
+  <ul class="bl">
+    <li><strong>Quality assurance</strong> — proactive. Building the process, standards, and habits that prevent defects: code review, a requirements walkthrough, a construction checklist followed before pouring concrete.</li>
+    <li><strong>Quality control</strong> — reactive. Inspecting the output after it's produced to catch what got through: testing, a final walkthrough, an inspector's sign-off.</li>
+  </ul>
+  <p>Both are necessary. The principle's point is that a project relying mostly on quality control — catching problems at the end — is already paying the expensive tax this diagram illustrates. Embedding quality means shifting the weight toward assurance, earlier.</p>
+
+  <div class="callout green">
+    <strong>Good practice, Fairview case:</strong> the platform team runs a short requirements walkthrough with actual library staff before writing code for the membership sign-up flow — catching "seniors need a paper fallback option, not everyone has an email address" as a five-minute conversation, instead of as a support crisis after launch.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A team only tests software right before launch, relying entirely on a final QA pass to catch problems. What does "embed quality" say about this approach?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is quality control (inspection) alone, with no quality assurance (prevention) earlier in the process — exactly the pattern that pushes defect-catching to the most expensive, latest possible point.">It over-relies on quality control (inspection) with no quality assurance (prevention) built in earlier</button>
+        <button class="q-option" data-correct="false" data-explanation="A final QA pass alone is inspection, not prevention — the module's whole point is that inspection-only is the expensive, late-catching pattern to avoid.">It's a solid approach, since a thorough final QA pass catches everything that matters</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A construction crew reviews the blueprint with the client before pouring the foundation, catching a room-size mismatch early. Is this quality assurance or quality control?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Reviewing before the (expensive, hard-to-reverse) work happens is proactive prevention — quality assurance — not inspection of already-completed work.">Quality assurance — it's a proactive check before the costly, hard-to-reverse work happens</button>
+        <button class="q-option" data-correct="false" data-explanation="Quality control means inspecting output that's already been produced — this example happens before the foundation is poured, which is prevention, not inspection.">Quality control — it's inspecting the plan for defects</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the cost-of-quality staircase diagram matter to a project manager's day-to-day decisions, not just to quality specialists?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! It's a direct argument for spending time on early reviews, walkthroughs, and prevention habits — time that often feels like it's 'slowing down' delivery but is reliably cheaper than the alternative of catching the same issue later.">It justifies spending time on early reviews and prevention habits, even when that time feels like it's slowing delivery down</button>
+        <button class="q-option" data-correct="false" data-explanation="The diagram isn't about staffing headcount for a dedicated QA team — it's a general argument about when in a project's timeline a defect is cheapest to catch, relevant to any role making a scheduling or process tradeoff.">It only matters for deciding how many dedicated QA staff to hire</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – BE AN ACCOUNTABLE LEADER
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 08</div>
+  <h1 class="mod-title">Be an <span class="acc">Accountable Leader</span></h1>
+  <p class="mod-lede">Leadership, in PMBOK 8's framing, is a behavior — not a title. Anyone on a project can lead in a given moment. Accountability is what makes that leadership trustworthy: owning the outcome, not just claiming the credit or dodging the blame.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why PMBOK 8 treats leadership as a behavior anyone can show, not a job title</li>
+      <li>What accountability actually means when work is delegated</li>
+      <li>Why psychological safety is a practical leadership tool, not a soft nicety</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Leadership Isn't a Title</h2>
+  <p>A junior team member who flags a risk nobody else noticed, and pushes until it gets addressed, is leading in that moment — regardless of their position on the org chart. A project manager who never does that, and only manages tasks, is not. PMBOK 8's principle is explicit that leadership behaviors — setting direction, unblocking others, making a hard call when nobody else will — can and should come from anywhere on the team.</p>
+
+  <h2 class="sh">Accountability Survives Delegation</h2>
+  <p>Delegating a task doesn't delegate accountability for the outcome. A project manager who hands off the vendor negotiation still owns the result if it goes badly — "I delegated it" is not a defense, it's a description of how the failure happened. Accountable leadership means the person ultimately answerable for an outcome stays answerable, even when the doing is spread across the team.</p>
+
+  <h2 class="sh">Psychological Safety Is a Leadership Tool, Not a Nicety</h2>
+  <p>A team member won't flag a risk, admit a mistake, or challenge a bad assumption if doing so has historically been punished, ignored, or embarrassing. Psychological safety — the confidence that raising a hard truth won't be held against you — is what makes the "leadership from anywhere" idea above actually work in practice. Without it, the person best positioned to catch a problem early stays quiet, and it surfaces later, more expensively (see Module 4).</p>
+
+  <div class="callout">
+    <strong>The test:</strong> the last time someone on your team raised a problem, was the visible response "thank you for catching this" or something that made the next person think twice before speaking up? Teams answer this question through repeated behavior, not through a stated value on a slide.
+  </div>
+
+  <div class="callout tomato">
+    <strong>The trap:</strong> a leader who takes credit for team wins but assigns individual blame for team failures is training the team to hide problems, not surface them — the opposite of accountable leadership, even if every individual decision along the way looked reasonable in isolation.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">A project manager delegates a vendor negotiation to a team member, who negotiates a bad contract. The PM tells the sponsor "that wasn't my decision." What does accountable leadership say about this response?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Delegating the task doesn't delegate accountability for the outcome — the PM remains answerable to the sponsor for the result, regardless of who did the actual negotiating.">It's a failure of accountability — delegating the task doesn't delegate ownership of the outcome</button>
+        <button class="q-option" data-correct="false" data-explanation="Delegation legitimately assigns the work, but PMBOK 8's principle is explicit that it does not transfer accountability for the result away from the person who delegated it.">It's correct — once delegated, accountability transfers fully to whoever did the work</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A junior developer notices a security flaw nobody else caught and pushes until it's fixed, even though it's not their job title's responsibility. Is this "leadership" under PMBOK 8's principle?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! PMBOK 8 explicitly frames leadership as a behavior anyone can demonstrate, not something reserved for people with a specific title — this is a clean example of leadership from outside the formal PM role.">Yes — leadership is framed as a behavior anyone can show, regardless of job title</button>
+        <button class="q-option" data-correct="false" data-explanation="This directly contradicts the principle's framing — leadership isn't reserved for those with 'leader' or 'manager' in their title.">No — only people with a formal leadership title can be said to be leading</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does this module call psychological safety "a practical leadership tool, not a soft nicety"?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Without safety, people best positioned to catch problems early stay quiet — and per Module 4's cost-of-quality logic, that means problems surface later and more expensively. Safety is what makes early catching actually happen.">Because without it, people won't raise risks or mistakes early, so problems get caught later — at a higher cost, per Module 4</button>
+        <button class="q-option" data-correct="false" data-explanation="The argument isn't about morale scores or engagement surveys — it's a direct, mechanical link to whether problems get surfaced early or late.">Because it improves scores on employee engagement surveys</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – INTEGRATE SUSTAINABILITY
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 08</div>
+  <h1 class="mod-title">Integrate <span class="acc">Sustainability</span></h1>
+  <p class="mod-lede">There's no dedicated "Sustainability" performance domain in PMBOK 8 — and that's deliberate. This principle's entire point is that sustainability isn't a separate workstream you bolt on. It's a lens applied inside every domain's decisions: governance, scope, schedule, finance, stakeholders, resources, and risk, all at once.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why sustainability has no dedicated domain, and what that implies about how to apply it</li>
+      <li>The environmental, social, economic, and governance dimensions it actually covers</li>
+      <li>How this principle threads through decisions in the domains covered in Parts 3–6</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Why No Dedicated Domain?</h2>
+  <p>If sustainability were its own domain, it would be easy to treat it as one team's job — "the sustainability workstream" — and let everyone else optimize their own domain without it. Making it a principle instead forces every domain's decisions to run through the same filter: the Finance module's budget decisions, the Resources module's staffing choices, the Schedule module's sequencing — all of it gets a sustainability lens, not just a dedicated sub-team.</p>
+
+  <h2 class="sh">Four Dimensions</h2>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🌱</div>
+      <h4>Environmental</h4>
+      <p>Resource use, waste, emissions, and the physical footprint of what the project builds or consumes.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🤝</div>
+      <h4>Social</h4>
+      <p>Effects on workers, communities, and the people who'll use (or be excluded from) what the project produces.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">💵</div>
+      <h4>Economic</h4>
+      <p>Whether the value created is durable — does it hold up past project closure, or does it quietly cost more later?</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">📋</div>
+      <h4>Governance</h4>
+      <p>Whether decisions were made transparently and can withstand scrutiny — ties directly back to organizational governance from Part 1.</p>
+    </div>
+  </div>
+
+  <div class="callout blue">
+    <strong>Fairview case, threaded through domains:</strong> Governance — the renovation contract requires transparent, auditable vendor selection (governance dimension). Finance — energy-efficient HVAC costs more upfront but lowers the library's operating budget for decades (economic dimension, previewing Part 5). Resources — construction scheduling avoids peak pollen/heat months to protect worker health (social dimension, previewing Part 5). None of this needed a separate "sustainability workstream" — it's the same domain decisions, filtered through one more lens.
+  </div>
+
+  <div class="callout mango">
+    <strong>It depends, on the project:</strong> the weight each dimension deserves varies hugely by context — a one-week internal report and a 40-year piece of infrastructure don't carry the same sustainability stakes. Tailoring (Part 1, Module 3) applies here too: apply the lens proportionally, not identically, to every project.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 6</div>
+
+    <div class="q-card">
+      <p class="q-text">A project team assumes sustainability is "not their job" because there's no sustainability domain assigned to them and no dedicated sustainability specialist on the team. What does this module say about that assumption?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The absence of a dedicated domain is deliberate — it's meant to make sustainability everyone's lens across every domain's decisions, not nobody's job because no one owns a dedicated workstream.">It's a misreading — the lack of a dedicated domain means sustainability applies inside every domain's decisions, not that nobody owns it</button>
+        <button class="q-option" data-correct="false" data-explanation="This is exactly the failure mode the module warns against — treating the absence of a dedicated domain as license to ignore the principle entirely.">It's correct — without a dedicated domain or specialist, sustainability isn't really actionable</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Choosing more expensive, energy-efficient HVAC now to lower a building's operating costs for the next 30 years is an example of which sustainability dimension?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="This isn't primarily about transparent decision-making processes — it's a durable cost/value tradeoff over time.">Governance — it's about the decision-making process</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Weighing upfront cost against long-term durable value is squarely the economic dimension of sustainability.">Economic — it weighs upfront cost against durable long-term value</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does this module say sustainability should be applied "proportionally, not identically" across different projects?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is the tailoring principle applied to sustainability specifically — a 40-year infrastructure project and a one-week internal report don't carry the same sustainability stakes, so the depth of attention should scale with the project's actual footprint.">Because tailoring means the depth of attention should scale with a project's actual stakes and footprint, not be applied uniformly regardless of context</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't a statement about legal enforceability — it's about matching effort to a project's actual scale and impact, consistent with the tailoring principle from Part 1.">Because sustainability requirements are only legally required for certain project types</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – BUILD AN EMPOWERED CULTURE
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">Module 07 / 08</div>
+  <h1 class="mod-title">Build an <span class="acc">Empowered Culture</span></h1>
+  <p class="mod-lede">A team that has to escalate every small decision to the project manager is slow, and it's slow by design — the design just wasn't intentional. This principle is about deliberately pushing decision rights down to the people closest to the work, and building the conditions that let them use that authority well.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What "empowerment" means in concrete, decision-rights terms — not just a motivational slogan</li>
+      <li>Why empowerment and accountability (Module 5) have to travel together</li>
+      <li>How the six principles work as one system, not six separate checkboxes</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Empowerment Is a Decision-Rights Question</h2>
+  <p>"Empowered culture" sounds soft, but it has a concrete test: for a given category of decision, who's actually allowed to make the call without asking permission first? A team that's empowered to decide its own daily task order, but has to escalate every $200 purchase, has real but narrow empowerment. A team that can approve its own minor scope trade-offs within a defined budget envelope has more. Neither is automatically right — the correct amount depends on the team's track record and the decision's blast radius — but it should be a deliberate choice, not an accident of who happened to be in the room when authority quietly calcified around one person.</p>
+
+  <h2 class="sh">Empowerment Needs Accountability's Partner</h2>
+  <p>Empowerment without accountability drifts into chaos — decisions made with no one answerable for the outcome. Accountability without empowerment (Module 5, on its own) produces leaders who own outcomes they never had real authority to shape. The two principles are paired in the same mindset dimension for exactly this reason: they only work together.</p>
+
+  <div class="callout green">
+    <strong>Good practice:</strong> the Fairview platform team is explicitly empowered to make any UI/UX call within the approved design system without sign-off, but must escalate anything touching the sign-up flow's data collection — because one is low blast-radius and reversible, the other touches privacy commitments made to the funder. The boundary was set on purpose, not discovered by accident when someone got in trouble.
+  </div>
+
+  <h2 class="sh">The Six, Working Together</h2>
+  <p>None of the six principles works well in isolation — they're meant to be held simultaneously, checking each other. A team with Empowered Culture but no Accountable Leadership drifts. A team with Focus on Value but no Holistic View optimizes locally and damages the wider system. A team with Embed Quality but no Empowered Culture builds a great product too slowly because every decision waits for permission.</p>
+
+  <table class="pm-table">
+    <thead><tr><th>Principle</th><th>Dimension</th><th>What it changes about a daily decision</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Adopt a Holistic View</td><td>Proactive</td><td>Checks the decision against the wider system before committing</td></tr>
+      <tr><td class="hl">Embed Quality</td><td>Proactive</td><td>Builds correctness in early instead of inspecting for it later</td></tr>
+      <tr><td class="hl">Be an Accountable Leader</td><td>Ownership</td><td>Keeps someone genuinely answerable for the outcome</td></tr>
+      <tr><td class="hl">Build an Empowered Culture</td><td>Ownership</td><td>Pushes the decision right to whoever's closest to the work</td></tr>
+      <tr><td class="hl">Focus on Value</td><td>Value-Driven</td><td>Re-tests whether the decision still serves a real, named outcome</td></tr>
+      <tr><td class="hl">Integrate Sustainability</td><td>Value-Driven</td><td>Weighs the decision's environmental, social, economic and governance cost</td></tr>
+    </tbody>
+  </table>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 7</div>
+
+    <div class="q-card">
+      <p class="q-text">A team can make any decision it likes with no escalation path at all, and nobody is clearly answerable when a decision goes badly. What's missing?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Empowerment without a paired Accountable Leader — someone genuinely answerable for outcomes — drifts into exactly this kind of ungoverned chaos.">Accountable Leadership — empowerment without accountability drifts into no one owning outcomes</button>
+        <button class="q-option" data-correct="false" data-explanation="This scenario is specifically about empowerment running unchecked, not about the wider organizational system — Holistic View isn't the missing piece here.">Holistic View — the team isn't checking the wider organizational system</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A project manager takes personal responsibility for every outcome but never lets the team make an independent decision, even small reversible ones. What's likely to suffer?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is Accountable Leadership without its Ownership-dimension partner, Empowered Culture — decisions bottleneck through one person, slowing everything down even when the decisions themselves are sound.">Speed and team growth — decisions bottleneck through one person instead of being pushed to whoever's closest to the work</button>
+        <button class="q-option" data-correct="false" data-explanation="This scenario is about decision-rights concentration, not primarily about whether individual decisions are technically correct.">Decision accuracy — decisions made by one experienced person are inherently less correct</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does this module insist the six principles must be "held simultaneously," rather than applied one at a time as separate checklist items?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! As the table and examples show, each principle checks a blind spot the others don't cover — dropping any one of them (e.g. Value without Holistic View, or Empowerment without Accountability) predictably produces a specific, describable failure mode.">Because each principle checks a specific blind spot the others don't — dropping any one predictably produces a describable failure mode</button>
+        <button class="q-option" data-correct="false" data-explanation="The claim isn't about certification requirements — it's a substantive argument that the principles function as an interlocking system, each one covering a gap the others leave open.">Because PMI requires all six to be documented together for certification purposes</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="7">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 8 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-8" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">Same caveat as Part 1: PMBOK 8 is a paywalled standard, so the exact principle names and the practitioner-survey figure behind their consolidation are drawn from corroborated public reporting, not quoted from the standard directly.</p>
+
+  <div class="ref-group-label">The Standard Itself</div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Project Management Institute. <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide) — Eighth Edition, and The Standard for Project Management</em>. Newtown Square, PA: Project Management Institute, 2025/2026.</div>
+    <div class="ref-annotation">The primary source for the six principles covered in this part. Paywalled — not reproduced or quoted verbatim here.</div>
+    <a class="ref-link" href="https://www.pmi.org/standards/pmbok" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Independent Analysis (secondary sources, cross-corroborated)</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Mudassir Iqbal. "The 6 Core Principles of PMBOK® 8 Explained." mudassiriqbal.net, 2026.</div>
+    <div class="ref-annotation">Source for the exact wording of the six principles and their grouping into the Proactive / Ownership / Value-Driven mindset dimensions used throughout this part. Cross-checked against the other independent sources below.</div>
+    <a class="ref-link" href="https://mudassiriqbal.net/pmbok-8-six-principles/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">BrainBOK. "PMBOK Guide 7th vs 8th Edition: 6 Principles, 7 Domains, 40 Processes." brainbok.com, 2026.</div>
+    <div class="ref-annotation">Source for the practitioner-survey figure (reported at approximately 48,000 respondents) behind the consolidation from 12 to 6 principles, cited in Module 1. Treat the exact respondent count as a reported secondary figure, not an independently verified primary statistic.</div>
+    <a class="ref-link" href="https://www.brainbok.com/blog/pmp/pmbok-guide-7th-vs-8th-edition-what-has-changed" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Foundational Concepts (edition-stable)</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Crosby, Philip B. <em>Quality Is Free: The Art of Making Quality Certain</em>. New York: McGraw-Hill, 1979.</div>
+    <div class="ref-annotation">The foundational text behind the "prevention beats inspection" cost-of-quality reasoning in Module 4 — Crosby's core argument that investing in prevention costs less than the cumulative cost of appraisal and failure. This course presents the concept qualitatively, not Crosby's specific historical cost figures, which are dated to 1970s manufacturing contexts.</div>
+    <a class="ref-link" href="https://www.mcgraw-hill.com" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the principle names and mindset-dimension groupings in this part are corroborated across two independent secondary sources beyond PMI's own paywalled standard, but should still be treated as pedagogical paraphrase rather than verbatim PMI text. The "~48,000 respondents" survey figure is a reported secondary statistic — cross-check it against PMI's own published methodology before citing it in a professional context. The cost-of-quality diagram in Module 4 is illustrative and qualitative, not a precise multiplier from any specific study.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 2 Complete! 🧭</h2>
+    <p>Six principles, three mindset dimensions, one system: Holistic View and Embed Quality keep you proactive; Accountable Leadership and Empowered Culture keep ownership clear; Focus on Value and Integrate Sustainability keep asking whether it's worth it. Part 3 — Governance — is where you'll see these principles in action inside the standard's biggest domain.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="8">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'pmbok8-part2';
+const TOTAL = 8;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

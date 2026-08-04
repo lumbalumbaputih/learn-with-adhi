@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="pmbok8-part3">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Governance · PMBOK 8, Field-Tested · Learn with Adhi</title>
+<meta name="description" content="Part 3 of PMBOK 8, Field-Tested: the Governance domain — chartering, integration across plans, sourcing and procurement, executing with quality, change control, and closing a project.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-management/pmbok8-part3-governance-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Governance · PMBOK 8, Field-Tested">
+<meta property="og:description" content="Chartering, integration across plans, procurement, executing with quality, change control, and closing.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"PMBOK 8, Field-Tested — Part 3: Governance","description":"Chartering, integration across plans, procurement, executing with quality, change control, and closing.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#1C5DDC; --acc-dim:#154BB3; --acc-bg:rgba(28,93,220,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#5b8cff);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="pmbok8-hub.html">← Series map · Part 3 of 7</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 7 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Starting a Project</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Integration Across Plans</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Sourcing &amp; Procurement</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Executing &amp; Quality Assurance</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Change Control &amp; Monitoring</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Closing a Project</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7">
+      <span class="nav-num">07</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">PMBOK 8 · Part 3</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – STARTING A PROJECT
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 07</div>
+  <h1 class="mod-title">Starting a <span class="acc">Project</span></h1>
+  <p class="mod-lede">Governance is the biggest domain in PMBOK 8 — old "Integration Management" territory, the glue that holds the other six domains together. It starts here: turning an idea into a formally authorized project with a named owner and a defined boundary.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What a business case actually has to justify</li>
+      <li>What a project charter must contain to do its job</li>
+      <li>Why "authorized" is a specific, meaningful word — not a formality</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Business Case</h2>
+  <p>Before a project exists, someone has to justify why it should — and, per Part 1's portfolio logic, why it deserves funding over the other candidates competing for the same budget. A business case names the problem or opportunity, the options considered (including "do nothing"), and the expected value against the cost. It's the document a portfolio decision-maker actually reads before saying yes.</p>
+
+  <h2 class="sh">The Charter: From Idea to Authorized Project</h2>
+  <p>A <strong>project charter</strong> is the document that formally authorizes a project to exist and gives the project manager the authority to apply organizational resources to it. Before the charter is signed, there is no project — just a proposal. After, there's a named sponsor, a defined (if high-level) scope, and a mandate.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">From idea to authorized project</div>
+    <svg class="demo-svg" viewBox="0 0 620 140" role="img" aria-label="A four-step flow: Idea, then Business Case, then Project Charter, then Authorized Project, connected by arrows">
+      <g font-family="var(--fb)" font-size="11" font-weight="700" fill="#fff">
+        <rect x="10" y="40" width="130" height="56" rx="10" fill="var(--muted)"/><text x="75" y="73" text-anchor="middle">Idea</text>
+        <rect x="175" y="40" width="130" height="56" rx="10" fill="var(--sea)"/><text x="240" y="68" text-anchor="middle">Business</text><text x="240" y="82" text-anchor="middle">Case</text>
+        <rect x="340" y="40" width="130" height="56" rx="10" fill="var(--mango)"/><text x="405" y="68" text-anchor="middle">Project</text><text x="405" y="82" text-anchor="middle">Charter</text>
+        <rect x="505" y="30" width="110" height="76" rx="10" fill="var(--acc)"/><text x="560" y="62" text-anchor="middle">Authorized</text><text x="560" y="76" text-anchor="middle" font-size="10">Project</text>
+      </g>
+      <g stroke="var(--ink)" stroke-width="2" fill="none" marker-end="url(#arrow3)">
+        <path d="M140 68 L175 68"/>
+        <path d="M305 68 L340 68"/>
+        <path d="M470 68 L505 68"/>
+      </g>
+      <defs><marker id="arrow3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Only the last step gives the PM real authority — everything before it is still a proposal, however good the idea.</div>
+  </div>
+
+  <h3 class="sub">What a charter must contain</h3>
+  <ul class="bl">
+    <li><strong>Purpose and justification</strong> — the "why," pulled from the business case</li>
+    <li><strong>High-level scope and deliverables</strong> — what's in, roughly, and what's explicitly out</li>
+    <li><strong>Named sponsor and project manager</strong> — who's accountable, who's authorized to act</li>
+    <li><strong>Success criteria</strong> — how "done, and done well" will be judged</li>
+    <li><strong>Key assumptions and constraints</strong> — the ground rules the plan will be built on</li>
+    <li><strong>High-level budget and timeline range</strong> — not the detailed plan yet, just the envelope</li>
+  </ul>
+
+  <div class="callout blue">
+    <strong>Fairview case:</strong> the library's charter names the city's Library Services director as sponsor, sets a $2.4M budget envelope and a hard 14-month deadline tied to the grant, and states success as "renovated facility operational, membership platform live, digital-literacy program running" — without yet specifying exactly which vendor, which construction sequence, or which platform features. That detail comes later, once planning begins in each domain.
+  </div>
+
+  <div class="callout tomato">
+    <strong>The trap:</strong> starting real work — hiring, spending, committing vendors — before the charter is signed. It feels efficient ("we're confident this will get approved") but it means work is happening with no one formally authorized to direct it, no defined budget ceiling, and no agreed success criteria. If it goes wrong, there's no charter to point to for what was actually promised.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A team starts hiring contractors and spending budget on a project idea that hasn't been formally chartered yet, because "everyone agrees it's a good idea." What's the risk?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Without a signed charter, there's no formally authorized scope, budget ceiling, or named accountable sponsor — work is happening with no agreed boundary to manage against if something goes wrong.">Work is happening with no formally authorized scope, budget, or accountable sponsor to manage against</button>
+        <button class="q-option" data-correct="false" data-explanation="Team agreement isn't the same as formal authorization — a charter creates a specific, documented mandate that informal consensus doesn't provide.">None — team consensus is functionally equivalent to a signed charter</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A charter states a $2.4M budget envelope and a 14-month deadline, but doesn't specify which construction vendor will be used or the exact sequence of work. Is this charter incomplete?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A charter sets the high-level envelope — budget range, timeline, scope, success criteria — not the detailed plan. Vendor selection and work sequencing are planning-level detail that comes after chartering, in the relevant domains (Governance's sourcing work, Schedule's sequencing).">No — a charter is meant to set the high-level envelope, not the detailed plan; vendor and sequencing detail comes later</button>
+        <button class="q-option" data-correct="false" data-explanation="Requiring full vendor and sequencing detail at charter stage would conflict with the charter's purpose as a high-level authorization document, not a detailed execution plan.">Yes — a charter must specify every vendor and the full work sequence to be valid</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does a business case need to consider "do nothing" as one of its options, alongside the proposed project?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A business case exists to justify the project against real alternatives — including not acting at all. If 'do nothing' isn't seriously considered, the case can't honestly claim the project is the best use of the funding, only that it's better than nothing was ever asked.">Because the business case has to justify the project against real alternatives, including not acting — otherwise it can't honestly claim to be the best use of funding</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't primarily a procedural formality — it's a substantive requirement to justify spending against genuine alternatives, one of which is always inaction.">It's just a procedural formality PMI requires with no real analytical value</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – INTEGRATION ACROSS PLANS
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 07</div>
+  <h1 class="mod-title">Integration Across <span class="acc">Plans</span></h1>
+  <p class="mod-lede">Part 2's "Adopt a Holistic View" was a mindset. This module is that mindset made mechanical: every domain writes its own subsidiary plan, and someone has to keep all of them pointed at the same project.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why every domain produces its own subsidiary plan, and why that's not redundant</li>
+      <li>How the project management plan integrates them into one coherent whole</li>
+      <li>What breaks when integration is skipped</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Six Plans, One Project</h2>
+  <p>Scope planning produces a scope management plan. Schedule planning produces a schedule management plan. The same is true for finance, resources, stakeholders, and risk (Parts 4–6 cover each in depth). Written in isolation, these plans will contradict each other — the schedule assumes resources the resource plan hasn't actually secured, the budget assumes a scope the requirements aren't finalized on yet. Integration is the ongoing work of reconciling them into one internally consistent <strong>project management plan</strong>.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">One integrated plan, six subsidiary inputs</div>
+    <svg class="demo-svg" viewBox="0 0 620 320" role="img" aria-label="A central Project Management Plan node connected to six subsidiary plan nodes: Scope, Schedule, Finance, Resources, Stakeholders, and Risk, arranged around it">
+      <circle cx="310" cy="160" r="70" fill="var(--acc)" opacity="0.92"/>
+      <text x="310" y="153" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="#fff">Project</text>
+      <text x="310" y="169" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="#fff">Management</text>
+      <text x="310" y="185" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="#fff">Plan</text>
+
+      <g font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">
+        <circle cx="310" cy="34" r="40" fill="var(--forest)"/><text x="310" y="39" text-anchor="middle">Scope</text>
+        <circle cx="130" cy="80" r="40" fill="var(--sea)"/><text x="130" y="85" text-anchor="middle">Schedule</text>
+        <circle cx="90" cy="230" r="40" fill="var(--tomato)"/><text x="90" y="235" text-anchor="middle">Finance</text>
+        <circle cx="240" cy="292" r="40" fill="var(--mango)"/><text x="240" y="297" text-anchor="middle">Resources</text>
+        <circle cx="490" cy="230" r="40" fill="var(--mawar)"/><text x="490" y="228" text-anchor="middle">Stake-</text><text x="490" y="242" text-anchor="middle">holders</text>
+        <circle cx="490" cy="80" r="40" fill="#8B5CF6"/><text x="490" y="85" text-anchor="middle">Risk</text>
+      </g>
+
+      <g stroke="var(--ink)" stroke-width="1.5" opacity="0.55">
+        <line x1="300" y1="94" x2="300" y2="112"/>
+        <line x1="170" y1="100" x2="255" y2="130"/>
+        <line x1="120" y1="200" x2="255" y2="180"/>
+        <line x1="250" y1="262" x2="285" y2="222"/>
+        <line x1="460" y1="210" x2="360" y2="185"/>
+        <line x1="455" y1="105" x2="365" y2="135"/>
+      </g>
+    </svg>
+    <div class="demo-caption">Each subsidiary plan is written by a different lens (Parts 4–6 cover them) — integration is what keeps them from contradicting each other as the project evolves.</div>
+  </div>
+
+  <h2 class="sh">Integration Is Ongoing, Not a One-Time Merge</h2>
+  <p>Integration isn't a single step where six documents get stapled together at the start. It's continuous: every time one subsidiary plan changes — a schedule slip, a budget cut, a new risk — integration is the work of checking what else needs to change to stay consistent. This is the direct, day-to-day expression of Part 2's Holistic View principle: the discipline of always asking "what else does this touch?"</p>
+
+  <div class="callout tomato">
+    <strong>What skipping this looks like:</strong> the schedule team commits to a four-week platform build sprint. Nobody tells the resource plan, which still shows the two senior developers allocated to a different internal project during that exact window. Both plans are individually "correct." The project isn't.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A schedule change is approved without checking whether the budget, staffing, or risk plans need to change too. What has failed?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is exactly what integration is meant to catch — a change in one subsidiary plan rippling into others without anyone checking the connections.">Integration — a change in one subsidiary plan wasn't checked against the others it affects</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't described as a stakeholder-engagement failure specifically — it's a cross-plan consistency failure, which is integration's job to catch.">Stakeholder engagement — the change wasn't communicated to stakeholders</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module insist integration is "ongoing, not a one-time merge"?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Subsidiary plans keep changing throughout a project's life — treating integration as a single kickoff-time event means every later change goes unreconciled.">Because subsidiary plans keep changing throughout the project, and a one-time merge would leave every later change unreconciled</button>
+        <button class="q-option" data-correct="false" data-explanation="Team size isn't the driver here — the need for ongoing integration comes from plans continuing to evolve after the initial merge, regardless of headcount.">Because larger teams require more paperwork than smaller ones</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Two senior developers are shown as available in the resource plan during the exact four-week window the schedule plan has committed them to a platform sprint — and also to a separate internal project. Both plans are individually well-written. What does this scenario illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Both plans can be individually sound and still be jointly inconsistent — that gap is precisely what integration exists to catch and resolve.">Individually correct subsidiary plans can still be jointly inconsistent — which is exactly the gap integration is meant to close</button>
+        <button class="q-option" data-correct="false" data-explanation="The scenario doesn't indicate either document is factually wrong on its own — the problem is the two correct documents were never reconciled against each other.">One of the two plans must simply be factually wrong</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – SOURCING & PROCUREMENT
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 07</div>
+  <h1 class="mod-title">Sourcing &amp; <span class="acc">Procurement</span></h1>
+  <p class="mod-lede">Most real projects buy something — a contractor, a vendor, a specialist consultant. Which contract type you choose isn't a legal footnote; it decides who eats the cost if the work runs over.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The make-or-buy decision, and what actually drives it</li>
+      <li>The three major contract types, and who bears cost-overrun risk under each</li>
+      <li>Why matching contract type to scope certainty matters more than getting the lowest quoted price</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Make or Buy?</h2>
+  <p>Before choosing a contract type, decide whether to build a capability in-house or acquire it externally. The honest drivers are usually: does this capability need to exist permanently inside the organization, or just for this project; is it cheaper to build the skill or rent it; and how much control does the project need over how the work gets done. The Fairview library case makes both calls: the city keeps the community-program design in-house (it needs to persist after the project), and buys the construction and specialized platform development externally (temporary need, specialized skill).</p>
+
+  <h2 class="sh">Three Contract Types, Three Risk Allocations</h2>
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">FP</div>
+      <div class="stat-lbl">Fixed-Price — the seller bears the cost-overrun risk. Best when scope is well defined.</div>
+      <div class="stat-sub">e.g. construction contract</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">CR</div>
+      <div class="stat-lbl">Cost-Reimbursable — the buyer bears the cost-overrun risk. Best when scope is genuinely uncertain.</div>
+      <div class="stat-sub">e.g. R&amp;D-heavy work</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">T&amp;M</div>
+      <div class="stat-lbl">Time &amp; Materials — risk is shared, usually capped by a not-to-exceed clause.</div>
+      <div class="stat-sub">e.g. short, evolving engagements</div>
+    </div>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">Where cost-overrun risk lands</div>
+    <svg class="demo-svg" viewBox="0 0 620 130" role="img" aria-label="A horizontal spectrum bar from Fixed-Price (seller bears risk) on the left through Time and Materials (shared risk) in the middle to Cost-Reimbursable (buyer bears risk) on the right">
+      <defs>
+        <linearGradient id="riskgrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--forest)"/>
+          <stop offset="50%" stop-color="var(--mango)"/>
+          <stop offset="100%" stop-color="var(--tomato)"/>
+        </linearGradient>
+      </defs>
+      <rect x="20" y="34" width="580" height="30" rx="15" fill="url(#riskgrad)"/>
+      <text x="80" y="90" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="var(--ink)">Fixed-Price</text>
+      <text x="80" y="104" text-anchor="middle" font-family="var(--fm)" font-size="8.5" fill="var(--muted)">seller's risk</text>
+      <text x="310" y="90" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="var(--ink)">Time &amp; Materials</text>
+      <text x="310" y="104" text-anchor="middle" font-family="var(--fm)" font-size="8.5" fill="var(--muted)">shared risk</text>
+      <text x="545" y="90" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="var(--ink)">Cost-Reimbursable</text>
+      <text x="545" y="104" text-anchor="middle" font-family="var(--fm)" font-size="8.5" fill="var(--muted)">buyer's risk</text>
+    </svg>
+    <div class="demo-caption">Matching contract type to actual scope certainty avoids the worst outcome: the wrong party holding a risk they can't control.</div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>The classic mistake:</strong> forcing a fixed-price contract onto genuinely uncertain, evolving work (a research-heavy software build) to "control cost." The vendor either pads the price heavily to cover their risk, or cuts corners when reality diverges from the fixed scope — because they, not the buyer, now eat any overrun. Fixed-price only controls cost when the scope really is well defined.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">The Fairview renovation's construction scope (room dimensions, materials, code requirements) is well documented before bidding. Which contract type fits best?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Well-defined, well-documented scope is exactly when fixed-price works well — the contractor can accurately price the known risk.">Fixed-Price — well-defined scope lets the contractor accurately price the risk</button>
+        <button class="q-option" data-correct="false" data-explanation="Cost-reimbursable shifts risk to the buyer, which makes the most sense when scope is genuinely uncertain — not when it's already well documented, as in this scenario.">Cost-Reimbursable — it's always the safer default for the buyer</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A city forces a fixed-price contract onto an experimental, scope-still-evolving AI feature for the platform. The vendor quotes a price 40% higher than a comparable T&amp;M estimate. Why?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Under fixed-price, the vendor bears all cost-overrun risk on genuinely uncertain scope — the higher quote is the vendor pricing in that risk, exactly the mismatch the module warns against.">The vendor is pricing in the cost-overrun risk it now bears, because the scope is genuinely uncertain under a fixed-price structure</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't described as a quality difference — it's a direct consequence of who bears the cost-overrun risk under the chosen contract type.">The vendor is simply offering lower quality for the higher price</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">What determines the make-or-buy decision, according to this module?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module frames make-or-buy around whether the capability needs to persist in the organization, relative cost of building vs. renting the skill, and how much control the project needs — not simply the cheapest quoted price.">Whether the capability needs to persist in the organization, relative cost, and how much control the project needs over the work</button>
+        <button class="q-option" data-correct="false" data-explanation="The module explicitly frames make-or-buy as more than a pure lowest-price comparison — persistence of the capability and control needs matter too.">Purely whichever option has the lowest quoted price</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – EXECUTING & QUALITY ASSURANCE
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 07</div>
+  <h1 class="mod-title">Executing &amp; <span class="acc">Quality Assurance</span></h1>
+  <p class="mod-lede">Planning is where you decide what to do. Executing is where you actually direct and manage the work — and where Part 2's "Embed Quality" principle turns into a repeatable habit, not a one-off inspection.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What "directing and managing project work" actually involves day to day</li>
+      <li>The Plan-Do-Check-Act cycle as a practical embedding technique</li>
+      <li>Where quality assurance activities fit inside execution, not after it</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Directing and Managing the Work</h2>
+  <p>Executing is where the project management plan becomes real activity: assigning work, removing blockers, coordinating across the team, integrating vendor deliverables, and keeping the team oriented toward the plan as reality inevitably deviates from it slightly, every day.</p>
+
+  <h2 class="sh">Plan-Do-Check-Act: Quality as a Habit, Not an Event</h2>
+  <p>The Plan-Do-Check-Act (PDCA) cycle — a long-standing quality-management technique, not a PMI invention — is a simple, repeatable loop for embedding quality during execution rather than inspecting for it afterward: plan a small improvement or standard, do it, check whether it worked, act on what you learned by adjusting the standard. Run continuously, in small loops, instead of once at the end.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The Plan-Do-Check-Act cycle</div>
+    <svg class="demo-svg" viewBox="0 0 400 400" role="img" aria-label="Four boxes arranged in a cycle labeled Plan, Do, Check, and Act, connected by arrows moving clockwise back to Plan">
+      <g font-family="var(--fb)" font-size="13" font-weight="700" fill="#fff">
+        <rect x="150" y="20" width="100" height="60" rx="10" fill="var(--sea)"/><text x="200" y="55" text-anchor="middle">Plan</text>
+        <rect x="300" y="170" width="100" height="60" rx="10" fill="var(--forest)"/><text x="350" y="205" text-anchor="middle">Do</text>
+        <rect x="150" y="320" width="100" height="60" rx="10" fill="var(--mango)"/><text x="200" y="355" text-anchor="middle">Check</text>
+        <rect x="0" y="170" width="100" height="60" rx="10" fill="var(--tomato)"/><text x="50" y="205" text-anchor="middle">Act</text>
+      </g>
+      <g stroke="var(--ink)" stroke-width="2.5" fill="none" marker-end="url(#arrow4)">
+        <path d="M250 55 C 320 70, 350 120, 350 170"/>
+        <path d="M350 230 C 350 280, 300 320, 250 345"/>
+        <path d="M150 355 C 80 335, 50 280, 50 230"/>
+        <path d="M50 170 C 55 110, 100 65, 150 50"/>
+      </g>
+      <defs><marker id="arrow4" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+      <text x="200" y="200" text-anchor="middle" font-family="var(--fm)" font-size="10" fill="var(--muted)">repeat</text>
+    </svg>
+    <div class="demo-caption">A small, continuous loop — not one big quality event at the end of the project.</div>
+  </div>
+
+  <h2 class="sh">Quality Assurance During Execution</h2>
+  <p>Quality assurance activities — process audits, peer reviews, standards checks — belong inside execution, running alongside the work, not scheduled as a separate phase after it. Waiting until "the quality phase" to check anything is exactly the inspection-heavy pattern Part 2's cost-of-quality diagram argued against.</p>
+
+  <div class="callout green">
+    <strong>Good practice, Fairview case:</strong> the construction team runs a short PDCA loop on the first renovated room before proceeding to the rest: plan the finishing technique, do one room, check it against the accessibility and durability standard, act on what's learned before repeating it across the remaining nine rooms — catching a fixable process issue on room one instead of all ten.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A team schedules "the quality phase" as a dedicated block at the very end of the project, after all the building work is done. What does this module say about that plan?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is the inspection-heavy, end-loaded pattern Part 2's cost-of-quality diagram warned against — quality assurance is meant to run continuously alongside execution, not as a separate final phase.">It repeats the expensive, late-catching pattern from Part 2 — quality assurance should run continuously alongside execution, not as a final phase</button>
+        <button class="q-option" data-correct="false" data-explanation="A dedicated end-of-project quality phase is precisely the pattern this module and Part 2's cost-of-quality diagram argue against — it pushes defect-catching to the most expensive point.">It's a solid plan — quality is best checked comprehensively once everything is finished</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A construction crew tests their finishing technique on one room, evaluates it against a standard, and adjusts before repeating it across nine more rooms. Which PDCA step have they just completed by evaluating room one?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Evaluating the result against a standard is the 'Check' step — it comes after 'Do' (building room one) and before 'Act' (adjusting the technique for the remaining rooms).">Check — evaluating the completed room against the standard</button>
+        <button class="q-option" data-correct="false" data-explanation="Plan is the step before doing the work — evaluating an already-completed room is Check, not Plan.">Plan — deciding how to finish the room</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why is PDCA described as a "small, continuous loop" rather than a single big quality event?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Running the loop on a small slice of work first (one room, not all ten) catches problems early and cheaply, consistent with Part 2's cost-of-quality logic — a single big event at the end catches everything late and expensively.">Because catching an issue on a small slice of work early is far cheaper than discovering the same issue across the whole project at the end</button>
+        <button class="q-option" data-correct="false" data-explanation="The point of PDCA's small-loop structure isn't about reducing the total volume of documentation — it's about when in the timeline problems get caught.">Because it reduces the total amount of paperwork required</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – CHANGE CONTROL & MONITORING
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 07</div>
+  <h1 class="mod-title">Change Control &amp; <span class="acc">Monitoring</span></h1>
+  <p class="mod-lede">Plans change. That's not a failure — pretending they won't is. What matters is whether change flows through a deliberate process or happens by accident, one quiet exception at a time.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The integrated change control process, step by step</li>
+      <li>The four categories a change request can fall into</li>
+      <li>Why "monitoring" isn't just watching — it's comparing plan to reality on purpose</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Integrated Change Control Process</h2>
+  <p>A change doesn't get absorbed into the project silently. It goes through a process: someone raises a change request, its impact on scope, schedule, cost, and risk gets assessed, a decision-making body (often called a Change Control Board, or CCB) approves or rejects it, and — if approved — the relevant baselines get formally updated.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The change control process</div>
+    <svg class="demo-svg" viewBox="0 0 640 200" role="img" aria-label="A flow diagram: Change Request leads to Impact Assessment, which leads to a CCB Decision diamond that branches to Rejected (returns to backlog) or Approved (leads to Update Baselines)">
+      <g font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">
+        <rect x="10" y="72" width="120" height="56" rx="10" fill="var(--sea)"/><text x="70" y="96" text-anchor="middle">Change</text><text x="70" y="110" text-anchor="middle">Request</text>
+        <rect x="170" y="72" width="130" height="56" rx="10" fill="var(--mango)"/><text x="235" y="96" text-anchor="middle">Impact</text><text x="235" y="110" text-anchor="middle">Assessment</text>
+      </g>
+      <polygon points="400,60 470,100 400,140 330,100" fill="var(--ink)"/>
+      <text x="400" y="96" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">CCB</text>
+      <text x="400" y="110" text-anchor="middle" font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">Decision</text>
+
+      <rect x="520" y="10" width="110" height="50" rx="10" fill="var(--forest)"/>
+      <text x="575" y="40" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Update</text>
+      <text x="575" y="53" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="#fff">Baselines</text>
+
+      <rect x="520" y="140" width="110" height="50" rx="10" fill="var(--tomato)"/>
+      <text x="575" y="169" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Rejected</text>
+
+      <g stroke="var(--ink)" stroke-width="2" fill="none" marker-end="url(#arrow5)">
+        <path d="M130 100 L170 100"/>
+        <path d="M300 100 L330 100"/>
+        <path d="M440 78 L520 40"/>
+        <path d="M440 122 L520 165"/>
+      </g>
+      <text x="480" y="52" font-family="var(--fb)" font-size="9" fill="var(--forest)" font-weight="700">approved</text>
+      <text x="475" y="150" font-family="var(--fb)" font-size="9" fill="var(--tomato)" font-weight="700">rejected</text>
+      <defs><marker id="arrow5" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">A rejected change isn't necessarily gone forever — it can return later with new information, but it doesn't get quietly absorbed without going through the process.</div>
+  </div>
+
+  <h3 class="sub">Four kinds of change</h3>
+  <table class="pm-table">
+    <thead><tr><th>Type</th><th>What it addresses</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Corrective action</td><td>Realigns work already underway that's drifted from the plan</td></tr>
+      <tr><td class="hl">Preventive action</td><td>Reduces the likelihood of a future deviation before it happens</td></tr>
+      <tr><td class="hl">Defect repair</td><td>Fixes a nonconforming deliverable</td></tr>
+      <tr><td class="hl">Baseline update</td><td>Formally revises the approved scope, schedule, or cost baseline itself</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sh">Monitoring: Comparing Plan to Reality, on Purpose</h2>
+  <p>Monitoring isn't passive observation — it's the deliberate act of comparing actual performance against the plan, on a defined cadence, so drift gets caught while it's still small and cheap to correct (echoing Module 4's PDCA logic). Part 5 covers the specific technique — Earned Value Management — used to quantify exactly how far off track a project is, in both cost and schedule terms.</p>
+
+  <div class="callout mango">
+    <strong>It depends, on the change's size:</strong> not every change needs a full CCB session — a project should tailor change-control formality to the change's blast radius, the same way Part 1 argued for tailoring the life cycle itself. A one-line copy fix doesn't need the same process as a scope-baseline change.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">A team member quietly adds a requested feature without running it through change control, reasoning "it's small, no one will mind." What's the risk, even if the feature itself is harmless?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Bypassing the process means the impact on schedule, cost, and other baselines was never formally assessed — even a harmless-seeming change can have ripple effects (Module 2's integration lesson) that go unchecked when it skips the process.">Its impact on schedule, cost, and other subsidiary plans was never assessed, even if the change itself turns out fine</button>
+        <button class="q-option" data-correct="false" data-explanation="Size alone doesn't determine whether formal assessment is needed — the point of the module's 'it depends' callout is tailoring the level of formality, not skipping assessment entirely for anything that feels small.">None — small changes never need to go through the process</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team catches work that's drifted from the schedule baseline and takes action to realign it with the original plan. What type of change is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Corrective action realigns work already underway that has drifted from the plan — exactly this scenario.">Corrective action — realigning work already underway that's drifted from plan</button>
+        <button class="q-option" data-correct="false" data-explanation="Preventive action addresses a future risk before it happens — this scenario describes work that has already drifted, which corrective action addresses.">Preventive action — reducing the likelihood of a future deviation</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the module say monitoring is "deliberate," not just passive observation?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Monitoring means actively comparing actual performance against the plan on a defined cadence — a deliberate, structured comparison, not casual awareness of how things are going.">Because it means actively comparing actual performance against the plan on a set cadence, not just casually being aware of how things seem to be going</button>
+        <button class="q-option" data-correct="false" data-explanation="The distinction isn't about who's responsible for it — it's about the difference between structured, deliberate comparison and casual, incidental awareness.">Because only senior managers are allowed to monitor a project</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – CLOSING A PROJECT
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Module 06 / 07</div>
+  <h1 class="mod-title">Closing a <span class="acc">Project</span></h1>
+  <p class="mod-lede">Recall Part 1: a project can legitimately end because the goal was achieved, proven impossible, or made unnecessary. Whichever it is, closing isn't just "stop working" — it's a defined set of activities that turns loose ends into a clean handover.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What formal closure actually involves, beyond finishing the last task</li>
+      <li>Why lessons learned belong in the closing sequence, not as an afterthought</li>
+      <li>How closure connects back to operations — the value delivery system's next stage</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Closing Sequence</h2>
+  <div class="demo-box">
+    <div class="demo-label">From final deliverable to archive</div>
+    <svg class="demo-svg" viewBox="0 0 640 140" role="img" aria-label="A five-step flow: Deliverable Accepted, Contracts Closed, Resources Released, Lessons Captured, Archived">
+      <g font-family="var(--fb)" font-size="9.5" font-weight="700" fill="#fff">
+        <rect x="0" y="40" width="118" height="56" rx="10" fill="var(--forest)"/><text x="59" y="64" text-anchor="middle">Deliverable</text><text x="59" y="78" text-anchor="middle">Accepted</text>
+        <rect x="132" y="40" width="118" height="56" rx="10" fill="var(--sea)"/><text x="191" y="64" text-anchor="middle">Contracts</text><text x="191" y="78" text-anchor="middle">Closed</text>
+        <rect x="264" y="40" width="118" height="56" rx="10" fill="var(--mango)"/><text x="323" y="64" text-anchor="middle">Resources</text><text x="323" y="78" text-anchor="middle">Released</text>
+        <rect x="396" y="40" width="118" height="56" rx="10" fill="var(--mawar)"/><text x="455" y="64" text-anchor="middle">Lessons</text><text x="455" y="78" text-anchor="middle">Captured</text>
+        <rect x="528" y="40" width="108" height="56" rx="10" fill="var(--acc)"/><text x="582" y="68" text-anchor="middle">Archived</text>
+      </g>
+      <g stroke="var(--ink)" stroke-width="2" fill="none" marker-end="url(#arrow6)">
+        <path d="M118 68 L132 68"/>
+        <path d="M250 68 L264 68"/>
+        <path d="M382 68 L396 68"/>
+        <path d="M514 68 L528 68"/>
+      </g>
+      <defs><marker id="arrow6" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Skipping any step leaves a loose end — an unclosed contract, an unreleased resource still nominally "on the project," a lesson nobody captured.</div>
+  </div>
+
+  <ul class="bl">
+    <li><strong>Formal acceptance</strong> — the sponsor or customer explicitly confirms the deliverable meets the agreed success criteria (Module 1's charter is the reference point).</li>
+    <li><strong>Contract closure</strong> — final payments settled, contractual obligations formally discharged with every vendor.</li>
+    <li><strong>Resource release</strong> — team members and equipment are freed for their next assignment, not left in limbo.</li>
+    <li><strong>Lessons learned</strong> — what worked, what didn't, captured while memory is fresh — not written from scratch months later when nobody remembers the details.</li>
+    <li><strong>Archiving</strong> — project records stored where the organization (and future projects) can actually find them.</li>
+  </ul>
+
+  <h2 class="sh">Closure Hands Off to Operations</h2>
+  <p>Recall Part 1's value delivery system: the project's deliverable becomes a product that transitions into operations, which sustain it long after the project team disbands. Closure is the formal handoff point — and a rushed or skipped closure often means operations inherits something nobody properly explained to them.</p>
+
+  <div class="callout">
+    <strong>Fairview case:</strong> closure means the renovated library and new platform are formally accepted by the city, the construction and IT vendor contracts are closed out, the temporary project staff roll off, a lessons-learned session captures what the next city renovation project should do differently, and library operations staff receive a documented handover — not just a finished building and an unexplained login screen.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 6</div>
+
+    <div class="q-card">
+      <p class="q-text">A project's last deliverable ships and the team immediately disbands and moves to new assignments, without formal sponsor acceptance or a lessons-learned session. What's missing?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Shipping the deliverable isn't the same as formal closure — acceptance, contract closure, and lessons learned are distinct steps that a rushed 'just stop working' skips.">Formal closure — shipping isn't the same as the acceptance, contract-closure, and lessons-learned steps that make closure complete</button>
+        <button class="q-option" data-correct="false" data-explanation="Nothing here suggests a scope-definition problem — the issue is that the closing sequence's remaining steps were skipped after the deliverable shipped.">Nothing is missing — shipping the final deliverable is the definition of project closure</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does this module recommend capturing lessons learned close to project closure, rather than months later?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Details fade quickly once a team disbands and moves to new work — capturing lessons while memory is fresh produces far more useful, specific input than trying to reconstruct it later.">Because memory of specific details fades quickly once the team disbands, making later reconstruction far less useful</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't about a PMI documentation deadline — it's a practical argument about the quality of information you can actually capture while it's still fresh.">Because PMI requires lessons learned to be filed within a specific number of days</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">How does closure connect to the value delivery system covered in Part 1?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Closure is the formal point where the project's deliverable transitions to operations, which then sustains the value — exactly the loop Part 1's value delivery system diagram described.">Closure is the formal handoff point where the project's deliverable transitions into operations, which then sustains the value going forward</button>
+        <button class="q-option" data-correct="false" data-explanation="Part 1's system explicitly includes operations as the stage after project closure, sustaining the deliverable's value — closure doesn't sit outside that system.">Closure has no real connection to the value delivery system — that framework only applies to the earlier phases</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">Same caveat as Parts 1 and 2: PMBOK 8 itself is paywalled, so the Governance domain's process names and grouping in this part draw on corroborated public reporting and well-established, edition-stable project-management technique.</p>
+
+  <div class="ref-group-label">The Standard Itself</div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Project Management Institute. <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide) — Eighth Edition, and The Standard for Project Management</em>. Newtown Square, PA: Project Management Institute, 2025/2026.</div>
+    <div class="ref-annotation">The primary source for the Governance domain covered in this part. Paywalled — not reproduced or quoted verbatim here.</div>
+    <a class="ref-link" href="https://www.pmi.org/standards/pmbok" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Independent Analysis (secondary sources, cross-corroborated)</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">BrainBOK. "PMBOK Guide 7th vs 8th Edition: 6 Principles, 7 Domains, 40 Processes." brainbok.com, 2026.</div>
+    <div class="ref-annotation">Source for the Governance domain's approximate process grouping (chartering, integration, sourcing, quality assurance, change/performance monitoring, closing) used to structure this part's module sequence.</div>
+    <a class="ref-link" href="https://www.brainbok.com/blog/pmp/pmbok-guide-7th-vs-8th-edition-what-has-changed" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Foundational Techniques (edition-stable)</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Deming, W. Edwards. <em>Out of the Crisis</em>. Cambridge, MA: MIT Press, 1986.</div>
+    <div class="ref-annotation">The classic source for the Plan-Do-Check-Act (originally Plan-Do-Study-Act) improvement cycle used in Module 4 — a quality-management technique that predates PMBOK and remains valid independent of any specific standard edition.</div>
+    <a class="ref-link" href="https://mitpress.mit.edu" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Project Management Institute. "Contract Types." pmi.org / general procurement-management practice.</div>
+    <div class="ref-annotation">General reference for the fixed-price, cost-reimbursable, and time-and-materials contract categories used in Module 3 — standard procurement terminology used across the industry, not specific to any one PMBOK edition.</div>
+    <a class="ref-link" href="https://www.pmi.org" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the Governance domain's exact process names and their grouping into this part's six modules are pedagogical paraphrase, corroborated against one independent secondary source beyond PMI's paywalled standard. The PDCA cycle and contract-type categories are general, well-established project-management technique, independently verifiable and not specific to PMBOK 8. Verify exact process names against the official standard before citing this course in a professional or certification context.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 3 Complete! 🏛️</h2>
+    <p>You've covered the standard's biggest domain: chartering, keeping every subsidiary plan integrated, sourcing and procurement, executing with quality built in, controlling change deliberately, and closing cleanly. Part 4 — Scope &amp; Schedule — is where "what are we building, and by when" gets concrete.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="7">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'pmbok8-part3';
+const TOTAL = 7;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
