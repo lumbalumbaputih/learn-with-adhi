@@ -26,7 +26,9 @@ Each course/feature ships as its own commit. Update this file as each lands.
   - **Wired:** `assets/courses.json` only (single wiring point for adult courses, id `pmbok8-guide`, category Practice, tags Intermediate/Career/PMP, accent indigo, primitive slab, duration Series, path → hub). Not wired into any kid-course files.
   - Verified: manifest JSON parses, Part 1's inline JS passes a Node syntax check, module/nav-item/done-button counts match `TOTAL=7`, all 18 quiz cards have exactly one `data-correct="true"`, all 6 SVGs are well-formed, relative asset paths resolve.
   - Files: `courses/project-management/PMBOK8-PLAN.md` (new), `courses/project-management/pmbok8-hub.html` (new), `courses/project-management/pmbok8-part1-foundations-v1.html` (new), `courses/project-management/project-management-course-v1.html` (cross-link edit), `assets/courses.json`.
-  - 🔜 Next: Part 2 (The Six Principles), then Parts 3–7 per `PMBOK8-PLAN.md` §3, one per step.
+- ✅ **Part 2 — The Six Principles** shipped (`pmbok8-part2-principles-v1.html`, 8 modules: the 3 mindset dimensions, then one module each for Holistic View / Focus on Value / Embed Quality / Accountable Leadership / Integrate Sustainability / Empowered Culture + a "working together" synthesis table, + References). 3 SVG diagrams, a stat-row (12→6, ~48,000-respondent survey figure, 3 dimensions), all 4 callout variants, 21 scenario quiz questions (verified exactly one correct answer each). Wired into `pmbok8-hub.html`'s route (added `href`, corrected `total:8`). `PMBOK8-PLAN.md` updated to mark Part 2 shipped.
+  - Files: `courses/project-management/pmbok8-part2-principles-v1.html` (new), `courses/project-management/pmbok8-hub.html`, `courses/project-management/PMBOK8-PLAN.md`.
+  - 🔜 Next: Part 3 (Governance), then Parts 4–7 per `PMBOK8-PLAN.md` §3, one per step.
 
 ## 2026-07-28
 

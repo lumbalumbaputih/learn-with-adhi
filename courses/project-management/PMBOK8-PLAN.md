@@ -163,19 +163,16 @@ quote, per §1.4's sourcing rule.)
 
 ## 3. Part-by-part module plan (Parts 2–7)
 
-**Part 2 — The Six Principles** (`pmbok8-part2-principles-v1.html`)
-1. The Mindset Layer: intro + the 3 dimensions (Proactive/Ownership/Value-Driven) + why 12→6
+**Part 2 — The Six Principles** ✅ shipped 2026-08-04 (`pmbok8-part2-principles-v1.html`, 8 modules total)
+1. The Mindset Layer: 3 dimensions (Proactive/Ownership/Value-Driven), quick 12→6 recap linking
+   back to Part 1 Module 5, "how to use a principle" worked example
 2. Adopt a Holistic View
 3. Focus on Value
 4. Embed Quality Into Processes and Deliverables
 5. Be an Accountable Leader
 6. Integrate Sustainability Within All Project Areas
-7. Build an Empowered Culture — *fold in a short "principles working together" synthesis at the
-   end of module 6 rather than a separate module 7, since References must be the true last
-   module (7 content + References would be 8 total — acceptable per the 5–8 range, OR compress
-   to 6 content modules by merging module 1's "why 12→6" into module 2's opening and merging two
-   thematically adjacent principles into one module if 8 sections feels long. Decide at build
-   time based on actual word count.)
+7. Build an Empowered Culture + a "the six working together" synthesis table
+8. References
 
 **Part 3 — Governance** (`pmbok8-part3-governance-v1.html`)
 1. Starting a Project: chartering, the business case, initiating
@@ -258,8 +255,8 @@ split — the 5–8 range in the Adult Course Standard is the hard constraint, n
 
 ## 6. Build order / status
 1. ✅ Hub + Part 1 (Foundations & the Value Delivery System) — shipped 2026-08-04.
-2. ⏳ Part 2 (Six Principles) — next.
-3. ⏳ Part 3 (Governance)
+2. ✅ Part 2 (Six Principles) — shipped 2026-08-04.
+3. ⏳ Part 3 (Governance) — next.
 4. ⏳ Part 4 (Scope & Schedule)
 5. ⏳ Part 5 (Finance & Resources)
 6. ⏳ Part 6 (Stakeholders & Risk)
