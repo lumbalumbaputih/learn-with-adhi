@@ -27,7 +27,7 @@ const UI={
   wa:"Kirim lewat WhatsApp",shareNote:"Pesan ini memakai ringkasan yang ditulis dengan bantuan AI. Tulisan lengkapnya ada di tautan.",
   shareFb:(c,f,u)=>`Kabar: “${c}”\nIni SALAH.\nFaktanya: ${f}\nBaca selengkapnya: ${u}`,
   shareNews:(t,i,u)=>`${t}\nIntinya: ${i}\nBaca: ${u}`,
-  zoom:"Ketuk gambar untuk memperbesar. Tulisan di dalam gambar berbahasa Inggris.",close:"Tutup",
+  zoom:"Ketuk gambar untuk memperbesar. Tulisan di dalam gambar berbahasa Inggris.",close:"Tutup",themeToDark:"Ganti ke mode gelap",themeToLight:"Ganti ke mode terang",
   glH:"Kamus kata sulit",glLede:"Kata-kata ini sering muncul di tulisan tentang iklim. Di dalam artikel, kata yang bergaris titik-titik bisa kamu ketuk untuk melihat artinya.",
   glNote:"Penjelasan di kamus ini ditulis dengan bantuan AI dalam bahasa sederhana. Belum diperiksa oleh ahli.",
   footer:"Tulisan berasal dari Skeptical Science dan diterjemahkan otomatis oleh Google Translate. Kotak biru ditulis dengan bantuan AI. Bukan situs resmi Skeptical Science. Hak cipta tetap milik penulis aslinya."},
@@ -57,7 +57,7 @@ const UI={
   wa:"Send on WhatsApp",shareNote:"This message uses a summary written with AI help. The full article is at the link.",
   shareFb:(c,f,u)=>`Claim: “${c}”\nThis is FALSE.\nThe facts: ${f}\nRead more: ${u}`,
   shareNews:(t,i,u)=>`${t}\nIn short: ${i}\nRead: ${u}`,
-  zoom:"Tap an image to enlarge it.",close:"Close",
+  zoom:"Tap an image to enlarge it.",close:"Close",themeToDark:"Switch to dark mode",themeToLight:"Switch to light mode",
   glH:"Word list",glLede:"These words come up a lot in climate articles. Inside an article, tap a word with a dotted underline to see what it means.",
   glNote:"These explanations were written with AI help in plain words. Not yet checked by an expert.",
   footer:"Articles come from Skeptical Science, machine-translated into Indonesian by Google Translate. Blue boxes were written with AI help. Not an official Skeptical Science site. Copyright stays with the original authors."}
@@ -91,8 +91,16 @@ const icon={
  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
  pin:'<path d="M12 21s7-6.2 7-11.5A7 7 0 005 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>'};
 const svg=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon[k]}</svg>`;
+const darkMQ=window.matchMedia?matchMedia("(prefers-color-scheme: dark)"):null;
+function isDark(){const t=document.documentElement.getAttribute("data-theme");return t?t==="dark":!!(darkMQ&&darkMQ.matches)}
+function setThemeUI(){
+  const b=$("#theme");if(b){const s=isDark()?T("themeToLight"):T("themeToDark");b.setAttribute("aria-label",s);b.title=s}
+  const m=document.querySelector('meta[name="theme-color"]');if(m){const g=getComputedStyle(document.documentElement).getPropertyValue("--ground").trim();if(g)m.content=g}
+}
+if(darkMQ&&darkMQ.addEventListener)darkMQ.addEventListener("change",setThemeUI);
 function setChrome(){
   document.documentElement.lang=lang;
+  setThemeUI();
   document.querySelectorAll("[data-i]").forEach(el=>el.textContent=T(el.dataset.i));
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
   document.body.style.setProperty("--fs",big?"1.3rem":"1.125rem");
@@ -258,6 +266,7 @@ function render(){
   document.title=route==="article"?`${$("#art-title").textContent} · Cek Fakta Iklim`:route==="kamus"?`${T("glH")} · Cek Fakta Iklim`:route==="tentang"?`${T("navAbout")} · Cek Fakta Iklim`:"Cek Fakta Iklim";
 }
 document.addEventListener("click",e=>{
+  if(e.target.closest("#theme")){const n=isDark()?"light":"dark";document.documentElement.setAttribute("data-theme",n);try{localStorage.setItem("cfi-theme",n)}catch(_){}setThemeUI();return}
   const l=e.target.closest("[data-lang]");if(l){lang=l.dataset.lang;try{localStorage.setItem("cfi-lang",lang)}catch(_){}render();return}
   const t=e.target.closest("[data-topic]");if(t){topic=t.dataset.topic;query="";render();return}
   if(e.target.closest("#back")&&document.referrer&&history.length>1){e.preventDefault();history.back();return}

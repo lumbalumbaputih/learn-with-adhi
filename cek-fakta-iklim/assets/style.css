@@ -20,6 +20,7 @@ body{margin:0}
   color-scheme:dark;--ground:#0F1716;--paper:#16211F;--ink:#E8EFED;--soft:#A3B3AE;--line:#2A3835;
   --sea:#5CC3E0;--sea-ink:#06232C;--sea-tint:#12313A;--yes:#6FD394;--yes-tint:#123222;--no:#FF8A7E;--no-tint:#3A1714;
   --mt:#F5C466;--mt-tint:#33280F;--term:#7FD3EA;}
+:root[data-theme="light"]{color-scheme:light}
 *{box-sizing:border-box}
 body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:var(--fs);line-height:1.6;padding-inline:16px;padding-block:0 48px}
 a{color:var(--sea);text-underline-offset:3px}
@@ -35,6 +36,13 @@ h1,h2,h3{font-family:var(--display);line-height:1.2;text-wrap:balance;margin:0}
 .logo svg{width:34px;height:34px;flex:none}
 .logo b{font-family:var(--display);font-size:1.15rem;font-weight:800;letter-spacing:-.01em;display:block;line-height:1.1;white-space:nowrap}
 .logo small{display:block;font-size:.75rem;color:var(--soft);line-height:1.2}
+.hbtns{display:flex;align-items:center;gap:8px;flex:none}
+.themebtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;flex:none;border:1.5px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
+.themebtn svg{width:20px;height:20px}
+.themebtn .sun{display:none}
+:root[data-theme="dark"] .themebtn .moon{display:none}
+:root[data-theme="dark"] .themebtn .sun{display:inline}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .themebtn .moon{display:none}:root:not([data-theme="light"]) .themebtn .sun{display:inline}}
 .lang{display:flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;flex:none}
 .lang button{border:0;background:transparent;padding:8px 12px;font-size:.9rem;font-weight:700;cursor:pointer;min-height:40px}
 .lang button[aria-pressed="true"]{background:var(--sea);color:var(--sea-ink)}
@@ -122,6 +130,7 @@ h1,h2,h3{font-family:var(--display);line-height:1.2;text-wrap:balance;margin:0}
 .page h2{font-size:1.2rem;font-weight:800;margin:28px 0 6px}
 .page p{max-width:65ch}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);color:var(--soft);font-size:.85rem}
+@media (max-width:340px){.bar-top{gap:8px}.hbtns{gap:6px}.logo{gap:8px}.logo svg{width:28px;height:28px}.logo b{font-size:1rem}.lang button{padding:8px 9px}}
 @media (max-width:420px){.logo small{display:none}.q{grid-template-columns:1fr}.q .stamp small{margin:0}.n{grid-template-columns:1fr 76px}.n img{width:76px;height:76px}}
 @media (prefers-reduced-motion:no-preference){.q,.tools button,.topics button{transition:border-color .15s,background-color .15s}}
 
