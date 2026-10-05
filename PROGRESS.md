@@ -17,6 +17,16 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-10-05
+
+- ✅ **NEW front-door item: "Cek Fakta Iklim"** (`cek-fakta-iklim/`, manifest id `cek-fakta-iklim`, `n:"R3"`, category Research, `eye` icon, tomato accent). Adhi asked to publish his Skeptical Science Indonesia website (his SUST5004 Creativity Project MVP) on this site, with its own card. It is the v9 public-release build from his claco workspace, copied unchanged: 87 posts (76 fact briefs and 11 Skeptical Science originals; 63 third-party reposts were already removed), Bahasa Indonesia interface, Google Translate for the article text (labelled), WhatsApp share button, glossary, read-aloud and AI-disclosure boxes.
+  - **Files:** new folder `cek-fakta-iklim/` (133 static files, about 2.4 MB, no build step); one new entry at the top of `assets/courses.json`, so it is the first card in the grid. The card links to `cek-fakta-iklim/`.
+  - **Not wired anywhere else on purpose:** `rayyan.html`, `kids.html`, `auth.js`, `dashboard.html`, `sw.js` and `sitemap.xml`. It is not a kids' course, and keeping it out of the sitemap keeps its exposure to the card on the home page.
+  - **Known limits (from the site's own README):** copyright stays with the original authors and no permission has been obtained from Skeptical Science or Gigafact (Adhi accepted that risk); the Indonesian article text is unedited Google Translate; the interface text written with AI help is not expert-checked; tested in headless Chromium at 390 px from a subfolder path, not on a real phone.
+  - **Side effect:** the home page hero counts every Research-category item as a "research report", so it now counts this website as one.
+  - **Deploy:** Adhi chose to merge straight to main instead of checking a preview first.
+  - **Next:** 🧪 check it on a real phone; ask Skeptical Science and Gigafact for permission; native-speaker review of the Indonesian text.
+
 ## 2026-08-04
 
 - ✅ **NEW adult course series: "PMBOK 8, Field-Tested"** (`courses/project-management/`, manifest id `pmbok8-guide`, `n:"18"`) — Adhi asked for a detailed course based on "The Standard for Project Management and A Guide to the PMBOK Guide." Research found PMI had shipped the **8th edition** since (paperback Jan 2026) with the **PMP exam realigned July 9, 2026** — a superseded-edition risk, so per Adhi's decision the series teaches **PMBOK 8 only** (6 principles, 7 performance domains, 5 focus areas, 40 processes), as a **7-part series behind a hub**, **practitioner-first but exam-aware**. The existing `project-management-course-v1.html` ("Builder's Guide") stays as the friendly on-ramp, now cross-linked both ways.

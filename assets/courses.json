@@ -1,5 +1,22 @@
 [
   {
+    "id": "cek-fakta-iklim",
+    "n": "R3",
+    "title": "Cek Fakta Iklim",
+    "blurb": "A minimum viable fact-checking site: 87 climate myth rebuttals from Skeptical Science in simple Indonesian (Google Translate, clearly labelled), with a WhatsApp share button, a glossary and read-aloud.",
+    "category": "Research",
+    "tags": [
+      "Website",
+      "Climate",
+      "Indonesia",
+      "Baru"
+    ],
+    "primitive": "eye",
+    "accent": "tomato",
+    "path": "cek-fakta-iklim/",
+    "duration": "Website"
+  },
+  {
     "id": "eco-board-game",
     "n": "G1",
     "title": "Penyelamat Bumi 🌍",
