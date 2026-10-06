@@ -29,7 +29,6 @@ const UI={
   shareNews:(t,i,u)=>`${t}\nIntinya: ${i}\nBaca: ${u}`,
   zoom:"Ketuk gambar untuk memperbesar. Tulisan di dalam gambar berbahasa Inggris.",close:"Tutup",themeToDark:"Ganti ke mode gelap",themeToLight:"Ganti ke mode terang",mvpEyebrow:"Prototipe (MVP)",mvpTitle:"Apa itu Cek Fakta Iklim?",mvpLede:"Cek Fakta Iklim adalah situs prototipe yang membawa tulisan sains iklim dari Skeptical Science ke Bahasa Indonesia yang sederhana. Banyak kabar soal iklim beredar lewat WhatsApp. Situs ini membantu orang mengecek kabar itu sebelum membagikannya.",mvp1h:"Dari Skeptical Science",mvp1t:"87 tulisan: 76 fakta singkat dan 11 tulisan asli. Diterjemahkan oleh Google Translate dan diberi label.",mvp2h:"Dibuat untuk WhatsApp",mvp2t:"Tombol bagikan sekali ketuk, kamus kata sulit, dan fitur Dengarkan untuk pembaca yang belum terbiasa dengan bahasa sains.",mvp3h:"Rencana berikutnya",mvp3t:"Dengan relawan: editor menerjemahkan dengan benar, menambah konteks Indonesia, dan membuat konten media sosial yang ringan. Ini baru rencana, belum dibuat.",mvpFine:"Ini prototipe, bukan situs resmi Skeptical Science.",mvpCta:"Lihat situsnya",mvpWhyH:"Kenapa harus Bahasa Indonesia yang sederhana?",mvpWhyQ:"Kalau hoaks lebih gampang dibaca daripada faktanya, hoaks yang menang.",mvpWhy1:"Hoaks itu pendek dan menyebar lewat WhatsApp dalam hitungan detik. Penjelasan sains biasanya panjang, penuh istilah, dan berbahasa Inggris.",mvpWhy2:"Tidak semua orang sempat belajar sains dengan baik di sekolah. Artikel yang sulit gampang ditinggalkan di tengah jalan.",mvpWhy3:"Karena itu fakta harus semudah hoaks untuk dibaca, tanpa kehilangan isinya.",
   glH:"Kamus kata sulit",glLede:"Kata-kata ini sering muncul di tulisan tentang iklim. Di dalam artikel, kata yang bergaris titik-titik bisa kamu ketuk untuk melihat artinya.",
-  glNote:"Penjelasan di kamus ini ditulis dengan bantuan AI dalam bahasa sederhana. Belum diperiksa oleh ahli.",
   footer:"Tulisan berasal dari Skeptical Science dan diterjemahkan otomatis oleh Google Translate. Bukan situs resmi Skeptical Science. Hak cipta tetap milik penulis aslinya."},
  en:{tagline:"Climate science in everyday words",navHome:"Home",navGlossary:"Word list",navAbout:"About this site",
   h1:"True or not? Check here first.",
@@ -59,7 +58,6 @@ const UI={
   shareNews:(t,i,u)=>`${t}\nIn short: ${i}\nRead: ${u}`,
   zoom:"Tap an image to enlarge it.",close:"Close",themeToDark:"Switch to dark mode",themeToLight:"Switch to light mode",mvpEyebrow:"Prototype (MVP)",mvpTitle:"What is Cek Fakta Iklim?",mvpLede:"Cek Fakta Iklim is a prototype website that brings climate science articles from Skeptical Science into plain Indonesian. Many climate claims spread through WhatsApp. This site helps people check a claim before they share it.",mvp1h:"From Skeptical Science",mvp1t:"87 articles: 76 fact briefs and 11 originals. Translated by Google Translate and clearly labelled.",mvp2h:"Made for WhatsApp",mvp2t:"A one-tap share button, a glossary of hard words, and a Listen feature for readers who are not used to science language.",mvp3h:"Next steps",mvp3t:"With volunteers: an editor to translate properly, Indonesian context added, and light social media content. This is a plan only, not built yet.",mvpFine:"This is a prototype, not an official Skeptical Science site.",mvpCta:"See the site",mvpWhyH:"Why plain Indonesian?",mvpWhyQ:"If a hoax is easier to read than the facts, the hoax wins.",mvpWhy1:"A hoax is short and travels through WhatsApp in seconds. Science explanations are usually long, full of technical words, and in English.",mvpWhy2:"Not everyone has had the chance to study science well at school. A hard article is easy to give up on halfway.",mvpWhy3:"So the facts have to be as easy to read as the hoax, without losing what they say.",
   glH:"Word list",glLede:"These words come up a lot in climate articles. Inside an article, tap a word with a dotted underline to see what it means.",
-  glNote:"These explanations were written with AI help in plain words. Not yet checked by an expert.",
   footer:"Articles come from Skeptical Science, machine-translated into Indonesian by Google Translate. Not an official Skeptical Science site. Copyright stays with the original authors."}
 };
 const TOPICS={id:{warm:"Bumi makin panas?",cause:"Siapa penyebabnya?",elnino:"El Niño",disaster:"Bencana dan kesehatan",ocean:"Laut dan es",energy:"Energi",hoax:"Hoaks"},
@@ -183,8 +181,7 @@ function article(p){
 function glossary(){
   const g=[...GLOSS].sort((a,b)=>(lang==="id"?a.id:a.en).localeCompare(lang==="id"?b.id:b.en));
   return `<div class="page"><h1>${T("glH")}</h1><p class="lede">${T("glLede")}</p>
-  <dl class="gl">${g.map(g=>`<div id="k-${g.key}"><dt>${esc(lang==="id"?g.id:g.en)}</dt><dd>${esc(lang==="id"?g.defId:g.defEn)}</dd></div>`).join("")}</dl>
-  <p class="lede">${T("glNote")}</p></div>`;
+  <dl class="gl">${g.map(g=>`<div id="k-${g.key}"><dt>${esc(lang==="id"?g.id:g.en)}</dt><dd>${esc(lang==="id"?g.defId:g.defEn)}</dd></div>`).join("")}</dl></div>`;
 }
 function about(){
   const n=POSTS.length;
