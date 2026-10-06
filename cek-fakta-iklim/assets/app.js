@@ -16,7 +16,7 @@ const UI={
   showEn:"Baca versi asli (English)",showId:"Baca versi Indonesia",
   bigger:"Huruf lebih besar",listen:"Dengarkan",stop:"Berhenti",
   noVoice:"HP atau browser ini belum punya suara Bahasa Indonesia. Coba buka di Google Chrome di HP Android.",
-  intinya:"Intinya",ours:"Ditulis dengan bantuan AI, belum diperiksa ahli. Bukan bagian dari tulisan asli.",
+  intinya:"Intinya",
   local:"Apa artinya untuk Indonesia?",localSrc:"Sumber",
   origQ:"Pertanyaan asli dari Gigafact",origA:v=>`Jawaban aslinya: ${v==="Yes"?"Ya":"Tidak"}.`,
   sources:"Sumber (Bahasa Inggris)",
@@ -46,7 +46,7 @@ const UI={
   showEn:"Read the original (English)",showId:"Read in Indonesian",
   bigger:"Bigger text",listen:"Listen",stop:"Stop",
   noVoice:"This phone or browser has no English voice installed.",
-  intinya:"In short",ours:"Written with AI help, not checked by an expert. Not part of the original article.",
+  intinya:"In short",
   local:"What does it mean for Indonesia?",localSrc:"Source",
   origQ:"Original Gigafact question",origA:v=>`Original answer: ${v}.`,
   sources:"Sources",
@@ -154,13 +154,13 @@ function article(p){
   const age=(Date.now()-toDate(p.date))/864e5;
   let top="";
   if(p.fb){
-    top+=`<div class="verdict">${badge("big")}<div><span class="lbl">${T("fact")}</span><p>${esc(tx(p.fakta))}</p><small>${T("ours")}</small></div></div>
+    top+=`<div class="verdict">${badge("big")}<div><span class="lbl">${T("fact")}</span><p>${esc(tx(p.fakta))}</p></div></div>
       <div class="origq"><span class="lbl">${T("origQ")}</span> ${esc(tx(p.question))} ${T("origA")(p.verdict)}</div>`;
   }
-  if(p.intinya) top+=`<div class="ours"><span class="lbl">${T("intinya")}</span><p>${esc(tx(p.intinya))}</p><small>${T("ours")}</small></div>`;
+  if(p.intinya) top+=`<div class="ours"><span class="lbl">${T("intinya")}</span><p>${esc(tx(p.intinya))}</p></div>`;
   let blocks=p.blocks;
   let body=`<div class="body" id="body">${blocks.some(b=>b.t==="img")?`<p class="zoomnote">${T("zoom")}</p>`:""}${blocks.map(block).join("")}</div>`;
-  if(p.local) body+=`<div class="ours local"><span class="lbl">${svg("pin")} ${T("local")}</span><p>${esc(tx(p.local))}</p><small>${T("ours")} ${T("localSrc")}: ${p.local.src.map(s=>`<a href="${s.u}">${esc(s.t)}</a>`).join("; ")}.</small></div>`;
+  if(p.local) body+=`<div class="ours local"><span class="lbl">${svg("pin")} ${T("local")}</span><p>${esc(tx(p.local))}</p><small>${T("localSrc")}: ${p.local.src.map(s=>`<a href="${s.u}">${esc(s.t)}</a>`).join("; ")}.</small></div>`;
   if(p.sources&&p.sources.length) body+=`<div class="sources"><h2>${T("sources")}</h2><ul>${p.sources.map(s=>`<li>${s.en}</li>`).join("")}</ul></div>`;
   const st=shareText(p);
   body+=`<div class="share"><h2>${T("shareH")}</h2><pre id="share-text">${esc(st)}</pre>
