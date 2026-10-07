@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/cek-fakta-iklim",
+      "destination": "https://assignment.tokocurahaustralia.com/",
+      "permanent": true
+    },
+    {
+      "source": "/cek-fakta-iklim/:path*",
+      "destination": "https://assignment.tokocurahaustralia.com/:path*",
+      "permanent": true
+    }
+  ]
+}
