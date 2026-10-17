@@ -435,6 +435,43 @@ export class Network {
     return this._routePatterns[routeIdx];
   }
 
+  /**
+   * How often a route runs on a service day, from the timetable: trips leaving their first stop in each hour
+   * (hours past midnight run on to 29 for after-midnight trips), the busiest single direction in that hour,
+   * and the first and last departure. It says nothing about how full the vehicles are.
+   * Takes one route index or several (see sameNameRoutes).
+   */
+  routeDay(routeIdxs, ymd) {
+    const H = 30, flags = this.serviceFlags(ymd);
+    const all = new Uint16Array(H), byDir = new Map();
+    let first = Infinity, last = -Infinity, trips = 0;
+    for (const pi of [].concat(routeIdxs).flatMap((ri) => this.routePatterns(ri))) {
+      const dir = this.patterns[pi].dir;
+      let d = byDir.get(dir);
+      if (!d) byDir.set(dir, (d = new Uint16Array(H)));
+      for (const q of this.patternProfiles[pi]) {
+        const p = this.profiles[q];
+        for (let i = 0; i < p.starts.length; i++) {
+          if (!flags[p.svc[i]]) continue;
+          const t = p.starts[i] + p.arr[0], hr = Math.min(H - 1, Math.floor(t / 3600));
+          all[hr]++; d[hr]++; trips++;
+          if (t < first) first = t;
+          if (t > last) last = t;
+        }
+      }
+    }
+    const oneWay = new Uint16Array(H);
+    for (const d of byDir.values()) for (let hr = 0; hr < H; hr++) if (d[hr] > oneWay[hr]) oneWay[hr] = d[hr];
+    return { all, oneWay, dirs: byDir.size, first, last, trips };
+  }
+
+  /** Routes with the same number and name. The feed lists some busy routes (950, 960, the CircleRoutes 998/999,
+   *  some CATs) once per operating contract, so one route people know is several entries here. */
+  sameNameRoutes(routeIdx) {
+    const r = this.routes[routeIdx];
+    return this.routes.filter((x) => x.short === r.short && x.long === r.long && x.type === r.type).map((x) => x.idx);
+  }
+
   routeShapes(routeIdx) {
     return [...new Set(this.routePatterns(routeIdx).map((pi) => this.patterns[pi].shape))];
   }

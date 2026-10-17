@@ -2,6 +2,7 @@
 import { DAY, fmtClock } from './sim.js';
 import { routeColor } from './colors.js';
 import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js';
+import { dayLabel } from './scrubber.js';
 
 const TABS = [['map', 'Map'], ['routes', 'Routes'], ['stops', 'Stops']];
 
@@ -281,6 +282,8 @@ export class Panel {
         h('summary', {}, h('span', { class: 'muted', text: 'Towards ' }), h('strong', { text: name }), h('span', { class: 'muted', text: `, ${p.stops.length} stops` })), stops));
     }
     this.r.todayTrips = h('span', { class: 'meta' });
+    this.r.busy = h('div', { class: 'busy-wrap' });
+    this.r.busyYmd = null;
     return h('div', { class: 'stack' },
       this._backBtn('Routes'),
       h('header', { class: 'page-head' }, chip(route, { big: true }),
@@ -288,7 +291,52 @@ export class Panel {
       h('p', { class: 'meta' }, this.r.routeRunning, this.r.todayTrips),
       h('div', { class: 'btn-row' },
         h('button', { class: 'btn', type: 'button', onclick: () => this.act.onRoute(idx), text: 'Show on map' })),
+      h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'How busy is this line?' }), this.r.busy),
       hs.length ? h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Directions' }), dirs) : null);
+  }
+
+  /** "How busy is this line?": trips per hour through the day, the busiest hour, first and last trip. */
+  _renderBusy(now) {
+    const net = this.net, idx = this.detail.idx, route = net.routes[idx];
+    const group = net.sameNameRoutes(idx);
+    const d = net.routeDay(group, now.ymd);
+    this.r.busyYmd = now.ymd;
+    this.r.busyBars = [];
+    this.r.todayTrips.textContent = `, ${fmtN(d.trips)} ${d.trips === 1 ? 'trip' : 'trips'} on this day`;
+    const wrap = this.r.busy;
+    if (!d.trips) {
+      wrap.replaceChildren(h('p', { class: 'empty', text: `No trips on ${dayLabel(now.ymd)}.` }));
+      return;
+    }
+    const hrLabel = (hr) => (hr % 24 === 0 ? 'midnight' : hr % 24 === 12 ? 'noon' : `${hr % 12 || 12}${hr % 24 < 12 ? 'am' : 'pm'}`);
+    let peak = 0;
+    for (let hr = 1; hr < d.all.length; hr++) if (d.all[hr] > d.all[peak]) peak = hr;
+    const from = Math.floor(d.first / 3600), to = Math.floor(d.last / 3600);
+    const gap = d.oneWay[peak] ? Math.round(60 / d.oneWay[peak]) : 0;
+    const often = gap <= 1 ? 'about every minute' : `about every ${gap} min`;
+    const each = d.dirs > 1 ? ' each way' : '';
+    const head = h('p', { class: 'busy-head' },
+      h('strong', { text: `Busiest ${hrLabel(peak)} to ${hrLabel(peak + 1)}` }),
+      `: ${fmtN(d.all[peak])} ${d.all[peak] === 1 ? 'trip' : 'trips'}, ${often}${each}.`);
+    const span = h('p', { class: 'meta', text: `First trip ${fmtClock(d.first)}, last trip ${fmtClock(d.last)}.` });
+    const color = routeColor(route);
+    const bars = h('div', { class: 'busy-bars', role: 'img',
+      'aria-label': `Trips per hour on ${dayLabel(now.ymd)}, from ${hrLabel(from)} to ${hrLabel(to + 1)}. Busiest ${hrLabel(peak)} to ${hrLabel(peak + 1)} with ${d.all[peak]} trips.` });
+    const axis = h('div', { class: 'busy-axis', 'aria-hidden': 'true' });
+    for (let hr = from; hr <= to; hr++) {
+      const n = d.all[hr];
+      const bar = h('span', { class: 'busy-bar', title: `${hrLabel(hr)}: ${n} ${n === 1 ? 'trip' : 'trips'}`,
+        style: { height: `${n ? Math.max(4, Math.round((n / d.all[peak]) * 100)) : 0}%`, background: color } });
+      bar.dataset.hr = String(hr);
+      this.r.busyBars.push(bar);
+      bars.append(bar);
+      axis.append(h('span', { text: hr % 3 === 0 ? (hr % 24 === 0 ? '12am' : hrLabel(hr)) : '' })); // short, so the right edge is not cut off
+    }
+    const split = group.length > 1
+      ? ` The timetable lists this route ${group.length} times (once for each operating contract), and this counts all of them.` : '';
+    wrap.replaceChildren(head, span, bars, axis,
+      h('p', { class: 'fine', text: `Trips per hour on ${dayLabel(now.ymd)}, from the timetable. This shows how often it runs, not how full it is.${split}` }));
+    this.r.busyNow = null;
   }
 
   // ---- Stops tab
@@ -445,16 +493,13 @@ export class Panel {
     if (this.r.routeRows) for (const [ri, el] of this.r.routeRows) { const n = perRoute.get(ri) || 0; el.textContent = n ? `${n} running` : ''; }
     if (this.r.vcard && this.vehicleId !== null) this._refreshVehicleCard();
     if (this.r.routeRunning && this.detail && this.detail.kind === 'route') {
-      const n = perRoute.get(this.detail.idx) || 0;
+      const n = net.sameNameRoutes(this.detail.idx).reduce((a, ri) => a + (perRoute.get(ri) || 0), 0); // same total as the chart
       this.r.routeRunning.textContent = n ? `${n} running now` : 'Not running now';
-      if (!this.r.todayTrips.textContent) {
-        const flags = net.serviceFlags(now.ymd);
-        let trips = 0;
-        for (const pi of net.routePatterns(this.detail.idx)) for (const q of net.patternProfiles[pi]) {
-          const p = net.profiles[q];
-          for (let i = 0; i < p.svc.length; i++) if (flags[p.svc[i]]) trips++;
-        }
-        this.r.todayTrips.textContent = `, ${fmtN(trips)} trips on this day`;
+      if (this.r.busyYmd !== now.ymd) this._renderBusy(now); // also when the day is changed with the time controls
+      const hr = String(Math.floor(now.sec / 3600));
+      if (this.r.busyNow !== hr) {
+        this.r.busyNow = hr;
+        for (const b of this.r.busyBars || []) b.classList.toggle('is-now', b.dataset.hr === hr);
       }
     }
     if (this.r.board && this.detail && this.detail.kind === 'entity') this._renderBoard();

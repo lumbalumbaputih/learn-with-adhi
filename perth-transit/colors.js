@@ -7,6 +7,13 @@ export const BUS_COLOR = '#2b3a47';
 export const FERRY_COLOR = '#0a7ea4'; // river blue, apart from the eight line colours
 export const INK = '#15222e';
 
+// Buses and the ferry are drawn darker on the light map and lighter on the dark one; train lines keep their colours.
+let theme = 'light';
+const DARK = { bus: '#c3ced8', ferry: '#3fb4dc' };
+export function setColorTheme(t) { theme = t; }
+export const busColor = () => (theme === 'dark' ? DARK.bus : BUS_COLOR);
+export const ferryColor = () => (theme === 'dark' ? DARK.ferry : FERRY_COLOR);
+
 const LINE_COLORS = {
   'Fremantle Line': '#2a78d6',
   'Armadale Line': '#eda100',
@@ -26,8 +33,8 @@ function hash(s) {
 }
 
 export function routeColor(route) {
-  if (route.isFerry) return FERRY_COLOR;
-  if (!route.isTrain) return BUS_COLOR;
+  if (route.isFerry) return ferryColor();
+  if (!route.isTrain) return busColor();
   return LINE_COLORS[route.long] || SPARE[hash(route.long) % SPARE.length];
 }
 

@@ -10,6 +10,20 @@ const $ = (id) => document.getElementById(id);
 const DEFAULT_VIEW = { lat: -31.955, lon: 115.87, zoom: 10.4 };
 const mobileQuery = window.matchMedia('(max-width: 819px)');
 
+// ---------------------------------------------------------------------- light / dark
+// Follows the device until the viewer presses the button; the choice is then kept in this browser.
+const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+function savedTheme() {
+  try { const t = localStorage.getItem('ptm-theme'); return t === 'light' || t === 'dark' ? t : null; } catch { return null; }
+}
+const themeNow = () => savedTheme() || (darkQuery.matches ? 'dark' : 'light');
+function paintTheme(t) {
+  document.documentElement.dataset.theme = t;
+  document.querySelector('meta[name="theme-color"]').content = t === 'dark' ? '#161d23' : '#ffffff';
+  const b = $('btn-theme');
+  if (b) b.setAttribute('aria-label', t === 'dark' ? 'Switch to the light map' : 'Switch to the dark map');
+}
+
 // ---------------------------------------------------------------------- loading
 function setLoading(text, fraction) {
   $('loading-text').textContent = text;
@@ -174,7 +188,8 @@ async function main() {
     },
   });
   setLoading('Loading the map', 0.9);
-  await mapView.init(parseHash(), { compactAttribution: mobileQuery.matches });
+  paintTheme(themeNow());
+  await mapView.init(parseHash(), { compactAttribution: mobileQuery.matches, theme: themeNow() });
   mapView.setPadding({ top: 0, right: 0, left: 0, bottom: mobileQuery.matches ? parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sheet-h'), 10) || 0 : 0 });
   panel.setCenter(mapView.view().lat, mapView.view().lon);
 
@@ -192,6 +207,15 @@ async function main() {
     btn3d.setAttribute('aria-pressed', String(on));
     mapView.set3D(on);
   });
+  const setTheme = async (t, save) => {
+    if (save) { try { localStorage.setItem('ptm-theme', t); } catch { /* private mode: still switches for this visit */ } }
+    paintTheme(t);
+    await mapView.setTheme(t);
+    panel.render(); // route chips take the theme's bus and ferry colours
+    tick(true);
+  };
+  $('btn-theme').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark', true));
+  darkQuery.addEventListener('change', () => { if (!savedTheme()) setTheme(themeNow(), false); });
   $('btn-zoom-in').addEventListener('click', () => mapView.zoomBy(1));
   $('btn-zoom-out').addEventListener('click', () => mapView.zoomBy(-1));
   $('btn-locate').addEventListener('click', () => locate());

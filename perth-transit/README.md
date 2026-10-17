@@ -6,9 +6,9 @@ A map of Perth's buses, trains and ferry moving through the day, in the style of
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.3 (see section 12)
+- **Current version:** v1.4 (see section 12)
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
-- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.3 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.3 will be lost.
+- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.4 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.4 will be lost.
 
 ## 1. How this started
 
@@ -35,6 +35,8 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
 - Routes, Stops and Map tabs with one search box. A stop or station page shows the next timetable departures.
 - Near me (the location stays in the browser), a 3D buildings mode, layer toggles, and an About dialog with the data credit.
+- Dark mode (since v1.4): follows the device, with a moon/sun button to switch by hand; the choice is kept in the browser.
+- "How busy is this line?" on every route page (since v1.4): trips per hour through the day, the busiest hour and how often it runs then, first and last trip. From the timetable only: it shows service frequency, not crowding.
 - A "What's new" version chip with a plain-language changelog (since v1.1).
 - On phones, a bottom sheet with three heights (peek, half, full) and touch dragging.
 - Shareable links: `?t=08:15&date=2026-10-19&speed=10` sets the moment, and the map position lives in the URL hash as `#@lat,lon,zoom`.
@@ -44,7 +46,7 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 - No real-time anything. No delays, cancellations or replacement buses.
 - No journey planner, fares or service alerts.
 - Ferries: left out on purpose in v1.0, **added in v1.3** (section 12) by patching the compiled data, not through the claco compiler.
-- No dark mode.
+- No passenger numbers or crowding: the timetable has none, so "How busy is this line?" is about how often the line runs.
 - Not yet tried on a real iPhone, Android phone, Safari or Firefox. Real-device frame rate is unmeasured.
 
 ## 4. How it works
@@ -181,6 +183,8 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 
 ## 10. Known limits and open items
 
+- **Visitor numbers.** Since v1.4 the page loads Vercel Web Analytics (already on for the project, same snippet as the site's home page). Page views show under `/perth-transit/` in the Vercel dashboard (project learn-with-adhi, Analytics). The address is reduced to the path before sending (no `#@lat,lon`, no `?t=`), panning does not count as a new view, and automated browsers are ignored by Vercel's script.
+- **Same route listed more than once.** The feed lists some routes once per operating contract (950, 950X, 960, 998, 999, Blue/Red/Yellow CAT). "How busy is this line?" and its running count combine them, but the rest of the app still treats each entry separately (two "950" rows in Routes, and "Show on map" highlights one entry and dims the other's buses). Merging them properly belongs in the compiler.
 - **Real name.** "Perth Transit Map" is a placeholder and must stay clear of the Authority's brand names.
 - **Licence check** (section 9) is still open.
 - **Timetable expiry** on 2027-01-11. The Authority can publish a new feed earlier. A scheduled rebuild is possible but would need approval.
@@ -206,6 +210,13 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.4 (2026-10-17)
+
+- **Dark mode.** `style.css` gains a dark token set under `:root[data-theme='dark']`, and hard-coded colours became tokens. An inline script in `index.html` sets `data-theme` before anything draws (saved choice in `localStorage` `ptm-theme`, else `prefers-color-scheme`). `app.js` keeps it in sync, adds the moon/sun button `#btn-theme` in the map controls, and follows device changes until the viewer picks. `mapview.js`: per-theme palette `PAL`, basemaps `STYLE_URLS` (OpenFreeMap positron / dark), and `setTheme()`, which swaps the basemap with `setStyle`, redraws this app's layers and puts back the selected route, stop, vehicle ring, Near-me dot, hidden layers and 3D buildings. `colors.js`: `setColorTheme()`, lighter bus `#c3ced8` and ferry `#3fb4dc` colours on the dark map (train line colours unchanged). Vehicle outlines are now SDF images tinted per theme.
+- **"How busy is this line?"** `sim.js` `routeDay(routes, ymd)` counts trips leaving their first stop in each hour (both directions, plus the busiest single direction for the "about every N min" figure), with first and last trip; `sameNameRoutes()` groups the routes the feed lists more than once. `panel.js` draws the chart on route pages in the route colour, highlights the current hour, rebuilds when the day changes, and says it measures frequency, not crowding. The "trips on this day" and "running now" figures on route pages use the same grouping.
+- **Visitor numbers.** Vercel Web Analytics snippet in `index.html` with a `beforeSend` hook that sends only the path. About dialog says visits are counted without cookies.
+- **Tests:** dark mode 12/12 (device dark, dark basemap, all 7 app layers, button to light and back, route highlight and hidden layers kept, choice saved and beats the device after reload, vehicle click in dark); busy chart 10/10 in light and dark plus phone; per-hour counts match the raw timetable for the Fremantle Line, route 950 (both entries, 293 trips) and the ferry on a Monday; analytics sends one view for `/perth-transit/` with no hash or query, none on pan; earlier ferry, What's new, click and phone checks re-run.
 
 ### v1.3 (2026-10-17)
 
