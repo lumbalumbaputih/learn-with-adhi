@@ -1,12 +1,16 @@
 // mapview.js: the map, its layers, the moving vehicles and what happens on click.
 import * as maplibregl from './vendor/maplibre-gl.mjs';
-import { routeColor, busColor, ferryColor, setColorTheme } from './colors.js';
+import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js';
 import { prettyName } from './util.js';
 
 export const STYLE_URLS = {
   light: 'https://tiles.openfreemap.org/styles/positron',
   dark: 'https://tiles.openfreemap.org/styles/dark',
 };
+// From this zoom on, buses show as route-number tags with a direction pointer.
+const TAG_Z = 15; // a whole zoom: per-vehicle zoom rules are evaluated at the tile's whole-number zoom
+const TAG_H = 18, TAG_LINE = 1.6, TAG_FONT = '700 11.5px Archivo, system-ui, sans-serif';
+const TIP = 20; // pointer image size; its triangle's base sits 0.24 * TIP below the image centre
 const fallbackStyle = (theme) => ({ version: 8, sources: {}, layers: [{ id: 'bg', type: 'background', paint: { 'background-color': theme === 'dark' ? '#0c0c0c' : '#eef1f2' } }] });
 
 // Colours of everything this app draws on top of the basemap, per theme.
@@ -14,12 +18,12 @@ const PAL = {
   light: {
     casing: '#ffffff', rail: '#56677a', stopFill: '#ffffff', stationStroke: '#15222e', accent: '#0a6c74',
     accentFill: 'rgba(10,108,116,0.14)', meStroke: '#ffffff', halo: '#ffffff', ring: '#15222e',
-    label: '#15222e', labelHalo: 'rgba(255,255,255,0.95)', building: '#d3dade', busLine: 0.32,
+    label: '#15222e', labelHalo: 'rgba(255,255,255,0.95)', building: '#d3dade', busLine: 0.32, tagHalo: '#ffffff',
   },
   dark: {
     casing: '#262e35', rail: '#8a99a8', stopFill: '#161d23', stationStroke: '#e4ebf0', accent: '#4cc0c8',
     accentFill: 'rgba(76,192,200,0.18)', meStroke: '#0c0c0c', halo: '#0c0c0c', ring: '#e4ebf0',
-    label: '#e4ebf0', labelHalo: 'rgba(12,12,12,0.9)', building: '#2a3036', busLine: 0.4,
+    label: '#e4ebf0', labelHalo: 'rgba(12,12,12,0.9)', building: '#2a3036', busLine: 0.4, tagHalo: '#0c0c0c',
   },
 };
 
@@ -85,6 +89,8 @@ export class MapView {
         if (a) a.classList.remove('maplibregl-compact-show');
       }, 4000);
     }
+    // tags are drawn on a canvas in the app's font, so wait for it (a fallback font would be cached otherwise)
+    try { await document.fonts.load(TAG_FONT); } catch { /* the tags then use the fallback font */ }
     this._addData();
     this._wire();
     return this;
@@ -159,6 +165,21 @@ export class MapView {
     vehImg('ptm-bus', 9, 17);
     vehImg('ptm-train', 9, 44);
     vehImg('ptm-ferry', 12, 24, 'boat');
+
+    {
+      // direction pointer that sits on the tag's edge, pointing the way the bus travels
+      // (the tags themselves are drawn on demand, one image per route label: see _tagImage)
+      const T = TIP * PR, tip = document.createElement('canvas');
+      tip.width = tip.height = T;
+      const tg = tip.getContext('2d');
+      const tri = (inset) => { tg.beginPath(); tg.moveTo(T / 2, T * 0.08 + inset); tg.lineTo(T * 0.92 - inset, T * 0.74 - inset * 0.5); tg.lineTo(T * 0.08 + inset, T * 0.74 - inset * 0.5); tg.closePath(); tg.fill(); };
+      tg.fillStyle = P.tagHalo; tri(0);
+      tg.fillStyle = '#000'; tg.globalCompositeOperation = 'destination-out'; tri(TAG_LINE * PR * 1.4); // hole, refilled in the route colour below
+      tg.globalCompositeOperation = 'source-over';
+      addImage('ptm-tip-ring', tg.getImageData(0, 0, T, T), { pixelRatio: PR });
+      tg.clearRect(0, 0, T, T); tg.fillStyle = '#fff'; tri(TAG_LINE * PR * 1.4);
+      addImage('ptm-tip', tg.getImageData(0, 0, T, T), { pixelRatio: PR, sdf: true });
+    }
 
     map.addSource('bus-routes', { type: 'geojson', data: bus });
     map.addSource('rail', { type: 'geojson', data: rail });
@@ -250,15 +271,33 @@ export class MapView {
       // trains draw above buses where they cross
       'symbol-sort-key': ['get', 't'],
     });
+    // at tag zoom the bus shapes give way to the tags; trains and the ferry keep theirs
+    const busOff = (expr) => ['step', ['zoom'], expr, TAG_Z, ['case', ['==', ['get', 't'], 0], 0, expr]];
     map.addLayer({ id: 'veh-halo', type: 'symbol', source: 'veh', layout: vehLayout('-halo'), paint: {
-      'icon-color': P.halo, 'icon-opacity': ['case', ['==', ['get', 'd'], 1], 0.18, 0.95],
+      'icon-color': P.halo, 'icon-opacity': busOff(['case', ['==', ['get', 'd'], 1], 0.18, 0.95]),
     } });
     map.addLayer({ id: 'veh', type: 'symbol', source: 'veh', layout: vehLayout(''), paint: {
-      'icon-color': ['get', 'c'], 'icon-opacity': ['case', ['==', ['get', 'd'], 1], 0.22, 1],
+      'icon-color': ['get', 'c'], 'icon-opacity': busOff(['case', ['==', ['get', 'd'], 1], 0.22, 1]),
     } });
     map.addLayer({ id: 'veh-arrow', type: 'symbol', source: 'veh', minzoom: 13.5, layout: vehLayout('-front'), paint: {
-      'icon-opacity': ['case', ['==', ['get', 'd'], 1], 0.2, 0.95],
+      'icon-opacity': busOff(['case', ['==', ['get', 'd'], 1], 0.2, 0.95]),
     } });
+    // Bus tags (from TAG_Z): a direction pointer with an outline, then the tag itself.
+    const isBus = ['==', ['get', 't'], 0];
+    const shown = (on, off) => ['step', ['zoom'], 0, TAG_Z, ['case', ['==', ['get', 'd'], 1], off, on]];
+    const flat = {
+      'icon-allow-overlap': true, 'icon-ignore-placement': true, 'icon-rotation-alignment': 'viewport', 'icon-pitch-alignment': 'viewport',
+      'icon-rotate': ['get', 'a'], 'icon-offset': ['get', 'o'], 'symbol-sort-key': ['*', -1, ['get', 'd']],
+    };
+    map.addLayer({ id: 'veh-tip-ring', type: 'symbol', source: 'veh', minzoom: Math.floor(TAG_Z), filter: isBus,
+      layout: { ...flat, 'icon-image': 'ptm-tip-ring' }, paint: { 'icon-opacity': shown(1, 0.25) } }, 'veh-halo');
+    map.addLayer({ id: 'veh-tip', type: 'symbol', source: 'veh', minzoom: Math.floor(TAG_Z), filter: isBus,
+      layout: { ...flat, 'icon-image': 'ptm-tip' }, paint: { 'icon-color': ['get', 'c'], 'icon-opacity': shown(1, 0.25) } }, 'veh-halo');
+    // one picture per tag (pill, outline and number together), so a tag on top fully covers the one under it
+    map.addLayer({ id: 'veh-tag', type: 'symbol', source: 'veh', minzoom: Math.floor(TAG_Z), filter: isBus, layout: {
+      'icon-image': ['get', 'ti'], 'icon-allow-overlap': true, 'icon-ignore-placement': true,
+      'icon-pitch-alignment': 'viewport', 'symbol-sort-key': ['*', -1, ['get', 'd']], // dimmed tags under the selected route's
+    }, paint: { 'icon-opacity': shown(1, 0.3) } }, 'veh-halo'); // under the shapes: trains and the ferry stay on top
     map.addLayer({ id: 'veh-sel', type: 'circle', source: 'veh', filter: ['==', ['get', 'vid'], this.selVid === null ? -1 : this.selVid], paint: {
       'circle-radius': r(8, 10, 14), 'circle-color': 'rgba(0,0,0,0)', 'circle-stroke-color': P.ring, 'circle-stroke-width': 2.5, 'circle-pitch-alignment': 'map',
     } });
@@ -279,23 +318,24 @@ export class MapView {
     setColorTheme(theme);
     const { style, ok } = await this._loadStyle(theme);
     if (theme !== this.theme) return; // switched again while loading
-    const keep = { sel: this._selData, me: this._meData, route: this.routeSel };
     this.basemapOk = ok;
     this.hasBuildings = !!(style.sources && style.sources.openmaptiles);
     this.map.setStyle(style, { diff: false });
     await new Promise((res) => this.map.once('style.load', res));
     this._addData();
-    if (keep.sel) this.map.getSource('sel').setData(keep.sel);
-    if (keep.me) this.map.getSource('me').setData(keep.me);
-    if (keep.route !== null) this.highlightRoute(keep.route);
+    // put back what is selected now (it may have changed while the new basemap loaded)
+    if (this._selData) this.map.getSource('sel').setData(this._selData);
+    if (this._meData) this.map.getSource('me').setData(this._meData);
+    if (this.routeSel !== null) this.highlightRoute(this.routeSel);
   }
 
   // ------------------------------------------------------------------ interaction
   _wire() {
     const map = this.map;
+    map.on('styleimagemissing', (e) => { if (e.id.startsWith('tag|')) this._tagImage(e.id); });
     const pickVehicle = (pt) => {
       const pad = 12;
-      const hits = map.queryRenderedFeatures([[pt.x - pad, pt.y - pad], [pt.x + pad, pt.y + pad]], { layers: ['veh'] });
+      const hits = map.queryRenderedFeatures([[pt.x - pad, pt.y - pad], [pt.x + pad, pt.y + pad]], { layers: ['veh', 'veh-tag'].filter((l) => map.getLayer(l)) });
       let best = null, bd = 1e9;
       for (const f of hits) {
         if (f.properties.d === 1) continue;
@@ -318,7 +358,7 @@ export class MapView {
       this.h.onEmpty();
     });
     map.on('mousemove', (e) => {
-      const near = map.queryRenderedFeatures([[e.point.x - 8, e.point.y - 8], [e.point.x + 8, e.point.y + 8]], { layers: ['veh', 'stations', 'stations-minor', 'stops'] });
+      const near = map.queryRenderedFeatures([[e.point.x - 8, e.point.y - 8], [e.point.x + 8, e.point.y + 8]], { layers: ['veh', 'veh-tag', 'stations', 'stations-minor', 'stops'].filter((l) => map.getLayer(l)) });
       map.getCanvas().style.cursor = near.length ? 'pointer' : '';
     });
     let t = 0;
@@ -335,20 +375,62 @@ export class MapView {
   }
 
   // ------------------------------------------------------------------ vehicles
+  /** A bus's route tag: image id and half size in CSS px, cached per route and theme. */
+  _tagInfo(route) {
+    const key = `${this.theme}|${route.idx}`;
+    let t = (this._tags || (this._tags = new Map())).get(key);
+    if (!t) {
+      const n = chipLabel(route), c = routeColor(route);
+      const ctx = this._measure || (this._measure = document.createElement('canvas').getContext('2d'));
+      ctx.font = TAG_FONT;
+      const w = Math.ceil(ctx.measureText(n).width) + 12;
+      t = { id: `tag|${this.theme}|${c}|${n}`, n, c, tc: textOn(c), w, hw: w / 2 + TAG_LINE, hh: TAG_H / 2 + TAG_LINE };
+      this._tags.set(key, t);
+      (this._tagById || (this._tagById = new Map())).set(t.id, t);
+    }
+    return t;
+  }
+
+  /** Draws a tag image the first time the map asks for it (styleimagemissing). */
+  _tagImage(id) {
+    const t = this._tagById && this._tagById.get(id);
+    if (!t || this.map.hasImage(id)) return;
+    const PR = 2, L = TAG_LINE, W = Math.ceil((t.w + L * 2) * PR), H = Math.ceil((TAG_H + L * 2) * PR);
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const x = cv.getContext('2d'); x.scale(PR, PR);
+    const pill = (inset) => { x.beginPath(); x.roundRect(inset, inset, t.w + L * 2 - inset * 2, TAG_H + L * 2 - inset * 2, (TAG_H + L * 2) / 2 - inset); x.fill(); };
+    x.fillStyle = PAL[this.theme].tagHalo; pill(0);
+    x.fillStyle = t.c; pill(L);
+    x.fillStyle = t.tc; x.font = TAG_FONT; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.fillText(t.n, (t.w + L * 2) / 2, (TAG_H + L * 2) / 2 + 0.5);
+    this.map.addImage(id, x.getImageData(0, 0, W, H), { pixelRatio: PR });
+  }
+
   setVehicles(list) {
     const net = this.net;
     const feats = [];
+    const mapBearing = this.map.getBearing(); // tag fields are cheap, so they are always filled in
     this.byId.clear();
     for (const v of list) {
       this.byId.set(v.id, v);
       const route = net.routes[v.route];
       if (this.mode !== 'all' && route.mode !== this.mode) continue;
-      feats.push({ type: 'Feature', properties: {
+      const p = {
         vid: v.id, t: route.isTrain ? 1 : route.isFerry ? 2 : 0, c: routeColor(route), b: Math.round(v.bearing),
         d: this.routeSel !== null && this.routeSel !== v.route ? 1 : 0,
-      }, geometry: { type: 'Point', coordinates: [v.lon, v.lat] } });
+      };
+      if (p.t === 0) {
+        // put the pointer just outside the tag's edge, in the direction the bus is heading on screen
+        const tg = this._tagInfo(route), a = (((v.bearing - mapBearing) % 360) + 360) % 360, th = (a * Math.PI) / 180;
+        const s = Math.abs(Math.sin(th)), c = Math.abs(Math.cos(th));
+        const r = Math.min(s > 1e-3 ? tg.hw / s : 1e9, c > 1e-3 ? tg.hh / c : 1e9) + 0.24 * TIP - 1.5; // pointer base tucks under the tag
+        p.ti = tg.id; p.a = Math.round(a); p.o = [0, -Math.round(r * 10) / 10];
+      }
+      feats.push({ type: 'Feature', properties: p, geometry: { type: 'Point', coordinates: [v.lon, v.lat] } });
     }
-    this.map.getSource('veh').setData({ type: 'FeatureCollection', features: feats });
+    // the source is missing for a moment while the basemap switches (dark mode); the next tick fills it
+    const src = this.map.getSource('veh');
+    if (src) src.setData({ type: 'FeatureCollection', features: feats });
     if (this.following) {
       const v = this.byId.get(this.following);
       if (v) this.map.easeTo({ center: [v.lon, v.lat], duration: 400, easing: (x) => x, essential: true });
@@ -360,7 +442,7 @@ export class MapView {
 
   setSelectedVehicle(id) {
     this.selVid = id;
-    this.map.setFilter('veh-sel', ['==', ['get', 'vid'], id === null ? -1 : id]);
+    if (this.map.getLayer('veh-sel')) this.map.setFilter('veh-sel', ['==', ['get', 'vid'], id === null ? -1 : id]);
   }
 
   follow(id) { this.following = id; }
@@ -368,6 +450,7 @@ export class MapView {
   highlightRoute(routeIdx) {
     this.routeSel = routeIdx;
     const src = this.map.getSource('route-hi');
+    if (!src) return; // basemap switching: setTheme redraws it
     if (routeIdx === null) { src.setData(empty()); return; }
     const net = this.net, color = routeColor(net.routes[routeIdx]);
     src.setData({ type: 'FeatureCollection', features: net.routeShapes(routeIdx).map((si) => {
@@ -391,11 +474,12 @@ export class MapView {
     const net = this.net, lat = net.entityLat(e), lon = net.entityLon(e);
     this._selData = { type: 'FeatureCollection', features: [
       { type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: [lon, lat] } }] };
-    this.map.getSource('sel').setData(this._selData);
+    const sel = this.map.getSource('sel');
+    if (sel) sel.setData(this._selData);
     if (fly) this.map.easeTo({ center: [lon, lat], zoom: Math.max(this.map.getZoom(), 15), padding: this._pad(0), duration: 700 });
   }
 
-  clearEntity() { this._selData = null; this.map.getSource('sel').setData(empty()); }
+  clearEntity() { this._selData = null; const sel = this.map.getSource('sel'); if (sel) sel.setData(empty()); }
 
   flyTo(lat, lon, zoom) { this.map.easeTo({ center: [lon, lat], zoom, padding: this._pad(0), duration: 700 }); }
 
@@ -404,7 +488,7 @@ export class MapView {
   set3D(on) {
     const map = this.map;
     this.is3D = on;
-    if (this.hasBuildings) map.setLayoutProperty('buildings-3d', 'visibility', on ? 'visible' : 'none');
+    if (this.hasBuildings && map.getLayer('buildings-3d')) map.setLayoutProperty('buildings-3d', 'visibility', on ? 'visible' : 'none');
     map.easeTo({ pitch: on ? 62 : 0, bearing: on ? -18 : 0, zoom: on ? Math.max(map.getZoom(), 14.4) : map.getZoom(), duration: 900 });
   }
 
@@ -417,7 +501,8 @@ export class MapView {
   setMe(lat, lon) {
     this._meData = lat === null ? null : { type: 'FeatureCollection', features: [
       { type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: [lon, lat] } }] };
-    this.map.getSource('me').setData(this._meData || empty());
+    const me = this.map.getSource('me');
+    if (me) me.setData(this._meData || empty());
   }
 
   resize() { this.map.resize(); }

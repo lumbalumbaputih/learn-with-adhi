@@ -6,9 +6,9 @@ A map of Perth's buses, trains and ferry moving through the day, in the style of
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.4 (see section 12)
+- **Current version:** v1.5 (see section 12)
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
-- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.4 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.4 will be lost.
+- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.5 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.5 will be lost.
 
 ## 1. How this started
 
@@ -30,7 +30,7 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 ## 2. What it does
 
 - About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 341 bus routes and, since v1.3, the Elizabeth Quay to Mends St ferry).
-- Trains drawn as long bars and buses as short pills, in the route colour, pointing the way they travel (since v1.1).
+- Trains drawn as long bars and buses as short pills, in the route colour, pointing the way they travel (since v1.1). From zoom 15 each bus becomes a tag with its route number and a direction pointer (since v1.5).
 - A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control. On phones the chart is hidden (since v1.2), so time there is changed with the buttons only.
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
 - Routes, Stops and Map tabs with one search box. A stop or station page shows the next timetable departures.
@@ -210,6 +210,12 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.5 (2026-10-17)
+
+- **Route numbers on buses.** Adhi asked for bus numbers on the pills, after a Jakarta transit map he showed as a reference. From zoom 15 (`TAG_Z` in `mapview.js`) each bus is a tag: a pill in the bus colour with a theme-coloured outline, the route number (or CAT name, from `chipLabel()`) in Archivo bold, and a small outlined pointer just outside the tag's edge in the bus's on-screen direction of travel. Below zoom 15 buses keep the v1.1 shapes; trains and the ferry are unchanged and draw on top of the tags.
+- **How:** each tag is one image (pill, outline and number together), drawn on a canvas the first time the map asks for it (`styleimagemissing`, `_tagImage()`), one per label, colour and theme. A first try drew the number as a MapLibre text label on a stretchable pill, but MapLibre draws all pills of a layer before all text, so overlapping tags showed each other's numbers; single images stack cleanly. The pointer's distance from the centre is worked out per bus from the measured tag width and its on-screen heading (`setVehicles()`, `_tagInfo()`). `TAG_Z` is a whole number because zoom rules in per-vehicle styles are evaluated at the tile's whole-number zoom (a 14.5 threshold showed nothing until zoom 15). Waits for the Archivo font before drawing. Clicking a tag opens that bus.
+- **Tests (headless Chromium):** tags appear at zoom 15 and above only (0 at 14.9, 75 at 15.1 in the CBD), the tag label matches the bus's route, clicking a tag opens that bus's card, only buses are tagged, the Trains filter hides them, a dark/light switch redraws them with the dark images, and the v1.1 to v1.4 suites re-run. Frame rate and update time in headless Chromium (software rendering) were measured before and after; see `PROGRESS.md`.
 
 ### v1.4 (2026-10-17)
 
