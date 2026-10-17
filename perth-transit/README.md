@@ -6,9 +6,9 @@ A map of Perth's buses, trains and ferry moving through the day, in the style of
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.5 (see section 12)
+- **Current version:** v1.6 (see section 12)
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
-- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.5 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.5 will be lost.
+- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.6 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.6 will be lost.
 
 ## 1. How this started
 
@@ -29,7 +29,7 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 
 ## 2. What it does
 
-- About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 341 bus routes and, since v1.3, the Elizabeth Quay to Mends St ferry).
+- About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 329 public bus routes and, since v1.3, the Elizabeth Quay to Mends St ferry).
 - Trains drawn as long bars and buses as short pills, in the route colour, pointing the way they travel (since v1.1). From zoom 15 each bus becomes a tag with its route number and a direction pointer (since v1.5).
 - A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control. On phones the chart is hidden (since v1.2), so time there is changed with the buttons only.
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
@@ -184,7 +184,7 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 10. Known limits and open items
 
 - **Visitor numbers.** Since v1.4 the page loads Vercel Web Analytics (already on for the project, same snippet as the site's home page). Page views show under `/perth-transit/` in the Vercel dashboard (project learn-with-adhi, Analytics). The address is reduced to the path before sending (no `#@lat,lon`, no `?t=`), panning does not count as a new view, and automated browsers are ignored by Vercel's script.
-- **Same route listed more than once.** The feed lists some routes once per operating contract (950, 950X, 960, 998, 999, Blue/Red/Yellow CAT). "How busy is this line?" and its running count combine them, but the rest of the app still treats each entry separately (two "950" rows in Routes, and "Show on map" highlights one entry and dims the other's buses). Merging them properly belongs in the compiler.
+- **Contract-specific route entries:** resolved in v1.6 at network load. Exact matches of short name, long name and mode share one public route; all their patterns and trips are retained. The stored feed counts remain 350 route entries; the interface has 338 public routes (329 bus, 8 rail, 1 ferry).
 - **Real name.** "Perth Transit Map" is a placeholder and must stay clear of the Authority's brand names.
 - **Licence check** (section 9) is still open.
 - **Timetable expiry** on 2027-01-11. The Authority can publish a new feed earlier. A scheduled rebuild is possible but would need approval.
@@ -210,6 +210,22 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.6 (2026-10-17)
+
+- Group identical public routes across operating contracts in `Network`, remapping pattern references once at load. Route lists, search, stop chips, running counts, directions, bounds and map selection now include the complete route. All 55,495 trips and 2,188 patterns are preserved; compiled JSON is unchanged.
+- The peak-hour summary describes an average in the busiest direction, rather than claiming that rate applies each way. Explain that the count includes branches and short trips leaving their first stops, so it is not a headway guarantee at a particular stop. Label first/last trips after midnight “next day”.
+- Reproducible checks (Node 24, no dependencies):
+
+  ```sh
+  node scripts/perth-transit-check-accuracy.mjs
+  python3 -I scripts/perth-transit-gtfs-expectations.py /tmp/perth-gtfs.zip > /tmp/perth-expected.json
+  node scripts/perth-transit-check-accuracy.mjs /tmp/perth-expected.json
+  ```
+
+  Use the original `mdb-1086-202610160127` download (section 6). The independent Python answer key reads raw GTFS, not compiled JSON. All 1,014 public-route/day summaries on Saturday 17, Sunday 18 and Monday 19 October match: hourly counts, daily totals, first and last departures. Regression checks cover route identity, preservation of every pattern and shape, route search, finite positions, and heartbeat/running counts at midnight, 1am, 8am, noon and 11pm on all three days.
+
+- Headless Chromium checks at desktop and 390px phone width: route 998 selection includes all 22 running buses and 20 shapes at Monday 8am; route 950 uses the busiest-direction wording; an overnight route labels next-day departures; no phone horizontal overflow or page errors on dark switching. Real devices and Safari/Firefox remain untested.
 
 ### v1.5 (2026-10-17)
 

@@ -313,12 +313,13 @@ export class Panel {
     for (let hr = 1; hr < d.all.length; hr++) if (d.all[hr] > d.all[peak]) peak = hr;
     const from = Math.floor(d.first / 3600), to = Math.floor(d.last / 3600);
     const gap = d.oneWay[peak] ? Math.round(60 / d.oneWay[peak]) : 0;
-    const often = gap <= 1 ? 'about every minute' : `about every ${gap} min`;
-    const each = d.dirs > 1 ? ' each way' : '';
+    const often = gap <= 1 ? 'an average of about one trip per minute' : `an average of about one trip per ${gap} min`;
+    const each = d.dirs > 1 ? ' in the busiest direction' : '';
     const head = h('p', { class: 'busy-head' },
       h('strong', { text: `Busiest ${hrLabel(peak)} to ${hrLabel(peak + 1)}` }),
       `: ${fmtN(d.all[peak])} ${d.all[peak] === 1 ? 'trip' : 'trips'}, ${often}${each}.`);
-    const span = h('p', { class: 'meta', text: `First trip ${fmtClock(d.first)}, last trip ${fmtClock(d.last)}.` });
+    const tripTime = (t) => `${fmtClock(t)}${t >= DAY ? ' next day' : ''}`;
+    const span = h('p', { class: 'meta', text: `First trip ${tripTime(d.first)}, last trip ${tripTime(d.last)}.` });
     const color = routeColor(route);
     const bars = h('div', { class: 'busy-bars', role: 'img',
       'aria-label': `Trips per hour on ${dayLabel(now.ymd)}, from ${hrLabel(from)} to ${hrLabel(to + 1)}. Busiest ${hrLabel(peak)} to ${hrLabel(peak + 1)} with ${d.all[peak]} trips.` });
@@ -332,10 +333,8 @@ export class Panel {
       bars.append(bar);
       axis.append(h('span', { text: hr % 3 === 0 ? (hr % 24 === 0 ? '12am' : hrLabel(hr)) : '' })); // short, so the right edge is not cut off
     }
-    const split = group.length > 1
-      ? ` The timetable lists this route ${group.length} times (once for each operating contract), and this counts all of them.` : '';
     wrap.replaceChildren(head, span, bars, axis,
-      h('p', { class: 'fine', text: `Trips per hour on ${dayLabel(now.ymd)}, from the timetable. This shows how often it runs, not how full it is.${split}` }));
+      h('p', { class: 'fine', text: `Trips leaving their first stop per hour on ${dayLabel(now.ymd)}, from the timetable. Branches and short trips are included; spacing at your stop may differ. This shows service frequency, not how full it is.` }));
     this.r.busyNow = null;
   }
 

@@ -152,10 +152,22 @@ export function smoothTimes(arr) {
 export class Network {
   constructor({ meta, core, trips, stops, shapes }) {
     this.meta = meta;
-    this.routes = core.routes.map(([short, long, type], idx) => ({
-      idx, short, long, type, name: short || long, isTrain: type === 2, isFerry: type === 4,
-      mode: type === 2 ? 'train' : type === 4 ? 'ferry' : 'bus',
-    }));
+    // Contract-specific GTFS route IDs can describe the same public route.
+    // Remap only route references; every pattern, profile and trip stays intact.
+    this.routes = [];
+    const routeKeys = new Map();
+    const routeMap = core.routes.map(([short, long, type]) => {
+      const key = JSON.stringify([short, long, type]);
+      if (!routeKeys.has(key)) {
+        const idx = this.routes.length;
+        routeKeys.set(key, idx);
+        this.routes.push({
+          idx, short, long, type, name: short || long, isTrain: type === 2, isFerry: type === 4,
+          mode: type === 2 ? 'train' : type === 4 ? 'ferry' : 'bus',
+        });
+      }
+      return routeKeys.get(key);
+    });
     this.headsigns = core.headsigns;
     this._shapeEnc = shapes;
     this._geom = new Array(shapes.length);
@@ -182,7 +194,7 @@ export class Network {
       const dist = new Float64Array(deltas.length);
       let acc = 0;
       for (let i = 0; i < deltas.length; i++) { acc += deltas[i]; dist[i] = acc; }
-      return { idx, route, dir, shape, hs, stops: Int32Array.from(stopIdx), dist };
+      return { idx, route: routeMap[route], dir, shape, hs, stops: Int32Array.from(stopIdx), dist };
     });
 
     // profiles (timing variants) and their trips
@@ -465,8 +477,7 @@ export class Network {
     return { all, oneWay, dirs: byDir.size, first, last, trips };
   }
 
-  /** Routes with the same number and name. The feed lists some busy routes (950, 960, the CircleRoutes 998/999,
-   *  some CATs) once per operating contract, so one route people know is several entries here. */
+  /** Public route identity (contract duplicates have already been coalesced at load). */
   sameNameRoutes(routeIdx) {
     const r = this.routes[routeIdx];
     return this.routes.filter((x) => x.short === r.short && x.long === r.long && x.type === r.type).map((x) => x.idx);
