@@ -1,5 +1,22 @@
 [
   {
+    "id": "perth-transit-map",
+    "n": "T4",
+    "title": "Perth Transit Map",
+    "blurb": "Watch Perth's buses and trains move through the day on a map. Positions are simulated from the published timetable, not live, so use it to see how the network runs and check the official planner before you travel.",
+    "category": "Tools",
+    "tags": [
+      "Map",
+      "Perth",
+      "Transport",
+      "Simulated"
+    ],
+    "primitive": "arc",
+    "accent": "sea",
+    "path": "perth-transit/",
+    "duration": "Map"
+  },
+  {
     "id": "cek-fakta-iklim",
     "n": "R3",
     "title": "Cek Fakta Iklim",
