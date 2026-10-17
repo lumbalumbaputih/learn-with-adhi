@@ -1,7 +1,7 @@
 // mapview.js: the map, its layers, the moving vehicles and what happens on click.
 import * as maplibregl from './vendor/maplibre-gl.mjs';
-import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js';
-import { prettyName } from './util.js';
+import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.7';
+import { prettyName } from './util.js?v=1.7';
 
 export const STYLE_URLS = {
   light: 'https://tiles.openfreemap.org/styles/positron',
@@ -69,11 +69,12 @@ export class MapView {
   async init(view, { compactAttribution, theme = 'light' }) {
     this.theme = theme;
     setColorTheme(theme);
-    const { style, ok } = await this._loadStyle(theme);
-    this.basemapOk = ok;
-    this.hasBuildings = !!(style.sources && style.sources.openmaptiles);
+    // Timetable interaction must not wait for a third-party style, tiles or fonts.
+    const basemap = this._loadStyle(theme);
+    this.basemapOk = false;
+    this.hasBuildings = false;
     const map = (this.map = new maplibregl.Map({
-      container: this.container, style,
+      container: this.container, style: fallbackStyle(theme),
       center: [view.lon, view.lat], zoom: view.zoom, minZoom: 7.5, maxZoom: 19, maxPitch: 70,
       attributionControl: false, dragRotate: true, touchPitch: true,
     }));
@@ -89,15 +90,24 @@ export class MapView {
         if (a) a.classList.remove('maplibregl-compact-show');
       }, 4000);
     }
-    // tags are drawn on a canvas in the app's font, so wait for it (a fallback font would be cached otherwise)
-    try { await document.fonts.load(TAG_FONT); } catch { /* the tags then use the fallback font */ }
     this._addData();
     this._wire();
+    // Invalidate measured tags when the optional font arrives; fallback text works meanwhile.
+    document.fonts.load(TAG_FONT).then(() => {
+      this._tags?.clear();
+      this._tagById?.clear();
+      for (const id of map.listImages()) if (id.startsWith('tag|')) map.removeImage(id);
+      if (this._lastVehicles) this.setVehicles(this._lastVehicles);
+    }).catch(() => {});
+    basemap.then(({ ok }) => {
+      if (ok && this.theme === theme) return this.setTheme(theme, { force: true });
+    }).catch((err) => console.warn('Basemap upgrade unavailable.', err));
     return this;
   }
 
   // ------------------------------------------------------------------ data and layers
   _lineFeatures() {
+    if (this._lines) return this._lines;
     const net = this.net;
     const shapeIsTrain = new Set(), shapeIsBus = new Set(), shapeIsFerry = new Set();
     for (const p of net.patterns) {
@@ -113,7 +123,7 @@ export class MapView {
         return { type: 'Feature', properties: { s: si }, geometry: { type: 'LineString', coordinates: coords } };
       }),
     });
-    return { bus: mk(shapeIsBus), rail: mk(shapeIsTrain), ferry: mk(shapeIsFerry) };
+    return (this._lines = { bus: mk(shapeIsBus), rail: mk(shapeIsTrain), ferry: mk(shapeIsFerry) });
   }
 
   _addData() {
@@ -312,21 +322,24 @@ export class MapView {
   }
 
   /** Switch between the light and dark map. Redraws this app's layers on the new basemap and keeps what was selected. */
-  async setTheme(theme) {
-    if (theme === this.theme || !this.map) return;
+  async setTheme(theme, { force = false } = {}) {
+    if ((!force && theme === this.theme) || !this.map) return;
+    const version = this._styleVersion = (this._styleVersion || 0) + 1;
     this.theme = theme;
     setColorTheme(theme);
     const { style, ok } = await this._loadStyle(theme);
-    if (theme !== this.theme) return; // switched again while loading
+    if (version !== this._styleVersion) return; // switched again while loading
     this.basemapOk = ok;
     this.hasBuildings = !!(style.sources && style.sources.openmaptiles);
     this.map.setStyle(style, { diff: false });
     await new Promise((res) => this.map.once('style.load', res));
+    if (version !== this._styleVersion) return;
     this._addData();
     // put back what is selected now (it may have changed while the new basemap loaded)
     if (this._selData) this.map.getSource('sel').setData(this._selData);
     if (this._meData) this.map.getSource('me').setData(this._meData);
     if (this.routeSel !== null) this.highlightRoute(this.routeSel);
+    if (this._lastVehicles) this.setVehicles(this._lastVehicles);
   }
 
   // ------------------------------------------------------------------ interaction
@@ -407,19 +420,27 @@ export class MapView {
   }
 
   setVehicles(list) {
+    this._lastVehicles = list;
     const net = this.net;
     const feats = [];
-    const mapBearing = this.map.getBearing(); // tag fields are cheap, so they are always filled in
+    const bounds = this.map.getBounds();
+    const latPad = (bounds.getNorth() - bounds.getSouth()) * 0.1;
+    const lonPad = (bounds.getEast() - bounds.getWest()) * 0.1;
+    const tagsVisible = this.map.getZoom() >= TAG_Z;
+    const mapBearing = this.map.getBearing();
     this.byId.clear();
     for (const v of list) {
       this.byId.set(v.id, v);
       const route = net.routes[v.route];
       if (this.mode !== 'all' && route.mode !== this.mode) continue;
+      // Keep the complete vehicle lookup for cards/follow, but only send visible points to the map worker.
+      if (v.lat < bounds.getSouth() - latPad || v.lat > bounds.getNorth() + latPad ||
+          v.lon < bounds.getWest() - lonPad || v.lon > bounds.getEast() + lonPad) continue;
       const p = {
         vid: v.id, t: route.isTrain ? 1 : route.isFerry ? 2 : 0, c: routeColor(route), b: Math.round(v.bearing),
         d: this.routeSel !== null && this.routeSel !== v.route ? 1 : 0,
       };
-      if (p.t === 0) {
+      if (p.t === 0 && tagsVisible) {
         // put the pointer just outside the tag's edge, in the direction the bus is heading on screen
         const tg = this._tagInfo(route), a = (((v.bearing - mapBearing) % 360) + 360) % 360, th = (a * Math.PI) / 180;
         const s = Math.abs(Math.sin(th)), c = Math.abs(Math.cos(th));
@@ -433,7 +454,7 @@ export class MapView {
     if (src) src.setData({ type: 'FeatureCollection', features: feats });
     if (this.following) {
       const v = this.byId.get(this.following);
-      if (v) this.map.easeTo({ center: [v.lon, v.lat], duration: 400, easing: (x) => x, essential: true });
+      if (v) this.map.easeTo({ center: [v.lon, v.lat], duration: 0 });
     }
     return feats.length;
   }

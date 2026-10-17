@@ -1,8 +1,8 @@
 // panel.js: tabs, search, route and stop pages, the vehicle card and the departures board.
-import { DAY, fmtClock } from './sim.js';
-import { routeColor } from './colors.js';
-import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js';
-import { dayLabel } from './scrubber.js';
+import { DAY, fmtClock } from './sim.js?v=1.7';
+import { routeColor } from './colors.js?v=1.7';
+import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.7';
+import { dayLabel } from './scrubber.js?v=1.7';
 
 const TABS = [['map', 'Map'], ['routes', 'Routes'], ['stops', 'Stops']];
 
@@ -11,9 +11,27 @@ function segmented(label, options, value, onChange) {
   for (const [v, text] of options) {
     wrap.append(h('button', {
       class: 'seg-btn', type: 'button', role: 'radio', 'aria-checked': String(v === value), text,
-      onclick: () => onChange(v),
+      tabindex: v === value ? 0 : -1,
+      onclick: () => {
+        onChange(v);
+        const group = [...document.querySelectorAll('[role="radiogroup"]')].find((g) => g.getAttribute('aria-label') === label);
+        group?.querySelector('[aria-checked="true"]')?.focus({ preventScroll: true });
+      },
     }));
   }
+  wrap.addEventListener('keydown', (e) => {
+    const buttons = [...wrap.children];
+    const i = buttons.indexOf(document.activeElement);
+    if (i < 0) return;
+    let next;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % buttons.length;
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i + buttons.length - 1) % buttons.length;
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = buttons.length - 1;
+    else return;
+    e.preventDefault();
+    buttons[next].click();
+  });
   return wrap;
 }
 
@@ -57,7 +75,16 @@ export class Panel {
       this.query = ''; this.input.value = ''; this._clearDetail(); this.setTab(ids[i]);
       tabs.children[i].focus();
     });
-    this.input.addEventListener('input', () => { this.query = this.input.value.trim(); this.render(); });
+    this.input.addEventListener('input', () => {
+      this.query = this.input.value.trim(); this.render();
+      clearTimeout(this._searchTimer);
+      this._searchTimer = setTimeout(() => {
+        const status = document.getElementById('search-status');
+        if (status) status.textContent = this.query
+          ? `Showing ${this.net.searchRoutes(this.query, 8).length} routes and ${this.net.searchEntities(this.query, 12).length} stops or stations for ${this.query}.`
+          : '';
+      }, 250);
+    });
     this.clearBtn.addEventListener('click', () => { this.input.value = ''; this.query = ''; this.render(); this.input.focus(); });
     this._syncTabs();
     this.render();
@@ -85,6 +112,7 @@ export class Panel {
     this.tab = 'routes'; this.detail = { kind: 'route', idx };
     this._syncTabs(); this.render();
     this.act.onRoute(idx);
+    this.content.focus({ preventScroll: true });
   }
 
   openEntity(e, { fly = true } = {}) {
@@ -94,6 +122,7 @@ export class Panel {
     this.boardFilter = 'all';
     this._syncTabs(); this.render();
     this.act.onEntity(e, fly);
+    this.content.focus({ preventScroll: true });
   }
 
   openVehicle(id) {
@@ -113,12 +142,14 @@ export class Panel {
   back() {
     this._clearDetail();
     this.render();
+    this.content.focus({ preventScroll: true });
   }
 
   closeVehicle() {
     this.vehicleId = null;
     this.act.onVehicleClose();
     this.render();
+    this.content.focus({ preventScroll: true });
   }
 
   setCenter(lat, lon) {
@@ -132,6 +163,10 @@ export class Panel {
     c.replaceChildren();
     this.r = {};
     this.clearBtn.hidden = !this.query;
+    if (!this.query) {
+      const status = document.getElementById('search-status');
+      if (status?.textContent) status.textContent = '';
+    }
     c.setAttribute('aria-labelledby', `tab-${this.tab}`);
     if (this.query) c.append(this._search());
     else if (this.detail && this.detail.kind === 'route') c.append(this._routePage());
@@ -158,7 +193,7 @@ export class Panel {
     this.r.ferry = h('span', { class: 'fig-num' });
     this.r.ferryLabel = h('span', { text: 'ferries' });
     this.r.vcard = h('div', { class: 'vcard-slot' });
-    const status = h('section', { class: 'status', 'aria-live': 'polite' },
+    const status = h('section', { class: 'status' },
       h('div', { class: 'status-main' }, this.r.total, h('div', { class: 'status-label' }, h('strong', { text: 'vehicles running' }), this.r.routes)),
       h('div', { class: 'figs' },
         h('div', { class: 'fig' }, this.r.bus, h('span', { text: 'buses' })),
@@ -324,8 +359,12 @@ export class Panel {
     const bars = h('div', { class: 'busy-bars', role: 'img',
       'aria-label': `Trips per hour on ${dayLabel(now.ymd)}, from ${hrLabel(from)} to ${hrLabel(to + 1)}. Busiest ${hrLabel(peak)} to ${hrLabel(peak + 1)} with ${d.all[peak]} trips.` });
     const axis = h('div', { class: 'busy-axis', 'aria-hidden': 'true' });
+    const rows = h('tbody', {});
     for (let hr = from; hr <= to; hr++) {
       const n = d.all[hr];
+      rows.append(h('tr', {},
+        h('th', { scope: 'row', text: `${hrLabel(hr)}${hr >= 24 ? ' next day' : ''}` }),
+        h('td', { text: fmtN(n) })));
       const bar = h('span', { class: 'busy-bar', title: `${hrLabel(hr)}: ${n} ${n === 1 ? 'trip' : 'trips'}`,
         style: { height: `${n ? Math.max(4, Math.round((n / d.all[peak]) * 100)) : 0}%`, background: color } });
       bar.dataset.hr = String(hr);
@@ -334,7 +373,11 @@ export class Panel {
       axis.append(h('span', { text: hr % 3 === 0 ? (hr % 24 === 0 ? '12am' : hrLabel(hr)) : '' })); // short, so the right edge is not cut off
     }
     wrap.replaceChildren(head, span, bars, axis,
-      h('p', { class: 'fine', text: `Trips leaving their first stop per hour on ${dayLabel(now.ymd)}, from the timetable. Branches and short trips are included; spacing at your stop may differ. This shows service frequency, not how full it is.` }));
+      h('p', { class: 'fine', text: `Trips leaving their first stop per hour on ${dayLabel(now.ymd)}, from the timetable. Branches and short trips are included; spacing at your stop may differ. This shows service frequency, not how full it is.` }),
+      h('details', { class: 'hourly-data' },
+        h('summary', { text: 'Hourly timetable counts' }),
+        h('table', {}, h('caption', { class: 'sr-only', text: `Trips by hour on ${dayLabel(now.ymd)}` }),
+          h('thead', {}, h('tr', {}, h('th', { scope: 'col', text: 'Hour' }), h('th', { scope: 'col', text: 'Trips' }))), rows)));
     this.r.busyNow = null;
   }
 
@@ -409,7 +452,11 @@ export class Panel {
 
   _syncBoardSeg() {
     if (!this.r.boardSeg) return;
-    for (const b of this.r.boardSeg.children) b.setAttribute('aria-checked', String(b.textContent.toLowerCase().startsWith(this.boardFilter === 'all' ? 'all' : this.boardFilter)));
+    for (const b of this.r.boardSeg.children) {
+      const on = b.textContent.toLowerCase().startsWith(this.boardFilter === 'all' ? 'all' : this.boardFilter);
+      b.setAttribute('aria-checked', String(on));
+      b.tabIndex = on ? 0 : -1;
+    }
   }
 
   _renderBoard() {

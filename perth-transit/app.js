@@ -1,14 +1,15 @@
 // app.js: loads the timetable, then wires clock, map, panel and scrubber together.
-import { Network, addDays, ymdParts, DAY } from './sim.js';
-import { SimClock } from './clock.js';
-import { MapView } from './mapview.js';
-import { Panel } from './panel.js';
-import { Scrubber, dayLabel } from './scrubber.js';
-import { fmtN } from './util.js';
+import { Network, addDays, ymdParts, DAY } from './sim.js?v=1.7';
+import { SimClock } from './clock.js?v=1.7';
+import { MapView } from './mapview.js?v=1.7';
+import { Panel } from './panel.js?v=1.7';
+import { Scrubber, dayLabel } from './scrubber.js?v=1.7';
+import { fmtN } from './util.js?v=1.7';
 
 const $ = (id) => document.getElementById(id);
 const DEFAULT_VIEW = { lat: -31.955, lon: 115.87, zoom: 10.4 };
 const mobileQuery = window.matchMedia('(max-width: 819px)');
+const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // ---------------------------------------------------------------------- light / dark
 // Follows the device until the viewer presses the button; the choice is then kept in this browser.
@@ -149,15 +150,25 @@ async function main() {
       const dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(qs.get('date') || '');
       if (dm) ymd = +dm[1] * 10000 + +dm[2] * 100 + +dm[3];
       clock.setTime(ymd, +m[1] * 3600 + +m[2] * 60);
-      if (qs.get('speed')) clock.setSpeed(Math.max(1, Math.min(600, +qs.get('speed') || 1)));
+      if (qs.has('speed') && Number.isFinite(Number(qs.get('speed')))) clock.setSpeed(Math.max(0, Math.min(600, Number(qs.get('speed')))));
     }
   }
 
+  if (motionQuery.matches) clock.setSpeed(0);
   let mapView = null, panel = null, scrub = null;
   const sheet = setupSheet((px) => {
     if (mapView && mapView.map) {
       mapView.setPadding({ top: 0, right: 0, left: 0, bottom: mobileQuery.matches ? px : 0 });
     }
+  });
+  document.querySelector('.skip-link').addEventListener('click', (e) => {
+    e.preventDefault(); sheet.ensure('full'); $('content').focus();
+  });
+  document.querySelector('.skip-time').addEventListener('click', (e) => {
+    e.preventDefault(); sheet.set('peek'); $('scrubber').focus();
+  });
+  $('content').addEventListener('focusin', (e) => {
+    if (e.target.matches(':focus-visible')) sheet.ensure('full');
   });
 
   const act = {
@@ -197,7 +208,19 @@ async function main() {
     onScrub: (sec) => { const n = clock.now(); clock.setTime(n.ymd, sec); tick(true); },
     onDay: (d) => { clock.shiftDays(d); tick(true); },
     onNow: () => { clock.goLive(); tick(true); },
-    onSpeed: (s) => { if (s === 1 && clock.live) return; clock.setSpeed(s); tick(true); },
+    onSpeed: (s) => {
+      if (s === 1 && clock.live) return;
+      if (s === 0) scrub.resumeSpeed = clock.speed || 1;
+      clock.setSpeed(s); tick(true);
+    },
+    onPause: () => {
+      if (clock.speed === 0 && !clock.live) clock.setSpeed(scrub.resumeSpeed || 1);
+      else { scrub.resumeSpeed = clock.speed || 1; clock.setSpeed(0); }
+      tick(true);
+    },
+  });
+  motionQuery.addEventListener('change', (e) => {
+    if (e.matches) { mapView.follow(null); clock.setSpeed(0); tick(true); }
   });
 
   // ---- map buttons
@@ -278,13 +301,21 @@ async function main() {
   });
 
   // ---- main loop
-  let hbYmd = 0, lastPanel = 0, lastTick = 0;
+  let hbYmd = 0, lastPanel = 0, lastTick = 0, lastMoment = '', frameId = null;
+  function schedule() {
+    if (frameId === null && !document.hidden && (clock.live || clock.speed !== 0)) frameId = requestAnimationFrame(frame);
+  }
   function tick(force) {
+    if (document.hidden) return;
     const t = performance.now();
-    const interval = clock.live && clock.speed === 1 ? (mapView.map.getZoom() > 14.5 ? 120 : 250) : 100;
-    if (!force && t - lastTick < interval) return;
-    lastTick = t;
+    // Align with display frames; avoid both timer judder and work that cannot be painted.
+    const interval = 1000 / 30, elapsed = t - lastTick;
+    if (!force && elapsed < interval) return;
+    lastTick = force ? t : t - (elapsed % interval);
     const now = clock.now();
+    const moment = `${now.ymd}|${now.sec}`;
+    if (!force && moment === lastMoment) return; // paused: no repeated geometry/DOM work
+    lastMoment = moment;
     const covered = net.covers(now.ymd);
     if (hbYmd !== now.ymd) {
       hbYmd = now.ymd;
@@ -295,10 +326,21 @@ async function main() {
     }
     const vehicles = covered ? net.vehicles(now.ymd, now.sec) : [];
     mapView.setVehicles(vehicles);
-    scrub.setTime({ ymd: now.ymd, sec: now.sec, live: clock.live, speed: clock.speed });
-    if (force || t - lastPanel > 1000) { lastPanel = t; panel.update(now, vehicles); }
+    // Text and accessibility attributes need only one refresh per second.
+    if (force || t - lastPanel > 1000) {
+      lastPanel = t;
+      scrub.setTime({ ymd: now.ymd, sec: now.sec, live: clock.live, speed: clock.speed });
+      panel.update(now, vehicles);
+    }
+    scrub.moveTo(now.sec);
+    if (force) schedule();
   }
-  setInterval(() => tick(false), 100);
+  function frame() { frameId = null; tick(false); schedule(); }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { cancelAnimationFrame(frameId); frameId = null; }
+    else tick(true);
+  });
+  mapView.map.on('moveend', () => { if (mapView.following === null) tick(true); });
   tick(true);
 
   window.__app = { net, clock, mapView, panel, scrub, tick, sheet };

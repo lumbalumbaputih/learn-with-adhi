@@ -1,6 +1,6 @@
 // scrubber.js: the day's heartbeat. A chart of vehicles running through the Perth service day
 // with a draggable cursor that sets the simulated time.
-import { DAY, fmtClock, ymdParts } from './sim.js';
+import { DAY, fmtClock, ymdParts } from './sim.js?v=1.7';
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 const el = (tag, attrs = {}, ...kids) => {
@@ -26,7 +26,7 @@ export function dayLabel(ymd) {
   });
 }
 
-const SPEEDS = [[1, 'Real time'], [10, '10×'], [60, '60×'], [300, '300×']];
+const SPEEDS = [[0, 'Paused'], [1, 'Real time'], [10, '10×'], [60, '60×'], [300, '300×']];
 const fmtN = (n) => n.toLocaleString('en-AU');
 
 export class Scrubber {
@@ -37,10 +37,11 @@ export class Scrubber {
     this.root = root;
 
     this.dayEl = el('span', { class: 'scrub-day' });
-    this.timeEl = el('span', { class: 'scrub-time' });
+    this.timeEl = el('input', { class: 'scrub-time', type: 'time', step: '60', 'aria-label': 'Simulation time' });
     const mk = (act, label, text) => el('button', { class: 'icon-btn', type: 'button', 'data-act': act, 'aria-label': label, text });
     this.prevBtn = mk('prev', 'Previous day', '‹');
     this.nextBtn = mk('next', 'Next day', '›');
+    this.pauseBtn = mk('pause', 'Pause animation', 'Pause');
     this.speedSel = el('select', { class: 'speed', 'aria-label': 'Simulation speed' });
     for (const [v, label] of SPEEDS) this.speedSel.append(el('option', { value: v, text: label }));
     this.nowBtn = el('button', { class: 'now-btn', type: 'button', 'data-act': 'now', text: 'Now', 'aria-pressed': 'true' });
@@ -57,7 +58,7 @@ export class Scrubber {
     root.append(
       el('div', { class: 'scrub-top' },
         el('div', { class: 'scrub-clock' }, this.dayEl, this.timeEl),
-        el('div', { class: 'scrub-actions' }, this.prevBtn, this.nextBtn, this.speedSel, this.nowBtn)),
+        el('div', { class: 'scrub-actions' }, this.prevBtn, this.nextBtn, this.pauseBtn, this.speedSel, this.nowBtn)),
       this.chart, this.note,
     );
 
@@ -68,6 +69,12 @@ export class Scrubber {
       if (a === 'prev') cb.onDay(-1);
       else if (a === 'next') cb.onDay(1);
       else if (a === 'now') cb.onNow();
+      else if (a === 'pause') cb.onPause();
+    });
+    this.timeEl.addEventListener('change', () => {
+      if (!this.timeEl.value) return;
+      const [hour, minute] = this.timeEl.value.split(':').map(Number);
+      cb.onScrub(hour * 3600 + minute * 60);
     });
     this.speedSel.addEventListener('change', () => cb.onSpeed(Number(this.speedSel.value)));
 
@@ -112,7 +119,10 @@ export class Scrubber {
   setTime(s) {
     this.sec = s.sec;
     this.dayEl.textContent = dayLabel(s.ymd);
-    this.timeEl.textContent = fmtClock(s.sec);
+    if (document.activeElement !== this.timeEl) this.timeEl.value = `${String(Math.floor(s.sec / 3600)).padStart(2, '0')}:${String(Math.floor(s.sec / 60) % 60).padStart(2, '0')}`;
+    const paused = !s.live && s.speed === 0;
+    this.pauseBtn.textContent = paused ? 'Play' : 'Pause';
+    this.pauseBtn.setAttribute('aria-label', paused ? 'Resume animation' : 'Pause animation');
     this.nowBtn.setAttribute('aria-pressed', String(s.live));
     this.nowBtn.disabled = s.live;
     if (document.activeElement !== this.speedSel) this.speedSel.value = String(s.speed);
@@ -120,6 +130,8 @@ export class Scrubber {
     this.chart.setAttribute('aria-valuetext', `${dayLabel(s.ymd)}, ${fmtClock(s.sec)}`);
     this._moveCursor();
   }
+
+  moveTo(sec) { this.sec = sec; this._moveCursor(); }
 
   setNote(text) { this.note.textContent = text; }
 

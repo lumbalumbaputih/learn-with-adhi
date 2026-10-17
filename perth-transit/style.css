@@ -103,7 +103,7 @@ ul, ol { padding: 0; list-style: none; }
 .grab { display: none; }
 .panel-head { flex: none; padding: 14px 16px 0; }
 .content { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 14px 16px 20px; }
-.content:focus { outline: none; }
+.content:focus-visible { outline-offset: -3px; }
 .panel-foot { flex: none; padding: 10px 16px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-3); }
 
 .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
@@ -328,8 +328,19 @@ ul, ol { padding: 0; list-style: none; }
 .scrub-clock { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
 .scrub-day { font-size: 13.5px; color: var(--ink-3); font-weight: 500; white-space: nowrap; }
 .scrub-time { font-size: 28px; line-height: 1; font-weight: 700; font-stretch: 72%; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.scrub-time { min-width: 0; width: 155px; border: 1px solid var(--line); border-radius: 6px; padding: 2px 4px; background: var(--paper); color-scheme: light; }
+:root[data-theme='dark'] .scrub-time { color-scheme: dark; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.skip-link { position: fixed; left: 8px; top: -100px; z-index: 100; padding: 12px; background: var(--paper); color: var(--accent-ink); border: 2px solid var(--accent); border-radius: 6px; }
+.skip-link:focus { top: 8px; }
+.skip-time:focus { top: 64px; }
+@media (pointer: coarse) {
+  .icon-btn, .scrub-actions .icon-btn, .ctl, .now-btn, .speed, .scrub-time { min-height: 44px; min-width: 44px; }
+  .seg-btn, .tab, .chip-btn, .link, .back { min-height: 44px; }
+}
 .scrub-actions { display: flex; align-items: center; gap: 4px; }
 .scrub-actions .icon-btn { width: 34px; height: 34px; font-size: 22px; line-height: 1; padding-bottom: 3px; }
+.scrub-actions [data-act='pause'] { width: 44px; font-size: 12px; font-weight: 600; padding-bottom: 0; }
 .speed {
   height: 34px; padding: 0 8px; border: 1px solid var(--line); border-radius: 17px; background: var(--paper);
   font-size: 13.5px; font-weight: 500; color: var(--ink-2);
@@ -350,6 +361,10 @@ ul, ol { padding: 0; list-style: none; }
 .busy-bar.is-now { opacity: 1; box-shadow: 0 0 0 1.5px var(--ink); }
 .busy-axis { display: flex; gap: 2px; font-size: 10.5px; color: var(--ink-3); }
 .busy-axis span { flex: 1; min-width: 0; overflow: visible; white-space: nowrap; }
+.hourly-data { margin-top: 8px; font-size: 14px; }
+.hourly-data summary { cursor: pointer; padding: 8px 0; }
+.hourly-data table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+.hourly-data th, .hourly-data td { padding: 7px 8px; text-align: left; border-bottom: 1px solid var(--line); }
 .scrub-chart { position: relative; height: 62px; margin-top: 6px; cursor: ew-resize; touch-action: none; border-radius: 6px; }
 .scrub-svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .g-grid { stroke: var(--line); stroke-width: 1; }
@@ -427,6 +442,9 @@ ul, ol { padding: 0; list-style: none; }
   }
   body:has(#panel[data-sheet='full']) .scrubber { display: none; }
   .scrub-clock { flex-direction: column; align-items: flex-start; gap: 1px; }
+  .scrub-top { flex-wrap: wrap; }
+  .scrub-clock { flex-direction: row; align-items: center; justify-content: space-between; width: 100%; }
+  .scrub-actions { width: 100%; justify-content: space-between; }
   .scrub-day { font-size: 12.5px; line-height: 1.1; }
   .scrub-time { font-size: 24px; }
   /* the day chart takes too much of a phone screen; the time row (prev/next day, speed, Now) stays */

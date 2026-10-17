@@ -6,9 +6,9 @@ A map of Perth's buses, trains and ferry moving through the day, in the style of
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.6 (see section 12)
+- **Current version:** v1.7 (see section 12)
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
-- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.6 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.6 will be lost.
+- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.7 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.7 will be lost.
 
 ## 1. How this started
 
@@ -63,7 +63,7 @@ site/data/*.json   (about 4.9 MB raw, about 0.8 MB gzipped)
 vehicle positions, departures, search   -->   MapLibre map, side panel, scrubber
 ```
 
-The `scripts/` and `test/` folders live in the claco build folder only. They are not in this repo.
+The original compiler and raw-GTFS fixture scripts live in the claco build folder. This repo now includes the ferry patch, independent accuracy checks and browser regression checks in `scripts/`.
 
 ### 4.1 The compiler (`scripts/compile_gtfs.py`)
 
@@ -94,7 +94,7 @@ Counts in this build: 349 routes (8 train lines and 341 bus routes), 55,081 trip
 
 | File | Job |
 |---|---|
-| `app.js` | loads the data, builds the network, clock, map, panel and scrubber, runs a 100 ms tick, handles the bottom sheet, locate, the About dialog and the What's new chip |
+| `app.js` | loads the data, builds the network, clock, map, panel and scrubber, schedules vehicle updates on display frames (up to 30 per second), refreshes text once per second, handles the bottom sheet, locate, the About dialog and the What's new chip |
 | `mapview.js` | MapLibre map and layers (bus routes, rail, selected route, stops, stations, vehicles, front marks, 3D buildings), click handling, the vehicle GeoJSON update |
 | `panel.js` | tabs, search, route and stop pages, vehicle card, departures board |
 | `scrubber.js` | the day chart and draggable cursor |
@@ -189,7 +189,7 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 - **Licence check** (section 9) is still open.
 - **Timetable expiry** on 2027-01-11. The Authority can publish a new feed earlier. A scheduled rebuild is possible but would need approval.
 - **Basemap tiles** come from a free community service. Check its usage terms if the site gets busy, or switch provider.
-- **Service worker caching.** On the Learn with Adhi site, `sw.js` serves same-origin JS, CSS and JSON cache-first with a background refresh, so a visitor who has opened a kids page sees the previous version of this map's files once after a redeploy, then the new one on the next load. It was left alone because it is the kids' offline layer. After the v1.1 deploy such a visitor can get the new `index.html` with the old `app.js` once: the What's new chip then shows but does not open until the next load.
+- **Service worker caching.** Since v1.7, first-party module imports, module preloads, the app entry and CSS carry a release query (`?v=1.7`). This avoids mixing old cached modules with new ones while preserving cache-first warm loads in the existing kids-site service worker. Bump the release query consistently across these files for the next code release. Compiled data retains its existing content-hash URLs; no service-worker or kids-page behaviour was changed. A browser regression seeds stale unversioned modules and checks that the new app still starts.
 - **Real-device testing** on iPhone and Android, and in Safari and Firefox.
 - **Ferry data is a patch** (v1.3): the claco compiler still drops route type 4, so a fresh compile there loses the ferry until `compile_gtfs.py` keeps it or `scripts/perth-transit-add-ferry.py` is re-run.
 - **claco is behind this repo** until the v1.1 files are copied back (see Source of truth at the top).
@@ -210,6 +210,22 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.7 (2026-10-17)
+
+- **Smoother animation:** replace the 100 ms timer/100–250 ms throttle with display-synchronised scheduling capped at 30 vehicle updates per second. Text, departure boards and accessibility attributes refresh at most once per second during playback; the chart cursor follows vehicle frames. Animation work stops when paused or hidden and resumes on visibility/playback changes. Following a vehicle no longer continually restarts a 400 ms camera animation.
+- **Less rendering work:** send only vehicles inside the map bounds plus a 10% margin to MapLibre. Preserve the full vehicle lookup for cards, counts and follow. Skip bus tag measurements below zoom 15 and cache static line geometry across theme changes. A CBD check at zoom 15.4 sends 34 of 631 vehicles to the map worker (the complete timetable remains available).
+- **Earlier interaction:** start with local map styling and upgrade the external basemap in the background. Neither external tiles nor the optional font blocks timetable readiness. Load the module graph earlier and use consistent release-version URLs for safe warm caching. In a controlled local headless test with a 4-second basemap delay, readiness changed from 4.57 seconds to 0.54 seconds. This is a simulated dependency delay, not a general network or real-device speed claim.
+- **Accessibility:** labelled pause/play and speed controls, an editable native time field on desktop and phones, paused startup for reduced motion (even for a shared playback link), automatic pause when the preference is enabled, keyboard skip links, arrow-key radio groups with a single tab stop, focus recovery after navigation, debounced search-result announcements, map keyboard guidance, larger coarse-pointer targets and a readable hourly-count table. Remove the broad `application` role and continuously updating live announcement from the map summary. Mobile time controls use two rows to fit narrow screens.
+- **Validation:** the raw-GTFS/engine accuracy checks still pass. `scripts/perth-transit-browser-check.cjs` checks pending-basemap startup, pause and hidden-tab work, editable time, keyboard groups/focus, viewport culling, reduced motion, phone controls and stale service-worker modules. axe-core reports zero violations for the seven tested states: desktop route detail, expanded hourly table, dark route detail, map summary, station departures, About dialog and 320px phone. Checks cover WCAG 2 A/AA, WCAG 2.1 AA and axe best-practice rules; automated scans do not establish full accessibility conformance. Real assistive technology, Safari/Firefox and physical devices remain to be tested.
+
+Run the browser check from the repository root with the static server already running on port 8099 (or set `PERTH_TEST_ORIGIN`):
+
+```sh
+npm install --prefix /tmp/perth-checks playwright axe-core
+PLAYWRIGHT_BROWSERS_PATH=/tmp/perth-browsers /tmp/perth-checks/node_modules/.bin/playwright install chromium
+NODE_PATH=/tmp/perth-checks/node_modules PLAYWRIGHT_BROWSERS_PATH=/tmp/perth-browsers node scripts/perth-transit-browser-check.cjs
+```
 
 ### v1.6 (2026-10-17)
 
