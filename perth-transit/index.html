@@ -25,10 +25,17 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
-  <link rel="stylesheet" href="style.css">
-  <script type="module" src="app.js"></script>
+  <link rel="stylesheet" href="style.css?v=1.7">
+  <link rel="modulepreload" href="sim.js?v=1.7">
+  <link rel="modulepreload" href="mapview.js?v=1.7">
+  <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
+  <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
+  <script type="module" src="app.js?v=1.7"></script>
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to timetable information</a>
+  <a class="skip-link skip-time" href="#scrubber">Skip to time controls</a>
+  <p id="search-status" class="sr-only" role="status" aria-atomic="true"></p>
   <aside id="panel" class="panel" data-sheet="peek" aria-label="Routes, stops and departures">
     <button id="grab" class="grab" type="button" aria-label="Resize the panel"><span></span></button>
     <header class="panel-head">
@@ -62,7 +69,8 @@
   </aside>
 
   <main id="main">
-  <div id="map" class="map" role="application" aria-label="Map of Perth buses, trains and ferry"></div>
+  <div id="map" class="map" role="region" aria-label="Map of Perth buses, trains and ferry" aria-describedby="map-help"></div>
+  <p id="map-help" class="sr-only">Use arrow keys to pan the map and plus or minus to zoom. The Routes and Stops tabs provide timetable information without using the map. Pause animation in the time controls.</p>
 
 
   <div class="map-ctl" role="group" aria-label="Map controls">
@@ -93,10 +101,25 @@
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
   <div id="whatsnew" class="whatsnew">
-    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.5 &middot; What&rsquo;s new</button>
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.7 &middot; What&rsquo;s new</button>
     <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
       <!-- Newest first. Write each line so someone who never used the map understands it. -->
       <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.7</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>The timetable opens while the background map loads. Vehicle movement is smoother, with less work for buses outside your view.</li>
+          <li>Pause or play the animation and edit the time directly, including on phones. Reduced-motion settings start the map paused.</li>
+          <li>Better keyboard navigation, spoken search results, larger touch controls, and a readable table of hourly trip counts.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.6</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Routes such as 950 and the CircleRoutes now appear once, with all their buses and paths included when selected.</li>
+          <li>Frequency summaries describe the busiest direction without promising equal service each way. Trips after midnight say “next day”.</li>
+        </ul>
+      </div>
       <div class="wn-ver">
         <p class="wn-head"><b>v1.5</b> <span>17 Oct 2026</span></p>
         <ul>
@@ -143,7 +166,7 @@
     </div>
   </div>
 
-  <section id="scrubber" class="scrubber" aria-label="Time of day"></section>
+  <section id="scrubber" class="scrubber" aria-label="Time of day" tabindex="-1"></section>
   <div id="banner" class="banner" role="status" hidden></div>
   <div id="toast" class="toast" role="status" hidden></div>
   </main>

@@ -6,9 +6,9 @@ A map of Perth's buses, trains and ferry moving through the day, in the style of
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.5 (see section 12)
+- **Current version:** v1.7 (see section 12)
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
-- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.5 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.5 will be lost.
+- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.7 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.7 will be lost.
 
 ## 1. How this started
 
@@ -29,7 +29,7 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 
 ## 2. What it does
 
-- About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 341 bus routes and, since v1.3, the Elizabeth Quay to Mends St ferry).
+- About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 329 public bus routes and, since v1.3, the Elizabeth Quay to Mends St ferry).
 - Trains drawn as long bars and buses as short pills, in the route colour, pointing the way they travel (since v1.1). From zoom 15 each bus becomes a tag with its route number and a direction pointer (since v1.5).
 - A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control. On phones the chart is hidden (since v1.2), so time there is changed with the buttons only.
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
@@ -63,7 +63,7 @@ site/data/*.json   (about 4.9 MB raw, about 0.8 MB gzipped)
 vehicle positions, departures, search   -->   MapLibre map, side panel, scrubber
 ```
 
-The `scripts/` and `test/` folders live in the claco build folder only. They are not in this repo.
+The original compiler and raw-GTFS fixture scripts live in the claco build folder. This repo now includes the ferry patch, independent accuracy checks and browser regression checks in `scripts/`.
 
 ### 4.1 The compiler (`scripts/compile_gtfs.py`)
 
@@ -94,7 +94,7 @@ Counts in this build: 349 routes (8 train lines and 341 bus routes), 55,081 trip
 
 | File | Job |
 |---|---|
-| `app.js` | loads the data, builds the network, clock, map, panel and scrubber, runs a 100 ms tick, handles the bottom sheet, locate, the About dialog and the What's new chip |
+| `app.js` | loads the data, builds the network, clock, map, panel and scrubber, schedules vehicle updates on display frames (up to 30 per second), refreshes text once per second, handles the bottom sheet, locate, the About dialog and the What's new chip |
 | `mapview.js` | MapLibre map and layers (bus routes, rail, selected route, stops, stations, vehicles, front marks, 3D buildings), click handling, the vehicle GeoJSON update |
 | `panel.js` | tabs, search, route and stop pages, vehicle card, departures board |
 | `scrubber.js` | the day chart and draggable cursor |
@@ -184,12 +184,12 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 10. Known limits and open items
 
 - **Visitor numbers.** Since v1.4 the page loads Vercel Web Analytics (already on for the project, same snippet as the site's home page). Page views show under `/perth-transit/` in the Vercel dashboard (project learn-with-adhi, Analytics). The address is reduced to the path before sending (no `#@lat,lon`, no `?t=`), panning does not count as a new view, and automated browsers are ignored by Vercel's script.
-- **Same route listed more than once.** The feed lists some routes once per operating contract (950, 950X, 960, 998, 999, Blue/Red/Yellow CAT). "How busy is this line?" and its running count combine them, but the rest of the app still treats each entry separately (two "950" rows in Routes, and "Show on map" highlights one entry and dims the other's buses). Merging them properly belongs in the compiler.
+- **Contract-specific route entries:** resolved in v1.6 at network load. Exact matches of short name, long name and mode share one public route; all their patterns and trips are retained. The stored feed counts remain 350 route entries; the interface has 338 public routes (329 bus, 8 rail, 1 ferry).
 - **Real name.** "Perth Transit Map" is a placeholder and must stay clear of the Authority's brand names.
 - **Licence check** (section 9) is still open.
 - **Timetable expiry** on 2027-01-11. The Authority can publish a new feed earlier. A scheduled rebuild is possible but would need approval.
 - **Basemap tiles** come from a free community service. Check its usage terms if the site gets busy, or switch provider.
-- **Service worker caching.** On the Learn with Adhi site, `sw.js` serves same-origin JS, CSS and JSON cache-first with a background refresh, so a visitor who has opened a kids page sees the previous version of this map's files once after a redeploy, then the new one on the next load. It was left alone because it is the kids' offline layer. After the v1.1 deploy such a visitor can get the new `index.html` with the old `app.js` once: the What's new chip then shows but does not open until the next load.
+- **Service worker caching.** Since v1.7, first-party module imports, module preloads, the app entry and CSS carry a release query (`?v=1.7`). This avoids mixing old cached modules with new ones while preserving cache-first warm loads in the existing kids-site service worker. Bump the release query consistently across these files for the next code release. Compiled data retains its existing content-hash URLs; no service-worker or kids-page behaviour was changed. A browser regression seeds stale unversioned modules and checks that the new app still starts.
 - **Real-device testing** on iPhone and Android, and in Safari and Firefox.
 - **Ferry data is a patch** (v1.3): the claco compiler still drops route type 4, so a fresh compile there loses the ferry until `compile_gtfs.py` keeps it or `scripts/perth-transit-add-ferry.py` is re-run.
 - **claco is behind this repo** until the v1.1 files are copied back (see Source of truth at the top).
@@ -210,6 +210,38 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.7 (2026-10-17)
+
+- **Smoother animation:** replace the 100 ms timer/100–250 ms throttle with display-synchronised scheduling capped at 30 vehicle updates per second. Text, departure boards and accessibility attributes refresh at most once per second during playback; the chart cursor follows vehicle frames. Animation work stops when paused or hidden and resumes on visibility/playback changes. Following a vehicle no longer continually restarts a 400 ms camera animation.
+- **Less rendering work:** send only vehicles inside the map bounds plus a 10% margin to MapLibre. Preserve the full vehicle lookup for cards, counts and follow. Skip bus tag measurements below zoom 15 and cache static line geometry across theme changes. A CBD check at zoom 15.4 sends 34 of 631 vehicles to the map worker (the complete timetable remains available).
+- **Earlier interaction:** start with local map styling and upgrade the external basemap in the background. Neither external tiles nor the optional font blocks timetable readiness. Load the module graph earlier and use consistent release-version URLs for safe warm caching. In a controlled local headless test with a 4-second basemap delay, readiness changed from 4.57 seconds to 0.54 seconds. This is a simulated dependency delay, not a general network or real-device speed claim.
+- **Accessibility:** labelled pause/play and speed controls, an editable native time field on desktop and phones, paused startup for reduced motion (even for a shared playback link), automatic pause when the preference is enabled, keyboard skip links, arrow-key radio groups with a single tab stop, focus recovery after navigation, debounced search-result announcements, map keyboard guidance, larger coarse-pointer targets and a readable hourly-count table. Remove the broad `application` role and continuously updating live announcement from the map summary. Mobile time controls use two rows to fit narrow screens.
+- **Validation:** the raw-GTFS/engine accuracy checks still pass. `scripts/perth-transit-browser-check.cjs` checks pending-basemap startup, pause and hidden-tab work, editable time, keyboard groups/focus, viewport culling, reduced motion, phone controls and stale service-worker modules. axe-core reports zero violations for the seven tested states: desktop route detail, expanded hourly table, dark route detail, map summary, station departures, About dialog and 320px phone. Checks cover WCAG 2 A/AA, WCAG 2.1 AA and axe best-practice rules; automated scans do not establish full accessibility conformance. Real assistive technology, Safari/Firefox and physical devices remain to be tested.
+
+Run the browser check from the repository root with the static server already running on port 8099 (or set `PERTH_TEST_ORIGIN`):
+
+```sh
+npm install --prefix /tmp/perth-checks playwright axe-core
+PLAYWRIGHT_BROWSERS_PATH=/tmp/perth-browsers /tmp/perth-checks/node_modules/.bin/playwright install chromium
+NODE_PATH=/tmp/perth-checks/node_modules PLAYWRIGHT_BROWSERS_PATH=/tmp/perth-browsers node scripts/perth-transit-browser-check.cjs
+```
+
+### v1.6 (2026-10-17)
+
+- Group identical public routes across operating contracts in `Network`, remapping pattern references once at load. Route lists, search, stop chips, running counts, directions, bounds and map selection now include the complete route. All 55,495 trips and 2,188 patterns are preserved; compiled JSON is unchanged.
+- The peak-hour summary describes an average in the busiest direction, rather than claiming that rate applies each way. Explain that the count includes branches and short trips leaving their first stops, so it is not a headway guarantee at a particular stop. Label first/last trips after midnight “next day”.
+- Reproducible checks (Node 24, no dependencies):
+
+  ```sh
+  node scripts/perth-transit-check-accuracy.mjs
+  python3 -I scripts/perth-transit-gtfs-expectations.py /tmp/perth-gtfs.zip > /tmp/perth-expected.json
+  node scripts/perth-transit-check-accuracy.mjs /tmp/perth-expected.json
+  ```
+
+  Use the original `mdb-1086-202610160127` download (section 6). The independent Python answer key reads raw GTFS, not compiled JSON. All 1,014 public-route/day summaries on Saturday 17, Sunday 18 and Monday 19 October match: hourly counts, daily totals, first and last departures. Regression checks cover route identity, preservation of every pattern and shape, route search, finite positions, and heartbeat/running counts at midnight, 1am, 8am, noon and 11pm on all three days.
+
+- Headless Chromium checks at desktop and 390px phone width: route 998 selection includes all 22 running buses and 20 shapes at Monday 8am; route 950 uses the busiest-direction wording; an overnight route labels next-day departures; no phone horizontal overflow or page errors on dark switching. Real devices and Safari/Firefox remain untested.
 
 ### v1.5 (2026-10-17)
 
