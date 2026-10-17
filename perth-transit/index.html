@@ -25,12 +25,13 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
-  <link rel="stylesheet" href="style.css?v=1.7">
-  <link rel="modulepreload" href="sim.js?v=1.7">
-  <link rel="modulepreload" href="mapview.js?v=1.7">
+  <link rel="stylesheet" href="style.css?v=1.8">
+  <link rel="modulepreload" href="sim.js?v=1.8">
+  <link rel="modulepreload" href="mapview.js?v=1.8">
+  <link rel="modulepreload" href="favourites.js?v=1.8">
   <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
   <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
-  <script type="module" src="app.js?v=1.7"></script>
+  <script type="module" src="app.js?v=1.8"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to timetable information</a>
@@ -101,10 +102,18 @@
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
   <div id="whatsnew" class="whatsnew">
-    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.7 &middot; What&rsquo;s new</button>
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.8 &middot; What&rsquo;s new</button>
     <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
       <!-- Newest first. Write each line so someone who never used the map understands it. -->
       <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.8</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Save Home, Work or any named place from the Map or Stops tab, then jump straight to its nearby stops.</li>
+          <li>Save the map centre, your current location or a selected stop. Rename, move or delete a saved place whenever you like.</li>
+          <li>Favourites stay in this browser on this device and appear as markers on the map.</li>
+        </ul>
+      </div>
       <div class="wn-ver">
         <p class="wn-head"><b>v1.7</b> <span>17 Oct 2026</span></p>
         <ul>
@@ -179,7 +188,7 @@
     <p>Timetable data from the Public Transport Authority of Western Australia. This data is available free of charge from www.transperth.wa.gov.au.</p>
     <p>Basemap by OpenFreeMap, using OpenMapTiles and data from OpenStreetMap contributors.</p>
     <p>This is an independent project. It is not affiliated with or endorsed by the Public Transport Authority or any transport operator.</p>
-    <p>Visits to this page are counted with Vercel Web Analytics, which does not use cookies or track you across sites. Your location (Near me) never leaves your browser.</p>
+    <p>Visits to this page are counted with Vercel Web Analytics, which does not use cookies or track you across sites. Favourite places are saved only in this browser on this device, with no account sync.</p>
     <p id="about-version" class="fine"></p>
     <div class="about-actions"><button id="about-close" class="btn" type="button">Close</button></div>
   </dialog>

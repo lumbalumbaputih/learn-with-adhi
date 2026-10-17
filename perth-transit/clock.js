@@ -1,5 +1,5 @@
 // clock.js: the simulation clock. Live follows Perth time; otherwise it runs from a chosen moment.
-import { perthLocal, perthOffsetMs, addDays, DAY } from './sim.js?v=1.7';
+import { perthLocal, perthOffsetMs, addDays, DAY } from './sim.js?v=1.8';
 
 export class SimClock {
   constructor() {

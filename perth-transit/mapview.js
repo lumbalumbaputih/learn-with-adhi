@@ -1,7 +1,7 @@
 // mapview.js: the map, its layers, the moving vehicles and what happens on click.
 import * as maplibregl from './vendor/maplibre-gl.mjs';
-import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.7';
-import { prettyName } from './util.js?v=1.7';
+import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.8';
+import { prettyName } from './util.js?v=1.8';
 
 export const STYLE_URLS = {
   light: 'https://tiles.openfreemap.org/styles/positron',
@@ -215,6 +215,7 @@ export class MapView {
     map.addSource('sel', { type: 'geojson', data: empty() });
     map.addSource('me', { type: 'geojson', data: empty() });
     map.addSource('veh', { type: 'geojson', data: empty() });
+    map.addSource('favourite-places', { type: 'geojson', data: this._placesData || empty() });
 
     const round = { 'line-cap': 'round', 'line-join': 'round' };
     map.addLayer({ id: 'bus-routes', type: 'line', source: 'bus-routes', layout: round, paint: {
@@ -312,7 +313,14 @@ export class MapView {
       'circle-radius': r(8, 10, 14), 'circle-color': 'rgba(0,0,0,0)', 'circle-stroke-color': P.ring, 'circle-stroke-width': 2.5, 'circle-pitch-alignment': 'map',
     } });
 
-    if (this.basemapOk) {
+    map.addLayer({ id: 'favourite-places', type: 'circle', source: 'favourite-places', paint: {
+      'circle-radius': 7, 'circle-color': P.accent, 'circle-stroke-color': P.halo, 'circle-stroke-width': 2.5,
+    } });
+    if (this.basemapOk && map.getStyle().glyphs) {
+      map.addLayer({ id: 'favourite-labels', type: 'symbol', source: 'favourite-places', layout: {
+        'text-field': ['get', 'name'], 'text-font': ['Noto Sans Bold'], 'text-size': 13,
+        'text-anchor': 'bottom', 'text-offset': [0, -0.8],
+      }, paint: { 'text-color': P.label, 'text-halo-color': P.labelHalo, 'text-halo-width': 1.6 } });
       map.addLayer({ id: 'stations-label', type: 'symbol', source: 'stations', minzoom: 11, filter: ['==', ['get', 'big'], 1], layout: {
         'text-field': ['get', 'n'], 'text-font': ['Noto Sans Bold'], 'text-size': ['interpolate', ['linear'], ['zoom'], 11, 10, 15, 13],
         'text-anchor': 'top', 'text-offset': [0, 0.9], 'text-optional': true, 'text-max-width': 8,
@@ -361,8 +369,12 @@ export class MapView {
     map.on('click', (e) => {
       const v = pickVehicle(e.point);
       if (v) { this.h.onVehicle(v.properties.vid); return; }
+      if (map.getLayer('favourite-places')) {
+        const place = map.queryRenderedFeatures(e.point, { layers: ['favourite-places'] })[0];
+        if (place) { this.h.onPlace(place.properties.id); return; }
+      }
       const pad = 10;
-      const hits = map.queryRenderedFeatures([[e.point.x - pad, e.point.y - pad], [e.point.x + pad, e.point.y + pad]], { layers: ['stations', 'stations-minor', 'stops'] });
+      const hits = map.queryRenderedFeatures([[e.point.x - pad, e.point.y - pad], [e.point.x + pad, e.point.y + pad]], { layers: ['stations', 'stations-minor', 'stops'].filter((l) => map.getLayer(l)) });
       if (hits.length) {
         const f = hits.find((x) => x.layer.id === 'stations') || hits[0];
         this.h.onEntity({ kind: f.layer.id === 'stops' ? 'stop' : 'station', idx: f.properties.i });
@@ -371,7 +383,7 @@ export class MapView {
       this.h.onEmpty();
     });
     map.on('mousemove', (e) => {
-      const near = map.queryRenderedFeatures([[e.point.x - 8, e.point.y - 8], [e.point.x + 8, e.point.y + 8]], { layers: ['veh', 'veh-tag', 'stations', 'stations-minor', 'stops'].filter((l) => map.getLayer(l)) });
+      const near = map.queryRenderedFeatures([[e.point.x - 8, e.point.y - 8], [e.point.x + 8, e.point.y + 8]], { layers: ['veh', 'veh-tag', 'stations', 'stations-minor', 'stops', 'favourite-places'].filter((l) => map.getLayer(l)) });
       map.getCanvas().style.cursor = near.length ? 'pointer' : '';
     });
     let t = 0;
@@ -517,6 +529,13 @@ export class MapView {
     if (vis) this.hidden.delete(id); else this.hidden.add(id);
     const ids = { bus: ['bus-routes'], stops: ['stops', 'stations-minor'], labels: ['stations-label'] }[id] || [];
     for (const l of ids) if (this.map.getLayer(l)) this.map.setLayoutProperty(l, 'visibility', vis ? 'visible' : 'none');
+  }
+
+  setPlaces(places) {
+    this._placesData = { type: 'FeatureCollection', features: places.map(({ id, name, lat, lon }) => ({
+      type: 'Feature', properties: { id, name }, geometry: { type: 'Point', coordinates: [lon, lat] },
+    })) };
+    this.map.getSource('favourite-places')?.setData(this._placesData);
   }
 
   setMe(lat, lon) {

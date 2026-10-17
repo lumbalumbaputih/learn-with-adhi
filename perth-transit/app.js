@@ -1,10 +1,11 @@
 // app.js: loads the timetable, then wires clock, map, panel and scrubber together.
-import { Network, addDays, ymdParts, DAY } from './sim.js?v=1.7';
-import { SimClock } from './clock.js?v=1.7';
-import { MapView } from './mapview.js?v=1.7';
-import { Panel } from './panel.js?v=1.7';
-import { Scrubber, dayLabel } from './scrubber.js?v=1.7';
-import { fmtN } from './util.js?v=1.7';
+import { Network, addDays, ymdParts, DAY } from './sim.js?v=1.8';
+import { SimClock } from './clock.js?v=1.8';
+import { MapView } from './mapview.js?v=1.8';
+import { Panel } from './panel.js?v=1.8';
+import { Scrubber, dayLabel } from './scrubber.js?v=1.8';
+import { fmtN } from './util.js?v=1.8';
+import { FavouritePlaces } from './favourites.js?v=1.8';
 
 const $ = (id) => document.getElementById(id);
 const DEFAULT_VIEW = { lat: -31.955, lon: 115.87, zoom: 10.4 };
@@ -155,7 +156,7 @@ async function main() {
   }
 
   if (motionQuery.matches) clock.setSpeed(0);
-  let mapView = null, panel = null, scrub = null;
+  let mapView = null, panel = null, scrub = null, favourites = null;
   const sheet = setupSheet((px) => {
     if (mapView && mapView.map) {
       mapView.setPadding({ top: 0, right: 0, left: 0, bottom: mobileQuery.matches ? px : 0 });
@@ -182,6 +183,12 @@ async function main() {
     onFollow: (id, on) => mapView.follow(on ? id : null),
     isFollowing: () => mapView.following !== null,
     onLocate: () => locate(),
+    getPlaces: () => favourites?.list() || [],
+    onSavePlace: (options) => { mapView.follow(null); favourites.edit(options); },
+    onPlace: (place) => {
+      mapView.follow(null); mapView.setSelectedVehicle(null);
+      panel.showPlace(place); mapView.flyTo(place.lat, place.lon, 15.2); sheet.ensure('half'); tick(true);
+    },
     onTab: () => {},
   };
   panel = new Panel({
@@ -191,6 +198,7 @@ async function main() {
   mapView = new MapView($('map'), net, {
     onVehicle: (id) => panel.openVehicle(id),
     onEntity: (e) => panel.openEntity(e, { fly: false }),
+    onPlace: (id) => favourites?.open(id),
     onEmpty: () => { if (mobileQuery.matches) sheet.set('peek'); },
     onUnfollow: () => panel._refreshVehicleCard(),
     onView: (v) => {
@@ -203,6 +211,16 @@ async function main() {
   await mapView.init(parseHash(), { compactAttribution: mobileQuery.matches, theme: themeNow() });
   mapView.setPadding({ top: 0, right: 0, left: 0, bottom: mobileQuery.matches ? parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sheet-h'), 10) || 0 : 0 });
   panel.setCenter(mapView.view().lat, mapView.view().lon);
+  favourites = new FavouritePlaces({
+    view: () => mapView.view(),
+    onChange: (places, focus) => {
+      mapView.setPlaces(places); panel.refreshPlaces(places);
+      if (focus && !favourites.dialog.open) $('content').focus({ preventScroll: true });
+    },
+    onOpen: (place) => act.onPlace(place),
+    onMessage: (message) => toast(message),
+  });
+  mapView.setPlaces(favourites.list()); panel.refreshPlaces(favourites.list());
 
   scrub = new Scrubber($('scrubber'), {
     onScrub: (sec) => { const n = clock.now(); clock.setTime(n.ymd, sec); tick(true); },
@@ -343,7 +361,7 @@ async function main() {
   mapView.map.on('moveend', () => { if (mapView.following === null) tick(true); });
   tick(true);
 
-  window.__app = { net, clock, mapView, panel, scrub, tick, sheet };
+  window.__app = { net, clock, mapView, panel, scrub, tick, sheet, favourites };
   setLoading('Ready', 1);
   document.body.classList.add('ready');
   $('loading').hidden = true;

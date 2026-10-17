@@ -401,6 +401,18 @@ ul, ol { padding: 0; list-style: none; }
 .about h3 { font-size: 14px; font-weight: 700; color: var(--ink-2); margin: 16px 0 6px; }
 .about p + p { margin-top: 10px; }
 .about-actions { display: flex; justify-content: flex-end; margin-top: 16px; }
+.place-row { display: flex; align-items: center; gap: 8px; }
+.place-row > .row { flex: 1; min-width: 0; }
+.place-row .row-title { overflow-wrap: anywhere; }
+.place-mark { color: var(--accent); font-size: 23px; }
+.favourites .btn-row { margin-top: 8px; }
+.favourites .fine { margin-top: 8px; }
+.place-form { display: flex; flex-direction: column; gap: 10px; }
+.place-form input, .place-form select { width: 100%; min-width: 0; min-height: 44px; padding: 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.place-form label { font-weight: 600; }
+.place-error { color: var(--ink); padding: 10px; border: 2px solid var(--accent); border-radius: 8px; }
+.place-actions { margin-top: 6px; }
+.favourites .btn, .place-actions .btn { min-height: 44px; }
 
 .loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--paper); }
 .loading-card { display: flex; flex-direction: column; align-items: center; gap: 14px; width: min(260px, 80vw); text-align: center; color: var(--ink-2); }
