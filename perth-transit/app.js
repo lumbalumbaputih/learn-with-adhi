@@ -226,6 +226,20 @@ async function main() {
   // ---- about dialog
   const about = $('about');
   $('about-open').addEventListener('click', () => about.showModal());
+
+  // ---- what's new: opens on hover (mouse) or click/tap, closes on leaving, outside click or Escape
+  const wn = $('whatsnew'), wnBtn = $('whatsnew-btn'), wnLog = $('whatsnew-log');
+  let wnPinned = false, wnTimer = 0;
+  // desktop: in the panel footer (bottom-left); phones hide that footer, so it floats on the map instead
+  const wnDesk = matchMedia('(min-width: 820px)');
+  const wnPlace = () => (wnDesk.matches ? document.querySelector('.panel-foot') : $('main')).appendChild(wn);
+  wnPlace(); wnDesk.addEventListener('change', wnPlace);
+  const wnShow = (on) => { clearTimeout(wnTimer); wnLog.hidden = !on; wnBtn.setAttribute('aria-expanded', String(on)); if (!on) wnPinned = false; };
+  wnBtn.addEventListener('click', () => { wnPinned = !wnPinned || wnLog.hidden; wnShow(wnPinned); });
+  wn.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') wnShow(true); });
+  wn.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && !wnPinned) wnTimer = setTimeout(() => wnShow(false), 250); });
+  document.addEventListener('pointerdown', (e) => { if (!wnLog.hidden && !wn.contains(e.target)) wnShow(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !wnLog.hidden) { e.stopImmediatePropagation(); wnShow(false); wnBtn.focus(); } });
   $('about-close').addEventListener('click', () => about.close());
   about.addEventListener('click', (e) => { if (e.target === about) about.close(); });
   const mm = net.meta;

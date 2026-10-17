@@ -257,6 +257,30 @@ ul, ol { padding: 0; list-style: none; }
 
 .sim-badge { position: fixed; z-index: 5; top: 14px; left: calc(var(--panel-w) + 14px); box-shadow: 0 1px 3px rgba(21, 34, 46, 0.2); pointer-events: none; }
 
+/* version chip + plain-language changelog, bottom-left of the map */
+.whatsnew { position: fixed; z-index: 6; }
+/* on desktop app.js moves it into the panel footer, next to the data credit */
+.panel-foot:has(.whatsnew) { display: flex; align-items: center; gap: 10px; }
+.panel-foot p { margin: 0; flex: 1; }
+.panel-foot .whatsnew { position: relative; flex: none; }
+.panel-foot .whatsnew-log { left: auto; right: 0; }
+.whatsnew-btn {
+  padding: 2px 9px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink-2);
+  font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.5; box-shadow: 0 1px 3px rgba(21, 34, 46, 0.2); cursor: pointer;
+}
+.whatsnew-btn:hover, .whatsnew-btn[aria-expanded='true'] { color: var(--accent); }
+.whatsnew-log {
+  position: absolute; left: 0; bottom: calc(100% + 6px); width: 300px; max-width: calc(100vw - 32px);
+  max-height: min(420px, 70vh); overflow-y: auto; padding: 12px 14px; border-radius: 12px;
+  background: var(--paper); box-shadow: var(--shadow); font-size: 13.5px; color: var(--ink-2);
+}
+.whatsnew-log h3 { margin: 0 0 6px; font-size: 15px; color: var(--ink); }
+.wn-ver + .wn-ver { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); }
+.wn-head { margin: 0 0 2px; color: var(--ink); }
+.wn-head span { margin-left: 6px; color: var(--ink-3); font-size: 12px; }
+.whatsnew-log ul { margin: 0; padding-left: 18px; }
+.whatsnew-log li { margin: 3px 0; line-height: 1.4; }
+
 .scrubber {
   position: fixed; z-index: 5; left: calc(var(--panel-w) + 16px); right: 68px; bottom: 30px; max-width: 760px;
   padding: 10px 14px 8px; border-radius: 14px; background: var(--paper); box-shadow: var(--shadow);
@@ -345,6 +369,9 @@ ul, ol { padding: 0; list-style: none; }
   #btn-zoom-in, #btn-zoom-out { display: none; }
   .ctl-group:has(#btn-zoom-in) { display: none; }
   .sim-badge { top: 14px; left: 52px; }
+  /* the bottom-left is taken by the sheet on phones, so the chip sits beside the Simulated badge */
+  .whatsnew { left: 136px; top: 14px; bottom: auto; }
+  .whatsnew-log { top: calc(100% + 6px); bottom: auto; left: -124px; width: calc(100vw - 24px); }
   .banner { top: 56px; left: 10px; right: 62px; max-width: none; }
   .scrubber {
     left: 8px; right: 8px; bottom: calc(var(--sheet-h) + 8px); max-width: none; padding: 8px 12px 6px;

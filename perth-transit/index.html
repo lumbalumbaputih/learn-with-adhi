@@ -72,6 +72,30 @@
 
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
+  <div id="whatsnew" class="whatsnew">
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.1 &middot; What&rsquo;s new</button>
+    <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
+      <!-- Newest first. Write each line so someone who never used the map understands it. -->
+      <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.1</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Trains now look like long trains and buses like short buses, so you can tell them apart at a glance.</li>
+          <li>Each vehicle points the way it is travelling, and when you zoom in a small white tip marks its front.</li>
+          <li>Added this &ldquo;What&rsquo;s new&rdquo; list.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.0</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>First version: watch Perth&rsquo;s buses and trains move around the map through the day.</li>
+          <li>Positions come from the published timetable, not live GPS, so delays are not shown.</li>
+          <li>Drag the time bar to see any time of day, search for a route or stop, and tap a vehicle to follow it.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <section id="scrubber" class="scrubber" aria-label="Time of day"></section>
   <div id="banner" class="banner" role="status" hidden></div>
   <div id="toast" class="toast" role="status" hidden></div>
