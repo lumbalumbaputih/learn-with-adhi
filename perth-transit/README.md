@@ -6,7 +6,7 @@ A map of Perth's buses and trains moving through the day, in the style of a live
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.1 (see section 12)
+- **Current version:** v1.2 (see section 12)
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
 - **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 was edited directly in this repo (section 12), so copy `mapview.js`, `app.js`, `index.html`, `style.css` and this `README.md` back into claco before the next re-copy, or v1.1 will be lost.
 
@@ -31,7 +31,7 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 
 - About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 341 bus routes).
 - Trains drawn as long bars and buses as short pills, in the route colour, pointing the way they travel (since v1.1).
-- A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control.
+- A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control. On phones the chart is hidden (since v1.2), so time there is changed with the buttons only.
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
 - Routes, Stops and Map tabs with one search box. A stop or station page shows the next timetable departures.
 - Near me (the location stays in the browser), a 3D buildings mode, layer toggles, and an About dialog with the data credit.
@@ -205,6 +205,10 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.2 (2026-10-17)
+
+- **Phones: day chart hidden.** Adhi found the time box took too much of a phone screen. At max-width 819 px `.scrub-chart` is now `display: none`, so the box is one row (date, time, previous/next day, speed, Now), about 53 px instead of about 110 px. The vehicles-through-the-day sentence was already hidden on phones. Lost on phones: dragging along the chart to pick a time of day. `scrubber.js` already skips drawing at zero width, and its ResizeObserver redraws the chart if the screen widens past 819 px. (`style.css`)
 
 ### v1.1 (2026-10-17)
 
