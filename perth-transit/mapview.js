@@ -89,6 +89,29 @@ export class MapView {
     g.beginPath(); g.moveTo(24, 6); g.lineTo(40, 40); g.lineTo(24, 31); g.lineTo(8, 40); g.closePath(); g.fill();
     map.addImage('ptm-arrow', g.getImageData(0, 0, 48, 48), { sdf: true });
 
+    // vehicle bodies, drawn pointing north and rotated by bearing: a short pill for buses, a long bar for trains.
+    // Each type gets a white outline image, an SDF body (tinted with the route colour) and a white front mark.
+    const PR = 2, PAD = 3;
+    const vehImg = (name, w, h) => {
+      const W = (w + PAD * 2) * PR, H = (h + PAD * 2) * PR;
+      const draw = (fn) => {
+        const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+        const x = cv.getContext('2d'); x.scale(PR, PR); x.fillStyle = '#fff'; fn(x);
+        return x.getImageData(0, 0, W, H);
+      };
+      const pill = (x, inset) => {
+        x.beginPath(); x.roundRect(PAD - inset, PAD - inset, w + inset * 2, h + inset * 2, Math.min(w / 2 + inset, 4 + inset)); x.fill();
+      };
+      map.addImage(name + '-halo', draw((x) => pill(x, 1.6)), { pixelRatio: PR });
+      map.addImage(name, draw((x) => pill(x, 0)), { pixelRatio: PR, sdf: true });
+      map.addImage(name + '-front', draw((x) => {
+        x.beginPath(); x.moveTo(PAD + w / 2, PAD + 1.5); x.lineTo(PAD + w - 1.6, PAD + 1.5 + w * 0.45);
+        x.lineTo(PAD + 1.6, PAD + 1.5 + w * 0.45); x.closePath(); x.fill();
+      }), { pixelRatio: PR });
+    };
+    vehImg('ptm-bus', 9, 17);
+    vehImg('ptm-train', 9, 44);
+
     map.addSource('bus-routes', { type: 'geojson', data: bus });
     map.addSource('rail', { type: 'geojson', data: rail });
     map.addSource('route-hi', { type: 'geojson', data: empty() });
@@ -164,19 +187,24 @@ export class MapView {
     } });
 
     const r = (a, b, c3) => ['interpolate', ['linear'], ['zoom'], 8, ['+', a, ['*', ['get', 't'], 1]], 12, ['+', b, ['*', ['get', 't'], 1.4]], 16, ['+', c3, ['*', ['get', 't'], 2.2]]];
-    map.addLayer({ id: 'veh-halo', type: 'circle', source: 'veh', paint: {
-      'circle-radius': r(2.5, 4.5, 9.0), 'circle-color': '#ffffff',
-      'circle-opacity': ['case', ['==', ['get', 'd'], 1], 0.18, 0.95], 'circle-pitch-alignment': 'map',
-    } });
-    map.addLayer({ id: 'veh', type: 'circle', source: 'veh', paint: {
-      'circle-radius': r(1.7, 3.3, 7.0), 'circle-color': ['get', 'c'],
-      'circle-opacity': ['case', ['==', ['get', 'd'], 1], 0.22, 1], 'circle-pitch-alignment': 'map',
-    } });
-    map.addLayer({ id: 'veh-arrow', type: 'symbol', source: 'veh', minzoom: 14.2, layout: {
-      'icon-image': 'ptm-arrow', 'icon-size': ['interpolate', ['linear'], ['zoom'], 14.2, 0.2, 17, 0.36],
-      'icon-rotate': ['get', 'b'], 'icon-rotation-alignment': 'map', 'icon-pitch-alignment': 'map',
+    const vehSize = ['interpolate', ['linear'], ['zoom'], 8, 0.34, 12, 0.62, 15, 1.0, 17, 1.35];
+    const vehIcon = (suffix) => ['case', ['==', ['get', 't'], 1], 'ptm-train' + suffix, 'ptm-bus' + suffix];
+    const vehLayout = (suffix) => ({
+      'icon-image': vehIcon(suffix), 'icon-size': vehSize, 'icon-rotate': ['get', 'b'],
+      'icon-rotation-alignment': 'map', 'icon-pitch-alignment': 'map',
       'icon-allow-overlap': true, 'icon-ignore-placement': true,
-    }, paint: { 'icon-color': ['case', ['==', ['get', 't'], 1], '#ffffff', '#ffffff'], 'icon-opacity': ['case', ['==', ['get', 'd'], 1], 0.2, 1] } });
+      // trains draw above buses where they cross
+      'symbol-sort-key': ['get', 't'],
+    });
+    map.addLayer({ id: 'veh-halo', type: 'symbol', source: 'veh', layout: vehLayout('-halo'), paint: {
+      'icon-opacity': ['case', ['==', ['get', 'd'], 1], 0.18, 0.95],
+    } });
+    map.addLayer({ id: 'veh', type: 'symbol', source: 'veh', layout: vehLayout(''), paint: {
+      'icon-color': ['get', 'c'], 'icon-opacity': ['case', ['==', ['get', 'd'], 1], 0.22, 1],
+    } });
+    map.addLayer({ id: 'veh-arrow', type: 'symbol', source: 'veh', minzoom: 13.5, layout: vehLayout('-front'), paint: {
+      'icon-opacity': ['case', ['==', ['get', 'd'], 1], 0.2, 0.95],
+    } });
     map.addLayer({ id: 'veh-sel', type: 'circle', source: 'veh', filter: ['==', ['get', 'vid'], -1], paint: {
       'circle-radius': r(8, 10, 14), 'circle-color': 'rgba(0,0,0,0)', 'circle-stroke-color': INK, 'circle-stroke-width': 2.5, 'circle-pitch-alignment': 'map',
     } });
