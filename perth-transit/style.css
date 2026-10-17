@@ -381,7 +381,8 @@ ul, ol { padding: 0; list-style: none; }
   .scrub-clock { flex-direction: column; align-items: flex-start; gap: 1px; }
   .scrub-day { font-size: 12.5px; line-height: 1.1; }
   .scrub-time { font-size: 24px; }
-  .scrub-chart { height: 40px; margin-top: 4px; }
+  /* the day chart takes too much of a phone screen; the time row (prev/next day, speed, Now) stays */
+  .scrub-chart { display: none; }
   .scrub-note { display: none; }
   .scrub-actions { gap: 2px; }
   .popover { right: 48px; }
