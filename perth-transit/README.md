@@ -1,14 +1,14 @@
 # Perth Transit Map
 
-A map of Perth's buses and trains moving through the day, in the style of a live transit map.
+A map of Perth's buses, trains and ferry moving through the day, in the style of a live transit map.
 
 > **It is not live.** Vehicle positions are worked out from the published timetable. They are not tracked by GPS, so delays, cancellations and replacement buses are not shown. The page says this in the panel badge, in a "Simulated" label on the map and in the About dialog. Check the official journey planner for live times before you travel.
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.2 (see section 12)
+- **Current version:** v1.4 (see section 12)
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
-- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 was edited directly in this repo (section 12), so copy `mapview.js`, `app.js`, `index.html`, `style.css` and this `README.md` back into claco before the next re-copy, or v1.1 will be lost.
+- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.4 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.4 will be lost.
 
 ## 1. How this started
 
@@ -29,12 +29,14 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 
 ## 2. What it does
 
-- About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 341 bus routes).
+- About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 341 bus routes and, since v1.3, the Elizabeth Quay to Mends St ferry).
 - Trains drawn as long bars and buses as short pills, in the route colour, pointing the way they travel (since v1.1).
 - A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control. On phones the chart is hidden (since v1.2), so time there is changed with the buttons only.
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
 - Routes, Stops and Map tabs with one search box. A stop or station page shows the next timetable departures.
 - Near me (the location stays in the browser), a 3D buildings mode, layer toggles, and an About dialog with the data credit.
+- Dark mode (since v1.4): follows the device, with a moon/sun button to switch by hand; the choice is kept in the browser.
+- "How busy is this line?" on every route page (since v1.4): trips per hour through the day, the busiest hour and how often it runs then, first and last trip. From the timetable only: it shows service frequency, not crowding.
 - A "What's new" version chip with a plain-language changelog (since v1.1).
 - On phones, a bottom sheet with three heights (peek, half, full) and touch dragging.
 - Shareable links: `?t=08:15&date=2026-10-19&speed=10` sets the moment, and the map position lives in the URL hash as `#@lat,lon,zoom`.
@@ -43,8 +45,8 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 
 - No real-time anything. No delays, cancellations or replacement buses.
 - No journey planner, fares or service alerts.
-- No ferries. They were left out on purpose in v1.0: the compiler keeps route types 2 and 3 only. Adding them needs a data rebuild that keeps route type 4 (Adhi asked for ferries on 2026-10-17; not started).
-- No dark mode.
+- Ferries: left out on purpose in v1.0, **added in v1.3** (section 12) by patching the compiled data, not through the claco compiler.
+- No passenger numbers or crowding: the timetable has none, so "How busy is this line?" is about how often the line runs.
 - Not yet tried on a real iPhone, Android phone, Safari or Firefox. Real-device frame rate is unmeasured.
 
 ## 4. How it works
@@ -181,13 +183,15 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 
 ## 10. Known limits and open items
 
+- **Visitor numbers.** Since v1.4 the page loads Vercel Web Analytics (already on for the project, same snippet as the site's home page). Page views show under `/perth-transit/` in the Vercel dashboard (project learn-with-adhi, Analytics). The address is reduced to the path before sending (no `#@lat,lon`, no `?t=`), panning does not count as a new view, and automated browsers are ignored by Vercel's script.
+- **Same route listed more than once.** The feed lists some routes once per operating contract (950, 950X, 960, 998, 999, Blue/Red/Yellow CAT). "How busy is this line?" and its running count combine them, but the rest of the app still treats each entry separately (two "950" rows in Routes, and "Show on map" highlights one entry and dims the other's buses). Merging them properly belongs in the compiler.
 - **Real name.** "Perth Transit Map" is a placeholder and must stay clear of the Authority's brand names.
 - **Licence check** (section 9) is still open.
 - **Timetable expiry** on 2027-01-11. The Authority can publish a new feed earlier. A scheduled rebuild is possible but would need approval.
 - **Basemap tiles** come from a free community service. Check its usage terms if the site gets busy, or switch provider.
 - **Service worker caching.** On the Learn with Adhi site, `sw.js` serves same-origin JS, CSS and JSON cache-first with a background refresh, so a visitor who has opened a kids page sees the previous version of this map's files once after a redeploy, then the new one on the next load. It was left alone because it is the kids' offline layer. After the v1.1 deploy such a visitor can get the new `index.html` with the old `app.js` once: the What's new chip then shows but does not open until the next load.
 - **Real-device testing** on iPhone and Android, and in Safari and Firefox.
-- **Ferries** (section 3): asked for, not started, needs a data rebuild in claco.
+- **Ferry data is a patch** (v1.3): the claco compiler still drops route type 4, so a fresh compile there loses the ferry until `compile_gtfs.py` keeps it or `scripts/perth-transit-add-ferry.py` is re-run.
 - **claco is behind this repo** until the v1.1 files are copied back (see Source of truth at the top).
 - **Phase 2, live arrivals (not started).** An unofficial live-times service exists. It is HTTP only, so a public HTTPS site would need a small server proxy. It is untested and its terms are unknown, so check that before building on it. The Transperth website's own per-station calls are rate limited, and bus calls need session cookies.
 
@@ -201,10 +205,26 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 6. Delivered to Adhi's workspace with a README and four reference screenshots.
 7. Pushed to the Learn with Adhi repo on a branch, with a new card (`assets/courses.json`, id `perth-transit-map`, n `T4`, category Tools), repo docs updated, and a draft pull request. Adhi merged it, and it was checked on the production site.
 8. v1.1 built in the Learn with Adhi repo (not claco) and merged the same day (section 12).
+9. v1.2 (phone layout) and v1.3 (ferry) also built in this repo the same day.
 
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.4 (2026-10-17)
+
+- **Dark mode.** `style.css` gains a dark token set under `:root[data-theme='dark']`, and hard-coded colours became tokens. An inline script in `index.html` sets `data-theme` before anything draws (saved choice in `localStorage` `ptm-theme`, else `prefers-color-scheme`). `app.js` keeps it in sync, adds the moon/sun button `#btn-theme` in the map controls, and follows device changes until the viewer picks. `mapview.js`: per-theme palette `PAL`, basemaps `STYLE_URLS` (OpenFreeMap positron / dark), and `setTheme()`, which swaps the basemap with `setStyle`, redraws this app's layers and puts back the selected route, stop, vehicle ring, Near-me dot, hidden layers and 3D buildings. `colors.js`: `setColorTheme()`, lighter bus `#c3ced8` and ferry `#3fb4dc` colours on the dark map (train line colours unchanged). Vehicle outlines are now SDF images tinted per theme.
+- **"How busy is this line?"** `sim.js` `routeDay(routes, ymd)` counts trips leaving their first stop in each hour (both directions, plus the busiest single direction for the "about every N min" figure), with first and last trip; `sameNameRoutes()` groups the routes the feed lists more than once. `panel.js` draws the chart on route pages in the route colour, highlights the current hour, rebuilds when the day changes, and says it measures frequency, not crowding. The "trips on this day" and "running now" figures on route pages use the same grouping.
+- **Visitor numbers.** Vercel Web Analytics snippet in `index.html` with a `beforeSend` hook that sends only the path. About dialog says visits are counted without cookies.
+- **Tests:** dark mode 12/12 (device dark, dark basemap, all 7 app layers, button to light and back, route highlight and hidden layers kept, choice saved and beats the device after reload, vehicle click in dark); busy chart 10/10 in light and dark plus phone; per-hour counts match the raw timetable for the Fremantle Line, route 950 (both entries, 293 trips) and the ferry on a Monday; analytics sends one view for `/perth-transit/` with no hash or query, none on pan; earlier ferry, What's new, click and phone checks re-run.
+
+### v1.3 (2026-10-17)
+
+- **Ferry added.** Transperth's only ferry route (`PWT-FRY-3`, route type 4, Elizabeth Quay Jetty to Mends St Jetty, South Perth): 414 trips a week-cycle across 8 service calendars, about 8 minutes southbound and 10 minutes northbound, every 15 to 30 minutes.
+- **Data:** added by `scripts/perth-transit-add-ferry.py` (repo root `scripts/`, not published with the map) from the same feed, `mdb-1086-202610160127`. The script appends to the five compiled files in the compiler's format, so every existing route, stop, station, shape, pattern and service keeps its index; it was checked that all existing entries are byte-for-byte unchanged. Each jetty becomes a stop with its own station (stop mode bit 4 = ferry). It refuses to run on data that already has a ferry. `meta.json` gets a new `hash`, a `ferries` count and a `patched` note. The unused Barrack St Jetty stop in the feed is not added.
+- **Interface:** ferry route colour `#0a7ea4`; dashed `ferry-line` layer over the river; boat-shaped vehicle icon (`ptm-ferry`, pointed bow at the front); jetties use the big station marker and label; "Ferry" button in the Map and Routes filters and on mixed-mode departure boards; a ferries count in the panel; a "Ferry" block under Train lines; "Ferry jetty" on jetty pages and rows; F glyph; Near me includes jetties; the day chart tooltip counts ferries. Routes gained `isFerry` and `mode` in `sim.js`; `heartbeat()` returns a `ferry` array.
+- **Trip progress bar fix (all vehicles):** the bar in the vehicle card now uses distance travelled instead of the last stop passed, so it moves smoothly. Before, a two-stop ferry trip sat at 0% the whole way.
+- **Tests (headless Chromium + Node):** engine departures from both jetties match the raw timetable exactly on a Monday, a Saturday, a Sunday and Christmas Day; 1,098 ferry positions sampled through a Monday all lie on the river; the ferry draws, can be clicked, filtered, searched and has a working departures board; the bus and train figures at 08:15 Monday are unchanged (1,280 buses, 66 trains); the What's new, phone and vehicle-click checks from v1.1/v1.2 still pass; no console errors.
 
 ### v1.2 (2026-10-17)
 

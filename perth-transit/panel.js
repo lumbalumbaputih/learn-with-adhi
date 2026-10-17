@@ -2,6 +2,7 @@
 import { DAY, fmtClock } from './sim.js';
 import { routeColor } from './colors.js';
 import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js';
+import { dayLabel } from './scrubber.js';
 
 const TABS = [['map', 'Map'], ['routes', 'Routes'], ['stops', 'Stops']];
 
@@ -154,28 +155,33 @@ export class Panel {
     this.r.routes = h('span', { class: 'status-sub' });
     this.r.bus = h('span', { class: 'fig-num' });
     this.r.train = h('span', { class: 'fig-num' });
+    this.r.ferry = h('span', { class: 'fig-num' });
+    this.r.ferryLabel = h('span', { text: 'ferries' });
     this.r.vcard = h('div', { class: 'vcard-slot' });
     const status = h('section', { class: 'status', 'aria-live': 'polite' },
       h('div', { class: 'status-main' }, this.r.total, h('div', { class: 'status-label' }, h('strong', { text: 'vehicles running' }), this.r.routes)),
       h('div', { class: 'figs' },
         h('div', { class: 'fig' }, this.r.bus, h('span', { text: 'buses' })),
-        h('div', { class: 'fig' }, this.r.train, h('span', { text: 'trains' }))),
+        h('div', { class: 'fig' }, this.r.train, h('span', { text: 'trains' })),
+        h('div', { class: 'fig' }, this.r.ferry, this.r.ferryLabel)),
       h('p', { class: 'hint', text: 'Positions are estimated from the published timetable. Vehicles are not tracked by GPS, and delays or cancellations are not shown.' }));
-    const seg = segmented('Show on the map', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses']], this.mapMode, (v) => {
+    const seg = segmented('Show on the map', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses'], ['ferry', 'Ferry']], this.mapMode, (v) => {
       this.mapMode = v; this.act.onMode(v); this.render();
     });
 
     this.r.lineRows = new Map();
     const list = h('ul', { class: 'plain-list' });
-    for (const r of net.routes.filter((x) => x.isTrain)) {
+    const ferries = h('ul', { class: 'plain-list' });
+    for (const r of net.routes.filter((x) => x.isTrain || x.isFerry)) {
       const count = h('span', { class: 'row-count' });
       this.r.lineRows.set(r.idx, count);
-      list.append(h('li', {}, h('button', { class: 'row', type: 'button', onclick: () => this.openRoute(r.idx) },
+      (r.isFerry ? ferries : list).append(h('li', {}, h('button', { class: 'row', type: 'button', onclick: () => this.openRoute(r.idx) },
         chip(r), h('span', { class: 'row-main' },
-          h('span', { class: 'row-title', text: r.long }), h('span', { class: 'row-sub', text: this._summary(r.idx) })), count)));
+          h('span', { class: 'row-title', text: r.isFerry ? 'Swan River ferry' : r.long }), h('span', { class: 'row-sub', text: this._summary(r.idx) })), count)));
     }
     return h('div', { class: 'stack' }, this.r.vcard, status, seg,
-      h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Train lines' }), list));
+      h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Train lines' }), list),
+      ferries.childElementCount ? h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Ferry' }), ferries) : null);
   }
 
   _vehicleCard(v, sec) {
@@ -243,12 +249,12 @@ export class Panel {
   _routesTab() {
     const net = this.net;
     this.r.routeRows = new Map();
-    const seg = segmented('Filter routes', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses']], this.routeFilter, (v) => {
+    const seg = segmented('Filter routes', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses'], ['ferry', 'Ferry']], this.routeFilter, (v) => {
       this.routeFilter = v; this.render();
     });
-    const routes = net.routes.filter((r) => this.routeFilter === 'all' || (this.routeFilter === 'train') === r.isTrain);
+    const routes = net.routes.filter((r) => this.routeFilter === 'all' || r.mode === this.routeFilter);
     return h('div', { class: 'stack' }, seg,
-      h('p', { class: 'meta', text: `${fmtN(routes.length)} routes` }), this._routeRows(routes));
+      h('p', { class: 'meta', text: `${fmtN(routes.length)} ${routes.length === 1 ? 'route' : 'routes'}` }), this._routeRows(routes));
   }
 
   _routePage() {
@@ -276,6 +282,8 @@ export class Panel {
         h('summary', {}, h('span', { class: 'muted', text: 'Towards ' }), h('strong', { text: name }), h('span', { class: 'muted', text: `, ${p.stops.length} stops` })), stops));
     }
     this.r.todayTrips = h('span', { class: 'meta' });
+    this.r.busy = h('div', { class: 'busy-wrap' });
+    this.r.busyYmd = null;
     return h('div', { class: 'stack' },
       this._backBtn('Routes'),
       h('header', { class: 'page-head' }, chip(route, { big: true }),
@@ -283,7 +291,52 @@ export class Panel {
       h('p', { class: 'meta' }, this.r.routeRunning, this.r.todayTrips),
       h('div', { class: 'btn-row' },
         h('button', { class: 'btn', type: 'button', onclick: () => this.act.onRoute(idx), text: 'Show on map' })),
+      h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'How busy is this line?' }), this.r.busy),
       hs.length ? h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Directions' }), dirs) : null);
+  }
+
+  /** "How busy is this line?": trips per hour through the day, the busiest hour, first and last trip. */
+  _renderBusy(now) {
+    const net = this.net, idx = this.detail.idx, route = net.routes[idx];
+    const group = net.sameNameRoutes(idx);
+    const d = net.routeDay(group, now.ymd);
+    this.r.busyYmd = now.ymd;
+    this.r.busyBars = [];
+    this.r.todayTrips.textContent = `, ${fmtN(d.trips)} ${d.trips === 1 ? 'trip' : 'trips'} on this day`;
+    const wrap = this.r.busy;
+    if (!d.trips) {
+      wrap.replaceChildren(h('p', { class: 'empty', text: `No trips on ${dayLabel(now.ymd)}.` }));
+      return;
+    }
+    const hrLabel = (hr) => (hr % 24 === 0 ? 'midnight' : hr % 24 === 12 ? 'noon' : `${hr % 12 || 12}${hr % 24 < 12 ? 'am' : 'pm'}`);
+    let peak = 0;
+    for (let hr = 1; hr < d.all.length; hr++) if (d.all[hr] > d.all[peak]) peak = hr;
+    const from = Math.floor(d.first / 3600), to = Math.floor(d.last / 3600);
+    const gap = d.oneWay[peak] ? Math.round(60 / d.oneWay[peak]) : 0;
+    const often = gap <= 1 ? 'about every minute' : `about every ${gap} min`;
+    const each = d.dirs > 1 ? ' each way' : '';
+    const head = h('p', { class: 'busy-head' },
+      h('strong', { text: `Busiest ${hrLabel(peak)} to ${hrLabel(peak + 1)}` }),
+      `: ${fmtN(d.all[peak])} ${d.all[peak] === 1 ? 'trip' : 'trips'}, ${often}${each}.`);
+    const span = h('p', { class: 'meta', text: `First trip ${fmtClock(d.first)}, last trip ${fmtClock(d.last)}.` });
+    const color = routeColor(route);
+    const bars = h('div', { class: 'busy-bars', role: 'img',
+      'aria-label': `Trips per hour on ${dayLabel(now.ymd)}, from ${hrLabel(from)} to ${hrLabel(to + 1)}. Busiest ${hrLabel(peak)} to ${hrLabel(peak + 1)} with ${d.all[peak]} trips.` });
+    const axis = h('div', { class: 'busy-axis', 'aria-hidden': 'true' });
+    for (let hr = from; hr <= to; hr++) {
+      const n = d.all[hr];
+      const bar = h('span', { class: 'busy-bar', title: `${hrLabel(hr)}: ${n} ${n === 1 ? 'trip' : 'trips'}`,
+        style: { height: `${n ? Math.max(4, Math.round((n / d.all[peak]) * 100)) : 0}%`, background: color } });
+      bar.dataset.hr = String(hr);
+      this.r.busyBars.push(bar);
+      bars.append(bar);
+      axis.append(h('span', { text: hr % 3 === 0 ? (hr % 24 === 0 ? '12am' : hrLabel(hr)) : '' })); // short, so the right edge is not cut off
+    }
+    const split = group.length > 1
+      ? ` The timetable lists this route ${group.length} times (once for each operating contract), and this counts all of them.` : '';
+    wrap.replaceChildren(head, span, bars, axis,
+      h('p', { class: 'fine', text: `Trips per hour on ${dayLabel(now.ymd)}, from the timetable. This shows how often it runs, not how full it is.${split}` }));
+    this.r.busyNow = null;
   }
 
   // ---- Stops tab
@@ -319,11 +372,15 @@ export class Panel {
     const tags = [];
     if (mode & 2) tags.push('Train');
     if (mode & 1) tags.push('Bus');
+    if (mode & 4) tags.push('Ferry');
+    const g = mode & 2 ? ['train', 'T'] : mode & 4 ? ['ferry', 'F'] : ['bus', 'B'];
+    const sub = e.kind === 'stop' ? `${tags.join(' and ')}, stop ${net.stopCode[e.idx]}`
+      : mode === 4 ? 'Ferry jetty' : `Station, ${tags.join(' and ').toLowerCase()}`;
     return h('button', { class: 'row', type: 'button', onclick: () => this.openEntity(e) },
-      h('span', { class: `glyph ${mode & 2 ? 'glyph-train' : 'glyph-bus'}`, 'aria-hidden': 'true', text: mode & 2 ? 'T' : 'B' }),
+      h('span', { class: `glyph glyph-${g[0]}`, 'aria-hidden': 'true', text: g[1] }),
       h('span', { class: 'row-main' },
         h('span', { class: 'row-title', text: prettyName(net.entityName(e)) }),
-        h('span', { class: 'row-sub', text: e.kind === 'stop' ? `${tags.join(' and ')}, stop ${net.stopCode[e.idx]}` : `Station, ${tags.join(' and ').toLowerCase()}` })),
+        h('span', { class: 'row-sub', text: sub })),
       trailing ? h('span', { class: 'row-count', text: trailing }) : null);
   }
 
@@ -336,14 +393,15 @@ export class Panel {
     routes.slice(0, 30).forEach((ri) => chips.append(h('button', { class: 'chip-btn', type: 'button', 'aria-label': `Route ${net.routes[ri].name}`, onclick: () => this.openRoute(ri) }, chip(net.routes[ri]))));
     if (routes.length > 30) chips.append(h('span', { class: 'meta', text: `and ${routes.length - 30} more` }));
     this.r.board = h('div', { class: 'board' });
-    const filters = (mode & 1) && (mode & 2)
-      ? segmented('Filter departures', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses']], this.boardFilter, (v) => { this.boardFilter = v; this._renderBoard(); this._syncBoardSeg(); })
+    const here = [['train', 'Trains', 2], ['bus', 'Buses', 1], ['ferry', 'Ferry', 4]].filter((x) => mode & x[2]);
+    const filters = here.length > 1
+      ? segmented('Filter departures', [['all', 'All'], ...here.map(([v, t]) => [v, t])], this.boardFilter, (v) => { this.boardFilter = v; this._renderBoard(); this._syncBoardSeg(); })
       : null;
     this.r.boardSeg = filters;
     return h('div', { class: 'stack' },
       this._backBtn('Stops'),
       h('header', { class: 'page-head' }, h('h2', { class: 'page-title', text: prettyName(net.entityName(e)) })),
-      h('p', { class: 'meta', text: e.kind === 'stop' ? `Stop ${net.stopCode[e.idx]}` : 'Station' }),
+      h('p', { class: 'meta', text: e.kind === 'stop' ? `Stop ${net.stopCode[e.idx]}` : mode === 4 ? 'Ferry jetty' : 'Station' }),
       h('div', { class: 'btn-row' }, h('button', { class: 'btn', type: 'button', onclick: () => this.act.onEntity(e, true), text: 'Show on map' })),
       routes.length ? h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Routes that stop here' }), chips) : null,
       h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Next departures' }), filters, this.r.board,
@@ -360,7 +418,7 @@ export class Panel {
     const net = this.net, e = this.detail.e, { now } = this.last;
     const stops = net.entityStops(e);
     let deps = net.departures(stops, now.ymd, now.sec, { limit: 40, horizon: 5400 });
-    if (this.boardFilter !== 'all') deps = deps.filter((d) => net.routes[d.route].isTrain === (this.boardFilter === 'train'));
+    if (this.boardFilter !== 'all') deps = deps.filter((d) => net.routes[d.route].mode === this.boardFilter);
     deps = deps.slice(0, 10);
     const b = this.r.board;
     const next = h('div', { class: 'board' });
@@ -417,32 +475,31 @@ export class Panel {
   update(now, vehicles) {
     this.last = { now, vehicles };
     const net = this.net;
-    let bus = 0, train = 0;
+    let bus = 0, train = 0, ferry = 0;
     const perRoute = new Map();
     for (const v of vehicles) {
-      if (v.type === 2) train++; else bus++;
+      if (v.type === 2) train++; else if (v.type === 4) ferry++; else bus++;
       perRoute.set(v.route, (perRoute.get(v.route) || 0) + 1);
     }
     if (this.r.total) {
-      this.r.total.textContent = fmtN(bus + train);
+      this.r.total.textContent = fmtN(bus + train + ferry);
       this.r.bus.textContent = fmtN(bus);
       this.r.train.textContent = fmtN(train);
+      this.r.ferry.textContent = fmtN(ferry);
+      this.r.ferryLabel.textContent = ferry === 1 ? 'ferry' : 'ferries';
       this.r.routes.textContent = `on ${fmtN(perRoute.size)} routes`;
     }
     if (this.r.lineRows) for (const [ri, el] of this.r.lineRows) { const n = perRoute.get(ri) || 0; el.textContent = n ? `${n} running` : 'not running'; el.classList.toggle('is-off', !n); }
     if (this.r.routeRows) for (const [ri, el] of this.r.routeRows) { const n = perRoute.get(ri) || 0; el.textContent = n ? `${n} running` : ''; }
     if (this.r.vcard && this.vehicleId !== null) this._refreshVehicleCard();
     if (this.r.routeRunning && this.detail && this.detail.kind === 'route') {
-      const n = perRoute.get(this.detail.idx) || 0;
+      const n = net.sameNameRoutes(this.detail.idx).reduce((a, ri) => a + (perRoute.get(ri) || 0), 0); // same total as the chart
       this.r.routeRunning.textContent = n ? `${n} running now` : 'Not running now';
-      if (!this.r.todayTrips.textContent) {
-        const flags = net.serviceFlags(now.ymd);
-        let trips = 0;
-        for (const pi of net.routePatterns(this.detail.idx)) for (const q of net.patternProfiles[pi]) {
-          const p = net.profiles[q];
-          for (let i = 0; i < p.svc.length; i++) if (flags[p.svc[i]]) trips++;
-        }
-        this.r.todayTrips.textContent = `, ${fmtN(trips)} trips on this day`;
+      if (this.r.busyYmd !== now.ymd) this._renderBusy(now); // also when the day is changed with the time controls
+      const hr = String(Math.floor(now.sec / 3600));
+      if (this.r.busyNow !== hr) {
+        this.r.busyNow = hr;
+        for (const b of this.r.busyBars || []) b.classList.toggle('is-now', b.dataset.hr === hr);
       }
     }
     if (this.r.board && this.detail && this.detail.kind === 'entity') this._renderBoard();
