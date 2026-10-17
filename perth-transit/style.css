@@ -167,6 +167,7 @@ ul, ol { padding: 0; list-style: none; }
 }
 .glyph-bus { background: #2b3a47; }
 .glyph-train { background: var(--accent); }
+.glyph-ferry { background: #0a7ea4; }
 
 .back {
   align-self: flex-start; display: inline-flex; align-items: center; gap: 2px; margin: -4px 0 -6px -6px; padding: 6px 10px 6px 4px;

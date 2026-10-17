@@ -4,6 +4,7 @@
 // and pick dark or light text by contrast.
 
 export const BUS_COLOR = '#2b3a47';
+export const FERRY_COLOR = '#0a7ea4'; // river blue, apart from the eight line colours
 export const INK = '#15222e';
 
 const LINE_COLORS = {
@@ -25,6 +26,7 @@ function hash(s) {
 }
 
 export function routeColor(route) {
+  if (route.isFerry) return FERRY_COLOR;
   if (!route.isTrain) return BUS_COLOR;
   return LINE_COLORS[route.long] || SPARE[hash(route.long) % SPARE.length];
 }
@@ -45,8 +47,9 @@ export function textOn(hex) {
   return white >= ink ? '#ffffff' : INK;
 }
 
-/** Label for a route chip: bus number, or the line name without the word "Line". */
+/** Label for a route chip: bus number, "Ferry", or the line name without the word "Line". */
 export function chipLabel(route) {
+  if (route.isFerry) return 'Ferry';
   return route.isTrain ? route.long.replace(/\s+Line$/i, '') : route.short || route.long;
 }
 

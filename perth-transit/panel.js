@@ -154,28 +154,33 @@ export class Panel {
     this.r.routes = h('span', { class: 'status-sub' });
     this.r.bus = h('span', { class: 'fig-num' });
     this.r.train = h('span', { class: 'fig-num' });
+    this.r.ferry = h('span', { class: 'fig-num' });
+    this.r.ferryLabel = h('span', { text: 'ferries' });
     this.r.vcard = h('div', { class: 'vcard-slot' });
     const status = h('section', { class: 'status', 'aria-live': 'polite' },
       h('div', { class: 'status-main' }, this.r.total, h('div', { class: 'status-label' }, h('strong', { text: 'vehicles running' }), this.r.routes)),
       h('div', { class: 'figs' },
         h('div', { class: 'fig' }, this.r.bus, h('span', { text: 'buses' })),
-        h('div', { class: 'fig' }, this.r.train, h('span', { text: 'trains' }))),
+        h('div', { class: 'fig' }, this.r.train, h('span', { text: 'trains' })),
+        h('div', { class: 'fig' }, this.r.ferry, this.r.ferryLabel)),
       h('p', { class: 'hint', text: 'Positions are estimated from the published timetable. Vehicles are not tracked by GPS, and delays or cancellations are not shown.' }));
-    const seg = segmented('Show on the map', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses']], this.mapMode, (v) => {
+    const seg = segmented('Show on the map', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses'], ['ferry', 'Ferry']], this.mapMode, (v) => {
       this.mapMode = v; this.act.onMode(v); this.render();
     });
 
     this.r.lineRows = new Map();
     const list = h('ul', { class: 'plain-list' });
-    for (const r of net.routes.filter((x) => x.isTrain)) {
+    const ferries = h('ul', { class: 'plain-list' });
+    for (const r of net.routes.filter((x) => x.isTrain || x.isFerry)) {
       const count = h('span', { class: 'row-count' });
       this.r.lineRows.set(r.idx, count);
-      list.append(h('li', {}, h('button', { class: 'row', type: 'button', onclick: () => this.openRoute(r.idx) },
+      (r.isFerry ? ferries : list).append(h('li', {}, h('button', { class: 'row', type: 'button', onclick: () => this.openRoute(r.idx) },
         chip(r), h('span', { class: 'row-main' },
-          h('span', { class: 'row-title', text: r.long }), h('span', { class: 'row-sub', text: this._summary(r.idx) })), count)));
+          h('span', { class: 'row-title', text: r.isFerry ? 'Swan River ferry' : r.long }), h('span', { class: 'row-sub', text: this._summary(r.idx) })), count)));
     }
     return h('div', { class: 'stack' }, this.r.vcard, status, seg,
-      h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Train lines' }), list));
+      h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Train lines' }), list),
+      ferries.childElementCount ? h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Ferry' }), ferries) : null);
   }
 
   _vehicleCard(v, sec) {
@@ -243,12 +248,12 @@ export class Panel {
   _routesTab() {
     const net = this.net;
     this.r.routeRows = new Map();
-    const seg = segmented('Filter routes', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses']], this.routeFilter, (v) => {
+    const seg = segmented('Filter routes', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses'], ['ferry', 'Ferry']], this.routeFilter, (v) => {
       this.routeFilter = v; this.render();
     });
-    const routes = net.routes.filter((r) => this.routeFilter === 'all' || (this.routeFilter === 'train') === r.isTrain);
+    const routes = net.routes.filter((r) => this.routeFilter === 'all' || r.mode === this.routeFilter);
     return h('div', { class: 'stack' }, seg,
-      h('p', { class: 'meta', text: `${fmtN(routes.length)} routes` }), this._routeRows(routes));
+      h('p', { class: 'meta', text: `${fmtN(routes.length)} ${routes.length === 1 ? 'route' : 'routes'}` }), this._routeRows(routes));
   }
 
   _routePage() {
@@ -319,11 +324,15 @@ export class Panel {
     const tags = [];
     if (mode & 2) tags.push('Train');
     if (mode & 1) tags.push('Bus');
+    if (mode & 4) tags.push('Ferry');
+    const g = mode & 2 ? ['train', 'T'] : mode & 4 ? ['ferry', 'F'] : ['bus', 'B'];
+    const sub = e.kind === 'stop' ? `${tags.join(' and ')}, stop ${net.stopCode[e.idx]}`
+      : mode === 4 ? 'Ferry jetty' : `Station, ${tags.join(' and ').toLowerCase()}`;
     return h('button', { class: 'row', type: 'button', onclick: () => this.openEntity(e) },
-      h('span', { class: `glyph ${mode & 2 ? 'glyph-train' : 'glyph-bus'}`, 'aria-hidden': 'true', text: mode & 2 ? 'T' : 'B' }),
+      h('span', { class: `glyph glyph-${g[0]}`, 'aria-hidden': 'true', text: g[1] }),
       h('span', { class: 'row-main' },
         h('span', { class: 'row-title', text: prettyName(net.entityName(e)) }),
-        h('span', { class: 'row-sub', text: e.kind === 'stop' ? `${tags.join(' and ')}, stop ${net.stopCode[e.idx]}` : `Station, ${tags.join(' and ').toLowerCase()}` })),
+        h('span', { class: 'row-sub', text: sub })),
       trailing ? h('span', { class: 'row-count', text: trailing }) : null);
   }
 
@@ -336,14 +345,15 @@ export class Panel {
     routes.slice(0, 30).forEach((ri) => chips.append(h('button', { class: 'chip-btn', type: 'button', 'aria-label': `Route ${net.routes[ri].name}`, onclick: () => this.openRoute(ri) }, chip(net.routes[ri]))));
     if (routes.length > 30) chips.append(h('span', { class: 'meta', text: `and ${routes.length - 30} more` }));
     this.r.board = h('div', { class: 'board' });
-    const filters = (mode & 1) && (mode & 2)
-      ? segmented('Filter departures', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses']], this.boardFilter, (v) => { this.boardFilter = v; this._renderBoard(); this._syncBoardSeg(); })
+    const here = [['train', 'Trains', 2], ['bus', 'Buses', 1], ['ferry', 'Ferry', 4]].filter((x) => mode & x[2]);
+    const filters = here.length > 1
+      ? segmented('Filter departures', [['all', 'All'], ...here.map(([v, t]) => [v, t])], this.boardFilter, (v) => { this.boardFilter = v; this._renderBoard(); this._syncBoardSeg(); })
       : null;
     this.r.boardSeg = filters;
     return h('div', { class: 'stack' },
       this._backBtn('Stops'),
       h('header', { class: 'page-head' }, h('h2', { class: 'page-title', text: prettyName(net.entityName(e)) })),
-      h('p', { class: 'meta', text: e.kind === 'stop' ? `Stop ${net.stopCode[e.idx]}` : 'Station' }),
+      h('p', { class: 'meta', text: e.kind === 'stop' ? `Stop ${net.stopCode[e.idx]}` : mode === 4 ? 'Ferry jetty' : 'Station' }),
       h('div', { class: 'btn-row' }, h('button', { class: 'btn', type: 'button', onclick: () => this.act.onEntity(e, true), text: 'Show on map' })),
       routes.length ? h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Routes that stop here' }), chips) : null,
       h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Next departures' }), filters, this.r.board,
@@ -360,7 +370,7 @@ export class Panel {
     const net = this.net, e = this.detail.e, { now } = this.last;
     const stops = net.entityStops(e);
     let deps = net.departures(stops, now.ymd, now.sec, { limit: 40, horizon: 5400 });
-    if (this.boardFilter !== 'all') deps = deps.filter((d) => net.routes[d.route].isTrain === (this.boardFilter === 'train'));
+    if (this.boardFilter !== 'all') deps = deps.filter((d) => net.routes[d.route].mode === this.boardFilter);
     deps = deps.slice(0, 10);
     const b = this.r.board;
     const next = h('div', { class: 'board' });
@@ -417,16 +427,18 @@ export class Panel {
   update(now, vehicles) {
     this.last = { now, vehicles };
     const net = this.net;
-    let bus = 0, train = 0;
+    let bus = 0, train = 0, ferry = 0;
     const perRoute = new Map();
     for (const v of vehicles) {
-      if (v.type === 2) train++; else bus++;
+      if (v.type === 2) train++; else if (v.type === 4) ferry++; else bus++;
       perRoute.set(v.route, (perRoute.get(v.route) || 0) + 1);
     }
     if (this.r.total) {
-      this.r.total.textContent = fmtN(bus + train);
+      this.r.total.textContent = fmtN(bus + train + ferry);
       this.r.bus.textContent = fmtN(bus);
       this.r.train.textContent = fmtN(train);
+      this.r.ferry.textContent = fmtN(ferry);
+      this.r.ferryLabel.textContent = ferry === 1 ? 'ferry' : 'ferries';
       this.r.routes.textContent = `on ${fmtN(perRoute.size)} routes`;
     }
     if (this.r.lineRows) for (const [ri, el] of this.r.lineRows) { const n = perRoute.get(ri) || 0; el.textContent = n ? `${n} running` : 'not running'; el.classList.toggle('is-off', !n); }

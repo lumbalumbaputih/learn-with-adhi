@@ -27,7 +27,8 @@ export const prettyName = (s) => s
 /** A route chip: bus number, or coloured line name. */
 export function chip(route, { big = false } = {}) {
   const { bg, fg } = chipColors(route);
-  return h('span', { class: `chip${route.isTrain ? ' chip-train' : ''}${big ? ' chip-big' : ''}`,
+  // ferry chips use the wide line-name shape too
+  return h('span', { class: `chip${route.isTrain || route.isFerry ? ' chip-train' : ''}${big ? ' chip-big' : ''}`,
     style: { background: bg, color: fg }, text: chipLabel(route) });
 }
 

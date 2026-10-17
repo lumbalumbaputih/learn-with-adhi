@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Perth Transit Map</title>
-  <meta name="description" content="See how Perth's buses and trains move through the day. Positions are simulated from the published timetable, not tracked live.">
+  <meta name="description" content="See how Perth's buses, trains and ferry move through the day. Positions are simulated from the published timetable, not tracked live.">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -46,7 +46,7 @@
   </aside>
 
   <main id="main">
-  <div id="map" class="map" role="application" aria-label="Map of Perth buses and trains"></div>
+  <div id="map" class="map" role="application" aria-label="Map of Perth buses, trains and ferry"></div>
 
 
   <div class="map-ctl" role="group" aria-label="Map controls">
@@ -73,10 +73,17 @@
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
   <div id="whatsnew" class="whatsnew">
-    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.2 &middot; What&rsquo;s new</button>
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.3 &middot; What&rsquo;s new</button>
     <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
       <!-- Newest first. Write each line so someone who never used the map understands it. -->
       <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.3</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Added the ferry across the Swan River, between Elizabeth Quay and Mends Street in South Perth. It shows as a small blue boat on a dashed line over the water.</li>
+          <li>Both jetties have their own page with the next ferry times, and you can show only the ferry with the new &ldquo;Ferry&rdquo; button.</li>
+        </ul>
+      </div>
       <div class="wn-ver">
         <p class="wn-head"><b>v1.2</b> <span>17 Oct 2026</span></p>
         <ul>
@@ -109,7 +116,7 @@
 
   <dialog id="about" class="about" aria-labelledby="about-title">
     <h2 id="about-title">About this map</h2>
-    <p>This map shows where buses and trains should be, worked out from the published timetable. It is not live. Vehicles are not tracked by GPS, so delays, cancellations and replacement buses are not shown.</p>
+    <p>This map shows where buses, trains and the ferry should be, worked out from the published timetable. It is not live. Vehicles are not tracked by GPS, so delays, cancellations and replacement buses are not shown.</p>
     <p>Use it to see how the network moves through the day. Check the official journey planner for live times before you travel.</p>
     <h3>Data</h3>
     <p>Timetable data from the Public Transport Authority of Western Australia. This data is available free of charge from www.transperth.wa.gov.au.</p>

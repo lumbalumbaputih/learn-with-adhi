@@ -153,7 +153,8 @@ export class Network {
   constructor({ meta, core, trips, stops, shapes }) {
     this.meta = meta;
     this.routes = core.routes.map(([short, long, type], idx) => ({
-      idx, short, long, type, name: short || long, isTrain: type === 2,
+      idx, short, long, type, name: short || long, isTrain: type === 2, isFerry: type === 4,
+      mode: type === 2 ? 'train' : type === 4 ? 'ferry' : 'bus',
     }));
     this.headsigns = core.headsigns;
     this._shapeEnc = shapes;
@@ -167,7 +168,7 @@ export class Network {
     this.stopLat = Float64Array.from(stops.lat, (v) => v / 1e5);
     this.stopLon = Float64Array.from(stops.lon, (v) => v / 1e5);
     this.stopStation = Int32Array.from(stops.par);
-    this.stopMode = Uint8Array.from(stops.mode); // bit 1 = bus, bit 2 = train
+    this.stopMode = Uint8Array.from(stops.mode); // bit 1 = bus, bit 2 = train, bit 4 = ferry
     this.stationName = stops.st.name;
     this.stationLat = Float64Array.from(stops.st.lat, (v) => v / 1e5);
     this.stationLon = Float64Array.from(stops.st.lon, (v) => v / 1e5);
@@ -334,7 +335,7 @@ export class Network {
       const route = this.routes[pat.route];
       list.push({
         id: run.day * 2 ** 40 + run.prof * 2 ** 20 + run.ti,
-        run, lat: pos.lat, lon: pos.lon, bearing: pos.bearing,
+        run, lat: pos.lat, lon: pos.lon, bearing: pos.bearing, dist: pos.dist,
         route: pat.route, type: route.type, pattern: pat.idx, state: pos.state, k: pos.k, nextK: pos.nextK,
       });
     }
@@ -354,7 +355,8 @@ export class Network {
       route, headsign: hs, state: v.state,
       stopName: this.stopName[pat.stops[v.k]],
       nextStopName: this.stopName[nextStop], nextStop, etaSec,
-      progress: pat.dist[last] > 0 ? Math.min(1, Math.max(0, (pat.dist[v.k] + 0) / pat.dist[last])) : 0,
+      // distance along the route, so a two-stop trip (the ferry) still fills the bar as it goes
+      progress: pat.dist[last] > pat.dist[0] ? Math.min(1, Math.max(0, ((v.dist ?? pat.dist[v.k]) - pat.dist[0]) / (pat.dist[last] - pat.dist[0]))) : 0,
       destination: this.stopName[pat.stops[last]],
     };
   }
@@ -537,7 +539,7 @@ export class Network {
     return scored.slice(0, limit).map(([, , i]) => this._entities[i]);
   }
 
-  nearestEntities(lat, lon, limit = 12, modeMask = 3) {
+  nearestEntities(lat, lon, limit = 12, modeMask = 7) {
     if (!this._entities) this._prepSearch();
     const best = [];
     for (const e of this._entities) {
@@ -554,23 +556,23 @@ export class Network {
   }
 
   // ------------------------------------------------------------ the day's heartbeat
-  /** Vehicles running at each bin start across the Perth service day: { total, bus, train, bin }. */
+  /** Vehicles running at each bin start across the Perth service day: { total, bus, train, ferry, bin }. */
   heartbeat(ymd, binSec = 300) {
     const nb = DAY / binSec;
-    const bus = new Uint16Array(nb), train = new Uint16Array(nb);
+    const bus = new Uint16Array(nb), train = new Uint16Array(nb), ferry = new Uint16Array(nb);
     for (const [dayYmd, shift] of [[ymd, 0], [addDays(ymd, -1), -DAY]]) {
       const R = this.runsForDay(dayYmd);
       for (let i = 0; i < R.n; i++) {
         const s = R.start[i] + shift, e = R.end[i] + shift;
         if (e <= 0 || s >= DAY) continue;
-        const isTrain = this.routes[this.patterns[this.profiles[R.prof[i]].pattern].route].isTrain;
+        const route = this.routes[this.patterns[this.profiles[R.prof[i]].pattern].route];
         const from = Math.max(0, Math.ceil(s / binSec)), to = Math.min(nb - 1, Math.ceil(e / binSec) - 1);
-        const a = isTrain ? train : bus;
+        const a = route.isTrain ? train : route.isFerry ? ferry : bus;
         for (let b = from; b <= to; b++) a[b]++;
       }
     }
     const total = new Uint16Array(nb);
-    for (let b = 0; b < nb; b++) total[b] = bus[b] + train[b];
-    return { total, bus, train, bin: binSec };
+    for (let b = 0; b < nb; b++) total[b] = bus[b] + train[b] + ferry[b];
+    return { total, bus, train, ferry, bin: binSec };
   }
 }

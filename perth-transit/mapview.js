@@ -1,6 +1,6 @@
 // mapview.js: the map, its layers, the moving vehicles and what happens on click.
 import * as maplibregl from './vendor/maplibre-gl.mjs';
-import { routeColor, BUS_COLOR, INK } from './colors.js';
+import { routeColor, BUS_COLOR, FERRY_COLOR, INK } from './colors.js';
 import { prettyName } from './util.js';
 
 export const STYLE_URL = 'https://tiles.openfreemap.org/styles/positron';
@@ -61,8 +61,11 @@ export class MapView {
   // ------------------------------------------------------------------ data and layers
   _lineFeatures() {
     const net = this.net;
-    const shapeIsTrain = new Set(), shapeIsBus = new Set();
-    for (const p of net.patterns) (net.routes[p.route].isTrain ? shapeIsTrain : shapeIsBus).add(p.shape);
+    const shapeIsTrain = new Set(), shapeIsBus = new Set(), shapeIsFerry = new Set();
+    for (const p of net.patterns) {
+      const r = net.routes[p.route];
+      (r.isTrain ? shapeIsTrain : r.isFerry ? shapeIsFerry : shapeIsBus).add(p.shape);
+    }
     const mk = (set) => ({
       type: 'FeatureCollection',
       features: [...set].map((si) => {
@@ -72,14 +75,14 @@ export class MapView {
         return { type: 'Feature', properties: { s: si }, geometry: { type: 'LineString', coordinates: coords } };
       }),
     });
-    return { bus: mk(shapeIsBus), rail: mk(shapeIsTrain) };
+    return { bus: mk(shapeIsBus), rail: mk(shapeIsTrain), ferry: mk(shapeIsFerry) };
   }
 
   _addData() {
     const map = this.map, net = this.net;
     const layers = map.getStyle().layers;
     const firstSymbol = (layers.find((l) => l.type === 'symbol') || {}).id;
-    const { bus, rail } = this._lineFeatures();
+    const { bus, rail, ferry } = this._lineFeatures();
 
     // arrow image for heading marks (SDF so it can be tinted)
     const c = document.createElement('canvas');
@@ -92,7 +95,7 @@ export class MapView {
     // vehicle bodies, drawn pointing north and rotated by bearing: a short pill for buses, a long bar for trains.
     // Each type gets a white outline image, an SDF body (tinted with the route colour) and a white front mark.
     const PR = 2, PAD = 3;
-    const vehImg = (name, w, h) => {
+    const vehImg = (name, w, h, shape = 'pill') => {
       const W = (w + PAD * 2) * PR, H = (h + PAD * 2) * PR;
       const draw = (fn) => {
         const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
@@ -102,8 +105,18 @@ export class MapView {
       const pill = (x, inset) => {
         x.beginPath(); x.roundRect(PAD - inset, PAD - inset, w + inset * 2, h + inset * 2, Math.min(w / 2 + inset, 4 + inset)); x.fill();
       };
-      map.addImage(name + '-halo', draw((x) => pill(x, 1.6)), { pixelRatio: PR });
-      map.addImage(name, draw((x) => pill(x, 0)), { pixelRatio: PR, sdf: true });
+      // ferries get a boat outline: pointed bow (the front), square stern
+      const boat = (x, inset) => {
+        const l = PAD - inset, r = PAD + w + inset, t = PAD - inset, b = PAD + h + inset, m = PAD + w / 2;
+        x.beginPath(); x.moveTo(m, t);
+        x.bezierCurveTo(r, t + h * 0.22, r, t + h * 0.45, r, t + h * 0.55);
+        x.lineTo(r, b - 2); x.quadraticCurveTo(r, b, r - 2, b); x.lineTo(l + 2, b); x.quadraticCurveTo(l, b, l, b - 2);
+        x.lineTo(l, t + h * 0.55); x.bezierCurveTo(l, t + h * 0.45, l, t + h * 0.22, m, t);
+        x.closePath(); x.fill();
+      };
+      const body = shape === 'boat' ? boat : pill;
+      map.addImage(name + '-halo', draw((x) => body(x, 1.6)), { pixelRatio: PR });
+      map.addImage(name, draw((x) => body(x, 0)), { pixelRatio: PR, sdf: true });
       map.addImage(name + '-front', draw((x) => {
         x.beginPath(); x.moveTo(PAD + w / 2, PAD + 1.5); x.lineTo(PAD + w - 1.6, PAD + 1.5 + w * 0.45);
         x.lineTo(PAD + 1.6, PAD + 1.5 + w * 0.45); x.closePath(); x.fill();
@@ -111,15 +124,17 @@ export class MapView {
     };
     vehImg('ptm-bus', 9, 17);
     vehImg('ptm-train', 9, 44);
+    vehImg('ptm-ferry', 12, 24, 'boat');
 
     map.addSource('bus-routes', { type: 'geojson', data: bus });
     map.addSource('rail', { type: 'geojson', data: rail });
+    map.addSource('ferry', { type: 'geojson', data: ferry });
     map.addSource('route-hi', { type: 'geojson', data: empty() });
     const st = { type: 'FeatureCollection', features: [] };
     for (let i = 0; i < net.stationName.length; i++) {
       // The feed also groups on-street bus stops under a parent. Only real stations and bus stations get the big marker.
       const raw = net.stationName[i];
-      const big = (net.stationMode[i] & 2) || /(Bus Stn|Busport)$/.test(raw) ? 1 : 0;
+      const big = (net.stationMode[i] & 6) || /(Bus Stn|Busport)$/.test(raw) ? 1 : 0; // train stations, jetties, bus stations
       st.features.push({ type: 'Feature', properties: { i, n: prettyName(raw), m: net.stationMode[i], big },
         geometry: { type: 'Point', coordinates: [net.stationLon[i], net.stationLat[i]] } });
     }
@@ -149,6 +164,11 @@ export class MapView {
     map.addLayer({ id: 'rail', type: 'line', source: 'rail', layout: round, paint: {
       'line-color': '#56677a',
       'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 12, 3, 15, 4.5],
+    } }, firstSymbol);
+    // ferry crossing over the river, dashed so it reads as a water route
+    map.addLayer({ id: 'ferry-line', type: 'line', source: 'ferry', layout: round, paint: {
+      'line-color': FERRY_COLOR, 'line-opacity': 0.85, 'line-dasharray': [1.5, 1.5],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.2, 12, 2.4, 15, 3.6],
     } }, firstSymbol);
     map.addLayer({ id: 'route-hi-casing', type: 'line', source: 'route-hi', layout: round, paint: {
       'line-color': '#ffffff', 'line-width': ['interpolate', ['linear'], ['zoom'], 8, 5, 12, 8, 15, 12],
@@ -188,7 +208,7 @@ export class MapView {
 
     const r = (a, b, c3) => ['interpolate', ['linear'], ['zoom'], 8, ['+', a, ['*', ['get', 't'], 1]], 12, ['+', b, ['*', ['get', 't'], 1.4]], 16, ['+', c3, ['*', ['get', 't'], 2.2]]];
     const vehSize = ['interpolate', ['linear'], ['zoom'], 8, 0.34, 12, 0.62, 15, 1.0, 17, 1.35];
-    const vehIcon = (suffix) => ['case', ['==', ['get', 't'], 1], 'ptm-train' + suffix, 'ptm-bus' + suffix];
+    const vehIcon = (suffix) => ['match', ['get', 't'], 1, 'ptm-train' + suffix, 2, 'ptm-ferry' + suffix, 'ptm-bus' + suffix];
     const vehLayout = (suffix) => ({
       'icon-image': vehIcon(suffix), 'icon-size': vehSize, 'icon-rotate': ['get', 'b'],
       'icon-rotation-alignment': 'map', 'icon-pitch-alignment': 'map',
@@ -268,11 +288,10 @@ export class MapView {
     this.byId.clear();
     for (const v of list) {
       this.byId.set(v.id, v);
-      if (this.mode === 'bus' && v.type === 2) continue;
-      if (this.mode === 'train' && v.type !== 2) continue;
       const route = net.routes[v.route];
+      if (this.mode !== 'all' && route.mode !== this.mode) continue;
       feats.push({ type: 'Feature', properties: {
-        vid: v.id, t: v.type === 2 ? 1 : 0, c: routeColor(route), b: Math.round(v.bearing),
+        vid: v.id, t: route.isTrain ? 1 : route.isFerry ? 2 : 0, c: routeColor(route), b: Math.round(v.bearing),
         d: this.routeSel !== null && this.routeSel !== v.route ? 1 : 0,
       }, geometry: { type: 'Point', coordinates: [v.lon, v.lat] } });
     }

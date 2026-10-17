@@ -129,7 +129,8 @@ export class Scrubber {
     const x = Math.min(Math.max(e.clientX - r.left, 0), r.width);
     const b = Math.min(this.hb.total.length - 1, Math.floor(((x / r.width) * DAY) / this.hb.bin));
     this.tip.hidden = false;
-    this.tip.textContent = `${fmtClock(b * this.hb.bin)}: ${fmtN(this.hb.bus[b])} buses, ${fmtN(this.hb.train[b])} trains`;
+    const fe = this.hb.ferry ? this.hb.ferry[b] : 0;
+    this.tip.textContent = `${fmtClock(b * this.hb.bin)}: ${fmtN(this.hb.bus[b])} buses, ${fmtN(this.hb.train[b])} trains${fe ? `, ${fmtN(fe)} ${fe === 1 ? 'ferry' : 'ferries'}` : ''}`;
     const w = this.tip.offsetWidth;
     this.tip.style.left = `${Math.min(Math.max(x - w / 2, 0), r.width - w)}px`;
   }
