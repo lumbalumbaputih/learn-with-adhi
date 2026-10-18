@@ -78,10 +78,11 @@
           <h3 class="next-title">Hop on another train?</h3>
           <div id="next-list" class="next-list"></div>
         </div>
-        <div class="card-actions">
-          <button id="hop" class="chunky primary" type="button">Hop on!</button>
-          <button id="hop-off" class="chunky" type="button" hidden>Hop off</button>
-        </div>
+      </div>
+      <!-- a direct child of the scrolling card, so it can stay pinned to the card's bottom edge -->
+      <div class="card-actions">
+        <button id="hop" class="chunky primary" type="button">Hop on!</button>
+        <button id="hop-off" class="chunky" type="button" hidden>Hop off</button>
       </div>
     </section>
     <p id="bubble" class="bubble" role="status" aria-atomic="true"></p>
@@ -93,9 +94,9 @@
       </button>
       <div class="now-line">
         <p id="clock" class="clock"></p>
+        <span id="pretend" class="pretend" hidden>Pretend day</span>
         <p id="count" class="count"></p>
       </div>
-      <p id="pretend" class="pretend" hidden></p>
       <button id="wake" class="chunky wake" type="button" hidden>Wake up the trains</button>
       <div id="speeds" class="speeds" role="radiogroup" aria-label="How fast time goes">
         <button class="chunky speed" type="button" role="radio" data-speed="0" aria-label="Pause"><span aria-hidden="true">&#9208;&#65039;</span><b>Pause</b></button>

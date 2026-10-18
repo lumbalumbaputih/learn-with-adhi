@@ -107,9 +107,9 @@ a { color: var(--accent); }
 }
 .round-btn { width: 44px; padding: 0; font-size: 20px; font-weight: 800; }
 
-/* in the dock, so it never covers the map credit and the card never covers it */
+/* next to the clock in the dock: never over the map credit, never under the card, and no extra height */
 .pretend {
-  display: inline-block; margin: -4px 0 10px; padding: 3px 12px; border-radius: 12px;
+  display: inline-block; padding: 1px 10px; border-radius: 10px;
   background: var(--amber-bg); color: var(--amber-ink); font-size: 13px; font-weight: 700;
 }
 
@@ -184,11 +184,11 @@ a { color: var(--accent); }
   background: var(--sun); font-size: 17px; line-height: 1; will-change: transform;
 }
 
-.card { max-height: calc(100dvh - var(--dock-h, 140px) - 170px); overflow-y: auto; } /* room above it for the station bubble */
-/* the ride buttons stay in view when a tall card scrolls */
+.card { max-height: calc(100dvh - var(--dock-h, 140px) - 116px); overflow-y: auto; } /* its top stays below the map credit */
+/* a direct child of the scrolling card, pinned to its bottom edge: the ride buttons stay in view when a tall card scrolls */
 .card-actions {
   position: sticky; bottom: 0; z-index: 1; display: flex; gap: 8px;
-  margin: 12px -16px -12px; padding: 10px 16px 12px; background: var(--paper); border-top: 1px solid var(--line);
+  padding: 10px 16px 12px; background: var(--paper); border-top: 1px solid var(--line);
 }
 .card-actions .chunky { flex: 1; }
 .card-actions:not(:has(button:not([hidden]))) { display: none; }
@@ -204,10 +204,11 @@ a { color: var(--accent); }
   0% { transform: none; } 25% { transform: scale(1.04) rotate(-1.2deg); } 55% { transform: scale(0.99) rotate(1deg); } 100% { transform: none; }
 }
 
-/* station calls while riding: a sunny bubble at the top */
+/* station calls while riding: a sunny bubble. On phones kids.js places it just above the card (or the dock),
+   so the card never has to shrink to make room for it; on side layouts it sits over the map beside the card. */
 .bubble {
-  position: fixed; z-index: 7; top: calc(max(10px, env(safe-area-inset-top)) + 84px); left: 50%;
-  max-width: calc(100% - 32px); padding: 8px 14px; transform: translate(-50%, -8px);
+  position: fixed; z-index: 7; bottom: var(--bubble-bottom, calc(var(--dock-h, 140px) + 8px)); left: 50%;
+  max-width: calc(100% - 32px); padding: 8px 14px; transform: translate(-50%, 8px);
   border: 2px solid var(--edge); border-radius: 20px; background: var(--sun); color: var(--sun-ink);
   box-shadow: 0 3px 0 var(--edge); font-size: 16px; font-weight: 800; text-align: center;
   opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease;
@@ -215,23 +216,29 @@ a { color: var(--accent); }
 .bubble.show { opacity: 1; transform: translate(-50%, 0); }
 .bubble:empty { padding: 0; border: 0; }
 
+/* short phones: while riding, the card drops the destination and the strip so a band of map stays free
+   for the train (the map shows it moving and the bubble calls each station) */
+@media (max-width: 819px) and (max-height: 700px) {
+  .card.riding .card-dest, .card.riding .strip { display: none; }
+}
 @media (min-width: 820px) {
   /* wide screens: top-left, under the map credit, clear of the centred dock */
   .card { right: auto; bottom: auto; top: calc(max(10px, env(safe-area-inset-top)) + 104px); width: 420px; margin: 0; max-height: calc(100dvh - var(--dock-h, 140px) - 128px); }
   /* centred over the map to the right of the card (432 px wide + gap), so it never covers the card */
-  .bubble { left: calc(50% + 222px); max-width: calc(100% - 468px); font-size: 18px; padding: 10px 18px; }
+  .bubble { top: calc(max(10px, env(safe-area-inset-top)) + 84px); bottom: auto; transform: translate(-50%, -8px);
+    left: calc(50% + 222px); width: max-content; max-width: calc(100% - 468px); font-size: 18px; padding: 10px 18px; }
 }
-/* short portrait phones: a lower card, so a band of map stays free for the train being ridden (the card scrolls; its buttons stay put) */
-@media (max-width: 819px) and (max-height: 700px) and (orientation: portrait) {
-  .card { max-height: calc(100dvh - var(--dock-h, 140px) - 250px); }
-}
-/* short landscape screens (phones held sideways): card down the left side, dock beside it.
-   Keep in step with sideQuery in kids.js. */
-@media (max-height: 500px) and (min-width: 560px) {
-  .card { left: 12px; right: auto; bottom: auto; top: calc(max(10px, env(safe-area-inset-top)) + 66px); width: 320px; margin: 0; max-height: calc(100dvh - 78px); }
-  .dock { left: 344px; right: 12px; max-width: none; margin: 0; }
-  .bubble, .hint { left: calc(50% + 172px); max-width: calc(100% - 368px); }
-  .bubble { top: calc(max(10px, env(safe-area-inset-top)) + 66px); }
+/* short landscape screens (phones held sideways): card down the left side under the map credit, dock beside it,
+   clear of notches. Keep in step with sideQuery in kids.js. */
+@media (max-height: 500px) and (min-width: 640px) {
+  .card {
+    left: max(12px, env(safe-area-inset-left)); right: auto; bottom: auto; width: 320px; margin: 0;
+    top: calc(max(10px, env(safe-area-inset-top)) + 100px);
+    max-height: calc(100dvh - max(10px, env(safe-area-inset-top)) - 100px - max(12px, env(safe-area-inset-bottom)));
+  }
+  .dock { left: calc(max(12px, env(safe-area-inset-left)) + 332px); right: max(12px, env(safe-area-inset-right)); max-width: none; margin: 0; }
+  .bubble, .hint { left: calc(50% + 172px); width: max-content; max-width: calc(100% - 368px); }
+  .bubble { top: calc(max(10px, env(safe-area-inset-top)) + 66px); bottom: auto; transform: translate(-50%, -8px); }
 }
 
 /* ------------------------------------------------------------------ grown-ups dialog */
@@ -265,6 +272,8 @@ a { color: var(--accent); }
 }
 @media (max-width: 370px) {
   .maplibregl-ctrl-top-left { top: calc(max(10px, env(safe-area-inset-top)) + 80px); }
+  .brand-sub { font-size: 10.5px; }
+  .card { max-height: calc(100dvh - var(--dock-h, 140px) - 130px); } /* the credit sits lower under the taller top bar */
   .brand { padding-right: 10px; }
   .brand h1 { font-size: 15px; white-space: normal; }
   .pill-btn { max-width: 84px; line-height: 1.1; text-align: center; }

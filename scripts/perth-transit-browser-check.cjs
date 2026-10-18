@@ -266,8 +266,10 @@ async function checkKids(browser, errors) {
   assert.equal(await rideP.getByRole('radio', { name: 'Pause' }).getAttribute('aria-checked'), 'true', 'Arrival pauses time');
   assert.ok((await rideP.locator('#next-list .next-train').count()) >= 1, 'Next trains are offered');
   await axeKids(rideP, 'arrival card with next trains');
-  await rideP.locator('#next-list .next-train').first().click();
+  await rideP.locator('#next-list .next-train').first().focus();
+  await rideP.keyboard.press('Enter');
   assert.match(await rideP.locator('#card-now').innerText(), new RegExp(`^Waiting at ${dest} for the train to `));
+  assert.equal(await rideP.evaluate(() => document.activeElement.id), 'hop-off', 'Keyboard focus moves to Stop waiting');
   assert.equal(await rideP.evaluate(() => __kids.clock.speed), 10, 'Choosing the next train carries on at the earlier speed');
   // a missed train (the tablet slept while waiting) must not break the next train's card
   await rideP.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 2 * 3600); __kids.tick(true); });
@@ -287,11 +289,21 @@ async function checkKids(browser, errors) {
   assert.equal(await kb.evaluate(() => document.activeElement.id), 'pick', 'Pick a train is the second tab stop');
   await kb.keyboard.press('Enter');
   await kb.waitForFunction(() => !document.getElementById('card').hidden);
-  assert.equal(await kb.evaluate(() => document.activeElement.id), 'card-title', 'Keyboard: a train can be picked without the map');
+  assert.equal(await kb.evaluate(() => document.activeElement.id), 'pick', 'Keyboard: a train can be picked without the map, and focus stays to pick again');
+  assert.match(await kb.locator('#bubble').innerText(), /, going to /, 'The picked train is announced');
   const firstPick = await kb.evaluate(() => __kids.selected);
-  await kb.locator('#pick').focus();
   await kb.keyboard.press('Enter');
   assert.notEqual(await kb.evaluate(() => __kids.selected), firstPick, 'Pressing again picks the next train');
+  // a train in the round whose trip ends is skipped, not reported as "no trains"
+  await kb.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 75 * 60); __kids.tick(true); });
+  await kb.keyboard.press('Enter');
+  assert.notEqual(await kb.evaluate(() => __kids.selected), null, 'Pick skips trains whose trip has ended');
+  // after the view moves somewhere else, picking starts there
+  await kb.evaluate(() => { __kids.mapView.map.jumpTo({ center: [115.75, -31.75], zoom: 12 }); __kids.tick(true); });
+  await kb.keyboard.press('Enter');
+  const near = await kb.evaluate(() => { const v = __kids.mapView.byId.get(__kids.selected); return Math.hypot(v.lon - 115.75, v.lat + 31.75); });
+  assert.ok(near < 0.25, `Pick starts again near the new view (${near})`);
+  await kb.evaluate(() => __kids.select([...__kids.mapView.byId.values()].find((x) => __kids.net.routes[x.route].isTrain && x.state === 'move').id));
   await kb.locator('#hop').focus();
   await kb.keyboard.press('Enter');
   await kb.waitForFunction(() => __kids.ride.id !== null);
@@ -307,36 +319,58 @@ async function checkKids(browser, errors) {
   assert.ok(zgap < 0.002, `The camera follows vehicle 0 (${zgap})`);
   await zero.close();
 
-  // review fixes: during a ride the train stays in view, the station bubble never covers the card's close button, Hop off is visible
-  for (const [w, h, label] of [[320, 640, 'small phone'], [390, 844, 'phone'], [667, 375, 'phone landscape'], [834, 1112, 'tablet portrait']]) {
-    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: w < 820, hasTouch: true });
-    await p.getByRole('radio', { name: 'Pause' }).click();
-    await p.evaluate(() => { const v = [...__kids.mapView.byId.values()].filter((x) => __kids.net.routes[x.route].long === 'Fremantle Line' && x.state === 'move').sort((a, b) => a.k - b.k)[0]; __kids.select(v.id); });
-    await p.getByRole('button', { name: 'Hop on!' }).click();
-    await p.getByRole('radio', { name: 'Pause' }).click();
-    await p.waitForFunction(() => __kids.mapView.following !== null);
-    await p.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 240); __kids.tick(true); }); // brings a station call
-    await p.evaluate(() => { document.getElementById('bubble').textContent = 'All aboard! Next stop: Perth Underground'; }); // the widest usual call
-    const geo = await p.evaluate(() => {
-      const r = (el) => el.getBoundingClientRect(), $ = (id) => document.getElementById(id);
-      const v = __kids.mapView.byId.get(__kids.mapView.following), pt = __kids.mapView.map.project([v.lon, v.lat]);
-      const card = r($('card')), dock = r($('dock')), top = r(document.querySelector('.top')), head = r($('card-head')), bub = r($('bubble')), off = r($('hop-off'));
-      const overlap = (a, b) => !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);
-      const M = 30; // comfortably in view: clear of the top bar, the card and the dock by this much
-      const clearOfCard = pt.x < card.left - M || pt.x > card.right + M || pt.y < card.top - M || pt.y > card.bottom + M;
-      const clearOfDock = pt.y < dock.top - M || pt.x < dock.left - M || pt.x > dock.right + M;
-      return { pt: [Math.round(pt.x), Math.round(pt.y)],
-        inView: pt.x > M && pt.x < innerWidth - M && pt.y > top.bottom + M && clearOfCard && clearOfDock,
-        bubbleOverHead: overlap(bub, head), offVisible: off.top >= Math.max(card.top, 0) - 1 && off.bottom <= Math.min(card.bottom, innerHeight) + 1 };
-    });
-    assert.ok(geo.inView, `${label}: the train being ridden is in view ${geo.pt}`);
-    assert.ok(!geo.bubbleOverHead, `${label}: the station bubble does not cover the card's header or close button`);
-    assert.ok(geo.offVisible, `${label}: Hop off is in view`);
-    await p.close();
+  // Layout across real phone browser sizes (toolbars showing), normal and pretend days, sideways phones and a tablet:
+  // the card's key parts stay visible, the ridden train stays in clear view, nothing covers the map credit or the card head.
+  const visibleIn = (el, box) => { const r = el.getBoundingClientRect(); return r.height > 0 && r.top >= box.top - 1 && r.bottom <= box.bottom + 1; };
+  for (const [w, h, label] of [[320, 568, 'small phone'], [375, 548, 'iPhone SE in Safari'], [390, 664, 'phone in a browser'], [390, 844, 'tall phone'],
+    [640, 360, 'phone sideways (small)'], [667, 375, 'phone sideways'], [844, 390, 'big phone sideways'], [834, 1112, 'tablet portrait']]) {
+    for (const date of ['2026-10-19', '2027-03-01']) { // a normal day, and a pretend day (dock shows the pretend label)
+      const tag = `${label} ${w}x${h}${date === '2027-03-01' ? ' pretend' : ''}`;
+      const p = await open(`?date=${date}&t=08:00`, { viewport: { width: w, height: h }, isMobile: w < 820, hasTouch: true });
+      await p.getByRole('radio', { name: 'Pause' }).click();
+      await p.evaluate(() => { const v = [...__kids.mapView.byId.values()].filter((x) => __kids.net.routes[x.route].long === 'Fremantle Line' && x.state === 'move').sort((a, b) => a.k - b.k)[0]; __kids.select(v.id); });
+      // before riding: the card's next-stop text, first strip stop and Hop on! are all visible
+      const before = await p.evaluate((vis) => {
+        const visibleIn = eval(vis), $ = (id) => document.getElementById(id), card = $('card').getBoundingClientRect();
+        const box = { top: Math.max(card.top, 0), bottom: Math.min(card.bottom, innerHeight) };
+        const dock = $('dock').getBoundingClientRect(), speeds = [...document.querySelectorAll('.speed')].map((b) => b.getBoundingClientRect());
+        const credit = document.querySelector('.maplibregl-ctrl-attrib-button'), cr = credit && credit.getBoundingClientRect();
+        const atCredit = cr && document.elementFromPoint(cr.left + cr.width / 2, cr.top + cr.height / 2);
+        return { now: visibleIn($('card-now'), box), dot: visibleIn(document.querySelector('#strip-list li'), box), hop: visibleIn($('hop'), box),
+          speedsFit: speeds.every((r) => r.left >= dock.left - 1 && r.right <= dock.right + 1 && r.right <= innerWidth),
+          creditFree: !atCredit || !!atCredit.closest('.maplibregl-ctrl') };
+      }, visibleIn.toString());
+      assert.ok(before.now && before.dot && before.hop, `${tag}: next stop, strip and Hop on! visible ${JSON.stringify(before)}`);
+      assert.ok(before.speedsFit, `${tag}: the speed buttons fit in the dock`);
+      assert.ok(before.creditFree, `${tag}: the card does not cover the map credit`);
+      // riding: the train is in clear view, Hop off is visible, and a long station call does not cover the card head
+      await p.getByRole('button', { name: 'Hop on!' }).click();
+      await p.getByRole('radio', { name: 'Pause' }).click();
+      await p.waitForFunction(() => __kids.mapView.following !== null);
+      await p.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 240); __kids.tick(true); });
+      await p.evaluate(() => { const b = document.getElementById('bubble'); b.textContent = 'All aboard! Next stop: Perth Underground'; b.classList.add('show'); dispatchEvent(new Event('resize')); });
+      const geo = await p.evaluate((vis) => {
+        const visibleIn = eval(vis), r = (el) => el.getBoundingClientRect(), $ = (id) => document.getElementById(id);
+        const v = __kids.mapView.byId.get(__kids.mapView.following), pt = __kids.mapView.map.project([v.lon, v.lat]);
+        const card = r($('card')), dock = r($('dock')), top = r(document.querySelector('.top')), head = r($('card-head')), bub = r($('bubble'));
+        const overlap = (a, b) => !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);
+        const M = 20, clear = (b) => pt.x < b.left - M || pt.x > b.right + M || pt.y < b.top - M || pt.y > b.bottom + M;
+        return { pt: [Math.round(pt.x), Math.round(pt.y)], inView: pt.x > M && pt.x < innerWidth - M && pt.y > top.bottom + M && pt.y < innerHeight - M && clear(card) && clear(dock),
+          bubbleOverHead: overlap(bub, head), bubbleInView: bub.top >= top.bottom - 1 && bub.right <= innerWidth && bub.left >= 0,
+          off: visibleIn($('hop-off'), { top: Math.max(card.top, 0), bottom: Math.min(card.bottom, innerHeight) }) };
+      }, visibleIn.toString());
+      assert.ok(geo.inView, `${tag}: the train being ridden is in clear view ${geo.pt}`);
+      assert.ok(geo.off, `${tag}: Hop off is visible`);
+      assert.ok(!geo.bubbleOverHead, `${tag}: the station call does not cover the card's head`);
+      assert.ok(geo.bubbleInView, `${tag}: the station call is on screen, below the top bar`);
+      await p.close();
+    }
   }
+  console.log('Layout matrix passes (8 sizes x normal and pretend day).');
 
   const pretend = await open('?date=2027-03-01&t=08:00');
-  assert.equal(await pretend.locator('#pretend').innerText(), 'Pretend day: a normal Monday');
+  assert.equal(await pretend.locator('#pretend').innerText(), 'Pretend day');
+  assert.match(await pretend.locator('#clock').innerText(), /^Monday /);
   assert.ok(await pretend.evaluate(() => __kids.net.covers(__kids.clock.now().ymd)), 'Pretend day is inside the timetable');
   assert.ok(await pretend.evaluate(() => document.getElementById('dock').contains(document.getElementById('pretend'))), 'The pretend label sits in the dock, clear of the map credit');
   await pretend.close();

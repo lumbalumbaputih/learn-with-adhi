@@ -14,7 +14,7 @@ const MODES = ['train', 'ferry'];
 const START_SPEED = 10; // fast enough to see the trains move at city zoom, slow enough to follow one
 const narrowQuery = matchMedia('(max-width: 819px)');
 // the card sits at the side (not above the dock) on wide screens and on short landscape phones: keep in step with kids.css
-const sideQuery = matchMedia('(min-width: 820px), (max-height: 500px) and (min-width: 560px)');
+const sideQuery = matchMedia('(min-width: 820px), (max-height: 500px) and (min-width: 640px)');
 const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
 const darkQuery = matchMedia('(prefers-color-scheme: dark)');
 
@@ -273,10 +273,25 @@ async function main() {
     if (sfx) sound.play(sfx);
     sound.speak(text);
     bubble.textContent = text;
+    placeBubble();
     bubble.classList.add('show');
     clearTimeout(say.t);
     say.t = setTimeout(() => bubble.classList.remove('show'), 3500);
   }
+  // phones: just above the card (or the dock), so the card never has to shrink to make room; side layouts: CSS places it
+  function placeBubble() {
+    if (sideQuery.matches) { document.documentElement.style.removeProperty('--bubble-bottom'); return; }
+    const anchor = (cardEl.hidden ? dock : cardEl).getBoundingClientRect().top;
+    const topBar = document.querySelector('.top').getBoundingClientRect().bottom;
+    const room = innerHeight - topBar - (bubble.offsetHeight || 44) - 8; // a very tall card: overlap its top rather than the top bar
+    document.documentElement.style.setProperty('--bubble-bottom', `${Math.max(0, Math.round(Math.min(innerHeight - anchor + 8, room)))}px`);
+  }
+  // keep the followed train in the free part of the map when the card changes size (text wraps, riding layout, rotation)
+  new ResizeObserver(() => {
+    if (ride.id !== null && !ride.done) mapView.map.setPadding(ridePadding());
+    if (bubble.classList.contains('show')) placeBubble();
+  }).observe(cardEl);
+  addEventListener('resize', () => { if (ride.id !== null && !ride.done) mapView.map.setPadding(ridePadding()); placeBubble(); });
   // the part of the map the card and the dock don't cover
   function ridePadding() {
     const r = cardEl.getBoundingClientRect(), dockTop = dock.getBoundingClientRect().top;
@@ -294,6 +309,7 @@ async function main() {
     const pat = net.patterns[v.pattern], prof = net.profiles[v.run.prof], now = clock.now();
     Object.assign(ride, { id: v.id, k: v.k, done: false, wait: null, follow: true });
     ride.endAt = absSec(now.ymd, v.run.t0 + prof.arr[prof.arr.length - 1]);
+    syncButtons(); // the riding layout first (a compact card on short phones), so the padding below fits it
     const m = mapView.map, zoom = Math.max(m.getZoom(), 13.2);
     m.setPadding(ridePadding());
     if (motionQuery.matches) { m.jumpTo({ center: [v.lon, v.lat], zoom }); mapView.follow(v.id); }
@@ -372,6 +388,7 @@ async function main() {
   }
   // "Hop on another train?": wait at the station until that train is there, then ride it
   function waitFor(d, station) {
+    const fromList = $('next-list').contains(document.activeElement); // that button is about to disappear
     resumeAfterArrival();
     const now = clock.now();
     Object.assign(ride, { id: null, done: false, follow: true, wait: { id: d.id, k: d.k, t: d.t, ymd: now.ymd, station, route: d.route } });
@@ -387,6 +404,7 @@ async function main() {
     if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
     updateWait(now);
     syncButtons();
+    if (fromList) $('hop-off').focus(); // "Stop waiting"
   }
   function updateWait(now) {
     const w = ride.wait, v = lookup(w.id);
@@ -404,6 +422,7 @@ async function main() {
   }
   function syncButtons() {
     const hop = $('hop'), off = $('hop-off'), had = document.activeElement;
+    cardEl.classList.toggle('riding', (ride.id !== null && !ride.done) || !!ride.wait);
     if (ride.done) { hop.hidden = true; off.hidden = false; off.textContent = 'Done'; }
     else if (ride.wait) { hop.hidden = true; off.hidden = false; off.textContent = 'Stop waiting'; }
     else if (ride.id !== null) { hop.hidden = ride.follow; hop.textContent = 'Find my train'; off.hidden = false; off.textContent = 'Hop off'; }
@@ -420,7 +439,7 @@ async function main() {
   $('hop-off').addEventListener('click', () => {
     const waiting = !!ride.wait;
     hopOff();
-    if (waiting) select(null); else tick(true);
+    if (waiting) { select(null); dock.focus(); } else tick(true); // the card closes: keep keyboard focus on the page's controls
   });
   $('card-close').addEventListener('click', () => select(null));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !dlg.open && cardState.id !== null) select(null); });
@@ -465,21 +484,31 @@ async function main() {
     }
   });
 
-  // ---- keyboard and screen readers: pick a train without the map (the map itself only pans and zooms)
-  let pickOrder = [], pickAt = -1;
+  // ---- keyboard and screen readers: pick a train without the map (the map itself only pans and zooms).
+  // Focus stays on the button, so pressing again picks the next one; the bubble (a live region) says which train.
+  let pickOrder = [], pickAt = -1, pickArea = null, pickZoom = 0;
+  function pickRound() { // the trains in view, nearest the middle first
+    const m = mapView.map, c = m.getCenter();
+    pickArea = m.getBounds(); pickZoom = m.getZoom(); pickAt = -1;
+    pickOrder = [...mapView.byId.values()]
+      .filter((v) => MODES.includes(net.routes[v.route].mode) && pickArea.contains([v.lon, v.lat]))
+      .sort((p, q) => Math.hypot(p.lon - c.lng, p.lat - c.lat) - Math.hypot(q.lon - c.lng, q.lat - c.lat))
+      .map((v) => v.id);
+  }
+  function nextPick() { // skip trains whose trip has ended since the round was made
+    while (pickAt + 1 < pickOrder.length) { const f = findVehicle(mapView.byId, pickOrder[++pickAt]); if (f) return f; }
+    return null;
+  }
   $('pick').addEventListener('click', () => {
-    const m = mapView.map, c = m.getCenter(), b = m.getBounds();
-    if (pickAt < 0 || pickAt >= pickOrder.length - 1) { // a fresh round: the trains in view, nearest the middle first
-      pickOrder = [...mapView.byId.values()]
-        .filter((v) => MODES.includes(net.routes[v.route].mode) && b.contains([v.lon, v.lat]))
-        .sort((p, q) => Math.hypot(p.lon - c.lng, p.lat - c.lat) - Math.hypot(q.lon - c.lng, q.lat - c.lat))
-        .map((v) => v.id);
-      pickAt = -1;
-    }
-    const id = pickOrder[++pickAt];
-    if (id === undefined || !mapView.byId.has(id)) { pickAt = -1; say('No trains here right now. Try zooming out.'); return; }
-    select(id);
-    $('card-title').focus();
+    const m = mapView.map;
+    // a new round when the view has moved somewhere else (not just the small move that shows a picked train)
+    if (!pickArea || !pickArea.contains(m.getCenter()) || Math.abs(m.getZoom() - pickZoom) > 1) pickRound();
+    let f = nextPick();
+    if (!f) { pickRound(); f = nextPick(); } // went round once: start again
+    if (!f) { say('No trains here right now. Try zooming out.'); return; }
+    select(f.id);
+    const v = f.v, pat = net.patterns[v.pattern];
+    say(`${lineName(net.routes[v.route])}, going to ${stationLabel(net, pat.stops[pat.stops.length - 1])}`);
   });
 
   // ---- grown-ups dialog
@@ -524,9 +553,7 @@ async function main() {
       lastText = t;
       const dow = DAYS[ymdToDow(now.ymd)];
       $('clock').textContent = `${dow} ${fmtClock(now.sec)}`;
-      const pr = $('pretend');
-      pr.hidden = !pretend;
-      if (pretend) pr.textContent = `Pretend day: a normal ${dow}`;
+      $('pretend').hidden = !pretend; // a typical day from the timetable, because the real date is outside it
       const trains = trainCount(vehicles), boats = boatCount(vehicles);
       let line;
       // "should be": these are timetable trains, not live ones
