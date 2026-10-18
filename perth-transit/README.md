@@ -193,6 +193,7 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 - **Real-device testing** on iPhone and Android, and in Safari and Firefox.
 - **Ferry data is a patch** (v1.3): the claco compiler still drops route type 4, so a fresh compile there loses the ferry until `compile_gtfs.py` keeps it or `scripts/perth-transit-add-ferry.py` is re-run.
 - **claco is behind this repo** until the v1.1 files are copied back (see Source of truth at the top).
+- **Kids' mode (planned 2026-10-18, not started).** A separate `kids.html` for any kid visiting: trains and the ferry only, big icons, ride along with a train, spotting games and a station passport. The full plan, steps, risks and open decisions are in `KIDS-PLAN.md` in this folder.
 - **Phase 2, live arrivals (not started).** An unofficial live-times service exists. It is HTTP only, so a public HTTPS site would need a small server proxy. It is untested and its terms are unknown, so check that before building on it. The Transperth website's own per-station calls are rate limited, and bus calls need session cookies.
 
 ## 11. Build timeline

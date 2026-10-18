@@ -17,6 +17,15 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-10-18
+
+- ✅ **Perth Transit Map: Kids' mode plan written (plan only, no code changed).** Adhi asked for a plan to make the map better and fun for kids. Asked first and he chose: the Perth Transit Map (not the kids' world), for **any kid visiting** (English, not tied to the Rayyan/Raya star system), as a plan file in the repo.
+  - **New file:** `perth-transit/KIDS-PLAN.md`. Covers why the current map isn't fun for kids (too much on screen, nothing to do, 9 px targets), what the engine already gives a kids' mode, design rules (trains first, no fail state, honest "should be, not live" wording, no location/accounts/leaderboards), a separate `kids.html` reusing `sim.js`/`mapview.js`, 13 steps in 4 phases (K0.1 skeleton + pretend day → K1.x train card, Hop on! ride-along, sounds → **real-kids gate** → K2.x Spot it!, Station Passport, races, day/night → K3.x facts, buses, front door, real-device pass, optional Bahasa Indonesia), a risk table, what's deliberately left out, and 8 open decisions for Adhi.
+  - **Facts in the plan come from the data** (Node, `sim.js`, Monday 19 Oct 2026): 8 lines + ferry, 85 train stations, 64 trains at 8am vs 1,325 vehicles in total, Mandurah Line 70.7 km / 54 min, no trains 1:11am to 4:30am on a Monday.
+  - **Biggest flags:** the timetable expires 2027-01-11 (under 3 months), so the kids' page needs a "pretend day" fallback; claco is still nominally the source of truth while 7 versions were made in this repo, and kids' mode would widen that gap (decision D1).
+  - **Files:** `perth-transit/KIDS-PLAN.md` (new), `perth-transit/README.md` (section 10 pointer), `CLAUDE.md`, `PROGRESS.md`.
+  - 🔜 **Next:** Adhi answers decisions D1 to D8, then K0.1.
+
 ## 2026-10-17
 
 - ✅ **Perth Transit Map v1.7: animation, load time and inclusion.** Display-synchronised scheduling targets up to 30 vehicle updates/s instead of a 100–250 ms timer; visible vehicles only are sent to the map worker, tags are measured only when shown, static lines are cached, and following no longer restarts a camera animation every tick. Text refreshes once per second. Paused and hidden pages stop animation work.
