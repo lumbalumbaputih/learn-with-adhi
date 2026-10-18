@@ -6,9 +6,9 @@ A map of Perth's buses, trains and ferry moving through the day, in the style of
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.7 (see section 12)
+- **Current version:** v1.8 (see section 12)
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
-- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.7 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.7 will be lost.
+- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.8 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.8 will be lost.
 
 ## 1. How this started
 
@@ -34,6 +34,7 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 - A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control. On phones the chart is hidden (since v1.2), so time there is changed with the buttons only.
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
 - Routes, Stops and Map tabs with one search box. A stop or station page shows the next timetable departures.
+- Favourite places in the Map and Stops tabs: save Home, Work or custom names from the map centre, current location or a selected stop/station. Open a place to see nearby stops; edit its name/location or delete it. Stored only in this browser on this device, with no account sync.
 - Near me (the location stays in the browser), a 3D buildings mode, layer toggles, and an About dialog with the data credit.
 - Dark mode (since v1.4): follows the device, with a moon/sun button to switch by hand; the choice is kept in the browser.
 - "How busy is this line?" on every route page (since v1.4): trips per hour through the day, the busiest hour and how often it runs then, first and last trip. From the timetable only: it shows service frequency, not crowding.
@@ -98,6 +99,7 @@ Counts in this build: 349 routes (8 train lines and 341 bus routes), 55,081 trip
 | `mapview.js` | MapLibre map and layers (bus routes, rail, selected route, stops, stations, vehicles, front marks, 3D buildings), click handling, the vehicle GeoJSON update |
 | `panel.js` | tabs, search, route and stop pages, vehicle card, departures board |
 | `scrubber.js` | the day chart and draggable cursor |
+| `favourites.js` | validated browser storage and the accessible add/edit place dialog |
 | `clock.js` | the simulation clock (live follows Perth time, or runs from a chosen moment) |
 | `colors.js`, `util.js` | line colours and text contrast, small DOM helpers |
 | `style.css` | all styling, desktop two-column layout, phone layout at max-width 819 px, reduced-motion handling |
@@ -189,7 +191,7 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 - **Licence check** (section 9) is still open.
 - **Timetable expiry** on 2027-01-11. The Authority can publish a new feed earlier. A scheduled rebuild is possible but would need approval.
 - **Basemap tiles** come from a free community service. Check its usage terms if the site gets busy, or switch provider.
-- **Service worker caching.** Since v1.7, first-party module imports, module preloads, the app entry and CSS carry a release query (`?v=1.7`). This avoids mixing old cached modules with new ones while preserving cache-first warm loads in the existing kids-site service worker. Bump the release query consistently across these files for the next code release. Compiled data retains its existing content-hash URLs; no service-worker or kids-page behaviour was changed. A browser regression seeds stale unversioned modules and checks that the new app still starts.
+- **Service worker caching.** Since v1.7, first-party module imports, module preloads, the app entry and CSS carry a release query (`?v=1.8`). This avoids mixing old cached modules with new ones while preserving cache-first warm loads in the existing kids-site service worker. Bump the release query consistently across these files for the next code release. Compiled data retains its existing content-hash URLs; no service-worker or kids-page behaviour was changed. A browser regression seeds stale unversioned modules and checks that the new app still starts.
 - **Real-device testing** on iPhone and Android, and in Safari and Firefox.
 - **Ferry data is a patch** (v1.3): the claco compiler still drops route type 4, so a fresh compile there loses the ferry until `compile_gtfs.py` keeps it or `scripts/perth-transit-add-ferry.py` is re-run.
 - **claco is behind this repo** until the v1.1 files are copied back (see Source of truth at the top).
@@ -210,6 +212,20 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.8 (2026-10-17)
+
+- **Favourite places:** a Favourites section in the Map and Stops tabs offers Home, Work and custom names. Choose the map centre (pan/zoom first), explicitly request the current device location, or use “Save this location” on a stop/station page. Selecting a saved place moves the map there and shows nearby stops with distances. Markers persist across light/dark map changes.
+- **Manage places:** rename without moving, replace a location using the map centre or device location, or delete it in the edit dialog. Names are limited to 40 characters and duplicate names are rejected without regard to case. Locations must be within the same Perth-area bounds as Near me. Accessible labels, native dialog focus/Escape behaviour, status/error announcements and 44px favourite/form actions work on narrow screens.
+- **Storage:** `ptm-favourite-places-v1` in localStorage holds versioned IDs, names and coordinates. Places survive reloads and update across tabs on the same browser/device; no account or cloud sync is added. Clearing site/browser data removes them. Storage or location-access errors leave existing places intact and report the problem; cancelling a pending location request cannot save it later. Malformed stored records are ignored so the timetable still opens.
+- **Validation:** `node scripts/perth-transit-favourites-check.mjs` covers persistence, rename, duplicate/coordinate validation, deletion and failed storage. `scripts/perth-transit-favourites-browser-check.cjs` covers Home/Work/custom places, reload, nearby stops, GPS, denied access, cancellation, failed writes, saving a station, delete, theme/map markers, phone/keyboard and cross-tab updates. axe reports zero violations for add-place, dark saved places and 320px edit-place states. The existing seven-state accessibility/browser suite and engine regression suite also pass. Real devices/assistive technology remain untested.
+- Release queries for first-party modules and CSS are now `?v=1.8`; include the new `favourites.js` when copying the transit source back to claco.
+
+Use the browser-test setup under v1.7, then run:
+
+```sh
+NODE_PATH=/tmp/perth-checks/node_modules PLAYWRIGHT_BROWSERS_PATH=/tmp/perth-browsers node scripts/perth-transit-favourites-browser-check.cjs
+```
 
 ### v1.7 (2026-10-17)
 

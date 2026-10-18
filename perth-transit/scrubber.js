@@ -1,6 +1,6 @@
 // scrubber.js: the day's heartbeat. A chart of vehicles running through the Perth service day
 // with a draggable cursor that sets the simulated time.
-import { DAY, fmtClock, ymdParts } from './sim.js?v=1.7';
+import { DAY, fmtClock, ymdParts } from './sim.js?v=1.8';
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 const el = (tag, attrs = {}, ...kids) => {

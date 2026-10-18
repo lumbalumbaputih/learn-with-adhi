@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import { PLACE_KEY, PlaceStore } from '../perth-transit/favourites.js';
+const values = new Map();
+const storage = { getItem: (k) => values.get(k) || null, setItem: (k, v) => values.set(k, v) };
+const store = new PlaceStore(storage);
+const home = store.save({ name: ' Home ', lat: -31.95, lon: 115.86 });
+const work = store.save({ name: 'Work', lat: -32.01, lon: 115.9 });
+assert.deepEqual(new PlaceStore(storage).list(), [home, work], 'Places survive reload');
+const renamed = store.save({ ...home, name: 'My home' });
+assert.equal(renamed.id, home.id);
+assert.equal(renamed.lat, home.lat);
+assert.equal(renamed.lon, home.lon);
+assert.throws(() => store.save({ name: '  WORK ', lat: -31.95, lon: 115.86 }), /already exists/);
+for (const bad of [{ name: ' ' }, { name: 'x'.repeat(41) }, { lat: NaN }, { lon: Infinity }, { lat: 0 }, { lon: 0 }]) {
+  assert.throws(() => store.save({ name: 'Other', lat: -31.95, lon: 115.86, ...bad }));
+}
+assert.throws(() => store.save({ ...home, id: 'missing' }), /removed/);
+assert.equal(store.list().length, 2, 'Rejected changes do not alter stored places');
+const original = storage.setItem;
+storage.setItem = () => { throw new Error('Quota exceeded'); };
+assert.throws(() => store.remove(home.id), /Could not save/);
+assert.throws(() => store.save({ name: 'Gym', lat: -31.95, lon: 115.86 }), /Could not save/);
+assert.equal(store.list().length, 2, 'Storage failure retains existing places');
+storage.setItem = original;
+store.remove(home.id);
+assert.deepEqual(new PlaceStore(storage).list(), [work]);
+values.set(PLACE_KEY, '{invalid JSON');
+assert.deepEqual(new PlaceStore(storage).list(), []);
+values.set(PLACE_KEY, JSON.stringify({ version: 1, places: [null, {}, work, work, { ...work, id: 'bad', lat: 'not a number' }] }));
+assert.deepEqual(new PlaceStore(storage).list(), [work], 'Damaged and duplicate rows are ignored');
+const blocked = new PlaceStore({ getItem: () => { throw new Error('Blocked'); }, setItem: storage.setItem });
+assert.deepEqual(blocked.list(), []);
+assert.throws(() => new PlaceStore(null).save({ name: 'Home', lat: -31.95, lon: 115.86 }), /Could not save/);
+console.log('Favourite-place persistence, renaming, validation, deletion and storage-failure checks pass.');
