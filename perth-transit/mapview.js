@@ -448,7 +448,7 @@ export class MapView {
           v.lon < bounds.getWest() - lonPad || v.lon > bounds.getEast() + lonPad) continue;
       const p = {
         vid: v.id, t: route.isTrain ? 1 : route.isFerry ? 2 : 0, c: routeColor(route), b: Math.round(v.bearing),
-        d: this.routeSel !== null && this.routeSel !== v.route ? 1 : 0,
+        d: !this.kids && this.routeSel !== null && this.routeSel !== v.route ? 1 : 0, // kids: every train stays tappable
       };
       if (p.t === 0 && tagsVisible) {
         // put the pointer just outside the tag's edge, in the direction the bus is heading on screen

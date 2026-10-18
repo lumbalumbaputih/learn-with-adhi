@@ -59,6 +59,21 @@
     <p id="pretend" class="pretend" hidden></p>
     <p id="hint" class="hint" role="status" hidden></p>
 
+    <section id="card" class="card" aria-labelledby="card-title" hidden>
+      <div id="card-head" class="card-head">
+        <h2 id="card-title"></h2>
+        <button id="card-close" class="card-close" type="button" aria-label="Close"><span aria-hidden="true">&#10005;</span></button>
+      </div>
+      <div class="card-body">
+        <p id="card-dest" class="card-dest"></p>
+        <p id="card-now" class="card-now"></p>
+        <div id="strip" class="strip" tabindex="0" role="group" aria-label="Stations on this trip">
+          <ol id="strip-list" class="strip-list"></ol>
+          <span id="strip-train" class="strip-train" aria-hidden="true">&#128646;</span>
+        </div>
+      </div>
+    </section>
+
     <section id="dock" class="dock" aria-label="Time" tabindex="-1">
       <div class="now-line">
         <p id="clock" class="clock"></p>

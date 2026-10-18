@@ -188,8 +188,23 @@ async function checkKids(browser, errors) {
     return null;
   });
   await k.touchscreen.tap(target.x + 10, target.y + 8);
-  await k.waitForFunction(() => __kids.selected !== null);
-  await axeKids(k, 'phone map');
+  await k.waitForFunction(() => __kids.selected !== null && !document.getElementById('card').hidden);
+  // K1.1 train card: line name, destination without platform words, one strip dot per stop, the next stop marked
+  const card = await k.evaluate(() => {
+    const v = __kids.mapView.byId.get(__kids.selected), $ = (id) => document.getElementById(id);
+    return { title: $('card-title').textContent, line: __kids.net.routes[v.route].isFerry ? 'The ferry' : __kids.net.routes[v.route].long, dest: $('card-dest').textContent, now: $('card-now').textContent,
+      dots: document.querySelectorAll('#strip-list li').length, stops: __kids.net.patterns[v.pattern].stops.length };
+  });
+  assert.equal(card.title, card.line);
+  assert.match(card.dest, /^Going to [A-Z]/);
+  assert.doesNotMatch(card.dest, /Platform|Stn/);
+  assert.equal(card.dots, card.stops);
+  assert.match(card.now, /^(Next stop: .+, (arriving now|in about \d+ minutes?)|Stopped at .+\. People are getting on and off\.)$/);
+  await axeKids(k, 'phone map with train card');
+  const finished = await k.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 3 * 3600); __kids.tick(true); return document.getElementById('card-now').textContent; });
+  assert.equal(finished, 'This trip is finished. Tap another train!');
+  await k.keyboard.press('Escape');
+  assert.equal(await k.locator('#card').isHidden(), true, 'Escape closes the train card');
   await k.getByRole('button', { name: 'For grown-ups' }).click();
   assert.match(await k.locator('#grownups').innerText(), /available free of charge from www\.transperth\.wa\.gov\.au/);
   await axeKids(k, 'grown-ups dialog');

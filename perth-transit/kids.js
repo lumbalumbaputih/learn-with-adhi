@@ -3,6 +3,8 @@
 import { Network, ymdToDow, addDays, fmtClock, ymdParts, DAY } from './sim.js?v=1.8';
 import { SimClock } from './clock.js?v=1.8';
 import { MapView } from './mapview.js?v=1.8';
+import { chipColors, routeColor } from './colors.js?v=1.8';
+import { prettyName } from './util.js?v=1.8';
 
 const $ = (id) => document.getElementById(id);
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -45,6 +47,19 @@ async function loadData() {
 }
 
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+const STRIP_STEP = 76; // px per stop on the line strip (matches .strip-list li in kids.css)
+
+/** "Perth Stn Platform 6" becomes "Perth": the station's name without the platform or the word Station. */
+function stationLabel(net, stop) {
+  const st = net.stopStation[stop];
+  return prettyName(st >= 0 ? net.stationName[st] : net.stopName[stop]).replace(/\s+Platform\s+\S+$/i, '').replace(/\s+Station$/, '');
+}
+const lineName = (route) => (route.isFerry ? 'The ferry' : route.long);
+function soonLabel(sec) {
+  if (sec <= 40) return 'arriving now';
+  const m = Math.round(sec / 60);
+  return m <= 1 ? 'in about 1 minute' : `in about ${m} minutes`;
+}
 function dateLabel(ymd) {
   const [y, m, d] = ymdParts(ymd);
   return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
@@ -112,7 +127,85 @@ async function main() {
   function select(id) {
     selected = id;
     mapView.setSelectedVehicle(id);
+    const v = id === null ? null : mapView.byId.get(id);
+    if (!v) { closeCard(); return; }
+    openCard(v);
+    tick(true);
   }
+
+  // ---- the train card: line, destination, what it is doing, and the line strip
+  const cardEl = $('card'), stripEl = $('strip'), stripList = $('strip-list'), stripTrain = $('strip-train');
+  const cardState = { id: null, pattern: -1, k: '', items: [] };
+  function openCard(v) {
+    const route = net.routes[v.route], pat = net.patterns[v.pattern];
+    const { bg, fg } = chipColors(route);
+    cardState.id = v.id; cardState.pattern = v.pattern; cardState.k = '';
+    $('card-head').style.background = bg;
+    $('card-head').style.color = fg;
+    cardEl.style.setProperty('--line-c', routeColor(route));
+    $('card-title').textContent = lineName(route);
+    $('card-dest').textContent = `Going to ${stationLabel(net, pat.stops[pat.stops.length - 1])}`;
+    cardState.items = [...pat.stops].map((stop) => {
+      const sr = Object.assign(document.createElement('span'), { className: 'sr-only' });
+      const li = document.createElement('li');
+      li.append(stationLabel(net, stop), sr);
+      return { li, sr };
+    });
+    stripList.replaceChildren(...cardState.items.map((x) => x.li));
+    stripEl.scrollLeft = 0;
+    cardEl.hidden = false;
+    hint.hidden = true;
+    mapView.highlightRoute(v.route);
+    requestAnimationFrame(() => showOnMap(v));
+  }
+  function closeCard() {
+    if (cardEl.hidden) return;
+    cardEl.hidden = true;
+    cardState.id = null;
+    mapView.highlightRoute(null);
+  }
+  // if the train is hidden behind the card or the dock, move the map so it can be seen
+  function showOnMap(v) {
+    const m = mapView.map, pt = m.project([v.lon, v.lat]), r = cardEl.getBoundingClientRect(), dockTop = dock.getBoundingClientRect().top;
+    const wide = !narrowQuery.matches;
+    const pad = wide ? { top: 80, bottom: innerHeight - dockTop + 20, left: r.right + 20, right: 40 }
+      : { top: 80, bottom: innerHeight - r.top + 20, left: 30, right: 30 };
+    const inView = pt.x > pad.left && pt.x < innerWidth - pad.right && pt.y > pad.top && pt.y < innerHeight - pad.bottom;
+    if (!inView) m.easeTo({ center: [v.lon, v.lat], padding: pad, duration: motionQuery.matches ? 0 : 600 });
+  }
+  function updateCard(now) {
+    if (cardState.id === null) return;
+    const v = mapView.byId.get(cardState.id);
+    const items = cardState.items, pat = net.patterns[cardState.pattern];
+    if (!v) { // the trip has ended (or time was moved past it)
+      $('card-now').textContent = 'This trip is finished. Tap another train!';
+      stripTrain.hidden = true;
+      return;
+    }
+    stripTrain.hidden = false;
+    const d = net.describe(v, now.sec), here = stationLabel(net, pat.stops[v.k]);
+    $('card-now').textContent = v.state === 'end' ? `Arrived at ${here}!`
+      : v.state === 'dwell' ? `Stopped at ${here}. People are getting on and off.`
+      : `Next stop: ${stationLabel(net, d.nextStop)}, ${soonLabel(d.etaSec)}`;
+    const key = `${v.k}|${v.state}`;
+    if (key !== cardState.k) { // filled dots up to the last stop reached; words for screen readers
+      cardState.k = key;
+      items.forEach((it, i) => {
+        const here = i === v.k && v.state !== 'move', next = i === v.k + 1 && v.state !== 'end';
+        it.li.classList.toggle('passed', i <= v.k);
+        it.li.classList.toggle('next', next);
+        it.sr.textContent = here ? ' (the train is here)' : i <= v.k ? ' (passed)' : next ? ' (next stop)' : '';
+      });
+    }
+    // slide the little train between the dots (by distance within the current run)
+    const k = v.k, span = k + 1 < pat.dist.length ? pat.dist[k + 1] - pat.dist[k] : 0;
+    const f = v.state === 'move' && span > 0 ? Math.min(1, Math.max(0, (v.dist - pat.dist[k]) / span)) : 0;
+    const x = 16 + (k + f) * STRIP_STEP + STRIP_STEP / 2;
+    stripTrain.style.transform = `translateX(${x}px)`;
+    if (x < stripEl.scrollLeft + 40 || x > stripEl.scrollLeft + stripEl.clientWidth - 40) stripEl.scrollLeft = x - stripEl.clientWidth / 2;
+  }
+  $('card-close').addEventListener('click', () => select(null));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !dlg.open && cardState.id !== null) select(null); });
 
   // ---- speed: a radio group with one tab stop and arrow keys
   const speedBtns = [...$('speeds').querySelectorAll('[data-speed]')];
@@ -187,6 +280,7 @@ async function main() {
     lastMoment = moment;
     const vehicles = net.vehicles(now.ymd, now.sec);
     mapView.setVehicles(vehicles);
+    updateCard(now);
     if (force || t - lastText > 1000) {
       lastText = t;
       const dow = DAYS[ymdToDow(now.ymd)];

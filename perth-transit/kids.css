@@ -136,6 +136,49 @@ a { color: var(--accent); }
 .speed { flex-direction: column; gap: 0; min-height: 56px; padding: 4px 2px; font-size: 13px; line-height: 1.2; }
 .speed span { font-size: 21px; line-height: 1.15; }
 
+/* ------------------------------------------------------------------ train card */
+.card {
+  position: fixed; z-index: 6; left: 12px; right: 12px; bottom: var(--dock-h, 140px);
+  max-width: 560px; margin: 0 auto 10px; overflow: hidden;
+  border: 2px solid var(--edge); border-radius: 22px; background: var(--paper); box-shadow: 0 4px 0 var(--edge);
+  animation: card-in 0.22s ease-out;
+}
+@keyframes card-in { from { transform: translateY(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+.card-head { display: flex; align-items: center; gap: 8px; padding: 8px 8px 8px 16px; }
+.card-head h2 { flex: 1; min-width: 0; font-size: 20px; font-weight: 800; line-height: 1.15; }
+.card-close {
+  flex: none; display: grid; place-items: center; width: 40px; height: 40px; padding: 0;
+  border: 2px solid currentColor; border-radius: 50%; background: transparent; color: inherit; font-size: 16px; font-weight: 800;
+}
+.card-body { padding: 10px 16px 12px; }
+.card-dest { font-size: 18px; font-weight: 750; }
+.card-now { margin-top: 2px; font-size: 15px; font-weight: 600; color: var(--ink-2); min-height: 1.5em; }
+
+/* the line strip: one stop per 76 px, passed stops filled in, the train sliding between them */
+.strip { position: relative; margin: 10px -16px 0; padding: 0 16px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.strip-list { position: relative; display: flex; list-style: none; padding: 30px 0 4px; }
+.strip-list::before {
+  content: ''; position: absolute; left: 38px; right: 38px; top: 38px; height: 6px; border-radius: 3px;
+  background: var(--line-c, var(--ink)); opacity: 0.35;
+}
+.strip-list li { position: relative; flex: none; width: 76px; padding-top: 22px; text-align: center; font-size: 12.5px; font-weight: 650; line-height: 1.15; color: var(--ink-2); }
+.strip-list li::before {
+  content: ''; position: absolute; top: 1px; left: 50%; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%;
+  border: 3px solid var(--line-c, var(--ink)); background: var(--paper); box-sizing: border-box;
+}
+.strip-list li.passed::before { background: var(--line-c, var(--ink)); }
+.strip-list li.next { color: var(--ink); font-weight: 800; }
+.strip-train {
+  position: absolute; top: 2px; left: 0; width: 32px; height: 32px; margin-left: -16px;
+  display: grid; place-items: center; border: 2px solid var(--edge); border-radius: 50%;
+  background: var(--sun); font-size: 17px; line-height: 1; will-change: transform;
+}
+
+@media (min-width: 820px) {
+  /* wide screens: top-left, under the map credit, clear of the centred dock */
+  .card { right: auto; bottom: auto; top: calc(max(10px, env(safe-area-inset-top)) + 100px); width: 420px; margin: 0; }
+}
+
 /* ------------------------------------------------------------------ grown-ups dialog */
 .grownups {
   width: min(560px, calc(100% - 24px)); max-height: calc(100% - 24px); margin: auto; padding: 22px 22px 18px;
