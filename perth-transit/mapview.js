@@ -40,6 +40,9 @@ export class MapView {
     this._modes = null; // null = every mode, else a Set of route modes to draw
     this.kids = false; // Perth Train Spotter: bigger vehicles, coloured train lines, train stations only
     this.following = null;
+    // padding to keep the followed vehicle in (kids' page: the part of the map the card and dock leave free).
+    // Applied inside each follow step: a separate map.setPadding() is a jump that stops running eases and gestures.
+    this.followPadding = null;
     this.padding = { top: 0, right: 0, bottom: 0, left: 0 };
     // what the viewer has set, so it can be put back after the basemap changes (dark mode)
     this.theme = 'light';
@@ -476,7 +479,7 @@ export class MapView {
     if (src) src.setData({ type: 'FeatureCollection', features: feats });
     if (this.following !== null) { // ids can be 0, so not a truthiness test
       const v = this.byId.get(this.following);
-      if (v) this.map.easeTo({ center: [v.lon, v.lat], duration: 0 });
+      if (v) this.map.easeTo(this.followPadding ? { center: [v.lon, v.lat], padding: this.followPadding, duration: 0 } : { center: [v.lon, v.lat], duration: 0 });
     }
     return feats.length;
   }

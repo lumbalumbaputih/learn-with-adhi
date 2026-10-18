@@ -323,7 +323,7 @@ async function checkKids(browser, errors) {
   // the card's key parts stay visible, the ridden train stays in clear view, nothing covers the map credit or the card head.
   const visibleIn = (el, box) => { const r = el.getBoundingClientRect(); return r.height > 0 && r.top >= box.top - 1 && r.bottom <= box.bottom + 1; };
   for (const [w, h, label] of [[320, 568, 'small phone'], [375, 548, 'iPhone SE in Safari'], [390, 664, 'phone in a browser'], [390, 844, 'tall phone'],
-    [640, 360, 'phone sideways (small)'], [667, 375, 'phone sideways'], [844, 390, 'big phone sideways'], [834, 1112, 'tablet portrait']]) {
+    [568, 320, 'small phone sideways'], [640, 360, 'phone sideways (small)'], [667, 375, 'phone sideways'], [844, 390, 'big phone sideways'], [834, 1112, 'tablet portrait']]) {
     for (const date of ['2026-10-19', '2027-03-01']) { // a normal day, and a pretend day (dock shows the pretend label)
       const tag = `${label} ${w}x${h}${date === '2027-03-01' ? ' pretend' : ''}`;
       const p = await open(`?date=${date}&t=08:00`, { viewport: { width: w, height: h }, isMobile: w < 820, hasTouch: true });
@@ -335,18 +335,22 @@ async function checkKids(browser, errors) {
         const box = { top: Math.max(card.top, 0), bottom: Math.min(card.bottom, innerHeight) };
         const dock = $('dock').getBoundingClientRect(), speeds = [...document.querySelectorAll('.speed')].map((b) => b.getBoundingClientRect());
         const credit = document.querySelector('.maplibregl-ctrl-attrib-button'), cr = credit && credit.getBoundingClientRect();
-        const atCredit = cr && document.elementFromPoint(cr.left + cr.width / 2, cr.top + cr.height / 2);
+        const overlap = (a, b) => !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);
+        const cl = $('card-close').getBoundingClientRect(), atClose = document.elementFromPoint(cl.left + cl.width / 2, cl.top + cl.height / 2);
         return { now: visibleIn($('card-now'), box), dot: visibleIn(document.querySelector('#strip-list li'), box), hop: visibleIn($('hop'), box),
           speedsFit: speeds.every((r) => r.left >= dock.left - 1 && r.right <= dock.right + 1 && r.right <= innerWidth),
-          creditFree: !atCredit || !!atCredit.closest('.maplibregl-ctrl') };
+          creditFree: !cr || !overlap(cr, card), closeHits: !!atClose && !!atClose.closest('#card-close') };
       }, visibleIn.toString());
-      assert.ok(before.now && before.dot && before.hop, `${tag}: next stop, strip and Hop on! visible ${JSON.stringify(before)}`);
+      // under 360 px tall (568x320) the card is about 200 px: the strip is reached by scrolling the card
+      assert.ok(before.now && (before.dot || h < 360) && before.hop, `${tag}: next stop, strip and Hop on! visible ${JSON.stringify(before)}`);
       assert.ok(before.speedsFit, `${tag}: the speed buttons fit in the dock`);
       assert.ok(before.creditFree, `${tag}: the card does not cover the map credit`);
+      assert.ok(before.closeHits, `${tag}: the card's close button can be tapped`);
       // riding: the train is in clear view, Hop off is visible, and a long station call does not cover the card head
       await p.getByRole('button', { name: 'Hop on!' }).click();
       await p.getByRole('radio', { name: 'Pause' }).click();
       await p.waitForFunction(() => __kids.mapView.following !== null);
+      assert.ok(await p.evaluate(() => __kids.mapView.map.getZoom()) >= 13, `${tag}: Hop on! zooms in to the train`);
       await p.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 240); __kids.tick(true); });
       await p.evaluate(() => { const b = document.getElementById('bubble'); b.textContent = 'All aboard! Next stop: Perth Underground'; b.classList.add('show'); dispatchEvent(new Event('resize')); });
       const geo = await p.evaluate((vis) => {
@@ -362,11 +366,45 @@ async function checkKids(browser, errors) {
       assert.ok(geo.inView, `${tag}: the train being ridden is in clear view ${geo.pt}`);
       assert.ok(geo.off, `${tag}: Hop off is visible`);
       assert.ok(!geo.bubbleOverHead, `${tag}: the station call does not cover the card's head`);
-      assert.ok(geo.bubbleInView, `${tag}: the station call is on screen, below the top bar`);
+      assert.ok(geo.bubbleInView || (await p.evaluate(() => document.getElementById('bubble').classList.contains('tucked'))), `${tag}: the station call is on screen, below the top bar`);
+      if (date === '2026-10-19') { // the end of the line: the next trains on offer can be seen and tapped
+        await p.evaluate(() => { for (let s = 0; s < 3600; s += 20) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 20); __kids.tick(true); } });
+        await p.waitForTimeout(150);
+        const arr = await p.evaluate(() => {
+          const b = document.querySelector('#next-list .next-train'); if (!b) return { offer: false };
+          const r = b.getBoundingClientRect(), at = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+          const strip = document.getElementById('strip'), tr = document.getElementById('strip-train').getBoundingClientRect(), sr = strip.getBoundingClientRect();
+          return { offer: !!at && !!at.closest('.next-train'), stripOk: strip.offsetParent === null || (tr.left >= sr.left - 1 && tr.right <= sr.right + 1) };
+        });
+        assert.ok(arr.offer, `${tag}: on arrival the first next train can be tapped`);
+        assert.ok(arr.stripOk, `${tag}: on arrival the strip shows the train at the end of the line`);
+      }
       await p.close();
     }
   }
-  console.log('Layout matrix passes (8 sizes x normal and pretend day).');
+  console.log('Layout matrix passes (9 sizes x normal and pretend day).');
+
+  // A drag during a ride keeps going while the card changes height (padding is never applied as a separate camera jump)
+  const drag = await open('?date=2026-10-19&t=08:00', { viewport: { width: 390, height: 664 } });
+  await drag.getByRole('radio', { name: 'Pause' }).click();
+  await drag.evaluate(() => { const v = [...__kids.mapView.byId.values()].filter((x) => __kids.net.routes[x.route].long === 'Fremantle Line' && x.state === 'move').sort((a, b) => a.k - b.k)[0]; __kids.select(v.id); });
+  await drag.getByRole('button', { name: 'Hop on!' }).click();
+  await drag.getByRole('radio', { name: 'Pause' }).click();
+  await drag.waitForFunction(() => __kids.mapView.following !== null);
+  const start = await drag.evaluate(() => { const top = document.querySelector('.top').getBoundingClientRect().bottom, card = document.getElementById('card').getBoundingClientRect(); return { x: 195, y: Math.round((top + card.top) / 2) }; });
+  await drag.mouse.move(start.x, start.y);
+  await drag.mouse.down();
+  for (let i = 1; i <= 4; i++) await drag.mouse.move(start.x + i * 10, start.y + i * 4);
+  const mid = await drag.evaluate(async () => { // make the card change height mid-drag, as a station call does
+    document.getElementById('card-now').textContent = 'Stopped at a station with a very long name. People are getting on and off, and on and off.';
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const c = __kids.mapView.map.getCenter(); return [c.lng, c.lat];
+  });
+  for (let i = 5; i <= 9; i++) await drag.mouse.move(start.x + i * 10, start.y + i * 4);
+  await drag.mouse.up();
+  const end = await drag.evaluate(() => { const c = __kids.mapView.map.getCenter(); return [c.lng, c.lat]; });
+  assert.ok(Math.hypot(end[0] - mid[0], end[1] - mid[1]) > 1e-4, 'A drag keeps moving the map after the card changes height');
+  await drag.close();
 
   const pretend = await open('?date=2027-03-01&t=08:00');
   assert.equal(await pretend.locator('#pretend').innerText(), 'Pretend day');

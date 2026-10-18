@@ -14,7 +14,7 @@ const MODES = ['train', 'ferry'];
 const START_SPEED = 10; // fast enough to see the trains move at city zoom, slow enough to follow one
 const narrowQuery = matchMedia('(max-width: 819px)');
 // the card sits at the side (not above the dock) on wide screens and on short landscape phones: keep in step with kids.css
-const sideQuery = matchMedia('(min-width: 820px), (max-height: 500px) and (min-width: 640px)');
+const sideQuery = matchMedia('(min-width: 820px), (max-height: 500px) and (min-width: 560px)');
 const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
 const darkQuery = matchMedia('(prefers-color-scheme: dark)');
 
@@ -216,6 +216,7 @@ async function main() {
     cardEl.hidden = true;
     cardState.id = null;
     mapView.highlightRoute(null);
+    mapView.followPadding = null;
     mapView.map.setPadding(NO_PAD);
   }
   // if the train is hidden behind the card or the dock, move the map so it can be seen
@@ -274,24 +275,29 @@ async function main() {
     sound.speak(text);
     bubble.textContent = text;
     placeBubble();
+    if (bubble.classList.contains('tucked')) { // the open card says it: make its status line light up instead
+      const now = $('card-now');
+      now.classList.remove('flash'); void now.offsetWidth; now.classList.add('flash');
+    }
     bubble.classList.add('show');
     clearTimeout(say.t);
     say.t = setTimeout(() => bubble.classList.remove('show'), 3500);
   }
   // phones: just above the card (or the dock), so the card never has to shrink to make room; side layouts: CSS places it
+  // Phones with a card open: there is no free spot for a floating bubble (it would cover the train or the card), so it
+  // is tucked away from sight but still speaks to screen readers, and say() lights up the card's status line instead.
+  // Phones without a card: just above the dock. Side layouts: CSS places it over the map beside the card.
   function placeBubble() {
-    if (sideQuery.matches) { document.documentElement.style.removeProperty('--bubble-bottom'); return; }
-    const anchor = (cardEl.hidden ? dock : cardEl).getBoundingClientRect().top;
-    const topBar = document.querySelector('.top').getBoundingClientRect().bottom;
-    const room = innerHeight - topBar - (bubble.offsetHeight || 44) - 8; // a very tall card: overlap its top rather than the top bar
-    document.documentElement.style.setProperty('--bubble-bottom', `${Math.max(0, Math.round(Math.min(innerHeight - anchor + 8, room)))}px`);
+    const tuck = !sideQuery.matches && !cardEl.hidden;
+    bubble.classList.toggle('tucked', tuck);
+    if (sideQuery.matches || tuck) { document.documentElement.style.removeProperty('--bubble-bottom'); return; }
+    document.documentElement.style.setProperty('--bubble-bottom', `${Math.round(innerHeight - dock.getBoundingClientRect().top + 8)}px`);
   }
-  // keep the followed train in the free part of the map when the card changes size (text wraps, riding layout, rotation)
-  new ResizeObserver(() => {
-    if (ride.id !== null && !ride.done) mapView.map.setPadding(ridePadding());
-    if (bubble.classList.contains('show')) placeBubble();
-  }).observe(cardEl);
-  addEventListener('resize', () => { if (ride.id !== null && !ride.done) mapView.map.setPadding(ridePadding()); placeBubble(); });
+  // Keep the followed train in the free part of the map when the card changes size (text wraps, riding layout, rotation).
+  // Only remembered here and applied by the next follow step: map.setPadding() would stop a zoom ease or a finger drag.
+  const refreshRidePadding = () => { if (ride.id !== null && !ride.done) mapView.followPadding = ridePadding(); };
+  new ResizeObserver(() => { refreshRidePadding(); if (bubble.classList.contains('show')) placeBubble(); }).observe(cardEl);
+  addEventListener('resize', () => { refreshRidePadding(); placeBubble(); });
   // the part of the map the card and the dock don't cover
   function ridePadding() {
     const r = cardEl.getBoundingClientRect(), dockTop = dock.getBoundingClientRect().top;
@@ -310,12 +316,12 @@ async function main() {
     Object.assign(ride, { id: v.id, k: v.k, done: false, wait: null, follow: true });
     ride.endAt = absSec(now.ymd, v.run.t0 + prof.arr[prof.arr.length - 1]);
     syncButtons(); // the riding layout first (a compact card on short phones), so the padding below fits it
-    const m = mapView.map, zoom = Math.max(m.getZoom(), 13.2);
-    m.setPadding(ridePadding());
-    if (motionQuery.matches) { m.jumpTo({ center: [v.lon, v.lat], zoom }); mapView.follow(v.id); }
+    const m = mapView.map, zoom = Math.max(m.getZoom(), 13.2), padding = ridePadding();
+    mapView.followPadding = padding;
+    if (motionQuery.matches) { m.jumpTo({ center: [v.lon, v.lat], zoom, padding }); mapView.follow(v.id); }
     else {
       mapView.follow(null); // following jumps every frame, which would cut the zoom short
-      m.easeTo({ center: [v.lon, v.lat], zoom, duration: 700 });
+      m.easeTo({ center: [v.lon, v.lat], zoom, padding, duration: 700 });
       m.once('moveend', () => { if (ride.id !== null && ride.follow) mapView.follow(ride.id); });
     }
     if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
@@ -331,6 +337,7 @@ async function main() {
     if (ride.done) resumeAfterArrival(); // leaving the arrival card
     Object.assign(ride, { id: null, wait: null, done: false, follow: true, station: -1 });
     mapView.follow(null);
+    mapView.followPadding = null;
     mapView.map.setPadding(NO_PAD);
     cardEl.classList.remove('celebrate');
     $('next-trains').hidden = true;
@@ -353,6 +360,7 @@ async function main() {
     const lastK = pat.stops.length - 1, lastStop = pat.stops[lastK], label = stationLabel(net, lastStop);
     ride.done = true;
     mapView.follow(null);
+    syncButtons(); // the arrival layout first, so the strip below is measured as it will be shown
     $('card-now').textContent = `You made it to ${label}! 🎉`;
     markStrip(lastK, -1, lastK);
     stripTrain.hidden = false;
@@ -362,11 +370,11 @@ async function main() {
     // pause for the moment of arrival, so the next trains on offer don't leave while the choice is made
     ride.paused = clock.speed !== 0;
     if (ride.paused) { ride.resume = clock.speed; clock.setSpeed(0); syncSpeeds(); }
-    showNextTrains(net.stopStation[lastStop], now);
+    showNextTrains(net.stopStation[lastStop], now, true);
     syncButtons();
   }
   const leavesLabel = (sec) => (sec <= 40 ? 'leaves now' : `leaves in about ${Math.max(1, Math.round(sec / 60))} minute${Math.round(sec / 60) > 1 ? 's' : ''}`);
-  function showNextTrains(station, now) {
+  function showNextTrains(station, now, reveal = false) {
     const list = station >= 0 ? trainsFrom(net, station, now.ymd, now.sec, { limit: 3 }) : [];
     ride.station = station;
     ride.offers = list.map((d) => `${d.id}|${Math.round((d.t - now.sec) / 60)}`).join(',');
@@ -385,6 +393,8 @@ async function main() {
       box.append(btn);
     }
     $('next-trains').hidden = false;
+    // on short screens the offers can start below the pinned buttons: bring them into view (not on the once-a-second refresh)
+    if (reveal) requestAnimationFrame(() => $('next-trains').scrollIntoView({ block: 'nearest' }));
   }
   // "Hop on another train?": wait at the station until that train is there, then ride it
   function waitFor(d, station) {
@@ -399,8 +409,7 @@ async function main() {
     stripTrain.hidden = true;
     placeStripTrain(d.k);
     const m = mapView.map;
-    m.setPadding(ridePadding());
-    m.easeTo({ center: [net.stationLon[station], net.stationLat[station]], zoom: Math.max(m.getZoom(), 13.2), duration: motionQuery.matches ? 0 : 600 });
+    m.easeTo({ center: [net.stationLon[station], net.stationLat[station]], zoom: Math.max(m.getZoom(), 13.2), padding: ridePadding(), duration: motionQuery.matches ? 0 : 600 });
     if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
     updateWait(now);
     syncButtons();
@@ -413,7 +422,7 @@ async function main() {
     if (!v && left < -180) { // it has gone (time jumped): offer the next ones instead
       ride.wait = null; ride.done = true;
       $('card-now').textContent = `We missed that ${noun}. Pick another one!`;
-      showNextTrains(w.station, now);
+      showNextTrains(w.station, now, true);
       syncButtons();
       return;
     }
@@ -423,6 +432,7 @@ async function main() {
   function syncButtons() {
     const hop = $('hop'), off = $('hop-off'), had = document.activeElement;
     cardEl.classList.toggle('riding', (ride.id !== null && !ride.done) || !!ride.wait);
+    cardEl.classList.toggle('arrived', ride.done);
     if (ride.done) { hop.hidden = true; off.hidden = false; off.textContent = 'Done'; }
     else if (ride.wait) { hop.hidden = true; off.hidden = false; off.textContent = 'Stop waiting'; }
     else if (ride.id !== null) { hop.hidden = ride.follow; hop.textContent = 'Find my train'; off.hidden = false; off.textContent = 'Hop off'; }
