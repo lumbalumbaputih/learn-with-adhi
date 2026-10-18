@@ -13,6 +13,8 @@ const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 const MODES = ['train', 'ferry'];
 const START_SPEED = 10; // fast enough to see the trains move at city zoom, slow enough to follow one
 const narrowQuery = matchMedia('(max-width: 819px)');
+// the card sits at the side (not above the dock) on wide screens and on short landscape phones: keep in step with kids.css
+const sideQuery = matchMedia('(min-width: 820px), (max-height: 500px) and (min-width: 560px)');
 const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
 const darkQuery = matchMedia('(prefers-color-scheme: dark)');
 
@@ -58,7 +60,7 @@ function stationLabel(net, stop) {
 }
 const lineName = (route) => (route.isFerry ? 'The ferry' : route.long);
 function soonLabel(sec) {
-  if (sec <= 40) return 'arriving now';
+  if (sec <= 40) return 'any moment now';
   const m = Math.round(sec / 60);
   return m <= 1 ? 'in about 1 minute' : `in about ${m} minutes`;
 }
@@ -106,8 +108,12 @@ async function main() {
     $('set-sound').checked = settings.sound;
     $('set-voice').checked = settings.voice;
     $('set-voice').disabled = !sound.canSpeak;
-    $('voice-note').hidden = sound.canSpeak;
+    // only on-device voices are used (sound.js): say so when there is none, once the voice list has loaded
+    const listed = sound.canSpeak && window.speechSynthesis.getVoices().length > 0;
+    $('voice-note').hidden = sound.canSpeak && !(listed && !sound.localVoice());
+    $('voice-note').textContent = sound.canSpeak ? 'This device has no English voice of its own, so nothing will be read aloud.' : "This browser can't read aloud.";
   }
+  if (sound.canSpeak) window.speechSynthesis.addEventListener('voiceschanged', () => syncSettings());
   function changeSettings(patch) {
     Object.assign(settings, patch);
     saveSettings(settings);
@@ -150,6 +156,11 @@ async function main() {
   fitDock();
 
   function select(id) {
+    // tapping the train you are riding (or waiting for) keeps the ride going
+    if (id !== null && (id === ride.id || (ride.wait && id === ride.wait.id))) {
+      if (ride.id !== null && !ride.done && !ride.follow) { ride.follow = true; mapView.follow(ride.id); syncButtons(); tick(true); }
+      return;
+    }
     if (riding()) hopOff();
     selected = id;
     mapView.setSelectedVehicle(id);
@@ -253,8 +264,9 @@ async function main() {
 
   // ---- Hop on!: ride along with the train, station by station
   const NO_PAD = { top: 0, right: 0, bottom: 0, left: 0 };
-  const ride = { id: null, k: -1, endAt: 0, follow: true, done: false, wait: null, station: -1, resume: 0, offers: '' };
-  const riding = () => ride.id !== null || ride.wait !== null;
+  const ride = { id: null, k: -1, endAt: 0, follow: true, done: false, wait: null, station: -1, resume: 0, paused: false, offers: '' };
+  // done covers the arrival card and the missed-train card (ride.id is null after a miss)
+  const riding = () => ride.id !== null || ride.wait !== null || ride.done;
   const absSec = (ymd, sec) => { const [y, m, d] = ymdParts(ymd); return Date.UTC(y, m - 1, d) / 1000 + sec; };
   const bubble = $('bubble');
   function say(text, sfx) { // a short call with its sound (and the voice, if on); the bubble is a polite live region
@@ -268,9 +280,15 @@ async function main() {
   // the part of the map the card and the dock don't cover
   function ridePadding() {
     const r = cardEl.getBoundingClientRect(), dockTop = dock.getBoundingClientRect().top;
-    return narrowQuery.matches
-      ? { top: 70, bottom: Math.max(0, Math.round(innerHeight - (cardEl.hidden ? dockTop : r.top) + 10)), left: 20, right: 20 }
-      : { top: 70, bottom: Math.max(0, Math.round(innerHeight - dockTop + 10)), left: cardEl.hidden ? 20 : Math.round(r.right + 10), right: 20 };
+    const top = Math.round(document.querySelector('.top').getBoundingClientRect().bottom + 10); // the top bar is taller on small screens
+    const p = sideQuery.matches
+      ? { top, bottom: Math.max(0, Math.round(innerHeight - dockTop + 10)), left: cardEl.hidden ? 20 : Math.round(r.right + 10), right: 20 }
+      : { top, bottom: Math.max(0, Math.round(innerHeight - (cardEl.hidden ? dockTop : r.top) + 10)), left: 20, right: 20 };
+    // always leave a band of map to show the train in, even when the card is tall
+    const room = innerHeight - 80;
+    if (p.top + p.bottom > room) p.bottom = Math.max(0, room - p.top);
+    if (p.left + p.right > innerWidth - 80) p.left = Math.max(0, innerWidth - 80 - p.right);
+    return p;
   }
   function startRide(v) {
     const pat = net.patterns[v.pattern], prof = net.profiles[v.run.prof], now = clock.now();
@@ -288,9 +306,13 @@ async function main() {
     say(`All aboard! Next stop: ${stationLabel(net, pat.stops[Math.min(v.k + 1, pat.stops.length - 1)])}`, net.routes[v.route].isFerry ? 'horn' : 'whistle');
     syncButtons();
   }
+  // after the arrival pause, carry on at the speed the viewer had chosen (also with reduced motion: it was their choice)
+  function resumeAfterArrival() {
+    if (ride.paused && clock.speed === 0 && ride.resume) { clock.setSpeed(ride.resume); syncSpeeds(); schedule(); }
+    ride.paused = false;
+  }
   function hopOff() {
-    // leaving the arrival card: carry on at the speed from before the arrival pause
-    if (ride.done && clock.speed === 0 && ride.resume && !motionQuery.matches) { clock.setSpeed(ride.resume); syncSpeeds(); schedule(); }
+    if (ride.done) resumeAfterArrival(); // leaving the arrival card
     Object.assign(ride, { id: null, wait: null, done: false, follow: true, station: -1 });
     mapView.follow(null);
     mapView.map.setPadding(NO_PAD);
@@ -322,8 +344,8 @@ async function main() {
     if (!motionQuery.matches) cardEl.classList.add('celebrate');
     say(`You made it to ${label}!`, 'yay');
     // pause for the moment of arrival, so the next trains on offer don't leave while the choice is made
-    ride.resume = clock.speed || ride.resume;
-    if (clock.speed !== 0) { clock.setSpeed(0); syncSpeeds(); }
+    ride.paused = clock.speed !== 0;
+    if (ride.paused) { ride.resume = clock.speed; clock.setSpeed(0); syncSpeeds(); }
     showNextTrains(net.stopStation[lastStop], now);
     syncButtons();
   }
@@ -350,6 +372,7 @@ async function main() {
   }
   // "Hop on another train?": wait at the station until that train is there, then ride it
   function waitFor(d, station) {
+    resumeAfterArrival();
     const now = clock.now();
     Object.assign(ride, { id: null, done: false, follow: true, wait: { id: d.id, k: d.k, t: d.t, ymd: now.ymd, station, route: d.route } });
     selected = d.id;
@@ -361,7 +384,7 @@ async function main() {
     const m = mapView.map;
     m.setPadding(ridePadding());
     m.easeTo({ center: [net.stationLon[station], net.stationLat[station]], zoom: Math.max(m.getZoom(), 13.2), duration: motionQuery.matches ? 0 : 600 });
-    if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(ride.resume || START_SPEED); syncSpeeds(); schedule(); }
+    if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
     updateWait(now);
     syncButtons();
   }
@@ -377,14 +400,18 @@ async function main() {
       return;
     }
     const pat = net.patterns[cardState.pattern];
-    $('card-now').textContent = `Waiting at ${stationLabel(net, net.stationStops[w.station][0])} for the ${noun} to ${stationLabel(net, pat.stops[pat.stops.length - 1])}. It comes ${left <= 40 ? 'any moment now' : soonLabel(left)}.`;
+    $('card-now').textContent = `Waiting at ${stationLabel(net, net.stationStops[w.station][0])} for the ${noun} to ${stationLabel(net, pat.stops[pat.stops.length - 1])}. It should come ${soonLabel(left)}.`;
   }
   function syncButtons() {
-    const hop = $('hop'), off = $('hop-off');
+    const hop = $('hop'), off = $('hop-off'), had = document.activeElement;
     if (ride.done) { hop.hidden = true; off.hidden = false; off.textContent = 'Done'; }
     else if (ride.wait) { hop.hidden = true; off.hidden = false; off.textContent = 'Stop waiting'; }
     else if (ride.id !== null) { hop.hidden = ride.follow; hop.textContent = 'Find my train'; off.hidden = false; off.textContent = 'Hop off'; }
     else { hop.hidden = cardState.id === null || !lookup(cardState.id); hop.textContent = 'Hop on!'; off.hidden = true; }
+    // a keyboard user's focus must not fall back to the page when the button they pressed hides itself
+    if ((had === hop && hop.hidden) || (had === off && off.hidden)) {
+      if (!hop.hidden) hop.focus(); else if (!off.hidden) off.focus(); else if (!cardEl.hidden) $('card-title').focus();
+    }
   }
   $('hop').addEventListener('click', () => {
     if (ride.id !== null) { ride.follow = true; mapView.follow(ride.id); tick(true); syncButtons(); } // find my train
@@ -432,12 +459,32 @@ async function main() {
   }
   $('wake').addEventListener('click', () => {
     const n = clock.now(), w = nextTrainTime(n.ymd, n.sec);
-    if (w) { clock.setTime(w.ymd, w.sec); if (clock.speed === 0) clock.setSpeed(START_SPEED); syncSpeeds(); sound.play('whistle'); tick(true); }
+    if (w) {
+      clock.setTime(w.ymd, w.sec); if (clock.speed === 0) clock.setSpeed(START_SPEED); syncSpeeds(); sound.play('whistle'); tick(true);
+      speedBtns.find((b) => b.tabIndex === 0).focus(); // the wake button has just hidden itself
+    }
+  });
+
+  // ---- keyboard and screen readers: pick a train without the map (the map itself only pans and zooms)
+  let pickOrder = [], pickAt = -1;
+  $('pick').addEventListener('click', () => {
+    const m = mapView.map, c = m.getCenter(), b = m.getBounds();
+    if (pickAt < 0 || pickAt >= pickOrder.length - 1) { // a fresh round: the trains in view, nearest the middle first
+      pickOrder = [...mapView.byId.values()]
+        .filter((v) => MODES.includes(net.routes[v.route].mode) && b.contains([v.lon, v.lat]))
+        .sort((p, q) => Math.hypot(p.lon - c.lng, p.lat - c.lat) - Math.hypot(q.lon - c.lng, q.lat - c.lat))
+        .map((v) => v.id);
+      pickAt = -1;
+    }
+    const id = pickOrder[++pickAt];
+    if (id === undefined || !mapView.byId.has(id)) { pickAt = -1; say('No trains here right now. Try zooming out.'); return; }
+    select(id);
+    $('card-title').focus();
   });
 
   // ---- grown-ups dialog
   const dlg = $('grownups');
-  $('grownups-open').addEventListener('click', () => dlg.showModal());
+  $('grownups-open').addEventListener('click', () => { syncSettings(); dlg.showModal(); });
   $('grownups-close').addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
   const mm = net.meta;
@@ -482,8 +529,9 @@ async function main() {
       if (pretend) pr.textContent = `Pretend day: a normal ${dow}`;
       const trains = trainCount(vehicles), boats = boatCount(vehicles);
       let line;
-      if (trains === 0) line = boats ? `${plural(boats, 'boat is', 'boats are')} moving. The trains are asleep.` : 'The trains are asleep.';
-      else line = `${plural(trains, 'train', 'trains')}${boats ? ` and ${plural(boats, 'boat', 'boats')}` : ''} ${trains + boats === 1 ? 'is' : 'are'} moving right now`;
+      // "should be": these are timetable trains, not live ones
+      if (trains === 0) line = boats ? `${plural(boats, 'boat', 'boats')} should be moving. The trains are asleep.` : 'The trains are asleep.';
+      else line = `${plural(trains, 'train', 'trains')}${boats ? ` and ${plural(boats, 'boat', 'boats')}` : ''} should be moving right now`;
       $('count').textContent = line;
       $('wake').hidden = trains > 0;
       if (ride.done && ride.station >= 0) { // time is running on the arrival card: keep the offers current

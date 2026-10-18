@@ -170,7 +170,8 @@ async function checkKids(browser, errors) {
   await idle(k);
   const types = await k.evaluate(async () => (await __kids.mapView.map.getSource('veh').getData()).features.map((f) => f.properties.t));
   assert.ok(types.length > 10 && types.every((t) => t === 1 || t === 2), 'Trains and the ferry only');
-  assert.match(await k.locator('#count').innerText(), /^64 trains and 2 boats are moving right now$/);
+  assert.match(await k.locator('#count').innerText(), /^64 trains and 2 boats should be moving right now$/);
+  assert.equal(await k.locator('.brand-sub').innerText(), 'From the timetable, not live', 'The kid-facing screen says the trains are not live');
   assert.equal(await k.locator('#pretend').isHidden(), true);
   await k.getByRole('radio', { name: /^Rocket/ }).click();
   assert.equal(await k.evaluate(() => __kids.clock.speed), 60);
@@ -199,7 +200,18 @@ async function checkKids(browser, errors) {
   assert.match(card.dest, /^Going to [A-Z]/);
   assert.doesNotMatch(card.dest, /Platform|Stn/);
   assert.equal(card.dots, card.stops);
-  assert.match(card.now, /^(Next stop: .+, (arriving now|in about \d+ minutes?)|Stopped at .+\. People are getting on and off\.)$/);
+  assert.match(card.now, /^(Next stop: .+, (any moment now|in about \d+ minutes?)|Stopped at .+\. People are getting on and off\.)$/);
+  const voicePick = await k.evaluate(() => { // review fix: only on-device voices, never online ones
+    if (!('speechSynthesis' in window)) return 'no speech';
+    const real = speechSynthesis.getVoices;
+    speechSynthesis.getVoices = () => [{ lang: 'en-AU', localService: false, name: 'Online AU' }, { lang: 'en-US', localService: true, name: 'Local US' }];
+    const a = __kids.sound.localVoice()?.name;
+    speechSynthesis.getVoices = () => [{ lang: 'en-AU', localService: false, name: 'Online AU' }];
+    const b = __kids.sound.localVoice();
+    speechSynthesis.getVoices = real;
+    return [a, b];
+  });
+  if (voicePick !== 'no speech') assert.deepEqual(voicePick, ['Local US', null], 'Only on-device voices are used');
   await axeKids(k, 'phone map with train card');
   const finished = await k.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 3 * 3600); __kids.tick(true); return document.getElementById('card-now').textContent; });
   assert.equal(finished, 'This trip is finished. Tap another train!');
@@ -239,6 +251,8 @@ async function checkKids(browser, errors) {
   await rideP.waitForFunction((id) => __kids.mapView.following === id, pick.id);
   await rideP.touchscreen.tap(30, 300);
   assert.equal(await rideP.evaluate(() => __kids.mapView.following), pick.id, 'A stray tap does not end the ride');
+  await rideP.evaluate((id) => __kids.select(id), pick.id);
+  assert.equal(await rideP.evaluate(() => [__kids.ride.id, __kids.mapView.following]).then(String), `${pick.id},${pick.id}`, 'Tapping your own train keeps the ride going');
   await rideP.evaluate(() => { // an hour in 20-second steps, as frames would go at Rocket speed
     for (let s = 0; s < 3600; s += 20) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 20); __kids.tick(true); }
   });
@@ -255,11 +269,76 @@ async function checkKids(browser, errors) {
   await rideP.locator('#next-list .next-train').first().click();
   assert.match(await rideP.locator('#card-now').innerText(), new RegExp(`^Waiting at ${dest} for the train to `));
   assert.equal(await rideP.evaluate(() => __kids.clock.speed), 10, 'Choosing the next train carries on at the earlier speed');
+  // a missed train (the tablet slept while waiting) must not break the next train's card
+  await rideP.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 2 * 3600); __kids.tick(true); });
+  assert.equal(await rideP.locator('#card-now').innerText(), 'We missed that train. Pick another one!');
+  await rideP.evaluate(() => { const v = [...__kids.mapView.byId.values()].find((x) => __kids.net.routes[x.route].isTrain && x.state === 'move'); __kids.select(v.id); });
+  assert.doesNotMatch(await rideP.locator('#card-now').innerText(), /missed/, 'After a missed train, the next card is normal');
+  assert.equal(await rideP.locator('#hop').isVisible(), true, 'and offers Hop on!');
+  assert.equal(await rideP.locator('#next-trains').isHidden(), true, 'without the old station offers');
   await rideP.close();
+
+  // review fixes: picking a train with the keyboard, and focus when a pressed button hides itself
+  const kb = await open('?date=2026-10-19&t=08:00', { viewport: { width: 1280, height: 860 } });
+  await kb.getByRole('radio', { name: 'Pause' }).click();
+  await kb.evaluate(() => document.activeElement.blur());
+  await kb.keyboard.press('Tab');
+  await kb.keyboard.press('Tab');
+  assert.equal(await kb.evaluate(() => document.activeElement.id), 'pick', 'Pick a train is the second tab stop');
+  await kb.keyboard.press('Enter');
+  await kb.waitForFunction(() => !document.getElementById('card').hidden);
+  assert.equal(await kb.evaluate(() => document.activeElement.id), 'card-title', 'Keyboard: a train can be picked without the map');
+  const firstPick = await kb.evaluate(() => __kids.selected);
+  await kb.locator('#pick').focus();
+  await kb.keyboard.press('Enter');
+  assert.notEqual(await kb.evaluate(() => __kids.selected), firstPick, 'Pressing again picks the next train');
+  await kb.locator('#hop').focus();
+  await kb.keyboard.press('Enter');
+  await kb.waitForFunction(() => __kids.ride.id !== null);
+  assert.equal(await kb.evaluate(() => document.activeElement.id), 'hop-off', 'Focus moves to Hop off when Hop on! hides itself');
+  await kb.close();
+
+  // review fix: the train with vehicle id 0 can be followed (ids are not truthy tests)
+  const zero = await open('?date=2026-10-19&t=07:52', { ...phone, reducedMotion: 'reduce' });
+  assert.ok(await zero.evaluate(() => { if (!__kids.mapView.byId.has(0)) return false; __kids.select(0); return true; }), 'Vehicle 0 runs at 7:52 on a Monday');
+  await zero.getByRole('button', { name: 'Hop on!' }).click();
+  await zero.evaluate(() => { for (let s = 0; s < 300; s += 20) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 20); __kids.tick(true); } });
+  const zgap = await zero.evaluate(() => { const v = __kids.mapView.byId.get(0), c = __kids.mapView.map.getCenter(); return Math.hypot(v.lon - c.lng, v.lat - c.lat); });
+  assert.ok(zgap < 0.002, `The camera follows vehicle 0 (${zgap})`);
+  await zero.close();
+
+  // review fixes: during a ride the train stays in view, the station bubble never covers the card's close button, Hop off is visible
+  for (const [w, h, label] of [[320, 640, 'small phone'], [390, 844, 'phone'], [667, 375, 'phone landscape'], [834, 1112, 'tablet portrait']]) {
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: w < 820, hasTouch: true });
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    await p.evaluate(() => { const v = [...__kids.mapView.byId.values()].filter((x) => __kids.net.routes[x.route].long === 'Fremantle Line' && x.state === 'move').sort((a, b) => a.k - b.k)[0]; __kids.select(v.id); });
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    await p.waitForFunction(() => __kids.mapView.following !== null);
+    await p.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 240); __kids.tick(true); }); // brings a station call
+    await p.evaluate(() => { document.getElementById('bubble').textContent = 'All aboard! Next stop: Perth Underground'; }); // the widest usual call
+    const geo = await p.evaluate(() => {
+      const r = (el) => el.getBoundingClientRect(), $ = (id) => document.getElementById(id);
+      const v = __kids.mapView.byId.get(__kids.mapView.following), pt = __kids.mapView.map.project([v.lon, v.lat]);
+      const card = r($('card')), dock = r($('dock')), top = r(document.querySelector('.top')), head = r($('card-head')), bub = r($('bubble')), off = r($('hop-off'));
+      const overlap = (a, b) => !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);
+      const M = 30; // comfortably in view: clear of the top bar, the card and the dock by this much
+      const clearOfCard = pt.x < card.left - M || pt.x > card.right + M || pt.y < card.top - M || pt.y > card.bottom + M;
+      const clearOfDock = pt.y < dock.top - M || pt.x < dock.left - M || pt.x > dock.right + M;
+      return { pt: [Math.round(pt.x), Math.round(pt.y)],
+        inView: pt.x > M && pt.x < innerWidth - M && pt.y > top.bottom + M && clearOfCard && clearOfDock,
+        bubbleOverHead: overlap(bub, head), offVisible: off.top >= Math.max(card.top, 0) - 1 && off.bottom <= Math.min(card.bottom, innerHeight) + 1 };
+    });
+    assert.ok(geo.inView, `${label}: the train being ridden is in view ${geo.pt}`);
+    assert.ok(!geo.bubbleOverHead, `${label}: the station bubble does not cover the card's header or close button`);
+    assert.ok(geo.offVisible, `${label}: Hop off is in view`);
+    await p.close();
+  }
 
   const pretend = await open('?date=2027-03-01&t=08:00');
   assert.equal(await pretend.locator('#pretend').innerText(), 'Pretend day: a normal Monday');
   assert.ok(await pretend.evaluate(() => __kids.net.covers(__kids.clock.now().ymd)), 'Pretend day is inside the timetable');
+  assert.ok(await pretend.evaluate(() => document.getElementById('dock').contains(document.getElementById('pretend'))), 'The pretend label sits in the dock, clear of the map credit');
   await pretend.close();
 
   const night = await open('?date=2026-10-20&t=02:30');
@@ -273,6 +352,14 @@ async function checkKids(browser, errors) {
 
   const reduced = await open('?date=2026-10-19&t=08:00', { ...phone, reducedMotion: 'reduce' });
   assert.equal(await reduced.getByRole('radio', { name: 'Pause' }).getAttribute('aria-checked'), 'true', 'Reduced motion starts paused');
+  // review fix: the arrival pause gives back the speed the viewer chose, with reduced motion too
+  await reduced.getByRole('radio', { name: /^Fast/ }).click();
+  await reduced.evaluate(() => { const v = [...__kids.mapView.byId.values()].filter((x) => __kids.net.routes[x.route].long === 'Fremantle Line' && x.state === 'move').sort((a, b) => a.k - b.k)[0]; __kids.select(v.id); });
+  await reduced.getByRole('button', { name: 'Hop on!' }).click();
+  await reduced.evaluate(() => { for (let s = 0; s < 3600; s += 20) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 20); __kids.tick(true); } });
+  assert.equal(await reduced.getByRole('radio', { name: 'Pause' }).getAttribute('aria-checked'), 'true', 'Arrival pauses time');
+  await reduced.locator('#next-list .next-train').first().click();
+  assert.equal(await reduced.evaluate(() => __kids.clock.speed), 10, 'With reduced motion too, the next train carries on at the chosen speed');
   await reduced.close();
 
   const small = await open('?date=2026-10-19&t=08:00', { ...phone, viewport: { width: 320, height: 640 } });

@@ -33,6 +33,7 @@
 </head>
 <body>
   <a class="skip-link" href="#dock">Skip to the time controls</a>
+  <button id="pick" class="skip-link pick" type="button">Pick a train near the middle of the map (press again for the next one)</button>
   <main id="main">
     <div id="map" class="map" role="region" aria-label="Map of Perth's trains and ferry" aria-describedby="map-help"></div>
     <p id="map-help" class="sr-only">Use arrow keys to move the map and plus or minus to zoom. The time controls can pause the trains.</p>
@@ -46,7 +47,10 @@
           <rect x="17" y="10" width="5" height="5" rx="1.5" fill="#fff"/>
           <circle cx="11.5" cy="25" r="2.5" fill="#15222e"/><circle cx="20.5" cy="25" r="2.5" fill="#15222e"/>
         </svg>
-        <h1>Perth Train Spotter</h1>
+        <div class="brand-text">
+          <h1>Perth Train Spotter</h1>
+          <p class="brand-sub">From the timetable, not live</p>
+        </div>
       </div>
       <nav class="top-actions" aria-label="Pages">
         <a class="pill-btn" href="./">Grown-up map</a>
@@ -56,12 +60,11 @@
       </nav>
     </header>
 
-    <p id="pretend" class="pretend" hidden></p>
     <p id="hint" class="hint" role="status" hidden></p>
 
     <section id="card" class="card" aria-labelledby="card-title" hidden>
       <div id="card-head" class="card-head">
-        <h2 id="card-title"></h2>
+        <h2 id="card-title" tabindex="-1"></h2>
         <button id="card-close" class="card-close" type="button" aria-label="Close"><span aria-hidden="true">&#10005;</span></button>
       </div>
       <div class="card-body">
@@ -92,6 +95,7 @@
         <p id="clock" class="clock"></p>
         <p id="count" class="count"></p>
       </div>
+      <p id="pretend" class="pretend" hidden></p>
       <button id="wake" class="chunky wake" type="button" hidden>Wake up the trains</button>
       <div id="speeds" class="speeds" role="radiogroup" aria-label="How fast time goes">
         <button class="chunky speed" type="button" role="radio" data-speed="0" aria-label="Pause"><span aria-hidden="true">&#9208;&#65039;</span><b>Pause</b></button>
@@ -111,7 +115,7 @@
       <label><input id="set-sound" type="checkbox"> Sound effects</label>
       <label><input id="set-voice" type="checkbox"> Read station names aloud</label>
       <p id="voice-note" class="fine" hidden>This browser can't read aloud.</p>
-      <p class="fine">The voice is your device's own. These choices are kept on this device only.</p>
+      <p class="fine">Only voices installed on this device are used, never online ones, so nothing is read aloud if there is no English voice here. These choices are kept on this device only.</p>
     </div>
     <h3>Privacy</h3>
     <p>No location, no accounts and no names. Nothing your child does here leaves this device. Visits to the page are counted with Vercel Web Analytics, which does not use cookies, and the map pictures are loaded from OpenFreeMap.</p>

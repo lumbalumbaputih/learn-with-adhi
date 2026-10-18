@@ -70,15 +70,36 @@ export class Sound {
 
   get canSpeak() { return typeof window !== 'undefined' && 'speechSynthesis' in window; }
 
-  /** Reads a short line aloud when the voice is switched on (an English (Australia) voice where the device has one). */
+  /**
+   * An English voice installed on this device (English (Australia) first), or null. Online voices
+   * (localService false, e.g. Edge's "Online (Natural)" ones) are never used: they would send the
+   * words to a speech service, and the grown-ups box promises nothing leaves the device.
+   */
+  localVoice() {
+    if (!this.canSpeak) return null;
+    const local = window.speechSynthesis.getVoices().filter((x) => x.localService);
+    return local.find((x) => /^en[-_]AU$/i.test(x.lang)) || local.find((x) => /^en/i.test(x.lang)) || null;
+  }
+
+  /** Reads a short line aloud when the voice is switched on and the device has an English voice of its own. */
   speak(text) {
     if (!this.settings.voice || !this.canSpeak) return;
     const synth = window.speechSynthesis;
+    if (!synth.getVoices().length) { // the list fills in a moment after the page loads: say the latest line then
+      this._pending = text;
+      if (!this._waiting) {
+        this._waiting = true;
+        const retry = () => { if (!this._waiting) return; this._waiting = false; const t = this._pending; this._pending = null; if (t && synth.getVoices().length) this.speak(t); };
+        synth.addEventListener('voiceschanged', retry, { once: true });
+        setTimeout(retry, 1500); // some browsers never fire voiceschanged
+      }
+      return;
+    }
+    const v = this.localVoice();
+    if (!v) return; // no English voice on this device: stay quiet rather than use an online one
     const u = new SpeechSynthesisUtterance(text.replace(/\p{Extended_Pictographic}/gu, '').trim());
-    const voices = synth.getVoices();
-    const v = voices.find((x) => x.lang === 'en-AU' || x.lang === 'en_AU') || voices.find((x) => /^en/i.test(x.lang));
-    u.lang = v ? v.lang : 'en-AU';
-    if (v) u.voice = v;
+    u.lang = v.lang;
+    u.voice = v;
     u.rate = 0.95;
     this._utter = u; // keep a reference: some browsers drop an utterance that is garbage-collected mid-sentence
     synth.cancel();

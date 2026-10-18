@@ -389,7 +389,7 @@ export class MapView {
       clearTimeout(t);
       t = setTimeout(() => this.h.onView && this.h.onView(this.view()), 250);
     });
-    map.on('dragstart', () => { if (this.following) { this.following = null; this.h.onUnfollow && this.h.onUnfollow(); } });
+    map.on('dragstart', () => { if (this.following !== null) { this.following = null; this.h.onUnfollow && this.h.onUnfollow(); } });
   }
 
   view() {
@@ -462,7 +462,7 @@ export class MapView {
     // the source is missing for a moment while the basemap switches (dark mode); the next tick fills it
     const src = this.map.getSource('veh');
     if (src) src.setData({ type: 'FeatureCollection', features: feats });
-    if (this.following) {
+    if (this.following !== null) { // ids can be 0, so not a truthiness test
       const v = this.byId.get(this.following);
       if (v) this.map.easeTo({ center: [v.lon, v.lat], duration: 0 });
     }
