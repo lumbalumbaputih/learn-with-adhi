@@ -174,9 +174,37 @@ a { color: var(--accent); }
   background: var(--sun); font-size: 17px; line-height: 1; will-change: transform;
 }
 
+.card { max-height: calc(100dvh - var(--dock-h, 140px) - 84px); overflow-y: auto; }
+.card-actions { display: flex; gap: 8px; margin-top: 12px; }
+.card-actions .chunky { flex: 1; }
+.card-actions:not(:has(button:not([hidden]))) { display: none; }
+.next-trains { margin-top: 12px; }
+.next-title { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+.next-list { display: grid; gap: 8px; }
+.next-train { justify-content: flex-start; gap: 12px; padding: 8px 12px; text-align: left; font-size: 15px; line-height: 1.2; }
+.next-train .sw { flex: none; width: 12px; height: 34px; border: 2px solid var(--edge); border-radius: 6px; }
+.next-train small { display: block; margin-top: 2px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.next-none { font-weight: 600; color: var(--ink-2); }
+.card.celebrate { animation: celebrate 0.7s ease; }
+@keyframes celebrate {
+  0% { transform: none; } 25% { transform: scale(1.04) rotate(-1.2deg); } 55% { transform: scale(0.99) rotate(1deg); } 100% { transform: none; }
+}
+
+/* station calls while riding: a sunny bubble at the top */
+.bubble {
+  position: fixed; z-index: 7; top: calc(max(10px, env(safe-area-inset-top)) + 96px); left: 50%;
+  max-width: calc(100% - 32px); padding: 10px 18px; transform: translate(-50%, -8px);
+  border: 2px solid var(--edge); border-radius: 20px; background: var(--sun); color: var(--sun-ink);
+  box-shadow: 0 3px 0 var(--edge); font-size: 18px; font-weight: 800; text-align: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.bubble.show { opacity: 1; transform: translate(-50%, 0); }
+.bubble:empty { padding: 0; border: 0; }
+
 @media (min-width: 820px) {
   /* wide screens: top-left, under the map credit, clear of the centred dock */
-  .card { right: auto; bottom: auto; top: calc(max(10px, env(safe-area-inset-top)) + 100px); width: 420px; margin: 0; }
+  .card { right: auto; bottom: auto; top: calc(max(10px, env(safe-area-inset-top)) + 100px); width: 420px; margin: 0; max-height: calc(100dvh - var(--dock-h, 140px) - 124px); }
+  .bubble { left: calc(50% + 120px); }
 }
 
 /* ------------------------------------------------------------------ grown-ups dialog */
@@ -212,5 +240,6 @@ a { color: var(--accent); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chunky, .loading-bar { transition: none; }
+  .chunky, .loading-bar, .bubble { transition: none; }
+  .card, .card.celebrate { animation: none; }
 }

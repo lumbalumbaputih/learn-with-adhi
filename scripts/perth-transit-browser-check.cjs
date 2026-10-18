@@ -210,6 +210,41 @@ async function checkKids(browser, errors) {
   await axeKids(k, 'grown-ups dialog');
   await k.close();
 
+  // K1.2 Hop on!: ride a train to the end, one station call per stop, then the next trains on offer
+  const rideP = await open('?date=2026-10-19&t=08:00');
+  await rideP.evaluate(() => {
+    window.calls = [];
+    new MutationObserver((recs) => { for (const r of recs) for (const n of r.addedNodes) if (n.data) calls.push(n.data); })
+      .observe(document.getElementById('bubble'), { childList: true, subtree: true });
+  });
+  await rideP.getByRole('radio', { name: 'Pause' }).click();
+  const pick = await rideP.evaluate(() => {
+    const { net, mapView } = __kids;
+    const v = [...mapView.byId.values()].filter((x) => net.routes[x.route].long === 'Fremantle Line' && x.state === 'move').sort((a, b) => a.k - b.k)[0];
+    __kids.select(v.id);
+    return { id: v.id, left: net.patterns[v.pattern].stops.length - 2 - v.k };
+  });
+  const dest = (await rideP.locator('#card-dest').innerText()).replace(/^Going to /, '');
+  await rideP.getByRole('button', { name: 'Hop on!' }).click();
+  assert.equal(await rideP.evaluate(() => __kids.clock.speed), 10, 'Hop on starts a paused clock');
+  await rideP.waitForFunction((id) => __kids.mapView.following === id, pick.id);
+  await rideP.touchscreen.tap(30, 300);
+  assert.equal(await rideP.evaluate(() => __kids.mapView.following), pick.id, 'A stray tap does not end the ride');
+  await rideP.evaluate(() => { // an hour in 20-second steps, as frames would go at Rocket speed
+    for (let s = 0; s < 3600; s += 20) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 20); __kids.tick(true); }
+  });
+  const calls = await rideP.evaluate(() => calls);
+  assert.match(calls[0], /^All aboard! Next stop: /);
+  assert.equal(calls.length - 2, pick.left, 'One station call per stop passed');
+  assert.equal(calls[calls.length - 1], `You made it to ${dest}!`);
+  assert.equal(await rideP.getByRole('radio', { name: 'Pause' }).getAttribute('aria-checked'), 'true', 'Arrival pauses time');
+  assert.ok((await rideP.locator('#next-list .next-train').count()) >= 1, 'Next trains are offered');
+  await axeKids(rideP, 'arrival card with next trains');
+  await rideP.locator('#next-list .next-train').first().click();
+  assert.match(await rideP.locator('#card-now').innerText(), new RegExp(`^Waiting at ${dest} for the train to `));
+  assert.equal(await rideP.evaluate(() => __kids.clock.speed), 10, 'Choosing the next train carries on at the earlier speed');
+  await rideP.close();
+
   const pretend = await open('?date=2027-03-01&t=08:00');
   assert.equal(await pretend.locator('#pretend').innerText(), 'Pretend day: a normal Monday');
   assert.ok(await pretend.evaluate(() => __kids.net.covers(__kids.clock.now().ymd)), 'Pretend day is inside the timetable');

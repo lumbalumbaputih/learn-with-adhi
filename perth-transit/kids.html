@@ -71,8 +71,17 @@
           <ol id="strip-list" class="strip-list"></ol>
           <span id="strip-train" class="strip-train" aria-hidden="true">&#128646;</span>
         </div>
+        <div id="next-trains" class="next-trains" hidden>
+          <h3 class="next-title">Hop on another train?</h3>
+          <div id="next-list" class="next-list"></div>
+        </div>
+        <div class="card-actions">
+          <button id="hop" class="chunky primary" type="button">Hop on!</button>
+          <button id="hop-off" class="chunky" type="button" hidden>Hop off</button>
+        </div>
       </div>
     </section>
+    <p id="bubble" class="bubble" role="status" aria-atomic="true"></p>
 
     <section id="dock" class="dock" aria-label="Time" tabindex="-1">
       <div class="now-line">

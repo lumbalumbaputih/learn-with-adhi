@@ -290,24 +290,31 @@ export class Network {
     return ymd >= this.meta.validFrom && ymd <= this.meta.validTo;
   }
 
-  /** True when the timetable changes the usual service on this date (public holidays, special events). */
-  hasChanges(ymd) {
-    return this._exByDate.has(ymd);
+  /** Number of trips that run on a date (all modes). */
+  tripsOn(ymd) {
+    const flags = this.serviceFlags(ymd);
+    let n = 0;
+    for (const prof of this.profiles) for (let i = 0; i < prof.svc.length; i++) n += flags[prof.svc[i]];
+    return n;
   }
 
   /**
-   * An ordinary covered day with the same weekday as `ymd`, for showing a typical day when `ymd`
-   * itself is outside the timetable. Skips the first week (it may be partial) and days with changes.
+   * The covered day with the same weekday as `ymd` that runs the most trips: a normal full-service day
+   * (public holidays run fewer). Used to show a typical day when `ymd` is outside the timetable.
+   * Exceptions in the calendar can't be used to spot ordinary days: this feed has them on every date.
    */
   typicalDay(ymd) {
     const dow = ymdToDow(ymd);
-    let fallback = null;
-    for (let d = addDays(this.meta.validFrom, 7); d <= this.meta.validTo; d = addDays(d, 1)) {
+    const memo = this._typical || (this._typical = new Map());
+    if (memo.has(dow)) return memo.get(dow);
+    let best = this.meta.validFrom, most = -1;
+    for (let d = this.meta.validFrom; d <= this.meta.validTo; d = addDays(d, 1)) {
       if (ymdToDow(d) !== dow) continue;
-      if (!this.hasChanges(d)) return d;
-      if (fallback === null) fallback = d;
+      const n = this.tripsOn(d);
+      if (n > most) { most = n; best = d; }
     }
-    return fallback ?? this.meta.validFrom;
+    memo.set(dow, best);
+    return best;
   }
 
   // ------------------------------------------------------------ runs of a service day
@@ -527,7 +534,7 @@ export class Network {
               const t = prof.starts[j] + depOff + shift;
               if (t > sec + hz) break;
               const pat = this.patterns[prof.pattern];
-              res.push({ t, stop: s, route: pat.route, pattern: pat.idx, k, prof: prof.idx, ti: j });
+              res.push({ t, stop: s, route: pat.route, pattern: pat.idx, k, prof: prof.idx, ti: j, shift }); // shift: which service day (-DAY = yesterday's)
               got++;
             }
           }

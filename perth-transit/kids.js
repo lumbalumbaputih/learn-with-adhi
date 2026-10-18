@@ -5,6 +5,7 @@ import { SimClock } from './clock.js?v=1.8';
 import { MapView } from './mapview.js?v=1.8';
 import { chipColors, routeColor } from './colors.js?v=1.8';
 import { prettyName } from './util.js?v=1.8';
+import { findVehicle, stopsReached, trainsFrom } from './ride.js?v=1.8';
 
 const $ = (id) => document.getElementById(id);
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -99,8 +100,9 @@ async function main() {
   let selected = null;
   const mapView = new MapView($('map'), net, {
     onVehicle: (id) => select(id),
-    onEntity: () => select(null),
-    onEmpty: () => select(null),
+    onEntity: () => { if (!riding()) select(null); },
+    onEmpty: () => { if (!riding()) select(null); }, // a stray tap must not end a ride
+    onUnfollow: () => { ride.follow = false; syncButtons(); },
   });
   setLoading('Putting the trains on the tracks', 0.9);
   paintTheme(themeNow());
@@ -125,21 +127,35 @@ async function main() {
   fitDock();
 
   function select(id) {
+    if (riding()) hopOff();
     selected = id;
     mapView.setSelectedVehicle(id);
     const v = id === null ? null : mapView.byId.get(id);
     if (!v) { closeCard(); return; }
-    openCard(v);
+    openCard(v.route, v.pattern, v.id);
+    requestAnimationFrame(() => showOnMap(v));
     tick(true);
+  }
+
+  // A vehicle's id changes at midnight (findVehicle); keep every place that holds it in step.
+  function lookup(id) {
+    const f = id === null ? null : findVehicle(mapView.byId, id);
+    if (f && f.id !== id) {
+      if (selected === id) { selected = f.id; mapView.setSelectedVehicle(f.id); }
+      if (cardState.id === id) cardState.id = f.id;
+      if (ride.wait && ride.wait.id === id) ride.wait.id = f.id;
+      if (ride.id === id) { ride.id = f.id; if (mapView.following === id) mapView.follow(f.id); }
+    }
+    return f ? f.v : null;
   }
 
   // ---- the train card: line, destination, what it is doing, and the line strip
   const cardEl = $('card'), stripEl = $('strip'), stripList = $('strip-list'), stripTrain = $('strip-train');
   const cardState = { id: null, pattern: -1, k: '', items: [] };
-  function openCard(v) {
-    const route = net.routes[v.route], pat = net.patterns[v.pattern];
+  function openCard(routeIdx, patternIdx, id) {
+    const route = net.routes[routeIdx], pat = net.patterns[patternIdx];
     const { bg, fg } = chipColors(route);
-    cardState.id = v.id; cardState.pattern = v.pattern; cardState.k = '';
+    cardState.id = id; cardState.pattern = patternIdx; cardState.k = '';
     $('card-head').style.background = bg;
     $('card-head').style.color = fg;
     cardEl.style.setProperty('--line-c', routeColor(route));
@@ -153,33 +169,47 @@ async function main() {
     });
     stripList.replaceChildren(...cardState.items.map((x) => x.li));
     stripEl.scrollLeft = 0;
+    cardEl.classList.remove('celebrate');
+    $('next-trains').hidden = true;
     cardEl.hidden = false;
     hint.hidden = true;
-    mapView.highlightRoute(v.route);
-    requestAnimationFrame(() => showOnMap(v));
+    mapView.highlightRoute(routeIdx);
+    syncButtons();
   }
   function closeCard() {
     if (cardEl.hidden) return;
     cardEl.hidden = true;
     cardState.id = null;
     mapView.highlightRoute(null);
+    mapView.map.setPadding(NO_PAD);
   }
   // if the train is hidden behind the card or the dock, move the map so it can be seen
   function showOnMap(v) {
-    const m = mapView.map, pt = m.project([v.lon, v.lat]), r = cardEl.getBoundingClientRect(), dockTop = dock.getBoundingClientRect().top;
-    const wide = !narrowQuery.matches;
-    const pad = wide ? { top: 80, bottom: innerHeight - dockTop + 20, left: r.right + 20, right: 40 }
-      : { top: 80, bottom: innerHeight - r.top + 20, left: 30, right: 30 };
+    const m = mapView.map, pt = m.project([v.lon, v.lat]), pad = ridePadding();
     const inView = pt.x > pad.left && pt.x < innerWidth - pad.right && pt.y > pad.top && pt.y < innerHeight - pad.bottom;
     if (!inView) m.easeTo({ center: [v.lon, v.lat], padding: pad, duration: motionQuery.matches ? 0 : 600 });
   }
+  /** Strip dots: filled up to `passed`, `next` marked; the words are for screen readers. */
+  function markStrip(passed, next, here, hereWords = ' (the train is here)') {
+    cardState.items.forEach((it, i) => {
+      it.li.classList.toggle('passed', i <= passed);
+      it.li.classList.toggle('next', i === next);
+      it.sr.textContent = i === here ? hereWords : i <= passed ? ' (passed)' : i === next ? ' (next stop)' : '';
+    });
+  }
+  function placeStripTrain(pos) {
+    const x = 16 + pos * STRIP_STEP + STRIP_STEP / 2;
+    stripTrain.style.transform = `translateX(${x}px)`;
+    if (x < stripEl.scrollLeft + 40 || x > stripEl.scrollLeft + stripEl.clientWidth - 40) stripEl.scrollLeft = x - stripEl.clientWidth / 2;
+  }
   function updateCard(now) {
-    if (cardState.id === null) return;
-    const v = mapView.byId.get(cardState.id);
-    const items = cardState.items, pat = net.patterns[cardState.pattern];
+    if (cardState.id === null || ride.done || ride.wait) return; // the ride writes its own words then
+    const v = lookup(cardState.id);
+    const pat = net.patterns[cardState.pattern];
     if (!v) { // the trip has ended (or time was moved past it)
       $('card-now').textContent = 'This trip is finished. Tap another train!';
       stripTrain.hidden = true;
+      if (!$('hop').hidden && ride.id === null) syncButtons();
       return;
     }
     stripTrain.hidden = false;
@@ -188,22 +218,157 @@ async function main() {
       : v.state === 'dwell' ? `Stopped at ${here}. People are getting on and off.`
       : `Next stop: ${stationLabel(net, d.nextStop)}, ${soonLabel(d.etaSec)}`;
     const key = `${v.k}|${v.state}`;
-    if (key !== cardState.k) { // filled dots up to the last stop reached; words for screen readers
+    if (key !== cardState.k) {
       cardState.k = key;
-      items.forEach((it, i) => {
-        const here = i === v.k && v.state !== 'move', next = i === v.k + 1 && v.state !== 'end';
-        it.li.classList.toggle('passed', i <= v.k);
-        it.li.classList.toggle('next', next);
-        it.sr.textContent = here ? ' (the train is here)' : i <= v.k ? ' (passed)' : next ? ' (next stop)' : '';
-      });
+      markStrip(v.k, v.state === 'end' ? -1 : v.k + 1, v.state === 'move' ? -1 : v.k);
     }
     // slide the little train between the dots (by distance within the current run)
     const k = v.k, span = k + 1 < pat.dist.length ? pat.dist[k + 1] - pat.dist[k] : 0;
-    const f = v.state === 'move' && span > 0 ? Math.min(1, Math.max(0, (v.dist - pat.dist[k]) / span)) : 0;
-    const x = 16 + (k + f) * STRIP_STEP + STRIP_STEP / 2;
-    stripTrain.style.transform = `translateX(${x}px)`;
-    if (x < stripEl.scrollLeft + 40 || x > stripEl.scrollLeft + stripEl.clientWidth - 40) stripEl.scrollLeft = x - stripEl.clientWidth / 2;
+    placeStripTrain(k + (v.state === 'move' && span > 0 ? Math.min(1, Math.max(0, (v.dist - pat.dist[k]) / span)) : 0));
   }
+
+  // ---- Hop on!: ride along with the train, station by station
+  const NO_PAD = { top: 0, right: 0, bottom: 0, left: 0 };
+  const ride = { id: null, k: -1, endAt: 0, follow: true, done: false, wait: null, station: -1, resume: 0, offers: '' };
+  const riding = () => ride.id !== null || ride.wait !== null;
+  const absSec = (ymd, sec) => { const [y, m, d] = ymdParts(ymd); return Date.UTC(y, m - 1, d) / 1000 + sec; };
+  const bubble = $('bubble');
+  function say(text) { // a short station call; the bubble is a polite live region
+    bubble.textContent = text;
+    bubble.classList.add('show');
+    clearTimeout(say.t);
+    say.t = setTimeout(() => bubble.classList.remove('show'), 3500);
+  }
+  // the part of the map the card and the dock don't cover
+  function ridePadding() {
+    const r = cardEl.getBoundingClientRect(), dockTop = dock.getBoundingClientRect().top;
+    return narrowQuery.matches
+      ? { top: 70, bottom: Math.max(0, Math.round(innerHeight - (cardEl.hidden ? dockTop : r.top) + 10)), left: 20, right: 20 }
+      : { top: 70, bottom: Math.max(0, Math.round(innerHeight - dockTop + 10)), left: cardEl.hidden ? 20 : Math.round(r.right + 10), right: 20 };
+  }
+  function startRide(v) {
+    const pat = net.patterns[v.pattern], prof = net.profiles[v.run.prof], now = clock.now();
+    Object.assign(ride, { id: v.id, k: v.k, done: false, wait: null, follow: true });
+    ride.endAt = absSec(now.ymd, v.run.t0 + prof.arr[prof.arr.length - 1]);
+    const m = mapView.map, zoom = Math.max(m.getZoom(), 13.2);
+    m.setPadding(ridePadding());
+    if (motionQuery.matches) { m.jumpTo({ center: [v.lon, v.lat], zoom }); mapView.follow(v.id); }
+    else {
+      mapView.follow(null); // following jumps every frame, which would cut the zoom short
+      m.easeTo({ center: [v.lon, v.lat], zoom, duration: 700 });
+      m.once('moveend', () => { if (ride.id !== null && ride.follow) mapView.follow(ride.id); });
+    }
+    if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
+    say(`All aboard! Next stop: ${stationLabel(net, pat.stops[Math.min(v.k + 1, pat.stops.length - 1)])}`);
+    syncButtons();
+  }
+  function hopOff() {
+    // leaving the arrival card: carry on at the speed from before the arrival pause
+    if (ride.done && clock.speed === 0 && ride.resume && !motionQuery.matches) { clock.setSpeed(ride.resume); syncSpeeds(); schedule(); }
+    Object.assign(ride, { id: null, wait: null, done: false, follow: true, station: -1 });
+    mapView.follow(null);
+    mapView.map.setPadding(NO_PAD);
+    cardEl.classList.remove('celebrate');
+    $('next-trains').hidden = true;
+    cardState.k = '';
+    syncButtons();
+  }
+  function updateRide(now) {
+    if (ride.wait) { updateWait(now); return; }
+    if (ride.id === null || ride.done) return;
+    const pat = net.patterns[cardState.pattern], last = pat.stops.length - 1;
+    const v = lookup(ride.id);
+    if (!v && absSec(now.ymd, now.sec) < ride.endAt - 1) { hopOff(); return; } // time jumped away from the trip
+    const k = v ? v.k : last; // gone at its end time: the trip is over
+    const reached = stopsReached(ride.k, k);
+    ride.k = Math.max(ride.k, k);
+    if (k >= last) finishRide(now, pat);
+    else if (reached.length) say(`${stationLabel(net, pat.stops[k])}!`);
+  }
+  function finishRide(now, pat) {
+    const lastK = pat.stops.length - 1, lastStop = pat.stops[lastK], label = stationLabel(net, lastStop);
+    ride.done = true;
+    mapView.follow(null);
+    $('card-now').textContent = `You made it to ${label}! 🎉`;
+    markStrip(lastK, -1, lastK);
+    stripTrain.hidden = false;
+    placeStripTrain(lastK);
+    if (!motionQuery.matches) cardEl.classList.add('celebrate');
+    say(`You made it to ${label}!`);
+    // pause for the moment of arrival, so the next trains on offer don't leave while the choice is made
+    ride.resume = clock.speed || ride.resume;
+    if (clock.speed !== 0) { clock.setSpeed(0); syncSpeeds(); }
+    showNextTrains(net.stopStation[lastStop], now);
+    syncButtons();
+  }
+  const leavesLabel = (sec) => (sec <= 40 ? 'leaves now' : `leaves in about ${Math.max(1, Math.round(sec / 60))} minute${Math.round(sec / 60) > 1 ? 's' : ''}`);
+  function showNextTrains(station, now) {
+    const list = station >= 0 ? trainsFrom(net, station, now.ymd, now.sec, { limit: 3 }) : [];
+    ride.station = station;
+    ride.offers = list.map((d) => `${d.id}|${Math.round((d.t - now.sec) / 60)}`).join(',');
+    const box = $('next-list');
+    box.replaceChildren();
+    if (!list.length) box.append(Object.assign(document.createElement('p'), { className: 'next-none', textContent: 'No more trains from here for a while.' }));
+    for (const d of list) {
+      const route = net.routes[d.route];
+      const btn = Object.assign(document.createElement('button'), { type: 'button', className: 'chunky next-train' });
+      const sw = Object.assign(document.createElement('span'), { className: 'sw' });
+      sw.style.background = routeColor(route);
+      const txt = document.createElement('span');
+      txt.append(`${lineName(route)} to ${stationLabel(net, d.last)}`, Object.assign(document.createElement('small'), { textContent: leavesLabel(d.t - now.sec) }));
+      btn.append(sw, txt);
+      btn.addEventListener('click', () => waitFor(d, station));
+      box.append(btn);
+    }
+    $('next-trains').hidden = false;
+  }
+  // "Hop on another train?": wait at the station until that train is there, then ride it
+  function waitFor(d, station) {
+    const now = clock.now();
+    Object.assign(ride, { id: null, done: false, follow: true, wait: { id: d.id, k: d.k, t: d.t, ymd: now.ymd, station, route: d.route } });
+    selected = d.id;
+    mapView.setSelectedVehicle(d.id);
+    openCard(d.route, d.pattern, d.id);
+    markStrip(-1, -1, d.k, ' (you are waiting here)');
+    stripTrain.hidden = true;
+    placeStripTrain(d.k);
+    const m = mapView.map;
+    m.setPadding(ridePadding());
+    m.easeTo({ center: [net.stationLon[station], net.stationLat[station]], zoom: Math.max(m.getZoom(), 13.2), duration: motionQuery.matches ? 0 : 600 });
+    if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(ride.resume || START_SPEED); syncSpeeds(); schedule(); }
+    updateWait(now);
+    syncButtons();
+  }
+  function updateWait(now) {
+    const w = ride.wait, v = lookup(w.id);
+    if (v && v.k >= w.k) { ride.wait = null; cardState.k = ''; startRide(v); return; }
+    const left = w.t - (absSec(now.ymd, now.sec) - absSec(w.ymd, 0)), noun = net.routes[w.route].isFerry ? 'ferry' : 'train';
+    if (!v && left < -180) { // it has gone (time jumped): offer the next ones instead
+      ride.wait = null; ride.done = true;
+      $('card-now').textContent = `We missed that ${noun}. Pick another one!`;
+      showNextTrains(w.station, now);
+      syncButtons();
+      return;
+    }
+    const pat = net.patterns[cardState.pattern];
+    $('card-now').textContent = `Waiting at ${stationLabel(net, net.stationStops[w.station][0])} for the ${noun} to ${stationLabel(net, pat.stops[pat.stops.length - 1])}. It comes ${left <= 40 ? 'any moment now' : soonLabel(left)}.`;
+  }
+  function syncButtons() {
+    const hop = $('hop'), off = $('hop-off');
+    if (ride.done) { hop.hidden = true; off.hidden = false; off.textContent = 'Done'; }
+    else if (ride.wait) { hop.hidden = true; off.hidden = false; off.textContent = 'Stop waiting'; }
+    else if (ride.id !== null) { hop.hidden = ride.follow; hop.textContent = 'Find my train'; off.hidden = false; off.textContent = 'Hop off'; }
+    else { hop.hidden = cardState.id === null || !lookup(cardState.id); hop.textContent = 'Hop on!'; off.hidden = true; }
+  }
+  $('hop').addEventListener('click', () => {
+    if (ride.id !== null) { ride.follow = true; mapView.follow(ride.id); tick(true); syncButtons(); } // find my train
+    else { const v = lookup(cardState.id); if (v) startRide(v); }
+  });
+  $('hop-off').addEventListener('click', () => {
+    const waiting = !!ride.wait;
+    hopOff();
+    if (waiting) select(null); else tick(true);
+  });
   $('card-close').addEventListener('click', () => select(null));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !dlg.open && cardState.id !== null) select(null); });
 
@@ -280,6 +445,7 @@ async function main() {
     lastMoment = moment;
     const vehicles = net.vehicles(now.ymd, now.sec);
     mapView.setVehicles(vehicles);
+    updateRide(now);
     updateCard(now);
     if (force || t - lastText > 1000) {
       lastText = t;
@@ -294,6 +460,10 @@ async function main() {
       else line = `${plural(trains, 'train', 'trains')}${boats ? ` and ${plural(boats, 'boat', 'boats')}` : ''} ${trains + boats === 1 ? 'is' : 'are'} moving right now`;
       $('count').textContent = line;
       $('wake').hidden = trains > 0;
+      if (ride.done && ride.station >= 0) { // time is running on the arrival card: keep the offers current
+        const fresh = trainsFrom(net, ride.station, now.ymd, now.sec, { limit: 3 }).map((d) => `${d.id}|${Math.round((d.t - now.sec) / 60)}`).join(',');
+        if (fresh !== ride.offers) showNextTrains(ride.station, now);
+      }
     }
     if (force) schedule();
   }
@@ -301,10 +471,11 @@ async function main() {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { cancelAnimationFrame(frameId); frameId = null; } else tick(true);
   });
-  mapView.map.on('moveend', () => tick(true));
+  // (not while following: the follow camera moves every frame and its moveend would call tick again, endlessly)
+  mapView.map.on('moveend', () => { if (mapView.following === null) tick(true); });
   tick(true);
 
-  window.__kids = { net, clock, mapView, tick, select, get selected() { return selected; } };
+  window.__kids = { net, clock, mapView, tick, select, get selected() { return selected; }, get ride() { return ride; } };
   setLoading('Ready', 1);
   document.body.classList.add('ready');
   $('loading').hidden = true;
