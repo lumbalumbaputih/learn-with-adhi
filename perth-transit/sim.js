@@ -148,13 +148,58 @@ export function smoothTimes(arr) {
   return ta;
 }
 
+/**
+ * Realistic motion for trains and the ferry (animation only). The timetable has whole minutes and
+ * almost never a stopping time (11 of 1,690 train stop entries), so taken literally a train glides
+ * through every station at a steady speed. Instead the vehicle speeds up and slows down between
+ * stops at `acc` m/s², up to `top` m/s, and stands at each intermediate stop for up to `dwell`
+ * seconds, leaving on the published time. These are assumptions, not measured figures: a typical
+ * suburban electric train (Perth's fastest run at about 130 km/h) and a slow harbour ferry.
+ * The published times are whole minutes, so a short run can look impossibly fast (1.5 km in "1
+ * minute"). Then the stop shrinks to `minDwell`, and after that the vehicle leaves up to `late`
+ * seconds after the published time and catches up later. It never leaves early, it reaches the last
+ * stop on time, and it only breaks the speed limits if even that is not enough.
+ * Buses keep the plain timetable interpolation: they only stop when someone is waiting or rings the
+ * bell, so a stop at every bus stop would be less accurate, not more.
+ */
+export const MOTION = {
+  train: { acc: 0.9, top: 130 / 3.6, dwell: 25, minDwell: 15, late: 30 },
+  ferry: { acc: 0.25, top: 8, dwell: 0, minDwell: 0, late: 0 },
+};
+
+/** Shortest time to cover s metres from stop to stop, speeding up and slowing down at a, no faster than v. */
+const minRun = (s, a, v) => (s >= (v * v) / a ? s / v + v / a : 2 * Math.sqrt(s / a));
+
+/** Distance covered t seconds into a stop-to-stop run of s metres taking T seconds, at acceleration a up to speed v. */
+function runDistance(s, T, a, v, t) {
+  if (t <= 0) return 0;
+  if (t >= T) return s;
+  const tr = v / a; // time spent speeding up (and again slowing down)
+  if (t < tr) return 0.5 * a * t * t;
+  if (t > T - tr) { const u = T - t; return s - 0.5 * a * u * u; }
+  return 0.5 * a * tr * tr + v * (t - tr);
+}
+
 // ---------------------------------------------------------------- network
 export class Network {
   constructor({ meta, core, trips, stops, shapes }) {
     this.meta = meta;
-    this.routes = core.routes.map(([short, long, type], idx) => ({
-      idx, short, long, type, name: short || long, isTrain: type === 2,
-    }));
+    // Contract-specific GTFS route IDs can describe the same public route.
+    // Remap only route references; every pattern, profile and trip stays intact.
+    this.routes = [];
+    const routeKeys = new Map();
+    const routeMap = core.routes.map(([short, long, type]) => {
+      const key = JSON.stringify([short, long, type]);
+      if (!routeKeys.has(key)) {
+        const idx = this.routes.length;
+        routeKeys.set(key, idx);
+        this.routes.push({
+          idx, short, long, type, name: short || long, isTrain: type === 2, isFerry: type === 4,
+          mode: type === 2 ? 'train' : type === 4 ? 'ferry' : 'bus',
+        });
+      }
+      return routeKeys.get(key);
+    });
     this.headsigns = core.headsigns;
     this._shapeEnc = shapes;
     this._geom = new Array(shapes.length);
@@ -167,7 +212,7 @@ export class Network {
     this.stopLat = Float64Array.from(stops.lat, (v) => v / 1e5);
     this.stopLon = Float64Array.from(stops.lon, (v) => v / 1e5);
     this.stopStation = Int32Array.from(stops.par);
-    this.stopMode = Uint8Array.from(stops.mode); // bit 1 = bus, bit 2 = train
+    this.stopMode = Uint8Array.from(stops.mode); // bit 1 = bus, bit 2 = train, bit 4 = ferry
     this.stationName = stops.st.name;
     this.stationLat = Float64Array.from(stops.st.lat, (v) => v / 1e5);
     this.stationLon = Float64Array.from(stops.st.lon, (v) => v / 1e5);
@@ -181,7 +226,7 @@ export class Network {
       const dist = new Float64Array(deltas.length);
       let acc = 0;
       for (let i = 0; i < deltas.length; i++) { acc += deltas[i]; dist[i] = acc; }
-      return { idx, route, dir, shape, hs, stops: Int32Array.from(stopIdx), dist };
+      return { idx, route: routeMap[route], dir, shape, hs, stops: Int32Array.from(stopIdx), dist };
     });
 
     // profiles (timing variants) and their trips
@@ -245,6 +290,33 @@ export class Network {
     return ymd >= this.meta.validFrom && ymd <= this.meta.validTo;
   }
 
+  /** Number of trips that run on a date (all modes). */
+  tripsOn(ymd) {
+    const flags = this.serviceFlags(ymd);
+    let n = 0;
+    for (const prof of this.profiles) for (let i = 0; i < prof.svc.length; i++) n += flags[prof.svc[i]];
+    return n;
+  }
+
+  /**
+   * The covered day with the same weekday as `ymd` that runs the most trips: a normal full-service day
+   * (public holidays run fewer). Used to show a typical day when `ymd` is outside the timetable.
+   * Exceptions in the calendar can't be used to spot ordinary days: this feed has them on every date.
+   */
+  typicalDay(ymd) {
+    const dow = ymdToDow(ymd);
+    const memo = this._typical || (this._typical = new Map());
+    if (memo.has(dow)) return memo.get(dow);
+    let best = this.meta.validFrom, most = -1;
+    for (let d = this.meta.validFrom; d <= this.meta.validTo; d = addDays(d, 1)) {
+      if (ymdToDow(d) !== dow) continue;
+      const n = this.tripsOn(d);
+      if (n > most) { most = n; best = d; }
+    }
+    memo.set(dow, best);
+    return best;
+  }
+
   // ------------------------------------------------------------ runs of a service day
   runsForDay(ymd) {
     let r = this._runs.get(ymd);
@@ -296,6 +368,8 @@ export class Network {
     const n = prof.arr.length;
     const tau = sec - run.t0;
     if (tau < prof.arr[0] || tau > prof.arr[n - 1]) return null;
+    const mo = prof.mo === undefined ? (prof.mo = this._motion(prof)) : prof.mo;
+    if (mo) return this._movePosition(prof, pat, mo, tau);
     const arr = prof.ta || (prof.ta = smoothTimes(prof.arr)); // animation times, see smoothTimes
     let lo = 0, hi = n - 1;
     while (lo < hi) {
@@ -311,6 +385,61 @@ export class Network {
       const span = arr[k + 1] - dep;
       const f = span > 0 ? (tau - dep) / span : 1;
       d = pat.dist[k] + (pat.dist[k + 1] - pat.dist[k]) * f;
+      state = 'move'; nextK = k + 1;
+    }
+    const out = { k, nextK, state, dist: d, pattern: pat.idx, prof: prof.idx };
+    pointAt(this.geom(pat.shape), d, out);
+    return out;
+  }
+
+  /**
+   * Stop and run timings for a train or ferry profile (see MOTION), or null for buses. Per stop:
+   * arrive / depart (seconds after trip start). Per run k (stop k to k + 1): acceleration and top speed.
+   */
+  _motion(prof) {
+    const pat = this.patterns[prof.pattern];
+    const cfg = MOTION[this.routes[pat.route].mode];
+    if (!cfg) return null;
+    const ta = prof.ta || (prof.ta = smoothTimes(prof.arr));
+    const n = ta.length;
+    const arrive = new Float64Array(n), depart = new Float64Array(n), acc = new Float64Array(n), top = new Float64Array(n);
+    arrive[0] = ta[0];
+    depart[0] = ta[0] + prof.dw[0];
+    for (let k = 1; k < n; k++) {
+      const s = pat.dist[k] - pat.dist[k - 1];
+      if (k === n - 1) { arrive[k] = depart[k] = ta[k]; }
+      else if (prof.dw[k] > 0) { arrive[k] = ta[k]; depart[k] = ta[k] + prof.dw[k]; } // the timetable has a real stopping time
+      else {
+        const late = ta[k] + cfg.late;
+        const earliest = Math.min(depart[k - 1] + minRun(s, cfg.acc, cfg.top), late);
+        depart[k] = Math.min(Math.max(ta[k], earliest + cfg.minDwell), late); // on time, or as soon as a short stop allows
+        arrive[k] = Math.max(earliest, depart[k] - cfg.dwell);
+      }
+      if (arrive[k] < depart[k - 1]) { arrive[k] = depart[k - 1]; depart[k] = Math.max(depart[k], arrive[k]); } // keep times in order
+      const T = arrive[k] - depart[k - 1];
+      if (T > 0 && s > 0) {
+        const a = cfg.acc * T * T >= 4 * s ? cfg.acc : (4 * s) / (T * T); // too little time: accelerate harder
+        acc[k - 1] = a;
+        top[k - 1] = (a * T - Math.sqrt(Math.max(0, a * a * T * T - 4 * a * s))) / 2;
+      }
+    }
+    return { arrive, depart, acc, top };
+  }
+
+  _movePosition(prof, pat, mo, tau) {
+    const n = mo.arrive.length;
+    let lo = 0, hi = n - 1;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (mo.arrive[mid] <= tau) lo = mid; else hi = mid - 1;
+    }
+    const k = lo;
+    let d, state, nextK;
+    if (k === n - 1) { d = pat.dist[k]; state = 'end'; nextK = k; }
+    else if (tau < mo.depart[k]) { d = pat.dist[k]; state = 'dwell'; nextK = k + 1; }
+    else {
+      const s = pat.dist[k + 1] - pat.dist[k], T = mo.arrive[k + 1] - mo.depart[k];
+      d = pat.dist[k] + (mo.acc[k] > 0 ? runDistance(s, T, mo.acc[k], mo.top[k], tau - mo.depart[k]) : s);
       state = 'move'; nextK = k + 1;
     }
     const out = { k, nextK, state, dist: d, pattern: pat.idx, prof: prof.idx };
@@ -334,7 +463,7 @@ export class Network {
       const route = this.routes[pat.route];
       list.push({
         id: run.day * 2 ** 40 + run.prof * 2 ** 20 + run.ti,
-        run, lat: pos.lat, lon: pos.lon, bearing: pos.bearing,
+        run, lat: pos.lat, lon: pos.lon, bearing: pos.bearing, dist: pos.dist,
         route: pat.route, type: route.type, pattern: pat.idx, state: pos.state, k: pos.k, nextK: pos.nextK,
       });
     }
@@ -354,7 +483,8 @@ export class Network {
       route, headsign: hs, state: v.state,
       stopName: this.stopName[pat.stops[v.k]],
       nextStopName: this.stopName[nextStop], nextStop, etaSec,
-      progress: pat.dist[last] > 0 ? Math.min(1, Math.max(0, (pat.dist[v.k] + 0) / pat.dist[last])) : 0,
+      // distance along the route, so a two-stop trip (the ferry) still fills the bar as it goes
+      progress: pat.dist[last] > pat.dist[0] ? Math.min(1, Math.max(0, ((v.dist ?? pat.dist[v.k]) - pat.dist[0]) / (pat.dist[last] - pat.dist[0]))) : 0,
       destination: this.stopName[pat.stops[last]],
     };
   }
@@ -404,7 +534,7 @@ export class Network {
               const t = prof.starts[j] + depOff + shift;
               if (t > sec + hz) break;
               const pat = this.patterns[prof.pattern];
-              res.push({ t, stop: s, route: pat.route, pattern: pat.idx, k, prof: prof.idx, ti: j });
+              res.push({ t, stop: s, route: pat.route, pattern: pat.idx, k, prof: prof.idx, ti: j, shift }); // shift: which service day (-DAY = yesterday's)
               got++;
             }
           }
@@ -431,6 +561,42 @@ export class Network {
   routePatterns(routeIdx) {
     if (!this._routePatterns) this._buildRoutePatterns();
     return this._routePatterns[routeIdx];
+  }
+
+  /**
+   * How often a route runs on a service day, from the timetable: trips leaving their first stop in each hour
+   * (hours past midnight run on to 29 for after-midnight trips), the busiest single direction in that hour,
+   * and the first and last departure. It says nothing about how full the vehicles are.
+   * Takes one route index or several (see sameNameRoutes).
+   */
+  routeDay(routeIdxs, ymd) {
+    const H = 30, flags = this.serviceFlags(ymd);
+    const all = new Uint16Array(H), byDir = new Map();
+    let first = Infinity, last = -Infinity, trips = 0;
+    for (const pi of [].concat(routeIdxs).flatMap((ri) => this.routePatterns(ri))) {
+      const dir = this.patterns[pi].dir;
+      let d = byDir.get(dir);
+      if (!d) byDir.set(dir, (d = new Uint16Array(H)));
+      for (const q of this.patternProfiles[pi]) {
+        const p = this.profiles[q];
+        for (let i = 0; i < p.starts.length; i++) {
+          if (!flags[p.svc[i]]) continue;
+          const t = p.starts[i] + p.arr[0], hr = Math.min(H - 1, Math.floor(t / 3600));
+          all[hr]++; d[hr]++; trips++;
+          if (t < first) first = t;
+          if (t > last) last = t;
+        }
+      }
+    }
+    const oneWay = new Uint16Array(H);
+    for (const d of byDir.values()) for (let hr = 0; hr < H; hr++) if (d[hr] > oneWay[hr]) oneWay[hr] = d[hr];
+    return { all, oneWay, dirs: byDir.size, first, last, trips };
+  }
+
+  /** Public route identity (contract duplicates have already been coalesced at load). */
+  sameNameRoutes(routeIdx) {
+    const r = this.routes[routeIdx];
+    return this.routes.filter((x) => x.short === r.short && x.long === r.long && x.type === r.type).map((x) => x.idx);
   }
 
   routeShapes(routeIdx) {
@@ -537,7 +703,7 @@ export class Network {
     return scored.slice(0, limit).map(([, , i]) => this._entities[i]);
   }
 
-  nearestEntities(lat, lon, limit = 12, modeMask = 3) {
+  nearestEntities(lat, lon, limit = 12, modeMask = 7) {
     if (!this._entities) this._prepSearch();
     const best = [];
     for (const e of this._entities) {
@@ -554,23 +720,23 @@ export class Network {
   }
 
   // ------------------------------------------------------------ the day's heartbeat
-  /** Vehicles running at each bin start across the Perth service day: { total, bus, train, bin }. */
+  /** Vehicles running at each bin start across the Perth service day: { total, bus, train, ferry, bin }. */
   heartbeat(ymd, binSec = 300) {
     const nb = DAY / binSec;
-    const bus = new Uint16Array(nb), train = new Uint16Array(nb);
+    const bus = new Uint16Array(nb), train = new Uint16Array(nb), ferry = new Uint16Array(nb);
     for (const [dayYmd, shift] of [[ymd, 0], [addDays(ymd, -1), -DAY]]) {
       const R = this.runsForDay(dayYmd);
       for (let i = 0; i < R.n; i++) {
         const s = R.start[i] + shift, e = R.end[i] + shift;
         if (e <= 0 || s >= DAY) continue;
-        const isTrain = this.routes[this.patterns[this.profiles[R.prof[i]].pattern].route].isTrain;
+        const route = this.routes[this.patterns[this.profiles[R.prof[i]].pattern].route];
         const from = Math.max(0, Math.ceil(s / binSec)), to = Math.min(nb - 1, Math.ceil(e / binSec) - 1);
-        const a = isTrain ? train : bus;
+        const a = route.isTrain ? train : route.isFerry ? ferry : bus;
         for (let b = from; b <= to; b++) a[b]++;
       }
     }
     const total = new Uint16Array(nb);
-    for (let b = 0; b < nb; b++) total[b] = bus[b] + train[b];
-    return { total, bus, train, bin: binSec };
+    for (let b = 0; b < nb; b++) total[b] = bus[b] + train[b] + ferry[b];
+    return { total, bus, train, ferry, bin: binSec };
   }
 }

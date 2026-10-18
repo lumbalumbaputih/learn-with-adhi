@@ -1,7 +1,8 @@
 // panel.js: tabs, search, route and stop pages, the vehicle card and the departures board.
-import { DAY, fmtClock } from './sim.js';
-import { routeColor } from './colors.js';
-import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js';
+import { DAY, fmtClock } from './sim.js?v=1.9';
+import { routeColor } from './colors.js?v=1.9';
+import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.9';
+import { dayLabel } from './scrubber.js?v=1.9';
 
 const TABS = [['map', 'Map'], ['routes', 'Routes'], ['stops', 'Stops']];
 
@@ -10,9 +11,27 @@ function segmented(label, options, value, onChange) {
   for (const [v, text] of options) {
     wrap.append(h('button', {
       class: 'seg-btn', type: 'button', role: 'radio', 'aria-checked': String(v === value), text,
-      onclick: () => onChange(v),
+      tabindex: v === value ? 0 : -1,
+      onclick: () => {
+        onChange(v);
+        const group = [...document.querySelectorAll('[role="radiogroup"]')].find((g) => g.getAttribute('aria-label') === label);
+        group?.querySelector('[aria-checked="true"]')?.focus({ preventScroll: true });
+      },
     }));
   }
+  wrap.addEventListener('keydown', (e) => {
+    const buttons = [...wrap.children];
+    const i = buttons.indexOf(document.activeElement);
+    if (i < 0) return;
+    let next;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % buttons.length;
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i + buttons.length - 1) % buttons.length;
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = buttons.length - 1;
+    else return;
+    e.preventDefault();
+    buttons[next].click();
+  });
   return wrap;
 }
 
@@ -56,7 +75,16 @@ export class Panel {
       this.query = ''; this.input.value = ''; this._clearDetail(); this.setTab(ids[i]);
       tabs.children[i].focus();
     });
-    this.input.addEventListener('input', () => { this.query = this.input.value.trim(); this.render(); });
+    this.input.addEventListener('input', () => {
+      this.query = this.input.value.trim(); this.render();
+      clearTimeout(this._searchTimer);
+      this._searchTimer = setTimeout(() => {
+        const status = document.getElementById('search-status');
+        if (status) status.textContent = this.query
+          ? `Showing ${this.net.searchRoutes(this.query, 8).length} routes and ${this.net.searchEntities(this.query, 12).length} stops or stations for ${this.query}.`
+          : '';
+      }, 250);
+    });
     this.clearBtn.addEventListener('click', () => { this.input.value = ''; this.query = ''; this.render(); this.input.focus(); });
     this._syncTabs();
     this.render();
@@ -84,6 +112,7 @@ export class Panel {
     this.tab = 'routes'; this.detail = { kind: 'route', idx };
     this._syncTabs(); this.render();
     this.act.onRoute(idx);
+    this.content.focus({ preventScroll: true });
   }
 
   openEntity(e, { fly = true } = {}) {
@@ -93,6 +122,7 @@ export class Panel {
     this.boardFilter = 'all';
     this._syncTabs(); this.render();
     this.act.onEntity(e, fly);
+    this.content.focus({ preventScroll: true });
   }
 
   openVehicle(id) {
@@ -112,12 +142,14 @@ export class Panel {
   back() {
     this._clearDetail();
     this.render();
+    this.content.focus({ preventScroll: true });
   }
 
   closeVehicle() {
     this.vehicleId = null;
     this.act.onVehicleClose();
     this.render();
+    this.content.focus({ preventScroll: true });
   }
 
   setCenter(lat, lon) {
@@ -131,6 +163,10 @@ export class Panel {
     c.replaceChildren();
     this.r = {};
     this.clearBtn.hidden = !this.query;
+    if (!this.query) {
+      const status = document.getElementById('search-status');
+      if (status?.textContent) status.textContent = '';
+    }
     c.setAttribute('aria-labelledby', `tab-${this.tab}`);
     if (this.query) c.append(this._search());
     else if (this.detail && this.detail.kind === 'route') c.append(this._routePage());
@@ -148,34 +184,75 @@ export class Panel {
   }
 
   // ---- Map tab
+  _favourites() {
+    const places = this.act.getPlaces();
+    const list = h('ul', { class: 'plain-list' });
+    for (const place of places) {
+      list.append(h('li', { class: 'place-row' },
+        h('button', { class: 'row', type: 'button', onclick: () => this.act.onPlace(place), 'aria-label': `Show stops near ${place.name}` },
+          h('span', { class: 'place-mark', 'aria-hidden': 'true', text: '★' }),
+          h('span', { class: 'row-main' }, h('span', { class: 'row-title', text: place.name }),
+            h('span', { class: 'row-sub', text: 'Show nearby stops' }))),
+        h('button', { class: 'btn btn-quiet', type: 'button', text: 'Edit', 'aria-label': `Edit ${place.name}`, onclick: () => this.act.onSavePlace({ place }) })));
+    }
+    const buttons = h('div', { class: 'btn-row' });
+    for (const name of ['Home', 'Work']) if (!places.some((p) => p.name.toLowerCase() === name.toLowerCase())) {
+      buttons.append(h('button', { class: 'btn btn-quiet', type: 'button', text: `Save ${name}`, onclick: () => this.act.onSavePlace({ name }) }));
+    }
+    buttons.append(h('button', { class: 'btn', type: 'button', text: 'Add a place', onclick: () => this.act.onSavePlace() }));
+    return h('section', { class: 'block favourites', 'aria-label': 'Favourite places' },
+      h('h2', { class: 'h2', text: 'Favourites' }), list, buttons,
+      h('p', { class: 'fine', text: 'Save Home, Work or another place on this device.' }));
+  }
+
+  refreshPlaces(places) {
+    if (this.nearMe?.placeId) {
+      const place = places.find((p) => p.id === this.nearMe.placeId);
+      this.nearMe = place ? { ...place, placeId: place.id } : null;
+    }
+    this.render();
+  }
+
+  showPlace(place) {
+    this._clearDetail(); this.query = ''; this.input.value = ''; this.vehicleId = null;
+    this.nearMe = { ...place, placeId: place.id };
+    this.setTab('stops');
+    this.content.focus({ preventScroll: true });
+  }
+
   _mapTab() {
     const net = this.net;
     this.r.total = h('span', { class: 'num' });
     this.r.routes = h('span', { class: 'status-sub' });
     this.r.bus = h('span', { class: 'fig-num' });
     this.r.train = h('span', { class: 'fig-num' });
+    this.r.ferry = h('span', { class: 'fig-num' });
+    this.r.ferryLabel = h('span', { text: 'ferries' });
     this.r.vcard = h('div', { class: 'vcard-slot' });
-    const status = h('section', { class: 'status', 'aria-live': 'polite' },
+    const status = h('section', { class: 'status' },
       h('div', { class: 'status-main' }, this.r.total, h('div', { class: 'status-label' }, h('strong', { text: 'vehicles running' }), this.r.routes)),
       h('div', { class: 'figs' },
         h('div', { class: 'fig' }, this.r.bus, h('span', { text: 'buses' })),
-        h('div', { class: 'fig' }, this.r.train, h('span', { text: 'trains' }))),
+        h('div', { class: 'fig' }, this.r.train, h('span', { text: 'trains' })),
+        h('div', { class: 'fig' }, this.r.ferry, this.r.ferryLabel)),
       h('p', { class: 'hint', text: 'Positions are estimated from the published timetable. Vehicles are not tracked by GPS, and delays or cancellations are not shown.' }));
-    const seg = segmented('Show on the map', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses']], this.mapMode, (v) => {
+    const seg = segmented('Show on the map', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses'], ['ferry', 'Ferry']], this.mapMode, (v) => {
       this.mapMode = v; this.act.onMode(v); this.render();
     });
 
     this.r.lineRows = new Map();
     const list = h('ul', { class: 'plain-list' });
-    for (const r of net.routes.filter((x) => x.isTrain)) {
+    const ferries = h('ul', { class: 'plain-list' });
+    for (const r of net.routes.filter((x) => x.isTrain || x.isFerry)) {
       const count = h('span', { class: 'row-count' });
       this.r.lineRows.set(r.idx, count);
-      list.append(h('li', {}, h('button', { class: 'row', type: 'button', onclick: () => this.openRoute(r.idx) },
+      (r.isFerry ? ferries : list).append(h('li', {}, h('button', { class: 'row', type: 'button', onclick: () => this.openRoute(r.idx) },
         chip(r), h('span', { class: 'row-main' },
-          h('span', { class: 'row-title', text: r.long }), h('span', { class: 'row-sub', text: this._summary(r.idx) })), count)));
+          h('span', { class: 'row-title', text: r.isFerry ? 'Swan River ferry' : r.long }), h('span', { class: 'row-sub', text: this._summary(r.idx) })), count)));
     }
-    return h('div', { class: 'stack' }, this.r.vcard, status, seg,
-      h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Train lines' }), list));
+    return h('div', { class: 'stack' }, this.r.vcard, status, seg, this._favourites(),
+      h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Train lines' }), list),
+      ferries.childElementCount ? h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Ferry' }), ferries) : null);
   }
 
   _vehicleCard(v, sec) {
@@ -243,12 +320,12 @@ export class Panel {
   _routesTab() {
     const net = this.net;
     this.r.routeRows = new Map();
-    const seg = segmented('Filter routes', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses']], this.routeFilter, (v) => {
+    const seg = segmented('Filter routes', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses'], ['ferry', 'Ferry']], this.routeFilter, (v) => {
       this.routeFilter = v; this.render();
     });
-    const routes = net.routes.filter((r) => this.routeFilter === 'all' || (this.routeFilter === 'train') === r.isTrain);
+    const routes = net.routes.filter((r) => this.routeFilter === 'all' || r.mode === this.routeFilter);
     return h('div', { class: 'stack' }, seg,
-      h('p', { class: 'meta', text: `${fmtN(routes.length)} routes` }), this._routeRows(routes));
+      h('p', { class: 'meta', text: `${fmtN(routes.length)} ${routes.length === 1 ? 'route' : 'routes'}` }), this._routeRows(routes));
   }
 
   _routePage() {
@@ -276,6 +353,8 @@ export class Panel {
         h('summary', {}, h('span', { class: 'muted', text: 'Towards ' }), h('strong', { text: name }), h('span', { class: 'muted', text: `, ${p.stops.length} stops` })), stops));
     }
     this.r.todayTrips = h('span', { class: 'meta' });
+    this.r.busy = h('div', { class: 'busy-wrap' });
+    this.r.busyYmd = null;
     return h('div', { class: 'stack' },
       this._backBtn('Routes'),
       h('header', { class: 'page-head' }, chip(route, { big: true }),
@@ -283,7 +362,59 @@ export class Panel {
       h('p', { class: 'meta' }, this.r.routeRunning, this.r.todayTrips),
       h('div', { class: 'btn-row' },
         h('button', { class: 'btn', type: 'button', onclick: () => this.act.onRoute(idx), text: 'Show on map' })),
+      h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'How busy is this line?' }), this.r.busy),
       hs.length ? h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Directions' }), dirs) : null);
+  }
+
+  /** "How busy is this line?": trips per hour through the day, the busiest hour, first and last trip. */
+  _renderBusy(now) {
+    const net = this.net, idx = this.detail.idx, route = net.routes[idx];
+    const group = net.sameNameRoutes(idx);
+    const d = net.routeDay(group, now.ymd);
+    this.r.busyYmd = now.ymd;
+    this.r.busyBars = [];
+    this.r.todayTrips.textContent = `, ${fmtN(d.trips)} ${d.trips === 1 ? 'trip' : 'trips'} on this day`;
+    const wrap = this.r.busy;
+    if (!d.trips) {
+      wrap.replaceChildren(h('p', { class: 'empty', text: `No trips on ${dayLabel(now.ymd)}.` }));
+      return;
+    }
+    const hrLabel = (hr) => (hr % 24 === 0 ? 'midnight' : hr % 24 === 12 ? 'noon' : `${hr % 12 || 12}${hr % 24 < 12 ? 'am' : 'pm'}`);
+    let peak = 0;
+    for (let hr = 1; hr < d.all.length; hr++) if (d.all[hr] > d.all[peak]) peak = hr;
+    const from = Math.floor(d.first / 3600), to = Math.floor(d.last / 3600);
+    const gap = d.oneWay[peak] ? Math.round(60 / d.oneWay[peak]) : 0;
+    const often = gap <= 1 ? 'an average of about one trip per minute' : `an average of about one trip per ${gap} min`;
+    const each = d.dirs > 1 ? ' in the busiest direction' : '';
+    const head = h('p', { class: 'busy-head' },
+      h('strong', { text: `Busiest ${hrLabel(peak)} to ${hrLabel(peak + 1)}` }),
+      `: ${fmtN(d.all[peak])} ${d.all[peak] === 1 ? 'trip' : 'trips'}, ${often}${each}.`);
+    const tripTime = (t) => `${fmtClock(t)}${t >= DAY ? ' next day' : ''}`;
+    const span = h('p', { class: 'meta', text: `First trip ${tripTime(d.first)}, last trip ${tripTime(d.last)}.` });
+    const color = routeColor(route);
+    const bars = h('div', { class: 'busy-bars', role: 'img',
+      'aria-label': `Trips per hour on ${dayLabel(now.ymd)}, from ${hrLabel(from)} to ${hrLabel(to + 1)}. Busiest ${hrLabel(peak)} to ${hrLabel(peak + 1)} with ${d.all[peak]} trips.` });
+    const axis = h('div', { class: 'busy-axis', 'aria-hidden': 'true' });
+    const rows = h('tbody', {});
+    for (let hr = from; hr <= to; hr++) {
+      const n = d.all[hr];
+      rows.append(h('tr', {},
+        h('th', { scope: 'row', text: `${hrLabel(hr)}${hr >= 24 ? ' next day' : ''}` }),
+        h('td', { text: fmtN(n) })));
+      const bar = h('span', { class: 'busy-bar', title: `${hrLabel(hr)}: ${n} ${n === 1 ? 'trip' : 'trips'}`,
+        style: { height: `${n ? Math.max(4, Math.round((n / d.all[peak]) * 100)) : 0}%`, background: color } });
+      bar.dataset.hr = String(hr);
+      this.r.busyBars.push(bar);
+      bars.append(bar);
+      axis.append(h('span', { text: hr % 3 === 0 ? (hr % 24 === 0 ? '12am' : hrLabel(hr)) : '' })); // short, so the right edge is not cut off
+    }
+    wrap.replaceChildren(head, span, bars, axis,
+      h('p', { class: 'fine', text: `Trips leaving their first stop per hour on ${dayLabel(now.ymd)}, from the timetable. Branches and short trips are included; spacing at your stop may differ. This shows service frequency, not how full it is.` }),
+      h('details', { class: 'hourly-data' },
+        h('summary', { text: 'Hourly timetable counts' }),
+        h('table', {}, h('caption', { class: 'sr-only', text: `Trips by hour on ${dayLabel(now.ymd)}` }),
+          h('thead', {}, h('tr', {}, h('th', { scope: 'col', text: 'Hour' }), h('th', { scope: 'col', text: 'Trips' }))), rows)));
+    this.r.busyNow = null;
   }
 
   // ---- Stops tab
@@ -293,7 +424,7 @@ export class Panel {
       h('button', { class: 'btn', type: 'button', onclick: () => this.act.onLocate(), text: 'Near me' }),
       h('button', { class: 'btn btn-quiet', type: 'button', disabled: !this.nearMe, onclick: () => { this.nearMe = null; this._renderNear(); }, text: 'Use map centre' }));
     this.r.nearHead = h('h2', { class: 'h2' });
-    const wrap = h('div', { class: 'stack' }, top, this.r.nearHead, this.r.near,
+    const wrap = h('div', { class: 'stack' }, this._favourites(), top, this.r.nearHead, this.r.near,
       h('p', { class: 'fine', text: 'Your location stays in your browser and is only used to sort nearby stops.' }));
     queueMicrotask(() => this._renderNear());
     return wrap;
@@ -304,7 +435,7 @@ export class Panel {
   _renderNear() {
     if (!this.r.near) return;
     const src = this.nearMe || this.center;
-    this.r.nearHead.textContent = this.nearMe ? 'Stops near you' : 'Stops near the map centre';
+    this.r.nearHead.textContent = this.nearMe?.name ? `Stops near ${this.nearMe.name}` : this.nearMe ? 'Stops near you' : 'Stops near the map centre';
     this.r.near.replaceChildren();
     if (!src) return;
     const list = h('ul', { class: 'plain-list' });
@@ -319,11 +450,15 @@ export class Panel {
     const tags = [];
     if (mode & 2) tags.push('Train');
     if (mode & 1) tags.push('Bus');
+    if (mode & 4) tags.push('Ferry');
+    const g = mode & 2 ? ['train', 'T'] : mode & 4 ? ['ferry', 'F'] : ['bus', 'B'];
+    const sub = e.kind === 'stop' ? `${tags.join(' and ')}, stop ${net.stopCode[e.idx]}`
+      : mode === 4 ? 'Ferry jetty' : `Station, ${tags.join(' and ').toLowerCase()}`;
     return h('button', { class: 'row', type: 'button', onclick: () => this.openEntity(e) },
-      h('span', { class: `glyph ${mode & 2 ? 'glyph-train' : 'glyph-bus'}`, 'aria-hidden': 'true', text: mode & 2 ? 'T' : 'B' }),
+      h('span', { class: `glyph glyph-${g[0]}`, 'aria-hidden': 'true', text: g[1] }),
       h('span', { class: 'row-main' },
         h('span', { class: 'row-title', text: prettyName(net.entityName(e)) }),
-        h('span', { class: 'row-sub', text: e.kind === 'stop' ? `${tags.join(' and ')}, stop ${net.stopCode[e.idx]}` : `Station, ${tags.join(' and ').toLowerCase()}` })),
+        h('span', { class: 'row-sub', text: sub })),
       trailing ? h('span', { class: 'row-count', text: trailing }) : null);
   }
 
@@ -336,15 +471,20 @@ export class Panel {
     routes.slice(0, 30).forEach((ri) => chips.append(h('button', { class: 'chip-btn', type: 'button', 'aria-label': `Route ${net.routes[ri].name}`, onclick: () => this.openRoute(ri) }, chip(net.routes[ri]))));
     if (routes.length > 30) chips.append(h('span', { class: 'meta', text: `and ${routes.length - 30} more` }));
     this.r.board = h('div', { class: 'board' });
-    const filters = (mode & 1) && (mode & 2)
-      ? segmented('Filter departures', [['all', 'All'], ['train', 'Trains'], ['bus', 'Buses']], this.boardFilter, (v) => { this.boardFilter = v; this._renderBoard(); this._syncBoardSeg(); })
+    const here = [['train', 'Trains', 2], ['bus', 'Buses', 1], ['ferry', 'Ferry', 4]].filter((x) => mode & x[2]);
+    const filters = here.length > 1
+      ? segmented('Filter departures', [['all', 'All'], ...here.map(([v, t]) => [v, t])], this.boardFilter, (v) => { this.boardFilter = v; this._renderBoard(); this._syncBoardSeg(); })
       : null;
     this.r.boardSeg = filters;
     return h('div', { class: 'stack' },
       this._backBtn('Stops'),
       h('header', { class: 'page-head' }, h('h2', { class: 'page-title', text: prettyName(net.entityName(e)) })),
-      h('p', { class: 'meta', text: e.kind === 'stop' ? `Stop ${net.stopCode[e.idx]}` : 'Station' }),
-      h('div', { class: 'btn-row' }, h('button', { class: 'btn', type: 'button', onclick: () => this.act.onEntity(e, true), text: 'Show on map' })),
+      h('p', { class: 'meta', text: e.kind === 'stop' ? `Stop ${net.stopCode[e.idx]}` : mode === 4 ? 'Ferry jetty' : 'Station' }),
+      h('div', { class: 'btn-row' },
+        h('button', { class: 'btn', type: 'button', onclick: () => this.act.onEntity(e, true), text: 'Show on map' }),
+        h('button', { class: 'btn btn-quiet', type: 'button', text: 'Save this location', onclick: () => this.act.onSavePlace({
+          name: prettyName(net.entityName(e)).slice(0, 40), point: { lat: net.entityLat(e), lon: net.entityLon(e) },
+        }) })),
       routes.length ? h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Routes that stop here' }), chips) : null,
       h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Next departures' }), filters, this.r.board,
         h('p', { class: 'fine', text: 'Timetable times only. Delays and cancellations are not shown.' })));
@@ -352,7 +492,11 @@ export class Panel {
 
   _syncBoardSeg() {
     if (!this.r.boardSeg) return;
-    for (const b of this.r.boardSeg.children) b.setAttribute('aria-checked', String(b.textContent.toLowerCase().startsWith(this.boardFilter === 'all' ? 'all' : this.boardFilter)));
+    for (const b of this.r.boardSeg.children) {
+      const on = b.textContent.toLowerCase().startsWith(this.boardFilter === 'all' ? 'all' : this.boardFilter);
+      b.setAttribute('aria-checked', String(on));
+      b.tabIndex = on ? 0 : -1;
+    }
   }
 
   _renderBoard() {
@@ -360,7 +504,7 @@ export class Panel {
     const net = this.net, e = this.detail.e, { now } = this.last;
     const stops = net.entityStops(e);
     let deps = net.departures(stops, now.ymd, now.sec, { limit: 40, horizon: 5400 });
-    if (this.boardFilter !== 'all') deps = deps.filter((d) => net.routes[d.route].isTrain === (this.boardFilter === 'train'));
+    if (this.boardFilter !== 'all') deps = deps.filter((d) => net.routes[d.route].mode === this.boardFilter);
     deps = deps.slice(0, 10);
     const b = this.r.board;
     const next = h('div', { class: 'board' });
@@ -417,32 +561,31 @@ export class Panel {
   update(now, vehicles) {
     this.last = { now, vehicles };
     const net = this.net;
-    let bus = 0, train = 0;
+    let bus = 0, train = 0, ferry = 0;
     const perRoute = new Map();
     for (const v of vehicles) {
-      if (v.type === 2) train++; else bus++;
+      if (v.type === 2) train++; else if (v.type === 4) ferry++; else bus++;
       perRoute.set(v.route, (perRoute.get(v.route) || 0) + 1);
     }
     if (this.r.total) {
-      this.r.total.textContent = fmtN(bus + train);
+      this.r.total.textContent = fmtN(bus + train + ferry);
       this.r.bus.textContent = fmtN(bus);
       this.r.train.textContent = fmtN(train);
+      this.r.ferry.textContent = fmtN(ferry);
+      this.r.ferryLabel.textContent = ferry === 1 ? 'ferry' : 'ferries';
       this.r.routes.textContent = `on ${fmtN(perRoute.size)} routes`;
     }
     if (this.r.lineRows) for (const [ri, el] of this.r.lineRows) { const n = perRoute.get(ri) || 0; el.textContent = n ? `${n} running` : 'not running'; el.classList.toggle('is-off', !n); }
     if (this.r.routeRows) for (const [ri, el] of this.r.routeRows) { const n = perRoute.get(ri) || 0; el.textContent = n ? `${n} running` : ''; }
     if (this.r.vcard && this.vehicleId !== null) this._refreshVehicleCard();
     if (this.r.routeRunning && this.detail && this.detail.kind === 'route') {
-      const n = perRoute.get(this.detail.idx) || 0;
+      const n = net.sameNameRoutes(this.detail.idx).reduce((a, ri) => a + (perRoute.get(ri) || 0), 0); // same total as the chart
       this.r.routeRunning.textContent = n ? `${n} running now` : 'Not running now';
-      if (!this.r.todayTrips.textContent) {
-        const flags = net.serviceFlags(now.ymd);
-        let trips = 0;
-        for (const pi of net.routePatterns(this.detail.idx)) for (const q of net.patternProfiles[pi]) {
-          const p = net.profiles[q];
-          for (let i = 0; i < p.svc.length; i++) if (flags[p.svc[i]]) trips++;
-        }
-        this.r.todayTrips.textContent = `, ${fmtN(trips)} trips on this day`;
+      if (this.r.busyYmd !== now.ymd) this._renderBusy(now); // also when the day is changed with the time controls
+      const hr = String(Math.floor(now.sec / 3600));
+      if (this.r.busyNow !== hr) {
+        this.r.busyNow = hr;
+        for (const b of this.r.busyBars || []) b.classList.toggle('is-now', b.dataset.hr === hr);
       }
     }
     if (this.r.board && this.detail && this.detail.kind === 'entity') this._renderBoard();

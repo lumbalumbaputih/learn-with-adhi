@@ -1,5 +1,5 @@
 // util.js: small DOM and text helpers shared by the interface modules.
-import { chipColors, chipLabel } from './colors.js';
+import { chipColors, chipLabel } from './colors.js?v=1.9';
 
 /** Create an element. attrs: class, text, dataset keys as data-*, on* handlers, style object. */
 export function h(tag, attrs, ...kids) {
@@ -27,7 +27,8 @@ export const prettyName = (s) => s
 /** A route chip: bus number, or coloured line name. */
 export function chip(route, { big = false } = {}) {
   const { bg, fg } = chipColors(route);
-  return h('span', { class: `chip${route.isTrain ? ' chip-train' : ''}${big ? ' chip-big' : ''}`,
+  // ferry chips use the wide line-name shape too
+  return h('span', { class: `chip${route.isTrain || route.isFerry ? ' chip-train' : ''}${big ? ' chip-big' : ''}`,
     style: { background: bg, color: fg }, text: chipLabel(route) });
 }
 

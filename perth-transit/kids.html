@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Perth Train Spotter</title>
+  <meta name="description" content="Watch Perth's trains and the ferry move on a map, made for kids. Positions come from the published timetable, not live tracking.">
+  <meta name="theme-color" content="#ffffff">
+  <script>
+    // light or dark before anything draws: the same saved choice as the grown-up map, else the device setting
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ptm-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <!-- Vercel Web Analytics: counts page views without cookies (same setup as the grown-up map) -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    window.va('beforeSend', function (e) { var u = new URL(e.url); u.hash = ''; u.search = ''; return Object.assign({}, e, { url: u.toString() }); });
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="vendor/maplibre-gl.css">
+  <link rel="stylesheet" href="kids.css?v=1.9">
+  <link rel="modulepreload" href="sim.js?v=1.9">
+  <link rel="modulepreload" href="mapview.js?v=1.9">
+  <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
+  <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
+  <script type="module" src="kids.js?v=1.9"></script>
+</head>
+<body>
+  <a class="skip-link" href="#dock">Skip to the time controls</a>
+  <button id="pick" class="skip-link pick" type="button">Pick a train near the middle of the map (press again for the next one)</button>
+  <main id="main">
+    <div id="map" class="map" role="region" aria-label="Map of Perth's trains and ferry" aria-describedby="map-help"></div>
+    <p id="map-help" class="sr-only">Use arrow keys to move the map and plus or minus to zoom. The time controls can pause the trains.</p>
+
+    <header class="top">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+          <rect width="32" height="32" rx="9" fill="#ffc234"/>
+          <rect x="7" y="7" width="18" height="15" rx="4" fill="#15222e"/>
+          <rect x="10" y="10" width="5" height="5" rx="1.5" fill="#fff"/>
+          <rect x="17" y="10" width="5" height="5" rx="1.5" fill="#fff"/>
+          <circle cx="11.5" cy="25" r="2.5" fill="#15222e"/><circle cx="20.5" cy="25" r="2.5" fill="#15222e"/>
+        </svg>
+        <div class="brand-text">
+          <h1>Perth Train Spotter</h1>
+          <p class="brand-sub">From the timetable, not live</p>
+        </div>
+      </div>
+      <nav class="top-actions" aria-label="Pages">
+        <a class="pill-btn" href="./">Grown-up map</a>
+        <button id="grownups-open" class="round-btn" type="button" aria-haspopup="dialog">
+          <span aria-hidden="true">?</span><span class="sr-only">For grown-ups</span>
+        </button>
+      </nav>
+    </header>
+
+    <p id="hint" class="hint" role="status" hidden></p>
+
+    <section id="card" class="card" aria-labelledby="card-title" hidden>
+      <div id="card-head" class="card-head">
+        <h2 id="card-title" tabindex="-1"></h2>
+        <button id="card-close" class="card-close" type="button" aria-label="Close"><span aria-hidden="true">&#10005;</span></button>
+      </div>
+      <div class="card-body">
+        <p id="card-dest" class="card-dest"></p>
+        <p id="card-now" class="card-now"></p>
+        <div id="strip" class="strip" tabindex="0" role="group" aria-label="Stations on this trip">
+          <ol id="strip-list" class="strip-list"></ol>
+          <span id="strip-train" class="strip-train" aria-hidden="true">&#128646;</span>
+        </div>
+        <div id="next-trains" class="next-trains" hidden>
+          <h3 class="next-title">Hop on another train?</h3>
+          <div id="next-list" class="next-list"></div>
+        </div>
+      </div>
+      <!-- a direct child of the scrolling card, so it can stay pinned to the card's bottom edge -->
+      <div class="card-actions">
+        <button id="hop" class="chunky primary" type="button">Hop on!</button>
+        <button id="hop-off" class="chunky" type="button" hidden>Hop off</button>
+      </div>
+    </section>
+    <p id="bubble" class="bubble" role="status" aria-atomic="true"></p>
+
+    <section id="dock" class="dock" aria-label="Time" tabindex="-1">
+      <button id="sound-btn" class="sound-btn" type="button" aria-pressed="true" aria-label="Sound effects">
+        <svg class="i-on" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="i-off" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="m16 9.5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="now-line">
+        <p id="clock" class="clock"></p>
+        <span id="pretend" class="pretend" hidden>Pretend day</span>
+        <p id="count" class="count"></p>
+      </div>
+      <button id="wake" class="chunky wake" type="button" hidden>Wake up the trains</button>
+      <div id="speeds" class="speeds" role="radiogroup" aria-label="How fast time goes">
+        <button class="chunky speed" type="button" role="radio" data-speed="0" aria-label="Pause"><span aria-hidden="true">&#9208;&#65039;</span><b>Pause</b></button>
+        <button class="chunky speed" type="button" role="radio" data-speed="1" aria-label="Slow: real-life speed"><span aria-hidden="true">&#128034;</span><b>Slow</b></button>
+        <button class="chunky speed" type="button" role="radio" data-speed="10" aria-label="Fast: 10 times faster than real life"><span aria-hidden="true">&#128007;</span><b>Fast</b></button>
+        <button class="chunky speed" type="button" role="radio" data-speed="60" aria-label="Rocket: 60 times faster than real life"><span aria-hidden="true">&#128640;</span><b>Rocket</b></button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="grownups" class="grownups" aria-labelledby="grownups-title">
+    <h2 id="grownups-title">For grown-ups</h2>
+    <p>Perth Train Spotter is a kids' version of the <a href="./">Perth Transit Map</a>. It shows where Perth's trains and the ferry <em>should</em> be, worked out from the published timetable.</p>
+    <p><strong>It is not live.</strong> Trains are not tracked, so delays and cancellations are not shown. Please don't use it to plan a real trip; check the official journey planner instead. How long trains stop at stations and how they speed up and slow down are our estimates.</p>
+    <h3>Settings</h3>
+    <div class="settings">
+      <label><input id="set-sound" type="checkbox"> Sound effects</label>
+      <label><input id="set-voice" type="checkbox"> Read station names aloud</label>
+      <p id="voice-note" class="fine" hidden>This browser can't read aloud.</p>
+      <p class="fine">Only voices installed on this device are used, never online ones, so nothing is read aloud if there is no English voice here. These choices are kept on this device only.</p>
+    </div>
+    <h3>Privacy</h3>
+    <p>No location, no accounts and no names. Nothing your child does here leaves this device. Visits to the page are counted with Vercel Web Analytics, which does not use cookies, and the map pictures are loaded from OpenFreeMap.</p>
+    <h3>Data</h3>
+    <p>Timetable data from the Public Transport Authority of Western Australia. This data is available free of charge from www.transperth.wa.gov.au.</p>
+    <p>Basemap by OpenFreeMap, using OpenMapTiles and data from OpenStreetMap contributors.</p>
+    <p>This is an independent project. It is not affiliated with or endorsed by the Public Transport Authority or any transport operator.</p>
+    <p id="grownups-version" class="fine"></p>
+    <div class="dialog-actions"><button id="grownups-close" class="chunky" type="button">Close</button></div>
+  </dialog>
+
+  <div id="loading" class="loading" role="status">
+    <div class="loading-card">
+      <p id="loading-text">Getting the trains ready</p>
+      <div class="loading-track"><div id="loading-bar" class="loading-bar"></div></div>
+      <button id="loading-retry" class="chunky" type="button" hidden>Try again</button>
+    </div>
+  </div>
+  <noscript><p class="noscript">Perth Train Spotter needs JavaScript to run.</p></noscript>
+</body>
+</html>

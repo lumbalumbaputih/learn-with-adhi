@@ -4,15 +4,39 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Perth Transit Map</title>
-  <meta name="description" content="See how Perth's buses and trains move through the day. Positions are simulated from the published timetable, not tracked live.">
+  <meta name="description" content="See how Perth's buses, trains and ferry move through the day. Positions are simulated from the published timetable, not tracked live.">
   <meta name="theme-color" content="#ffffff">
+  <script>
+    // light or dark before anything draws: the viewer's saved choice, else the device setting (app.js keeps it in sync)
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ptm-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <!-- Vercel Web Analytics: counts page views without cookies (same setup as the site's home page) -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    // send only the page path: the #@lat,lon,zoom part can sit near the viewer after "Near me", and ?t= is just a time
+    window.va('beforeSend', function (e) { var u = new URL(e.url); u.hash = ''; u.search = ''; return Object.assign({}, e, { url: u.toString() }); });
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
-  <link rel="stylesheet" href="style.css">
-  <script type="module" src="app.js"></script>
+  <link rel="stylesheet" href="style.css?v=1.9">
+  <link rel="modulepreload" href="sim.js?v=1.9">
+  <link rel="modulepreload" href="mapview.js?v=1.9">
+  <link rel="modulepreload" href="favourites.js?v=1.9">
+  <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
+  <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
+  <script type="module" src="app.js?v=1.9"></script>
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to timetable information</a>
+  <a class="skip-link skip-time" href="#scrubber">Skip to time controls</a>
+  <p id="search-status" class="sr-only" role="status" aria-atomic="true"></p>
   <aside id="panel" class="panel" data-sheet="peek" aria-label="Routes, stops and departures">
     <button id="grab" class="grab" type="button" aria-label="Resize the panel"><span></span></button>
     <header class="panel-head">
@@ -46,10 +70,12 @@
   </aside>
 
   <main id="main">
-  <div id="map" class="map" role="application" aria-label="Map of Perth buses and trains"></div>
+  <div id="map" class="map" role="region" aria-label="Map of Perth buses, trains and ferry" aria-describedby="map-help"></div>
+  <p id="map-help" class="sr-only">Use arrow keys to pan the map and plus or minus to zoom. The Routes and Stops tabs provide timetable information without using the map. Pause animation in the time controls.</p>
 
 
   <div class="map-ctl" role="group" aria-label="Map controls">
+    <a id="btn-kids" class="ctl ctl-text ctl-kids" href="kids.html" title="Perth Train Spotter: the map for kids">Kids</a>
     <button id="btn-3d" class="ctl ctl-text" type="button" aria-pressed="false" title="Tilt the map and show buildings">3D</button>
     <div class="ctl-group">
       <button id="btn-zoom-in" class="ctl" type="button" aria-label="Zoom in">+</button>
@@ -68,23 +94,113 @@
         <label><input type="checkbox" data-layer="labels" checked> Station names</label>
       </div>
     </div>
+    <button id="btn-theme" class="ctl" type="button" aria-label="Switch to the dark map" title="Dark or light map">
+      <svg class="i-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
   </div>
 
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
-  <section id="scrubber" class="scrubber" aria-label="Time of day"></section>
+  <div id="whatsnew" class="whatsnew">
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.9 &middot; What&rsquo;s new</button>
+    <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
+      <!-- Newest first. Write each line so someone who never used the map understands it. -->
+      <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.9</b> <span>18 Oct 2026</span></p>
+        <ul>
+          <li>Trains now stop at every station for a short time, as if people are getting on and off, then speed up and slow down between stations instead of gliding at one speed.</li>
+          <li>The ferry also slows down as it reaches the jetty. Buses move as before, because they only stop when someone is waiting or rings the bell.</li>
+          <li>The stopping times and speeds are our estimate. The timetable only gives whole minutes, so a train can be up to half a minute behind it here.</li>
+          <li>Following a train now works for every train (one weekday morning train could not be followed before).</li>
+          <li>New: <a href="kids.html">Perth Train Spotter</a>, a version of this map for kids. Tap a train, hop on and ride it to the end of the line. Press the yellow Kids button to try it.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.8</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Save Home, Work or any named place from the Map or Stops tab, then jump straight to its nearby stops.</li>
+          <li>Save the map centre, your current location or a selected stop. Rename, move or delete a saved place whenever you like.</li>
+          <li>Favourites stay in this browser on this device and appear as markers on the map.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.7</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>The timetable opens while the background map loads. Vehicle movement is smoother, with less work for buses outside your view.</li>
+          <li>Pause or play the animation and edit the time directly, including on phones. Reduced-motion settings start the map paused.</li>
+          <li>Better keyboard navigation, spoken search results, larger touch controls, and a readable table of hourly trip counts.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.6</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Routes such as 950 and the CircleRoutes now appear once, with all their buses and paths included when selected.</li>
+          <li>Frequency summaries describe the busiest direction without promising equal service each way. Trips after midnight say “next day”.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.5</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Zoom in to street level and every bus shows its route number, with a small pointer showing which way it is going.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.4</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Dark mode. The map follows your phone or computer setting, and the moon button switches it by hand. It remembers your choice.</li>
+          <li>Every route now has a &ldquo;How busy is this line?&rdquo; chart: how many trips run each hour, the busiest hour and the first and last trip. It shows how often the line runs, not how full it is.</li>
+          <li>We now count visits to this page, without cookies, to see whether people use it.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.3</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Added the ferry across the Swan River, between Elizabeth Quay and Mends Street in South Perth. It shows as a small blue boat on a dashed line over the water.</li>
+          <li>Both jetties have their own page with the next ferry times, and you can show only the ferry with the new &ldquo;Ferry&rdquo; button.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.2</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>On phones, the busy-times chart under the clock is gone, so the map has more room. You can still change the day, the speed and jump back to now with the buttons.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.1</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>Trains now look like long trains and buses like short buses, so you can tell them apart at a glance.</li>
+          <li>Each vehicle points the way it is travelling, and when you zoom in a small white tip marks its front.</li>
+          <li>Added this &ldquo;What&rsquo;s new&rdquo; list.</li>
+        </ul>
+      </div>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.0</b> <span>17 Oct 2026</span></p>
+        <ul>
+          <li>First version: watch Perth&rsquo;s buses and trains move around the map through the day.</li>
+          <li>Positions come from the published timetable, not live GPS, so delays are not shown.</li>
+          <li>Drag the time bar to see any time of day, search for a route or stop, and tap a vehicle to follow it.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section id="scrubber" class="scrubber" aria-label="Time of day" tabindex="-1"></section>
   <div id="banner" class="banner" role="status" hidden></div>
   <div id="toast" class="toast" role="status" hidden></div>
   </main>
 
   <dialog id="about" class="about" aria-labelledby="about-title">
     <h2 id="about-title">About this map</h2>
-    <p>This map shows where buses and trains should be, worked out from the published timetable. It is not live. Vehicles are not tracked by GPS, so delays, cancellations and replacement buses are not shown.</p>
+    <p>This map shows where buses, trains and the ferry should be, worked out from the published timetable. It is not live. Vehicles are not tracked by GPS, so delays, cancellations and replacement buses are not shown.</p>
+    <p>The timetable lists whole minutes only. How long trains stop at each station and how they speed up and slow down between stations are our estimates, so a train here can be up to half a minute behind the timetable.</p>
     <p>Use it to see how the network moves through the day. Check the official journey planner for live times before you travel.</p>
     <h3>Data</h3>
     <p>Timetable data from the Public Transport Authority of Western Australia. This data is available free of charge from www.transperth.wa.gov.au.</p>
     <p>Basemap by OpenFreeMap, using OpenMapTiles and data from OpenStreetMap contributors.</p>
     <p>This is an independent project. It is not affiliated with or endorsed by the Public Transport Authority or any transport operator.</p>
+    <p>Visits to this page are counted with Vercel Web Analytics, which does not use cookies or track you across sites. Favourite places are saved only in this browser on this device, with no account sync.</p>
     <p id="about-version" class="fine"></p>
     <div class="about-actions"><button id="about-close" class="btn" type="button">Close</button></div>
   </dialog>
