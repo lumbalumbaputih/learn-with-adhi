@@ -25,13 +25,13 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
-  <link rel="stylesheet" href="style.css?v=1.8">
-  <link rel="modulepreload" href="sim.js?v=1.8">
-  <link rel="modulepreload" href="mapview.js?v=1.8">
-  <link rel="modulepreload" href="favourites.js?v=1.8">
+  <link rel="stylesheet" href="style.css?v=1.9">
+  <link rel="modulepreload" href="sim.js?v=1.9">
+  <link rel="modulepreload" href="mapview.js?v=1.9">
+  <link rel="modulepreload" href="favourites.js?v=1.9">
   <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
   <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
-  <script type="module" src="app.js?v=1.8"></script>
+  <script type="module" src="app.js?v=1.9"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to timetable information</a>
@@ -75,6 +75,7 @@
 
 
   <div class="map-ctl" role="group" aria-label="Map controls">
+    <a id="btn-kids" class="ctl ctl-text ctl-kids" href="kids.html" title="Perth Train Spotter: the map for kids">Kids</a>
     <button id="btn-3d" class="ctl ctl-text" type="button" aria-pressed="false" title="Tilt the map and show buildings">3D</button>
     <div class="ctl-group">
       <button id="btn-zoom-in" class="ctl" type="button" aria-label="Zoom in">+</button>
@@ -102,10 +103,20 @@
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
   <div id="whatsnew" class="whatsnew">
-    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.8 &middot; What&rsquo;s new</button>
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.9 &middot; What&rsquo;s new</button>
     <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
       <!-- Newest first. Write each line so someone who never used the map understands it. -->
       <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.9</b> <span>18 Oct 2026</span></p>
+        <ul>
+          <li>Trains now stop at every station for a short time, as if people are getting on and off, then speed up and slow down between stations instead of gliding at one speed.</li>
+          <li>The ferry also slows down as it reaches the jetty. Buses move as before, because they only stop when someone is waiting or rings the bell.</li>
+          <li>The stopping times and speeds are our estimate. The timetable only gives whole minutes, so a train can be up to half a minute behind it here.</li>
+          <li>Following a train now works for every train (one weekday morning train could not be followed before).</li>
+          <li>New: <a href="kids.html">Perth Train Spotter</a>, a version of this map for kids. Tap a train, hop on and ride it to the end of the line. Press the yellow Kids button to try it.</li>
+        </ul>
+      </div>
       <div class="wn-ver">
         <p class="wn-head"><b>v1.8</b> <span>17 Oct 2026</span></p>
         <ul>
@@ -183,6 +194,7 @@
   <dialog id="about" class="about" aria-labelledby="about-title">
     <h2 id="about-title">About this map</h2>
     <p>This map shows where buses, trains and the ferry should be, worked out from the published timetable. It is not live. Vehicles are not tracked by GPS, so delays, cancellations and replacement buses are not shown.</p>
+    <p>The timetable lists whole minutes only. How long trains stop at each station and how they speed up and slow down between stations are our estimates, so a train here can be up to half a minute behind the timetable.</p>
     <p>Use it to see how the network moves through the day. Check the official journey planner for live times before you travel.</p>
     <h3>Data</h3>
     <p>Timetable data from the Public Transport Authority of Western Australia. This data is available free of charge from www.transperth.wa.gov.au.</p>

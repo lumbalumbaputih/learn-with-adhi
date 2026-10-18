@@ -1,7 +1,7 @@
 // mapview.js: the map, its layers, the moving vehicles and what happens on click.
 import * as maplibregl from './vendor/maplibre-gl.mjs';
-import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.8';
-import { prettyName } from './util.js?v=1.8';
+import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.9';
+import { prettyName } from './util.js?v=1.9';
 
 export const STYLE_URLS = {
   light: 'https://tiles.openfreemap.org/styles/positron',
@@ -37,6 +37,8 @@ export class MapView {
     this.byId = new Map();
     this.routeSel = null;
     this.mode = 'all';
+    this._modes = null; // null = every mode, else a Set of route modes to draw
+    this.kids = false; // Perth Train Spotter: bigger vehicles, coloured train lines, train stations only
     this.following = null;
     this.padding = { top: 0, right: 0, bottom: 0, left: 0 };
     // what the viewer has set, so it can be put back after the basemap changes (dark mode)
@@ -66,8 +68,9 @@ export class MapView {
     return res;
   }
 
-  async init(view, { compactAttribution, theme = 'light' }) {
+  async init(view, { compactAttribution, theme = 'light', kids = false }) {
     this.theme = theme;
+    this.kids = kids;
     setColorTheme(theme);
     // Timetable interaction must not wait for a third-party style, tiles or fonts.
     const basemap = this._loadStyle(theme);
@@ -109,10 +112,11 @@ export class MapView {
   _lineFeatures() {
     if (this._lines) return this._lines;
     const net = this.net;
-    const shapeIsTrain = new Set(), shapeIsBus = new Set(), shapeIsFerry = new Set();
+    const shapeIsTrain = new Set(), shapeIsBus = new Set(), shapeIsFerry = new Set(), lineColor = new Map();
     for (const p of net.patterns) {
       const r = net.routes[p.route];
       (r.isTrain ? shapeIsTrain : r.isFerry ? shapeIsFerry : shapeIsBus).add(p.shape);
+      if (r.isTrain && !lineColor.has(p.shape)) lineColor.set(p.shape, routeColor(r)); // train line colours do not change with the theme
     }
     const mk = (set) => ({
       type: 'FeatureCollection',
@@ -120,7 +124,7 @@ export class MapView {
         const g = net.geom(si);
         const coords = new Array(g.n);
         for (let i = 0; i < g.n; i++) coords[i] = [g.lon[i], g.lat[i]];
-        return { type: 'Feature', properties: { s: si }, geometry: { type: 'LineString', coordinates: coords } };
+        return { type: 'Feature', properties: { s: si, c: lineColor.get(si) || null }, geometry: { type: 'LineString', coordinates: coords } };
       }),
     });
     return (this._lines = { bus: mk(shapeIsBus), rail: mk(shapeIsTrain), ferry: mk(shapeIsFerry) });
@@ -199,7 +203,7 @@ export class MapView {
     for (let i = 0; i < net.stationName.length; i++) {
       // The feed also groups on-street bus stops under a parent. Only real stations and bus stations get the big marker.
       const raw = net.stationName[i];
-      const big = (net.stationMode[i] & 6) || /(Bus Stn|Busport)$/.test(raw) ? 1 : 0; // train stations, jetties, bus stations
+      const big = (net.stationMode[i] & 6) || (!this.kids && /(Bus Stn|Busport)$/.test(raw)) ? 1 : 0; // train stations, jetties, bus stations (kids: no bus stations)
       st.features.push({ type: 'Feature', properties: { i, n: prettyName(raw), m: net.stationMode[i], big },
         geometry: { type: 'Point', coordinates: [net.stationLon[i], net.stationLat[i]] } });
     }
@@ -223,13 +227,15 @@ export class MapView {
       'line-opacity': ['interpolate', ['linear'], ['zoom'], 8, 0.1, 12, 0.15, 15, P.busLine],
       'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.6, 12, 1, 15, 2.2],
     } }, firstSymbol);
+    const K = this.kids ? 1.6 : 1; // kids: thicker lines in their own colours
     map.addLayer({ id: 'rail-casing', type: 'line', source: 'rail', layout: round, paint: {
       'line-color': P.casing, 'line-opacity': 0.9,
-      'line-width': ['interpolate', ['linear'], ['zoom'], 8, 3, 12, 5.5, 15, 8],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 8, 3 * K, 12, 5.5 * K, 15, 8 * K],
     } }, firstSymbol);
     map.addLayer({ id: 'rail', type: 'line', source: 'rail', layout: round, paint: {
-      'line-color': P.rail,
-      'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 12, 3, 15, 4.5],
+      'line-color': this.kids ? ['coalesce', ['get', 'c'], P.rail] : P.rail,
+      'line-opacity': this.kids ? 0.5 : 1, // kids: lighter tracks so the trains on them stand out
+      'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5 * K, 12, 3 * K, 15, 4.5 * K],
     } }, firstSymbol);
     // ferry crossing over the river, dashed so it reads as a water route
     map.addLayer({ id: 'ferry-line', type: 'line', source: 'ferry', layout: round, paint: {
@@ -273,7 +279,9 @@ export class MapView {
     } });
 
     const r = (a, b, c3) => ['interpolate', ['linear'], ['zoom'], 8, ['+', a, ['*', ['get', 't'], 1]], 12, ['+', b, ['*', ['get', 't'], 1.4]], 16, ['+', c3, ['*', ['get', 't'], 2.2]]];
-    const vehSize = ['interpolate', ['linear'], ['zoom'], 8, 0.34, 12, 0.62, 15, 1.0, 17, 1.35];
+    const vehSize = this.kids // kids: big enough to see and tap from the start
+      ? ['interpolate', ['linear'], ['zoom'], 8, 0.75, 12, 1.05, 15, 1.4, 17, 1.7]
+      : ['interpolate', ['linear'], ['zoom'], 8, 0.34, 12, 0.62, 15, 1.0, 17, 1.35];
     const vehIcon = (suffix) => ['match', ['get', 't'], 1, 'ptm-train' + suffix, 2, 'ptm-ferry' + suffix, 'ptm-bus' + suffix];
     const vehLayout = (suffix) => ({
       'icon-image': vehIcon(suffix), 'icon-size': vehSize, 'icon-rotate': ['get', 'b'],
@@ -284,13 +292,15 @@ export class MapView {
     });
     // at tag zoom the bus shapes give way to the tags; trains and the ferry keep theirs
     const busOff = (expr) => ['step', ['zoom'], expr, TAG_Z, ['case', ['==', ['get', 't'], 0], 0, expr]];
+    // kids: a dark outline (light outline on the dark map), so a train never blends into its own coloured track
+    const halo = this.kids ? (this.theme === 'dark' ? '#ffffff' : '#15222e') : P.halo;
     map.addLayer({ id: 'veh-halo', type: 'symbol', source: 'veh', layout: vehLayout('-halo'), paint: {
-      'icon-color': P.halo, 'icon-opacity': busOff(['case', ['==', ['get', 'd'], 1], 0.18, 0.95]),
+      'icon-color': halo, 'icon-opacity': busOff(['case', ['==', ['get', 'd'], 1], 0.18, 0.95]),
     } });
     map.addLayer({ id: 'veh', type: 'symbol', source: 'veh', layout: vehLayout(''), paint: {
       'icon-color': ['get', 'c'], 'icon-opacity': busOff(['case', ['==', ['get', 'd'], 1], 0.22, 1]),
     } });
-    map.addLayer({ id: 'veh-arrow', type: 'symbol', source: 'veh', minzoom: 13.5, layout: vehLayout('-front'), paint: {
+    map.addLayer({ id: 'veh-arrow', type: 'symbol', source: 'veh', minzoom: this.kids ? 9 : 13.5, layout: vehLayout('-front'), paint: {
       'icon-opacity': busOff(['case', ['==', ['get', 'd'], 1], 0.2, 0.95]),
     } });
     // Bus tags (from TAG_Z): a direction pointer with an outline, then the tag itself.
@@ -355,7 +365,7 @@ export class MapView {
     const map = this.map;
     map.on('styleimagemissing', (e) => { if (e.id.startsWith('tag|')) this._tagImage(e.id); });
     const pickVehicle = (pt) => {
-      const pad = 12;
+      const pad = this.kids ? 28 : 12; // small fingers: forgiving taps
       const hits = map.queryRenderedFeatures([[pt.x - pad, pt.y - pad], [pt.x + pad, pt.y + pad]], { layers: ['veh', 'veh-tag'].filter((l) => map.getLayer(l)) });
       let best = null, bd = 1e9;
       for (const f of hits) {
@@ -391,7 +401,7 @@ export class MapView {
       clearTimeout(t);
       t = setTimeout(() => this.h.onView && this.h.onView(this.view()), 250);
     });
-    map.on('dragstart', () => { if (this.following) { this.following = null; this.h.onUnfollow && this.h.onUnfollow(); } });
+    map.on('dragstart', () => { if (this.following !== null) { this.following = null; this.h.onUnfollow && this.h.onUnfollow(); } });
   }
 
   view() {
@@ -444,13 +454,13 @@ export class MapView {
     for (const v of list) {
       this.byId.set(v.id, v);
       const route = net.routes[v.route];
-      if (this.mode !== 'all' && route.mode !== this.mode) continue;
+      if (this._modes && !this._modes.has(route.mode)) continue;
       // Keep the complete vehicle lookup for cards/follow, but only send visible points to the map worker.
       if (v.lat < bounds.getSouth() - latPad || v.lat > bounds.getNorth() + latPad ||
           v.lon < bounds.getWest() - lonPad || v.lon > bounds.getEast() + lonPad) continue;
       const p = {
         vid: v.id, t: route.isTrain ? 1 : route.isFerry ? 2 : 0, c: routeColor(route), b: Math.round(v.bearing),
-        d: this.routeSel !== null && this.routeSel !== v.route ? 1 : 0,
+        d: !this.kids && this.routeSel !== null && this.routeSel !== v.route ? 1 : 0, // kids: every train stays tappable
       };
       if (p.t === 0 && tagsVisible) {
         // put the pointer just outside the tag's edge, in the direction the bus is heading on screen
@@ -464,14 +474,15 @@ export class MapView {
     // the source is missing for a moment while the basemap switches (dark mode); the next tick fills it
     const src = this.map.getSource('veh');
     if (src) src.setData({ type: 'FeatureCollection', features: feats });
-    if (this.following) {
+    if (this.following !== null) { // ids can be 0, so not a truthiness test
       const v = this.byId.get(this.following);
       if (v) this.map.easeTo({ center: [v.lon, v.lat], duration: 0 });
     }
     return feats.length;
   }
 
-  setMode(mode) { this.mode = mode; }
+  /** 'all', one mode ('train', 'bus', 'ferry') or a list of modes. */
+  setMode(mode) { this.mode = mode; this._modes = mode === 'all' ? null : new Set([].concat(mode)); }
 
   setSelectedVehicle(id) {
     this.selVid = id;

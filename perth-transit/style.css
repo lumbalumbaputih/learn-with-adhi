@@ -282,6 +282,8 @@ ul, ol { padding: 0; list-style: none; }
 .ctl-group .ctl:last-child { border-radius: 0 0 10px 10px; }
 .ctl:hover { background: var(--paper-2); }
 .ctl-text { font-size: 14px; font-weight: 700; font-stretch: 85%; }
+.ctl-kids { width: auto; padding: 0 10px; background: #ffc234; color: #2e2100; text-decoration: none; }
+.ctl-kids:hover { background: #ffd366; }
 #btn-theme .i-sun, :root[data-theme='dark'] #btn-theme .i-moon { display: none; }
 :root[data-theme='dark'] #btn-theme .i-sun { display: block; }
 .ctl[aria-pressed='true'], .ctl[aria-expanded='true'] { background: var(--accent); color: var(--on-accent); }

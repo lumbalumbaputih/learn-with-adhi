@@ -1,5 +1,5 @@
 // Favourite places stay on this browser/device, separately from the timetable.
-import { h } from './util.js?v=1.8';
+import { h } from './util.js?v=1.9';
 
 export const PLACE_KEY = 'ptm-favourite-places-v1';
 const validPoint = (p) => Number.isFinite(p?.lat) && Number.isFinite(p?.lon)

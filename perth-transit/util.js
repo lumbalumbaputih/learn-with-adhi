@@ -1,5 +1,5 @@
 // util.js: small DOM and text helpers shared by the interface modules.
-import { chipColors, chipLabel } from './colors.js?v=1.8';
+import { chipColors, chipLabel } from './colors.js?v=1.9';
 
 /** Create an element. attrs: class, text, dataset keys as data-*, on* handlers, style object. */
 export function h(tag, attrs, ...kids) {
