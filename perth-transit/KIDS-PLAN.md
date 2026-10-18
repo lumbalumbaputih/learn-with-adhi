@@ -1,6 +1,6 @@
 # Perth Transit Map: Kids Mode plan
 
-- **Status:** plan only. Nothing in this file is built yet.
+- **Status:** building started 2026-10-18 (see Step status at the end). Adhi decided D1 (this repo), D2 (separate page) and D6 (name: **Perth Train Spotter**), and the other five go ahead on the recommendations.
 - **Written:** 2026-10-18, at Adhi's request ("make a plan on how to make it better, and maybe fun to use for kids").
 - **Scope he chose:** the Perth Transit Map (not the Learn with Adhi kids' world), for **any kid visiting** the site. That means English, and **not** tied to Rayyan's and Raya's star and progress system (`kids.html`, `auth.js`, `dashboard.html` stay untouched).
 - **Read first:** `README.md` in this folder (how the map works) and section 8 below (decisions Adhi still has to make before building starts).
@@ -71,7 +71,7 @@ Rough screen layout (phone first):
 
 ```
 +--------------------------------------+
-| [logo] Train Spotter*   [sound] [?]  |  <- [?] = "For grown-ups"
+| [logo] Perth Train Spotter [snd][?]  |  <- [?] = "For grown-ups"
 |                                      |
 |         full-screen map              |
 |      trains + ferry, big icons       |
@@ -82,7 +82,6 @@ Rough screen layout (phone first):
 |  [Spot it!]  [Hop on!]  [Passport]   |  <- three big buttons
 |  speed: [slow]  [fast]  [rocket]     |
 +--------------------------------------+
-* working name, see decision D6
 ```
 
 Links: a small "Kids" button on the main map's header, and a "Grown-up map" link back from the kids' page.
@@ -176,7 +175,7 @@ Each step below is **one SOP step**: build, check, update the docs, commit and p
 | **Kids believe it's live** and wait at a station for a train that's late | Medium | "Pretend"/"should be" wording everywhere, the grown-ups box, and no Near me in kids' mode |
 | **Timetable runs out 2027-01-11** | High (the page goes blank) | Pretend day (K0.1). A data rebuild is still needed for the main map |
 | **Watching dots isn't fun** | High, it's the main risk | Phase 1 gate before building more games |
-| **Two copies of the code drift**: claco is meant to be the source of truth, but v1.1 to v1.7 were all made in this repo | Medium, and getting worse | Decision D1 below. Kids' mode would add four more files that claco doesn't have |
+| ~~**Two copies of the code drift**~~ | Resolved 2026-10-18 | Adhi made this repo the source of truth (D1) |
 | **Licence and trademarks:** the data licence bans the Authority's brand names | Medium | Line names are fine (they're in the data). No operator name in the kids' page title, no imitation of the real trains' paint or logos, and no mascot that looks like either |
 | **Old tablets struggle** | Unknown (never measured on a real device) | Trains-only default (about 20 times fewer vehicles), and the real-device pass in K3.4 |
 | **Children's privacy** | Low if the rules hold | No location, no accounts, no leaderboards, local storage only. Keep it that way |
@@ -195,16 +194,16 @@ Each step below is **one SOP step**: build, check, update the docs, commit and p
 
 ## 8. Decisions for Adhi (before K0.1 starts)
 
-Each has a recommendation. Building can start on the recommendations if Adhi says so.
+Each has a recommendation. D1, D2 and D6 were decided by Adhi on 2026-10-18; the rest go ahead on the recommendations (he didn't object).
 
 | # | Decision | Recommendation | Other option |
 |---|---|---|---|
-| D1 | Where does the site code live from now on? | **This repo** (claco keeps the compiler only), because 7 versions have already been made here | Keep claco as the source and copy everything back first |
-| D2 | Separate kids' page or a switch in the main map? | **Separate page** (section 3) | A kids' switch inside `index.html` |
+| D1 | Where does the site code live from now on? | ✅ **Decided: this repo** (claco keeps the compiler only) | |
+| D2 | Separate kids' page or a switch in the main map? | ✅ **Decided: separate page** (section 3) | |
 | D3 | Age range to design for | **About 5 to 10.** Big pictures, short words, voice optional for non-readers | Narrower (6 to 9) or wider |
 | D4 | What shows by default | **Trains and ferry**, buses opt-in (K3.2) | Everything, like the main map |
 | D5 | How kids find it | **Button on the main map now; a site card in the Play category after the Phase 1 gate** | Card straight away, or button only |
-| D6 | Name (must not use the Authority's brand names) | Something like "Perth Train Spotter" or "Hop On, Perth!" (placeholders, your call) | Keep "Perth Transit Map: Kids" |
+| D6 | Name (must not use the Authority's brand names) | ✅ **Decided: Perth Train Spotter** | |
 | D7 | Bahasa Indonesia switch | **Later** (K3.5), only if wanted | Build it in from K0.1 |
 | D8 | Sound by default | **Effects on, voice off**, both remembered | Everything off until turned on |
 

@@ -1,10 +1,10 @@
 // app.js: loads the timetable, then wires clock, map, panel and scrubber together.
-import { Network, addDays, ymdParts, DAY } from './sim.js?v=1.7';
-import { SimClock } from './clock.js?v=1.7';
-import { MapView } from './mapview.js?v=1.7';
-import { Panel } from './panel.js?v=1.7';
-import { Scrubber, dayLabel } from './scrubber.js?v=1.7';
-import { fmtN } from './util.js?v=1.7';
+import { Network, addDays, ymdParts, DAY } from './sim.js?v=1.8';
+import { SimClock } from './clock.js?v=1.8';
+import { MapView } from './mapview.js?v=1.8';
+import { Panel } from './panel.js?v=1.8';
+import { Scrubber, dayLabel } from './scrubber.js?v=1.8';
+import { fmtN } from './util.js?v=1.8';
 
 const $ = (id) => document.getElementById(id);
 const DEFAULT_VIEW = { lat: -31.955, lon: 115.87, zoom: 10.4 };

@@ -6,9 +6,9 @@ A map of Perth's buses, trains and ferry moving through the day, in the style of
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.7 (see section 12)
+- **Current version:** v1.8 (see section 12)
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
-- **Source of truth:** the build folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`). v1.0 in this repo was a byte-for-byte copy of its `site/` folder. Change it there and re-copy it, do not hand-edit it here. **Exception:** v1.1 to v1.7 were made directly in this repo (section 12). Before the next re-copy, copy back into claco: all of `perth-transit/` except `vendor/` and `fonts/` (the JS, `index.html`, `style.css`, this `README.md` and the five `data/*.json` files), and either teach claco's `compile_gtfs.py` to keep route type 4 or run `scripts/perth-transit-add-ferry.py` from this repo after each compile. Otherwise the ferry and v1.1 to v1.7 will be lost.
+- **Source of truth:** **this repo** (Adhi's decision, 2026-10-18). Edit `perth-transit/` here. v1.0 was a byte-for-byte copy of the `site/` folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`), and v1.1 to v1.8 were all made here, so **never re-copy claco's `site/` over this folder**: it would wipe the ferry and v1.1 onwards. claco still holds the original GTFS compiler (`scripts/compile_gtfs.py`), which a timetable rebuild needs (section 6). After a rebuild, copy only the five `data/*.json` files here and run `scripts/perth-transit-add-ferry.py` (the compiler still drops route type 4).
 
 ## 1. How this started
 
@@ -30,6 +30,7 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 ## 2. What it does
 
 - About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 329 public bus routes and, since v1.3, the Elizabeth Quay to Mends St ferry).
+- Trains stop at each station for a short time and speed up and slow down between stations (since v1.8, estimated, see section 4.2).
 - Trains drawn as long bars and buses as short pills, in the route colour, pointing the way they travel (since v1.1). From zoom 15 each bus becomes a tag with its route number and a direction pointer (since v1.5).
 - A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control. On phones the chart is hidden (since v1.2), so time there is changed with the buttons only.
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
@@ -89,6 +90,7 @@ Counts in this build: 349 routes (8 train lines and 341 bus routes), 55,081 trip
 - Time is seconds since Perth local midnight of the service day. Trips can run past midnight (GTFS times go up to about 27 hours), so yesterday's service day is checked as well.
 - For any moment it finds the trips that are running, locates each one on its shape by interpolating between stops (including dwell at stops), and answers departure, search, nearest-stop and route queries.
 - **Timing detail that matters:** the timetable only has whole minutes, so several stops can share one minute. For animation only, those stops are spread evenly across the minute (`smoothTimes()`), otherwise vehicles jump. Departure boards use the raw published times, never the smoothed ones.
+- **Train and ferry motion (since v1.8, `MOTION` in `sim.js`, animation only):** the timetable gives trains almost no stopping time (11 of 1,690 train stop entries), so a literal reading glides through every station. Trains now stand at each station for up to 25 s, leave on the published minute, and speed up and slow down at 0.9 m/s² up to 130 km/h (the ferry: 0.25 m/s², up to 8 m/s). When a rounded minute is too tight (Kelmscott to Challis is 1.48 km in "1 minute"), the stop shrinks to 15 s and then the train leaves up to 30 s late and catches up; it never leaves early and always reaches the last stop on time. Buses are unchanged: they stop only on request, so a stop at every bus stop would be wrong. All of these figures are **assumptions** (typical suburban electric train, slow harbour ferry), not Transperth data. Trip start/end, counts, departure boards and "How busy is this line?" are unchanged.
 
 ### 4.3 The interface
 
@@ -192,7 +194,7 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 - **Service worker caching.** Since v1.7, first-party module imports, module preloads, the app entry and CSS carry a release query (`?v=1.7`). This avoids mixing old cached modules with new ones while preserving cache-first warm loads in the existing kids-site service worker. Bump the release query consistently across these files for the next code release. Compiled data retains its existing content-hash URLs; no service-worker or kids-page behaviour was changed. A browser regression seeds stale unversioned modules and checks that the new app still starts.
 - **Real-device testing** on iPhone and Android, and in Safari and Firefox.
 - **Ferry data is a patch** (v1.3): the claco compiler still drops route type 4, so a fresh compile there loses the ferry until `compile_gtfs.py` keeps it or `scripts/perth-transit-add-ferry.py` is re-run.
-- **claco is behind this repo** until the v1.1 files are copied back (see Source of truth at the top).
+- **claco's `site/` is out of date** (it stops at v1.0) and is no longer the source (see Source of truth at the top).
 - **Kids' mode (planned 2026-10-18, not started).** A separate `kids.html` for any kid visiting: trains and the ferry only, big icons, ride along with a train, spotting games and a station passport. The full plan, steps, risks and open decisions are in `KIDS-PLAN.md` in this folder.
 - **Phase 2, live arrivals (not started).** An unofficial live-times service exists. It is HTTP only, so a public HTTPS site would need a small server proxy. It is untested and its terms are unknown, so check that before building on it. The Transperth website's own per-station calls are rate limited, and bus calls need session cookies.
 
@@ -211,6 +213,15 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.8 (2026-10-18)
+
+- **Trains stop at stations; trains and the ferry speed up and slow down.** Adhi asked for a more accurate simulation, "such as the train takes a moment to drop on and off passengers at the station". `sim.js`: `MOTION` settings, `Network._motion()` (per timing profile: arrive/depart time at each stop, acceleration and top speed for each run, computed once and cached as `prof.mo`) and `_movePosition()` (stands still during the stop, then a speed-up / steady / slow-down profile between stops via `runDistance()`). Buses take the old path unchanged. Model details and limits in section 4.2.
+- **Results (all 125 train timing profiles):** every intermediate stop now has a stop: 1,122 of 1,440 the full 25 s and 307 between 6 and 25 s (the rest are 11 real stopping times kept from the timetable); 199 stops leave late, by at most 30 s; no run is modelled faster than 130 km/h or harder than 0.9 m/s². The first attempt (fixed stop, no lateness allowed) produced 187 km/h on such rounding-squeezed runs; allowing a short catch-up fixed that.
+- **Checks:** new `scripts/perth-transit-check-motion.mjs` (stands still at the station mid-stop, never leaves before the published minute or more than 30 s after, last stop on time, never backwards, no jump over 70 m in a second, buses still use timetable interpolation). A one-off comparison with the v1.7 engine over 80,963 bus positions on a Monday, Saturday and Sunday found no differences; train positions move by up to 1.1 km, the distance 30 s covers at 130 km/h. `scripts/perth-transit-check-accuracy.mjs` and the browser check (seven axe states) still pass. A headless browser check followed one Fremantle Line train: it stops 25 s at North Fremantle and Victoria Street, 15 s at Mosman Park, and its card says "At North Fremantle Station" while stopped.
+- **Interface:** release query `?v=1.8` on every first-party module and the stylesheet; What's new and the About dialog say stopping times and speeds are estimates.
+- The claco engine test from section 7 (positions within 24.7 m of straight-line timetable interpolation) no longer applies to trains, by design.
+- Source of truth moved to this repo (top of this file).
 
 ### v1.7 (2026-10-17)
 

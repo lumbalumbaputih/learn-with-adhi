@@ -148,6 +148,38 @@ export function smoothTimes(arr) {
   return ta;
 }
 
+/**
+ * Realistic motion for trains and the ferry (animation only). The timetable has whole minutes and
+ * almost never a stopping time (11 of 1,690 train stop entries), so taken literally a train glides
+ * through every station at a steady speed. Instead the vehicle speeds up and slows down between
+ * stops at `acc` m/s², up to `top` m/s, and stands at each intermediate stop for up to `dwell`
+ * seconds, leaving on the published time. These are assumptions, not measured figures: a typical
+ * suburban electric train (Perth's fastest run at about 130 km/h) and a slow harbour ferry.
+ * The published times are whole minutes, so a short run can look impossibly fast (1.5 km in "1
+ * minute"). Then the stop shrinks to `minDwell`, and after that the vehicle leaves up to `late`
+ * seconds after the published time and catches up later. It never leaves early, it reaches the last
+ * stop on time, and it only breaks the speed limits if even that is not enough.
+ * Buses keep the plain timetable interpolation: they only stop when someone is waiting or rings the
+ * bell, so a stop at every bus stop would be less accurate, not more.
+ */
+export const MOTION = {
+  train: { acc: 0.9, top: 130 / 3.6, dwell: 25, minDwell: 15, late: 30 },
+  ferry: { acc: 0.25, top: 8, dwell: 0, minDwell: 0, late: 0 },
+};
+
+/** Shortest time to cover s metres from stop to stop, speeding up and slowing down at a, no faster than v. */
+const minRun = (s, a, v) => (s >= (v * v) / a ? s / v + v / a : 2 * Math.sqrt(s / a));
+
+/** Distance covered t seconds into a stop-to-stop run of s metres taking T seconds, at acceleration a up to speed v. */
+function runDistance(s, T, a, v, t) {
+  if (t <= 0) return 0;
+  if (t >= T) return s;
+  const tr = v / a; // time spent speeding up (and again slowing down)
+  if (t < tr) return 0.5 * a * t * t;
+  if (t > T - tr) { const u = T - t; return s - 0.5 * a * u * u; }
+  return 0.5 * a * tr * tr + v * (t - tr);
+}
+
 // ---------------------------------------------------------------- network
 export class Network {
   constructor({ meta, core, trips, stops, shapes }) {
@@ -309,6 +341,8 @@ export class Network {
     const n = prof.arr.length;
     const tau = sec - run.t0;
     if (tau < prof.arr[0] || tau > prof.arr[n - 1]) return null;
+    const mo = prof.mo === undefined ? (prof.mo = this._motion(prof)) : prof.mo;
+    if (mo) return this._movePosition(prof, pat, mo, tau);
     const arr = prof.ta || (prof.ta = smoothTimes(prof.arr)); // animation times, see smoothTimes
     let lo = 0, hi = n - 1;
     while (lo < hi) {
@@ -324,6 +358,61 @@ export class Network {
       const span = arr[k + 1] - dep;
       const f = span > 0 ? (tau - dep) / span : 1;
       d = pat.dist[k] + (pat.dist[k + 1] - pat.dist[k]) * f;
+      state = 'move'; nextK = k + 1;
+    }
+    const out = { k, nextK, state, dist: d, pattern: pat.idx, prof: prof.idx };
+    pointAt(this.geom(pat.shape), d, out);
+    return out;
+  }
+
+  /**
+   * Stop and run timings for a train or ferry profile (see MOTION), or null for buses. Per stop:
+   * arrive / depart (seconds after trip start). Per run k (stop k to k + 1): acceleration and top speed.
+   */
+  _motion(prof) {
+    const pat = this.patterns[prof.pattern];
+    const cfg = MOTION[this.routes[pat.route].mode];
+    if (!cfg) return null;
+    const ta = prof.ta || (prof.ta = smoothTimes(prof.arr));
+    const n = ta.length;
+    const arrive = new Float64Array(n), depart = new Float64Array(n), acc = new Float64Array(n), top = new Float64Array(n);
+    arrive[0] = ta[0];
+    depart[0] = ta[0] + prof.dw[0];
+    for (let k = 1; k < n; k++) {
+      const s = pat.dist[k] - pat.dist[k - 1];
+      if (k === n - 1) { arrive[k] = depart[k] = ta[k]; }
+      else if (prof.dw[k] > 0) { arrive[k] = ta[k]; depart[k] = ta[k] + prof.dw[k]; } // the timetable has a real stopping time
+      else {
+        const late = ta[k] + cfg.late;
+        const earliest = Math.min(depart[k - 1] + minRun(s, cfg.acc, cfg.top), late);
+        depart[k] = Math.min(Math.max(ta[k], earliest + cfg.minDwell), late); // on time, or as soon as a short stop allows
+        arrive[k] = Math.max(earliest, depart[k] - cfg.dwell);
+      }
+      if (arrive[k] < depart[k - 1]) { arrive[k] = depart[k - 1]; depart[k] = Math.max(depart[k], arrive[k]); } // keep times in order
+      const T = arrive[k] - depart[k - 1];
+      if (T > 0 && s > 0) {
+        const a = cfg.acc * T * T >= 4 * s ? cfg.acc : (4 * s) / (T * T); // too little time: accelerate harder
+        acc[k - 1] = a;
+        top[k - 1] = (a * T - Math.sqrt(Math.max(0, a * a * T * T - 4 * a * s))) / 2;
+      }
+    }
+    return { arrive, depart, acc, top };
+  }
+
+  _movePosition(prof, pat, mo, tau) {
+    const n = mo.arrive.length;
+    let lo = 0, hi = n - 1;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (mo.arrive[mid] <= tau) lo = mid; else hi = mid - 1;
+    }
+    const k = lo;
+    let d, state, nextK;
+    if (k === n - 1) { d = pat.dist[k]; state = 'end'; nextK = k; }
+    else if (tau < mo.depart[k]) { d = pat.dist[k]; state = 'dwell'; nextK = k + 1; }
+    else {
+      const s = pat.dist[k + 1] - pat.dist[k], T = mo.arrive[k + 1] - mo.depart[k];
+      d = pat.dist[k] + (mo.acc[k] > 0 ? runDistance(s, T, mo.acc[k], mo.top[k], tau - mo.depart[k]) : s);
       state = 'move'; nextK = k + 1;
     }
     const out = { k, nextK, state, dist: d, pattern: pat.idx, prof: prof.idx };

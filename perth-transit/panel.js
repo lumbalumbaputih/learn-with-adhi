@@ -1,8 +1,8 @@
 // panel.js: tabs, search, route and stop pages, the vehicle card and the departures board.
-import { DAY, fmtClock } from './sim.js?v=1.7';
-import { routeColor } from './colors.js?v=1.7';
-import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.7';
-import { dayLabel } from './scrubber.js?v=1.7';
+import { DAY, fmtClock } from './sim.js?v=1.8';
+import { routeColor } from './colors.js?v=1.8';
+import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.8';
+import { dayLabel } from './scrubber.js?v=1.8';
 
 const TABS = [['map', 'Map'], ['routes', 'Routes'], ['stops', 'Stops']];
 
