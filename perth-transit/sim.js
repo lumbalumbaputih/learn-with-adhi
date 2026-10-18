@@ -290,6 +290,26 @@ export class Network {
     return ymd >= this.meta.validFrom && ymd <= this.meta.validTo;
   }
 
+  /** True when the timetable changes the usual service on this date (public holidays, special events). */
+  hasChanges(ymd) {
+    return this._exByDate.has(ymd);
+  }
+
+  /**
+   * An ordinary covered day with the same weekday as `ymd`, for showing a typical day when `ymd`
+   * itself is outside the timetable. Skips the first week (it may be partial) and days with changes.
+   */
+  typicalDay(ymd) {
+    const dow = ymdToDow(ymd);
+    let fallback = null;
+    for (let d = addDays(this.meta.validFrom, 7); d <= this.meta.validTo; d = addDays(d, 1)) {
+      if (ymdToDow(d) !== dow) continue;
+      if (!this.hasChanges(d)) return d;
+      if (fallback === null) fallback = d;
+    }
+    return fallback ?? this.meta.validFrom;
+  }
+
   // ------------------------------------------------------------ runs of a service day
   runsForDay(ymd) {
     let r = this._runs.get(ymd);

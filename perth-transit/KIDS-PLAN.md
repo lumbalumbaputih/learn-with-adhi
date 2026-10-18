@@ -221,7 +221,7 @@ Each has a recommendation. D1, D2 and D6 were decided by Adhi on 2026-10-18; the
 
 | Step | Status |
 |---|---|
-| K0.1 Kids page skeleton + pretend day | Not started |
+| K0.1 Kids page skeleton + pretend day | ✅ Done 2026-10-18 (also took the speed buttons from K1.2 and a basic For grown-ups dialog from K1.3, because pausing and the licence credit are needed from the start) |
 | K1.1 Big train card + line strip | Not started |
 | K1.2 Hop on! | Not started |
 | K1.3 Sounds, settings, grown-ups box | Not started |

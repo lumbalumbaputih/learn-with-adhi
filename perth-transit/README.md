@@ -31,6 +31,7 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 
 - About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 329 public bus routes and, since v1.3, the Elizabeth Quay to Mends St ferry).
 - Trains stop at each station for a short time and speed up and slow down between stations (since v1.8, estimated, see section 4.2).
+- **Perth Train Spotter** (`kids.html`, since v1.8): a kids' page on the same engine and map, for any kid visiting (English, not tied to the Learn with Adhi star system). Trains and the ferry only, big outlined shapes on coloured lines, Pause/Slow/Fast/Rocket time, a "pretend day" when the date is outside the timetable, and a For grown-ups box. Reached from the yellow **Kids** button on the map. The full plan is in `KIDS-PLAN.md`.
 - Trains drawn as long bars and buses as short pills, in the route colour, pointing the way they travel (since v1.1). From zoom 15 each bus becomes a tag with its route number and a direction pointer (since v1.5).
 - A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control. On phones the chart is hidden (since v1.2), so time there is changed with the buttons only.
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
@@ -102,6 +103,7 @@ Counts in this build: 349 routes (8 train lines and 341 bus routes), 55,081 trip
 | `scrubber.js` | the day chart and draggable cursor |
 | `clock.js` | the simulation clock (live follows Perth time, or runs from a chosen moment) |
 | `colors.js`, `util.js` | line colours and text contrast, small DOM helpers |
+| `kids.html`, `kids.js`, `kids.css` | Perth Train Spotter, the kids' page (since v1.8). Reuses `sim.js`, `clock.js` and `mapview.js`; `mapview.js` takes `init(..., { kids: true })` for bigger outlined vehicles, coloured train lines and train stations only, and `setMode()` accepts a list of modes |
 | `style.css` | all styling, desktop two-column layout, phone layout at max-width 819 px, reduced-motion handling |
 | `vendor/` | MapLibre GL JS 6.11.2, vendored so no script loads from a CDN |
 | `fonts/` | Archivo variable font, self-hosted |
@@ -195,7 +197,7 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 - **Real-device testing** on iPhone and Android, and in Safari and Firefox.
 - **Ferry data is a patch** (v1.3): the claco compiler still drops route type 4, so a fresh compile there loses the ferry until `compile_gtfs.py` keeps it or `scripts/perth-transit-add-ferry.py` is re-run.
 - **claco's `site/` is out of date** (it stops at v1.0) and is no longer the source (see Source of truth at the top).
-- **Kids' mode (planned 2026-10-18, not started).** A separate `kids.html` for any kid visiting: trains and the ferry only, big icons, ride along with a train, spotting games and a station passport. The full plan, steps, risks and open decisions are in `KIDS-PLAN.md` in this folder.
+- **Kids' mode (Perth Train Spotter, in progress).** `kids.html` is live from v1.8 (K0.1); the train card, ride-along, sounds, spotting games and station passport follow. Steps, risks and decisions are in `KIDS-PLAN.md` in this folder.
 - **Phase 2, live arrivals (not started).** An unofficial live-times service exists. It is HTTP only, so a public HTTPS site would need a small server proxy. It is untested and its terms are unknown, so check that before building on it. The Transperth website's own per-station calls are rate limited, and bus calls need session cookies.
 
 ## 11. Build timeline
@@ -222,6 +224,7 @@ The same history, in plain words, is in the What's new list on the page (`index.
 - **Interface:** release query `?v=1.8` on every first-party module and the stylesheet; What's new and the About dialog say stopping times and speeds are estimates.
 - The claco engine test from section 7 (positions within 24.7 m of straight-line timetable interpolation) no longer applies to trains, by design.
 - Source of truth moved to this repo (top of this file).
+- **Perth Train Spotter, step K0.1** (`kids.html`, `kids.js`, `kids.css`, see `KIDS-PLAN.md`): full-screen map with trains and the ferry only, Pause/Slow/Fast/Rocket (1x, 10x, 60x; starts at 10x, paused with reduced motion), "64 trains and 2 boats are moving right now", a "Wake up the trains" button when none run (jumps to the first train, 4:30am on a Monday night), a labelled pretend day (same weekday, ordinary date inside the timetable: `Network.typicalDay()`, `hasChanges()`) when the date is outside the timetable or time runs past its end, forgiving 28 px taps, `?t=`/`date=` links, and a For grown-ups dialog with the licence and privacy sentences. `mapview.js` kids options: vehicles about twice as big with a dark outline (light on the dark map) and the white front tip from zoom 9, train lines in their colours at half strength, no bus layers or bus stations. A first screenshot showed trains blending into their own coloured lines, hence the outline. The yellow **Kids** button on the map links to it. Browser check: new kids section (trains-only drawing, count text, speed radios and arrow keys, tap selects a train, pretend day, wake-up time, reduced motion, 320 px fit, axe on phone, grown-ups dialog and desktop dark: no violations).
 
 ### v1.7 (2026-10-17)
 
