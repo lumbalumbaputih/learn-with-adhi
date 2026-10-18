@@ -84,6 +84,10 @@
     <p id="bubble" class="bubble" role="status" aria-atomic="true"></p>
 
     <section id="dock" class="dock" aria-label="Time" tabindex="-1">
+      <button id="sound-btn" class="sound-btn" type="button" aria-pressed="true" aria-label="Sound effects">
+        <svg class="i-on" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="i-off" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="m16 9.5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
       <div class="now-line">
         <p id="clock" class="clock"></p>
         <p id="count" class="count"></p>
@@ -102,6 +106,13 @@
     <h2 id="grownups-title">For grown-ups</h2>
     <p>Perth Train Spotter is a kids' version of the <a href="./">Perth Transit Map</a>. It shows where Perth's trains and the ferry <em>should</em> be, worked out from the published timetable.</p>
     <p><strong>It is not live.</strong> Trains are not tracked, so delays and cancellations are not shown. Please don't use it to plan a real trip; check the official journey planner instead. How long trains stop at stations and how they speed up and slow down are our estimates.</p>
+    <h3>Settings</h3>
+    <div class="settings">
+      <label><input id="set-sound" type="checkbox"> Sound effects</label>
+      <label><input id="set-voice" type="checkbox"> Read station names aloud</label>
+      <p id="voice-note" class="fine" hidden>This browser can't read aloud.</p>
+      <p class="fine">The voice is your device's own. These choices are kept on this device only.</p>
+    </div>
     <h3>Privacy</h3>
     <p>No location, no accounts and no names. Nothing your child does here leaves this device. Visits to the page are counted with Vercel Web Analytics, which does not use cookies, and the map pictures are loaded from OpenFreeMap.</p>
     <h3>Data</h3>

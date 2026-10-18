@@ -205,17 +205,26 @@ async function checkKids(browser, errors) {
   assert.equal(finished, 'This trip is finished. Tap another train!');
   await k.keyboard.press('Escape');
   assert.equal(await k.locator('#card').isHidden(), true, 'Escape closes the train card');
+  // K1.3 settings: effects on and voice off by default, both kept in this browser
+  assert.equal(await k.locator('#sound-btn').getAttribute('aria-pressed'), 'true');
+  await k.locator('#sound-btn').click();
+  assert.equal(await k.evaluate(() => localStorage.getItem('ptmKids')), '{"sound":false,"voice":false}');
   await k.getByRole('button', { name: 'For grown-ups' }).click();
   assert.match(await k.locator('#grownups').innerText(), /available free of charge from www\.transperth\.wa\.gov\.au/);
+  assert.equal(await k.getByRole('checkbox', { name: 'Sound effects' }).isChecked(), false);
+  await k.getByRole('checkbox', { name: 'Read station names aloud' }).check();
+  assert.equal(await k.evaluate(() => localStorage.getItem('ptmKids')), '{"sound":false,"voice":true}');
   await axeKids(k, 'grown-ups dialog');
   await k.close();
 
   // K1.2 Hop on!: ride a train to the end, one station call per stop, then the next trains on offer
   const rideP = await open('?date=2026-10-19&t=08:00');
   await rideP.evaluate(() => {
-    window.calls = [];
+    window.calls = []; window.played = [];
     new MutationObserver((recs) => { for (const r of recs) for (const n of r.addedNodes) if (n.data) calls.push(n.data); })
       .observe(document.getElementById('bubble'), { childList: true, subtree: true });
+    const s = __kids.sound, play = s._play.bind(s); // K1.3: record the sounds that would play
+    s._play = (n) => { played.push(n); play(n); };
   });
   await rideP.getByRole('radio', { name: 'Pause' }).click();
   const pick = await rideP.evaluate(() => {
@@ -237,6 +246,9 @@ async function checkKids(browser, errors) {
   assert.match(calls[0], /^All aboard! Next stop: /);
   assert.equal(calls.length - 2, pick.left, 'One station call per stop passed');
   assert.equal(calls[calls.length - 1], `You made it to ${dest}!`);
+  await rideP.waitForTimeout(200);
+  const played = await rideP.evaluate(() => played);
+  assert.deepEqual([played[0], played[1], played[played.length - 1], played.filter((x) => x === 'chime').length], ['pop', 'whistle', 'yay', pick.left], 'Pop, whistle, a chime per station, then the fanfare');
   assert.equal(await rideP.getByRole('radio', { name: 'Pause' }).getAttribute('aria-checked'), 'true', 'Arrival pauses time');
   assert.ok((await rideP.locator('#next-list .next-train').count()) >= 1, 'Next trains are offered');
   await axeKids(rideP, 'arrival card with next trains');

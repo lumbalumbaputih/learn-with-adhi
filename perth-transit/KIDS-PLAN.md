@@ -224,8 +224,8 @@ Each has a recommendation. D1, D2 and D6 were decided by Adhi on 2026-10-18; the
 | K0.1 Kids page skeleton + pretend day | ✅ Done 2026-10-18 (also took the speed buttons from K1.2 and a basic For grown-ups dialog from K1.3, because pausing and the licence credit are needed from the start) |
 | K1.1 Big train card + line strip | ✅ Done 2026-10-18 |
 | K1.2 Hop on! | ✅ Done 2026-10-18 (plus: time pauses on arrival so the next-train offers stay true; waiting at the station for the chosen train) |
-| K1.3 Sounds, settings, grown-ups box | Not started |
-| Phase 1 gate (real kids) | Not started |
+| K1.3 Sounds, settings, grown-ups box | ✅ Done 2026-10-18 |
+| Phase 1 gate (real kids) | ⏳ Ready for Adhi: 2 or 3 kids, 10 minutes each, watch without helping. Do they hop on a second train unprompted? Also the first real-phone/tablet test (sound, voice, taps, speed) |
 | K2.1 Spot it! | Not started |
 | K2.2 Station Passport | Not started |
 | K2.3 Who gets there first? | Not started |

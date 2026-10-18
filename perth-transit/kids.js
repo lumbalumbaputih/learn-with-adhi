@@ -6,6 +6,7 @@ import { MapView } from './mapview.js?v=1.8';
 import { chipColors, routeColor } from './colors.js?v=1.8';
 import { prettyName } from './util.js?v=1.8';
 import { findVehicle, stopsReached, trainsFrom } from './ride.js?v=1.8';
+import { Sound, loadSettings, saveSettings } from './sound.js?v=1.8';
 
 const $ = (id) => document.getElementById(id);
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -96,6 +97,28 @@ async function main() {
   clock.setTime(pretend ? net.typicalDay(real.ymd) : real.ymd, real.sec);
   clock.setSpeed(motionQuery.matches ? 0 : START_SPEED);
 
+  // ---- sound: effects on and voice off by default, kept on this device (sound.js)
+  const settings = loadSettings();
+  const sound = new Sound(settings);
+  for (const ev of ['pointerdown', 'keydown']) document.addEventListener(ev, () => sound.unlock(), { capture: true, passive: true });
+  function syncSettings() {
+    $('sound-btn').setAttribute('aria-pressed', String(settings.sound));
+    $('set-sound').checked = settings.sound;
+    $('set-voice').checked = settings.voice;
+    $('set-voice').disabled = !sound.canSpeak;
+    $('voice-note').hidden = sound.canSpeak;
+  }
+  function changeSettings(patch) {
+    Object.assign(settings, patch);
+    saveSettings(settings);
+    if (!settings.voice) sound.stopSpeaking();
+    syncSettings();
+  }
+  $('sound-btn').addEventListener('click', () => { changeSettings({ sound: !settings.sound }); sound.unlock(); sound.play('pop'); });
+  $('set-sound').addEventListener('change', (e) => changeSettings({ sound: e.target.checked }));
+  $('set-voice').addEventListener('change', (e) => { changeSettings({ voice: e.target.checked }); sound.speak('Station names will be read aloud.'); });
+  syncSettings();
+
   // ---- map
   let selected = null;
   const mapView = new MapView($('map'), net, {
@@ -133,6 +156,7 @@ async function main() {
     const v = id === null ? null : mapView.byId.get(id);
     if (!v) { closeCard(); return; }
     openCard(v.route, v.pattern, v.id);
+    sound.play('pop');
     requestAnimationFrame(() => showOnMap(v));
     tick(true);
   }
@@ -233,7 +257,9 @@ async function main() {
   const riding = () => ride.id !== null || ride.wait !== null;
   const absSec = (ymd, sec) => { const [y, m, d] = ymdParts(ymd); return Date.UTC(y, m - 1, d) / 1000 + sec; };
   const bubble = $('bubble');
-  function say(text) { // a short station call; the bubble is a polite live region
+  function say(text, sfx) { // a short call with its sound (and the voice, if on); the bubble is a polite live region
+    if (sfx) sound.play(sfx);
+    sound.speak(text);
     bubble.textContent = text;
     bubble.classList.add('show');
     clearTimeout(say.t);
@@ -259,7 +285,7 @@ async function main() {
       m.once('moveend', () => { if (ride.id !== null && ride.follow) mapView.follow(ride.id); });
     }
     if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
-    say(`All aboard! Next stop: ${stationLabel(net, pat.stops[Math.min(v.k + 1, pat.stops.length - 1)])}`);
+    say(`All aboard! Next stop: ${stationLabel(net, pat.stops[Math.min(v.k + 1, pat.stops.length - 1)])}`, net.routes[v.route].isFerry ? 'horn' : 'whistle');
     syncButtons();
   }
   function hopOff() {
@@ -283,7 +309,7 @@ async function main() {
     const reached = stopsReached(ride.k, k);
     ride.k = Math.max(ride.k, k);
     if (k >= last) finishRide(now, pat);
-    else if (reached.length) say(`${stationLabel(net, pat.stops[k])}!`);
+    else if (reached.length) say(`${stationLabel(net, pat.stops[k])}!`, 'chime');
   }
   function finishRide(now, pat) {
     const lastK = pat.stops.length - 1, lastStop = pat.stops[lastK], label = stationLabel(net, lastStop);
@@ -294,7 +320,7 @@ async function main() {
     stripTrain.hidden = false;
     placeStripTrain(lastK);
     if (!motionQuery.matches) cardEl.classList.add('celebrate');
-    say(`You made it to ${label}!`);
+    say(`You made it to ${label}!`, 'yay');
     // pause for the moment of arrival, so the next trains on offer don't leave while the choice is made
     ride.resume = clock.speed || ride.resume;
     if (clock.speed !== 0) { clock.setSpeed(0); syncSpeeds(); }
@@ -406,7 +432,7 @@ async function main() {
   }
   $('wake').addEventListener('click', () => {
     const n = clock.now(), w = nextTrainTime(n.ymd, n.sec);
-    if (w) { clock.setTime(w.ymd, w.sec); if (clock.speed === 0) clock.setSpeed(START_SPEED); syncSpeeds(); tick(true); }
+    if (w) { clock.setTime(w.ymd, w.sec); if (clock.speed === 0) clock.setSpeed(START_SPEED); syncSpeeds(); sound.play('whistle'); tick(true); }
   });
 
   // ---- grown-ups dialog
@@ -475,7 +501,7 @@ async function main() {
   mapView.map.on('moveend', () => { if (mapView.following === null) tick(true); });
   tick(true);
 
-  window.__kids = { net, clock, mapView, tick, select, get selected() { return selected; }, get ride() { return ride; } };
+  window.__kids = { net, clock, mapView, tick, select, sound, settings, get selected() { return selected; }, get ride() { return ride; } };
   setLoading('Ready', 1);
   document.body.classList.add('ready');
   $('loading').hidden = true;
