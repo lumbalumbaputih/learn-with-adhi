@@ -1,12 +1,12 @@
 // kids.js: Perth Train Spotter. A kids' page on the same timetable engine and map as the grown-up map:
 // trains and the ferry only, big shapes, time that can run faster than real life, and plain words.
-import { Network, ymdToDow, addDays, fmtClock, ymdParts, DAY } from './sim.js?v=1.8';
-import { SimClock } from './clock.js?v=1.8';
-import { MapView } from './mapview.js?v=1.8';
-import { chipColors, routeColor } from './colors.js?v=1.8';
-import { prettyName } from './util.js?v=1.8';
-import { findVehicle, stopsReached, trainsFrom } from './ride.js?v=1.8';
-import { Sound, loadSettings, saveSettings } from './sound.js?v=1.8';
+import { Network, ymdToDow, addDays, fmtClock, ymdParts, DAY } from './sim.js?v=1.9';
+import { SimClock } from './clock.js?v=1.9';
+import { MapView } from './mapview.js?v=1.9';
+import { chipColors, routeColor } from './colors.js?v=1.9';
+import { prettyName } from './util.js?v=1.9';
+import { findVehicle, stopsReached, trainsFrom } from './ride.js?v=1.9';
+import { Sound, loadSettings, saveSettings } from './sound.js?v=1.9';
 
 const $ = (id) => document.getElementById(id);
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];

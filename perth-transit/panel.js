@@ -1,8 +1,8 @@
 // panel.js: tabs, search, route and stop pages, the vehicle card and the departures board.
-import { DAY, fmtClock } from './sim.js?v=1.8';
-import { routeColor } from './colors.js?v=1.8';
-import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.8';
-import { dayLabel } from './scrubber.js?v=1.8';
+import { DAY, fmtClock } from './sim.js?v=1.9';
+import { routeColor } from './colors.js?v=1.9';
+import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.9';
+import { dayLabel } from './scrubber.js?v=1.9';
 
 const TABS = [['map', 'Map'], ['routes', 'Routes'], ['stops', 'Stops']];
 
@@ -184,6 +184,42 @@ export class Panel {
   }
 
   // ---- Map tab
+  _favourites() {
+    const places = this.act.getPlaces();
+    const list = h('ul', { class: 'plain-list' });
+    for (const place of places) {
+      list.append(h('li', { class: 'place-row' },
+        h('button', { class: 'row', type: 'button', onclick: () => this.act.onPlace(place), 'aria-label': `Show stops near ${place.name}` },
+          h('span', { class: 'place-mark', 'aria-hidden': 'true', text: '★' }),
+          h('span', { class: 'row-main' }, h('span', { class: 'row-title', text: place.name }),
+            h('span', { class: 'row-sub', text: 'Show nearby stops' }))),
+        h('button', { class: 'btn btn-quiet', type: 'button', text: 'Edit', 'aria-label': `Edit ${place.name}`, onclick: () => this.act.onSavePlace({ place }) })));
+    }
+    const buttons = h('div', { class: 'btn-row' });
+    for (const name of ['Home', 'Work']) if (!places.some((p) => p.name.toLowerCase() === name.toLowerCase())) {
+      buttons.append(h('button', { class: 'btn btn-quiet', type: 'button', text: `Save ${name}`, onclick: () => this.act.onSavePlace({ name }) }));
+    }
+    buttons.append(h('button', { class: 'btn', type: 'button', text: 'Add a place', onclick: () => this.act.onSavePlace() }));
+    return h('section', { class: 'block favourites', 'aria-label': 'Favourite places' },
+      h('h2', { class: 'h2', text: 'Favourites' }), list, buttons,
+      h('p', { class: 'fine', text: 'Save Home, Work or another place on this device.' }));
+  }
+
+  refreshPlaces(places) {
+    if (this.nearMe?.placeId) {
+      const place = places.find((p) => p.id === this.nearMe.placeId);
+      this.nearMe = place ? { ...place, placeId: place.id } : null;
+    }
+    this.render();
+  }
+
+  showPlace(place) {
+    this._clearDetail(); this.query = ''; this.input.value = ''; this.vehicleId = null;
+    this.nearMe = { ...place, placeId: place.id };
+    this.setTab('stops');
+    this.content.focus({ preventScroll: true });
+  }
+
   _mapTab() {
     const net = this.net;
     this.r.total = h('span', { class: 'num' });
@@ -214,7 +250,7 @@ export class Panel {
         chip(r), h('span', { class: 'row-main' },
           h('span', { class: 'row-title', text: r.isFerry ? 'Swan River ferry' : r.long }), h('span', { class: 'row-sub', text: this._summary(r.idx) })), count)));
     }
-    return h('div', { class: 'stack' }, this.r.vcard, status, seg,
+    return h('div', { class: 'stack' }, this.r.vcard, status, seg, this._favourites(),
       h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Train lines' }), list),
       ferries.childElementCount ? h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Ferry' }), ferries) : null);
   }
@@ -388,7 +424,7 @@ export class Panel {
       h('button', { class: 'btn', type: 'button', onclick: () => this.act.onLocate(), text: 'Near me' }),
       h('button', { class: 'btn btn-quiet', type: 'button', disabled: !this.nearMe, onclick: () => { this.nearMe = null; this._renderNear(); }, text: 'Use map centre' }));
     this.r.nearHead = h('h2', { class: 'h2' });
-    const wrap = h('div', { class: 'stack' }, top, this.r.nearHead, this.r.near,
+    const wrap = h('div', { class: 'stack' }, this._favourites(), top, this.r.nearHead, this.r.near,
       h('p', { class: 'fine', text: 'Your location stays in your browser and is only used to sort nearby stops.' }));
     queueMicrotask(() => this._renderNear());
     return wrap;
@@ -399,7 +435,7 @@ export class Panel {
   _renderNear() {
     if (!this.r.near) return;
     const src = this.nearMe || this.center;
-    this.r.nearHead.textContent = this.nearMe ? 'Stops near you' : 'Stops near the map centre';
+    this.r.nearHead.textContent = this.nearMe?.name ? `Stops near ${this.nearMe.name}` : this.nearMe ? 'Stops near you' : 'Stops near the map centre';
     this.r.near.replaceChildren();
     if (!src) return;
     const list = h('ul', { class: 'plain-list' });
@@ -444,7 +480,11 @@ export class Panel {
       this._backBtn('Stops'),
       h('header', { class: 'page-head' }, h('h2', { class: 'page-title', text: prettyName(net.entityName(e)) })),
       h('p', { class: 'meta', text: e.kind === 'stop' ? `Stop ${net.stopCode[e.idx]}` : mode === 4 ? 'Ferry jetty' : 'Station' }),
-      h('div', { class: 'btn-row' }, h('button', { class: 'btn', type: 'button', onclick: () => this.act.onEntity(e, true), text: 'Show on map' })),
+      h('div', { class: 'btn-row' },
+        h('button', { class: 'btn', type: 'button', onclick: () => this.act.onEntity(e, true), text: 'Show on map' }),
+        h('button', { class: 'btn btn-quiet', type: 'button', text: 'Save this location', onclick: () => this.act.onSavePlace({
+          name: prettyName(net.entityName(e)).slice(0, 40), point: { lat: net.entityLat(e), lon: net.entityLon(e) },
+        }) })),
       routes.length ? h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Routes that stop here' }), chips) : null,
       h('section', { class: 'block' }, h('h3', { class: 'h3', text: 'Next departures' }), filters, this.r.board,
         h('p', { class: 'fine', text: 'Timetable times only. Delays and cancellations are not shown.' })));
