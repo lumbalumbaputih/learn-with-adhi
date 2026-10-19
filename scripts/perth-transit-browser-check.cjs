@@ -272,7 +272,8 @@ async function checkKids(browser, errors) {
   assert.equal(await rideP.evaluate(() => document.activeElement.id), 'hop-off', 'Keyboard focus moves to Stop waiting');
   assert.equal(await rideP.evaluate(() => __kids.clock.speed), 10, 'Choosing the next train carries on at the earlier speed');
   // a missed train (the tablet slept while waiting) must not break the next train's card
-  await rideP.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 2 * 3600); __kids.tick(true); });
+  // (paused first: on a slow machine the running clock could bring the train in before the jump)
+  await rideP.evaluate(() => { __kids.clock.setSpeed(0); const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 2 * 3600); __kids.tick(true); });
   assert.equal(await rideP.locator('#card-now').innerText(), 'We missed that train. Pick another one!');
   await rideP.evaluate(() => { const v = [...__kids.mapView.byId.values()].find((x) => __kids.net.routes[x.route].isTrain && x.state === 'move'); __kids.select(v.id); });
   assert.doesNotMatch(await rideP.locator('#card-now').innerText(), /missed/, 'After a missed train, the next card is normal');
@@ -518,6 +519,37 @@ async function checkKids(browser, errors) {
     await p.close();
   }
   console.log('Fourth review round checks pass.');
+
+  // Fifth round: a next train's card starts at its header (the arrival card was scrolled to its offers) on sideways phones
+  for (const [w, h] of [[568, 320], [640, 360], [740, 360]]) {
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: true, hasTouch: true });
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    await pickLine(p, 'Fremantle Line', /Perth$/);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    assert.ok(await toEnd(p), `${w}x${h}: the ride ends`);
+    await p.waitForTimeout(150);
+    await p.locator('#next-list .next-train').first().click();
+    const waitTop = await p.evaluate(() => document.getElementById('card').scrollTop);
+    assert.equal(waitTop, 0, `${w}x${h}: the waiting card starts at its header`);
+    assert.ok(await seen(p, '#card-close'), `${w}x${h}: the waiting card's close button can be tapped`);
+    assert.ok(await p.evaluate(() => { for (let s = 0; s < 3600 && __kids.ride.id === null; s += 10) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 10); __kids.tick(true); } return __kids.ride.id !== null; }), `${w}x${h}: boards the next train`);
+    assert.ok(await seen(p, '#card-close'), `${w}x${h}: riding the next train, its close button can be tapped`);
+    await p.close();
+  }
+  // Fifth round: hopping on a train standing at a station, "All aboard! Next stop: ..." is shown (the card says "Stopped at ...")
+  for (const [w, h] of [[375, 667], [390, 844]]) {
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
+    assert.ok(await p.evaluate(() => { const v = [...__kids.mapView.byId.values()].find((x) => __kids.net.routes[x.route].isTrain && x.state === 'dwell' && x.k > 0); if (!v) return false; __kids.select(v.id); return true; }), `${w}x${h}: a train standing at a station`);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    const aboard = await p.evaluate(() => {
+      const b = document.getElementById('bubble'), r = b.getBoundingClientRect(), top = document.querySelector('.top').getBoundingClientRect().bottom;
+      return { text: b.textContent, status: document.getElementById('card-now').textContent, tucked: b.classList.contains('tucked'), inView: r.width > 40 && r.top >= top - 1 && r.bottom <= innerHeight };
+    });
+    assert.match(aboard.status, /^Stopped at /);
+    assert.ok(/^All aboard! Next stop: /.test(aboard.text) && !aboard.tucked && aboard.inView, `${w}x${h}: the All aboard call can be seen ${JSON.stringify(aboard)}`);
+    await p.close();
+  }
+  console.log('Fifth review round checks pass.');
 
   const pretend = await open('?date=2027-03-01&t=08:00');
   assert.equal(await pretend.locator('#pretend').innerText(), 'Pretend day');

@@ -204,6 +204,7 @@ async function main() {
     });
     stripList.replaceChildren(...cardState.items.map((x) => x.li));
     stripEl.scrollLeft = 0;
+    cardEl.scrollTop = 0; // a new train's card starts at its header (the arrival card may have been scrolled to its offers)
     cardEl.classList.remove('celebrate');
     $('card-now').classList.remove('flash');
     $('next-trains').hidden = true;
@@ -351,7 +352,8 @@ async function main() {
       m.once('moveend', () => { if (ride.id !== null && ride.follow) mapView.follow(ride.id); });
     }
     if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
-    say(`All aboard! Next stop: ${stationLabel(net, pat.stops[Math.min(v.k + 1, pat.stops.length - 1)])}`, net.routes[v.route].isFerry ? 'horn' : 'whistle', 'status');
+    // the status line names the next stop only while moving (at a station it says where the train is): otherwise the call floats
+    say(`All aboard! Next stop: ${stationLabel(net, pat.stops[Math.min(v.k + 1, pat.stops.length - 1)])}`, net.routes[v.route].isFerry ? 'horn' : 'whistle', v.state === 'move' ? 'status' : '');
     syncButtons();
   }
   // after the arrival pause, carry on at the speed the viewer had chosen (also with reduced motion: it was their choice)
@@ -448,7 +450,7 @@ async function main() {
     if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
     updateWait(now);
     syncButtons();
-    if (fromList) $('hop-off').focus(); // "Stop waiting"
+    if (fromList) $('hop-off').focus({ preventScroll: true }); // "Stop waiting" (pinned, so always in view: no scroll)
   }
   function updateWait(now) {
     const w = ride.wait, v = lookup(w.id);
@@ -474,7 +476,8 @@ async function main() {
     else { hop.hidden = cardState.id === null || !lookup(cardState.id); hop.textContent = 'Hop on!'; off.hidden = true; }
     // a keyboard user's focus must not fall back to the page when the button they pressed hides itself
     if ((had === hop && hop.hidden) || (had === off && off.hidden)) {
-      if (!hop.hidden) hop.focus(); else if (!off.hidden) off.focus(); else if (!cardEl.hidden) $('card-title').focus();
+      // the ride buttons are pinned to the card's bottom, always in view: focusing them must not scroll the card
+      if (!hop.hidden) hop.focus({ preventScroll: true }); else if (!off.hidden) off.focus({ preventScroll: true }); else if (!cardEl.hidden) $('card-title').focus();
     }
   }
   $('hop').addEventListener('click', () => {
