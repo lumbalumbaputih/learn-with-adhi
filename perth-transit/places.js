@@ -54,7 +54,7 @@ export async function loadPlaceCatalogue(fetcher = globalThis.fetch) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12000);
   try {
-    const response = await fetcher('data/places.json?v=1.10', { signal: controller.signal, cache: 'no-cache' });
+    const response = await fetcher('data/places.json?v=1.10.1', { signal: controller.signal, cache: 'no-cache' });
     if (!response.ok) throw new Error(`Place catalogue ${response.status}`);
     return new PlaceCatalogue(await response.json());
   } finally { clearTimeout(timer); }
