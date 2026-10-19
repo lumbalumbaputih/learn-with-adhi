@@ -1,17 +1,18 @@
 // kids.js: Perth Train Spotter. A kids' page on the same timetable engine and map as the grown-up map:
 // trains and the ferry only, big shapes, time that can run faster than real life, and plain words.
-import { Network, ymdToDow, addDays, fmtClock, ymdParts, DAY } from './sim.js?v=1.10.1';
-import { SimClock } from './clock.js?v=1.10.1';
-import { MapView } from './mapview.js?v=1.10.1';
-import { chipColors, routeColor } from './colors.js?v=1.10.1';
-import { prettyName } from './util.js?v=1.10.1';
-import { findVehicle, stopsReached, trainsFrom } from './ride.js?v=1.10.1';
-import { Sound, loadSettings, saveSettings } from './sound.js?v=1.10.1';
+import { Network, ymdToDow, addDays, fmtClock, ymdParts, DAY } from './sim.js?v=1.11';
+import { SimClock } from './clock.js?v=1.11';
+import { MapView } from './mapview.js?v=1.11';
+import { chipColors, routeColor } from './colors.js?v=1.11';
+import { prettyName } from './util.js?v=1.11';
+import { findVehicle, stopsReached, trainsFrom } from './ride.js?v=1.11';
+import { Sound, loadSettings, saveSettings } from './sound.js?v=1.11';
 
 const $ = (id) => document.getElementById(id);
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const MODES = ['train', 'ferry'];
-const START_SPEED = 10; // fast enough to see the trains move at city zoom, slow enough to follow one
+const START_SPEED = 1; // open at normal speed, following current Perth time
+const PLAY_SPEED = 10; // resume a paused play ride at Fast, as before
 const narrowQuery = matchMedia('(max-width: 819px)');
 // the card sits at the side (not above the dock) on wide screens and on short landscape phones: keep in step with kids.css
 const sideQuery = matchMedia('(min-width: 820px), (max-height: 500px) and (min-width: 640px)');
@@ -96,8 +97,9 @@ async function main() {
   const tm = /^(\d{1,2}):(\d{2})$/.exec(qs.get('t') || ''), dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(qs.get('date') || '');
   if (tm) { real.sec = Math.min(+tm[1] * 3600 + +tm[2] * 60, DAY - 1); if (dm) real.ymd = +dm[1] * 10000 + +dm[2] * 100 + +dm[3]; }
   let pretend = !net.covers(real.ymd);
-  clock.setTime(pretend ? net.typicalDay(real.ymd) : real.ymd, real.sec);
-  clock.setSpeed(motionQuery.matches ? 0 : START_SPEED);
+  if (tm || pretend) clock.setTime(pretend ? net.typicalDay(real.ymd) : real.ymd, real.sec);
+  if (motionQuery.matches) clock.setSpeed(0);
+  else if (!clock.live) clock.setSpeed(START_SPEED);
 
   // ---- sound: effects on and voice off by default, kept on this device (sound.js)
   const settings = loadSettings();
@@ -126,7 +128,13 @@ async function main() {
   syncSettings();
 
   // ---- map
-  let selected = null;
+  let selected = null, locationRequest = null;
+  const locateButton = $('locate');
+  function cancelLocationRequest() {
+    locationRequest = null;
+    locateButton.removeAttribute('aria-busy');
+    locateButton.removeAttribute('aria-disabled');
+  }
   const mapView = new MapView($('map'), net, {
     onVehicle: (id) => select(id),
     onEntity: () => { if (!riding()) select(null); },
@@ -155,7 +163,9 @@ async function main() {
   new ResizeObserver(fitDock).observe(dock);
   fitDock();
 
-  function select(id) {
+  function select(id, { cancelLocation = true } = {}) {
+    if (cancelLocation) cancelLocationRequest();
+    if (id === null) { clearTimeout(say.t); bubble.classList.remove('show'); sound.stopSpeaking(); }
     // tapping the train you are riding (or waiting for) keeps the ride going
     if (id !== null && (id === ride.id || (ride.wait && id === ride.wait.id))) {
       if (ride.id !== null && !ride.done && !ride.follow) { ride.follow = true; mapView.follow(ride.id); syncButtons(); tick(true); }
@@ -318,7 +328,7 @@ async function main() {
       m.easeTo({ center: [v.lon, v.lat], zoom, duration: 700 });
       m.once('moveend', () => { if (ride.id !== null && ride.follow) mapView.follow(ride.id); });
     }
-    if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
+    if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(PLAY_SPEED); syncSpeeds(); schedule(); }
     say(`All aboard! Next stop: ${stationLabel(net, pat.stops[Math.min(v.k + 1, pat.stops.length - 1)])}`, net.routes[v.route].isFerry ? 'horn' : 'whistle');
     syncButtons();
   }
@@ -401,7 +411,7 @@ async function main() {
     const m = mapView.map;
     m.setPadding(ridePadding());
     m.easeTo({ center: [net.stationLon[station], net.stationLat[station]], zoom: Math.max(m.getZoom(), 13.2), duration: motionQuery.matches ? 0 : 600 });
-    if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
+    if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(PLAY_SPEED); syncSpeeds(); schedule(); }
     updateWait(now);
     syncButtons();
     if (fromList) $('hop-off').focus(); // "Stop waiting"
@@ -452,6 +462,7 @@ async function main() {
       b.setAttribute('aria-checked', String(on));
       b.tabIndex = on ? 0 : -1;
     }
+    $('now-btn').setAttribute('aria-pressed', String(clock.live));
   }
   function setSpeed(s) { clock.setSpeed(s); syncSpeeds(); tick(true); }
   speedBtns.forEach((b, i) => {
@@ -468,6 +479,51 @@ async function main() {
   syncSpeeds();
   motionQuery.addEventListener('change', (e) => { if (e.matches) setSpeed(0); });
 
+  // ---- current Perth time and one-shot, opt-in location
+  $('now-btn').addEventListener('click', () => {
+    select(null, { cancelLocation: false });
+    clock.goLive();
+    const now = clock.now();
+    pretend = !net.covers(now.ymd);
+    if (pretend) clock.setTime(net.typicalDay(now.ymd), now.sec);
+    if (motionQuery.matches) clock.setSpeed(0);
+    syncSpeeds(); tick(true);
+    showHint(pretend ? "Today's timetable isn't available. This is a pretend day at the current Perth time."
+      : motionQuery.matches ? 'Showing Perth time now. Press Slow to start the trains.' : 'Back to Perth time now.');
+  });
+  locateButton.addEventListener('click', () => {
+    if (locationRequest) return;
+    if (!navigator.geolocation) { showHint('Location is not available here. You can still move the map yourself.'); return; }
+    const request = {};
+    locationRequest = request;
+    locateButton.setAttribute('aria-busy', 'true');
+    locateButton.setAttribute('aria-disabled', 'true');
+    showHint('Finding your location…');
+    const found = (position) => {
+      if (locationRequest !== request) return; // a newer map/vehicle choice wins
+      cancelLocationRequest();
+      const { latitude: lat, longitude: lon } = position.coords;
+      if (!Number.isFinite(lat) || !Number.isFinite(lon) || lat < -32.7 || lat > -31.35 || lon < 115.5 || lon > 116.5) {
+        showHint('This map covers Perth. You can still look around the map yourself.'); return;
+      }
+      const speed = clock.speed;
+      select(null);
+      if (clock.speed !== speed) { clock.setSpeed(speed); syncSpeeds(); } // leaving an arrival card must keep location separate from time
+      mapView.setMe(lat, lon);
+      mapView.flyTo(lat, lon, 14);
+      showHint('The blue dot is where you are.'); tick(true);
+    };
+    const failed = (error) => {
+      if (locationRequest !== request) return;
+      cancelLocationRequest();
+      showHint(error.code === 1 ? 'Location was not allowed. You can still move the map yourself.'
+        : 'Could not find your location. Try again or move the map yourself.');
+    };
+    try { navigator.geolocation.getCurrentPosition(found, failed, { timeout: 10000, maximumAge: 60000, enableHighAccuracy: false }); }
+    catch { failed({ code: 2 }); }
+  });
+  mapView.map.on('dragstart', cancelLocationRequest);
+
   // ---- wake up: jump to the next moment a train runs (the trains sleep for a few hours each night)
   function nextTrainTime(ymd, sec) {
     for (let s = sec; s < sec + 14 * 3600; s += 120) {
@@ -479,7 +535,7 @@ async function main() {
   $('wake').addEventListener('click', () => {
     const n = clock.now(), w = nextTrainTime(n.ymd, n.sec);
     if (w) {
-      clock.setTime(w.ymd, w.sec); if (clock.speed === 0) clock.setSpeed(START_SPEED); syncSpeeds(); sound.play('whistle'); tick(true);
+      clock.setTime(w.ymd, w.sec); if (clock.speed === 0) clock.setSpeed(PLAY_SPEED); syncSpeeds(); sound.play('whistle'); tick(true);
       speedBtns.find((b) => b.tabIndex === 0).focus(); // the wake button has just hidden itself
     }
   });
@@ -541,6 +597,7 @@ async function main() {
       clock.setTime(net.typicalDay(now.ymd), now.sec);
       now = clock.now();
       pretend = true;
+      syncSpeeds();
     }
     const moment = `${now.ymd}|${now.sec}`;
     if (!force && moment === lastMoment) return;
@@ -580,7 +637,9 @@ async function main() {
   setLoading('Ready', 1);
   document.body.classList.add('ready');
   $('loading').hidden = true;
-  showHint(clock.speed === 0 ? 'Press Fast to start the trains!' : 'Watch the trains move! Tap Rocket to make time go faster.');
+  showHint(clock.speed === 0 ? 'Press Slow to start the trains!'
+    : clock.live ? 'It is Perth time now. Tap a train, or press Me to find your area.'
+      : 'Watch the trains move! Press Now to return to Perth time.');
 }
 
 $('loading-retry').addEventListener('click', () => location.reload());

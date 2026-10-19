@@ -147,10 +147,11 @@ const plainStyle = { version: 8, sources: {}, layers: [{ id: 'bg', type: 'backgr
 // ---------------------------------------------------------------- Perth Train Spotter (kids.html)
 async function checkKids(browser, errors) {
   const phone = { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true };
-  const open = async (q, opts = phone) => {
+  const open = async (q, opts = phone, setup = async () => {}) => {
     const p = await browser.newPage(opts);
     p.on('pageerror', (e) => errors.push(e.message));
     await p.route('https://tiles.openfreemap.org/styles/*', (route) => route.fulfill({ json: plainStyle }));
+    await setup(p);
     await p.goto(`${origin}/perth-transit/kids.html${q}`);
     await p.waitForFunction(() => !!window.__kids && document.getElementById('loading').hidden);
     return p;
@@ -164,8 +165,110 @@ async function checkKids(browser, errors) {
     console.log('axe passes: kids', label);
   };
 
+  // The clock always uses Perth time, even when the viewer is elsewhere. Location is opt-in.
+  const current = await open('', { ...phone, timezoneId: 'America/New_York', permissions: ['geolocation'],
+    geolocation: { latitude: -31.95123, longitude: 115.86123 } }, async (p) => {
+    await p.clock.setFixedTime(new Date('2026-10-19T00:15:00Z'));
+    await p.addInitScript(() => {
+      window.locationCalls = 0;
+      const real = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+      navigator.geolocation.getCurrentPosition = (...args) => { locationCalls++; return real(...args); };
+    });
+  });
+  assert.deepEqual(await current.evaluate(() => [__kids.clock.live, __kids.clock.speed, __kids.clock.now()]),
+    [true, 1, { ymd: 20261019, sec: 29700 }], 'Opens at actual Perth time at 1×');
+  assert.equal(await current.locator('#now-btn').getAttribute('aria-pressed'), 'true');
+  assert.equal(await current.evaluate(() => locationCalls), 0, 'No location request on startup');
+  await current.clock.setFixedTime(new Date('2026-10-19T00:16:00Z'));
+  assert.equal(await current.evaluate(() => __kids.clock.now().sec), 29760, 'Current mode follows the real clock');
+  await current.getByRole('radio', { name: /^Rocket/ }).click();
+  await current.evaluate(() => { const v = [...__kids.mapView.byId.values()].find((v) => __kids.net.routes[v.route].isTrain); __kids.select(v.id); });
+  await current.getByRole('button', { name: 'Hop on!' }).click();
+  await current.getByRole('button', { name: 'Now: current Perth time' }).focus();
+  await current.keyboard.press('Enter');
+  assert.deepEqual(await current.evaluate(() => [__kids.clock.live, __kids.clock.speed, __kids.clock.now().sec, __kids.selected, __kids.mapView.following]),
+    [true, 1, 29760, null, null], 'Keyboard Now ends the ride and restores the real time');
+  assert.equal(await current.locator('#bubble').evaluate((e) => e.classList.contains('show')), false, 'Now clears the old ride announcement');
+  await current.getByRole('radio', { name: 'Pause' }).click();
+  const locationBefore = await current.evaluate(() => ({ time: __kids.clock.now(), url: location.href,
+    storage: { ...localStorage }, session: { ...sessionStorage } }));
+  await current.getByRole('button', { name: 'Me: my location', exact: true }).click();
+  await current.waitForFunction(() => document.getElementById('hint').textContent === 'The blue dot is where you are.');
+  const located = await current.evaluate(async () => ({ calls: locationCalls, time: __kids.clock.now(), url: location.href,
+    storage: { ...localStorage }, session: { ...sessionStorage }, marker: (await __kids.mapView.map.getSource('me').getData()).features[0].geometry.coordinates }));
+  assert.equal(located.calls, 1);
+  assert.deepEqual(located.marker, [115.86123, -31.95123]);
+  assert.deepEqual({ time: located.time, url: located.url, storage: located.storage, session: located.session }, locationBefore,
+    'Finding location does not change the clock or save coordinates in storage or links');
+  await current.waitForFunction(() => !__kids.mapView.map.isMoving());
+  assert.ok(await current.evaluate(() => Math.abs(__kids.mapView.map.getCenter().lng - 115.86123) < 0.001), 'Map centres on the location');
+  await axeKids(current, 'current-time and location controls');
+  await current.screenshot({ path: '/tmp/perth-kids-now-location.png' });
+  await current.close();
+
+  // Deterministic failure/retry/cancellation coverage, without using a device's real location.
+  const geo = await open('?date=2027-03-01&t=08:00', phone, async (p) => {
+    await p.clock.setFixedTime(new Date('2026-10-19T00:15:00Z'));
+    await p.addInitScript(() => {
+      window.geoCalls = [];
+      navigator.geolocation.getCurrentPosition = (ok, fail, options) => geoCalls.push({ ok, fail, options });
+    });
+  });
+  await geo.getByRole('button', { name: 'Now: current Perth time' }).click();
+  assert.equal(await geo.locator('#pretend').isHidden(), true, 'Now leaves a pretend day when today is covered');
+  assert.equal(await geo.evaluate(() => __kids.clock.now().ymd), 20261019);
+  const locate = geo.getByRole('button', { name: 'Me: my location', exact: true });
+  await locate.click();
+  assert.equal(await locate.getAttribute('aria-busy'), 'true');
+  await geo.evaluate(() => document.getElementById('locate').click());
+  assert.equal(await geo.evaluate(() => geoCalls.length), 1, 'Duplicate location requests are ignored');
+  await geo.evaluate(() => geoCalls[0].fail({ code: 1 }));
+  assert.match(await geo.locator('#hint').innerText(), /not allowed/);
+  assert.equal(await locate.getAttribute('aria-busy'), null);
+  await axeKids(geo, 'location denied');
+  await locate.click();
+  await geo.evaluate(() => geoCalls[1].fail({ code: 3 }));
+  assert.match(await geo.locator('#hint').innerText(), /Try again/);
+  await locate.click();
+  await geo.evaluate(() => geoCalls[2].ok({ coords: { latitude: -6.2, longitude: 106.8 } }));
+  assert.match(await geo.locator('#hint').innerText(), /covers Perth/);
+  await locate.click();
+  await geo.evaluate(() => {
+    const v = [...__kids.mapView.byId.values()].find((v) => __kids.net.routes[v.route].isTrain);
+    __kids.select(v.id);
+    geoCalls[3].ok({ coords: { latitude: -31.95, longitude: 115.86 } });
+  });
+  assert.equal(await geo.locator('#card').isHidden(), false, 'A late location response does not cancel a newer train selection');
+  assert.equal(await geo.evaluate(async () => (await __kids.mapView.map.getSource('me').getData()).features.length), 0);
+  await geo.getByRole('button', { name: 'Hop on!' }).click();
+  await locate.click();
+  await geo.evaluate(() => geoCalls[4].ok({ coords: { latitude: -31.95, longitude: 115.86 } }));
+  assert.equal(await geo.evaluate(() => __kids.mapView.following), null, 'Finding location ends train following');
+  assert.equal(await geo.locator('#card').isHidden(), true);
+  assert.equal(await geo.locator('#bubble').evaluate((e) => e.classList.contains('show')), false, 'Location clears the old ride announcement');
+  await locate.click();
+  await geo.evaluate(() => { __kids.mapView.map.fire('dragstart'); geoCalls[5].ok({ coords: { latitude: -31.96, longitude: 115.87 } }); });
+  assert.deepEqual(await geo.evaluate(async () => (await __kids.mapView.map.getSource('me').getData()).features[0].geometry.coordinates),
+    [115.86, -31.95], 'Dragging cancels a pending location result');
+  await geo.evaluate(() => { navigator.geolocation.getCurrentPosition = () => { throw new Error('Unavailable'); }; });
+  await locate.click();
+  assert.equal(await locate.getAttribute('aria-busy'), null, 'Synchronous location failure resets the button');
+  assert.match(await geo.locator('#hint').innerText(), /Try again/);
+  await geo.evaluate(() => Object.defineProperty(navigator, 'geolocation', { value: undefined }));
+  await locate.click();
+  assert.match(await geo.locator('#hint').innerText(), /not available/);
+  await geo.clock.setFixedTime(new Date('2027-03-01T00:15:00Z'));
+  await geo.getByRole('button', { name: 'Now: current Perth time' }).click();
+  assert.equal(await geo.locator('#pretend').isVisible(), true, 'Now still labels unavailable dates as pretend');
+  assert.equal(await geo.locator('#now-btn').getAttribute('aria-pressed'), 'false');
+  assert.ok(await geo.evaluate(() => __kids.net.covers(__kids.clock.now().ymd)));
+  await geo.reload();
+  await geo.waitForFunction(() => !!window.__kids);
+  assert.equal(await geo.locator('#pretend').isVisible(), true, 'Expired timetable startup is labelled pretend');
+  await geo.close();
+
   const k = await open('?date=2026-10-19&t=08:00');
-  assert.equal(await k.evaluate(() => __kids.clock.speed), 10, 'Kids page starts at 10x');
+  assert.equal(await k.evaluate(() => __kids.clock.speed), 1, 'Kids page opens at normal speed');
   await k.getByRole('radio', { name: 'Pause' }).click();
   await idle(k);
   const types = await k.evaluate(async () => (await __kids.mapView.map.getSource('veh').getData()).features.map((f) => f.properties.t));
@@ -333,14 +436,16 @@ async function checkKids(browser, errors) {
       const before = await p.evaluate((vis) => {
         const visibleIn = eval(vis), $ = (id) => document.getElementById(id), card = $('card').getBoundingClientRect();
         const box = { top: Math.max(card.top, 0), bottom: Math.min(card.bottom, innerHeight) };
-        const dock = $('dock').getBoundingClientRect(), speeds = [...document.querySelectorAll('.speed')].map((b) => b.getBoundingClientRect());
+        const dock = $('dock').getBoundingClientRect(), tools = [...document.querySelectorAll('.dock-tools button')].map((b) => b.getBoundingClientRect()), speeds = [...document.querySelectorAll('.speed')].map((b) => b.getBoundingClientRect());
         const credit = document.querySelector('.maplibregl-ctrl-attrib-button'), cr = credit && credit.getBoundingClientRect();
         const atCredit = cr && document.elementFromPoint(cr.left + cr.width / 2, cr.top + cr.height / 2);
         return { now: visibleIn($('card-now'), box), dot: visibleIn(document.querySelector('#strip-list li'), box), hop: visibleIn($('hop'), box),
+          toolsFit: tools.every((r) => r.width >= 44 && r.height >= 44 && r.left >= dock.left && r.right <= dock.right && r.top >= dock.top && r.bottom <= dock.bottom) && tools[0].left >= $('clock').getBoundingClientRect().right,
           speedsFit: speeds.every((r) => r.left >= dock.left - 1 && r.right <= dock.right + 1 && r.right <= innerWidth),
           creditFree: !atCredit || !!atCredit.closest('.maplibregl-ctrl') };
       }, visibleIn.toString());
       assert.ok(before.now && before.dot && before.hop, `${tag}: next stop, strip and Hop on! visible ${JSON.stringify(before)}`);
+      assert.ok(before.toolsFit, `${tag}: Now, location and sound targets fit without covering the clock`);
       assert.ok(before.speedsFit, `${tag}: the speed buttons fit in the dock`);
       assert.ok(before.creditFree, `${tag}: the card does not cover the map credit`);
       // riding: the train is in clear view, Hop off is visible, and a long station call does not cover the card head
@@ -386,6 +491,9 @@ async function checkKids(browser, errors) {
 
   const reduced = await open('?date=2026-10-19&t=08:00', { ...phone, reducedMotion: 'reduce' });
   assert.equal(await reduced.getByRole('radio', { name: 'Pause' }).getAttribute('aria-checked'), 'true', 'Reduced motion starts paused');
+  await reduced.clock.setFixedTime(new Date('2026-10-19T00:15:00Z'));
+  await reduced.getByRole('button', { name: 'Now: current Perth time' }).click();
+  assert.deepEqual(await reduced.evaluate(() => [__kids.clock.speed, __kids.clock.now().sec]), [0, 29700], 'Now respects reduced motion');
   // review fix: the arrival pause gives back the speed the viewer chose, with reduced motion too
   await reduced.getByRole('radio', { name: /^Fast/ }).click();
   await reduced.evaluate(() => { const v = [...__kids.mapView.byId.values()].filter((x) => __kids.net.routes[x.route].long === 'Fremantle Line' && x.state === 'move').sort((a, b) => a.k - b.k)[0]; __kids.select(v.id); });

@@ -6,7 +6,7 @@ A map of Perth's buses, trains and ferry moving through the day, in the style of
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current version:** v1.10.1 — place-name search and map labels (section 5.1; previous release history in section 12).
+- **Current version:** v1.11 — kids’ current-time and location controls; place-name search and map labels (section 5.1; previous release history in section 12).
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
 - **Source of truth:** **this repo** (Adhi's decision, 2026-10-18). Edit `perth-transit/` here. v1.0 was a byte-for-byte copy of the `site/` folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`), and v1.1 to v1.9 were all made here, so **never re-copy claco's `site/` over this folder**: it would wipe the ferry and v1.1 onwards. claco still holds the original GTFS compiler (`scripts/compile_gtfs.py`), which a timetable rebuild needs (section 6). After a rebuild, copy only the five `data/*.json` files here and run `scripts/perth-transit-add-ferry.py` (the compiler still drops route type 4).
 
@@ -31,7 +31,7 @@ The design choice was deliberate: this project does not use the Learn with Adhi 
 
 - About 1,300 vehicles at the weekday morning peak, animated along the real route shapes (8 train lines, 329 public bus routes and, since v1.3, the Elizabeth Quay to Mends St ferry).
 - Trains stop at each station for a short time and speed up and slow down between stations (since v1.8, estimated, see section 4.2).
-- **Perth Train Spotter** (`kids.html`, since v1.8): a kids' page on the same engine and map, for any kid visiting (English, not tied to the Learn with Adhi star system). Trains and the ferry only, big outlined shapes on coloured lines, Pause/Slow/Fast/Rocket time, a "pretend day" when the date is outside the timetable, and a For grown-ups box. Reached from the yellow **Kids** button on the map. The full plan is in `KIDS-PLAN.md`.
+- **Perth Train Spotter** (`kids.html`, since v1.8): a kids' page on the same engine and map, for any kid visiting (English, not tied to the Learn with Adhi star system). Trains and the ferry only, big outlined shapes on coloured lines, current Perth time at normal speed on opening, Now to reset the clock, optional Me to centre a one-shot device location, Pause/Slow/Fast/Rocket time, a "pretend day" when the date is outside the timetable, and a For grown-ups box. Reached from the yellow **Kids** button on the map. The full plan is in `KIDS-PLAN.md`.
 - Trains drawn as long bars and buses as short pills, in the route colour, pointing the way they travel (since v1.1). From zoom 15 each bus becomes a tag with its route number and a direction pointer (since v1.5).
 - A time scrubber for any day in the timetable, with a day-long chart of how many vehicles are running (5 minute bins), plus a Now button, previous and next day, and speed control. On phones the chart is hidden (since v1.2), so time there is changed with the buttons only.
 - Tap a vehicle for its route, headsign, next stop and a Follow button.
@@ -234,7 +234,7 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 - **Licence check** (section 9) is still open.
 - **Timetable expiry** on 2027-01-11. The Authority can publish a new feed earlier. A scheduled rebuild is possible but would need approval.
 - **Basemap tiles** come from a free community service. Check its usage terms if the site gets busy, or switch provider.
-- **Service worker caching.** Since v1.7, first-party module imports, module preloads, the app entry and CSS carry a release query (`?v=1.9`). This avoids mixing old cached modules with new ones while preserving cache-first warm loads in the existing kids-site service worker. Bump the release query consistently across these files for the next code release. Compiled data retains its existing content-hash URLs; no service-worker or kids-page behaviour was changed. A browser regression seeds stale unversioned modules and checks that the new app still starts.
+- **Service worker caching.** Since v1.7, first-party module imports, module preloads, the app entry and CSS carry a release query (`?v=1.11`). This avoids mixing old cached modules with new ones while preserving cache-first warm loads in the existing kids-site service worker. Bump the release query consistently across these files for the next code release. Compiled data retains its existing content-hash URLs; no service-worker or kids-page behaviour was changed. A browser regression seeds stale unversioned modules and checks that the new app still starts.
 - **Real-device testing** on iPhone and Android, and in Safari and Firefox.
 - **Ferry data is a patch** (v1.3): the claco compiler still drops route type 4, so a fresh compile there loses the ferry until `compile_gtfs.py` keeps it or `scripts/perth-transit-add-ferry.py` is re-run.
 - **claco's `site/` is out of date** (it stops at v1.0) and is no longer the source (see Source of truth at the top).
@@ -256,6 +256,13 @@ Other licences: MapLibre GL JS is BSD-3 (file in `vendor/`), the Archivo font is
 ## 12. Version history
 
 The same history, in plain words, is in the What's new list on the page (`index.html`, `#whatsnew-log`). Add each new version there and here.
+
+### v1.11 (2026-10-20)
+
+- **Kids’ Now and Me buttons.** Perth Train Spotter opens following the current Perth clock at normal speed (previously 10×). Now ends a ride and restores the current date/time. Shared time links still open at their chosen moment, and reduced motion still starts and resets paused. Outside the timetable window, a clearly labelled pretend day retains the same weekday and time; Now cannot provide a live timetable after expiry. The header still says “From the timetable, not live”: this adds current-time playback, not GPS vehicle tracking.
+- **Optional location.** Me requests a single browser position only after a tap and permission, centres the map and shows a blue dot within the Perth area. It neither changes the clock nor saves coordinates in storage or links. OpenFreeMap receives map requests for the viewed area. Denied/unavailable/timed-out location has a friendly message and retry; a subsequent train selection or map drag takes priority over a late response. Updated the grown-ups privacy wording and KIDS-PLAN to reflect Adhi’s explicit location request.
+- **Validation:** extended the existing browser suite for current Perth time from another viewer timezone, real-clock changes, keyboard Now/reset from a ride and pretend day, reduced motion, a browser-granted emulated position, location denial/timeouts/out-of-area results/retry/cancellation, no automatic location request or coordinate persistence, and accessible controls. The existing 8-size × 2-day card/ride layout matrix also checks the new 44px targets and clock clearance. Physical devices and Safari/Firefox remain untested. All first-party module/CSS release queries are `?v=1.11`.
+
 
 ### v1.9 (2026-10-18)
 
