@@ -1,11 +1,12 @@
 // app.js: loads the timetable, then wires clock, map, panel and scrubber together.
-import { Network, addDays, ymdParts, DAY } from './sim.js?v=1.9';
-import { SimClock } from './clock.js?v=1.9';
-import { MapView } from './mapview.js?v=1.9';
-import { Panel } from './panel.js?v=1.9';
-import { Scrubber, dayLabel } from './scrubber.js?v=1.9';
-import { fmtN } from './util.js?v=1.9';
-import { FavouritePlaces } from './favourites.js?v=1.9';
+import { Network, addDays, ymdParts, DAY } from './sim.js?v=1.10';
+import { SimClock } from './clock.js?v=1.10';
+import { MapView } from './mapview.js?v=1.10';
+import { Panel } from './panel.js?v=1.10';
+import { Scrubber, dayLabel } from './scrubber.js?v=1.10';
+import { fmtN } from './util.js?v=1.10';
+import { FavouritePlaces } from './favourites.js?v=1.10';
+import { loadPlaceCatalogue } from './places.js?v=1.10';
 
 const $ = (id) => document.getElementById(id);
 const DEFAULT_VIEW = { lat: -31.955, lon: 115.87, zoom: 10.4 };
@@ -187,8 +188,16 @@ async function main() {
     onSavePlace: (options) => { mapView.follow(null); favourites.edit(options); },
     onPlace: (place) => {
       mapView.follow(null); mapView.setSelectedVehicle(null);
+      mapView.setDestination(null);
       panel.showPlace(place); mapView.flyTo(place.lat, place.lon, 15.2); sheet.ensure('half'); tick(true);
     },
+    onNamedPlace: (place) => {
+      mapView.follow(null); mapView.setSelectedVehicle(null);
+      panel.showPlace(place, { catalogue: true });
+      mapView.setDestination(place); mapView.flyTo(place.lat, place.lon, 15.5); sheet.ensure('half'); tick(true);
+    },
+    onNamedPlaceClose: () => mapView.setDestination(null),
+    onRetryPlaces: () => loadNamedPlaces(),
     onTab: () => {},
   };
   panel = new Panel({
@@ -199,6 +208,10 @@ async function main() {
     onVehicle: (id) => panel.openVehicle(id),
     onEntity: (e) => panel.openEntity(e, { fly: false }),
     onPlace: (id) => favourites?.open(id),
+    onNamedPlace: (id) => {
+      const place = panel.catalogue?.byId.get(id);
+      if (place) act.onNamedPlace(place);
+    },
     onEmpty: () => { if (mobileQuery.matches) sheet.set('peek'); },
     onUnfollow: () => panel._refreshVehicleCard(),
     onView: (v) => {
@@ -221,6 +234,19 @@ async function main() {
     onMessage: (message) => toast(message),
   });
   mapView.setPlaces(favourites.list()); panel.refreshPlaces(favourites.list());
+
+  let placesPending = false;
+  async function loadNamedPlaces() {
+    if (placesPending) return;
+    placesPending = true; panel.setCatalogue(null, 'loading');
+    try {
+      const catalogue = await loadPlaceCatalogue();
+      mapView.setCatalogue(catalogue); panel.setCatalogue(catalogue);
+    } catch (error) {
+      console.warn('Place catalogue unavailable.', error);
+      panel.setCatalogue(null, 'error');
+    } finally { placesPending = false; }
+  }
 
   scrub = new Scrubber($('scrubber'), {
     onScrub: (sec) => { const n = clock.now(); clock.setTime(n.ymd, sec); tick(true); },
@@ -280,6 +306,7 @@ async function main() {
       const { latitude: lat, longitude: lon } = pos.coords;
       if (lat < -36 || lat > -28 || lon < 112 || lon > 120) { toast('You seem to be outside the Perth area, so nearby stops are not shown.'); return; }
       mapView.setMe(lat, lon);
+      mapView.setDestination(null);
       mapView.flyTo(lat, lon, 15.2);
       panel.setNearMe(lat, lon);
       panel.query = ''; $('search').value = ''; panel._clearDetail();
@@ -362,6 +389,7 @@ async function main() {
   tick(true);
 
   window.__app = { net, clock, mapView, panel, scrub, tick, sheet, favourites };
+  loadNamedPlaces();
   setLoading('Ready', 1);
   document.body.classList.add('ready');
   $('loading').hidden = true;

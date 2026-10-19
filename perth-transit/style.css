@@ -407,6 +407,17 @@ ul, ol { padding: 0; list-style: none; }
 .place-row > .row { flex: 1; min-width: 0; }
 .place-row .row-title { overflow-wrap: anywhere; }
 .place-mark { color: var(--accent); font-size: 23px; }
+.selected-place .fine { margin: 8px 0 12px; text-transform: capitalize; }
+.named-place-result { min-height: 48px; }
+.destination-marker {
+  max-width: 220px; padding: 10px 14px; border: 2px solid var(--accent); border-radius: 12px;
+  background: var(--paper); color: var(--ink); box-shadow: var(--shadow);
+  font: 600 13px/1.35 var(--font); text-align: center; overflow-wrap: anywhere; cursor: pointer;
+}
+.destination-marker::after {
+  content: ''; position: absolute; bottom: -9px; left: calc(50% - 7px); width: 12px; height: 12px;
+  background: var(--paper); border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(45deg);
+}
 .favourites .btn-row { margin-top: 8px; }
 .favourites .fine { margin-top: 8px; }
 .place-form { display: flex; flex-direction: column; gap: 10px; }

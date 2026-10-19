@@ -6,7 +6,7 @@ const origin = process.env.PERTH_TEST_ORIGIN || 'http://127.0.0.1:8099';
 const plainStyle = { version: 8, sources: {}, layers: [{ id: 'bg', type: 'background', paint: { 'background-color': '#eef1f2' } }] };
 
 (async () => {
-  const browser = await chromium.launch({ args: ['--no-sandbox'] });
+  const browser = await chromium.launch({ executablePath: process.env.PERTH_CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   const errors = [];
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });

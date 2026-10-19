@@ -1,8 +1,9 @@
 // panel.js: tabs, search, route and stop pages, the vehicle card and the departures board.
-import { DAY, fmtClock } from './sim.js?v=1.9';
-import { routeColor } from './colors.js?v=1.9';
-import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.9';
-import { dayLabel } from './scrubber.js?v=1.9';
+import { DAY, fmtClock } from './sim.js?v=1.10';
+import { routeColor } from './colors.js?v=1.10';
+import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.10';
+import { dayLabel } from './scrubber.js?v=1.10';
+import { placeDescription } from './places.js?v=1.10';
 
 const TABS = [['map', 'Map'], ['routes', 'Routes'], ['stops', 'Stops']];
 
@@ -55,6 +56,8 @@ export class Panel {
     this.nearMe = null;
     this.last = null;              // last update payload
     this.r = {};
+    this.catalogue = null;
+    this.catalogueState = 'loading';
 
     for (const [id, label] of TABS) {
       tabs.append(h('button', {
@@ -81,7 +84,7 @@ export class Panel {
       this._searchTimer = setTimeout(() => {
         const status = document.getElementById('search-status');
         if (status) status.textContent = this.query
-          ? `Showing ${this.net.searchRoutes(this.query, 8).length} routes and ${this.net.searchEntities(this.query, 12).length} stops or stations for ${this.query}.`
+          ? `Showing ${this.catalogue?.search(this.query, 8, this.center).length || 0} places, ${this.net.searchRoutes(this.query, 8).length} routes and ${this.net.searchEntities(this.query, 12).length} stops or stations for ${this.query}.`
           : '';
       }, 250);
     });
@@ -213,9 +216,9 @@ export class Panel {
     this.render();
   }
 
-  showPlace(place) {
+  showPlace(place, { catalogue = false } = {}) {
     this._clearDetail(); this.query = ''; this.input.value = ''; this.vehicleId = null;
-    this.nearMe = { ...place, placeId: place.id };
+    this.nearMe = { ...place, ...(catalogue ? { catalogueId: place.id } : { placeId: place.id }) };
     this.setTab('stops');
     this.content.focus({ preventScroll: true });
   }
@@ -422,10 +425,19 @@ export class Panel {
     this.r.near = h('div', { class: 'near' });
     const top = h('div', { class: 'btn-row' },
       h('button', { class: 'btn', type: 'button', onclick: () => this.act.onLocate(), text: 'Near me' }),
-      h('button', { class: 'btn btn-quiet', type: 'button', disabled: !this.nearMe, onclick: () => { this.nearMe = null; this._renderNear(); }, text: 'Use map centre' }));
+      h('button', { class: 'btn btn-quiet', type: 'button', disabled: !this.nearMe, onclick: () => {
+        this.nearMe = null; this.act.onNamedPlaceClose(); this.render();
+      }, text: 'Use map centre' }));
     this.r.nearHead = h('h2', { class: 'h2' });
-    const wrap = h('div', { class: 'stack' }, this._favourites(), top, this.r.nearHead, this.r.near,
-      h('p', { class: 'fine', text: 'Your location stays in your browser and is only used to sort nearby stops.' }));
+    const place = this.nearMe?.catalogueId ? this.nearMe : null;
+    const selected = place ? h('section', { class: 'block selected-place', 'aria-label': 'Selected place' },
+      h('h2', { class: 'h2', text: place.name }),
+      h('p', { class: 'fine', text: placeDescription(place) }),
+      h('div', { class: 'btn-row' },
+        h('button', { class: 'btn', type: 'button', text: 'Save this place', onclick: () => this.act.onSavePlace({ name: place.name.slice(0, 40), point: place }) }),
+        h('a', { class: 'btn btn-quiet', href: `https://www.openstreetmap.org/${place.id}`, target: '_blank', rel: 'noopener noreferrer', text: 'View on OpenStreetMap' }))) : null;
+    const wrap = h('div', { class: 'stack' }, selected, place ? null : this._favourites(), top, this.r.nearHead, this.r.near,
+      h('p', { class: 'fine', text: 'Distances are in a straight line, not walking routes. Your location stays in your browser.' }));
     queueMicrotask(() => this._renderNear());
     return wrap;
   }
@@ -532,15 +544,46 @@ export class Panel {
   }
 
   // ---- Search results
+  setCatalogue(catalogue, state = 'ready') {
+    this.catalogue = catalogue;
+    this.catalogueState = state;
+    if (this.query) {
+      const active = this.content.contains(document.activeElement) ? document.activeElement : null;
+      // Async loading should not remove a keyboard-focused transit result.
+      if (active) this.content.addEventListener('focusout', () => requestAnimationFrame(() => {
+        if (this.query && !this.content.contains(document.activeElement)) this.render();
+      }), { once: true });
+      else this.render();
+      const status = document.getElementById('search-status');
+      if (status) status.textContent = state === 'ready'
+        ? `Places loaded. ${catalogue.search(this.query, 8, this.center).length} place results for ${this.query}.`
+        : state === 'error' ? 'Place search is unavailable. Routes and stops can still be searched.' : 'Loading places.';
+    }
+  }
+
   _search() {
     const net = this.net, q = this.query;
     const routes = net.searchRoutes(q, 8);
     const ents = net.searchEntities(q, 12);
+    const places = this.catalogue?.search(q, 8, this.center) || [];
     const wrap = h('div', { class: 'stack' });
-    if (!routes.length && !ents.length) {
-      wrap.append(h('p', { class: 'empty', text: `Nothing found for "${q}". Try a route number or part of a stop name.` }));
-      return wrap;
+    const placeList = h('ul', { class: 'plain-list' });
+    for (const place of places) {
+      placeList.append(h('li', {}, h('button', { class: 'row named-place-result', type: 'button', onclick: () => this.act.onNamedPlace(place), 'aria-label': `Show stops near ${place.name}${place.locality ? `, ${place.locality}` : ''}` },
+        h('span', { class: 'place-mark', 'aria-hidden': 'true', text: '⌖' }),
+        h('span', { class: 'row-main' }, h('span', { class: 'row-title', text: place.name }),
+          h('span', { class: 'row-sub', text: placeDescription(place) })))));
     }
+    const placeSection = h('section', { class: 'block', 'aria-label': 'Place search results' }, h('h2', { class: 'h2', text: 'Places' }), placeList);
+    if (this.catalogueState === 'loading') placeSection.append(h('p', { class: 'fine', text: 'Loading places… Routes and stops are available below.' }));
+    else if (this.catalogueState === 'error') placeSection.append(
+      h('p', { class: 'fine', text: 'Could not load places. Check your connection and try again.' }),
+      h('button', { class: 'btn btn-quiet', type: 'button', text: 'Retry place search', onclick: () => this.act.onRetryPlaces() }));
+    else {
+      if (!places.length) placeSection.append(h('p', { class: 'fine', text: q.length < 2 ? 'Type at least two letters to find a place.' : `No places found for “${q}”. Try another name or suburb. Some places are missing from OpenStreetMap.` }));
+      placeSection.append(h('p', { class: 'fine' }, 'Perth places · ', h('a', { href: 'https://www.openstreetmap.org/copyright', target: '_blank', rel: 'noopener noreferrer', text: '© OpenStreetMap contributors' }), ` · Updated ${this.catalogue.updated}`));
+    }
+    wrap.append(placeSection);
     if (routes.length) {
       const list = h('ul', { class: 'plain-list' });
       for (const r of routes) {
@@ -554,6 +597,7 @@ export class Panel {
       for (const e of ents) list.append(h('li', {}, this._entityRow(e)));
       wrap.append(h('section', { class: 'block' }, h('h2', { class: 'h2', text: 'Stops and stations' }), list));
     }
+    if (!routes.length && !ents.length) wrap.append(h('p', { class: 'fine', text: 'No matching routes or stops. Try a route number or part of a stop name.' }));
     return wrap;
   }
 
