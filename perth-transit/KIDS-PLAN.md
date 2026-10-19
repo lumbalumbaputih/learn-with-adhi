@@ -226,6 +226,7 @@ Each has a recommendation. D1, D2 and D6 were decided by Adhi on 2026-10-18; the
 | K1.2 Hop on! | ✅ Done 2026-10-18 (plus: time pauses on arrival so the next-train offers stay true; waiting at the station for the chosen train) |
 | K1.3 Sounds, settings, grown-ups box | ✅ Done 2026-10-18 |
 | Pre-merge review fixes | ✅ Done 2026-10-18: keyboard "Pick a train", "From the timetable, not live" under the title (rule 5), on-device voices only, missed-train and own-train-tap fixes, layout fixes (see README section 12) |
+| Third to fifth review rounds | ✅ Done 2026-10-19 (v1.9.1): ride camera and drags, sideways layout from 560 px, rotating a paused ride, arrival card keeps "You made it!" on screen, where station calls show, next train's card starts at its header (see README section 12) |
 | Phase 1 gate (real kids) | ⏳ Ready for Adhi: 2 or 3 kids, 10 minutes each, watch without helping. Do they hop on a second train unprompted? Also the first real-phone/tablet test (sound, voice, taps, speed) |
 | K2.1 Spot it! | Not started |
 | K2.2 Station Passport | Not started |

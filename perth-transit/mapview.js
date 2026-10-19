@@ -1,7 +1,7 @@
 // mapview.js: the map, its layers, the moving vehicles and what happens on click.
 import * as maplibregl from './vendor/maplibre-gl.mjs';
-import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.9';
-import { prettyName } from './util.js?v=1.9';
+import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.9.1';
+import { prettyName } from './util.js?v=1.9.1';
 
 export const STYLE_URLS = {
   light: 'https://tiles.openfreemap.org/styles/positron',
@@ -40,6 +40,9 @@ export class MapView {
     this._modes = null; // null = every mode, else a Set of route modes to draw
     this.kids = false; // Perth Train Spotter: bigger vehicles, coloured train lines, train stations only
     this.following = null;
+    // padding to keep the followed vehicle in (kids' page: the part of the map the card and dock leave free).
+    // Applied inside each follow step: a separate map.setPadding() is a jump that stops running eases and gestures.
+    this.followPadding = null;
     this.padding = { top: 0, right: 0, bottom: 0, left: 0 };
     // what the viewer has set, so it can be put back after the basemap changes (dark mode)
     this.theme = 'light';
@@ -474,11 +477,16 @@ export class MapView {
     // the source is missing for a moment while the basemap switches (dark mode); the next tick fills it
     const src = this.map.getSource('veh');
     if (src) src.setData({ type: 'FeatureCollection', features: feats });
-    if (this.following !== null) { // ids can be 0, so not a truthiness test
-      const v = this.byId.get(this.following);
-      if (v) this.map.easeTo({ center: [v.lon, v.lat], duration: 0 });
-    }
+    this.refollow();
     return feats.length;
+  }
+
+  /** One follow step: centre the followed vehicle (inside followPadding when set). setVehicles does this every tick;
+   *  call it directly when the padding changes while no ticks run (the clock is paused). */
+  refollow() {
+    if (this.following === null) return; // ids can be 0, so not a truthiness test
+    const v = this.byId.get(this.following);
+    if (v) this.map.easeTo(this.followPadding ? { center: [v.lon, v.lat], padding: this.followPadding, duration: 0 } : { center: [v.lon, v.lat], duration: 0 });
   }
 
   /** 'all', one mode ('train', 'bus', 'ferry') or a list of modes. */

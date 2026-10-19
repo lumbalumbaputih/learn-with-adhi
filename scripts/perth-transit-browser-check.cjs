@@ -272,7 +272,8 @@ async function checkKids(browser, errors) {
   assert.equal(await rideP.evaluate(() => document.activeElement.id), 'hop-off', 'Keyboard focus moves to Stop waiting');
   assert.equal(await rideP.evaluate(() => __kids.clock.speed), 10, 'Choosing the next train carries on at the earlier speed');
   // a missed train (the tablet slept while waiting) must not break the next train's card
-  await rideP.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 2 * 3600); __kids.tick(true); });
+  // (paused first: on a slow machine the running clock could bring the train in before the jump)
+  await rideP.evaluate(() => { __kids.clock.setSpeed(0); const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 2 * 3600); __kids.tick(true); });
   assert.equal(await rideP.locator('#card-now').innerText(), 'We missed that train. Pick another one!');
   await rideP.evaluate(() => { const v = [...__kids.mapView.byId.values()].find((x) => __kids.net.routes[x.route].isTrain && x.state === 'move'); __kids.select(v.id); });
   assert.doesNotMatch(await rideP.locator('#card-now').innerText(), /missed/, 'After a missed train, the next card is normal');
@@ -323,7 +324,7 @@ async function checkKids(browser, errors) {
   // the card's key parts stay visible, the ridden train stays in clear view, nothing covers the map credit or the card head.
   const visibleIn = (el, box) => { const r = el.getBoundingClientRect(); return r.height > 0 && r.top >= box.top - 1 && r.bottom <= box.bottom + 1; };
   for (const [w, h, label] of [[320, 568, 'small phone'], [375, 548, 'iPhone SE in Safari'], [390, 664, 'phone in a browser'], [390, 844, 'tall phone'],
-    [640, 360, 'phone sideways (small)'], [667, 375, 'phone sideways'], [844, 390, 'big phone sideways'], [834, 1112, 'tablet portrait']]) {
+    [568, 320, 'small phone sideways'], [640, 360, 'phone sideways (small)'], [667, 375, 'phone sideways'], [844, 390, 'big phone sideways'], [834, 1112, 'tablet portrait']]) {
     for (const date of ['2026-10-19', '2027-03-01']) { // a normal day, and a pretend day (dock shows the pretend label)
       const tag = `${label} ${w}x${h}${date === '2027-03-01' ? ' pretend' : ''}`;
       const p = await open(`?date=${date}&t=08:00`, { viewport: { width: w, height: h }, isMobile: w < 820, hasTouch: true });
@@ -335,18 +336,22 @@ async function checkKids(browser, errors) {
         const box = { top: Math.max(card.top, 0), bottom: Math.min(card.bottom, innerHeight) };
         const dock = $('dock').getBoundingClientRect(), speeds = [...document.querySelectorAll('.speed')].map((b) => b.getBoundingClientRect());
         const credit = document.querySelector('.maplibregl-ctrl-attrib-button'), cr = credit && credit.getBoundingClientRect();
-        const atCredit = cr && document.elementFromPoint(cr.left + cr.width / 2, cr.top + cr.height / 2);
+        const overlap = (a, b) => !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);
+        const cl = $('card-close').getBoundingClientRect(), atClose = document.elementFromPoint(cl.left + cl.width / 2, cl.top + cl.height / 2);
         return { now: visibleIn($('card-now'), box), dot: visibleIn(document.querySelector('#strip-list li'), box), hop: visibleIn($('hop'), box),
           speedsFit: speeds.every((r) => r.left >= dock.left - 1 && r.right <= dock.right + 1 && r.right <= innerWidth),
-          creditFree: !atCredit || !!atCredit.closest('.maplibregl-ctrl') };
+          creditFree: !cr || !overlap(cr, card), closeHits: !!atClose && !!atClose.closest('#card-close') };
       }, visibleIn.toString());
-      assert.ok(before.now && before.dot && before.hop, `${tag}: next stop, strip and Hop on! visible ${JSON.stringify(before)}`);
+      // under 360 px tall (568x320) the card is about 200 px: the strip is reached by scrolling the card
+      assert.ok(before.now && (before.dot || h < 360) && before.hop, `${tag}: next stop, strip and Hop on! visible ${JSON.stringify(before)}`);
       assert.ok(before.speedsFit, `${tag}: the speed buttons fit in the dock`);
       assert.ok(before.creditFree, `${tag}: the card does not cover the map credit`);
+      assert.ok(before.closeHits, `${tag}: the card's close button can be tapped`);
       // riding: the train is in clear view, Hop off is visible, and a long station call does not cover the card head
       await p.getByRole('button', { name: 'Hop on!' }).click();
       await p.getByRole('radio', { name: 'Pause' }).click();
       await p.waitForFunction(() => __kids.mapView.following !== null);
+      assert.ok(await p.evaluate(() => __kids.mapView.map.getZoom()) >= 13, `${tag}: Hop on! zooms in to the train`);
       await p.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 240); __kids.tick(true); });
       await p.evaluate(() => { const b = document.getElementById('bubble'); b.textContent = 'All aboard! Next stop: Perth Underground'; b.classList.add('show'); dispatchEvent(new Event('resize')); });
       const geo = await p.evaluate((vis) => {
@@ -362,11 +367,189 @@ async function checkKids(browser, errors) {
       assert.ok(geo.inView, `${tag}: the train being ridden is in clear view ${geo.pt}`);
       assert.ok(geo.off, `${tag}: Hop off is visible`);
       assert.ok(!geo.bubbleOverHead, `${tag}: the station call does not cover the card's head`);
-      assert.ok(geo.bubbleInView, `${tag}: the station call is on screen, below the top bar`);
+      assert.ok(geo.bubbleInView || (await p.evaluate(() => document.getElementById('bubble').classList.contains('tucked'))), `${tag}: the station call is on screen, below the top bar`);
+      if (date === '2026-10-19') { // the end of the line: the next trains on offer can be seen and tapped
+        await p.evaluate(() => { for (let s = 0; s < 3600; s += 20) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 20); __kids.tick(true); } });
+        await p.waitForTimeout(150);
+        const arr = await p.evaluate(() => {
+          const b = document.querySelector('#next-list .next-train'); if (!b) return { offer: false };
+          const r = b.getBoundingClientRect(), at = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+          const strip = document.getElementById('strip'), tr = document.getElementById('strip-train').getBoundingClientRect(), sr = strip.getBoundingClientRect();
+          return { offer: !!at && !!at.closest('.next-train'), stripOk: strip.offsetParent === null || (tr.left >= sr.left - 1 && tr.right <= sr.right + 1) };
+        });
+        assert.ok(arr.offer, `${tag}: on arrival the first next train can be tapped`);
+        assert.ok(arr.stripOk, `${tag}: on arrival the strip shows the train at the end of the line`);
+      }
       await p.close();
     }
   }
-  console.log('Layout matrix passes (8 sizes x normal and pretend day).');
+  console.log('Layout matrix passes (9 sizes x normal and pretend day).');
+
+  // A drag during a ride keeps going while the card changes height (padding is never applied as a separate camera jump)
+  const drag = await open('?date=2026-10-19&t=08:00', { viewport: { width: 390, height: 664 } });
+  await drag.getByRole('radio', { name: 'Pause' }).click();
+  await drag.evaluate(() => { const v = [...__kids.mapView.byId.values()].filter((x) => __kids.net.routes[x.route].long === 'Fremantle Line' && x.state === 'move').sort((a, b) => a.k - b.k)[0]; __kids.select(v.id); });
+  await drag.getByRole('button', { name: 'Hop on!' }).click();
+  await drag.getByRole('radio', { name: 'Pause' }).click();
+  await drag.waitForFunction(() => __kids.mapView.following !== null);
+  const start = await drag.evaluate(() => { const top = document.querySelector('.top').getBoundingClientRect().bottom, card = document.getElementById('card').getBoundingClientRect(); return { x: 195, y: Math.round((top + card.top) / 2) }; });
+  await drag.mouse.move(start.x, start.y);
+  await drag.mouse.down();
+  for (let i = 1; i <= 4; i++) await drag.mouse.move(start.x + i * 10, start.y + i * 4);
+  const mid = await drag.evaluate(async () => { // make the card change height mid-drag, as a station call does
+    document.getElementById('card-now').textContent = 'Stopped at a station with a very long name. People are getting on and off, and on and off.';
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const c = __kids.mapView.map.getCenter(); return [c.lng, c.lat];
+  });
+  for (let i = 5; i <= 9; i++) await drag.mouse.move(start.x + i * 10, start.y + i * 4);
+  await drag.mouse.up();
+  const end = await drag.evaluate(() => { const c = __kids.mapView.map.getCenter(); return [c.lng, c.lat]; });
+  assert.ok(Math.hypot(end[0] - mid[0], end[1] - mid[1]) > 1e-4, 'A drag keeps moving the map after the card changes height');
+  await drag.close();
+
+  // Fourth review round: rotating a paused ride, the arrival card's status line, and where station calls show
+  const pickLine = (p, line, dest) => p.evaluate(([line, src]) => { // the train furthest from the end of its trip, going to dest
+    const re = new RegExp(src);
+    const vs = [...__kids.mapView.byId.values()].filter((x) => __kids.net.routes[x.route].long === line && x.state === 'move').sort((a, b) => a.k - b.k);
+    for (const v of vs) { __kids.select(v.id); if (re.test(document.getElementById('card-dest').textContent)) return v.id; }
+    return null;
+  }, [line, dest.source]);
+  const seen = (p, sel) => p.evaluate((sel) => { // on screen and not covered (by the pinned buttons, or scrolled out of the card)
+    const el = document.querySelector(sel), r = el.getBoundingClientRect();
+    const at = r.height > 0 && document.elementFromPoint(r.left + Math.min(24, r.width / 2), r.top + r.height / 2);
+    return !!at && el.contains(at);
+  }, sel);
+  const trainClear = (p) => p.evaluate(() => {
+    const v = __kids.mapView.byId.get(__kids.ride.id), pt = __kids.mapView.map.project([v.lon, v.lat]), r = (id) => document.getElementById(id).getBoundingClientRect();
+    const top = document.querySelector('.top').getBoundingClientRect().bottom, M = 10;
+    const clear = (b) => pt.x < b.left - M || pt.x > b.right + M || pt.y < b.top - M || pt.y > b.bottom + M;
+    return { pt: [Math.round(pt.x), Math.round(pt.y)], ok: pt.x > M && pt.x < innerWidth - M && pt.y > top + M && pt.y < innerHeight - M && clear(r('card')) && clear(r('dock')) };
+  });
+  const toEnd = (p) => p.evaluate(() => { for (let s = 0; s < 7200 && !__kids.ride.done; s += 20) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 20); __kids.tick(true); } return __kids.ride.done; });
+  // a paused ride (and every reduced-motion ride) keeps its train in view when the phone is turned: no tick is called here
+  for (const [from, to, rm] of [[[390, 844], [844, 390]], [[844, 390], [390, 844]], [[375, 667], [667, 375]], [[390, 844], [844, 390], true]]) {
+    const tag = `paused ride turned ${from.join('x')} to ${to.join('x')}${rm ? ' (reduced motion)' : ''}`;
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: from[0], height: from[1] }, isMobile: true, hasTouch: true, ...(rm ? { reducedMotion: 'reduce' } : {}) });
+    if (!rm) await p.getByRole('radio', { name: 'Pause' }).click();
+    assert.ok((await pickLine(p, 'Fremantle Line', /./)) !== null, `${tag}: a Fremantle Line train`);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    await p.waitForFunction(() => __kids.mapView.following !== null);
+    if (!rm) await p.getByRole('radio', { name: 'Pause' }).click();
+    assert.equal(await p.evaluate(() => __kids.clock.speed), 0, `${tag}: paused`);
+    await p.setViewportSize({ width: to[0], height: to[1] });
+    await p.waitForTimeout(600);
+    const t = await trainClear(p);
+    assert.ok(t.ok, `${tag}: the train stays in clear view ${t.pt}`);
+    await p.close();
+  }
+  // arrival and a missed train on short portrait phones: the status line stays on screen and the first next train can be tapped
+  for (const [w, h] of [[320, 568], [375, 548], [360, 600], [412, 600]]) {
+    for (const [line, dest] of [['Fremantle Line', /Perth$/], ['Fremantle Line', /Fremantle$/], ['Midland Line', /Perth$/]]) {
+      const tag = `${w}x${h} ${line} to ${dest.source.replace('$', '')}`;
+      const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: true, hasTouch: true });
+      await p.getByRole('radio', { name: 'Pause' }).click();
+      assert.ok((await pickLine(p, line, dest)) !== null, `${tag}: a train`);
+      await p.getByRole('button', { name: 'Hop on!' }).click();
+      assert.ok(await toEnd(p), `${tag}: the ride ends`);
+      await p.waitForTimeout(150);
+      assert.match(await p.locator('#card-now').innerText(), /^You made it to /);
+      assert.ok(await seen(p, '#card-now'), `${tag}: "You made it" stays on screen`);
+      assert.ok(await seen(p, '#next-list .next-train'), `${tag}: the first next train can be tapped`);
+      if (line === 'Fremantle Line' && /Perth/.test(dest.source)) { // then wait for a train and miss it
+        await p.locator('#next-list .next-train').first().click();
+        await p.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 2 * 3600); __kids.tick(true); });
+        await p.waitForTimeout(150);
+        assert.match(await p.locator('#card-now').innerText(), /^We missed that/);
+        assert.ok(await seen(p, '#card-now'), `${tag}: "We missed that train" stays on screen`);
+        assert.ok(await seen(p, '#next-list .next-train'), `${tag}: after a miss, the first next train can be tapped`);
+      }
+      await p.close();
+    }
+  }
+  // a stacked sideways phone too narrow for the side layout: the card is too short to show its status line, so calls float
+  for (const [w, h] of [[480, 320], [534, 320], [540, 360]]) {
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: true, hasTouch: true });
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    await pickLine(p, 'Fremantle Line', /./);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    await p.waitForFunction(() => __kids.mapView.following !== null);
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    const call = await p.evaluate(() => { // step on to the next station call
+      const b = document.getElementById('bubble'), first = b.textContent;
+      for (let s = 0; s < 1800 && b.textContent === first; s += 10) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 10); __kids.tick(true); }
+      const r = b.getBoundingClientRect(), top = document.querySelector('.top').getBoundingClientRect().bottom;
+      return { text: b.textContent, tucked: b.classList.contains('tucked'), inView: r.width > 40 && r.top >= top - 1 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth };
+    });
+    assert.match(call.text, /!$/, `${w}x${h}: a station call`);
+    assert.ok(!call.tucked && call.inView, `${w}x${h}: the station call can be seen ${JSON.stringify(call)}`);
+    await p.close();
+  }
+  // a message that is not about the card ("No trains here") floats even with a card open, and does not light up the card
+  for (const [w, h] of [[768, 1024], [390, 844]]) {
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h } });
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    await p.locator('#pick').focus();
+    await p.keyboard.press('Enter');
+    await p.waitForFunction(() => !document.getElementById('card').hidden);
+    await p.waitForTimeout(1700); // past the status line's light-up time, if any
+    await p.evaluate(() => { __kids.mapView.map.jumpTo({ center: [115.45, -31.95], zoom: 13 }); __kids.tick(true); }); // out at sea
+    await p.keyboard.press('Enter');
+    const msg = await p.evaluate(() => {
+      const b = document.getElementById('bubble'), r = b.getBoundingClientRect(), top = document.querySelector('.top').getBoundingClientRect().bottom;
+      return { text: b.textContent, tucked: b.classList.contains('tucked'), inView: r.width > 40 && r.top >= top - 1 && r.bottom <= innerHeight, flash: document.getElementById('card-now').classList.contains('flash') };
+    });
+    assert.equal(msg.text, 'No trains here right now. Try zooming out.');
+    assert.ok(!msg.tucked && msg.inView && !msg.flash, `${w}x${h}: "No trains here" is shown, the card is not lit up ${JSON.stringify(msg)}`);
+    await p.close();
+  }
+  // the status line's light-up is not replayed by a card opened later; with reduced motion it is a still colour
+  for (const rm of [false, true]) {
+    const p = await open('?date=2026-10-19&t=08:00', { ...phone, ...(rm ? { reducedMotion: 'reduce' } : {}) });
+    if (!rm) await p.getByRole('radio', { name: 'Pause' }).click();
+    const id = await pickLine(p, 'Fremantle Line', /./);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    const lit = await p.evaluate(() => { const s = document.getElementById('card-now'); return [s.classList.contains('flash'), getComputedStyle(s).backgroundColor]; });
+    assert.ok(lit[0] && lit[1] !== 'rgba(0, 0, 0, 0)', `All aboard lights up the status line${rm ? ' (reduced motion: a still colour)' : ''} ${lit}`);
+    await p.locator('#hop-off').click();
+    await p.evaluate(() => __kids.select(null));
+    await p.waitForTimeout(1800);
+    await p.evaluate((id) => __kids.select([...__kids.mapView.byId.values()].find((x) => __kids.net.routes[x.route].isTrain && x.id !== id).id), id);
+    const again = await p.evaluate(() => { const s = document.getElementById('card-now'); return [s.classList.contains('flash'), s.getAnimations().length]; });
+    assert.deepEqual(again, [false, 0], `A card opened later does not light up again${rm ? ' (reduced motion)' : ''}`);
+    await p.close();
+  }
+  console.log('Fourth review round checks pass.');
+
+  // Fifth round: a next train's card starts at its header (the arrival card was scrolled to its offers) on sideways phones
+  for (const [w, h] of [[568, 320], [640, 360], [740, 360]]) {
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: true, hasTouch: true });
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    await pickLine(p, 'Fremantle Line', /Perth$/);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    assert.ok(await toEnd(p), `${w}x${h}: the ride ends`);
+    await p.waitForTimeout(150);
+    await p.locator('#next-list .next-train').first().click();
+    const waitTop = await p.evaluate(() => document.getElementById('card').scrollTop);
+    assert.equal(waitTop, 0, `${w}x${h}: the waiting card starts at its header`);
+    assert.ok(await seen(p, '#card-close'), `${w}x${h}: the waiting card's close button can be tapped`);
+    assert.ok(await p.evaluate(() => { for (let s = 0; s < 3600 && __kids.ride.id === null; s += 10) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 10); __kids.tick(true); } return __kids.ride.id !== null; }), `${w}x${h}: boards the next train`);
+    assert.ok(await seen(p, '#card-close'), `${w}x${h}: riding the next train, its close button can be tapped`);
+    await p.close();
+  }
+  // Fifth round: hopping on a train standing at a station, "All aboard! Next stop: ..." is shown (the card says "Stopped at ...")
+  for (const [w, h] of [[375, 667], [390, 844]]) {
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
+    assert.ok(await p.evaluate(() => { const v = [...__kids.mapView.byId.values()].find((x) => __kids.net.routes[x.route].isTrain && x.state === 'dwell' && x.k > 0); if (!v) return false; __kids.select(v.id); return true; }), `${w}x${h}: a train standing at a station`);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    const aboard = await p.evaluate(() => {
+      const b = document.getElementById('bubble'), r = b.getBoundingClientRect(), top = document.querySelector('.top').getBoundingClientRect().bottom;
+      return { text: b.textContent, status: document.getElementById('card-now').textContent, tucked: b.classList.contains('tucked'), inView: r.width > 40 && r.top >= top - 1 && r.bottom <= innerHeight };
+    });
+    assert.match(aboard.status, /^Stopped at /);
+    assert.ok(/^All aboard! Next stop: /.test(aboard.text) && !aboard.tucked && aboard.inView, `${w}x${h}: the All aboard call can be seen ${JSON.stringify(aboard)}`);
+    await p.close();
+  }
+  console.log('Fifth review round checks pass.');
 
   const pretend = await open('?date=2027-03-01&t=08:00');
   assert.equal(await pretend.locator('#pretend').innerText(), 'Pretend day');

@@ -25,13 +25,13 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
-  <link rel="stylesheet" href="style.css?v=1.9">
-  <link rel="modulepreload" href="sim.js?v=1.9">
-  <link rel="modulepreload" href="mapview.js?v=1.9">
-  <link rel="modulepreload" href="favourites.js?v=1.9">
+  <link rel="stylesheet" href="style.css?v=1.9.1">
+  <link rel="modulepreload" href="sim.js?v=1.9.1">
+  <link rel="modulepreload" href="mapview.js?v=1.9.1">
+  <link rel="modulepreload" href="favourites.js?v=1.9.1">
   <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
   <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
-  <script type="module" src="app.js?v=1.9"></script>
+  <script type="module" src="app.js?v=1.9.1"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to timetable information</a>
@@ -103,10 +103,18 @@
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
   <div id="whatsnew" class="whatsnew">
-    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.9 &middot; What&rsquo;s new</button>
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.9.1 &middot; What&rsquo;s new</button>
     <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
       <!-- Newest first. Write each line so someone who never used the map understands it. -->
       <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.9.1</b> <span>19 Oct 2026</span></p>
+        <ul>
+          <li>Perth Train Spotter on phones: Hop on! now zooms in to your train on short and sideways phones, and moving the map with your finger during a ride is no longer cut off.</li>
+          <li>On phones, a station call now lights up the part of the train card that says what the train is doing, instead of floating over the map, and at the end of a ride the next trains you can hop on are shown on screen.</li>
+          <li>Smaller phones held sideways now show the train card down the left side, so the card is no longer squashed.</li>
+        </ul>
+      </div>
       <div class="wn-ver">
         <p class="wn-head"><b>v1.9</b> <span>18 Oct 2026</span></p>
         <ul>

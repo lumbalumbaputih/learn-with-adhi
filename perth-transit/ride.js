@@ -1,5 +1,5 @@
 // ride.js: riding along with a train on the kids' page (pure logic, no DOM, so it is tested in Node).
-import { DAY } from './sim.js?v=1.9';
+import { DAY } from './sim.js?v=1.9.1';
 
 // Vehicle ids carry their service day (see Network.vehicles): at midnight today's trips become
 // yesterday's, so a train running past midnight gets this much added to its id.

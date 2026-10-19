@@ -1,12 +1,12 @@
 // kids.js: Perth Train Spotter. A kids' page on the same timetable engine and map as the grown-up map:
 // trains and the ferry only, big shapes, time that can run faster than real life, and plain words.
-import { Network, ymdToDow, addDays, fmtClock, ymdParts, DAY } from './sim.js?v=1.9';
-import { SimClock } from './clock.js?v=1.9';
-import { MapView } from './mapview.js?v=1.9';
-import { chipColors, routeColor } from './colors.js?v=1.9';
-import { prettyName } from './util.js?v=1.9';
-import { findVehicle, stopsReached, trainsFrom } from './ride.js?v=1.9';
-import { Sound, loadSettings, saveSettings } from './sound.js?v=1.9';
+import { Network, ymdToDow, addDays, fmtClock, ymdParts, DAY } from './sim.js?v=1.9.1';
+import { SimClock } from './clock.js?v=1.9.1';
+import { MapView } from './mapview.js?v=1.9.1';
+import { chipColors, routeColor } from './colors.js?v=1.9.1';
+import { prettyName } from './util.js?v=1.9.1';
+import { findVehicle, stopsReached, trainsFrom } from './ride.js?v=1.9.1';
+import { Sound, loadSettings, saveSettings } from './sound.js?v=1.9.1';
 
 const $ = (id) => document.getElementById(id);
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -14,7 +14,7 @@ const MODES = ['train', 'ferry'];
 const START_SPEED = 10; // fast enough to see the trains move at city zoom, slow enough to follow one
 const narrowQuery = matchMedia('(max-width: 819px)');
 // the card sits at the side (not above the dock) on wide screens and on short landscape phones: keep in step with kids.css
-const sideQuery = matchMedia('(min-width: 820px), (max-height: 500px) and (min-width: 640px)');
+const sideQuery = matchMedia('(min-width: 820px), (max-height: 500px) and (min-width: 560px)');
 const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
 const darkQuery = matchMedia('(prefers-color-scheme: dark)');
 
@@ -204,7 +204,9 @@ async function main() {
     });
     stripList.replaceChildren(...cardState.items.map((x) => x.li));
     stripEl.scrollLeft = 0;
+    cardEl.scrollTop = 0; // a new train's card starts at its header (the arrival card may have been scrolled to its offers)
     cardEl.classList.remove('celebrate');
+    $('card-now').classList.remove('flash');
     $('next-trains').hidden = true;
     cardEl.hidden = false;
     hint.hidden = true;
@@ -216,6 +218,7 @@ async function main() {
     cardEl.hidden = true;
     cardState.id = null;
     mapView.highlightRoute(null);
+    mapView.followPadding = null;
     mapView.map.setPadding(NO_PAD);
   }
   // if the train is hidden behind the card or the dock, move the map so it can be seen
@@ -269,29 +272,59 @@ async function main() {
   const riding = () => ride.id !== null || ride.wait !== null || ride.done;
   const absSec = (ymd, sec) => { const [y, m, d] = ymdParts(ymd); return Date.UTC(y, m - 1, d) / 1000 + sec; };
   const bubble = $('bubble');
-  function say(text, sfx) { // a short call with its sound (and the voice, if on); the bubble is a polite live region
+  /**
+   * A short call with its sound (and the voice, if on). The bubble is a polite live region, so screen readers hear every call.
+   * where: 'status' = a ride call the card's status line also shows (that line lights up), 'card' = the open card shows it
+   * (a picked train's line and destination), otherwise a message of its own (it always floats).
+   */
+  function say(text, sfx, where = '') {
     if (sfx) sound.play(sfx);
     sound.speak(text);
     bubble.textContent = text;
+    bubble.dataset.where = where;
     placeBubble();
+    if (where === 'status' && bubble.classList.contains('tucked')) flashStatus();
     bubble.classList.add('show');
     clearTimeout(say.t);
     say.t = setTimeout(() => bubble.classList.remove('show'), 3500);
   }
-  // phones: just above the card (or the dock), so the card never has to shrink to make room; side layouts: CSS places it
+  // the status line lights up for a moment (a colour, not motion, under reduced motion); the class goes when it is done,
+  // so a card opened later does not replay it
+  function flashStatus() {
+    const st = $('card-now');
+    st.classList.remove('flash'); void st.offsetWidth; st.classList.add('flash');
+    clearTimeout(flashStatus.t);
+    flashStatus.t = setTimeout(() => st.classList.remove('flash'), 1500);
+  }
+  // the card's status line can be seen: not scrolled away, not cut off by a very short card or by its pinned buttons
+  function statusInView() {
+    const st = $('card-now').getBoundingClientRect(), c = cardEl.getBoundingClientRect();
+    const act = cardEl.querySelector('.card-actions').getBoundingClientRect();
+    return st.height > 0 && st.top >= c.top && st.bottom <= (act.height ? Math.min(c.bottom, act.top) : c.bottom) + 1;
+  }
+  // Phones with a card open, when the card itself shows the message and its status line can be seen: there is no free
+  // spot for a floating bubble (it would cover the train or the card), so it is tucked away from sight (still read by
+  // screen readers). Otherwise on phones: just above the card (or the dock), never over the top bar. Side layouts: CSS.
   function placeBubble() {
-    if (sideQuery.matches) { document.documentElement.style.removeProperty('--bubble-bottom'); return; }
+    const tuck = !sideQuery.matches && !cardEl.hidden && !!bubble.dataset.where && statusInView();
+    bubble.classList.toggle('tucked', tuck);
+    if (sideQuery.matches || tuck) { document.documentElement.style.removeProperty('--bubble-bottom'); return; }
     const anchor = (cardEl.hidden ? dock : cardEl).getBoundingClientRect().top;
     const topBar = document.querySelector('.top').getBoundingClientRect().bottom;
     const room = innerHeight - topBar - (bubble.offsetHeight || 44) - 8; // a very tall card: overlap its top rather than the top bar
     document.documentElement.style.setProperty('--bubble-bottom', `${Math.max(0, Math.round(Math.min(innerHeight - anchor + 8, room)))}px`);
   }
-  // keep the followed train in the free part of the map when the card changes size (text wraps, riding layout, rotation)
-  new ResizeObserver(() => {
-    if (ride.id !== null && !ride.done) mapView.map.setPadding(ridePadding());
-    if (bubble.classList.contains('show')) placeBubble();
-  }).observe(cardEl);
-  addEventListener('resize', () => { if (ride.id !== null && !ride.done) mapView.map.setPadding(ridePadding()); placeBubble(); });
+  // Keep the followed train in the free part of the map when the card changes size (text wraps, riding layout, rotation).
+  // Applied as a follow step, never with map.setPadding() (a jump that would stop a zoom ease or a finger drag). The
+  // ticks do that while the clock runs; when it is paused (always at first with reduced motion) nothing else would,
+  // so take one step now. Safe: while the hop-on zoom eases or a finger drags, nothing is being followed.
+  const refreshRidePadding = () => {
+    if (ride.id === null || ride.done) return;
+    mapView.followPadding = ridePadding();
+    if (clock.speed === 0) mapView.refollow();
+  };
+  new ResizeObserver(() => { refreshRidePadding(); if (bubble.classList.contains('show')) placeBubble(); }).observe(cardEl);
+  addEventListener('resize', () => { refreshRidePadding(); placeBubble(); });
   // the part of the map the card and the dock don't cover
   function ridePadding() {
     const r = cardEl.getBoundingClientRect(), dockTop = dock.getBoundingClientRect().top;
@@ -310,16 +343,17 @@ async function main() {
     Object.assign(ride, { id: v.id, k: v.k, done: false, wait: null, follow: true });
     ride.endAt = absSec(now.ymd, v.run.t0 + prof.arr[prof.arr.length - 1]);
     syncButtons(); // the riding layout first (a compact card on short phones), so the padding below fits it
-    const m = mapView.map, zoom = Math.max(m.getZoom(), 13.2);
-    m.setPadding(ridePadding());
-    if (motionQuery.matches) { m.jumpTo({ center: [v.lon, v.lat], zoom }); mapView.follow(v.id); }
+    const m = mapView.map, zoom = Math.max(m.getZoom(), 13.2), padding = ridePadding();
+    mapView.followPadding = padding;
+    if (motionQuery.matches) { m.jumpTo({ center: [v.lon, v.lat], zoom, padding }); mapView.follow(v.id); }
     else {
       mapView.follow(null); // following jumps every frame, which would cut the zoom short
-      m.easeTo({ center: [v.lon, v.lat], zoom, duration: 700 });
+      m.easeTo({ center: [v.lon, v.lat], zoom, padding, duration: 700 });
       m.once('moveend', () => { if (ride.id !== null && ride.follow) mapView.follow(ride.id); });
     }
     if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
-    say(`All aboard! Next stop: ${stationLabel(net, pat.stops[Math.min(v.k + 1, pat.stops.length - 1)])}`, net.routes[v.route].isFerry ? 'horn' : 'whistle');
+    // the status line names the next stop only while moving (at a station it says where the train is): otherwise the call floats
+    say(`All aboard! Next stop: ${stationLabel(net, pat.stops[Math.min(v.k + 1, pat.stops.length - 1)])}`, net.routes[v.route].isFerry ? 'horn' : 'whistle', v.state === 'move' ? 'status' : '');
     syncButtons();
   }
   // after the arrival pause, carry on at the speed the viewer had chosen (also with reduced motion: it was their choice)
@@ -331,6 +365,7 @@ async function main() {
     if (ride.done) resumeAfterArrival(); // leaving the arrival card
     Object.assign(ride, { id: null, wait: null, done: false, follow: true, station: -1 });
     mapView.follow(null);
+    mapView.followPadding = null;
     mapView.map.setPadding(NO_PAD);
     cardEl.classList.remove('celebrate');
     $('next-trains').hidden = true;
@@ -347,26 +382,27 @@ async function main() {
     const reached = stopsReached(ride.k, k);
     ride.k = Math.max(ride.k, k);
     if (k >= last) finishRide(now, pat);
-    else if (reached.length) say(`${stationLabel(net, pat.stops[k])}!`, 'chime');
+    else if (reached.length) say(`${stationLabel(net, pat.stops[k])}!`, 'chime', 'status');
   }
   function finishRide(now, pat) {
     const lastK = pat.stops.length - 1, lastStop = pat.stops[lastK], label = stationLabel(net, lastStop);
     ride.done = true;
     mapView.follow(null);
+    syncButtons(); // the arrival layout first, so the strip below is measured as it will be shown
     $('card-now').textContent = `You made it to ${label}! 🎉`;
     markStrip(lastK, -1, lastK);
     stripTrain.hidden = false;
     placeStripTrain(lastK);
     if (!motionQuery.matches) cardEl.classList.add('celebrate');
-    say(`You made it to ${label}!`, 'yay');
+    say(`You made it to ${label}!`, 'yay', 'status');
     // pause for the moment of arrival, so the next trains on offer don't leave while the choice is made
     ride.paused = clock.speed !== 0;
     if (ride.paused) { ride.resume = clock.speed; clock.setSpeed(0); syncSpeeds(); }
-    showNextTrains(net.stopStation[lastStop], now);
+    showNextTrains(net.stopStation[lastStop], now, true);
     syncButtons();
   }
   const leavesLabel = (sec) => (sec <= 40 ? 'leaves now' : `leaves in about ${Math.max(1, Math.round(sec / 60))} minute${Math.round(sec / 60) > 1 ? 's' : ''}`);
-  function showNextTrains(station, now) {
+  function showNextTrains(station, now, reveal = false) {
     const list = station >= 0 ? trainsFrom(net, station, now.ymd, now.sec, { limit: 3 }) : [];
     ride.station = station;
     ride.offers = list.map((d) => `${d.id}|${Math.round((d.t - now.sec) / 60)}`).join(',');
@@ -385,6 +421,17 @@ async function main() {
       box.append(btn);
     }
     $('next-trains').hidden = false;
+    if (reveal) requestAnimationFrame(revealOffers); // not on the once-a-second refresh
+  }
+  // On short screens the first offer can start below the pinned buttons: scroll just enough to show it, but never so far
+  // that the status line ("You made it ...!", "We missed that train") leaves the top of the card.
+  function revealOffers() {
+    const first = $('next-list').firstElementChild;
+    if (!first || cardEl.hidden) return;
+    const act = cardEl.querySelector('.card-actions').getBoundingClientRect(), c = cardEl.getBoundingClientRect();
+    const need = first.getBoundingClientRect().bottom - ((act.height ? act.top : c.bottom) - 8);
+    const room = $('card-now').getBoundingClientRect().top - c.top - 6;
+    if (need > 0 && room > 0) cardEl.scrollTop += Math.min(need, room);
   }
   // "Hop on another train?": wait at the station until that train is there, then ride it
   function waitFor(d, station) {
@@ -399,12 +446,11 @@ async function main() {
     stripTrain.hidden = true;
     placeStripTrain(d.k);
     const m = mapView.map;
-    m.setPadding(ridePadding());
-    m.easeTo({ center: [net.stationLon[station], net.stationLat[station]], zoom: Math.max(m.getZoom(), 13.2), duration: motionQuery.matches ? 0 : 600 });
+    m.easeTo({ center: [net.stationLon[station], net.stationLat[station]], zoom: Math.max(m.getZoom(), 13.2), padding: ridePadding(), duration: motionQuery.matches ? 0 : 600 });
     if (clock.speed === 0 && !motionQuery.matches) { clock.setSpeed(START_SPEED); syncSpeeds(); schedule(); }
     updateWait(now);
     syncButtons();
-    if (fromList) $('hop-off').focus(); // "Stop waiting"
+    if (fromList) $('hop-off').focus({ preventScroll: true }); // "Stop waiting" (pinned, so always in view: no scroll)
   }
   function updateWait(now) {
     const w = ride.wait, v = lookup(w.id);
@@ -413,7 +459,7 @@ async function main() {
     if (!v && left < -180) { // it has gone (time jumped): offer the next ones instead
       ride.wait = null; ride.done = true;
       $('card-now').textContent = `We missed that ${noun}. Pick another one!`;
-      showNextTrains(w.station, now);
+      showNextTrains(w.station, now, true);
       syncButtons();
       return;
     }
@@ -423,13 +469,15 @@ async function main() {
   function syncButtons() {
     const hop = $('hop'), off = $('hop-off'), had = document.activeElement;
     cardEl.classList.toggle('riding', (ride.id !== null && !ride.done) || !!ride.wait);
+    cardEl.classList.toggle('arrived', ride.done);
     if (ride.done) { hop.hidden = true; off.hidden = false; off.textContent = 'Done'; }
     else if (ride.wait) { hop.hidden = true; off.hidden = false; off.textContent = 'Stop waiting'; }
     else if (ride.id !== null) { hop.hidden = ride.follow; hop.textContent = 'Find my train'; off.hidden = false; off.textContent = 'Hop off'; }
     else { hop.hidden = cardState.id === null || !lookup(cardState.id); hop.textContent = 'Hop on!'; off.hidden = true; }
     // a keyboard user's focus must not fall back to the page when the button they pressed hides itself
     if ((had === hop && hop.hidden) || (had === off && off.hidden)) {
-      if (!hop.hidden) hop.focus(); else if (!off.hidden) off.focus(); else if (!cardEl.hidden) $('card-title').focus();
+      // the ride buttons are pinned to the card's bottom, always in view: focusing them must not scroll the card
+      if (!hop.hidden) hop.focus({ preventScroll: true }); else if (!off.hidden) off.focus({ preventScroll: true }); else if (!cardEl.hidden) $('card-title').focus();
     }
   }
   $('hop').addEventListener('click', () => {
@@ -508,7 +556,7 @@ async function main() {
     if (!f) { say('No trains here right now. Try zooming out.'); return; }
     select(f.id);
     const v = f.v, pat = net.patterns[v.pattern];
-    say(`${lineName(net.routes[v.route])}, going to ${stationLabel(net, pat.stops[pat.stops.length - 1])}`);
+    say(`${lineName(net.routes[v.route])}, going to ${stationLabel(net, pat.stops[pat.stops.length - 1])}`, '', 'card');
   });
 
   // ---- grown-ups dialog
