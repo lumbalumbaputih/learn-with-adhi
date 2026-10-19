@@ -17,6 +17,13 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-10-19
+
+- ✅ **Perth Train Spotter v1.9.1: the third review round's fixes, which missed the PR #165 merge, plus a fourth round.** Adhi merged PR #165 before my third-round fix commit was pushed, so main (and the live site) still had those regressions (no Hop on! zoom on short and sideways phones, drags cut off mid-ride, a crushed card on 560-639 px sideways phones). With Adhi's OK the branch was restarted from main and the commit carried over (doc conflicts only). The fourth review round, over that commit, confirmed two more regressions of mine and four minor issues, all fixed: rotating a paused or reduced-motion ride lost the train (`MapView.refollow()`); the arrival and missed-train cards scrolled "You made it!" off short phones (`revealOffers()` scrolls only to the first next train, never past the status line); station calls hidden on 480-559 px sideways phones and "No trains here" hidden (`say(text, sfx, where)` + `statusInView()`); the status-line light-up replayed on later cards and had no reduced-motion version. Release query `?v=1.9.1` and a What's new entry.
+  - **Checks:** new browser checks for each finding fail 22 times on the third-round code and 49 times on what is live now; all browser (main, kids, favourites), kids, accuracy, motion and favourites checks pass.
+  - **Files:** `perth-transit/{kids.js,kids.css,mapview.js,index.html,kids.html,README.md,KIDS-PLAN.md}` plus the `?v=` bump in every first-party module, `scripts/perth-transit-browser-check.cjs`, `CLAUDE.md`, `PROGRESS.md`.
+  - **Next:** Adhi's real-kids gate and a real-phone test (Phase 2 not started).
+
 ## 2026-10-18
 
 - ✅ **Publication docs reconciled (PR #158):** preserve the complete v1.8 favourites and v1.9 train-motion/Train Spotter history and the repo-as-source-of-truth decision, while recording that the initial Perth Transit Map was merged and live. The old public-merge decision item is removed; the licence reading and real-device checks remain open.

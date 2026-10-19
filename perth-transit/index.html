@@ -25,13 +25,13 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
-  <link rel="stylesheet" href="style.css?v=1.9">
-  <link rel="modulepreload" href="sim.js?v=1.9">
-  <link rel="modulepreload" href="mapview.js?v=1.9">
-  <link rel="modulepreload" href="favourites.js?v=1.9">
+  <link rel="stylesheet" href="style.css?v=1.9.1">
+  <link rel="modulepreload" href="sim.js?v=1.9.1">
+  <link rel="modulepreload" href="mapview.js?v=1.9.1">
+  <link rel="modulepreload" href="favourites.js?v=1.9.1">
   <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
   <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
-  <script type="module" src="app.js?v=1.9"></script>
+  <script type="module" src="app.js?v=1.9.1"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to timetable information</a>
@@ -103,10 +103,17 @@
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
   <div id="whatsnew" class="whatsnew">
-    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.9 &middot; What&rsquo;s new</button>
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.9.1 &middot; What&rsquo;s new</button>
     <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
       <!-- Newest first. Write each line so someone who never used the map understands it. -->
       <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.9.1</b> <span>19 Oct 2026</span></p>
+        <ul>
+          <li>Perth Train Spotter fixes for phones: the train you ride stays in view when you turn the phone, even while the clock is paused, and the card at the end of a ride keeps &ldquo;You made it!&rdquo; on screen above the next trains.</li>
+          <li>Station calls on small or sideways phones are shown again when the card is too small to show them, and the &ldquo;No trains here&rdquo; message is no longer hidden.</li>
+        </ul>
+      </div>
       <div class="wn-ver">
         <p class="wn-head"><b>v1.9</b> <span>18 Oct 2026</span></p>
         <ul>

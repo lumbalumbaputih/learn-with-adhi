@@ -406,6 +406,119 @@ async function checkKids(browser, errors) {
   assert.ok(Math.hypot(end[0] - mid[0], end[1] - mid[1]) > 1e-4, 'A drag keeps moving the map after the card changes height');
   await drag.close();
 
+  // Fourth review round: rotating a paused ride, the arrival card's status line, and where station calls show
+  const pickLine = (p, line, dest) => p.evaluate(([line, src]) => { // the train furthest from the end of its trip, going to dest
+    const re = new RegExp(src);
+    const vs = [...__kids.mapView.byId.values()].filter((x) => __kids.net.routes[x.route].long === line && x.state === 'move').sort((a, b) => a.k - b.k);
+    for (const v of vs) { __kids.select(v.id); if (re.test(document.getElementById('card-dest').textContent)) return v.id; }
+    return null;
+  }, [line, dest.source]);
+  const seen = (p, sel) => p.evaluate((sel) => { // on screen and not covered (by the pinned buttons, or scrolled out of the card)
+    const el = document.querySelector(sel), r = el.getBoundingClientRect();
+    const at = r.height > 0 && document.elementFromPoint(r.left + Math.min(24, r.width / 2), r.top + r.height / 2);
+    return !!at && el.contains(at);
+  }, sel);
+  const trainClear = (p) => p.evaluate(() => {
+    const v = __kids.mapView.byId.get(__kids.ride.id), pt = __kids.mapView.map.project([v.lon, v.lat]), r = (id) => document.getElementById(id).getBoundingClientRect();
+    const top = document.querySelector('.top').getBoundingClientRect().bottom, M = 10;
+    const clear = (b) => pt.x < b.left - M || pt.x > b.right + M || pt.y < b.top - M || pt.y > b.bottom + M;
+    return { pt: [Math.round(pt.x), Math.round(pt.y)], ok: pt.x > M && pt.x < innerWidth - M && pt.y > top + M && pt.y < innerHeight - M && clear(r('card')) && clear(r('dock')) };
+  });
+  const toEnd = (p) => p.evaluate(() => { for (let s = 0; s < 7200 && !__kids.ride.done; s += 20) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 20); __kids.tick(true); } return __kids.ride.done; });
+  // a paused ride (and every reduced-motion ride) keeps its train in view when the phone is turned: no tick is called here
+  for (const [from, to, rm] of [[[390, 844], [844, 390]], [[844, 390], [390, 844]], [[375, 667], [667, 375]], [[390, 844], [844, 390], true]]) {
+    const tag = `paused ride turned ${from.join('x')} to ${to.join('x')}${rm ? ' (reduced motion)' : ''}`;
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: from[0], height: from[1] }, isMobile: true, hasTouch: true, ...(rm ? { reducedMotion: 'reduce' } : {}) });
+    if (!rm) await p.getByRole('radio', { name: 'Pause' }).click();
+    assert.ok((await pickLine(p, 'Fremantle Line', /./)) !== null, `${tag}: a Fremantle Line train`);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    await p.waitForFunction(() => __kids.mapView.following !== null);
+    if (!rm) await p.getByRole('radio', { name: 'Pause' }).click();
+    assert.equal(await p.evaluate(() => __kids.clock.speed), 0, `${tag}: paused`);
+    await p.setViewportSize({ width: to[0], height: to[1] });
+    await p.waitForTimeout(600);
+    const t = await trainClear(p);
+    assert.ok(t.ok, `${tag}: the train stays in clear view ${t.pt}`);
+    await p.close();
+  }
+  // arrival and a missed train on short portrait phones: the status line stays on screen and the first next train can be tapped
+  for (const [w, h] of [[320, 568], [375, 548], [360, 600], [412, 600]]) {
+    for (const [line, dest] of [['Fremantle Line', /Perth$/], ['Fremantle Line', /Fremantle$/], ['Midland Line', /Perth$/]]) {
+      const tag = `${w}x${h} ${line} to ${dest.source.replace('$', '')}`;
+      const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: true, hasTouch: true });
+      await p.getByRole('radio', { name: 'Pause' }).click();
+      assert.ok((await pickLine(p, line, dest)) !== null, `${tag}: a train`);
+      await p.getByRole('button', { name: 'Hop on!' }).click();
+      assert.ok(await toEnd(p), `${tag}: the ride ends`);
+      await p.waitForTimeout(150);
+      assert.match(await p.locator('#card-now').innerText(), /^You made it to /);
+      assert.ok(await seen(p, '#card-now'), `${tag}: "You made it" stays on screen`);
+      assert.ok(await seen(p, '#next-list .next-train'), `${tag}: the first next train can be tapped`);
+      if (line === 'Fremantle Line' && /Perth/.test(dest.source)) { // then wait for a train and miss it
+        await p.locator('#next-list .next-train').first().click();
+        await p.evaluate(() => { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 2 * 3600); __kids.tick(true); });
+        await p.waitForTimeout(150);
+        assert.match(await p.locator('#card-now').innerText(), /^We missed that/);
+        assert.ok(await seen(p, '#card-now'), `${tag}: "We missed that train" stays on screen`);
+        assert.ok(await seen(p, '#next-list .next-train'), `${tag}: after a miss, the first next train can be tapped`);
+      }
+      await p.close();
+    }
+  }
+  // a stacked sideways phone too narrow for the side layout: the card is too short to show its status line, so calls float
+  for (const [w, h] of [[480, 320], [534, 320], [540, 360]]) {
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h }, isMobile: true, hasTouch: true });
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    await pickLine(p, 'Fremantle Line', /./);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    await p.waitForFunction(() => __kids.mapView.following !== null);
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    const call = await p.evaluate(() => { // step on to the next station call
+      const b = document.getElementById('bubble'), first = b.textContent;
+      for (let s = 0; s < 1800 && b.textContent === first; s += 10) { const n = __kids.clock.now(); __kids.clock.setTime(n.ymd, n.sec + 10); __kids.tick(true); }
+      const r = b.getBoundingClientRect(), top = document.querySelector('.top').getBoundingClientRect().bottom;
+      return { text: b.textContent, tucked: b.classList.contains('tucked'), inView: r.width > 40 && r.top >= top - 1 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth };
+    });
+    assert.match(call.text, /!$/, `${w}x${h}: a station call`);
+    assert.ok(!call.tucked && call.inView, `${w}x${h}: the station call can be seen ${JSON.stringify(call)}`);
+    await p.close();
+  }
+  // a message that is not about the card ("No trains here") floats even with a card open, and does not light up the card
+  for (const [w, h] of [[768, 1024], [390, 844]]) {
+    const p = await open('?date=2026-10-19&t=08:00', { viewport: { width: w, height: h } });
+    await p.getByRole('radio', { name: 'Pause' }).click();
+    await p.locator('#pick').focus();
+    await p.keyboard.press('Enter');
+    await p.waitForFunction(() => !document.getElementById('card').hidden);
+    await p.waitForTimeout(1700); // past the status line's light-up time, if any
+    await p.evaluate(() => { __kids.mapView.map.jumpTo({ center: [115.45, -31.95], zoom: 13 }); __kids.tick(true); }); // out at sea
+    await p.keyboard.press('Enter');
+    const msg = await p.evaluate(() => {
+      const b = document.getElementById('bubble'), r = b.getBoundingClientRect(), top = document.querySelector('.top').getBoundingClientRect().bottom;
+      return { text: b.textContent, tucked: b.classList.contains('tucked'), inView: r.width > 40 && r.top >= top - 1 && r.bottom <= innerHeight, flash: document.getElementById('card-now').classList.contains('flash') };
+    });
+    assert.equal(msg.text, 'No trains here right now. Try zooming out.');
+    assert.ok(!msg.tucked && msg.inView && !msg.flash, `${w}x${h}: "No trains here" is shown, the card is not lit up ${JSON.stringify(msg)}`);
+    await p.close();
+  }
+  // the status line's light-up is not replayed by a card opened later; with reduced motion it is a still colour
+  for (const rm of [false, true]) {
+    const p = await open('?date=2026-10-19&t=08:00', { ...phone, ...(rm ? { reducedMotion: 'reduce' } : {}) });
+    if (!rm) await p.getByRole('radio', { name: 'Pause' }).click();
+    const id = await pickLine(p, 'Fremantle Line', /./);
+    await p.getByRole('button', { name: 'Hop on!' }).click();
+    const lit = await p.evaluate(() => { const s = document.getElementById('card-now'); return [s.classList.contains('flash'), getComputedStyle(s).backgroundColor]; });
+    assert.ok(lit[0] && lit[1] !== 'rgba(0, 0, 0, 0)', `All aboard lights up the status line${rm ? ' (reduced motion: a still colour)' : ''} ${lit}`);
+    await p.locator('#hop-off').click();
+    await p.evaluate(() => __kids.select(null));
+    await p.waitForTimeout(1800);
+    await p.evaluate((id) => __kids.select([...__kids.mapView.byId.values()].find((x) => __kids.net.routes[x.route].isTrain && x.id !== id).id), id);
+    const again = await p.evaluate(() => { const s = document.getElementById('card-now'); return [s.classList.contains('flash'), s.getAnimations().length]; });
+    assert.deepEqual(again, [false, 0], `A card opened later does not light up again${rm ? ' (reduced motion)' : ''}`);
+    await p.close();
+  }
+  console.log('Fourth review round checks pass.');
+
   const pretend = await open('?date=2027-03-01&t=08:00');
   assert.equal(await pretend.locator('#pretend').innerText(), 'Pretend day');
   assert.match(await pretend.locator('#clock').innerText(), /^Monday /);

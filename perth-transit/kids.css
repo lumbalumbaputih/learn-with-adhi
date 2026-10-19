@@ -185,7 +185,7 @@ a { color: var(--accent); }
 }
 
 .card { max-height: calc(100dvh - var(--dock-h, 140px) - 126px); overflow-y: auto; scroll-padding-bottom: 84px; } /* top below the map credit; scrolling into view clears the pinned buttons */
-/* a station call on phones: the card's status line lights up (the floating bubble would cover the train or the card) */
+/* a station call on phones, when the status line can be seen: it lights up (a floating bubble would cover the train or the card) */
 .card-now.flash { animation: call-flash 1.4s ease-out; border-radius: 8px; }
 @keyframes call-flash { 0%, 35% { background: var(--sun); color: var(--sun-ink); } 100% { background: transparent; } }
 /* a direct child of the scrolling card, pinned to its bottom edge: the ride buttons stay in view when a tall card scrolls */
@@ -292,6 +292,6 @@ a { color: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) {
   .chunky, .loading-bar, .bubble { transition: none; }
-  .card-now.flash { animation: none; }
+  .card-now.flash { animation: none; background: var(--sun); color: var(--sun-ink); } /* a colour, not motion */
   .card, .card.celebrate { animation: none; }
 }
