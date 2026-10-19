@@ -17,6 +17,19 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-10-20
+
+- ✅ **Perth Transit v1.10: real place-name search and labels (PR #167).** Completed the catalogue after network access was enabled: 15,711 named OpenStreetMap destinations, including 104 hotels; source `2026-10-19T22:22:21Z`, about 2.12 MB raw / 0.44 MB gzip. Search Duxton Hotel Perth or Pan Pacific Perth to see the selected place and nearby timetable stops. The draft's source-data and GitHub-access blockers are resolved.
+  - **Validation:** real-catalogue readiness checks, reproducible offline compilation, search/model and three builder checks pass. The live-provider browser check verifies real hotel searches, hotel-name rendering, nearby departures, light/dark maps and mobile layout; it loaded 26 actual vector tiles and seven font responses. TLS verification remains enabled through the supplied proxy/CA. Existing regression/accessibility checks also passed; physical devices remain untested.
+  - **Files:** `perth-transit/data/places.json`, `scripts/perth-transit-places-live-browser-check.cjs`, refresh script/tests and the feature's documentation/changelog. Queries remain local, with no paid API or new credentials.
+
+## 2026-10-19
+
+- **Perth Transit v1.10 — place-name search draft, awaiting real catalogue:** added local name/alias/suburb search, named map points/labels, selected-place pins and nearby stop/departure navigation, plus favourite saving at the selected coordinates. Search queries stay on-device. Optional catalogue loading has failure/retry states and does not block the timetable. Shared module versions advance to `?v=1.10` to keep warm caches consistent.
+  - **Data:** `scripts/perth-transit-build-places.py` downloads an OpenStreetMap/Overpass extract offline, records provenance/ODbL credit, removes same-name duplicate venues and preserves the previous catalogue on failed/partial refreshes. No paid API key is required. `perth-transit/data/places.LICENSE.md` records the database terms.
+  - **Checks:** new name-search/model checks, three builder checks and the new fixture browser suite pass, including nearby departures, favourites, dark mode, layer controls, loading/failure/retry, safe rendering of untrusted names, mobile label visibility and two axe states. The existing accuracy, favourite model and favourite browser suites also pass, as does the full main-map/Train Spotter browser suite including its 8-size normal/pretend-day layout matrix. Existing browser scripts now support `PERTH_CHROMIUM_PATH` for the installed system browser.
+  - **Blocked:** the current cloud proxy returns HTTP 403 for the Overpass source. The real `data/places.json` is not present; fixture tests do not establish real hotel coverage. Required source/map network settings are saved for review. Generate and validate the catalogue and verify live map labels after access is enabled; do not merge or deploy this draft before then. GitHub API access is also currently denied, preventing draft-PR creation.
+
 ## 2026-10-18
 
 - ✅ **Publication docs reconciled (PR #158):** preserve the complete v1.8 favourites and v1.9 train-motion/Train Spotter history and the repo-as-source-of-truth decision, while recording that the initial Perth Transit Map was merged and live. The old public-merge decision item is removed; the licence reading and real-device checks remain open.

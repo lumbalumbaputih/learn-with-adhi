@@ -25,13 +25,13 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
-  <link rel="stylesheet" href="style.css?v=1.9">
-  <link rel="modulepreload" href="sim.js?v=1.9">
-  <link rel="modulepreload" href="mapview.js?v=1.9">
-  <link rel="modulepreload" href="favourites.js?v=1.9">
+  <link rel="stylesheet" href="style.css?v=1.10">
+  <link rel="modulepreload" href="sim.js?v=1.10">
+  <link rel="modulepreload" href="mapview.js?v=1.10">
+  <link rel="modulepreload" href="favourites.js?v=1.10">
   <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
   <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
-  <script type="module" src="app.js?v=1.9"></script>
+  <script type="module" src="app.js?v=1.10"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to timetable information</a>
@@ -56,7 +56,7 @@
       </div>
       <div class="search">
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
-        <input id="search" type="search" placeholder="Search a route or stop" aria-label="Search for a route or stop" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+        <input id="search" type="search" placeholder="Search a hotel, place, route or stop" aria-label="Search for a place, route or stop" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
         <button id="search-clear" class="icon-btn" type="button" aria-label="Clear search" hidden>
           <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
@@ -92,6 +92,7 @@
         <label><input type="checkbox" data-layer="bus" checked> Bus routes</label>
         <label><input type="checkbox" data-layer="stops" checked> Bus stops</label>
         <label><input type="checkbox" data-layer="labels" checked> Station names</label>
+        <label><input type="checkbox" data-layer="places" checked> Place names</label>
       </div>
     </div>
     <button id="btn-theme" class="ctl" type="button" aria-label="Switch to the dark map" title="Dark or light map">
@@ -103,10 +104,18 @@
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
   <div id="whatsnew" class="whatsnew">
-    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.9 &middot; What&rsquo;s new</button>
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.10 &middot; What&rsquo;s new</button>
     <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
       <!-- Newest first. Write each line so someone who never used the map understands it. -->
       <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.10</b> <span>20 Oct 2026</span></p>
+        <ul>
+          <li>Search by hotel, shop, restaurant or landmark name. Choose a place to find nearby stops and timetable departures, or save it as a favourite.</li>
+          <li>Zoom in to see place names on the map, or switch them off in Map layers.</li>
+          <li>Places come from OpenStreetMap and some may be missing or out of date. Searches stay on your device.</li>
+        </ul>
+      </div>
       <div class="wn-ver">
         <p class="wn-head"><b>v1.9</b> <span>18 Oct 2026</span></p>
         <ul>
@@ -199,6 +208,7 @@
     <h3>Data</h3>
     <p>Timetable data from the Public Transport Authority of Western Australia. This data is available free of charge from www.transperth.wa.gov.au.</p>
     <p>Basemap by OpenFreeMap, using OpenMapTiles and data from OpenStreetMap contributors.</p>
+    <p>Place names and locations: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a>, under the <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">Open Database Licence</a>. The Perth place catalogue is bundled with this site; searches stay on your device. Some businesses may be missing or out of date. Map pins and distances are approximate; nearby stops are sorted by straight-line distance.</p>
     <p>This is an independent project. It is not affiliated with or endorsed by the Public Transport Authority or any transport operator.</p>
     <p>Visits to this page are counted with Vercel Web Analytics, which does not use cookies or track you across sites. Favourite places are saved only in this browser on this device, with no account sync.</p>
     <p id="about-version" class="fine"></p>

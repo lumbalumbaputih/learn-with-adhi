@@ -5,7 +5,7 @@ const axePath = process.env.PERTH_AXE_PATH || require.resolve('axe-core/axe.min.
 const origin = process.env.PERTH_TEST_ORIGIN || 'http://127.0.0.1:8099';
 const key = 'ptm-favourite-places-v1';
 (async () => {
-  const browser = await chromium.launch({ args: ['--no-sandbox'] });
+  const browser = await chromium.launch({ executablePath: process.env.PERTH_CHROMIUM_PATH || undefined, args: ['--no-sandbox'] });
   try {
     const context = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 1280, height: 900 }, geolocation: { latitude: -32.01, longitude: 115.9 }, permissions: ['geolocation'] });
     await context.route('https://tiles.openfreemap.org/styles/*', (r) => r.fulfill({ json: { version: 8, sources: {}, layers: [{ id: 'bg', type: 'background' }] } }));

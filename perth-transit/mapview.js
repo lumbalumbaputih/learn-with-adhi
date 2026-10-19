@@ -1,7 +1,7 @@
 // mapview.js: the map, its layers, the moving vehicles and what happens on click.
 import * as maplibregl from './vendor/maplibre-gl.mjs';
-import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.9';
-import { prettyName } from './util.js?v=1.9';
+import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.10';
+import { prettyName } from './util.js?v=1.10';
 
 export const STYLE_URLS = {
   light: 'https://tiles.openfreemap.org/styles/positron',
@@ -337,6 +337,44 @@ export class MapView {
       }, paint: { 'text-color': P.label, 'text-halo-color': P.labelHalo, 'text-halo-width': 1.6 } });
     }
     for (const id of this.hidden) this.setLayerVisible(id, false);
+    this._addNamedPlaceLayers();
+  }
+
+  _addNamedPlaceLayers() {
+    const map = this.map, P = PAL[this.theme];
+    if (this.kids || !map.getSource('veh') || map.getSource('named-places')) return;
+    map.addSource('named-places', { type: 'geojson', data: this._catalogueData || empty() });
+    const visibility = this.hidden.has('places') ? 'none' : 'visible';
+    map.addLayer({ id: 'named-places', type: 'circle', source: 'named-places', minzoom: 14,
+      layout: { visibility }, paint: { 'circle-radius': 3, 'circle-color': P.accent,
+        'circle-stroke-width': 1, 'circle-stroke-color': P.halo } }, 'veh-halo');
+    if (this.basemapOk && map.getStyle().glyphs) {
+      map.addLayer({ id: 'named-place-labels', type: 'symbol', source: 'named-places', minzoom: 14,
+        layout: { visibility, 'text-field': ['get', 'name'], 'text-font': ['Noto Sans Regular'],
+          'text-size': 12, 'text-anchor': 'top', 'text-offset': [0, 0.6], 'text-max-width': 9,
+          'symbol-sort-key': ['get', 'rank'] },
+        paint: { 'text-color': P.label, 'text-halo-color': P.labelHalo, 'text-halo-width': 1.5 } }, 'veh-halo');
+    }
+  }
+
+  setCatalogue(catalogue) {
+    this._catalogueData = catalogue.geojson();
+    this._addNamedPlaceLayers();
+    this.map.getSource('named-places')?.setData(this._catalogueData);
+  }
+
+  setDestination(place) {
+    this._destinationMarker?.remove();
+    this._destinationMarker = null;
+    if (!place) return;
+    // DOM text remains readable if external basemap glyphs/tiles are unavailable.
+    const pin = document.createElement('button');
+    pin.className = 'destination-marker'; pin.type = 'button';
+    pin.textContent = place.name;
+    pin.setAttribute('aria-label', `Show stops near ${place.name}`);
+    pin.addEventListener('click', (event) => { event.stopPropagation(); this.h.onNamedPlace(place.id); });
+    this._destinationMarker = new maplibregl.Marker({ element: pin, anchor: 'bottom' })
+      .setLngLat([place.lon, place.lat]).addTo(this.map);
   }
 
   /** Switch between the light and dark map. Redraws this app's layers on the new basemap and keeps what was selected. */
@@ -390,10 +428,13 @@ export class MapView {
         this.h.onEntity({ kind: f.layer.id === 'stops' ? 'stop' : 'station', idx: f.properties.i });
         return;
       }
+      const namedLayers = ['named-places', 'named-place-labels'].filter((l) => map.getLayer(l));
+      const named = namedLayers.length ? map.queryRenderedFeatures(e.point, { layers: namedLayers })[0] : null;
+      if (named) { this.h.onNamedPlace(named.properties.id); return; }
       this.h.onEmpty();
     });
     map.on('mousemove', (e) => {
-      const near = map.queryRenderedFeatures([[e.point.x - 8, e.point.y - 8], [e.point.x + 8, e.point.y + 8]], { layers: ['veh', 'veh-tag', 'stations', 'stations-minor', 'stops', 'favourite-places'].filter((l) => map.getLayer(l)) });
+      const near = map.queryRenderedFeatures([[e.point.x - 8, e.point.y - 8], [e.point.x + 8, e.point.y + 8]], { layers: ['veh', 'veh-tag', 'stations', 'stations-minor', 'stops', 'favourite-places', 'named-places', 'named-place-labels'].filter((l) => map.getLayer(l)) });
       map.getCanvas().style.cursor = near.length ? 'pointer' : '';
     });
     let t = 0;
@@ -538,7 +579,7 @@ export class MapView {
 
   setLayerVisible(id, vis) {
     if (vis) this.hidden.delete(id); else this.hidden.add(id);
-    const ids = { bus: ['bus-routes'], stops: ['stops', 'stations-minor'], labels: ['stations-label'] }[id] || [];
+    const ids = { bus: ['bus-routes'], stops: ['stops', 'stations-minor'], labels: ['stations-label'], places: ['named-places', 'named-place-labels'] }[id] || [];
     for (const l of ids) if (this.map.getLayer(l)) this.map.setLayoutProperty(l, 'visibility', vis ? 'visible' : 'none');
   }
 

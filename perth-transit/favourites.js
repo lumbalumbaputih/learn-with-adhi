@@ -1,5 +1,5 @@
 // Favourite places stay on this browser/device, separately from the timetable.
-import { h } from './util.js?v=1.9';
+import { h } from './util.js?v=1.10';
 
 export const PLACE_KEY = 'ptm-favourite-places-v1';
 const validPoint = (p) => Number.isFinite(p?.lat) && Number.isFinite(p?.lon)
@@ -82,7 +82,7 @@ export class FavouritePlaces {
     this.title.textContent = place ? 'Edit favourite place' : 'Add favourite place';
     this.name.value = place?.name || name;
     this.source.replaceChildren();
-    if (this.savedPoint) this.source.append(h('option', { value: 'saved', text: place ? 'Keep saved location' : 'Selected stop or station' }));
+    if (this.savedPoint) this.source.append(h('option', { value: 'saved', text: place ? 'Keep saved location' : point?.name ? 'Selected place' : 'Selected stop or station' }));
     this.source.append(h('option', { value: 'centre', text: 'Map centre' }), h('option', { value: 'current', text: 'My current location' }));
     this.source.value = this.savedPoint ? 'saved' : 'centre';
     this.deleteButton.hidden = !place; this.error.hidden = true;
