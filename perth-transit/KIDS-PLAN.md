@@ -49,7 +49,7 @@ The good news is that the engine already has nearly everything a kids' mode need
 3. **Big, few, friendly.** Tap targets of at least 48 px, short sentences, rounded numbers ("in about 2 minutes", not "1 min 47 s").
 4. **No fail state.** A wrong tap tells the kid what they tapped ("That's the Airport Line, it's green!") and lets them keep looking. Never "Wrong!".
 5. **Honest, in kid words.** The map is not live. Kids' mode must still say so, in words a kid understands: "This shows where trains *should* be, from the timetable. Real trains can be a bit late."
-6. **Safe by default.** No location, no accounts, no names, no leaderboards. Progress stays on the device. The only things that leave it are the map pictures being fetched from OpenFreeMap (as on the main map) and the existing path-only page view count.
+6. **Safe by default.** No accounts, names or leaderboards. Location is optional: only pressing My location requests a one-shot browser position, after browser permission. It centres the map and shows a dot; coordinates are not saved or added to links. Map pictures for the viewed area come from OpenFreeMap and the existing page count sends only the path. Progress stays on the device. This replaces the original no-location rule at Adhi's explicit request on 2026-10-20.
 7. **Always something moving.** If today has no timetable (after 2027-01-11) or it's the middle of the night, offer a clearly labelled "pretend day" instead of an empty map (K0.1, K2.4).
 8. **Quiet unless asked.** Sound effects on, spoken announcements off by default (kids often play on a parent's phone in public). Both are switches, and the choice is remembered.
 
@@ -98,7 +98,7 @@ Each step below is **one SOP step**: build, check, update the docs, commit and p
 - `kids.html` / `kids.js` / `kids.css`. Loads the same data. Shows trains and the ferry only, with bigger icons. Bus lines and bus stops are hidden, station names are shown.
 - Small additions to `mapview.js`: `setMode()` accepts a set of modes (today it takes one, so "trains and ferry" isn't possible), plus a size option for vehicle icons. The main map's behaviour must not change.
 - **Pretend day:** if today isn't covered by the timetable (`net.covers()` is false), replay the same weekday from inside the timetable window, labelled "Pretend day: a normal Monday". The timetable runs out on **2027-01-11, under 3 months from now**, so without this the kids' page goes blank in January unless the data is rebuilt.
-- Starts at the real Perth time, at 10× speed. With reduced motion turned on in the device settings it starts paused, like the main map.
+- Starts at the real Perth time, at 1× speed (updated at Adhi's request, 2026-10-20). Now returns from a chosen time or ride to current Perth time; Me requests the device location and centres a blue dot within the Perth map area. With reduced motion turned on in the device settings it starts paused, like the main map.
 - **Done when:** loads at 390 px and on desktop; about 64 trains and the ferry are visible at 8am on a Monday and no buses are; the existing `scripts/perth-transit-browser-check.cjs` still passes on the main map; axe-core finds no violations on the kids' page.
 
 ### Phase 1: the core toy (go/no-go gate at the end)
@@ -118,7 +118,7 @@ Each step below is **one SOP step**: build, check, update the docs, commit and p
 
 **K1.3 · Sounds, settings and the grown-ups box**
 - Sound effects made in the browser (Web Audio: chime, train horn, ferry horn, sticker pop), so there are no audio files. Sound and voice switches, remembered in `localStorage` (`ptmKids`).
-- A "For grown-ups" box: not live, don't use it to plan a trip, no location used, progress stays on the device (only the map pictures and a page count go over the internet). It also carries the licence credit sentence and the not-affiliated sentence, both required (see README section 9).
+- A "For grown-ups" box: not live, don't use it to plan a trip, location only when My location is pressed and browser permission is granted; coordinates are not saved or put in links, progress stays on the device, and map pictures for the viewed area and a path-only page count use the internet. It also carries the licence credit sentence and the not-affiliated sentence, both required (see README section 9).
 
 > **Gate after Phase 1.** Put it in front of 2 or 3 real kids for 10 minutes each (Rayyan is the obvious first tester) and watch, without helping. The question: **do they hop on a second train without being asked?** If not, fix Phase 1 before building anything in Phase 2. Games on top of a dull core won't save it.
 
@@ -178,7 +178,7 @@ Each step below is **one SOP step**: build, check, update the docs, commit and p
 | ~~**Two copies of the code drift**~~ | Resolved 2026-10-18 | Adhi made this repo the source of truth (D1) |
 | **Licence and trademarks:** the data licence bans the Authority's brand names | Medium | Line names are fine (they're in the data). No operator name in the kids' page title, no imitation of the real trains' paint or logos, and no mascot that looks like either |
 | **Old tablets struggle** | Unknown (never measured on a real device) | Trains-only default (about 20 times fewer vehicles), and the real-device pass in K3.4 |
-| **Children's privacy** | Low if the rules hold | No location, no accounts, no leaderboards, local storage only. Keep it that way |
+| **Children's privacy** | Low if the rules hold | Optional one-shot location only after a tap and browser permission; no stored/shared coordinates, accounts or leaderboards. Keep the grown-ups privacy wording in sync |
 
 ---
 
@@ -226,6 +226,7 @@ Each has a recommendation. D1, D2 and D6 were decided by Adhi on 2026-10-18; the
 | K1.2 Hop on! | ✅ Done 2026-10-18 (plus: time pauses on arrival so the next-train offers stay true; waiting at the station for the chosen train) |
 | K1.3 Sounds, settings, grown-ups box | ✅ Done 2026-10-18 |
 | Pre-merge review fixes | ✅ Done 2026-10-18: keyboard "Pick a train", "From the timetable, not live" under the title (rule 5), on-device voices only, missed-train and own-train-tap fixes, layout fixes (see README section 12) |
+| Current-time and location controls | ✅ Added 2026-10-20 at Adhi's request: current Perth time at 1×, Now reset, optional Me location, reduced-motion pause and pretend-day fallback |
 | Phase 1 gate (real kids) | ⏳ Ready for Adhi: 2 or 3 kids, 10 minutes each, watch without helping. Do they hop on a second train unprompted? Also the first real-phone/tablet test (sound, voice, taps, speed) |
 | K2.1 Spot it! | Not started |
 | K2.2 Station Passport | Not started |

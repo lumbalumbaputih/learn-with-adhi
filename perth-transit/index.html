@@ -25,13 +25,13 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
-  <link rel="stylesheet" href="style.css?v=1.10.1">
-  <link rel="modulepreload" href="sim.js?v=1.10.1">
-  <link rel="modulepreload" href="mapview.js?v=1.10.1">
-  <link rel="modulepreload" href="favourites.js?v=1.10.1">
+  <link rel="stylesheet" href="style.css?v=1.11">
+  <link rel="modulepreload" href="sim.js?v=1.11">
+  <link rel="modulepreload" href="mapview.js?v=1.11">
+  <link rel="modulepreload" href="favourites.js?v=1.11">
   <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
   <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
-  <script type="module" src="app.js?v=1.10.1"></script>
+  <script type="module" src="app.js?v=1.11"></script>
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to timetable information</a>
@@ -104,10 +104,18 @@
   <span class="sim-badge" title="Vehicle positions are estimated from the timetable">Simulated</span>
 
   <div id="whatsnew" class="whatsnew">
-    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.10.1 &middot; What&rsquo;s new</button>
+    <button id="whatsnew-btn" class="whatsnew-btn" type="button" aria-expanded="false" aria-controls="whatsnew-log">v1.11 &middot; What&rsquo;s new</button>
     <div id="whatsnew-log" class="whatsnew-log" role="region" aria-label="What's new" hidden>
       <!-- Newest first. Write each line so someone who never used the map understands it. -->
       <h3>What&rsquo;s new</h3>
+      <div class="wn-ver">
+        <p class="wn-head"><b>v1.11</b> <span>20 Oct 2026</span></p>
+        <ul>
+          <li>The kids’ map opens at Perth time now, at normal speed. Press Now to return after playing with time.</li>
+          <li>Press Me to ask your browser to show your location as a blue dot. Location is optional and is not saved.</li>
+          <li>Trains still follow the published timetable; delays and cancellations are not shown.</li>
+        </ul>
+      </div>
       <div class="wn-ver">
         <p class="wn-head"><b>v1.10.1</b> <span>20 Oct 2026</span></p>
         <ul><li>On phones, typing opens the search results and choosing a place keeps its name above the stops panel and time controls.</li></ul>

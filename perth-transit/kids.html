@@ -24,12 +24,12 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
-  <link rel="stylesheet" href="kids.css?v=1.10.1">
-  <link rel="modulepreload" href="sim.js?v=1.10.1">
-  <link rel="modulepreload" href="mapview.js?v=1.10.1">
+  <link rel="stylesheet" href="kids.css?v=1.11">
+  <link rel="modulepreload" href="sim.js?v=1.11">
+  <link rel="modulepreload" href="mapview.js?v=1.11">
   <link rel="modulepreload" href="vendor/maplibre-gl.mjs">
   <link rel="modulepreload" href="vendor/maplibre-gl-shared.mjs">
-  <script type="module" src="kids.js?v=1.10.1"></script>
+  <script type="module" src="kids.js?v=1.11"></script>
 </head>
 <body>
   <a class="skip-link" href="#dock">Skip to the time controls</a>
@@ -88,12 +88,21 @@
     <p id="bubble" class="bubble" role="status" aria-atomic="true"></p>
 
     <section id="dock" class="dock" aria-label="Time" tabindex="-1">
-      <button id="sound-btn" class="sound-btn" type="button" aria-pressed="true" aria-label="Sound effects">
-        <svg class="i-on" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        <svg class="i-off" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="m16 9.5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-      <div class="now-line">
+      <div class="dock-head">
         <p id="clock" class="clock"></p>
+        <div class="dock-tools" role="group" aria-label="Time and location">
+          <button id="now-btn" class="quick-btn" type="button" aria-label="Now: current Perth time" aria-pressed="false" title="Return to current Perth time">Now</button>
+          <button id="locate" class="quick-btn locate-btn" type="button" aria-label="Me: my location" title="Show my location">
+            <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <span aria-hidden="true">Me</span>
+          </button>
+          <button id="sound-btn" class="sound-btn" type="button" aria-pressed="true" aria-label="Sound effects">
+            <svg class="i-on" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <svg class="i-off" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="m16 9.5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="count-line">
         <span id="pretend" class="pretend" hidden>Pretend day</span>
         <p id="count" class="count"></p>
       </div>
@@ -119,7 +128,7 @@
       <p class="fine">Only voices installed on this device are used, never online ones, so nothing is read aloud if there is no English voice here. These choices are kept on this device only.</p>
     </div>
     <h3>Privacy</h3>
-    <p>No location, no accounts and no names. Nothing your child does here leaves this device. Visits to the page are counted with Vercel Web Analytics, which does not use cookies, and the map pictures are loaded from OpenFreeMap.</p>
+    <p>Location is requested only when you press Me and your browser allows it. It is used on this page to centre the map and show a blue dot, and is not saved or added to links. OpenFreeMap supplies the map pictures for the area you view. There are no accounts or names. Visits to the page are counted with Vercel Web Analytics, which does not use cookies.</p>
     <h3>Data</h3>
     <p>Timetable data from the Public Transport Authority of Western Australia. This data is available free of charge from www.transperth.wa.gov.au.</p>
     <p>Basemap by OpenFreeMap, using OpenMapTiles and data from OpenStreetMap contributors.</p>
