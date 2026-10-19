@@ -1,7 +1,7 @@
 // mapview.js: the map, its layers, the moving vehicles and what happens on click.
 import * as maplibregl from './vendor/maplibre-gl.mjs';
-import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.10';
-import { prettyName } from './util.js?v=1.10';
+import { routeColor, busColor, ferryColor, setColorTheme, chipLabel, textOn } from './colors.js?v=1.10.1';
+import { prettyName } from './util.js?v=1.10.1';
 
 export const STYLE_URLS = {
   light: 'https://tiles.openfreemap.org/styles/positron',

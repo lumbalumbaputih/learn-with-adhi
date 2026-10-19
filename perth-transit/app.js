@@ -1,12 +1,12 @@
 // app.js: loads the timetable, then wires clock, map, panel and scrubber together.
-import { Network, addDays, ymdParts, DAY } from './sim.js?v=1.10';
-import { SimClock } from './clock.js?v=1.10';
-import { MapView } from './mapview.js?v=1.10';
-import { Panel } from './panel.js?v=1.10';
-import { Scrubber, dayLabel } from './scrubber.js?v=1.10';
-import { fmtN } from './util.js?v=1.10';
-import { FavouritePlaces } from './favourites.js?v=1.10';
-import { loadPlaceCatalogue } from './places.js?v=1.10';
+import { Network, addDays, ymdParts, DAY } from './sim.js?v=1.10.1';
+import { SimClock } from './clock.js?v=1.10.1';
+import { MapView } from './mapview.js?v=1.10.1';
+import { Panel } from './panel.js?v=1.10.1';
+import { Scrubber, dayLabel } from './scrubber.js?v=1.10.1';
+import { fmtN } from './util.js?v=1.10.1';
+import { FavouritePlaces } from './favourites.js?v=1.10.1';
+import { loadPlaceCatalogue } from './places.js?v=1.10.1';
 
 const $ = (id) => document.getElementById(id);
 const DEFAULT_VIEW = { lat: -31.955, lon: 115.87, zoom: 10.4 };
@@ -189,15 +189,16 @@ async function main() {
     onPlace: (place) => {
       mapView.follow(null); mapView.setSelectedVehicle(null);
       mapView.setDestination(null);
-      panel.showPlace(place); mapView.flyTo(place.lat, place.lon, 15.2); sheet.ensure('half'); tick(true);
+      panel.showPlace(place); sheet.ensure('half'); mapView.flyTo(place.lat, place.lon, 15.2); tick(true);
     },
     onNamedPlace: (place) => {
       mapView.follow(null); mapView.setSelectedVehicle(null);
       panel.showPlace(place, { catalogue: true });
-      mapView.setDestination(place); mapView.flyTo(place.lat, place.lon, 15.5); sheet.ensure('half'); tick(true);
+      sheet.ensure('half'); mapView.setDestination(place); mapView.flyTo(place.lat, place.lon, 15.5); tick(true);
     },
     onNamedPlaceClose: () => mapView.setDestination(null),
     onRetryPlaces: () => loadNamedPlaces(),
+    onSearch: () => sheet.ensure('half'),
     onTab: () => {},
   };
   panel = new Panel({

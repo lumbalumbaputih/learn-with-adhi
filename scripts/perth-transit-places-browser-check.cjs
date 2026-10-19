@@ -75,6 +75,8 @@ const fixture = { version: 1, sourceTimestamp: '2026-10-19T00:00:00Z', places: [
     await page.getByRole('button', { name: 'Show stops near Example Hotel, Perth', exact: true }).click();
     await axe('320px selected place');
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+    assert.equal(await page.evaluate(() => document.getElementById('whatsnew-btn').getBoundingClientRect().right
+      <= document.getElementById('btn-kids').getBoundingClientRect().left), true, 'Release chip leaves the Kids link clear on narrow phones');
     await page.waitForFunction(() => !__app.mapView.map.isMoving());
     const markerVisible = await page.locator('.destination-marker').evaluate((element) => {
       const box = element.getBoundingClientRect(), panel = document.getElementById('panel').getBoundingClientRect();
@@ -110,6 +112,24 @@ const fixture = { version: 1, sourceTimestamp: '2026-10-19T00:00:00Z', places: [
     }, origin);
     assert.equal(await page.evaluate(() => __app.mapView.map.getLayoutProperty('named-place-labels', 'text-field')[1]), 'name');
     assert.equal(await page.evaluate(() => __app.mapView.map.getLayoutProperty('named-place-labels', 'visibility')), 'none', 'Place-name preference survives theme switching');
+    // A fresh touch visit starts with the panel collapsed. Camera padding must
+    // reflect its expanded height before the destination is centred.
+    const phone = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+    phone.on('pageerror', (error) => errors.push(error.message));
+    await phone.route('https://tiles.openfreemap.org/styles/*', (route) => route.fulfill({ json: plainStyle }));
+    await phone.route('**/data/places.json*', (route) => route.fulfill({ json: fixture }));
+    await phone.goto(`${origin}/perth-transit/?date=2026-10-19&t=08:00&speed=0`);
+    await phone.waitForFunction(() => !!window.__app && __app.panel.catalogueState === 'ready');
+    await phone.getByRole('searchbox').fill('old example inn');
+    assert.equal(await phone.evaluate(() => __app.sheet.state), 'half', 'Typing reveals the place results on a phone');
+    await phone.getByRole('button', { name: 'Show stops near Example Hotel, Perth', exact: true }).tap();
+    await phone.waitForFunction(() => !__app.mapView.map.isMoving());
+    const phonePinVisible = await phone.locator('.destination-marker').evaluate((element) => {
+      const pin = element.getBoundingClientRect(), controls = document.getElementById('scrubber').getBoundingClientRect();
+      return pin.top >= 0 && pin.bottom < controls.top && pin.left >= 0 && pin.right <= innerWidth;
+    });
+    assert.equal(phonePinVisible, true, 'Fresh phone search keeps the hotel name above the expanded stops panel and time controls');
+    await phone.close();
     assert.deepEqual(externalSearches, [], 'Queries make no external search API requests');
     assert.deepEqual(errors, []);
     console.log('Place browser checks pass: loading/failure/retry, name search, nearby timetables, favourites, theme/layers, untrusted names, mobile layout and two axe states.');

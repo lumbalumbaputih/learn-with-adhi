@@ -1,9 +1,9 @@
 // panel.js: tabs, search, route and stop pages, the vehicle card and the departures board.
-import { DAY, fmtClock } from './sim.js?v=1.10';
-import { routeColor } from './colors.js?v=1.10';
-import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.10';
-import { dayLabel } from './scrubber.js?v=1.10';
-import { placeDescription } from './places.js?v=1.10';
+import { DAY, fmtClock } from './sim.js?v=1.10.1';
+import { routeColor } from './colors.js?v=1.10.1';
+import { h, fmtN, prettyName, chip, distLabel, minsLabel } from './util.js?v=1.10.1';
+import { dayLabel } from './scrubber.js?v=1.10.1';
+import { placeDescription } from './places.js?v=1.10.1';
 
 const TABS = [['map', 'Map'], ['routes', 'Routes'], ['stops', 'Stops']];
 
@@ -79,7 +79,9 @@ export class Panel {
       tabs.children[i].focus();
     });
     this.input.addEventListener('input', () => {
-      this.query = this.input.value.trim(); this.render();
+      this.query = this.input.value.trim();
+      if (this.query) this.act.onSearch?.();
+      this.render();
       clearTimeout(this._searchTimer);
       this._searchTimer = setTimeout(() => {
         const status = document.getElementById('search-status');
