@@ -107,6 +107,7 @@ def main():
     with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', dir=args.output.parent, delete=False) as out:
         json.dump(catalogue, out, ensure_ascii=False, separators=(',', ':'))
         temporary = Path(out.name)
+    temporary.chmod(0o644)  # static web servers may run as a different user
     temporary.replace(args.output)
     print(f"Saved {len(catalogue['places'])} named places to {args.output}; source {catalogue['sourceTimestamp']}.")
 

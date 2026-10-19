@@ -6,7 +6,7 @@ A map of Perth's buses, trains and ferry moving through the day, in the style of
 
 - **Live copy:** https://learn.tokocurahaustralia.com/perth-transit/ (folder `perth-transit/` in the Learn with Adhi repo, card T4 in the Tools category)
 - **Built:** 2026-10-17, with Claude Code, for Adhi
-- **Current live version:** v1.9 (see section 12). **v1.10 place-name search is a draft:** its real OpenStreetMap catalogue must be downloaded and validated before publication (section 5.1).
+- **Current version:** v1.10 — place-name search and map labels (section 5.1; previous release history in section 12).
 - **Timetable valid:** 2026-10-13 to 2027-01-11. After that the map shows a banner and no vehicles until the data is rebuilt.
 - **Source of truth:** **this repo** (Adhi's decision, 2026-10-18). Edit `perth-transit/` here. v1.0 was a byte-for-byte copy of the `site/` folder in Adhi's claco workspace (`2-claout/projects/perth-transit/`), and v1.1 to v1.9 were all made here, so **never re-copy claco's `site/` over this folder**: it would wipe the ferry and v1.1 onwards. claco still holds the original GTFS compiler (`scripts/compile_gtfs.py`), which a timetable rebuild needs (section 6). After a rebuild, copy only the five `data/*.json` files here and run `scripts/perth-transit-add-ferry.py` (the compiler still drops route type 4).
 
@@ -130,13 +130,13 @@ python3 -m http.server 8099
 
 Then open http://localhost:8099/. Any static host works. The whole folder is about 6 MB.
 
-### 5.1 Place-name search (v1.10 draft)
+### 5.1 Place-name search (v1.10)
 
 The main map can search hotels, shops, restaurants, landmarks and suburbs by name or alternative name, alongside routes and stops. Results include the place category and its suburb/address when supplied by OpenStreetMap. Selecting a place opens nearby stops, a named map pin and a button to save the exact location as a favourite. Nearby distances are straight-line distances; polygon locations are approximate bounding-box centres, not guaranteed entrances.
 
 `places.js` searches a same-origin static catalogue; queries never go to an external search service. The timetable opens independently of catalogue loading and remains usable if the catalogue fails. Search then offers a retry. The main map draws catalogue points and collision-managed labels from zoom 14; Place names in Map layers controls them. The selected pin uses DOM text, so its name remains readable without external map fonts. Dark/light switching restores the catalogue and layer preference. The kids' page does not load the catalogue.
 
-**Publication blocker:** `data/places.json` has not yet been generated. The cloud proxy currently denies `overpass-api.de` and `tiles.openfreemap.org`. Required domains have been saved in the environment draft. Apply the environment settings, then generate the real catalogue and pass the catalogue-readiness check below before merging or deploying this feature. The browser tests use clearly fictional fixtures; they do not establish real Perth coverage or verify the provider's live map rendering.
+**Bundled data (20 October 2026):** 15,711 named places, including 104 hotels. The OpenStreetMap source timestamp is `2026-10-19T22:22:21Z`. The catalogue is about 2.12 MB raw / 0.44 MB gzip. Real searches for Duxton Hotel Perth and Pan Pacific Perth, their nearby timetables, live light/dark map labels and phone layout have passed the live-provider browser check. Coverage depends on OpenStreetMap; this is not a complete business directory.
 
 Refresh the catalogue offline (normally monthly, or after known venue changes):
 
@@ -157,7 +157,15 @@ npm install --prefix /tmp/perth-checks --cache /tmp/perth-npm-cache playwright@1
 NODE_PATH=/tmp/perth-checks/node_modules PERTH_CHROMIUM_PATH=/usr/bin/chromium node scripts/perth-transit-places-browser-check.cjs
 ```
 
-`PERTH_CHROMIUM_PATH` is an optional system-Chromium override supported by the new and existing browser checks; omit it to use a Playwright-installed browser. Validated so far: search normalization/ranking, alternative names, suburb disambiguation, invalid catalogue handling; three builder checks for duplicate venues, partial results and safe replacement; browser loading/failure/retry, nearby timetable navigation, saving and reloading favourites, themes/layers, safe text rendering of source names, a visible destination label above the mobile sheet and two automated axe states. The existing main-map, favourite-place and Train Spotter browser suites also pass, including the kids layout matrix. Label-layer wiring uses a test style; real provider rendering and real-device checks remain outstanding.
+To validate real data and the live map provider after a refresh:
+
+```bash
+NODE_PATH=/tmp/perth-checks/node_modules PERTH_CHROMIUM_PATH=/usr/bin/chromium node scripts/perth-transit-places-live-browser-check.cjs
+```
+
+Both browser suites accept `PERTH_TEST_ORIGIN` when using a port other than 8099. In the managed cloud environment, the live check uses the inherited proxy and routes real OpenFreeMap asset responses through Playwright's API client, which uses the supplied Node CA trust. TLS verification stays enabled; provider assets are not mocked. The current-instance live check loaded 26 real vector tiles and seven font responses. Keep the configured proxy and CA environment when running it.
+
+`PERTH_CHROMIUM_PATH` is an optional system-Chromium override supported by the new and existing browser checks; omit it to use a Playwright-installed browser. Validated so far: search normalization/ranking, alternative names, suburb disambiguation, invalid catalogue handling; three builder checks for duplicate venues, partial results and safe replacement; browser loading/failure/retry, nearby timetable navigation, saving and reloading favourites, themes/layers, safe text rendering of source names, a visible destination label above the mobile sheet and two automated axe states. The existing main-map, favourite-place and Train Spotter browser suites also pass, including the kids layout matrix. The fixture suite verifies label-layer wiring with a test style. The live-provider check additionally verifies real hotel labels, vector tiles and fonts; physical devices remain untested.
 
 ## 6. Rebuild the timetable
 

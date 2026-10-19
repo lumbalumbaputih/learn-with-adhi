@@ -47,6 +47,7 @@ class CatalogueBuilderChecks(unittest.TestCase):
             result = subprocess.run([sys.executable, '-I', str(SCRIPT), '--input', str(raw), '--output', str(output), '--min-places', '1'], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(len(json.loads(output.read_text())['places']), 1)
+            self.assertEqual(output.stat().st_mode & 0o777, 0o644)
 
 
 if __name__ == '__main__':

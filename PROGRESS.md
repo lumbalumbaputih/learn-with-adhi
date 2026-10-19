@@ -17,6 +17,12 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-10-20
+
+- ✅ **Perth Transit v1.10: real place-name search and labels (PR #167).** Completed the catalogue after network access was enabled: 15,711 named OpenStreetMap destinations, including 104 hotels; source `2026-10-19T22:22:21Z`, about 2.12 MB raw / 0.44 MB gzip. Search Duxton Hotel Perth or Pan Pacific Perth to see the selected place and nearby timetable stops. The draft's source-data and GitHub-access blockers are resolved.
+  - **Validation:** real-catalogue readiness checks, reproducible offline compilation, search/model and three builder checks pass. The live-provider browser check verifies real hotel searches, hotel-name rendering, nearby departures, light/dark maps and mobile layout; it loaded 26 actual vector tiles and seven font responses. TLS verification remains enabled through the supplied proxy/CA. Existing regression/accessibility checks also passed; physical devices remain untested.
+  - **Files:** `perth-transit/data/places.json`, `scripts/perth-transit-places-live-browser-check.cjs`, refresh script/tests and the feature's documentation/changelog. Queries remain local, with no paid API or new credentials.
+
 ## 2026-10-19
 
 - **Perth Transit v1.10 — place-name search draft, awaiting real catalogue:** added local name/alias/suburb search, named map points/labels, selected-place pins and nearby stop/departure navigation, plus favourite saving at the selected coordinates. Search queries stay on-device. Optional catalogue loading has failure/retry states and does not block the timetable. Shared module versions advance to `?v=1.10` to keep warm caches consistent.
