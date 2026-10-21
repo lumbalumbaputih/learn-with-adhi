@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project & People (Bahasa Indonesia) · Learn with Adhi</title>
+<meta name="description" content="Seri 11 bagian tentang sisi manusia dalam menjalankan sebuah proyek: attitudes, personality & values, emotions & perception, motivation, group behaviour, teams, communications, leadership, power & politics, conflict & negotiation, culture, dan change & stress — dalam Bahasa Indonesia, istilah teknis tetap Bahasa Inggris.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-people/project-people-hub-id.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Project & People (Bahasa Indonesia)">
+<meta property="og:description" content="11 bagian, satu benang merah: teori organisational behaviour di balik menjalankan sebuah proyek, dalam Bahasa Indonesia dengan istilah teknis tetap utuh.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#171310; --paper:#FBF4E6; --paper2:#F3EAD6; --muted:#6B6259; --line:rgba(23,19,16,.12);
+  --gold:#FFC234; --mawar:#7C3AED;
+  --p1:#7C3AED; --p2:#2D6FB3; --p3:#1F9D55; --p4:#D97706; --p5:#0E8B8B; --p6:#E03E2D;
+  --p7:#DB2777; --p8:#CA8A04; --p9:#EA580C; --p10:#1C5DDC; --p11:#65A30D;
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--ink);color:var(--paper);font-size:16px;line-height:1.7}
+::selection{background:var(--gold);color:var(--ink)}
+
+header{padding:72px 24px 30px;text-align:center;position:relative;overflow:hidden}
+.eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+h1{font-family:var(--fd);font-weight:800;font-size:clamp(36px,7vw,72px);letter-spacing:-.04em;line-height:.98}
+h1 em{font-style:normal;color:var(--gold)}
+.sub{color:rgba(251,244,230,.7);max-width:660px;margin:22px auto 0;font-size:clamp(14.5px,2vw,17px)}
+.sub a{color:var(--gold)}
+.totals{font-family:var(--fm);font-size:12px;color:rgba(251,244,230,.55);margin-top:24px;letter-spacing:.08em}
+.langswitch{margin-top:16px}
+.langswitch a{font-family:var(--fm);font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:.04em;border:1px solid var(--gold);border-radius:99px;padding:6px 16px}
+.langswitch a:hover{background:var(--gold);color:var(--ink)}
+
+/* ── ARCHITECTURE STRIP ── */
+#arch{max-width:960px;margin:44px auto 0;padding:0 20px}
+.arch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.arch-card{background:#221c16;border:1.5px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center}
+.arch-num{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--gold)}
+.arch-lbl{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(251,244,230,.55);margin-top:4px}
+@media(max-width:640px){.arch-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ── ON-RAMP CARD ── */
+#onramp{max-width:880px;margin:40px auto 0;padding:0 18px}
+.oc{display:flex;align-items:center;gap:18px;background:#221c16;border:2px solid var(--gold);border-radius:16px;padding:18px 22px;text-decoration:none;color:var(--paper);transition:transform .15s}
+.oc:hover{transform:translate(-3px,-3px)}
+.oc-icon{font-size:30px;flex-shrink:0}
+.oc-t{font-family:var(--fd);font-weight:800;font-size:16px}
+.oc-s{font-size:13px;color:rgba(251,244,230,.65);margin-top:3px}
+
+/* ── ROUTE ── */
+#route{max-width:880px;margin:40px auto 0;padding:0 18px 60px;position:relative}
+.route-label{font-family:var(--fm);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(251,244,230,.5);text-align:center;margin-bottom:26px}
+.spine{position:absolute;left:50%;top:56px;bottom:110px;width:4px;background:repeating-linear-gradient(180deg,rgba(251,244,230,.25) 0 10px,transparent 10px 20px);transform:translateX(-50%)}
+.part{display:flex;align-items:stretch;margin:30px 0;position:relative}
+.part:nth-child(even){flex-direction:row-reverse}
+.part-card{width:calc(50% - 42px);background:#221c16;border:2.5px solid var(--cc);border-radius:20px;padding:22px 24px;position:relative;transition:transform .18s var(--ease),box-shadow .18s;text-decoration:none;color:var(--paper);display:block}
+a.part-card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--cc)}
+.part-card.locked{opacity:.55;border-style:dashed}
+.part-knot{position:absolute;left:50%;top:30px;transform:translateX(-50%);width:46px;height:46px;border-radius:50%;background:var(--cc);border:3.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:20px;z-index:2;box-shadow:0 0 0 3px var(--cc)}
+.part-n{font-family:var(--fm);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cc);font-weight:700}
+.part-t{font-family:var(--fd);font-weight:800;font-size:clamp(17px,2.3vw,21px);letter-spacing:-.02em;line-height:1.15;margin:6px 0 8px}
+.part-b{font-size:13px;color:rgba(251,244,230,.65);line-height:1.65}
+.part-dom{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.4);margin-top:10px;letter-spacing:.03em}
+.part-prog{margin-top:13px}
+.part-bar{height:7px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.part-fill{height:100%;background:var(--cc);border-radius:99px;transition:width .6s var(--ease)}
+.part-pct{font-family:var(--fm);font-size:10.5px;color:rgba(251,244,230,.55);margin-top:5px}
+.part-status{display:inline-block;font-family:var(--fm);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;border:1.5px solid;border-radius:99px;padding:3px 10px;margin-top:12px}
+.st-open{color:var(--gold);border-color:var(--gold)}
+.st-done{color:#7BE3A4;border-color:#7BE3A4}
+.st-soon{color:rgba(251,244,230,.45);border-color:rgba(251,244,230,.3)}
+
+.foot{padding:30px 24px 60px;text-align:center;font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.4);letter-spacing:.08em}
+.foot a{color:rgba(251,244,230,.7)}
+
+@media(max-width:720px){
+  .spine{left:24px}
+  .part,.part:nth-child(even){flex-direction:row}
+  .part-card{width:calc(100% - 64px);margin-left:64px}
+  .part-knot{left:24px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Seri 11 bagian · sisi manusia dari sebuah proyek</div>
+  <h1>Project &amp; <em>People</em></h1>
+  <p class="sub">Kenapa attitudes, personality, motivation, groups, leadership, power, conflict, culture, dan stress sama pentingnya dengan jadwal dan budget — sebelas bagian riset organisational behaviour, diterapkan langsung pada menjalankan sebuah proyek, dengan setiap istilah teknis tetap utuh dalam Bahasa Inggris dan dijelaskan dengan benar dalam Bahasa Indonesia.</p>
+  <div class="totals" id="totals">— / 11 BAGIAN SELESAI</div>
+  <div class="langswitch"><a href="project-people-hub.html">🇬🇧 Read in English</a></div>
+</header>
+
+<div id="arch">
+  <div class="arch-grid">
+    <div class="arch-card"><div class="arch-num">11</div><div class="arch-lbl">Bagian</div></div>
+    <div class="arch-card"><div class="arch-num">52</div><div class="arch-lbl">Modul Konten</div></div>
+    <div class="arch-card"><div class="arch-num">156</div><div class="arch-lbl">Kuis Skenario</div></div>
+    <div class="arch-card"><div class="arch-num">1</div><div class="arch-lbl">Benang Merah: Proyekmu</div></div>
+  </div>
+</div>
+
+<div id="onramp">
+  <a class="oc" href="../project-management/project-management-course-v1.html">
+    <div class="oc-icon">🏗️</div>
+    <div>
+      <div class="oc-t">Butuh sisi proses juga? Mulai dari Builder's Guide</div>
+      <div class="oc-s">Triple Constraint, WBS, RACI, risk — pendamping proses untuk seri soft-skills ini. Keduanya bisa berdiri sendiri; bersama-sama, keduanya mencakup dua sisi menjalankan sebuah proyek.</div>
+    </div>
+  </a>
+</div>
+
+<div id="route">
+  <div class="route-label">Rutenya — 11 Bagian</div>
+  <div class="spine"></div>
+</div>
+
+<div class="foot">PROJECT &amp; PEOPLE (ID) · <a href="../../index.html">LEARN WITH ADHI</a> · Teori organisational behaviour diterapkan pada project management · ∎</div>
+
+<script>
+const PARTS=[
+  {n:1,icon:'🧠',cc:'var(--p1)',title:'Attitudes, Personality & Values in Projects',dom:'3 komponen attitude · cognitive dissonance · job attitudes · Big Five · Dark Triad · values',total:6,id:'project-people-part1-id',
+   href:'project-people-part1-attitudes-personality-values-id-v1.html',
+   blurb:"Apa itu attitude sebenarnya, kenapa cognitive dissonance membuat orang lebih memilih rasionalisasi ketimbang berubah, model Big Five, tiga trait Dark Triad yang secara sosial tidak diinginkan, dan values di baliknya semua."},
+  {n:2,icon:'🎭',cc:'var(--p2)',title:'Emotions, Moods, Perception & Individual Decision Making in Projects',dom:'emotions vs. moods · emotional labour & EI · attribution theory · bounded rationality · decision biases',total:6,id:'project-people-part2-id',
+   href:'project-people-part2-emotions-perception-decisions-id-v1.html',
+   blurb:'Bagaimana emotions berbeda dari moods, ongkos "surface acting" dalam emotional labour, attribution theory untuk membaca perilaku, dan empat bias — hindsight, anchoring, confirmation, availability — yang diam-diam mendistorsi setiap keputusan.'},
+  {n:3,icon:'🔥',cc:'var(--p3)',title:'Motivation in Projects',dom:"Maslow · Herzberg · McClelland · self-efficacy · Four-Drive, reinforcement & expectancy theories",total:6,id:'project-people-part3-id',
+   href:'project-people-part3-motivation-id-v1.html',
+   blurb:"Lima teori motivasi, berdampingan: Maslow's hierarchy, Herzberg's two factors, McClelland's learned needs, Bandura's self-efficacy, dan model Four-Drive, reinforcement, serta expectancy — apa yang sebenarnya diprediksi masing-masing di sebuah tim proyek."},
+  {n:4,icon:'👥',cc:'var(--p4)',title:'Foundations of Group Behaviour',dom:'formal vs. informal groups · social identity theory · tahapan Tuckman · psychological contracts · groupthink',total:6,id:'project-people-part4-id',
+   href:'project-people-part4-group-behaviour-id-v1.html',
+   blurb:"Kenapa orang membentuk groups (social identity theory), lima tahap yang pasti dilalui setiap group, psychological contract yang tak tertulis antara sebuah group dan anggotanya, dan bagaimana konsensus diam-diam berubah jadi groupthink."},
+  {n:5,icon:'🧩',cc:'var(--p5)',title:'Understanding Project Teams',dom:'kenapa teams jadi populer · kenapa cross-functional teams gagal · membangun high-performing team',total:5,id:'project-people-part5-id',
+   href:'project-people-part5-project-teams-id-v1.html',
+   blurb:'Apa bedanya work team dari sekadar group, kenapa sebagian besar cross-functional teams diam-diam gagal (dan empat perbaikan yang berhasil), dan beda nyata antara mobilisasi project team yang high-performing dan low-performing.'},
+  {n:6,icon:'💬',cc:'var(--p6)',title:'Communications in Projects',dom:'4 fungsi communication · communication process · modes · persuasion · barriers',total:6,id:'project-people-part6-id',
+   href:'project-people-part6-communications-id-v1.html',
+   blurb:"Kenapa communication tidak pernah benar-benar linear, pembagian oral/written/non-verbal di balik aturan 55/38/7 yang terkenal, ethos/pathos/logos dari Aristotle, dan delapan barriers — dari filtering sampai berbohong terang-terangan — yang merusaknya."},
+  {n:7,icon:'🧭',cc:'var(--p7)',title:'Leadership in Projects',dom:'leadership vs. management · trait & behavioural theories · Fiedler & LMX · charisma · transformational · shared leadership',total:6,id:'project-people-part7-id',
+   href:'project-people-part7-leadership-id-v1.html',
+   blurb:'Dari teori trait "great man" melalui Fiedler Contingency Model dan Leader-Member Exchange, sampai charismatic dan transformational leadership serta argumen yang mulai berkembang untuk membagi leadership di seluruh project team.'},
+  {n:8,icon:'⚡',cc:'var(--p8)',title:'Power and Politics in Project Management',dom:'power vs. leadership · 5 bases of power · influence tactics · stakeholder grid · organisational politics',total:5,id:'project-people-part8-id',
+   href:'project-people-part8-power-politics-id-v1.html',
+   blurb:'Apa itu power sebenarnya (dan bedanya dari leadership), lima bases of power klasik dalam model French &amp; Raven, bagaimana orang merespons influence, dan kenapa political behaviour kadang benar-benar diperlukan — dan kadang tidak.'},
+  {n:9,icon:'⚔️',cc:'var(--p9)',title:'Conflict & Negotiation in Project Management',dom:'traditional vs. interactionist conflict · 5 handling intentions · memilih teknik · distributive vs. integrative bargaining',total:5,id:'project-people-part9-id',
+   href:'project-people-part9-conflict-negotiation-id-v1.html',
+   blurb:"Kenapa sebagian conflict justru baik untuk sebuah proyek, lima cara naluriah orang menanganinya (dan cara memilihnya secara sengaja), serta beda antara negosiasi untuk membagi kue yang tetap dan negosiasi untuk memperbesarnya."},
+  {n:10,icon:'🏛️',cc:'var(--p10)',title:'Organisational Structure and Culture: Project-Based Organisations',dom:'7 karakteristik culture · Competing Values Framework · dominant culture & subcultures · project culture',total:5,id:'project-people-part10-id',
+   href:'project-people-part10-culture-structure-id-v1.html',
+   blurb:'Tujuh karakteristik yang membentuk culture sebuah organisasi, framework Clan/Adhocracy/Market/Hierarchy untuk mengelompokkannya, dan apa yang membuat micro-culture sebuah project team sendiri terbentuk dan melekat.'},
+  {n:11,icon:'🌀',cc:'var(--p11)',title:'Organisational Change and Stress Management in Projects',dom:'forces for change · resistance · Lewin & Kotter · change-ready culture · stress, burnout & mengelolanya',total:7,id:'project-people-part11-id',
+   href:'project-people-part11-change-stress-id-v1.html',
+   blurb:"Apa yang sebenarnya mendorong resistance to change (dan delapan strategi yang mengatasinya), model perubahan Lewin dan Kotter berdampingan, serta riset stress dan burnout yang khusus untuk project manager — plus cara mengelolanya."},
+];
+const route=document.getElementById('route');
+let doneCount=0;
+PARTS.forEach(p=>{
+  let done_n=0;
+  try{ done_n=Object.values(JSON.parse(localStorage.getItem(p.id+':done')||'{}')).filter(Boolean).length; }catch(_){ }
+  const pct=Math.min(100,Math.round(done_n/p.total*100));
+  const done=pct>=100; if(done) doneCount++;
+  const open=!!p.href;
+  const el=document.createElement('div'); el.className='part'; el.style.setProperty('--cc',p.cc);
+  const tag = done?'<span class="part-status st-done">✓ Selesai</span>'
+            : open?'<span class="part-status st-open">● Buka — mulai sekarang</span>'
+                  :'<span class="part-status st-soon">Sedang dibuat…</span>';
+  const inner=`
+    <div class="part-n">Bagian ${p.n} dari 11</div>
+    <div class="part-t">${p.title}</div>
+    <div class="part-b">${p.blurb}</div>
+    <div class="part-dom">${p.dom}</div>
+    ${open?`<div class="part-prog"><div class="part-bar"><div class="part-fill" style="width:${pct}%"></div></div><div class="part-pct">${done_n} / ${p.total} modul selesai</div></div>`:''}
+    ${tag}`;
+  el.innerHTML=`<div class="part-knot">${p.icon}</div>`;
+  if(open){
+    const a=document.createElement('a'); a.className='part-card'; a.href=p.href; a.innerHTML=inner; el.appendChild(a);
+  } else {
+    const d=document.createElement('div'); d.className='part-card locked'; d.innerHTML=inner; el.appendChild(d);
+  }
+  route.appendChild(el);
+});
+document.getElementById('totals').textContent=`${doneCount} / 11 BAGIAN SELESAI`;
+if (doneCount>=11){
+  try{ const s=new Set(JSON.parse(localStorage.getItem('lwa:completed')||'[]')); s.add('project-people-id'); localStorage.setItem('lwa:completed',JSON.stringify([...s])); }catch(_){}
+}
+</script>
+</body>
+</html>
