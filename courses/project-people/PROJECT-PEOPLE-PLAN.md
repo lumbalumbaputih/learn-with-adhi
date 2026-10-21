@@ -343,7 +343,7 @@ scope for this series; just don't make it worse).
 | 5 — Understanding Project Teams | `project-people-part5-project-teams-v1.html` | ⏳ |
 | 6 — Communications in Projects | `project-people-part6-communications-v1.html` | ⏳ |
 | 7 — Leadership in Projects | `project-people-part7-leadership-v1.html` | ⏳ |
-| 8 — Power and Politics | `project-people-part8-power-politics-v1.html` | ⏳ |
-| 9 — Conflict & Negotiation | `project-people-part9-conflict-negotiation-v1.html` | ⏳ |
+| 8 — Power and Politics | `project-people-part8-power-politics-v1.html` | ✅ shipped |
+| 9 — Conflict & Negotiation | `project-people-part9-conflict-negotiation-v1.html` | ✅ shipped |
 | 10 — Organisational Structure & Culture | `project-people-part10-culture-structure-v1.html` | ⏳ |
 | 11 — Organisational Change & Stress Management | `project-people-part11-change-stress-v1.html` | ⏳ |
