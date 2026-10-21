@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="project-people-part3">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motivation in Projects · Project & People · Learn with Adhi</title>
+<meta name="description" content="Part 3 of Project & People: Maslow's hierarchy, Herzberg's two-factor theory, McClelland's learned needs, Bandura's self-efficacy, Four-Drive theory, reinforcement theory, and expectancy theory — five motivation models applied to project teams.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-people/project-people-part3-motivation-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Motivation in Projects · Project & People">
+<meta property="og:description" content="Maslow, Herzberg, McClelland, self-efficacy, Four-Drive theory, reinforcement theory, and expectancy theory, applied to project teams.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Project & People — Part 3: Motivation in Projects","description":"Maslow's hierarchy, Herzberg's two-factor theory, McClelland's learned needs, Bandura's self-efficacy, Four-Drive theory, reinforcement theory, and expectancy theory.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#A78BFA);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="project-people-hub.html">← Series map · Part 3 of 11</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 6 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1"><span class="nav-num">01</span><span class="nav-title">Defining Motivation &amp; Maslow's Hierarchy</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="2"><span class="nav-num">02</span><span class="nav-title">Herzberg's Two-Factor Theory</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="3"><span class="nav-num">03</span><span class="nav-title">McClelland's Learned Needs Theory</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="4"><span class="nav-num">04</span><span class="nav-title">Self-Efficacy</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="5"><span class="nav-num">05</span><span class="nav-title">Four-Drive, Reinforcement &amp; Expectancy Theory</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="6"><span class="nav-num">06</span><span class="nav-title">References</span><span class="nav-check">✓</span></div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">Project &amp; People · Part 3</span>
+</div>
+<div id="overlay"></div>
+
+<main id="main">
+
+<!-- MODULE 1 -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 06</div>
+  <h1 class="mod-title">Defining Motivation &amp; <span class="acc">Maslow's Hierarchy</span></h1>
+  <p class="mod-lede">Motivation isn't one thing — it's the combination of three measurable dimensions of effort, and the first theory to explain where that effort comes from is still the most recognisable one in management.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Motivation's three dimensions: intensity, direction, persistence</li>
+      <li>Maslow's five needs and the hierarchy's key assumption</li>
+      <li>Lower-order vs. higher-order needs</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Defining Motivation</h2>
+  <p>Motivation refers to the processes that account for an individual's <strong>intensity</strong>, <strong>direction</strong>, and <strong>persistence</strong> of effort toward attaining a work-related goal.</p>
+  <ul class="bl">
+    <li><strong>Intensity</strong> describes how hard a person tries.</li>
+    <li><strong>Direction</strong> — high-intensity effort only helps if it's channelled toward something that actually benefits the work; otherwise the effort isn't beneficial to performance.</li>
+    <li><strong>Persistence</strong> measures how long a person can sustain effort. Motivated people stay with a task long enough to actually achieve the goal.</li>
+  </ul>
+
+  <h2 class="sh">Maslow's Hierarchy of Needs</h2>
+  <p>Maslow (1943) proposed a hierarchy of five needs: physiological, safety, social, esteem, and self-actualisation. As each need becomes substantially satisfied, the next one up the hierarchy becomes dominant. <strong>Lower-order needs</strong> (physiological, safety) are satisfied externally. <strong>Higher-order needs</strong> (social, esteem, self-actualisation) are satisfied internally.</p>
+  <p>The hierarchy's key — and most criticised — assumption: individuals cannot move up to the next level until all needs at the current level are substantially satisfied, meaning people are assumed to climb the hierarchy strictly in order.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Maslow's five needs, lower-order vs. higher-order</div>
+    <svg class="demo-svg" viewBox="0 0 640 280" role="img" aria-label="A five-level pyramid from bottom to top: physiological, safety (both lower-order, externally satisfied), then social, esteem, self-actualisation (all higher-order, internally satisfied)">
+      <polygon points="320,20 460,80 180,80" fill="var(--acc)" opacity="0.95"/>
+      <text x="320" y="58" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Self-actualisation</text>
+
+      <polygon points="180,80 460,80 500,140 140,140" fill="var(--acc)" opacity="0.8"/>
+      <text x="320" y="116" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Esteem</text>
+
+      <polygon points="140,140 500,140 540,200 100,200" fill="var(--acc)" opacity="0.65"/>
+      <text x="320" y="176" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Social</text>
+
+      <polygon points="100,200 540,200 575,240 65,240" fill="var(--mango)" opacity="0.85"/>
+      <text x="320" y="225" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Safety</text>
+
+      <polygon points="65,240 575,240 605,270 35,270" fill="var(--mango)"/>
+      <text x="320" y="260" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#fff">Physiological</text>
+
+      <text x="20" y="235" font-family="var(--fm)" font-size="9" fill="#7a4a04">LOWER-ORDER</text>
+      <text x="20" y="247" font-family="var(--fm)" font-size="8" fill="var(--muted)">(external)</text>
+      <text x="20" y="110" font-family="var(--fm)" font-size="9" fill="var(--acc-dim)">HIGHER-ORDER</text>
+      <text x="20" y="122" font-family="var(--fm)" font-size="8" fill="var(--muted)">(internal)</text>
+    </svg>
+    <div class="demo-caption">The theory's strict assumption: a person won't be motivated by esteem needs while physiological or safety needs remain substantially unmet.</div>
+  </div>
+
+  <div class="callout mango">
+    <strong>Project application:</strong> a team member worried about job security after a round of layoffs (a safety need) will be hard to motivate with "growth opportunity" talk (an esteem/self-actualisation appeal) until the safety concern is genuinely addressed — Maslow's hierarchy predicts the lower-order concern has to be settled first, not talked past.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+    <div class="q-card">
+      <p class="q-text">A team member puts in long hours (high intensity) but spends most of that time polishing a slide deck nobody asked for, while the actual deliverable slips. What's missing, in motivation's own terms?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Intensity alone isn't enough — effort has to be channelled in a direction that benefits the work. High effort pointed at the wrong target doesn't translate into performance.">Direction — the effort is intense but not channelled toward what actually benefits the project</button>
+        <button class="q-option" data-correct="false" data-explanation="Persistence is about sustaining effort over time — the scenario doesn't describe the person giving up early, it describes effort aimed at the wrong target, which is a direction problem.">Persistence — they're clearly not working long enough</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Following a round of project budget cuts and rumoured layoffs, management rolls out a "career growth and self-actualisation" workshop. According to Maslow's hierarchy, why might this land poorly right now?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Maslow's hierarchy assumes people can't be motivated by a higher-order need (self-actualisation/esteem) while a lower-order need (safety, triggered by layoff fears) remains substantially unmet — the workshop is aimed at the wrong level.">It targets a higher-order need (self-actualisation) while an unmet lower-order need (safety, from layoff fears) is still dominant</button>
+        <button class="q-option" data-correct="false" data-explanation="The hierarchy's logic runs the other way — it's precisely BECAUSE safety needs are unmet that a higher-order appeal (growth, self-actualisation) is predicted to land poorly, not because the levels are unrelated.">It's irrelevant — Maslow's hierarchy says needs operate completely independently of each other</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Which pair correctly matches a need to its lower-order/higher-order classification, per this module?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Safety is explicitly classified as a lower-order (externally satisfied) need, and esteem is explicitly classified as a higher-order (internally satisfied) need.">Safety = lower-order (externally satisfied); Esteem = higher-order (internally satisfied)</button>
+        <button class="q-option" data-correct="false" data-explanation="This reverses the module's own classification — safety is lower-order and externally satisfied, while esteem is higher-order and internally satisfied.">Safety = higher-order; Esteem = lower-order</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 2 -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 06</div>
+  <h1 class="mod-title">Herzberg's <span class="acc">Two-Factor</span> Theory</h1>
+  <p class="mod-lede">Herzberg's (1966) most important — and most counter-intuitive — claim: satisfaction and dissatisfaction are not opposite ends of the same scale. They're driven by two entirely separate sets of factors.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Hygiene factors (extrinsic) vs. motivators (intrinsic)</li>
+      <li>Why removing dissatisfaction doesn't create satisfaction</li>
+      <li>The theory's main critiques</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Two Separate Scales, Not One</h2>
+  <p>The conventional view treats satisfaction and dissatisfaction as two ends of a single scale. Herzberg's two-factor theory says otherwise: <strong>hygiene factors</strong> (extrinsic — pay, policies, working conditions, supervision) prevent dissatisfaction when present, but don't create satisfaction on their own. <strong>Motivators</strong> (intrinsic — recognition, responsibility, achievement, growth) are what actually create satisfaction.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Two independent scales, not one continuum</div>
+    <svg class="demo-svg" viewBox="0 0 640 180" role="img" aria-label="Two separate horizontal scales: hygiene factors run from dissatisfaction to no dissatisfaction, and motivators run from no satisfaction to satisfaction, shown as independent rather than opposite ends of one line">
+      <text x="20" y="28" font-family="var(--fd)" font-size="13" font-weight="800" fill="#B45F04">HYGIENE FACTORS (extrinsic)</text>
+      <rect x="20" y="40" width="600" height="30" rx="8" fill="rgba(217,119,6,.12)" stroke="var(--mango)" stroke-width="2"/>
+      <text x="40" y="60" font-family="var(--fb)" font-size="10" fill="#7a4a04">Dissatisfaction</text>
+      <text x="580" y="60" text-anchor="end" font-family="var(--fb)" font-size="10" fill="#7a4a04">No dissatisfaction</text>
+      <path d="M100 55 L560 55" stroke="#B45F04" stroke-width="2" marker-end="url(#arrowH)" opacity="0.5"/>
+
+      <text x="20" y="108" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc-dim)">MOTIVATORS (intrinsic)</text>
+      <rect x="20" y="120" width="600" height="30" rx="8" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <text x="40" y="140" font-family="var(--fb)" font-size="10" fill="var(--acc-dim)">No satisfaction</text>
+      <text x="580" y="140" text-anchor="end" font-family="var(--fb)" font-size="10" fill="var(--acc-dim)">Satisfaction</text>
+      <path d="M100 135 L560 135" stroke="var(--acc)" stroke-width="2" marker-end="url(#arrowH)" opacity="0.5"/>
+
+      <text x="320" y="172" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-style="italic" fill="var(--muted)">Fixing hygiene moves you along the TOP scale only — it can't move you along the bottom one</text>
+      <defs><marker id="arrowH" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#999"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Raising pay (hygiene) can take dissatisfaction away — it cannot, by itself, manufacture genuine satisfaction. Only motivators do that.</div>
+  </div>
+
+  <h2 class="sh">The Critique</h2>
+  <ul class="bl">
+    <li>The theory assumes happy employees automatically produce more — a link that isn't reliably supported.</li>
+    <li>What motivates one individual can genuinely de-motivate another.</li>
+    <li>It doesn't account for individual personality differences that could produce a different response to the exact same motivator or hygiene factor.</li>
+  </ul>
+
+  <div class="callout tomato">
+    <strong>The common PM mistake:</strong> responding to a disengaged team by improving only hygiene factors — a bigger budget for snacks, nicer office chairs, more flexible hours — and being surprised when engagement doesn't move. Hygiene factors can remove active dissatisfaction, but genuine motivation (and the discretionary effort that comes with it) requires the intrinsic motivators: real recognition, real responsibility, real growth.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+    <div class="q-card">
+      <p class="q-text">A company raises everyone's salary and upgrades office equipment after an engagement survey showed low scores. Six months later, engagement hasn't meaningfully improved. What does Herzberg's theory predict about this outcome?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Pay and equipment are hygiene factors — they can remove dissatisfaction, but the theory specifically predicts they cannot manufacture genuine satisfaction or engagement on their own. That requires motivators.">This is exactly what the theory predicts — hygiene factors like pay and equipment prevent dissatisfaction but don't create genuine satisfaction or motivation</button>
+        <button class="q-option" data-correct="false" data-explanation="The theory explicitly treats satisfaction and dissatisfaction as separate scales — improving hygiene factors doesn't automatically translate into the other scale moving, which is exactly why the result is unsurprising under the theory.">This is a theory-breaking anomaly, since satisfaction and dissatisfaction are supposed to be the same scale</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Which change is a motivator, in Herzberg's terms, rather than a hygiene factor?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Giving someone genuine ownership and recognised responsibility over a meaningful piece of work is an intrinsic motivator — exactly the category the theory says actually creates satisfaction, as opposed to extrinsic hygiene factors like pay or conditions.">Giving a team member real ownership of a feature, with public recognition for the outcome</button>
+        <button class="q-option" data-correct="false" data-explanation="Standardising the office chair policy is an extrinsic, working-conditions-type factor — a hygiene factor, not a motivator.">Standardising the office chair policy across all desks</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A manager assumes that because public recognition in front of the whole team strongly motivated one employee, it will have the same effect on every team member. What critique of Herzberg's theory does this overlook?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The theory's critique specifically notes it doesn't account for individual personality differences, and that what motivates one person can actually de-motivate another (e.g. someone who finds public praise uncomfortable rather than rewarding).">The theory's critique that it doesn't account for individual personality differences, and what motivates one person can de-motivate another</button>
+        <button class="q-option" data-correct="false" data-explanation="The critique doesn't claim motivators never work — it claims their effect isn't uniform across individuals, which is a narrower and more specific point than 'motivators are universally ineffective.'">The critique that motivators never actually work for anyone</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 3 -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 06</div>
+  <h1 class="mod-title">McClelland's <span class="acc">Learned Needs</span> Theory</h1>
+  <p class="mod-lede">McClelland (1961) argues people are driven by three learned needs, present in different strengths in different people — and one of his most surprising findings concerns who makes the most effective executive.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The three needs: achievement, affiliation, power</li>
+      <li>Personalised vs. socialised power</li>
+      <li>The theory's main critique — can needs really be "learned" in adulthood?</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Three Needs</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><div class="icon">🎯</div><h4>Need for Achievement</h4><p>The need to reach goals and take personal responsibility. People high in this need want reasonably challenging goals — not trivially easy ones, and not impossible ones.</p></div>
+    <div class="concept-card"><div class="icon">🤝</div><h4>Need for Affiliation</h4><p>A desire to seek approval, conform to others' wishes, and avoid conflict. Counter-intuitively, effective executives tend to have a LOWER need for social approval, not a higher one.</p></div>
+    <div class="concept-card"><div class="icon">⚡</div><h4>Need for Power</h4><p>A desire to control one's environment. Splits into personalised power (control for its own sake) vs. socialised power (control used in service of a group or cause).</p></div>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">Three independent needs — everyone has their own profile</div>
+    <svg class="demo-svg" viewBox="0 0 640 220" role="img" aria-label="Three horizontal bars showing need for achievement, need for affiliation, and need for power as independent strengths that vary from person to person, with power additionally split into personalised and socialised forms">
+      <text x="20" y="28" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--ink)">Need for Achievement</text>
+      <rect x="230" y="16" width="390" height="18" rx="9" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <rect x="230" y="16" width="260" height="18" rx="9" fill="var(--acc)" opacity="0.8"/>
+
+      <text x="20" y="68" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--ink)">Need for Affiliation</text>
+      <rect x="230" y="56" width="390" height="18" rx="9" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <rect x="230" y="56" width="140" height="18" rx="9" fill="var(--sea)" opacity="0.8"/>
+      <text x="230" y="90" font-family="var(--fb)" font-size="9.5" font-style="italic" fill="var(--muted)">lower in effective executives, per the research</text>
+
+      <text x="20" y="128" font-family="var(--fd)" font-size="12" font-weight="700" fill="var(--ink)">Need for Power</text>
+      <rect x="230" y="116" width="390" height="18" rx="9" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <rect x="230" y="116" width="310" height="18" rx="9" fill="var(--mango)" opacity="0.8"/>
+
+      <rect x="230" y="150" width="185" height="48" rx="10" fill="rgba(224,62,45,.08)" stroke="var(--tomato)" stroke-width="1.5"/>
+      <text x="322" y="170" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="var(--tomato)">Personalised power</text>
+      <text x="322" y="186" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">control for its own sake</text>
+
+      <rect x="435" y="150" width="185" height="48" rx="10" fill="rgba(31,157,85,.08)" stroke="var(--green)" stroke-width="1.5"/>
+      <text x="527" y="170" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="var(--green)">Socialised power</text>
+      <text x="527" y="186" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">control for the group's cause</text>
+    </svg>
+    <div class="demo-caption">Bar lengths here are illustrative of one hypothetical profile — the theory's point is that each need varies independently, with no fixed "ideal" mix, and power itself splits further into two very different uses.</div>
+  </div>
+
+  <div class="callout blue">
+    <strong>The surprising finding:</strong> a high need for affiliation sounds like a leadership asset — being well-liked, seeking consensus — but the research specifically finds effective executives tend to have a <em>lower</em> need for social approval. A leader who needs to be liked by everyone will struggle to make the unpopular calls a project sometimes requires.
+  </div>
+
+  <h2 class="sh">The Critique</h2>
+  <p>McClelland's main premise — that these needs can be <em>learned</em> by adults — has attracted major criticism. It conflicts with a large body of literature finding that motives are normally acquired in childhood and are difficult to alter once a person reaches adulthood. Treat the theory as a useful lens for understanding existing individual differences in need strength, not as a guaranteed training programme for installing new needs in adults.</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+    <div class="q-card">
+      <p class="q-text">A project lead consistently sets goals the team describes as "just barely within reach, but doable with real effort" rather than trivially easy or wildly unrealistic ones. Which need does this most reflect?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A preference for reasonably challenging — not trivially easy, not impossible — goals and personal responsibility for reaching them is the defining signature of a high need for achievement.">Need for achievement — a preference for reasonably challenging, personally-owned goals</button>
+        <button class="q-option" data-correct="false" data-explanation="Need for affiliation is about seeking approval and avoiding conflict — goal-difficulty calibration isn't the defining marker of this need.">Need for affiliation — wanting goals the team will approve of</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">An executive avoids making an unpopular but necessary staffing decision because they're worried about how the team will feel about them personally. According to McClelland's findings on effective executives, what does this suggest?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! McClelland's research specifically found effective executives have a LOWER need for social approval — a high need for affiliation, which prioritises being liked and avoiding conflict, is associated with struggling to make exactly this kind of unpopular-but-necessary call.">A high need for affiliation may be interfering with effective decision-making — effective executives tend to have a lower need for social approval</button>
+        <button class="q-option" data-correct="false" data-explanation="McClelland's finding runs the opposite direction — a high need for affiliation (wanting approval) is associated with LESS effective executive decision-making in this specific sense, not more.">This is exactly the profile of a highly effective executive, per McClelland's findings</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A training consultant claims they can "install" a strong need for achievement in any adult employee within a two-day workshop. What is the main academic critique of McClelland's theory that bears directly on this claim?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The theory's central and most-cited critique is exactly this: its premise that needs can be learned in adulthood conflicts with a large body of evidence that motives are normally acquired in childhood and are difficult to alter later — making a two-day adult 'installation' claim especially suspect.">The theory's premise that needs can be learned by adults conflicts with evidence that motives are normally set in childhood and hard to change later</button>
+        <button class="q-option" data-correct="false" data-explanation="The critique isn't about which need category is correctly named — it's specifically about whether needs can be learned/changed in adulthood at all, which directly undercuts a rapid-workshop claim.">The critique is that achievement isn't actually one of the three needs McClelland identified</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 4 -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 06</div>
+  <h1 class="mod-title"><span class="acc">Self-Efficacy</span></h1>
+  <p class="mod-lede">Bandura's (1977) self-efficacy is one of the best predictors of future performance we have — and it's built from four specific, identifiable sources, not just innate confidence.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What self-efficacy is, and how it differs from self-esteem</li>
+      <li>The four sources of self-efficacy</li>
+      <li>Why negative verbal feedback hurts efficacy more than positive feedback helps it</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Self-Efficacy, Defined</h2>
+  <p><strong>Self-efficacy</strong> is an individual's own feeling that they can complete a specific task. It is <em>not</em> the same as self-esteem (a person's general degree of liking or disliking themselves) — self-efficacy is task-specific, not a global self-evaluation. It is one of the single best predictors of future performance available.</p>
+
+  <h2 class="sh">The Four Sources of Self-Efficacy</h2>
+  <div class="demo-box">
+    <div class="demo-label">Four inputs feeding one output: a person's efficacy belief</div>
+    <svg class="demo-svg" viewBox="0 0 640 230" role="img" aria-label="Four source boxes — mastery experiences, vicarious experiences, verbal persuasion, physiological state — all feeding arrows into a central box labelled self-efficacy belief">
+      <rect x="20" y="20" width="160" height="56" rx="10" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="2"/>
+      <text x="100" y="44" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="var(--sea)">Mastery experiences</text>
+      <text x="100" y="60" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">your own past success/failure</text>
+
+      <rect x="460" y="20" width="160" height="56" rx="10" fill="var(--paper-2)" stroke="var(--forest)" stroke-width="2"/>
+      <text x="540" y="44" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="var(--forest)">Vicarious experiences</text>
+      <text x="540" y="60" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">watching someone similar succeed</text>
+
+      <rect x="20" y="150" width="160" height="56" rx="10" fill="var(--paper-2)" stroke="var(--mango)" stroke-width="2"/>
+      <text x="100" y="174" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="#B45F04">Verbal persuasion</text>
+      <text x="100" y="190" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">"you can do it" — but cuts both ways</text>
+
+      <rect x="460" y="150" width="160" height="56" rx="10" fill="var(--paper-2)" stroke="var(--tomato)" stroke-width="2"/>
+      <text x="540" y="174" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-weight="700" fill="var(--tomato)">Physiological state</text>
+      <text x="540" y="190" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--muted)">anxiety, racing heart, sweating</text>
+
+      <circle cx="320" cy="113" r="56" fill="var(--acc)"/>
+      <text x="320" y="108" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="#fff">Self-</text>
+      <text x="320" y="124" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="#fff">efficacy</text>
+
+      <path d="M180 48 L270 95" stroke="var(--sea)" stroke-width="1.5"/>
+      <path d="M460 48 L370 95" stroke="var(--forest)" stroke-width="1.5"/>
+      <path d="M180 178 L270 131" stroke="var(--mango)" stroke-width="1.5"/>
+      <path d="M460 178 L370 131" stroke="var(--tomato)" stroke-width="1.5"/>
+    </svg>
+    <div class="demo-caption">All four sources can move the same efficacy belief in either direction — none of them are fixed traits.</div>
+  </div>
+
+  <ul class="bl">
+    <li><strong>Mastery experiences</strong> — your own personal history of success or failure at similar tasks. Good past performance builds a positive sense of your own ability.</li>
+    <li><strong>Vicarious experiences</strong> — watching someone similar to you succeed at a threatening or difficult task raises your own expectation that you can acquire the same skill, often by imitation.</li>
+    <li><strong>Verbal persuasion</strong> — feedback that encourages someone to attempt and complete a task. "You can do it" is the most common form.</li>
+    <li><strong>Physiological state</strong> — anxiety, a racing heart, sweating. These physical symptoms reflect (and in turn affect) a person's own perception of their efficacy for the task at hand.</li>
+  </ul>
+
+  <div class="callout tomato">
+    <strong>An asymmetry worth remembering:</strong> negative verbal messages have an even greater effect on <em>lowering</em> efficacy expectations than positive messages have on <em>raising</em> them. A single discouraging comment from a respected source can undo several encouraging ones — which is a strong practical argument for being careful with critical feedback around a task someone is still building confidence in.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+    <div class="q-card">
+      <p class="q-text">A junior engineer has never personally deployed a production system, but watches a peer with a similar background successfully do it and talk through how they approached it. Which source of self-efficacy is most directly at work?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Observing someone similar to you succeed at a task, and imagining acquiring the same skill yourself, is exactly the definition of a vicarious experience.">Vicarious experience — observing a similar peer succeed raises the junior engineer's own expectation of success</button>
+        <button class="q-option" data-correct="false" data-explanation="Mastery experience specifically refers to the person's OWN past success or failure — this scenario describes watching someone else, which is vicarious, not mastery, experience.">Mastery experience — they're learning from their own past deployment history</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Two people are each given five pieces of encouraging feedback before a presentation, but one of them also receives one sharply critical comment from a senior colleague right before going on stage. Based on the module's asymmetry finding, what should we expect?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module specifically notes negative verbal messages have a GREATER effect on lowering efficacy than positive messages have on raising it — so one critical comment can plausibly undo the effect of several encouraging ones.">The person who also got the critical comment may show meaningfully lower efficacy, since negative feedback outweighs positive feedback of similar volume</button>
+        <button class="q-option" data-correct="false" data-explanation="The module's finding is specifically an asymmetry — negative feedback has a disproportionately larger effect, not an equal and opposite one that cancels out neatly.">The five positive comments and one negative comment should roughly cancel out, leaving both people similarly confident</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A manager says "She's clearly very self-confident as a person, so she'll definitely feel capable handling this brand-new type of task she's never attempted." What's the flaw in this reasoning, per this module?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Self-efficacy is explicitly task-specific, not a global trait like self-esteem — general self-confidence as a person doesn't automatically transfer to confidence in a specific, unfamiliar task.">It conflates self-esteem (a general, global trait) with self-efficacy (a belief specific to a particular task) — the two aren't the same thing</button>
+        <button class="q-option" data-correct="false" data-explanation="The module explicitly distinguishes self-efficacy from self-esteem as two different constructs — it doesn't treat them as interchangeable.">There's no flaw — self-efficacy and self-esteem are the same thing, so this reasoning is sound</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 5 -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 06</div>
+  <h1 class="mod-title">Four-Drive, Reinforcement &amp; <span class="acc">Expectancy Theory</span></h1>
+  <p class="mod-lede">Three more lenses on motivation, each asking a different question: what innate drives do all humans share? How does reinforcement shape repeated behaviour? And what has to be true, in someone's own head, before they'll put in effort at all?</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The Four-Drive theory's four innate, independent drives</li>
+      <li>Reinforcement theory's core claim about behaviour and consequences</li>
+      <li>Expectancy theory's effort → performance → reward → goal chain</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Four-Drive Theory</h2>
+  <p>Research identifies four underlying drives: to <strong>Acquire &amp; Achieve</strong>, to <strong>Bond &amp; Belong</strong>, to be <strong>Challenged &amp; Comprehend</strong>, and to <strong>Define &amp; Defend</strong>. Three defining features: they're <strong>innate and hardwired</strong> (everyone has all four), <strong>independent of each other</strong> (no hierarchy — unlike Maslow's model), and a <strong>complete set</strong> (no major drive is left out). Most organisations focus heavily on the Acquire &amp; Achieve drive (base pay, incentives) while under-investing in the other three — which is exactly where a lot of unrealised engagement sits.</p>
+
+  <table class="pm-table">
+    <thead><tr><th>Drive</th><th>What it looks like satisfied</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Acquire &amp; Achieve</td><td>Fair pay, recognition, advancement — the drive most organisations already address</td></tr>
+      <tr><td class="hl">Bond &amp; Belong</td><td>Genuine team connection, inclusion, a sense of "my people"</td></tr>
+      <tr><td class="hl">Challenge &amp; Comprehend</td><td>Meaningful, non-trivial problems; the chance to understand, not just execute</td></tr>
+      <tr><td class="hl">Define &amp; Defend</td><td>Clear values, a defensible sense of what the work stands for and why</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sh">Reinforcement Theory</h2>
+  <p>Skinner's reinforcement theory argues behaviour is a function of its consequences. Positive consequences (e.g. a financial reward) encourage a behaviour; negative consequences discourage it. Three assumptions underpin it: behaviour is environmentally caused; behaviour can be modified by controlling its consequences; and reinforced behaviour tends to be repeated. Praise, nagging, public reprimand, and withholding a bonus are all, in this framework, reinforcement mechanisms — whether used deliberately or not.</p>
+
+  <h2 class="sh">Expectancy Theory</h2>
+  <p>Vroom's expectancy theory argues the strength of a tendency to act a certain way depends on the strength of the expectation of a given outcome, and the attractiveness of that outcome. In practice: a team member exerts high effort when they believe (1) effort will lead to good performance, (2) good performance will lead to a reward (bonus, promotion, recognition), and (3) that reward will satisfy their own personal goals. Break any one link in that chain, and the whole motivational effect collapses — even if the other two links are perfectly intact.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Expectancy theory's chain — and where it breaks</div>
+    <svg class="demo-svg" viewBox="0 0 640 160" role="img" aria-label="A four-box chain: Effort leads to Performance leads to Reward leads to Personal Goal Satisfaction, with each arrow labelled by the belief required to keep that link intact">
+      <rect x="10" y="50" width="130" height="56" rx="10" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <text x="75" y="83" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="var(--acc-dim)">Effort</text>
+      <path d="M140 78 L170 78" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrowE)"/>
+      <text x="155" y="60" text-anchor="middle" font-family="var(--fb)" font-size="8" fill="var(--muted)">"will it work?"</text>
+
+      <rect x="175" y="50" width="130" height="56" rx="10" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <text x="240" y="83" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="var(--acc-dim)">Performance</text>
+      <path d="M305 78 L335 78" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrowE)"/>
+      <text x="320" y="60" text-anchor="middle" font-family="var(--fb)" font-size="8" fill="var(--muted)">"will it be seen?"</text>
+
+      <rect x="340" y="50" width="130" height="56" rx="10" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <text x="405" y="83" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="var(--acc-dim)">Reward</text>
+      <path d="M470 78 L500 78" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrowE)"/>
+      <text x="485" y="60" text-anchor="middle" font-family="var(--fb)" font-size="8" fill="var(--muted)">"do I want it?"</text>
+
+      <rect x="505" y="50" width="130" height="56" rx="10" fill="var(--acc)"/>
+      <text x="570" y="74" text-anchor="middle" font-family="var(--fd)" font-size="10.5" font-weight="800" fill="#fff">Personal Goal</text>
+      <text x="570" y="90" text-anchor="middle" font-family="var(--fd)" font-size="10.5" font-weight="800" fill="#fff">Satisfaction</text>
+
+      <text x="320" y="135" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-style="italic" fill="var(--muted)">A break anywhere in this chain — doubt at any one link — collapses the whole motivational effect</text>
+      <defs><marker id="arrowE" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">All three links have to hold for expectancy theory's motivational effect to actually show up in behaviour.</div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+    <div class="q-card">
+      <p class="q-text">A company's engagement strategy consists entirely of raises and bonuses (Acquire &amp; Achieve), with no attention paid to team cohesion, meaningful problem-solving, or a clear sense of purpose. What does Four-Drive theory predict is being left on the table?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Four-Drive theory holds all four drives are innate, independent, and together form a complete set — over-indexing on Acquire & Achieve alone leaves the Bond & Belong, Challenge & Comprehend, and Define & Defend drives unaddressed, which is exactly where unrealised engagement tends to sit.">Real engagement gains from the other three drives — Bond & Belong, Challenge & Comprehend, Define & Defend — which pay alone can't satisfy</button>
+        <button class="q-option" data-correct="false" data-explanation="Four-Drive theory explicitly treats the four drives as independent — it doesn't claim satisfying one drive fully substitutes for the other three.">Nothing — satisfying Acquire & Achieve alone is sufficient, since it's the dominant drive in Four-Drive theory</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A team member who used to work hard now puts in minimal effort after learning that their last project's strong performance was never actually reviewed, recognised, or rewarded by anyone. Which theory, and which specific mechanism, best explains this change?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Expectancy theory predicts motivation collapses when any link in the effort→performance→reward→personal-goal chain breaks — here, the performance→reward link broke (good performance went unrecognised), undermining the whole chain.">Expectancy theory — the performance-to-reward link broke, which collapses the whole motivational chain even if effort still led to good performance</button>
+        <button class="q-option" data-correct="false" data-explanation="McClelland's theory is about the relative strength of three learned needs (achievement/affiliation/power) in an individual — it doesn't specifically model a broken link in an effort-reward chain the way expectancy theory does.">McClelland's learned needs theory — their need for achievement has permanently disappeared</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A manager publicly reprimands an employee every time they raise a process concern in a meeting, and over time the employee stops raising concerns altogether. Which theory most directly explains the employee's changed behaviour, and why?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Reinforcement theory holds that behaviour is a function of its consequences — public reprimand is a negative consequence, and under the theory's own assumptions, a behaviour followed by negative consequences becomes less likely to be repeated, exactly as observed.">Reinforcement theory — public reprimand is a negative consequence that discourages the reprimanded behaviour from recurring</button>
+        <button class="q-option" data-correct="false" data-explanation="Herzberg's theory concerns hygiene factors and motivators as two independent scales, not the direct consequence-shapes-behaviour mechanism described here — reinforcement theory is the more direct fit.">Herzberg's two-factor theory — public reprimand is a hygiene factor that's been removed</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 6 — REFERENCES -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">This part draws on five established motivation theories from the organisational-behaviour literature. The source lecture material itself is unpublished teaching material and is not cited directly as a public source.</p>
+
+  <div class="ref-group-label">The Five Theories, at Their Source</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Maslow, Abraham H. "A Theory of Human Motivation." <em>Psychological Review</em> 50, no. 4 (1943): 370–396.</div>
+    <div class="ref-annotation">The original, foundational paper introducing the hierarchy of needs — the direct basis for Module 1. Later popularisations (including the pyramid diagram itself) came from secondary sources, not this paper, which is worth noting if citing the pyramid shape specifically.</div>
+    <a class="ref-link" href="https://doi.org/10.1037/h0054346" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Herzberg, Frederick. <em>Work and the Nature of Man</em>. Cleveland: World Publishing Co., 1966.</div>
+    <div class="ref-annotation">Herzberg's own full statement of the two-factor (motivation-hygiene) theory underlying Module 2, building on his earlier 1959 empirical study with Mausner and Snyderman.</div>
+    <a class="ref-link" href="https://www.worldcat.org/title/work-and-the-nature-of-man/oclc/330267" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">McClelland, David C. <em>The Achieving Society</em>. Princeton, NJ: Van Nostrand, 1961.</div>
+    <div class="ref-annotation">The foundational text for the learned needs theory covered in Module 3 — achievement, affiliation, and power as the three core needs, and the research on executive effectiveness and affiliation need.</div>
+    <a class="ref-link" href="https://doi.org/10.1037/14359-000" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Bandura, Albert. "Self-Efficacy: Toward a Unifying Theory of Behavioral Change." <em>Psychological Review</em> 84, no. 2 (1977): 191–215.</div>
+    <div class="ref-annotation">The seminal paper defining self-efficacy and its four sources — mastery experience, vicarious experience, verbal persuasion, and physiological state — directly underlying Module 4.</div>
+    <a class="ref-link" href="https://doi.org/10.1037/0033-295X.84.2.191" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Reinforcement, Expectancy &amp; the Four-Drive Model</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Skinner, Burrhus F. <em>Science and Human Behavior</em>. New York: Macmillan, 1953.</div>
+    <div class="ref-annotation">Skinner's foundational statement of operant conditioning and reinforcement theory, underlying Module 5's "behaviour is a function of its consequences" claim.</div>
+    <a class="ref-link" href="https://www.bfskinner.org/product/science-and-human-behavior-pdf/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Vroom, Victor H. <em>Work and Motivation</em>. New York: Wiley, 1964.</div>
+    <div class="ref-annotation">The original source for expectancy theory's effort-performance-reward-goal chain, underlying Module 5's final section.</div>
+    <a class="ref-link" href="https://psycnet.apa.org/record/1964-35027-000" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Nohria, Nitin, Boris Groysberg, and Linda-Eling Lee. "Employee Motivation: A Powerful New Model." <em>Harvard Business Review</em> 86, no. 7/8 (2008): 78–84.</div>
+    <div class="ref-annotation">The Four-Drive theory's direct source. The source lecture slide attributes this to "Nitin, Groysberg and Eling-Lee 2008," which appears to be a reordering/truncation of the authors' names (Nitin Nohria, Boris Groysberg, Linda-Eling Lee) — the correct author order and full citation are given here.</div>
+    <a class="ref-link" href="https://hbr.org/2008/07/employee-motivation-a-powerful-new-model" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the source lecture slide's author attribution for the Four-Drive theory ("Nitin, Groysberg and Eling-Lee 2008") does not match standard citation order; it has been corrected above to Nohria, Groysberg &amp; Lee (2008) based on the well-documented Harvard Business Review publication of that theory. Verify this and all other citations here against the original sources before use in any formal academic or professional context.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 3 Complete! 🔥</h2>
+    <p>You've now covered five distinct motivation theories — Maslow, Herzberg, McClelland, self-efficacy, and the Four-Drive/reinforcement/expectancy trio — and how each applies to a project team. Part 4 — Foundations of Group Behaviour — is next.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'project-people-part3';
+const TOTAL = 6;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

@@ -325,20 +325,17 @@ scope for this series; just don't make it worse).
 
 1. ✅ Plan (this doc)
 2. ✅ Hub skeleton + Part 1 (reference implementation)
-3. ⏳ Parts 2–11, in any order (no part depends on another being built first, though Part 5
-   Module 4 "Applying It" references Parts 1–4's concepts by name and reads better once they
-   exist)
-4. Manifest entry + sitemap once hub + Part 1 are live
-5. Final pass: open every part once, confirm sidebar nav counts match `TOTAL`, confirm the hub's
-   `href`s all resolve, spot-check 2–3 quizzes per part for correct-answer wiring, update this plan's
-   status table
+3. ✅ Parts 2–11 all shipped
+4. ✅ Manifest entry + sitemap (added alongside hub + Part 1)
+5. ⏳ Final pass: wire all 11 parts' `href`s into the hub's `PARTS` array, re-validate every part's
+   sidebar nav counts/quiz wiring, update this plan's status table (this step)
 
 | Part | File | Status |
 |---|---|---|
 | Hub | `project-people-hub.html` | ✅ shipped |
 | 1 — Attitudes, Personality & Values | `project-people-part1-attitudes-personality-values-v1.html` | ✅ shipped |
-| 2 — Emotions, Moods, Perception & Decision Making | `project-people-part2-emotions-perception-decisions-v1.html` | ⏳ |
-| 3 — Motivation | `project-people-part3-motivation-v1.html` | ⏳ |
+| 2 — Emotions, Moods, Perception & Decision Making | `project-people-part2-emotions-perception-decisions-v1.html` | ✅ shipped |
+| 3 — Motivation | `project-people-part3-motivation-v1.html` | ✅ shipped |
 | 4 — Foundations of Group Behaviour | `project-people-part4-group-behaviour-v1.html` | ✅ shipped |
 | 5 — Understanding Project Teams | `project-people-part5-project-teams-v1.html` | ✅ shipped |
 | 6 — Communications in Projects | `project-people-part6-communications-v1.html` | ✅ shipped |
