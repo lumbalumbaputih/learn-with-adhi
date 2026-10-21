@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="project-people-part5">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Understanding Project Teams · Project &amp; People · Learn with Adhi</title>
+<meta name="description" content="Part 5 of Project & People: what makes a work team different from a group, why cross-functional teams fail, building a high-performing project team, and applying the series so far to your own team.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-people/project-people-part5-project-teams-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding Project Teams · Project & People">
+<meta property="og:description" content="Why teams took over, why cross-functional teams fail, and building a high-performing project team.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Project & People — Part 5: Understanding Project Teams","description":"What makes a work team different from a group, why cross-functional teams fail, and building a high-performing project team.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#A78BFA);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="project-people-hub.html">← Series map · Part 5 of 11</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 5 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1"><span class="nav-num">01</span><span class="nav-title">What Is a Team, Really?</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="2"><span class="nav-num">02</span><span class="nav-title">Why Cross-Functional Teams Fail</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="3"><span class="nav-num">03</span><span class="nav-title">Building a High-Performing Team</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="4"><span class="nav-num">04</span><span class="nav-title">Applying It: Parts 1–4, in Practice</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="5"><span class="nav-num">05</span><span class="nav-title">References</span><span class="nav-check">✓</span></div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">Project &amp; People · Part 5</span>
+</div>
+<div id="overlay"></div>
+
+<main id="main">
+
+<!-- MODULE 1 -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 05</div>
+  <h1 class="mod-title">What Is a <span class="acc">Team</span>, Really?</h1>
+  <p class="mod-lede">A group (Part 4) becomes something more specific — a <em>work team</em> — the moment its combined output genuinely exceeds what the individuals could have produced separately. That's not a soft claim; it's the whole reason organisations reorganised around teams in the first place.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The precise definition of a work team, and how it differs from a group</li>
+      <li>The four reasons teams became the default way of organising work</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Team Advantage</h2>
+  <p>A <strong>work team</strong> is a group whose individual efforts result in a level of performance that is greater than the sum of the individual inputs. That "greater than the sum" clause is the entire point — a collection of skilled individuals who merely sit near each other is a group (Part 4); it becomes a team only once genuine synergy shows up in the output.</p>
+
+  <h2 class="sh">Why Teams Took Over</h2>
+  <p>Teams became the default way organisations get work done for four concrete reasons: they are more <strong>flexible and responsive</strong> to changing events than traditional departments or other permanent groupings; they can <strong>quickly assemble, deploy, refocus and disband</strong> as the work demands; they <strong>facilitate employee participation</strong> in operating decisions; and they are an effective means for management to <strong>democratise organisations and increase employee motivation</strong>.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Group vs. team — the one-line test</div>
+    <svg class="demo-svg" viewBox="0 0 640 180" role="img" aria-label="Two scales side by side: a Group scale shows individual contributions summing to exactly the total output, while a Team scale shows individual contributions summing to less than the total output, with an extra synergy portion added">
+      <text x="140" y="26" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--ink)">A Group</text>
+      <rect x="40" y="40" width="60" height="90" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <rect x="110" y="40" width="60" height="90" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <rect x="180" y="40" width="60" height="90" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="140" y="150" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="var(--muted)">output = sum of individual inputs</text>
+      <path d="M260 85 L300 85" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrowT)"/>
+
+      <text x="480" y="26" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc-dim)">A Team</text>
+      <rect x="400" y="40" width="60" height="90" fill="var(--acc-bg)" stroke="var(--acc)"/>
+      <rect x="470" y="40" width="60" height="90" fill="var(--acc-bg)" stroke="var(--acc)"/>
+      <rect x="540" y="40" width="60" height="90" fill="var(--acc-bg)" stroke="var(--acc)"/>
+      <rect x="400" y="10" width="200" height="22" rx="6" fill="var(--acc)"/>
+      <text x="500" y="25" text-anchor="middle" font-family="var(--fm)" font-size="9.5" fill="#fff">+ SYNERGY</text>
+      <text x="500" y="150" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="var(--acc-dim)" font-weight="600">output &gt; sum of individual inputs</text>
+      <defs><marker id="arrowT" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Same three people, same individual skill — the difference is whether the whole genuinely exceeds the parts.</div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+    <div class="q-card">
+      <p class="q-text">Three specialists are assigned to the same project but work almost entirely independently, handing off finished pieces with little collaboration. Output is exactly what you'd expect from adding up three solo contributors. By this module's definition, is this a work team?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="A shared project assignment alone doesn't meet the definition — the defining feature of a work team is that combined performance genuinely exceeds the sum of individual inputs, which this scenario explicitly doesn't show.">Yes — they're all assigned to the same project, which makes them a team</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Output exactly matching the sum of individual inputs, with no synergy, is precisely what the module's definition excludes. This may be a formal group (Part 4), but it isn't functioning as a work team.">No — their combined performance matches, rather than exceeds, the sum of individual inputs</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A leadership team wants to boost employee buy-in to a new operating model and increase motivation, without flattening the org chart entirely. Which of the four reasons teams became popular most directly supports this goal?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module names democratising organisations and increasing employee motivation as one of the four specific reasons teams became the default way of organising work — directly matching this goal.">Teams are an effective means for management to democratise organisations and increase employee motivation</button>
+        <button class="q-option" data-correct="false" data-explanation="Rapid assembly/disbandment is a genuine reason teams became popular, but it addresses responsiveness to changing events, not the specific goal of boosting buy-in and motivation described here.">Teams can quickly assemble, deploy, refocus and disband</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A fast-moving startup credits much of its speed to reorganising around small project teams instead of fixed functional departments. Which of the four documented reasons for teams' rise does this best illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Flexibility and responsiveness to changing events — compared to traditional departments or other permanent groupings — is exactly the reason the module gives for this kind of speed advantage.">Teams are more flexible and responsive to changing events than traditional departments</button>
+        <button class="q-option" data-correct="false" data-explanation="Employee participation in operating decisions is a real reason teams became popular, but it doesn't specifically explain organisational speed versus a fixed departmental structure — flexibility and responsiveness does.">Teams facilitate employee participation in operating decisions</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 2 -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 05</div>
+  <h1 class="mod-title">Why Cross-Functional Teams <span class="acc">Fail</span></h1>
+  <p class="mod-lede">Cross-functional teams promise the best of every discipline in one room. In practice, research by Behnam Tabrizi (2015) found most of them simply don't deliver — and the reasons are structural, not personal.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The four structural reasons cross-functional teams fail</li>
+      <li>The four fixes that reliably address them</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Why They Fail</h2>
+  <ul class="bl">
+    <li><strong>Unclear governance and lack of accountability</strong> — nobody is actually on the hook for the team's overall outcome.</li>
+    <li><strong>Goals lack specificity</strong> — the mandate is broad ("improve customer experience") rather than a measurable target.</li>
+    <li><strong>Organisations fail to prioritise the team's success</strong> — members' real incentives still point back to their home department.</li>
+    <li><strong>Teams operate in silos</strong> — engineers, designers, and salespeople each optimise for their own function rather than the shared output.</li>
+  </ul>
+
+  <h2 class="sh">The Fix</h2>
+  <ol class="nl">
+    <li>Every project requires an <strong>end-to-end accountable leader</strong> — one person whose job is the whole outcome, not just their functional slice.</li>
+    <li>Every project needs <strong>established goals, resources, and deadlines</strong> — specificity closes the "goals lack specificity" gap directly.</li>
+    <li>Teams must have the <strong>project's success as their main objective</strong> — not a secondary task layered on top of their "real" job.</li>
+    <li>Every project should be <strong>constantly re-evaluated</strong> — silos and drift creep back in without a standing mechanism to catch them.</li>
+  </ol>
+
+  <div class="demo-box">
+    <div class="demo-label">Four failure modes, four matching fixes</div>
+    <svg class="demo-svg" viewBox="0 0 640 230" role="img" aria-label="Four rows, each pairing a failure mode on the left with its matching fix on the right: unclear governance paired with an end-to-end accountable leader; vague goals paired with established goals, resources and deadlines; low priority paired with project success as the main objective; silos paired with constant re-evaluation">
+      <g font-family="var(--fb)" font-size="11">
+        <rect x="20" y="15" width="260" height="42" rx="8" fill="rgba(224,62,45,.08)" stroke="var(--tomato)"/>
+        <text x="35" y="40" fill="var(--tomato)" font-weight="700">✗ Unclear governance</text>
+        <path d="M285 36 L350 36" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrowF)"/>
+        <rect x="355" y="15" width="265" height="42" rx="8" fill="rgba(31,157,85,.08)" stroke="var(--green)"/>
+        <text x="370" y="40" fill="#145e30" font-weight="700">✓ End-to-end accountable leader</text>
+
+        <rect x="20" y="70" width="260" height="42" rx="8" fill="rgba(224,62,45,.08)" stroke="var(--tomato)"/>
+        <text x="35" y="95" fill="var(--tomato)" font-weight="700">✗ Goals lack specificity</text>
+        <path d="M285 91 L350 91" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrowF)"/>
+        <rect x="355" y="70" width="265" height="42" rx="8" fill="rgba(31,157,85,.08)" stroke="var(--green)"/>
+        <text x="370" y="95" fill="#145e30" font-weight="700">✓ Set goals, resources, deadlines</text>
+
+        <rect x="20" y="125" width="260" height="42" rx="8" fill="rgba(224,62,45,.08)" stroke="var(--tomato)"/>
+        <text x="35" y="150" fill="var(--tomato)" font-weight="700">✗ Success not prioritised</text>
+        <path d="M285 146 L350 146" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrowF)"/>
+        <rect x="355" y="125" width="265" height="42" rx="8" fill="rgba(31,157,85,.08)" stroke="var(--green)"/>
+        <text x="370" y="150" fill="#145e30" font-weight="700">✓ Project success = main objective</text>
+
+        <rect x="20" y="180" width="260" height="42" rx="8" fill="rgba(224,62,45,.08)" stroke="var(--tomato)"/>
+        <text x="35" y="205" fill="var(--tomato)" font-weight="700">✗ Teams operate in silos</text>
+        <path d="M285 201 L350 201" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrowF)"/>
+        <rect x="355" y="180" width="265" height="42" rx="8" fill="rgba(31,157,85,.08)" stroke="var(--green)"/>
+        <text x="370" y="205" fill="#145e30" font-weight="700">✓ Constantly re-evaluated</text>
+      </g>
+      <defs><marker id="arrowF" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Tabrizi's four failure modes map one-to-one onto four concrete fixes — none of which require "better people," only better structure.</div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>The trap to avoid:</strong> treating cross-functional failure as a personality or culture problem ("our engineers and salespeople just don't get along") when it's actually a structural one. Tabrizi's fixes are all structural — accountability, specificity, prioritisation, re-evaluation — because that's where the actual leverage sits.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+    <div class="q-card">
+      <p class="q-text">A cross-functional product launch team has a vague mandate to "improve the customer onboarding experience," with no numeric target or deadline. Six months later, little has shipped. Which failure mode does this best match?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! 'Improve the customer experience' with no measurable target or deadline is the textbook case of goals lacking specificity — the fix is establishing concrete goals, resources, and deadlines.">Goals lack specificity</button>
+        <button class="q-option" data-correct="false" data-explanation="Operating in silos is about functional groups each optimising for their own area rather than the shared output — this scenario is specifically about the mandate itself being too vague to act on, which is the goals-specificity failure.">Teams operating in silos</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A cross-functional team has clear, specific goals and a deadline, but no single person is actually accountable for the end-to-end outcome — each function head only answers for their own slice. What's the prescribed fix?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is precisely the 'unclear governance and lack of accountability' failure mode, and the module's matching fix is assigning one end-to-end accountable leader for the whole outcome.">Assign one end-to-end accountable leader for the whole project outcome</button>
+        <button class="q-option" data-correct="false" data-explanation="The goals and deadline are already specific in this scenario — the missing piece is accountability for the end-to-end outcome, not goal clarity.">Write a more detailed goals document</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">An organisation funds a cross-functional team's charter on paper but quietly still evaluates every team member's performance review almost entirely on their home-department metrics. What failure mode is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Real incentives still pointing back to the home department, regardless of the charter on paper, is exactly 'organisations fail to prioritise the team's success' — the fix is making project success the team's actual main objective, reflected in how members are evaluated.">The organisation fails to prioritise the team's success over members' home-department incentives</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't about the stated goals being vague — the charter and goals may be perfectly specific; the problem is that real incentives (performance reviews) don't actually point toward the team's success.">Goals lack specificity</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 3 -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 05</div>
+  <h1 class="mod-title">Building a <span class="acc">High-Performing</span> Project Team</h1>
+  <p class="mod-lede">Ericksen &amp; Dyer's (2004) research is blunt about where high-performing project teams actually earn their advantage: not in the middle of the project, but in how they're mobilised at the very start.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What separates high- and low-performing teams' mobilisation</li>
+      <li>Why the formative stage carries disproportionate weight</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Two Very Different Starts</h2>
+  <p><strong>High-performing project teams</strong> mobilise much quicker and launch faster, through a <em>comprehensive mobilisation strategy</em>: content-clarification activities (elucidating the project's scope and requirements, gathering supportive background information, creating working documents), <em>competency-based staffing</em>, outreach activities, and participatory meetings.</p>
+  <p><strong>Low-performing project teams</strong>, by contrast, run a <em>limited mobilisation strategy</em>: process-formation activities only (laying out plans and associated timetables, with little real content clarification), <em>politically-based staffing</em>, and programmed meetings where leaders tell and sell while members resist and question.</p>
+
+  <table class="pm-table">
+    <thead><tr><th>Dimension</th><th>High-Performing Teams</th><th>Low-Performing Teams</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Mobilisation</td><td>Comprehensive</td><td>Limited</td></tr>
+      <tr><td class="hl">Early focus</td><td>Content clarification (scope, requirements, background info)</td><td>Process formation only (plans, timetables)</td></tr>
+      <tr><td class="hl">Staffing</td><td>Competency-based</td><td>Politically-based</td></tr>
+      <tr><td class="hl">Meetings</td><td>Participatory</td><td>Programmed; leaders tell/sell, members resist/question</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">One fork in the road, at the formative stage</div>
+    <svg class="demo-svg" viewBox="0 0 640 220" role="img" aria-label="A diagram showing a single starting point labelled Project Kickoff splitting into two diverging paths at the formative stage: an upper path through comprehensive mobilisation, content clarification, competency-based staffing and participatory meetings leading to high performance, and a lower path through limited mobilisation, process-formation only, politically-based staffing and programmed meetings leading to low performance">
+      <circle cx="40" cy="110" r="22" fill="var(--ink)"/>
+      <text x="40" y="115" text-anchor="middle" font-family="var(--fm)" font-size="8" fill="var(--paper)">START</text>
+      <text x="40" y="146" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--muted)">Kickoff</text>
+
+      <path d="M62 105 L160 55" stroke="var(--green)" stroke-width="3" fill="none"/>
+      <path d="M160 55 L560 55" stroke="var(--green)" stroke-width="3" fill="none" marker-end="url(#arrowG)"/>
+      <rect x="160" y="34" width="400" height="42" rx="10" fill="rgba(31,157,85,.10)" stroke="var(--green)" stroke-width="1.5"/>
+      <text x="180" y="50" font-family="var(--fb)" font-size="9.5" fill="#145e30">Comprehensive mobilisation → content clarification →</text>
+      <text x="180" y="66" font-family="var(--fb)" font-size="9.5" fill="#145e30">competency-based staffing → participatory meetings</text>
+      <text x="610" y="60" font-family="var(--fd)" font-size="11" font-weight="800" fill="#145e30">HIGH</text>
+      <text x="610" y="74" font-family="var(--fd)" font-size="11" font-weight="800" fill="#145e30">PERF.</text>
+
+      <path d="M62 115 L160 165" stroke="var(--tomato)" stroke-width="3" fill="none"/>
+      <path d="M160 165 L560 165" stroke="var(--tomato)" stroke-width="3" fill="none" marker-end="url(#arrowT)"/>
+      <rect x="160" y="144" width="400" height="42" rx="10" fill="rgba(224,62,45,.08)" stroke="var(--tomato)" stroke-width="1.5"/>
+      <text x="180" y="160" font-family="var(--fb)" font-size="9.5" fill="#8c2d20">Limited mobilisation → process formation only →</text>
+      <text x="180" y="176" font-family="var(--fb)" font-size="9.5" fill="#8c2d20">politically-based staffing → programmed meetings</text>
+      <text x="610" y="170" font-family="var(--fd)" font-size="11" font-weight="800" fill="#8c2d20">LOW</text>
+      <text x="610" y="184" font-family="var(--fd)" font-size="11" font-weight="800" fill="#8c2d20">PERF.</text>
+
+      <text x="100" y="20" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.08em" fill="var(--muted)">THE FORMATIVE STAGE — where the fork happens</text>
+      <defs>
+        <marker id="arrowG" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--green)"/></marker>
+        <marker id="arrowT" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--tomato)"/></marker>
+      </defs>
+    </svg>
+    <div class="demo-caption">Both paths start from the identical moment — a kickoff. The split happens entirely in how that moment is handled, not in anything about the work itself.</div>
+  </div>
+
+  <div class="callout green">
+    <strong>The headline finding:</strong> actions taken in the formative stage are the single most important predictor of a project team's later performance. Whatever a PM does — or skips — in the first weeks of mobilisation has outsized, durable effects on everything that follows.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+    <div class="q-card">
+      <p class="q-text">A new PM is staffing a project team entirely by asking "who has capacity this month?" rather than "who's genuinely skilled for this work?" What does Ericksen &amp; Dyer's research call this, and what does it predict?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Staffing driven by availability or organisational convenience rather than skill match is politically-based staffing — the pattern the research associates with low-performing teams.">Politically-based staffing — associated with low-performing teams</button>
+        <button class="q-option" data-correct="false" data-explanation="Competency-based staffing means selecting people specifically for their skill fit to the work — staffing by raw availability is the opposite pattern, politically-based staffing.">Competency-based staffing — associated with high-performing teams</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">In a kickoff meeting, the project lead spends the entire session presenting a finished plan and timetable, while team members' questions about scope and requirements go largely unaddressed. What pattern does this match?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Process-formation activities (plans/timetables) with little genuine content clarification, delivered in a 'telling and selling' mode rather than participatory discussion, is exactly the low-performing team pattern.">The low-performing pattern — process-formation activities with little real content clarification, and leaders telling/selling rather than engaging participation</button>
+        <button class="q-option" data-correct="false" data-explanation="A comprehensive mobilisation strategy specifically includes content-clarification activities and participatory meetings — this scenario describes the opposite: plans presented with unaddressed questions.">A comprehensive mobilisation strategy, since a full plan and timetable were presented</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Why does the module stress that "actions taken in the formative stage are most important" rather than treating all project phases as equally decisive for team performance?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is the headline finding from Ericksen & Dyer's research — the mobilisation choices made at the very start (staffing basis, clarification depth, meeting style) have outsized, durable effects on everything that follows, more than later-stage interventions.">Because the research specifically found that early mobilisation choices have outsized, durable effects on the team's subsequent development and performance</button>
+        <button class="q-option" data-correct="false" data-explanation="The finding isn't that later stages don't matter at all — it's that the formative stage carries disproportionate predictive weight for what follows, which is a stronger and more specific claim than 'early stages are the only ones that matter.'">Because later project stages have no measurable effect on team performance at all</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 4 — SYNTHESIS -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 05 · Synthesis</div>
+  <h1 class="mod-title">Applying It: Parts 1–4, <span class="acc">in Practice</span></h1>
+  <p class="mod-lede">This module introduces no new source material — it's a practical synthesis, pulling together Parts 1 through 4 into one concrete question: when you're actually standing up a project team next month, what do you do differently because you now know all of this?</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How to apply attitudes, decision biases, motivation, and group theory while building a team</li>
+      <li>Four concrete actions, one per earlier part of this series</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Four Lenses on the Same Team</h2>
+  <p>Mobilising a project team (Module 3) is exactly the moment where everything from Parts 1–4 becomes practically useful at once. Here's how each part changes what you actually do:</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🧠</div>
+      <h4>From Part 1 — Screen for Fit, Not Just Skill</h4>
+      <p>Weight observer-ratings over self-reports when assessing candidates; watch for Dark Triad red flags that look like confidence in an interview; check person-project fit, not just availability.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🎭</div>
+      <h4>From Part 2 — Watch Your Own Biases</h4>
+      <p>When evaluating who to staff, you're vulnerable to availability bias (favouring who comes to mind easily) and confirmation bias (favouring people who confirm your existing read of them). Use structured criteria, not gut feel alone.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🔥</div>
+      <h4>From Part 3 — Match the Motivational Lever</h4>
+      <p>McClelland's need for achievement wants challenging, well-defined goals; self-efficacy grows from early wins — so hand a new team a genuinely winnable first milestone, not the hardest problem first.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">👥</div>
+      <h4>From Part 4 — Expect the Stages, Shape the Contract</h4>
+      <p>Storming is coming — plan for it rather than panicking. Set the psychological contract's terms explicitly and early. Watch early consensus for signs of groupthink rather than celebrating it as alignment.</p>
+    </div>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">One mobilisation decision, four checks</div>
+    <svg class="demo-svg" viewBox="0 0 640 210" role="img" aria-label="A central box labelled Staffing This Role with four arrows pointing out to four checks: Part 1 fit check, Part 2 bias check, Part 3 motivation check, Part 4 group-stage check">
+      <rect x="250" y="20" width="140" height="50" rx="12" fill="var(--acc)"/>
+      <text x="320" y="50" text-anchor="middle" font-family="var(--fd)" font-size="12.5" font-weight="800" fill="#fff">Staffing This Role</text>
+      <g font-family="var(--fb)" font-size="10.5" fill="var(--ink)">
+        <rect x="20" y="110" width="140" height="60" rx="10" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="90" y="134" text-anchor="middle" font-weight="700">Part 1</text>
+        <text x="90" y="150" text-anchor="middle">Fit check</text>
+        <rect x="175" y="110" width="140" height="60" rx="10" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="245" y="134" text-anchor="middle" font-weight="700">Part 2</text>
+        <text x="245" y="150" text-anchor="middle">Bias check</text>
+        <rect x="330" y="110" width="140" height="60" rx="10" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="400" y="134" text-anchor="middle" font-weight="700">Part 3</text>
+        <text x="400" y="150" text-anchor="middle">Motivation check</text>
+        <rect x="480" y="110" width="140" height="60" rx="10" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="550" y="134" text-anchor="middle" font-weight="700">Part 4</text>
+        <text x="550" y="150" text-anchor="middle">Group-stage check</text>
+      </g>
+      <path d="M290 70 L90 110" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M305 70 L245 110" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M335 70 L400 110" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M350 70 L550 110" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+    </svg>
+    <div class="demo-caption">The same single decision — who joins the team — touches all four earlier parts at once.</div>
+  </div>
+
+  <div class="callout">
+    <strong>The practical takeaway:</strong> Module 3 showed that formative-stage actions predict long-run team performance more than almost anything that follows. Parts 1–4 are what tell you specifically <em>which</em> formative-stage actions to take — not just "mobilise comprehensively," but mobilise comprehensively <em>while screening for fit, checking your own biases, matching motivational levers, and shaping the group's early dynamics deliberately.</em>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+    <div class="q-card">
+      <p class="q-text">A PM staffing a new team keeps choosing the same few people they've worked with before, reasoning "I know they're good" — without benchmarking against other qualified candidates. Which earlier part's concept is most directly relevant to flagging this risk?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Favouring people who come easily to mind, without a structured comparison, is a textbook availability bias (Part 2) — exactly the kind of decision-making shortcut this synthesis module calls out as a risk during staffing.">Part 2's decision biases — specifically, availability bias (favouring who comes easily to mind)</button>
+        <button class="q-option" data-correct="false" data-explanation="Tuckman's stages describe how a group develops once formed — they don't directly address the staffing-selection bias illustrated in this scenario, which is a Part 2 decision-bias issue.">Part 4's stages of group development</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A new team's very first assignment is the hardest, most ambiguous part of the whole project, chosen because "we should tackle the scariest thing first." Based on Part 3's self-efficacy concept, what risk does this synthesis module flag?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Self-efficacy grows from mastery experiences — early wins. Handing a brand-new team the hardest problem first, before they've built any track record together, risks an early failure that damages collective self-efficacy rather than building it.">It risks denying the team an early mastery experience, which self-efficacy theory says is important for building confidence going forward</button>
+        <button class="q-option" data-correct="false" data-explanation="This synthesis module doesn't claim difficulty itself is irrelevant — it specifically flags sequencing (an early, winnable milestone before harder problems) as the practical lesson from self-efficacy theory.">There's no risk — task difficulty is unrelated to motivation theory</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">During a team's first few weeks, a PM notices early friction over who should make final calls on a few decisions. Drawing on this synthesis module's guidance from Part 4, what's the recommended mindset?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is the module's explicit guidance: storming is a predictable, normal stage (Part 4, Module 3), and the synthesis module recommends planning for it rather than treating its arrival as alarming or abnormal.">Expect this — it likely reflects the normal 'storming' stage of group development, and should be managed rather than treated as alarming</button>
+        <button class="q-option" data-correct="false" data-explanation="The synthesis module specifically recommends planning for and managing through the storming stage, not disbanding the team at the first sign of friction over roles.">This is a clear sign the team should be disbanded and reformed immediately</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 5 – REFERENCES -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">The source lecture material (an unpublished postgraduate unit) isn't citable as a public source. Below are the named studies and foundational texts it draws from.</p>
+
+  <div class="ref-group-label">Cross-Functional Teams</div>
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Tabrizi, Behnam. "75% of Cross-Functional Teams Are Dysfunctional." <em>Harvard Business Review</em>, June 23, 2015.</div>
+    <div class="ref-annotation">The source for Module 2's four failure modes and four fixes — a widely-cited HBR article drawing on Tabrizi's broader research into cross-functional team performance.</div>
+    <a class="ref-link" href="https://hbr.org/2015/06/75-of-cross-functional-teams-are-dysfunctional" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Team Mobilisation &amp; Performance</div>
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Ericksen, Jeff, and Lee Dyer. "Right from the Start: Exploring the Effects of Early Team Events on Subsequent Project Team Development and Performance." <em>Administrative Science Quarterly</em> 49, no. 3 (2004): 438–471.</div>
+    <div class="ref-annotation">The source for Module 3's high- vs. low-performing team mobilisation comparison and the "formative stage is most important" finding. Verify the exact page range against the publisher record before formal citation.</div>
+    <a class="ref-link" href="https://doi.org/10.2307/4131444" target="_blank" rel="noopener">→ Source</a>
+  </div>
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Katzenbach, Jon R., and Douglas K. Smith. <em>The Wisdom of Teams: Creating the High-Performance Organization</em>. Boston: Harvard Business School Press, 1993.</div>
+    <div class="ref-annotation">A classic, widely-used foundational text on the team-vs-group distinction underlying Module 1's definition of a work team.</div>
+    <a class="ref-link" href="https://www.hbs.edu/faculty/Pages/item.aspx?num=8349" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the source lecture slides name these studies without full bibliographic detail. The citations above are reconstructed from the most plausible matching publication and should be independently verified against the original record before use in any formal academic or professional citation context. Module 4 is a synthesis exercise written for this series and does not draw on additional sources beyond Parts 1–4 of this series itself.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 5 Complete! 🧩</h2>
+    <p>You now know what actually makes a team a team, why cross-functional teams fail (and the fix), what separates high- from low-performing mobilisation, and how to apply everything from Parts 1–4 the moment you start building a team. Part 6 — Communications in Projects — is next.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'project-people-part5';
+const TOTAL = 5;
+function getProgress() { try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; } }
+function saveProgress(p) { localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p)); }
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) { document.getElementById('completion-banner').style.display = 'block'; markCourseComplete(); }
+}
+let currentModule = 1;
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => { o.disabled = true; if (o.dataset.correct === 'true') o.classList.add('correct'); });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+  document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => goto(parseInt(item.dataset.module))));
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => btn.addEventListener('click', () => goto(currentModule - 1)));
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => btn.addEventListener('click', () => goto(currentModule + 1)));
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

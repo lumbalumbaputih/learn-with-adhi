@@ -1,5 +1,17 @@
 [
   {
+    "id": "project-people",
+    "n": "19",
+    "title": "Project & People",
+    "blurb": "The human side of running a project: attitudes, motivation, teams, leadership, power, conflict, culture and stress — 11 modules of organisational-behaviour theory applied directly to project management, with the terms kept intact and explained properly.",
+    "category": "Practice",
+    "tags": ["Series", "Leadership", "Teams"],
+    "primitive": "wave",
+    "accent": "mawar",
+    "path": "courses/project-people/project-people-hub.html",
+    "duration": "Series"
+  },
+  {
     "id": "perth-transit-map",
     "n": "T4",
     "title": "Perth Transit Map",
