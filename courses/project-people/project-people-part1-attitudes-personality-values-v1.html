@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="project-people-part1">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attitudes, Personality &amp; Values in Projects · Project &amp; People · Learn with Adhi</title>
+<meta name="description" content="Part 1 of Project & People: the three components of an attitude, cognitive dissonance, job attitudes, the Big Five personality model, the Dark Triad, project-manager fit, and terminal vs. instrumental values — explained with the real terms intact.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-people/project-people-part1-attitudes-personality-values-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attitudes, Personality & Values in Projects · Project & People">
+<meta property="og:description" content="The three components of an attitude, cognitive dissonance, the Big Five, the Dark Triad, and terminal vs. instrumental values — applied to project management.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Project & People — Part 1: Attitudes, Personality & Values in Projects","description":"The three components of an attitude, cognitive dissonance, job attitudes, the Big Five, the Dark Triad, project-manager fit, and terminal vs. instrumental values.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#A78BFA);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="project-people-hub.html">← Series map · Part 1 of 11</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 6 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Attitudes: Components &amp; Cognitive Dissonance</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Job Attitudes</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Personality &amp; the Big Five</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">The Dark Triad &amp; PM Fit</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Values: Terminal &amp; Instrumental</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">Project &amp; People · Part 1</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – ATTITUDES: COMPONENTS & COGNITIVE DISSONANCE
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 06</div>
+  <h1 class="mod-title">Attitudes: Components &amp; <span class="acc">Cognitive Dissonance</span></h1>
+  <p class="mod-lede">An <strong>attitude</strong> is an evaluative statement or judgment — positive or negative — about an object, a person, or an event. Before you can read a team, predict a stakeholder's reaction, or understand why a perfectly rational contractor is suddenly digging in, you need the three-part anatomy underneath every attitude.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The three components of an attitude: cognitive, affective, behavioural</li>
+      <li>What cognitive dissonance is, and the three ways people resolve it</li>
+      <li>When attitudes actually predict behaviour — and when they don't</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Three Components of an Attitude</h2>
+  <p>An attitude isn't one thing — it's three, working together. The <strong>cognitive component</strong> is the belief: an opinion or intellectual understanding of the way things are. The <strong>affective component</strong> is the emotional or "feelings" part — and it's the critical piece, because it's what actually drives behavioural outcomes. The <strong>behavioural component</strong> is the intention to act in a certain way toward someone or something.</p>
+  <p>Notice the word <em>intention</em>. An intention to behave is not the same as the behaviour itself — the behaviour may or may not follow, and it's shaped by everything else going on around the attitude.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Worked example — a contractor's mistake, three ways</div>
+    <svg class="demo-svg" viewBox="0 0 640 230" role="img" aria-label="Three connected boxes showing the cognitive, affective, and behavioural components of an attitude, with an example belief, feeling, and intention flowing left to right">
+      <rect x="18" y="30" width="184" height="150" rx="14" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <text x="110" y="56" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc-dim)">COGNITIVE</text>
+      <text x="110" y="74" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.04em" fill="var(--muted)">the belief</text>
+      <text x="110" y="104" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">"The contractor</text>
+      <text x="110" y="122" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">made a mistake —</text>
+      <text x="110" y="140" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">my project is</text>
+      <text x="110" y="158" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">running late."</text>
+
+      <rect x="228" y="30" width="184" height="150" rx="14" fill="rgba(217,119,6,.10)" stroke="var(--mango)" stroke-width="2"/>
+      <text x="320" y="56" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#B45F04">AFFECTIVE</text>
+      <text x="320" y="74" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.04em" fill="var(--muted)">the feeling (critical)</text>
+      <text x="320" y="104" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">"I'm anxious and</text>
+      <text x="320" y="122" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">angry — the deadline</text>
+      <text x="320" y="140" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">is approaching and</text>
+      <text x="320" y="158" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">this isn't my fault."</text>
+
+      <rect x="438" y="30" width="184" height="150" rx="14" fill="rgba(31,157,85,.10)" stroke="var(--green)" stroke-width="2"/>
+      <text x="530" y="56" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#145e30">BEHAVIOURAL</text>
+      <text x="530" y="74" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.04em" fill="var(--muted)">the intention</text>
+      <text x="530" y="104" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">"I'll ask if the</text>
+      <text x="530" y="122" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">contractor can</text>
+      <text x="530" y="140" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">mitigate faster so we</text>
+      <text x="530" y="158" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">still hit the deadline."</text>
+
+      <path d="M202 105 L228 105" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrowA)"/>
+      <path d="M412 105 L438 105" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrowA)"/>
+      <text x="320" y="210" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-style="italic" fill="var(--muted)">Intent to behave ≠ actual behaviour — whether he follows through still depends on what happens next.</text>
+      <defs><marker id="arrowA" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Same situation, three layers. The affective layer is the one that actually converts a belief into pressure to act.</div>
+  </div>
+
+  <h2 class="sh">Cognitive Dissonance</h2>
+  <p><strong>Cognitive dissonance</strong> is any incompatibility between two or more attitudes, or between an attitude and a behaviour. It produces genuine psychological discomfort — and because that discomfort is unpleasant, people are motivated to reduce it and restore consistency.</p>
+  <p>There are exactly three ways to resolve it: <strong>change the attitude</strong> itself, <strong>modify the behaviour</strong> to match the attitude, or <strong>rationalise</strong> the gap (find a justification that makes the inconsistency feel acceptable). Most people reach for rationalisation first — it's the lowest-effort fix, even though it doesn't actually close the gap.</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🔄</div>
+      <h4>Change the Attitude</h4>
+      <p>The highest-effort, most durable fix: genuinely update the belief or feeling so it matches the behaviour.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🛠️</div>
+      <h4>Modify the Behaviour</h4>
+      <p>Stop doing the thing that conflicts with the attitude — bring the action in line with the belief instead.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">💬</div>
+      <h4>Rationalise</h4>
+      <p>Construct a justification that makes the inconsistency feel okay, without actually changing either side.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Project scenario:</strong> a project sponsor who publicly champions "data-driven decisions" keeps overruling the dashboard with gut calls. That's dissonance between stated attitude and behaviour. Watch for which resolution path they take — do they start trusting the data (attitude change), stop overruling it (behaviour change), or start explaining why "this particular case is different" every time (rationalisation)? The third pattern, repeated often enough, is a reliable tell that the stated attitude was never really load-bearing.
+  </div>
+
+  <h2 class="sh">Predicting Behaviour From Attitudes</h2>
+  <p>Predicting behaviour from attitudes is more art than science, but a few relationships hold up reasonably well:</p>
+  <ul class="bl">
+    <li><strong>Specificity matches specificity.</strong> Specific attitudes predict specific behaviours; general attitudes only predict general patterns of behaviour.</li>
+    <li><strong>Values strengthen the link.</strong> The more tightly an attitude connects to a value someone genuinely holds dear, the stronger — and more predictive — the relationship to behaviour.</li>
+    <li><strong>Social pressure weakens it.</strong> High social pressure can suppress the attitude-behaviour link, producing disagreement between what someone believes and what they visibly do.</li>
+    <li><strong>Experience strengthens it.</strong> Attitudes formed from direct personal experience are stronger predictors of future behaviour than attitudes picked up secondhand.</li>
+  </ul>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A team member says "I believe in work-life balance" (belief) but regularly works until 10pm without being asked (behaviour). According to the three ways of resolving dissonance, which response would count as <em>rationalisation</em> rather than genuine resolution?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="This is modifying the behaviour — bringing the action back in line with the stated attitude. That's a genuine resolution, not a rationalisation.">They start leaving at 6pm to match their stated belief</button>
+        <button class="q-option" data-correct="false" data-explanation="This is changing the attitude itself — updating the belief to honestly reflect what they actually value now. Also a genuine resolution.">They admit they actually value visible dedication over balance, and drop the old belief</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Saying 'it's just this one deadline' explains away the gap without changing either the belief or the behaviour — the textbook definition of rationalisation. If it recurs every week, the stated attitude was never really the operative one.">They say "it's just this one deadline, it's not really about balance" — and keep working late every week</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Two stakeholders both say they "support sustainability." One has spent a decade running a conservation nonprofit; the other read one article last month. Whose stated attitude is likely to be the <em>stronger predictor</em> of their actual project decisions?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Attitudes grounded in direct personal experience are stronger predictors of future behaviour than attitudes picked up secondhand — a decade of lived practice outweighs a recently-read article, even though both state the same attitude.">The nonprofit veteran — their attitude is grounded in years of direct personal experience</button>
+        <button class="q-option" data-correct="false" data-explanation="Recency of acquiring an attitude isn't what strengthens the attitude-behaviour link — depth of personal experience is. A single article doesn't out-predict a decade of lived practice.">The one who read the article — it's freshest in their mind</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A site supervisor privately disagrees with a safety shortcut the client is pressuring the team to take, but goes along with it anyway under heavy pressure from the client's representative. What does this scenario illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! High social pressure can suppress the attitude-behaviour relationship — the supervisor's genuine attitude (disagreement) and their visible behaviour (compliance) have been pulled apart by external pressure, exactly the pattern the slide describes.">High social pressure is weakening the link between the supervisor's real attitude and their observed behaviour</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't cognitive dissonance being resolved — there's no sign the supervisor has changed their attitude, modified their stated belief, or rationalised it away. They're simply complying under pressure while the attitude stays intact and unexpressed.">The supervisor has resolved cognitive dissonance through rationalisation</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – JOB ATTITUDES
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 06</div>
+  <h1 class="mod-title">Job <span class="acc">Attitudes</span></h1>
+  <p class="mod-lede">People hold thousands of attitudes, but the study of organisational behaviour narrows in on a small set of work-related ones. Four matter most for a project environment: job satisfaction, job involvement, psychological empowerment, and organisational commitment.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What job satisfaction and job involvement actually measure</li>
+      <li>Psychological empowerment, and the construction-industry evidence behind it</li>
+      <li>Organisational commitment, and why it predicts more than just "staying"</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Job Satisfaction &amp; Job Involvement</h2>
+  <p><strong>Job satisfaction</strong> is a positive feeling about a job, resulting from an evaluation of its characteristics. A person high in job satisfaction holds positive feelings about their job; a person low in it holds negative feelings. <strong>Job involvement</strong> is related but distinct — it measures the degree to which people identify psychologically with their job, and how much they consider their perceived performance level important to their own self-worth. Someone with high job involvement doesn't just like the job; they treat doing it well as part of who they are.</p>
+
+  <h2 class="sh">Psychological Empowerment</h2>
+  <p>A close relative of job involvement is <strong>psychological empowerment</strong>: the degree to which employees' beliefs influence their work environment, their sense of competence, the meaningfulness of their job, and their perceived autonomy. It's not a perk management hands out — it's how empowered an employee genuinely <em>feels</em>, which is a different thing from how much formal authority they've been given.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">↑</div>
+      <div class="stat-lbl">Psychological empowerment was positively related to both task behaviours and contextual (discretionary) behaviours</div>
+      <div class="stat-sub">Tuuli &amp; Rowlinson, 2009</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">HK</div>
+      <div class="stat-lbl">Study sample: construction project management teams in Hong Kong</div>
+      <div class="stat-sub">Same study</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">↓</div>
+      <div class="stat-lbl">High job involvement and empowerment are linked to reduced absences and lower resignation rates</div>
+      <div class="stat-sub">General OB research finding</div>
+    </div>
+  </div>
+
+  <div class="callout blue">
+    <strong>The nuance that matters:</strong> one study of nursing managers in Singapore found good leaders empower staff by involving them in decisions and giving discretion to "do their own thing" — but another study found that, for teachers in India, self-perceived competence didn't translate into more innovative behaviour. The lesson: empowerment initiatives need to be tailored to the culture and the behavioural outcome you actually want, not applied as a one-size-fits-all leadership recipe.
+  </div>
+
+  <h2 class="sh">Organisational Commitment</h2>
+  <p><strong>Commitment</strong> is the degree to which an individual identifies with a particular entity — here, a project — and its goals, and wishes to maintain membership in it. It is one of the highest-leverage attitudes a project manager can cultivate, because of what it reliably produces downstream.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">What organisational commitment produces, downstream</div>
+    <svg class="demo-svg" viewBox="0 0 640 230" role="img" aria-label="A central box labelled Commitment with six arrows radiating out to boxes labelled increased effort, discretionary behaviours, knowledge sharing, collaboration, conflict reduction, and shared mental models, all feeding into a final box labelled project success">
+      <rect x="260" y="20" width="120" height="50" rx="12" fill="var(--acc)" />
+      <text x="320" y="50" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#fff">Commitment</text>
+
+      <g font-family="var(--fb)" font-size="10" fill="var(--ink)">
+        <rect x="20" y="100" width="130" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="85" y="123" text-anchor="middle">Increased effort</text>
+        <rect x="165" y="100" width="150" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="240" y="123" text-anchor="middle">Discretionary behaviours</text>
+        <rect x="330" y="100" width="140" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="400" y="123" text-anchor="middle">Knowledge sharing</text>
+        <rect x="485" y="100" width="135" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="552" y="123" text-anchor="middle">Collaboration</text>
+        <rect x="85" y="150" width="150" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="160" y="173" text-anchor="middle">Conflict reduction</text>
+        <rect x="350" y="150" width="165" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="432" y="173" text-anchor="middle">Shared mental models</text>
+      </g>
+
+      <path d="M300 70 L85 100" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M305 70 L240 100" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M325 70 L400 100" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M335 70 L552 100" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M305 70 L160 150" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M330 70 L432 150" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+
+      <path d="M320 198 L320 205" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="220" y="205" width="200" height="22" rx="8" fill="var(--ink)"/>
+      <text x="320" y="220" text-anchor="middle" font-family="var(--fm)" font-size="10" letter-spacing="0.06em" fill="var(--paper)">→ PROJECT SUCCESS</text>
+    </svg>
+    <div class="demo-caption">Six distinct mechanisms, all of which trace back to one attitude — which is why committed teams consistently outperform merely satisfied ones.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A developer says: "I like this job fine, nine-to-five, but it's not who I am — my real passion project happens on weekends." What does this most clearly describe?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Job satisfaction could still be present (they 'like it fine') — the key signal here is about identity and self-worth, which is job involvement, not satisfaction per se.">High job satisfaction</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Job involvement measures how much someone identifies psychologically with the job and ties their self-worth to their performance in it. Explicitly saying the job 'isn't who I am' is a clear marker of low job involvement, even if satisfaction is moderate.">Low job involvement — the job isn't tied to their sense of self-worth</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Following the Tuuli &amp; Rowlinson (2009) finding, a PM wants to boost psychological empowerment on a Hong Kong construction project the same way a nursing-manager study showed success in Singapore — by simply copying the exact same involvement tactics. What does the India-teachers finding caution against here?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The India teachers' study found self-perceived competence didn't translate into innovative behaviour there — showing empowerment's downstream effects are context-dependent. Blindly porting a tactic that worked in one culture/industry doesn't guarantee the same outcome in another.">Copying a tactic wholesale risks missing that empowerment's effects are culture- and context-dependent, not universal</button>
+        <button class="q-option" data-correct="false" data-explanation="The slide doesn't make a claim about psychological empowerment being industry-specific to construction — the caution is about culture/context sensitivity generally, not a blanket rule that construction techniques never transfer.">Psychological empowerment only applies within the construction industry and can't inform nursing or teaching contexts</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A project is behind schedule. One team member who is highly <em>committed</em> (versus merely satisfied) is more likely to do which of the following, specifically because of commitment's documented downstream effects?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Commitment is linked to discretionary behaviours and increased effort — voluntarily picking up extra, unassigned work to help the project land is exactly the kind of discretionary effort commitment predicts.">Voluntarily pick up extra, unassigned work to help the deadline land</button>
+        <button class="q-option" data-correct="false" data-explanation="Commitment is associated with knowledge sharing and collaboration, not withholding — this is closer to the opposite of what commitment predicts.">Withhold information from teammates to protect their own individual performance review</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – PERSONALITY & THE BIG FIVE
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 06</div>
+  <h1 class="mod-title">Personality &amp; the <span class="acc">Big Five</span></h1>
+  <p class="mod-lede">"Personality" doesn't mean charm or a winning smile — psychologists use it to describe the dynamic growth and development of a person's whole psychological system, captured through measurable traits. One model, the Big Five, has the strongest research base of any personality framework in organisational behaviour.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>How personality is actually measured — self-report vs. observer-rating surveys</li>
+      <li>The five dimensions of the Big Five model, and what each predicts</li>
+      <li>Why observer-ratings, not self-reports, better predict job success</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Measuring Personality</h2>
+  <p>Research shows personality tests genuinely help managers forecast who's best for a job — which is why they're used in hiring decisions. There are two main measurement approaches. <strong>Self-report surveys</strong> have individuals evaluate themselves (e.g. "I worry a lot about the future"). <strong>Observer-rating surveys</strong> have a colleague or another observer rate the person instead, sometimes with their knowledge and sometimes without.</p>
+
+  <table class="pm-table">
+    <thead><tr><th>Method</th><th>Strength</th><th>Weakness</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Self-report</td><td>Fast, scalable, and the person's own insight into themselves</td><td>Vulnerable to impression management — people "fake good" when they know it affects a hiring decision</td></tr>
+      <tr><td class="hl">Observer-rating</td><td>Independent of the subject's own self-presentation</td><td>Reflects only what's externally visible, which can miss internal traits</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout mango">
+    <strong>The counter-intuitive finding:</strong> self-report and observer-rating surveys are strongly correlated, but not perfectly — and the correlation is stronger for the more visible traits like Extraversion and Conscientiousness. Despite self-reports being more common, research suggests <strong>observer-ratings are the better predictor of job success.</strong> If you only trust what candidates say about themselves, you're using the weaker signal.
+  </div>
+
+  <h2 class="sh">The Big Five Model</h2>
+  <p>An impressive body of research supports five basic dimensions underlying most of the significant variation in human personality — and these dimensions do a genuinely good job predicting how people behave in real-life situations.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The Big Five, as five independent continuums</div>
+    <svg class="demo-svg" viewBox="0 0 640 290" role="img" aria-label="Five horizontal bars, one per Big Five trait, each running from a low-end label to a high-end label: Extraversion from reserved to gregarious, Agreeableness from antagonistic to cooperative, Conscientiousness from disorganised to dependable, Emotional stability from anxious to secure, Openness from conventional to curious">
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="24" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Extraversion</text>
+        <rect x="150" y="12" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="12" width="300" height="14" rx="7" fill="var(--acc)" opacity="0.75"/>
+        <text x="150" y="40" fill="var(--muted)">reserved, timid, quiet</text>
+        <text x="610" y="40" text-anchor="end" fill="var(--muted)">gregarious, assertive, sociable</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="80" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Agreeableness</text>
+        <rect x="150" y="68" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="68" width="360" height="14" rx="7" fill="var(--sea)" opacity="0.75"/>
+        <text x="150" y="96" fill="var(--muted)">cold, disagreeable, antagonistic</text>
+        <text x="610" y="96" text-anchor="end" fill="var(--muted)">cooperative, warm, trusting</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="136" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Conscientiousness</text>
+        <rect x="150" y="124" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="124" width="410" height="14" rx="7" fill="var(--forest)" opacity="0.75"/>
+        <text x="150" y="152" fill="var(--muted)">distracted, disorganised, unreliable</text>
+        <text x="610" y="152" text-anchor="end" fill="var(--muted)">responsible, dependable, persistent</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="192" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Emotional Stability</text>
+        <rect x="150" y="180" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="180" width="260" height="14" rx="7" fill="var(--mango)" opacity="0.75"/>
+        <text x="150" y="208" fill="var(--muted)">nervous, anxious, insecure</text>
+        <text x="610" y="208" text-anchor="end" fill="var(--muted)">calm, self-confident, secure under stress</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="248" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Openness to Experience</text>
+        <rect x="150" y="236" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="236" width="340" height="14" rx="7" fill="var(--tomato)" opacity="0.75"/>
+        <text x="150" y="264" fill="var(--muted)">conventional, finds comfort in the familiar</text>
+        <text x="610" y="264" text-anchor="end" fill="var(--muted)">curious, imaginative, artistic</text>
+      </g>
+    </svg>
+    <div class="demo-caption">Each trait is a continuum, not a category — nobody is purely "an extravert"; everyone sits somewhere on all five bars at once. The filled portion here is illustrative, not a universal "ideal" profile.</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">638</div>
+      <div class="stat-lbl">Everyday English words describe personality traits — from "Accessible" to "Zany"</div>
+      <div class="stat-sub">Illustrating the scale the Big Five compresses down to just 5 dimensions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-lbl">Dimensions capture most of the significant variation in human personality</div>
+      <div class="stat-sub">Big Five model</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">½σ</div>
+      <div class="stat-lbl">Roughly how much higher people rate their own conscientiousness when they know a hiring decision is riding on it</div>
+      <div class="stat-sub">Impression-management effect</div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">A hiring panel is deciding between relying solely on a candidate's self-report personality test, or also asking the candidate's former colleagues to complete an observer-rating survey. Based on the research, what's the better approach?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Self-report alone is the weaker predictor of job success, and it's specifically vulnerable to impression management when the candidate knows the stakes.">Rely on the self-report alone — it's faster and reflects the candidate's own self-knowledge</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Research suggests observer-ratings are a better predictor of job success than self-reports, and each method captures something the other misses — so combining them, rather than relying on self-report alone, is the stronger approach.">Combine both — observer-ratings are a better predictor of job success, but each method adds unique information</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A project team member scores low on Emotional Stability on a validated Big Five assessment. In practical project terms, what should a PM expect under high-stress conditions (e.g. a missed deadline crisis)?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Low emotional stability (high neuroticism) is defined by the slide as tending toward nervous, anxious, depressed, and insecure responses under stress — exactly what a PM should expect and plan support for during a crisis.">A tendency toward greater anxiety, nervousness, and insecurity under the pressure</button>
+        <button class="q-option" data-correct="false" data-explanation="That calm, secure-under-stress profile describes someone high in emotional stability, which is the opposite end of this person's score.">Unusual calm and confidence, since low scorers handle stress better</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A candidate takes a personality test twice: once "just for fun" at home, and once as part of a real hiring process. Research on impression management predicts what difference between the two results?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Evidence shows that when people know personality scores will be used for hiring decisions, they rate themselves roughly half a standard deviation higher on conscientiousness and emotional stability than when just taking it to learn about themselves.">The hiring-context test will likely show higher conscientiousness and emotional stability scores, due to impression management</button>
+        <button class="q-option" data-correct="false" data-explanation="The research finding is specifically that scores shift higher under hiring-stakes conditions (impression management), not that the two contexts produce identical, unbiased results.">Both tests should produce identical results, since personality is a stable trait</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – THE DARK TRIAD & PROJECT-MANAGER FIT
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 06</div>
+  <h1 class="mod-title">The Dark Triad &amp; <span class="acc">Project-Manager Fit</span></h1>
+  <p class="mod-lede">Besides the Big Five, researchers have identified three socially undesirable traits that everyone carries to varying degrees — and which matter directly for how project teams actually function. Then: the practical question of fit, for the people you staff and for yourself.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Machiavellianism, Narcissism, and Psychopathy — the Dark Triad, defined properly</li>
+      <li>What the evidence actually says each one predicts (and doesn't) at work</li>
+      <li>Person-organisation fit, and why the PM should evaluate their own fit too</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Dark Triad</h2>
+  <p>With the exception of neuroticism, the Big Five traits are socially desirable — we're glad to score high on them. The Dark Triad is different: three traits we all carry in varying degrees, which researchers group together precisely because of their shared negative character, even though they don't always occur together in the same person.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The three traits of the Dark Triad</div>
+    <svg class="demo-svg" viewBox="0 0 640 300" role="img" aria-label="Three circles arranged in a triangle, labelled Machiavellianism, Narcissism, and Psychopathy, each with a short definition, connected by lines to show they are related but independent traits">
+      <circle cx="320" cy="60" r="68" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="320" y="48" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc-dim)">Machiavellianism</text>
+      <text x="320" y="66" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">pragmatic, emotionally</text>
+      <text x="320" y="80" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">distant, "ends justify</text>
+      <text x="320" y="94" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">the means"</text>
+
+      <circle cx="140" cy="220" r="68" fill="rgba(224,62,45,.08)" stroke="var(--tomato)" stroke-width="2.5"/>
+      <text x="140" y="208" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--tomato)">Narcissism</text>
+      <text x="140" y="226" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">grandiose self-</text>
+      <text x="140" y="240" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">importance, needs</text>
+      <text x="140" y="254" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">excessive admiration</text>
+
+      <circle cx="500" cy="220" r="68" fill="rgba(217,119,6,.10)" stroke="var(--mango)" stroke-width="2.5"/>
+      <text x="500" y="208" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#B45F04">Psychopathy</text>
+      <text x="500" y="226" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">lack of concern, no</text>
+      <text x="500" y="240" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">guilt or remorse,</text>
+      <text x="500" y="254" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">manipulative</text>
+
+      <path d="M275 108 L185 168" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="4 3"/>
+      <path d="M365 108 L455 168" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="4 3"/>
+      <path d="M208 220 L432 220" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="320" y="292" text-anchor="middle" font-family="var(--fb)" font-size="10" font-style="italic" fill="var(--muted)">Related by their social undesirability — but independent; a person can carry one, two, or all three</text>
+    </svg>
+    <div class="demo-caption">Everyone carries each of these to some degree — the Dark Triad describes a spectrum, not a diagnosis.</div>
+  </div>
+
+  <h3 class="sub">What the Evidence Actually Shows</h3>
+  <ul class="bl">
+    <li><strong>Machiavellianism (high Mach):</strong> manipulates more, wins more, is persuaded less, and persuades others more than low-Mach people. High Machs act aggressively and engage in more counterproductive work behaviours — but Machiavellianism doesn't significantly predict overall job performance. They often win in the short term by manipulating others, then lose those gains long-term because they aren't well liked.</li>
+    <li><strong>Narcissism:</strong> a sense of entitlement and arrogance, paired with a need for excessive admiration — and narcissists tend to be <em>rated as less effective</em>, despite (or because of) their self-confidence.</li>
+    <li><strong>Psychopathy:</strong> findings are inconsistent on whether it correlates with job performance, but it's related to the use of hard influence tactics (threats, manipulation) and bullying behaviour. The cunning it can produce may help someone gain power in an organisation — but it tends to keep them from using that power toward healthy ends.</li>
+  </ul>
+
+  <div class="callout tomato">
+    <strong>Why this matters for a PM:</strong> all three Dark Triad traits can look like confidence, decisiveness, or results-orientation in a first impression or a job interview — and all three predict worse long-run team outcomes than they promise up front. Weight observer-ratings (Module 3) more heavily than charm in high-stakes hiring, especially for roles with real authority over others.
+  </div>
+
+  <h2 class="sh">Project-Manager Fit</h2>
+  <p>In many real projects, staff get assigned to a team purely on the basis of availability — whoever's free gets slotted in. But a PM who understands <strong>person-organisation fit</strong> has a measurably better chance of success, because they can use that understanding to actively manage their team's composition and dynamics, rather than treating the roster as fixed.</p>
+  <p>Just as important: it's worth the PM evaluating their <em>own</em> fit, introspectively, with both the organisation and the type of project they're running. A PM who thrives running tightly-scoped, predictive construction projects may struggle — not from lack of skill, but from poor fit — when dropped into an ambiguous, fast-moving innovation project, and vice versa.</p>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A team member consistently manipulates situations to their own advantage, wins most negotiations, and is rarely persuaded by others — but a year-end review shows their overall job performance rating is unremarkable, and peers increasingly avoid working with them. Which Dark Triad finding does this best match?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This matches the Machiavellianism evidence precisely: high Machs manipulate more, win more, and are persuaded less — but Machiavellianism doesn't significantly predict overall job performance, and high-Mach employees' short-term wins erode over time because they aren't well liked.">High Machiavellianism — wins and manipulation without a performance boost, and eroding goodwill over time</button>
+        <button class="q-option" data-correct="false" data-explanation="Narcissism's defining markers are grandiosity and a need for admiration, not specifically manipulation-to-win negotiations — and narcissists tend to be rated as less effective, not performance-neutral.">High Narcissism — their grandiosity directly explains the win rate</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A PM is staffed onto a new project purely because they happened to be available, with no consideration of fit. What does the module recommend the PM do to improve their odds of success?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module specifically recommends the PM evaluate their own person-organisation fit introspectively — with both the organisation and this particular type of project — rather than simply accepting the assignment as given.">Introspectively evaluate their own fit with the organisation and this type of project, and use that insight to manage the team</button>
+        <button class="q-option" data-correct="false" data-explanation="The guidance isn't to request reassignment by default — it's to actively evaluate and use fit information to manage the situation they're in, which is a more practical and immediately actionable step.">Request reassignment immediately, since availability-based staffing guarantees poor fit</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why does the evidence on psychopathy specifically caution organisations to "exercise caution" before using it in employment decisions?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The research base is described as relatively new and the literature as inconsistent about its relationship to job performance and counterproductive behaviour — using an immature, unsettled measure in high-stakes employment decisions carries more risk than reward at this stage.">Research on the Dark Triad (including psychopathy) is relatively new, and findings on its relationship to job performance are inconsistent</button>
+        <button class="q-option" data-correct="false" data-explanation="The caution isn't about legal prohibition — it's about the scientific immaturity and inconsistency of the current evidence base, which makes it an unreliable basis for high-stakes decisions right now.">It's because using personality data of any kind in hiring is universally illegal</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – VALUES: TERMINAL & INSTRUMENTAL
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 06</div>
+  <h1 class="mod-title">Values: <span class="acc">Terminal</span> &amp; Instrumental</h1>
+  <p class="mod-lede">Values are the deepest layer underneath attitudes and motivation — the basic convictions that shape what people treat as right, good, or desirable long before any specific attitude ever forms about a specific situation.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What values are, and why they're unusually stable once formed</li>
+      <li>Terminal values (desirable end-states) vs. instrumental values (preferred means)</li>
+      <li>Why values matter for predicting attitudes, motivation, and perception</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">What Values Are, and Why They Stick</h2>
+  <p><strong>Values</strong> represent basic convictions that a specific mode of conduct or end-state of existence is personally or socially preferable to its opposite. Values lay the foundation for understanding people's attitudes and motivation, and they directly influence perception — they are, by definition, not neutral. They carry a judgmental element about what's right, good, or desirable.</p>
+  <p>Values are also unusually stable. A significant portion of the values we hold are established early — by parents, teachers, and friends — often taught in absolute, black-or-white terms (you were never taught to be "a little bit honest"). That absolute early learning is exactly what makes values so stable and enduring into adulthood.</p>
+
+  <h2 class="sh">Terminal vs. Instrumental Values</h2>
+  <p><strong>Terminal values</strong> refer to desirable end-states — the goals a person wants to achieve during their lifetime (prosperity and economic success, freedom, health and well-being, world peace, meaning in life). <strong>Instrumental values</strong> refer to the preferred modes of behaviour, or the means of achieving those terminal values (autonomy and self-reliance, personal discipline, kindness, goal-orientation).</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Means and ends — an instrumental value chain toward a terminal value</div>
+    <svg class="demo-svg" viewBox="0 0 640 170" role="img" aria-label="A horizontal chain showing instrumental values of self-discipline and goal-orientation leading through an arrow to the terminal value of prosperity and economic success">
+      <rect x="20" y="40" width="170" height="80" rx="12" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="2"/>
+      <text x="105" y="62" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.06em" fill="var(--sea)">INSTRUMENTAL</text>
+      <text x="105" y="84" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">Self-discipline +</text>
+      <text x="105" y="100" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">goal-orientation</text>
+
+      <rect x="235" y="40" width="170" height="80" rx="12" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="2"/>
+      <text x="320" y="62" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.06em" fill="var(--sea)">INSTRUMENTAL</text>
+      <text x="320" y="84" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">Autonomy +</text>
+      <text x="320" y="100" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">self-reliance</text>
+
+      <path d="M405 80 L445 80" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrowV)"/>
+
+      <rect x="450" y="30" width="170" height="100" rx="12" fill="var(--acc)" opacity="0.9"/>
+      <text x="535" y="56" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.06em" fill="#fff" opacity="0.85">TERMINAL</text>
+      <text x="535" y="80" text-anchor="middle" font-family="var(--fb)" font-size="11.5" font-weight="700" fill="#fff">Prosperity &amp;</text>
+      <text x="535" y="98" text-anchor="middle" font-family="var(--fb)" font-size="11.5" font-weight="700" fill="#fff">economic success</text>
+      <text x="535" y="115" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#fff" opacity="0.8">(an end-state)</text>
+
+      <defs><marker id="arrowV" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Instrumental values are the "how"; terminal values are the "what for." The same instrumental value can serve several different terminal values at once.</div>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🏁</div>
+      <h4>Terminal Values</h4>
+      <p>Examples: prosperity and economic success, freedom, health and well-being, world peace, meaning in life.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🧭</div>
+      <h4>Instrumental Values</h4>
+      <p>Examples: autonomy and self-reliance, personal discipline, kindness, goal-orientation.</p>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <strong>Project application:</strong> when a conflict over "the right way to do this" keeps resurfacing even after the facts are settled, it's often not a disagreement about information at all — it's two people operating from different instrumental values (one prizes autonomy, the other prizes strict adherence to process) in service of the <em>same</em> terminal value (project success). Naming the underlying value, not just the surface disagreement, is usually what unlocks the conversation.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">Why, according to the module, do values tend to be so much more stable over a lifetime than attitudes are?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Values are mostly learned early in life, in absolute terms (you were never taught to be 'a little bit honest') — and that black-or-white early learning is exactly what gives them their unusual stability and endurance.">They're largely established early in life, often in absolute, black-or-white terms, which makes them resistant to change</button>
+        <button class="q-option" data-correct="false" data-explanation="The module doesn't claim values are biologically fixed and unchangeable from birth — it specifically says they can change if questioned, though questioning more often reinforces them.">They're biologically hardwired at birth and cannot change under any circumstances</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">"Wanting to achieve world peace" and "practising personal discipline every day" — which is the terminal value and which is the instrumental value?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! World peace is a desirable end-state (terminal value); personal discipline is a preferred mode of behaviour or means toward achieving broader goals (instrumental value) — exactly matching the module's own examples of each.">World peace = terminal (an end-state); personal discipline = instrumental (a means)</button>
+        <button class="q-option" data-correct="false" data-explanation="This reverses the definitions — personal discipline is a mode of behaviour (instrumental), while world peace is the kind of end-state the module classifies as terminal.">Personal discipline = terminal (an end-state); world peace = instrumental (a means)</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Two engineers on the same project both genuinely want it to succeed (same terminal value), but keep clashing over whether to follow the documented process strictly or improvise based on judgment. What does this module suggest is really going on?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is the module's own project-application point: a disagreement that resurfaces even after the facts are settled is often a clash of differing instrumental values (process-adherence vs. autonomy) in service of the same shared terminal value — naming that is usually what unlocks the conversation.">A clash between two different instrumental values (strict process vs. autonomous judgment) both serving the same terminal value</button>
+        <button class="q-option" data-correct="false" data-explanation="If anything, the shared terminal value (wanting the project to succeed) is what they have in common — the module frames the clash as being about differing means (instrumental values), not about missing information.">A simple factual disagreement that more information would resolve</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">This part draws on the established organisational-behaviour research literature. The source lecture material itself (an unpublished postgraduate project-management unit) is not citable as a public source, so the references below point to the named studies and canonical texts it draws from.</p>
+
+  <div class="ref-group-label">Primary Theorists &amp; Foundational Texts</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Robbins, Stephen P., and Timothy A. Judge. <em>Organisational Behaviour</em>. Various editions. Melbourne: Pearson Australia.</div>
+    <div class="ref-annotation">The evident textbook base for this module's definitions (attitudes, the three components, job satisfaction/involvement, psychological empowerment, the Big Five, and the Dark Triad). Treated here as the canonical OB reference; check the latest edition for updated empirical citations.</div>
+    <a class="ref-link" href="https://www.pearson.com/en-au/subject-catalog/p/organisational-behaviour/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Festinger, Leon. <em>A Theory of Cognitive Dissonance</em>. Stanford, CA: Stanford University Press, 1957.</div>
+    <div class="ref-annotation">The foundational text on cognitive dissonance theory — the incompatibility between attitudes, or between attitude and behaviour, and the drive to restore consistency covered in Module 1.</div>
+    <a class="ref-link" href="https://www.sup.org/books/psychology/theory-cognitive-dissonance" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Applied to Project Management</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Tuuli, Martin M., and Steve Rowlinson. "Performance Consequences of Psychological Empowerment." <em>Journal of Construction Engineering and Management</em> 135, no. 12 (2009): 1334–1347.</div>
+    <div class="ref-annotation">The construction-project-management-team study in Hong Kong cited in Module 2, linking psychological empowerment to task and contextual (discretionary) behaviours. Verify the exact volume/page details against the publisher record before citing in formal academic work.</div>
+    <a class="ref-link" href="https://ascelibrary.org/journal/jcemd4" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">The Dark Triad</div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Paulhus, Delroy L., and Kevin M. Williams. "The Dark Triad of Personality: Narcissism, Machiavellianism, and Psychopathy." <em>Journal of Research in Personality</em> 36, no. 6 (2002): 556–563.</div>
+    <div class="ref-annotation">The paper that coined and established the "Dark Triad" as a research term — the foundational source for Module 4's three traits and their measurement.</div>
+    <a class="ref-link" href="https://doi.org/10.1016/S0092-6566(02)00505-6" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Furnham, Adrian, Steven C. Richards, and Delroy L. Paulhus. "The Dark Triad of Personality: A 10 Year Review." <em>Social and Personality Psychology Compass</em> 7, no. 3 (2013): 199–216.</div>
+    <div class="ref-annotation">A decade-long review of Dark Triad research, including the narcissistic-leader findings referenced in Module 4 on bold, aggressive, attention-seeking leadership behaviour.</div>
+    <a class="ref-link" href="https://doi.org/10.1111/spc3.12018" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the source lecture slides name several studies and years (e.g. Tuuli &amp; Rowlinson 2009) without full bibliographic detail. The citations above are reconstructed from the most plausible matching publication and should be independently verified against the original journal record before use in any formal academic or professional citation context.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 1 Complete! 🧠</h2>
+    <p>You now have the anatomy of an attitude, the mechanics of cognitive dissonance, the four job attitudes that matter most on a project, the Big Five and the Dark Triad, and the two layers of values underneath it all. Part 2 — Emotions, Moods, Perception &amp; Individual Decision Making — is next.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'project-people-part1';
+const TOTAL = 6;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
