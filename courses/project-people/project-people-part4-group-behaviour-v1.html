@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="project-people-part4">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundations of Group Behaviour · Project &amp; People · Learn with Adhi</title>
+<meta name="description" content="Part 4 of Project & People: defining and classifying groups, social identity theory, Tuckman's stages of group development, the psychological contract, and groupthink & groupshift.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-people/project-people-part4-group-behaviour-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Foundations of Group Behaviour · Project & People">
+<meta property="og:description" content="Formal vs. informal groups, why people form groups, Tuckman's five stages, the psychological contract, groupthink & groupshift.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Project & People — Part 4: Foundations of Group Behaviour","description":"Formal vs. informal groups, social identity theory, Tuckman's stages, the psychological contract, groupthink & groupshift.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#A78BFA);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="project-people-hub.html">← Series map · Part 4 of 11</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 6 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1"><span class="nav-num">01</span><span class="nav-title">Defining &amp; Classifying Groups</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="2"><span class="nav-num">02</span><span class="nav-title">Why People Form Groups</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="3"><span class="nav-num">03</span><span class="nav-title">Stages of Group Development</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="4"><span class="nav-num">04</span><span class="nav-title">The Psychological Contract</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="5"><span class="nav-num">05</span><span class="nav-title">Groupthink &amp; Groupshift</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="6"><span class="nav-num">06</span><span class="nav-title">References</span><span class="nav-check">✓</span></div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">Project &amp; People · Part 4</span>
+</div>
+<div id="overlay"></div>
+
+<main id="main">
+
+<!-- MODULE 1 -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 06</div>
+  <h1 class="mod-title">Defining &amp; <span class="acc">Classifying</span> Groups</h1>
+  <p class="mod-lede">Every project runs on groups — but not all groups are the same kind of thing, and the difference between a "formal" and an "informal" group explains a lot of what actually drives behaviour on a team.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The formal definition of a group — and why it requires interdependence, not just proximity</li>
+      <li>Formal groups vs. informal groups, and why informal groups matter just as much</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">What Counts as a Group</h2>
+  <p>A <strong>group</strong> is defined as two or more individuals, interacting and interdependent, who have come together to achieve particular objectives. The word <em>interdependent</em> is doing real work here — a crowd of people waiting at a bus stop are not a group in this sense, because nothing one of them does depends on, or affects, what the others do. A project team is a group precisely because each member's work actually depends on the others'.</p>
+
+  <h2 class="sh">Formal Groups vs. Informal Groups</h2>
+  <p><strong>Formal groups</strong> are those defined by the organisation's structure, with designated work assignments establishing specific tasks. In a formal group, the behaviours members should engage in are stipulated by, and directed toward, organisational goals — a six-person project delivery team assembled on a charter is a formal group.</p>
+  <p><strong>Informal groups</strong> are neither formally structured nor organisationally determined. They're natural formations that appear in response to the need for social contact — three team members from different workstreams who regularly grab coffee together are an informal group. These interactions are not written into anyone's job description, but they deeply affect behaviour and performance on the formal team all the same.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Same project, two overlapping group structures</div>
+    <svg class="demo-svg" viewBox="0 0 640 260" role="img" aria-label="A rectangle labelled Formal Group containing boxes for Project Manager, Engineer, Designer, and Analyst arranged by the org chart; overlaid with a dashed loop labelled Informal Group connecting the Engineer and the Analyst, who regularly have lunch together, cutting across the formal structure">
+      <rect x="20" y="20" width="600" height="220" rx="16" fill="none" stroke="var(--acc)" stroke-width="2"/>
+      <text x="36" y="42" font-family="var(--fm)" font-size="9.5" letter-spacing="0.08em" fill="var(--acc-dim)">FORMAL GROUP — defined by the org chart</text>
+
+      <rect x="60" y="70" width="130" height="60" rx="10" fill="var(--paper-2)" stroke="var(--line-s)" stroke-width="1.5"/>
+      <text x="125" y="95" text-anchor="middle" font-family="var(--fb)" font-size="11" font-weight="700" fill="var(--ink)">Project</text>
+      <text x="125" y="111" text-anchor="middle" font-family="var(--fb)" font-size="11" font-weight="700" fill="var(--ink)">Manager</text>
+
+      <rect x="230" y="70" width="130" height="60" rx="10" fill="var(--paper-2)" stroke="var(--line-s)" stroke-width="1.5"/>
+      <text x="295" y="105" text-anchor="middle" font-family="var(--fb)" font-size="11" font-weight="700" fill="var(--ink)">Engineer</text>
+
+      <rect x="400" y="70" width="130" height="60" rx="10" fill="var(--paper-2)" stroke="var(--line-s)" stroke-width="1.5"/>
+      <text x="465" y="105" text-anchor="middle" font-family="var(--fb)" font-size="11" font-weight="700" fill="var(--ink)">Designer</text>
+
+      <rect x="230" y="160" width="130" height="60" rx="10" fill="var(--paper-2)" stroke="var(--line-s)" stroke-width="1.5"/>
+      <text x="295" y="195" text-anchor="middle" font-family="var(--fb)" font-size="11" font-weight="700" fill="var(--ink)">Analyst</text>
+
+      <path d="M250 130 C 230 155, 250 165, 270 170" fill="none" stroke="var(--mango)" stroke-width="2.5" stroke-dasharray="5 4"/>
+      <path d="M330 170 C 350 165, 370 155, 360 130" fill="none" stroke="var(--mango)" stroke-width="2.5" stroke-dasharray="5 4"/>
+      <text x="295" y="250" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="#B45F04" font-weight="600">Informal group: Engineer &amp; Analyst, who lunch together daily — not on any org chart</text>
+    </svg>
+    <div class="demo-caption">The formal structure is drawn by the organisation. The informal one is drawn by the people in it — and both shape what actually happens on the project.</div>
+  </div>
+
+  <div class="callout">
+    <strong>Why this distinction matters:</strong> a PM who only manages the formal structure — the charter, the RACI, the reporting lines — is managing half the team. Information, trust, and early warning of problems travel through the informal network just as often as through the formal one, and sometimes faster.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+    <div class="q-card">
+      <p class="q-text">Forty people are all waiting in the same queue to badge into a construction site each morning. By the module's definition, are they a "group"?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Shared physical space and a shared activity (queuing) aren't enough — the definition specifically requires interdependence, where what one person does affects the others. Nothing about one person's queuing depends on another's.">Yes — they share a location and a common activity, which is enough to count</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! The group definition requires interaction AND interdependence toward a shared objective. A queue has neither — it's a category of people in the same place, not a group in the organisational-behaviour sense.">No — they lack interdependence; nothing one person does in the queue affects what the others do</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Three developers from unrelated project teams start a weekly after-work trivia night that has nothing to do with any of their formal job descriptions. What kind of group is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! It arose purely from a need for social contact, with no organisational structure or designated work assignment behind it — the textbook definition of an informal group.">An informal group — it formed purely from the need for social contact, not from any organisational structure</button>
+        <button class="q-option" data-correct="false" data-explanation="Formal groups are defined by the organisation's structure with designated work assignments directed at organisational goals — a voluntary trivia night has neither.">A formal group — because it meets on a regular schedule</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A PM notices that bad news about schedule slippage always seems to reach the sponsor through informal hallway conversations well before it shows up in the formal status report. What does this scenario best illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is the exact dynamic the module highlights: informal groups and networks carry real information and influence, often faster than formal reporting lines — ignoring them means managing only half the team's actual communication.">Informal networks carry real information, sometimes faster than the formal structure does — and shouldn't be ignored</button>
+        <button class="q-option" data-correct="false" data-explanation="The scenario isn't about which report format is faster to produce — it's about two parallel channels (formal structure vs. informal group ties) carrying the same information at different speeds.">The formal status report template is simply poorly designed and needs a faster update cycle</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 2 -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 06</div>
+  <h1 class="mod-title">Why People <span class="acc">Form</span> Groups</h1>
+  <p class="mod-lede">Social identity theory explains something project managers feel constantly but rarely name: why "our team" vs. "their team" becomes emotionally real so fast, and why people defend group membership even when it costs them something individually.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Social identity theory's four drivers of group membership</li>
+      <li>Why high-status groups attract stronger identification</li>
+      <li>How group identity reduces uncertainty about "who we are"</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Social Identity Theory</h2>
+  <p><strong>Social identity theory</strong> considers when and why individuals come to see themselves as members of a group. Four characteristics make a social identity matter to a person:</p>
+
+  <div class="concept-grid">
+    <div class="concept-card"><div class="icon">🪞</div><h4>Similarity</h4><p>We identify more strongly with people who are like us.</p></div>
+    <div class="concept-card"><div class="icon">🔀</div><h4>Distinctiveness</h4><p>We're drawn to identities that mark us as different from other groups.</p></div>
+    <div class="concept-card"><div class="icon">🏆</div><h4>Status</h4><p>We use identities to raise our self-esteem — so we're more likely to identify with high-status groups.</p></div>
+    <div class="concept-card"><div class="icon">🧭</div><h4>Uncertainty Reduction</h4><p>Membership tells us who we are and how we're meant to behave, reducing ambiguity.</p></div>
+  </div>
+
+  <div class="callout blue">
+    <strong>Project application:</strong> a project explicitly branded and resourced as the organisation's flagship initiative attracts stronger voluntary identification than an unglamorous maintenance project — not because the work itself differs in difficulty, but because status feeds the self-esteem driver of social identity. Naming and visibly backing a project changes how much people identify with it, independent of the work.
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">The same four drivers that bond a group also separate it from others</div>
+    <svg class="demo-svg" viewBox="0 0 640 260" role="img" aria-label="Two overlapping circles labelled Our Team and Their Team, with the four social identity drivers — similarity, distinctiveness, status, uncertainty reduction — shown feeding into the Our Team circle, and an annotation noting the same drivers that bond the in-group also separate it from the out-group">
+      <circle cx="250" cy="140" r="100" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="200" y="100" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc-dim)">OUR TEAM</text>
+      <text x="200" y="118" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">(in-group)</text>
+
+      <circle cx="420" cy="140" r="78" fill="var(--paper-2)" stroke="var(--line-s)" stroke-width="2.5"/>
+      <text x="460" y="108" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--muted)">THEIR TEAM</text>
+      <text x="460" y="126" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">(out-group)</text>
+
+      <g font-family="var(--fb)" font-size="10" fill="var(--ink)">
+        <rect x="18" y="18" width="118" height="30" rx="8" fill="#fff" stroke="var(--sea)"/>
+        <text x="77" y="37" text-anchor="middle">Similarity</text>
+        <rect x="18" y="56" width="118" height="30" rx="8" fill="#fff" stroke="var(--forest)"/>
+        <text x="77" y="75" text-anchor="middle">Distinctiveness</text>
+        <rect x="18" y="212" width="118" height="30" rx="8" fill="#fff" stroke="var(--mango)"/>
+        <text x="77" y="231" text-anchor="middle">Status</text>
+        <rect x="18" y="174" width="140" height="30" rx="8" fill="#fff" stroke="var(--tomato)"/>
+        <text x="88" y="193" text-anchor="middle">Uncertainty reduction</text>
+      </g>
+      <path d="M136 33 L168 90" stroke="var(--sea)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M136 71 L170 110" stroke="var(--forest)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M158 189 L185 165" stroke="var(--tomato)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M136 227 L185 185" stroke="var(--mango)" stroke-width="1.5" opacity="0.6"/>
+
+      <text x="335" y="143" text-anchor="middle" font-family="var(--fb)" font-size="15" fill="var(--muted)" opacity="0.7">⇄</text>
+      <text x="320" y="238" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-style="italic" fill="var(--muted)">Drawing the in-group boundary automatically draws the out-group boundary too</text>
+    </svg>
+    <div class="demo-caption">The four drivers don't just build "us" — the act of building "us" simultaneously defines "them," which is why rivalry needs no deliberate trigger.</div>
+  </div>
+
+  <h2 class="sh">Identity Cuts Both Ways</h2>
+  <p>The same forces that bind a project team together also build walls between it and other teams. If "our team" is distinctive and high-status, by definition "their team" is something else — which is precisely why inter-team rivalry (engineering vs. design, project vs. operations) emerges so naturally, without anyone deliberately starting a conflict. We'll return to this directly when we cover intergroup conflict in Part 9.</p>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+    <div class="q-card">
+      <p class="q-text">A company renames an unglamorous data-migration project "Project Lighthouse," gives it its own branded Slack channel, and has the CEO mention it in an all-hands. Engagement on the team visibly rises, even though the actual tasks haven't changed. Which driver of social identity best explains this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Raising a project's visible status — branding, executive attention — feeds the self-esteem motive behind social identity, making people more willing to identify with it, independent of the underlying work.">Status — elevating the project's visible status increases people's self-esteem motive to identify with it</button>
+        <button class="q-option" data-correct="false" data-explanation="Nothing about this scenario involves reducing ambiguity about roles or behaviour — the change is about the project's prestige, which maps to the status driver, not uncertainty reduction.">Uncertainty reduction — the new name clarifies what the team's role is</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A new hire joins a project team and almost immediately starts describing themselves as "one of the backend crew" rather than using their job title. Which driver is most directly at work?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Adopting a group identity quickly resolves ambiguity about who you are in a new environment and how you're expected to behave — exactly the uncertainty-reduction driver.">Uncertainty reduction — group membership quickly answers 'who am I here, and how should I act?'</button>
+        <button class="q-option" data-correct="false" data-explanation="Distinctiveness is about the group marking itself apart from other groups, not about a new member's own motive for adopting an identity to reduce personal ambiguity.">Distinctiveness — the backend crew wants to mark itself apart from other groups</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Why, according to social identity theory, does rivalry between a project team and the operations team it will eventually hand off to often emerge even when nobody intends to start a conflict?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The same forces (similarity, distinctiveness, status, uncertainty reduction) that bind one group together simultaneously mark other groups as different — rivalry is a natural, often unintended, byproduct of identity formation, not a sign anyone acted in bad faith.">The same identity-forming process that bonds a team internally also marks other teams as distinct from it, naturally generating us-vs-them dynamics</button>
+        <button class="q-option" data-correct="false" data-explanation="The module doesn't claim rivalry requires a deliberate personality clash — it frames inter-group tension as an often-unintended structural byproduct of identity formation itself.">It only happens when a specific individual on one team deliberately provokes the other</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 3 -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 06</div>
+  <h1 class="mod-title">Stages of <span class="acc">Group Development</span></h1>
+  <p class="mod-lede">Bruce Tuckman's model describes a predictable sequence every group tends to move through — and knowing which stage a team is in changes what a PM should actually do about the friction they're seeing.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Tuckman's five stages: forming, storming, norming, performing, adjourning</li>
+      <li>Why "storming" is a predictable stage, not a sign the team has failed</li>
+      <li>How the model itself evolved after its original publication</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Five Stages</h2>
+  <p>Tuckman's model (1965) describes groups moving through five predictable stages: <strong>forming</strong> (members get oriented, test boundaries, and depend on a leader for direction), <strong>storming</strong> (conflict emerges over roles, authority, and direction — genuine intragroup conflict), <strong>norming</strong> (close relationships develop, cohesion emerges, roles and norms stabilise), <strong>performing</strong> (the group is fully functional, energy has moved from getting-to-know-you dynamics to the actual task), and <strong>adjourning</strong> (for temporary groups like project teams, wrapping up activities and disbanding).</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The five stages, as a project team's energy curve</div>
+    <svg class="demo-svg" viewBox="0 0 640 220" role="img" aria-label="A line graph across five labelled phases—forming, storming, norming, performing, adjourning—showing team effectiveness dipping during storming before rising through norming to a peak at performing, then declining at adjourning">
+      <line x1="40" y1="190" x2="610" y2="190" stroke="var(--line-s)" stroke-width="1.5"/>
+      <path d="M40 130 C 90 110, 110 170, 170 175 C 230 178, 260 110, 330 80 C 400 55, 450 40, 520 38 C 560 40, 590 70, 610 110"
+            fill="none" stroke="var(--acc)" stroke-width="3"/>
+      <circle cx="40" cy="130" r="5" fill="var(--acc)"/>
+      <circle cx="170" cy="175" r="5" fill="var(--tomato)"/>
+      <circle cx="330" cy="80" r="5" fill="var(--mango)"/>
+      <circle cx="520" cy="38" r="5" fill="var(--green)"/>
+      <circle cx="610" cy="110" r="5" fill="var(--muted)"/>
+      <text x="40" y="208" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="var(--ink)">Forming</text>
+      <text x="170" y="208" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="var(--tomato)" font-weight="700">Storming</text>
+      <text x="330" y="208" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="#B45F04">Norming</text>
+      <text x="520" y="208" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="#145e30" font-weight="700">Performing</text>
+      <text x="610" y="208" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="var(--muted)">Adjourning</text>
+    </svg>
+    <div class="demo-caption">The dip at "storming" is normal and predictable — the mistake is treating it as team failure instead of a stage to manage through.</div>
+  </div>
+
+  <div class="callout mango">
+    <strong>A nuance worth knowing:</strong> Tuckman's original 1965 paper actually proposed only <em>four</em> stages — forming, storming, norming, performing. "Adjourning" was added over a decade later, in Tuckman &amp; Jensen's 1977 follow-up paper, once researchers recognised that temporary groups (like most project teams) need an explicit stage for winding down. It's a good reminder that even famous, widely-taught models get revised after publication.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+    <div class="q-card">
+      <p class="q-text">Three weeks into a new project, tension erupts over who has final say on design decisions, and two senior members openly disagree in a planning meeting. A junior PM is alarmed and considers reporting the team as dysfunctional. What does Tuckman's model suggest instead?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is a textbook description of the storming stage — conflict over roles and authority is a predictable, normal phase, not evidence of team failure. The PM's job is to help the team move through it toward norming, not to panic.">This matches the normal 'storming' stage — conflict over roles and authority — and should be actively managed, not treated as failure</button>
+        <button class="q-option" data-correct="false" data-explanation="Tuckman's model specifically frames this kind of conflict as a predictable developmental stage most groups pass through, not as a sign the team composition itself is broken.">The team composition is clearly wrong and should be reassembled from scratch</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">A project team has been working together for months, has stable roles, clear norms for how decisions get made, and is now producing its best work with minimal friction. Which stage are they in?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Stable roles and norms (from norming) plus peak output and minimal friction is exactly the performing stage — the group's energy has shifted fully onto the task.">Performing — stable norms are in place and the team's energy is now on the task itself</button>
+        <button class="q-option" data-correct="false" data-explanation="Norming is the stage where roles and norms are still forming and cohesion is just developing — this scenario describes a team that has already stabilised and moved past that into peak output, which is performing.">Norming — the team is still establishing roles</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Why does the module flag that "adjourning" wasn't part of Tuckman's original 1965 model?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! It's a concrete, useful reminder that even famous, widely-cited models aren't frozen at their original publication — Tuckman & Jensen's own 1977 follow-up revised the model once the need for an explicit wind-down stage for temporary groups became clear.">To illustrate that influential models are often revised after publication as understanding develops — in this case, to account for temporary groups needing a wind-down stage</button>
+        <button class="q-option" data-correct="false" data-explanation="The point isn't to discredit the adjourning stage — it's a well-established addition (Tuckman & Jensen, 1977) — the point is historical accuracy about how the model developed over time.">To suggest that 'adjourning' isn't a real or useful stage and should be disregarded</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 4 -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 06</div>
+  <h1 class="mod-title">The <span class="acc">Psychological</span> Contract</h1>
+  <p class="mod-lede">Beneath every written employment agreement sits an unwritten one — a set of mutual expectations about what each side owes the other. Understanding which kind your project team operates under changes what you can reasonably ask of them.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What a psychological contract is, and why it's never written down</li>
+      <li>Relational contracts vs. transactional contracts</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Mutual Expectations, Unwritten</h2>
+  <p>A <strong>psychological contract</strong> captures the mutual expectations of commitment between an employer and employee — a two-way exchange of perceived promises and obligations that no one signs, but everyone operates under. When either side feels the other has broken this unwritten deal, trust erodes fast, often faster than when a written contract term is breached, precisely because the psychological contract was never explicit enough to negotiate or clarify in the first place.</p>
+
+  <h2 class="sh">Relational vs. Transactional Contracts</h2>
+  <p><strong>Relational contracts</strong> are usually longer-term, open-ended relationships within unitary (single) organisations, built on an exchange of loyalty, trust, and support. <strong>Transactional contracts</strong> are short-term relationships within pluralistic (mixed) organisational contexts, characterised by mutual self-interest rather than loyalty.</p>
+
+  <table class="pm-table">
+    <thead><tr><th></th><th>Relational Contract</th><th>Transactional Contract</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Time horizon</td><td>Longer-term, open-ended</td><td>Short-term, defined</td></tr>
+      <tr><td class="hl">Organisational context</td><td>Unitary (single) organisation</td><td>Pluralistic (mixed) context</td></tr>
+      <tr><td class="hl">What's exchanged</td><td>Loyalty, trust, support</td><td>Mutual self-interest</td></tr>
+      <tr><td class="hl">Typical example</td><td>A core, long-tenured employee</td><td>A contractor hired for one project phase</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">What flows each way, under each kind of contract</div>
+    <svg class="demo-svg" viewBox="0 0 640 220" role="img" aria-label="Two side-by-side panels comparing a relational psychological contract, a long open-ended exchange of loyalty trust and support, against a transactional psychological contract, a short defined exchange of a scoped deliverable for payment">
+      <rect x="20" y="20" width="285" height="180" rx="14" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <text x="162" y="46" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc-dim)">RELATIONAL</text>
+      <text x="162" y="62" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">long-term · open-ended · unitary org</text>
+      <circle cx="80" cy="110" r="26" fill="#fff" stroke="var(--acc)" stroke-width="2"/>
+      <text x="80" y="115" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Employer</text>
+      <circle cx="245" cy="110" r="26" fill="#fff" stroke="var(--acc)" stroke-width="2"/>
+      <text x="245" y="115" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Employee</text>
+      <path d="M106 100 L219 100" stroke="var(--acc)" stroke-width="2" marker-end="url(#arrowR1)"/>
+      <path d="M219 122 L106 122" stroke="var(--acc)" stroke-width="2" marker-end="url(#arrowR2)"/>
+      <text x="162" y="160" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--acc-dim)">security, support, growth</text>
+      <text x="162" y="178" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--acc-dim)">⇄ loyalty, trust, discretionary effort</text>
+
+      <rect x="335" y="20" width="285" height="180" rx="14" fill="rgba(217,119,6,.10)" stroke="var(--mango)" stroke-width="2"/>
+      <text x="477" y="46" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#B45F04">TRANSACTIONAL</text>
+      <text x="477" y="62" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">short-term · defined · pluralistic context</text>
+      <circle cx="395" cy="110" r="26" fill="#fff" stroke="var(--mango)" stroke-width="2"/>
+      <text x="395" y="115" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Employer</text>
+      <circle cx="560" cy="110" r="26" fill="#fff" stroke="var(--mango)" stroke-width="2"/>
+      <text x="560" y="115" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">Contractor</text>
+      <path d="M421 100 L534 100" stroke="var(--mango)" stroke-width="2" marker-end="url(#arrowR1)"/>
+      <path d="M534 122 L421 122" stroke="var(--mango)" stroke-width="2" marker-end="url(#arrowR2)"/>
+      <text x="477" y="160" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="#B45F04">payment, a scoped brief</text>
+      <text x="477" y="178" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="#B45F04">⇄ exactly what was agreed, no more</text>
+
+      <defs>
+        <marker id="arrowR1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker>
+        <marker id="arrowR2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker>
+      </defs>
+    </svg>
+    <div class="demo-caption">Neither contract is "better" — they're calibrated to a different time horizon and context. The trouble starts when a PM applies relational expectations to a transactional relationship, or vice versa.</div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>A common PM mistake:</strong> treating a contractor or short-term specialist (whose psychological contract is transactional) as if they owe the same loyalty-driven discretionary effort as a long-tenured core team member (whose contract is relational) — and then feeling "betrayed" when they don't deliver it. The mismatch is in the expectation, not in the contractor's conduct.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+    <div class="q-card">
+      <p class="q-text">A PM is frustrated that a contractor, brought on for a six-week sprint, declined to volunteer unpaid overtime the way a long-tenured core staff member did. What does the psychological contract framework suggest about this situation?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The contractor's short-term, mutual-self-interest arrangement is a transactional psychological contract, which simply doesn't carry the same loyalty-based expectations as the core employee's relational one — the mismatch is in the PM's expectation, not a failure by the contractor.">The contractor and the core employee likely operate under different psychological contracts — transactional vs. relational — so expecting identical discretionary effort is a mismatch</button>
+        <button class="q-option" data-correct="false" data-explanation="The framework doesn't suggest the contractor's behaviour is a problem to fix — it suggests the PM's expectation itself was mismatched to the type of psychological contract actually in place.">The contractor is simply less committed and should be replaced</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Which scenario best describes a relational psychological contract?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! A long tenure, an open-ended time horizon, and a loyalty-for-security exchange within one organisation is exactly the relational pattern described in the module.">An employee who has worked at the same organisation for 12 years, trades loyalty for long-term security, and expects to stay indefinitely</button>
+        <button class="q-option" data-correct="false" data-explanation="A defined short engagement focused on mutual self-interest within a mixed/contracted context is the transactional pattern, not the relational one.">A specialist hired for a single 3-month engagement who expects a clearly scoped deliverable and nothing more</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">Why can breaking an unwritten psychological contract sometimes damage trust faster than breaking an explicit written contract term?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Because the psychological contract was never explicitly stated or negotiated, there's no agreed text to refer back to or clarify — the breach feels personal and ambiguous rather than a documented, addressable dispute, which the module notes makes it erode trust especially fast.">Because it was never made explicit, there's no shared, agreed text to point to or renegotiate — the breach feels personal and is harder to resolve cleanly</button>
+        <button class="q-option" data-correct="false" data-explanation="The module doesn't claim psychological contracts carry formal legal weight — if anything, their informality is exactly what makes a breach harder to resolve through normal channels.">Psychological contracts carry more legal weight than written employment contracts</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 5 -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 06</div>
+  <h1 class="mod-title">Groupthink &amp; <span class="acc">Groupshift</span></h1>
+  <p class="mod-lede">Groups don't just combine individual judgment — they can systematically distort it, in two distinct and well-documented ways.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Groupthink: how the drive for consensus overrides realistic appraisal</li>
+      <li>Groupshift: why groups push initial positions toward extremes</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Groupthink</h2>
+  <p><strong>Groupthink</strong> is a phenomenon where the norm for consensus overrides the realistic appraisal of alternative courses of action. A cohesive team under pressure to agree can suppress doubts, self-censor dissent, and converge on a decision that no individual member, questioned privately, would actually endorse.</p>
+
+  <div class="callout tomato">
+    <strong>The warning signs:</strong> a project steering committee that moves suspiciously fast to consensus on a risky decision, where dissenting voices go quiet rather than being argued down, is a groupthink red flag — not a sign of strong alignment. Genuine alignment survives someone playing devil's advocate; groupthink doesn't.
+  </div>
+
+  <h2 class="sh">Groupshift</h2>
+  <p><strong>Groupshift</strong> describes how group members tend to exaggerate their initial positions when discussing a decision as a group, producing a measurable shift in risk between what the group ultimately decides and what an individual member would have decided alone. That shift can go either way — toward greater conservatism, or toward greater risk — but it's rarely neutral.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Groupthink vs. groupshift — two distinct distortions</div>
+    <svg class="demo-svg" viewBox="0 0 640 210" role="img" aria-label="Two side-by-side diagrams: Groupthink shows several individual opinion bubbles converging into one narrow consensus bubble under pressure; Groupshift shows an individual's moderate starting position being pushed further toward an extreme after group discussion">
+      <rect x="20" y="20" width="290" height="175" rx="14" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <text x="165" y="44" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc-dim)">GROUPTHINK</text>
+      <circle cx="70" cy="90" r="16" fill="#fff" stroke="var(--line-s)"/>
+      <circle cx="115" cy="75" r="16" fill="#fff" stroke="var(--line-s)"/>
+      <circle cx="160" cy="95" r="16" fill="#fff" stroke="var(--line-s)"/>
+      <circle cx="205" cy="78" r="16" fill="#fff" stroke="var(--line-s)"/>
+      <circle cx="250" cy="90" r="16" fill="#fff" stroke="var(--line-s)"/>
+      <path d="M70 106 L140 150 M115 91 L150 150 M160 111 L160 150 M205 94 L172 150 M250 106 L182 150" stroke="var(--acc)" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <ellipse cx="160" cy="165" rx="55" ry="18" fill="var(--acc)"/>
+      <text x="160" y="170" text-anchor="middle" font-family="var(--fb)" font-size="10" font-weight="700" fill="#fff">forced "consensus"</text>
+
+      <rect x="330" y="20" width="290" height="175" rx="14" fill="rgba(217,119,6,.10)" stroke="var(--mango)" stroke-width="2"/>
+      <text x="475" y="44" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#B45F04">GROUPSHIFT</text>
+      <line x1="355" y1="110" x2="595" y2="110" stroke="var(--line-s)" stroke-width="2"/>
+      <circle cx="475" cy="110" r="8" fill="var(--muted)"/>
+      <text x="475" y="130" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--muted)">individual's starting view</text>
+      <path d="M483 110 L570 110" stroke="var(--mango)" stroke-width="2.5" marker-end="url(#arrowG)"/>
+      <circle cx="575" cy="110" r="8" fill="var(--mango)"/>
+      <text x="575" y="90" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#B45F04" font-weight="700">group's shifted view</text>
+      <defs><marker id="arrowG" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--mango)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Groupthink compresses a range of private views into one artificial consensus. Groupshift pushes a single view further toward an extreme. They're different mechanisms, and a team can suffer from either, or both.</div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+    <div class="q-card">
+      <p class="q-text">A project steering committee reaches a unanimous go-ahead decision on a risky vendor switch in just ten minutes, with no one raising concerns — even though two members privately told a colleague afterward they had serious doubts. What does this best illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Suppressed private doubts behind a fast, unanimous public consensus is the textbook pattern of groupthink — the norm for agreement overriding honest appraisal of the risk.">Groupthink — the drive for consensus suppressed honest individual doubts</button>
+        <button class="q-option" data-correct="false" data-explanation="Groupshift is about individual positions being pushed toward a more extreme version after discussion — this scenario is about dissent being silenced in favour of fast agreement, which is groupthink.">Groupshift — the group pushed each member's view toward a riskier extreme</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">An individual engineer, surveyed alone, rates a new unproven technology as "moderately risky but worth a pilot." After a team discussion, the group collectively decides to roll it out company-wide immediately, further than any individual's private rating suggested. What does this illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The group's decision shifted further toward risk than any individual member's private starting position — the defining signature of groupshift.">Groupshift — the group's decision moved further toward risk than any individual's own starting position</button>
+        <button class="q-option" data-correct="false" data-explanation="This scenario shows positions becoming more extreme after discussion, not suppressed dissent converging on a forced consensus — that pattern is groupshift, not groupthink.">Groupthink — the team suppressed dissent to reach a forced agreement</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+    <div class="q-card">
+      <p class="q-text">What is a practical sign that a steering committee's fast agreement is healthy alignment rather than groupthink?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Genuine alignment can withstand someone deliberately arguing the other side without the group's position collapsing or the dissenter being punished — groupthink typically can't survive that test, because the 'consensus' was never robustly examined in the first place.">The decision survives a deliberate devil's-advocate challenge without the group suppressing or punishing the dissent</button>
+        <button class="q-option" data-correct="false" data-explanation="Speed of agreement is not, by itself, evidence of health — groupthink is specifically characterised by unusually fast, artificial consensus, which is the opposite of a reliable signal here.">The decision was reached unusually quickly, which shows the team works efficiently together</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- MODULE 6 – REFERENCES -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">The source lecture material (an unpublished postgraduate unit) isn't citable as a public source. Below are the named theorists and foundational studies it draws from.</p>
+
+  <div class="ref-group-label">Social Identity &amp; Group Formation</div>
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Tajfel, Henri, and John C. Turner. "An Integrative Theory of Intergroup Conflict." In <em>The Social Psychology of Intergroup Relations</em>, edited by William G. Austin and Stephen Worchel, 33–47. Monterey, CA: Brooks/Cole, 1979.</div>
+    <div class="ref-annotation">The foundational chapter establishing social identity theory — the similarity/distinctiveness/status/uncertainty-reduction framework covered in Module 2.</div>
+    <a class="ref-link" href="https://psycnet.apa.org/record/1987-02197-001" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Group Development &amp; the Psychological Contract</div>
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Tuckman, Bruce W. "Developmental Sequence in Small Groups." <em>Psychological Bulletin</em> 63, no. 6 (1965): 384–399.</div>
+    <div class="ref-annotation">The original four-stage model (forming, storming, norming, performing) discussed in Module 3.</div>
+    <a class="ref-link" href="https://doi.org/10.1037/h0022100" target="_blank" rel="noopener">→ Source</a>
+  </div>
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Tuckman, Bruce W., and Mary Ann C. Jensen. "Stages of Small-Group Development Revisited." <em>Group &amp; Organization Studies</em> 2, no. 4 (1977): 419–427.</div>
+    <div class="ref-annotation">The follow-up paper that added "adjourning" as a fifth stage, specifically to account for temporary groups — directly relevant to project teams.</div>
+    <a class="ref-link" href="https://doi.org/10.1177/105960117700200404" target="_blank" rel="noopener">→ Source</a>
+  </div>
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Rousseau, Denise M. "Psychological and Implied Contracts in Organizations." <em>Employee Responsibilities and Rights Journal</em> 2, no. 2 (1989): 121–139.</div>
+    <div class="ref-annotation">The foundational paper on psychological contracts in organisations, underpinning Module 4's relational/transactional distinction.</div>
+    <a class="ref-link" href="https://doi.org/10.1007/BF01384942" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Groupthink</div>
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Janis, Irving L. <em>Victims of Groupthink: A Psychological Study of Foreign-Policy Decisions and Fiascoes</em>. Boston: Houghton Mifflin, 1972.</div>
+    <div class="ref-annotation">The book that coined and established "groupthink" as a concept, covered in Module 5. Janis's original case studies are drawn from foreign-policy fiascos, but the mechanism generalises directly to project steering committees and boards.</div>
+    <a class="ref-link" href="https://www.google.com/search?q=Victims+of+Groupthink+Irving+Janis+1972" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the source lecture slides name concepts and years without full bibliographic detail in several cases. The citations above are reconstructed from the most plausible matching publication and should be independently verified before use in any formal academic or professional citation context.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 4 Complete! 👥</h2>
+    <p>You now understand what makes a group a group, why people identify with one in the first place, the predictable stages every team moves through, the unwritten psychological contract underneath it all, and the two ways groups distort judgment. Part 5 — Understanding Project Teams — is next.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'project-people-part4';
+const TOTAL = 6;
+function getProgress() { try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; } }
+function saveProgress(p) { localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p)); }
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) { document.getElementById('completion-banner').style.display = 'block'; markCourseComplete(); }
+}
+let currentModule = 1;
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => { o.disabled = true; if (o.dataset.correct === 'true') o.classList.add('correct'); });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+  document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => goto(parseInt(item.dataset.module))));
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => btn.addEventListener('click', () => goto(currentModule - 1)));
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => btn.addEventListener('click', () => goto(currentModule + 1)));
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

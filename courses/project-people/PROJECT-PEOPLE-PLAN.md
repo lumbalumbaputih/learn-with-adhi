@@ -339,8 +339,8 @@ scope for this series; just don't make it worse).
 | 1 — Attitudes, Personality & Values | `project-people-part1-attitudes-personality-values-v1.html` | ✅ shipped |
 | 2 — Emotions, Moods, Perception & Decision Making | `project-people-part2-emotions-perception-decisions-v1.html` | ⏳ |
 | 3 — Motivation | `project-people-part3-motivation-v1.html` | ⏳ |
-| 4 — Foundations of Group Behaviour | `project-people-part4-group-behaviour-v1.html` | ⏳ |
-| 5 — Understanding Project Teams | `project-people-part5-project-teams-v1.html` | ⏳ |
+| 4 — Foundations of Group Behaviour | `project-people-part4-group-behaviour-v1.html` | ✅ shipped |
+| 5 — Understanding Project Teams | `project-people-part5-project-teams-v1.html` | ✅ shipped |
 | 6 — Communications in Projects | `project-people-part6-communications-v1.html` | ✅ shipped |
 | 7 — Leadership in Projects | `project-people-part7-leadership-v1.html` | ✅ shipped |
 | 8 — Power and Politics | `project-people-part8-power-politics-v1.html` | ✅ shipped |
