@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="project-people-part7">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leadership in Projects · Project &amp; People · Learn with Adhi</title>
+<meta name="description" content="Part 7 of Project & People: leadership vs. management, trait and behavioural theories, the Fiedler Contingency Model, Leader-Member Exchange, charismatic and transformational leadership, and shared leadership in project teams.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-people/project-people-part7-leadership-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leadership in Projects · Project & People">
+<meta property="og:description" content="Leadership vs. management, Fiedler and LMX, charismatic and transformational leadership, and shared leadership — applied to project management.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Project & People — Part 7: Leadership in Projects","description":"Leadership vs. management, trait and behavioural theories, the Fiedler Contingency Model, Leader-Member Exchange, charismatic and transformational leadership, and shared leadership.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#A78BFA);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="project-people-hub.html">← Series map · Part 7 of 11</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 6 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Leadership vs. Management</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Early Theories: Traits &amp; Behaviours</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Contingency Theories: Fiedler &amp; LMX</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Charismatic &amp; Transformational Leadership</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Shared Leadership</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">Project &amp; People · Part 7</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – LEADERSHIP VS. MANAGEMENT
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 06</div>
+  <h1 class="mod-title">Leadership vs. <span class="acc">Management</span></h1>
+  <p class="mod-lede">Every project needs both — but they are not the same skill, and confusing them is how competent managers fail to actually lead. Day &amp; Antonakis (2012) draw the line precisely.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Day &amp; Antonakis's definition of leadership vs. management</li>
+      <li>The full manager-vs-leader contrast, trait by trait</li>
+      <li>Why "successful leadership requires good management" — but doesn't stop there</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Two Different Activities</h2>
+  <p><strong>Leadership</strong> is a purpose-driven activity grounded in values, ideals, vision, symbols, and emotional exchanges. <strong>Management</strong> is a task-driven activity grounded in rationality, bureaucratic means, and the fulfilment of contractual obligations. A project manager's functional role genuinely overlaps both — but they are distinct skill sets, and a PM strong in one is not automatically strong in the other.</p>
+  <p>Day &amp; Antonakis's own conclusion is carefully balanced: <strong>successful leadership requires good management</strong> — but <strong>leadership goes beyond management</strong>. You cannot lead a chaotic, unmanaged project into success through vision alone; but you also cannot manage your way into extraordinary, above-expectation performance through process alone.</p>
+
+  <h2 class="sh">Manager vs. Leader, Trait by Trait</h2>
+  <table class="pm-table">
+    <thead><tr><th>Manager</th><th>Leader</th></tr></thead>
+    <tbody>
+      <tr><td>Technical competence, administration, supervision</td><td>Selling the vision, dealing with ambiguity, persuasion</td></tr>
+      <tr><td>Analytical decision making</td><td>Intuitive decision making</td></tr>
+      <tr><td>Risk-cautious</td><td>Takes the necessary risks</td></tr>
+      <tr><td>Accepts the status quo</td><td>Challenges the status quo</td></tr>
+      <tr><td>Does things correctly</td><td>Does the correct thing</td></tr>
+      <tr><td>Imitates</td><td>Originates</td></tr>
+      <tr><td>Plans tactics</td><td>Plans strategy</td></tr>
+      <tr><td>Improvement</td><td>Innovation</td></tr>
+      <tr><td>Employee compliance</td><td>Employee commitment</td></tr>
+      <tr><td>Focuses on the bottom line</td><td>Focuses on future directions and vision</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">Where management and leadership overlap</div>
+    <svg class="demo-svg" viewBox="0 0 640 220" role="img" aria-label="Two overlapping circles labelled Management and Leadership, with the overlapping region labelled Project Manager's Role, showing that the role draws on both but each circle also has traits unique to it">
+      <circle cx="240" cy="110" r="100" fill="rgba(45,111,179,.12)" stroke="var(--sea)" stroke-width="2.5"/>
+      <circle cx="400" cy="110" r="100" fill="rgba(124,58,237,.12)" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="175" y="70" text-anchor="middle" font-family="var(--fd)" font-size="14" font-weight="800" fill="var(--sea)">MANAGEMENT</text>
+      <text x="175" y="90" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">rationality,</text>
+      <text x="175" y="104" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">bureaucratic means,</text>
+      <text x="175" y="118" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">contracts</text>
+
+      <text x="465" y="70" text-anchor="middle" font-family="var(--fd)" font-size="14" font-weight="800" fill="var(--acc-dim)">LEADERSHIP</text>
+      <text x="465" y="90" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">values, ideals,</text>
+      <text x="465" y="104" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">vision, symbols,</text>
+      <text x="465" y="118" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">emotional exchange</text>
+
+      <text x="320" y="155" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="var(--ink)">PROJECT MANAGER'S</text>
+      <text x="320" y="171" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="var(--ink)">ACTUAL ROLE</text>
+      <text x="320" y="195" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--muted)">good management is necessary, but not sufficient</text>
+    </svg>
+    <div class="demo-caption">A PM operates in both circles at once — but each circle has genuinely distinct skills that don't automatically transfer from the other.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A PM runs flawless status reports, keeps the budget exactly on track, and ensures every contractual deliverable is met on schedule — but the team describes the project as having "no real direction" and feels uninspired. What does this scenario best illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is strong management (rationality, bureaucratic means, contractual fulfilment) without leadership (vision, purpose, emotional exchange) — exactly the gap Day & Antonakis describe: good management alone doesn't produce leadership's extra, above-expectation effects.">Strong management without leadership — the PM is managing tasks well but not leading with vision or purpose</button>
+        <button class="q-option" data-correct="false" data-explanation="Nothing in the scenario suggests contracts or budgets are being mismanaged — quite the opposite. The gap described is specifically about vision and direction, which is a leadership gap, not a management one.">Strong leadership without management — the PM has vision but can't execute</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A project sponsor says: "We don't need a visionary on this project, we just need someone who hits the contractual milestones." According to Day &amp; Antonakis's own conclusion, what's the risk in this framing?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Day & Antonakis conclude that leadership goes beyond management — good management is necessary but doesn't, by itself, produce the above-expectation outcomes leadership specifically enables. Treating milestone-hitting as sufficient risks missing that extra dimension entirely.">It risks settling for compliance and on-schedule delivery while missing the above-expectation performance that leadership specifically enables</button>
+        <button class="q-option" data-correct="false" data-explanation="The module's position is the opposite — it argues both are needed, and that leadership specifically adds something beyond what good management alone delivers, not that management alone is sufficient.">There's no risk — management alone is sufficient for any project's success</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Per the manager-vs-leader contrast table, which pairing correctly matches a manager behaviour with its leader counterpart?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The table specifically contrasts the manager's 'does things correctly' (efficiency within the existing frame) with the leader's 'does the correct thing' (questioning whether the frame itself is right).">Manager: "does things correctly" — Leader: "does the correct thing"</button>
+        <button class="q-option" data-correct="false" data-explanation="This reverses the table — 'plans strategy' is listed under the leader column, and 'plans tactics' under the manager column, not the other way around.">Manager: "plans strategy" — Leader: "plans tactics"</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – EARLY THEORIES: TRAITS & BEHAVIOURS
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 06</div>
+  <h1 class="mod-title">Early Theories: <span class="acc">Traits</span> &amp; Behaviours</h1>
+  <p class="mod-lede">Leadership research began by asking "who are leaders?" (trait theories), then shifted to "what do leaders do?" (behavioural theories). Both left an important gap that the next module's contingency theories had to fill.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Trait theories: which personal qualities actually predict leadership (and what they predict better)</li>
+      <li>Behavioural theories: task-, people-, and change-oriented behaviour</li>
+      <li>Why both approaches were eventually judged incomplete</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Trait Theories</h2>
+  <p>Trait theories assume leaders have certain personal qualities and characteristics that differentiate them from non-leaders. Robust research (Judge et al. 2002) finds the Big Five personality traits predict leadership emergence — especially <strong>extraversion</strong>, the single strongest predictor. Self-monitoring, emotional intelligence, and self-efficacy are also related. More surprisingly, even the socially undesirable traits of narcissism and social dominance predict leadership emergence — narcissistic leaders often favour bold, aggressive, magnanimous actions specifically to draw attention to their vision.</p>
+
+  <div class="callout tomato">
+    <strong>The critical limitation:</strong> traits do a noticeably better job predicting leader <em>emergence</em> (who gets seen as a leader and rises) than leader <em>effectiveness</em> (who actually performs well once there). Trait theory also largely assumes leadership sits entirely within the person, ignoring the surrounding context — a serious gap, since the same traits can produce wildly different outcomes in different situations.
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">↑</div>
+      <div class="stat-lbl">Extraversion is the single strongest Big Five predictor of leadership emergence</div>
+      <div class="stat-sub">Judge et al., 2002</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3</div>
+      <div class="stat-lbl">Other individual differences also linked to leadership: self-monitoring, emotional intelligence, self-efficacy</div>
+      <div class="stat-sub">Same research base</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">⚠</div>
+      <div class="stat-lbl">Even narcissism and social dominance — socially undesirable traits — predict leadership emergence</div>
+      <div class="stat-sub">A genuinely uncomfortable finding</div>
+    </div>
+  </div>
+
+  <h2 class="sh">Behavioural Theories</h2>
+  <p>Behavioural theories shift the question from "who leaders are" to "what leaders do." Research identified two primary dimensions, later joined by a third:</p>
+  <ul class="bl">
+    <li><strong>Task-oriented behaviour</strong> — goal-centred; letting followers know what's expected of them, using uniform procedures, maintaining clear performance standards.</li>
+    <li><strong>People-oriented behaviour</strong> — relationship-centred; acting friendly and approachable, showing concern for others' welfare.</li>
+    <li><strong>Change-oriented behaviour</strong> (Yukl, 1998) — a third dimension involving creativity, risk-taking, and a focus on the future.</li>
+  </ul>
+
+  <div class="demo-box">
+    <div class="demo-label">Two axes, plus a third dimension</div>
+    <svg class="demo-svg" viewBox="0 0 640 260" role="img" aria-label="A two-axis grid with Task-Oriented Behaviour on the horizontal axis and People-Oriented Behaviour on the vertical axis, plus a diagonal arrow labelled Change-Oriented Behaviour cutting across both, representing creativity, risk-taking and future focus as a third dimension">
+      <line x1="80" y1="220" x2="80" y2="30" stroke="var(--ink)" stroke-width="2" marker-end="url(#bt1)"/>
+      <line x1="80" y1="220" x2="600" y2="220" stroke="var(--ink)" stroke-width="2" marker-end="url(#bt1)"/>
+      <text x="80" y="20" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="var(--sea)">People-oriented</text>
+      <text x="610" y="224" text-anchor="start" font-family="var(--fb)" font-size="10.5" fill="var(--forest)">Task-oriented</text>
+
+      <text x="55" y="130" text-anchor="end" font-family="var(--fb)" font-size="9.5" fill="var(--muted)" transform="rotate(-90 55 130)">friendly, approachable,</text>
+      <text x="55" y="100" text-anchor="end" font-family="var(--fb)" font-size="9.5" fill="var(--muted)">concern for welfare</text>
+      <text x="340" y="250" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--muted)">goal-centred, clear expectations, uniform procedures</text>
+
+      <path d="M120 190 L560 60" stroke="var(--mango)" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#bt2)"/>
+      <rect x="330" y="95" width="230" height="40" rx="8" fill="rgba(217,119,6,.12)" stroke="var(--mango)" stroke-width="1.5"/>
+      <text x="445" y="112" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="800" fill="#B45F04">CHANGE-ORIENTED</text>
+      <text x="445" y="127" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#B45F04">creativity, risk-taking, future focus</text>
+
+      <defs>
+        <marker id="bt1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker>
+        <marker id="bt2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--mango)"/></marker>
+      </defs>
+    </svg>
+    <div class="demo-caption">Task and people orientation were the original two dimensions; Yukl (1998) added change-orientation as a third, cutting across both.</div>
+  </div>
+
+  <div class="callout mango">
+    <strong>Why behavioural theory also fell short:</strong> research following this approach produced contradictory findings and failed to identify consistent relationships between a leader's behaviour and their team's performance. Knowing someone is high in "task orientation," for instance, didn't reliably predict whether their team actually performed better — a strong hint that <em>context</em>, not just behaviour in the abstract, was the missing variable. That hint is exactly what the next module's contingency theories set out to address.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A candidate for a team-lead role is highly extraverted, confident, and quick to speak up in meetings — and is consistently rated by peers as "clearly leadership material." Six months into the role, their actual team performance is mediocre. What does trait theory's own evidence predict about this pattern?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module specifically notes traits do a better job predicting leader EMERGENCE (being seen as leader material, getting chosen) than effectiveness (actually performing well once there) — this scenario is a textbook instance of that gap.">This is exactly what the research predicts — traits like extraversion predict emergence (being seen/chosen as a leader) much better than they predict actual effectiveness</button>
+        <button class="q-option" data-correct="false" data-explanation="Trait theory doesn't claim traits guarantee performance — its own evidence specifically shows the opposite: traits predict emergence far more reliably than effectiveness, which is exactly the gap this scenario shows.">This contradicts trait theory, which claims traits should guarantee strong performance</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A PM clearly defines what's expected of each team member, enforces consistent procedures, and sets firm performance standards — but rarely checks in on how people are feeling or coping. Which behavioural dimension is strongly present, and which is likely weak?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Clear expectations, uniform procedures, and firm standards are the textbook definition of task-oriented behaviour, while the lack of concern for feelings/welfare indicates weak people-oriented behaviour.">Strong task-oriented behaviour, weak people-oriented behaviour</button>
+        <button class="q-option" data-correct="false" data-explanation="This reverses the two dimensions — the described behaviours (expectations, procedures, standards) are the definition of task-orientation, not people-orientation, and the module defines people-orientation as relationship-centred concern for welfare, which is what's missing here.">Strong people-oriented behaviour, weak task-oriented behaviour</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Why did research on behavioural leadership theories ultimately fail to settle the question of what makes a leader effective?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module states research produced contradictory findings and failed to find consistent relationships between leader behaviour and team performance — a strong signal that something outside the behaviour itself (context) was the missing variable, which contingency theory later addressed.">It produced contradictory findings and failed to find a consistent link between specific behaviours and team performance</button>
+        <button class="q-option" data-correct="false" data-explanation="The module doesn't attribute the failure to a lack of research volume — it specifically describes the findings as contradictory and inconsistent, pointing toward a missing variable (context), which is a different problem from simply needing more studies.">It succeeded completely — the only reason it's no longer taught is it's old-fashioned</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – CONTINGENCY THEORIES: FIEDLER & LMX
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 06</div>
+  <h1 class="mod-title">Contingency Theories: Fiedler &amp; <span class="acc">LMX</span></h1>
+  <p class="mod-lede">Contingency theory's core assumption: context changes everything. There should be an appropriate match between a leader's style and the demands of the situation — and once researchers started taking followers seriously too, they discovered leaders don't treat every follower the same way, either.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The Fiedler Contingency Model: the 3 factors that determine situational favourableness</li>
+      <li>Leader-Member Exchange (LMX): in-groups, out-groups, and what high-quality LMX actually produces</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Fiedler Contingency Model (1964)</h2>
+  <p>Fred Fiedler's model treats a leader's style (task-oriented or people-oriented) as the <strong>cause</strong>, and performance as the <strong>effect</strong> — but the relationship between the two is moderated entirely by <strong>situational favourableness</strong>, determined by three factors:</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The Fiedler Contingency Model: cause → moderator → effect</div>
+    <svg class="demo-svg" viewBox="0 0 680 230" role="img" aria-label="A flow diagram: Task- or people-oriented leadership style (the cause) feeds into Situational Favourableness, which is made up of three factors (Leader-Member Relationship, Task Structure, Leader's Position Power), which together determine Performance (the effect)">
+      <rect x="10" y="90" width="150" height="60" rx="12" fill="var(--acc)"/>
+      <text x="85" y="114" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="#fff">Task- OR</text>
+      <text x="85" y="130" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="#fff">People-Oriented</text>
+      <text x="85" y="144" text-anchor="middle" font-family="var(--fm)" font-size="8.5" fill="#fff" opacity="0.85">(the CAUSE)</text>
+
+      <path d="M160 120 L195 120" stroke="var(--ink)" stroke-width="2" marker-end="url(#fc1)"/>
+
+      <rect x="198" y="40" width="280" height="150" rx="12" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="2"/>
+      <text x="338" y="60" text-anchor="middle" font-family="var(--fm)" font-size="10" letter-spacing="0.06em" fill="var(--sea)">SITUATIONAL FAVOURABLENESS</text>
+      <rect x="212" y="72" width="252" height="30" rx="6" fill="#fff" stroke="var(--line-s)"/>
+      <text x="338" y="92" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="var(--ink)">Leader-Member Relationship (trust, respect)</text>
+      <rect x="212" y="108" width="252" height="30" rx="6" fill="#fff" stroke="var(--line-s)"/>
+      <text x="338" y="128" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="var(--ink)">Task Structure (clearly defined tasks)</text>
+      <rect x="212" y="144" width="252" height="30" rx="6" fill="#fff" stroke="var(--line-s)"/>
+      <text x="338" y="164" text-anchor="middle" font-family="var(--fb)" font-size="10.5" fill="var(--ink)">Leader's Position Power (authority)</text>
+
+      <path d="M478 120 L513 120" stroke="var(--ink)" stroke-width="2" marker-end="url(#fc1)"/>
+
+      <rect x="516" y="90" width="150" height="60" rx="12" fill="var(--forest)"/>
+      <text x="591" y="118" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#fff">Performance</text>
+      <text x="591" y="134" text-anchor="middle" font-family="var(--fm)" font-size="8.5" fill="#fff" opacity="0.85">(the EFFECT)</text>
+
+      <text x="338" y="215" text-anchor="middle" font-family="var(--fb)" font-size="10" font-style="italic" fill="var(--muted)">Since style is fairly fixed, Fiedler argues: adapt the SITUATION to the leader, not the other way around</text>
+      <defs><marker id="fc1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Because Fiedler treats leadership style as a relatively fixed personality trait, his model's practical advice is unusual: don't try to change the leader — change which situations you put them in.</div>
+  </div>
+
+  <h2 class="sh">Leader-Member Exchange (LMX)</h2>
+  <p>LMX theory observes that leaders don't form one uniform relationship with "the team" — they form individual relationships with each member, and those relationships vary sharply in quality, based on interpersonal similarity (demographic, attitude/personality, or competence).</p>
+
+  <table class="pm-table">
+    <thead><tr><th></th><th>"In-group" (high-quality LMX)</th><th>"Out-group" (low-quality LMX)</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Responsibility</td><td>More responsibility delegated</td><td>Less responsibility delegated</td></tr>
+      <tr><td class="hl">Satisfaction &amp; commitment</td><td>Higher job satisfaction, higher commitment</td><td>Lower satisfaction, lower commitment</td></tr>
+      <tr><td class="hl">Communication &amp; resources</td><td>More/better communication, more access to resources and information</td><td>Less of both</td></tr>
+      <tr><td class="hl">Growth &amp; performance</td><td>More learning/growth opportunities, better job performance</td><td>Fewer opportunities, weaker outcomes</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>The uncomfortable implication:</strong> LMX quality is based partly on interpersonal similarity — meaning a PM can unintentionally build a stronger relationship with team members who simply remind them of themselves, while a genuinely high-performing but "different" team member drifts into the out-group through no fault of their own. Deliberately checking who's in your own in-group, and why, is one of the few concrete ways a PM can counteract this.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">A task-oriented PM is placed on a project with clearly defined tasks, strong trust with the team, and firm positional authority. Per Fiedler, what does this combination predict?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! All three favourableness factors (strong leader-member relations, clear task structure, strong position power) are high — a textbook favourable situation where a task-oriented style, per Fiedler, is predicted to perform well.">A highly favourable situation — strong performance is likely given this leader's style</button>
+        <button class="q-option" data-correct="false" data-explanation="Fiedler's model doesn't claim style alone determines performance independent of the situation — it specifically argues performance depends on the match between style and all three situational-favourableness factors, which here are all strongly positive.">Fiedler's model would predict poor performance regardless, since task-oriented leaders are always less effective</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Rather than retrain a task-oriented leader to "become more people-oriented" for an ambiguous, low-trust project, Fiedler's model recommends what instead?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Because Fiedler treats leadership style as a relatively fixed trait, his model's distinctive recommendation is to adapt the situation (reassignment, restructuring tasks, clarifying authority) to suit the leader, rather than trying to retrain the leader's style.">Adapt the situation to fit the leader's existing style, since style is relatively fixed</button>
+        <button class="q-option" data-correct="false" data-explanation="This is the opposite of Fiedler's distinctive claim — he specifically argues style is relatively fixed and recommends changing the situation, not retraining the leader's personality-level style.">Intensively retrain the leader's personality until their style changes to fit the project</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Two equally competent team members do similar work, but one shares the PM's alma mater and social interests while the other doesn't. Per LMX theory, what risk does this create?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! LMX quality is partly based on interpersonal similarity — meaning the similar team member risks landing in the higher-quality in-group (more responsibility, resources, opportunities) while the equally competent but dissimilar member risks the out-group, regardless of actual performance.">The similar team member may drift into a higher-quality 'in-group' relationship with more resources and opportunities, independent of actual performance differences</button>
+        <button class="q-option" data-correct="false" data-explanation="LMX theory's point is precisely that relationship quality often tracks similarity rather than tracking competence or performance evenly — it does not guarantee equal treatment for equally competent people.">LMX theory guarantees both will be treated identically, since they perform similarly</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – CHARISMATIC & TRANSFORMATIONAL LEADERSHIP
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 06</div>
+  <h1 class="mod-title">Charismatic &amp; <span class="acc">Transformational</span> Leadership</h1>
+  <p class="mod-lede">Charisma is an attribution followers make, not a fixed trait a leader either has or lacks. And not all charismatic leaders are equal — the "socialised" kind, and the broader transformational leadership model, consistently produce the strongest outcomes of any approach in this module.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Conger &amp; Kanungo's charismatic-leadership behaviours, and why "good vs. bad" charisma matters</li>
+      <li>Socialised charismatic leaders, specifically</li>
+      <li>The Full Range of Leadership Model, from laissez-faire to the four transformational behaviours</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Charismatic Leadership</h2>
+  <p>Conger &amp; Kanungo (1998) describe charisma as an <strong>attribution</strong>: followers assign heroic or extraordinary leadership ability to someone when they observe specific behaviours — willingness to take personal risk and dissatisfaction with the status quo, a compellingly articulated vision, unconventional behaviours in pursuit of desired change, and genuine sensitivity to follower needs. Critically, charisma isn't a fixed personal quality the leader simply "has" — it's something followers confer based on what they see.</p>
+
+  <div class="callout tomato">
+    <strong>Why the evaluation matters:</strong> charisma theory is critiqued for fixating on individual leader characteristics without distinguishing <em>good</em> charismatic leaders (who serve the organisation and its people) from <em>bad</em> ones (who serve themselves). The same observable behaviours — risk-taking, an unconventional compelling vision — can belong to either, which is exactly why Module 1's Dark Triad content (narcissism in particular) matters here too.
+  </div>
+
+  <h3 class="sub">Socialised Charismatic Leaders</h3>
+  <p>A <strong>socialised charismatic leader</strong> has an egalitarian, self-transcendent, empowering personality. They pursue organisation-driven goals (not personal ones) and promote feelings of empowerment, personal growth, and equal participation in their followers — using rewards specifically to reinforce behaviour consistent with the organisation's own vision and mission. Where a self-serving charismatic leader demands admiration, a socialised one is driven to serve others.</p>
+
+  <h2 class="sh">The Full Range of Leadership Model</h2>
+  <p>This model lays out a spectrum of leadership styles by effectiveness, from least to most. <strong>Transactional leadership</strong> relies on social-exchange obligations — guiding followers by clarifying roles and tasks. <strong>Transformational leadership</strong> inspires followers to transcend their own self-interest, producing a profound effect on their performance.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The Full Range of Leadership Model, by effectiveness</div>
+    <svg class="demo-svg" viewBox="0 0 680 190" role="img" aria-label="A horizontal bar increasing in effectiveness from left to right: laissez-faire (least effective), management by exception, contingent reward, then the four transformational behaviours (individualised consideration, intellectual stimulation, inspirational motivation, idealised influence) at the most effective end">
+      <rect x="10" y="40" width="100" height="40" fill="var(--line-s)"/>
+      <text x="60" y="64" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="var(--ink)">Laissez-faire</text>
+      <rect x="110" y="40" width="130" height="40" fill="#D8CDB0"/>
+      <text x="175" y="58" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="var(--ink)">Management</text>
+      <text x="175" y="70" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="var(--ink)">by exception</text>
+      <rect x="240" y="40" width="130" height="40" fill="var(--mango)" opacity="0.65"/>
+      <text x="305" y="58" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="#fff">Contingent</text>
+      <text x="305" y="70" text-anchor="middle" font-family="var(--fb)" font-size="8.5" fill="#fff">reward</text>
+      <rect x="370" y="40" width="300" height="40" fill="var(--acc)"/>
+      <text x="520" y="64" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="800" fill="#fff">4 Transformational Behaviours</text>
+
+      <text x="60" y="30" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--muted)">LEAST EFFECTIVE</text>
+      <text x="520" y="30" text-anchor="middle" font-family="var(--fm)" font-size="9" fill="var(--acc-dim)">MOST EFFECTIVE</text>
+      <path d="M15 95 L670 95" stroke="var(--ink)" stroke-width="2" marker-end="url(#lc1)"/>
+
+      <text x="400" y="122" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">• Individualised consideration</text>
+      <text x="400" y="138" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">• Intellectual stimulation</text>
+      <text x="400" y="154" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">• Inspirational motivation</text>
+      <text x="400" y="170" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">• Idealised influence</text>
+      <defs><marker id="lc1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Laissez-faire is the most passive and least effective style. Management-by-exception only shows up when there's already a problem — often too late. Contingent reward works, but won't produce above-and-beyond effort. Only the four transformational behaviours reliably do.</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">↑</div>
+      <div class="stat-lbl">Higher productivity, organisational effectiveness, morale, and job satisfaction</div>
+      <div class="stat-sub">Outcomes of transformational leadership</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">↓</div>
+      <div class="stat-lbl">Lower turnover and lower absenteeism</div>
+      <div class="stat-sub">Same outcome set</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">+</div>
+      <div class="stat-lbl">Greater organisational adaptability and creativity</div>
+      <div class="stat-sub">Same outcome set</div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A new program lead is articulate, takes bold risks, and has a magnetic, compelling vision — but uses that vision mainly to demand personal loyalty and credit for themselves rather than to grow or empower the team. What does this module say about classifying this person?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module explicitly distinguishes socialised charismatic leaders (who serve others, pursue organisation-driven goals, empower followers) from self-serving ones who demand admiration and pursue personal goals — this scenario describes the latter, which is exactly why the evaluation warns against fixating only on the visible charismatic behaviours.">They display charismatic behaviours but are NOT a socialised charismatic leader — the self-serving goal orientation is the key distinguishing factor</button>
+        <button class="q-option" data-correct="false" data-explanation="The module's whole point about 'good vs. bad' charisma is that the same surface behaviours (risk-taking, compelling vision) don't automatically make someone a socialised, other-serving charismatic leader — the goal orientation (self vs. organisation) is what actually distinguishes them.">Any leader who displays the charismatic behaviours automatically qualifies as a socialised charismatic leader</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A manager only intervenes with the team when something has already gone wrong, otherwise staying hands-off. Per the Full Range of Leadership Model, where does this sit, and what's the practical problem?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is management-by-exception, placed low on the effectiveness scale specifically because the leader only becomes available once there's already a problem — which the module notes is 'often too late.'">Management-by-exception — low on the effectiveness scale, because the leader only engages once a problem already exists, often too late</button>
+        <button class="q-option" data-correct="false" data-explanation="Contingent reward involves actively reinforcing desired behaviour with rewards — this scenario describes pure reactive intervention with no mention of proactive reward-based reinforcement, which is a different (and less effective) style.">Contingent reward — a solidly effective middle-of-the-road style</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A PM wants their team to go above and beyond — not just meet contractual obligations, but genuinely exceed expectations. Per the Full Range of Leadership Model, which styles reliably produce that outcome?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module specifically states only the four transformational behaviours (individualised consideration, intellectual stimulation, inspirational motivation, idealised influence) reliably motivate followers to perform above expectations — contingent reward is effective but explicitly described as NOT producing above-and-beyond effort.">Only the four transformational behaviours — contingent reward is effective, but won't get employees to go above and beyond on its own</button>
+        <button class="q-option" data-correct="false" data-explanation="Laissez-faire is specifically described as the most passive and least effective style in the entire model — it is the last place to look for above-expectation performance.">Laissez-faire leadership, since it gives the team maximum freedom to exceed expectations on their own</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – SHARED LEADERSHIP
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 06</div>
+  <h1 class="mod-title">Shared <span class="acc">Leadership</span></h1>
+  <p class="mod-lede">What if leadership didn't belong to one person at all? Hoegl &amp; Muethel's 2016 field study of 96 virtual software-development project teams found shared leadership works — under three specific conditions, and against three predictable forms of resistance from the people who'd have to let go of control.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>What shared leadership actually is, and the 3 conditions it requires</li>
+      <li>Why formal leaders resist it — and the 5 strategies that enable it anyway</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Leadership, Broadly Distributed</h2>
+  <p><strong>Shared leadership</strong> assumes leadership is broadly distributed rather than assigned to one person — people within the team and organisation lead each other, as the moment and the task require. It's achievable only if three conditions hold at once: formal leaders are willing to delegate power, the group has a genuinely collaborative culture of support, and team members have the actual ability to influence others through persuasion (not just formal authority).</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Traditional (vertical) vs. shared leadership</div>
+    <svg class="demo-svg" viewBox="0 0 640 220" role="img" aria-label="Left: a traditional hierarchical leadership diagram with one leader at the top and arrows pointing down to four team members. Right: a shared leadership diagram with the same four team members in a circle, with arrows pointing between each other in both directions">
+      <text x="150" y="26" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--sea)">TRADITIONAL (vertical)</text>
+      <circle cx="150" cy="60" r="22" fill="var(--sea)"/>
+      <text x="150" y="65" text-anchor="middle" font-family="var(--fb)" font-size="9" fill="#fff">Leader</text>
+      <circle cx="70" cy="150" r="18" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <circle cx="130" cy="150" r="18" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <circle cx="170" cy="150" r="18" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <circle cx="230" cy="150" r="18" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <path d="M140 78 L80 134" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#sl1)"/>
+      <path d="M148 82 L131 132" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#sl1)"/>
+      <path d="M155 82 L168 132" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#sl1)"/>
+      <path d="M165 78 L222 134" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#sl1)"/>
+
+      <text x="490" y="26" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc)">SHARED</text>
+      <circle cx="420" cy="80" r="18" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <circle cx="560" cy="80" r="18" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <circle cx="420" cy="180" r="18" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <circle cx="560" cy="180" r="18" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <path d="M435 85 L545 85" stroke="var(--acc)" stroke-width="1.5" marker-end="url(#sl2)" marker-start="url(#sl2)"/>
+      <path d="M435 175 L545 175" stroke="var(--acc)" stroke-width="1.5" marker-end="url(#sl2)" marker-start="url(#sl2)"/>
+      <path d="M420 98 L420 162" stroke="var(--acc)" stroke-width="1.5" marker-end="url(#sl2)" marker-start="url(#sl2)"/>
+      <path d="M560 98 L560 162" stroke="var(--acc)" stroke-width="1.5" marker-end="url(#sl2)" marker-start="url(#sl2)"/>
+      <path d="M433 93 L547 167" stroke="var(--acc)" stroke-width="1.5" opacity="0.5"/>
+
+      <defs>
+        <marker id="sl1" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--ink)"/></marker>
+        <marker id="sl2" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--acc)"/></marker>
+      </defs>
+    </svg>
+    <div class="demo-caption">Vertical leadership routes all direction through one node. Shared leadership routes it through whoever the moment and the task call for.</div>
+  </div>
+
+  <h2 class="sh">Why Leaders Resist It — and What Enables It Anyway</h2>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🏛️</div>
+      <h4>Traditional Understanding</h4>
+      <p>Leaders often hold a conventional, single-person model of what leadership is supposed to look like.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">😤</div>
+      <h4>Overconfidence</h4>
+      <p>Leaders can be overconfident in their own singular role and judgment relative to the team's.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">😟</div>
+      <h4>Fear of Dispensability</h4>
+      <p>Sharing leadership can feel like making yourself replaceable — a real fear, even when unfounded.</p>
+    </div>
+  </div>
+
+  <p>Hoegl &amp; Muethel's strategies for enabling shared leadership anyway: accept the new rules of the game, respect team members' competencies, actively encourage leadership behaviours in others, loosen the reins and avoid the "responsibility trap" (believing only you can be accountable), and genuinely become a true team member rather than only its head.</p>
+
+  <div class="callout green">
+    <strong>Project scenario:</strong> on a cross-functional project, the engineer naturally takes the lead during a technical design debate, the client-relationship specialist takes the lead during a tense stakeholder negotiation, and a third member takes the lead organising the final handover. No single person is "the leader" throughout — leadership moved to wherever the task's demands matched someone's actual competence, exactly as shared leadership predicts.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">A formal team lead privately worries: "If I let other people make real decisions, what's even left for me to do?" Which barrier to shared leadership does this best illustrate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is precisely the fear of becoming dispensable — worrying that delegating real decision authority erodes their own indispensable value, one of the three named reasons leaders resist shared leadership.">Fear of becoming dispensable</button>
+        <button class="q-option" data-correct="false" data-explanation="Overconfidence would look more like actively believing their own judgment is superior to the team's — this scenario is specifically about anxiety over their own future role, which maps to fear of dispensability instead.">Overconfidence in their own role</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A project team has a highly competitive, blame-oriented culture where members rarely support one another. Per the three conditions for shared leadership, what's the specific blocker here, even if the formal leader is fully willing to delegate?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! One of the three required conditions is a genuinely collaborative culture of support — a competitive, blame-oriented culture fails this condition outright, regardless of how willing the formal leader is to delegate.">The team lacks a collaborative culture of support, one of the three required conditions</button>
+        <button class="q-option" data-correct="false" data-explanation="The scenario specifies the formal leader IS willing to delegate — the blocker described is squarely about the team's own culture, which is a separate, independently necessary condition.">The formal leader isn't willing to delegate power, which the scenario rules out</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Hoegl &amp; Muethel's field study covered 96 virtual software-development project teams across 36 companies. Why is the "virtual" context specifically relevant to shared leadership's practical value?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module frames shared leadership as especially valuable in virtual/distributed project teams, where a single leader can't be everywhere monitoring everything in real time — distributing leadership across whoever's closest to the moment's demands helps compensate for that physical/time-zone distance.">A single centralised leader struggles to monitor and direct everything in a distributed, virtual team — sharing leadership helps cover that gap</button>
+        <button class="q-option" data-correct="false" data-explanation="The module's framing is the opposite — virtual, distributed teams are exactly where a single centralised leader's limits show up most, making shared leadership's distributed model more valuable, not less relevant.">Virtual teams don't actually need any leadership at all, formal or shared</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">This part draws on the established leadership-research literature. The source lecture material itself (an unpublished postgraduate project-management unit) is not citable as a public source, so the references below point to the named scholars and studies it draws from.</p>
+
+  <div class="ref-group-label">Leadership vs. Management</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Day, David V., and John Antonakis, eds. <em>The Nature of Leadership</em>. 2nd ed. Thousand Oaks, CA: Sage, 2012.</div>
+    <div class="ref-annotation">Source of the leadership-vs-management distinction used in Module 1 — leadership as purpose-driven and values-based, management as task-driven and grounded in rationality and contractual obligation.</div>
+    <a class="ref-link" href="https://us.sagepub.com/en-us/nam/the-nature-of-leadership/book233350" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Trait &amp; Behavioural Theories</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Judge, Timothy A., Joyce E. Bono, Remus Ilies, and Megan W. Gerhardt. "Personality and Leadership: A Qualitative and Quantitative Review." <em>Journal of Applied Psychology</em> 87, no. 4 (2002): 765–780.</div>
+    <div class="ref-annotation">The real meta-analytic source behind Module 2's Big Five-and-leadership findings, including extraversion's standing as the strongest single predictor of leadership emergence.</div>
+    <a class="ref-link" href="https://doi.org/10.1037/0021-9010.87.4.765" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Contingency Theories</div>
+
+  <div class="ref-item" style="border-left-color:var(--forest)">
+    <div class="ref-citation">Fiedler, Fred E. "A Contingency Model of Leadership Effectiveness." <em>Advances in Experimental Social Psychology</em> 1 (1964): 149–190.</div>
+    <div class="ref-annotation">The original, foundational source of the Fiedler Contingency Model covered in Module 3 — one of the earliest and most influential contingency theories of leadership.</div>
+    <a class="ref-link" href="https://doi.org/10.1016/S0065-2601(08)60051-9" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--forest)">
+    <div class="ref-citation">Graen, George B., and Mary Uhl-Bien. "Relationship-Based Approach to Leadership: Development of Leader-Member Exchange (LMX) Theory of Leadership over 25 Years." <em>Leadership Quarterly</em> 6, no. 2 (1995): 219–247.</div>
+    <div class="ref-annotation">The foundational LMX paper. Note: the source lecture slide attributes this to "Green and Uhl-Bien 1995" — very likely a transcription variant of "Graen," the theory's actual co-originator; verify the correct spelling before citing formally.</div>
+    <a class="ref-link" href="https://doi.org/10.1016/1048-9843(95)90036-5" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Charismatic &amp; Transformational Leadership</div>
+
+  <div class="ref-item" style="border-left-color:var(--mango)">
+    <div class="ref-citation">Conger, Jay A., and Rabindra N. Kanungo. <em>Charismatic Leadership in Organizations</em>. Thousand Oaks, CA: Sage, 1998.</div>
+    <div class="ref-annotation">Source of the charismatic-leadership behaviours covered in Module 4 and the critique that the theory fixates on individual leader characteristics without distinguishing good from bad charismatic leaders.</div>
+    <a class="ref-link" href="https://us.sagepub.com/en-us/nam/charismatic-leadership-in-organizations/book6711" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--mango)">
+    <div class="ref-citation">Bass, Bernard M. <em>Leadership and Performance Beyond Expectations</em>. New York: Free Press, 1985.</div>
+    <div class="ref-annotation">The foundational source of transformational/transactional leadership theory and the Full Range of Leadership Model covered in Module 4.</div>
+    <a class="ref-link" href="https://www.google.com/search?q=Bass+1985+Leadership+and+Performance+Beyond+Expectations" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Shared Leadership</div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Hoegl, Martin, and Miriam Muethel. "Enabling Shared Leadership in Virtual Project Teams: A Practitioners' Guide." <em>Project Management Journal</em> 47, no. 1 (2016): 7–12.</div>
+    <div class="ref-annotation">The field study of 96 virtual software-development project teams across 36 companies behind Module 5's shared-leadership content, including the resistance factors and enabling strategies.</div>
+    <a class="ref-link" href="https://doi.org/10.1002/pmj.21564" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the source lecture slides attribute LMX to "Green and Uhl-Bien" where the established literature credits George Graen as co-originator — likely a transcription error in the original material, flagged in the reference above. Verify all author spellings and publication details independently before using in formal academic or professional citation.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 7 Complete! 🧭</h2>
+    <p>You now have leadership vs. management, the trait and behavioural theories (and why both fell short), Fiedler's contingency model and LMX, charismatic and transformational leadership's Full Range model, and the emerging case for sharing leadership across a whole team. Part 8 — Power and Politics in Project Management — is next.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'project-people-part7';
+const TOTAL = 6;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

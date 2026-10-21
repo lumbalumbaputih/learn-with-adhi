@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="project-people-part6">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communications in Projects · Project &amp; People · Learn with Adhi</title>
+<meta name="description" content="Part 6 of Project & People: the 4 functions of communication, the 8-part communication process and why it isn't linear, oral/written/non-verbal modes, Aristotle's ethos/pathos/logos, automatic vs. controlled processing, and the 8 barriers to effective communication.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-people/project-people-part6-communications-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Communications in Projects · Project & People">
+<meta property="og:description" content="The communication process, oral/written/non-verbal modes, persuasion, and the eight barriers that break communication down — applied to project management.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Project & People — Part 6: Communications in Projects","description":"The 4 functions of communication, the communication process, modes of communication, persuasion (ethos/pathos/logos, automatic vs. controlled processing), and the barriers to effective communication.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (4 variants + default) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── DATA TABLES ── */
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── RESOURCES / REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#A78BFA);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-series"><a href="project-people-hub.html">← Series map · Part 6 of 11</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 6 modules</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Why We Communicate</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2">
+      <span class="nav-num">02</span>
+      <span class="nav-title">The Communication Process</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Modes of Communication</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Persuasion: Ethos, Pathos, Logos</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Barriers to Effective Communication</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6">
+      <span class="nav-num">06</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">Project &amp; People · Part 6</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – WHY WE COMMUNICATE
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 06</div>
+  <h1 class="mod-title">Why We <span class="acc">Communicate</span></h1>
+  <p class="mod-lede"><strong>Communication</strong> is the transfer <em>and</em> understanding of meaning — transfer alone isn't enough. A message that arrives but isn't understood hasn't actually been communicated. Every instance of communication on a project serves one (or more) of exactly four functions.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Why "transfer of meaning" isn't the same as "transfer of understanding"</li>
+      <li>The four functions of communication: control, motivation, emotional expression, information</li>
+      <li>Why none of the four is "more important" — and what that means in practice</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Four Functions</h2>
+  <p>Almost every communication that happens inside a group or organisation performs one or more of four functions. None of them outranks the others — a healthy team needs all four operating at once.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The four functions, radiating from one act of communication</div>
+    <svg class="demo-svg" viewBox="0 0 640 310" role="img" aria-label="A central hub labelled Communication with four connected boxes: Control (roles and responsibilities), Motivation (feedback on performance), Emotional Expression (feelings and social needs), and Information (decision making)">
+      <circle cx="320" cy="155" r="62" fill="var(--acc)"/>
+      <text x="320" y="150" text-anchor="middle" font-family="var(--fd)" font-size="14" font-weight="800" fill="#fff">Communi-</text>
+      <text x="320" y="168" text-anchor="middle" font-family="var(--fd)" font-size="14" font-weight="800" fill="#fff">cation</text>
+
+      <rect x="20" y="20" width="200" height="72" rx="12" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="2"/>
+      <text x="120" y="44" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--sea)">CONTROL</text>
+      <text x="120" y="64" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">roles &amp; responsibilities,</text>
+      <text x="120" y="78" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">formal + informal norms</text>
+
+      <rect x="420" y="20" width="200" height="72" rx="12" fill="var(--paper-2)" stroke="var(--forest)" stroke-width="2"/>
+      <text x="520" y="44" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--forest)">MOTIVATION</text>
+      <text x="520" y="64" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">feedback on performance,</text>
+      <text x="520" y="78" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">goal clarity</text>
+
+      <rect x="20" y="218" width="200" height="72" rx="12" fill="var(--paper-2)" stroke="var(--mango)" stroke-width="2"/>
+      <text x="120" y="242" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#B45F04">EMOTIONAL EXPRESSION</text>
+      <text x="120" y="262" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">feelings, social needs,</text>
+      <text x="120" y="276" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">frustration &amp; satisfaction</text>
+
+      <rect x="420" y="218" width="200" height="72" rx="12" fill="var(--paper-2)" stroke="var(--tomato)" stroke-width="2"/>
+      <text x="520" y="242" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--tomato)">INFORMATION</text>
+      <text x="520" y="262" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">data for identifying &amp;</text>
+      <text x="520" y="276" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">evaluating decisions</text>
+
+      <path d="M270 100 L288 130" stroke="var(--sea)" stroke-width="2" stroke-dasharray="3 3"/>
+      <path d="M370 100 L352 130" stroke="var(--forest)" stroke-width="2" stroke-dasharray="3 3"/>
+      <path d="M270 218 L288 185" stroke="var(--mango)" stroke-width="2" stroke-dasharray="3 3"/>
+      <path d="M370 218 L352 185" stroke="var(--tomato)" stroke-width="2" stroke-dasharray="3 3"/>
+    </svg>
+    <div class="demo-caption">All four functions fire constantly, often in the same conversation — a single stand-up meeting can control, motivate, vent feelings, and transmit decision-relevant information all at once.</div>
+  </div>
+
+  <h3 class="sub">Control Isn't Only Formal</h3>
+  <p>Organisations control behaviour through authority hierarchies and formal guidelines — job descriptions, reporting lines, required status updates. But control also happens informally: when a work group teases or socially pressures a member who's "producing too much" and making the rest of the team look bad, that's communication performing a control function too, with no manager involved at all.</p>
+
+  <div class="callout">
+    <strong>Project scenario:</strong> a team member silently resents being left out of a decision — but says nothing. Nothing was transferred, so by definition nothing was communicated, however strongly they felt it. The fix isn't a better feeling on their end; it's an actual act of communication (even just naming the frustration out loud) that gets understood by the other side.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 1</div>
+
+    <div class="q-card">
+      <p class="q-text">A PM sends a detailed status email, but three stakeholders later reveal they completely misread its priority level. Has communication occurred, by this module's own definition?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Communication requires BOTH transfer and understanding of meaning. A message that was sent but misunderstood has only achieved transfer, not communication.">Yes — the message was successfully transferred to all three stakeholders</button>
+        <button class="q-option" data-correct="true" data-explanation="Correct! Communication is the transfer AND understanding of meaning. Transfer without understanding (as happened here) does not meet the definition — the email was sent, but communication, properly defined, did not occur.">No — meaning was transferred but not understood, so by definition communication did not occur</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A junior team member consistently finishes tasks early, and colleagues start quietly excluding them from lunch plans and making pointed comments about "showing off." Which function of communication is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This is informal control — the group is using social pressure (exclusion, pointed remarks) to pull the over-producer's behaviour back toward the group's own norm, exactly as the module describes for informal control.">Control — the group is informally pressuring behaviour back toward its own norm</button>
+        <button class="q-option" data-correct="false" data-explanation="This isn't performance feedback aimed at improving output or clarifying goals — it's social pressure aimed at making someone conform, which is control, not motivation.">Motivation — the group is giving performance feedback</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">In a single weekly stand-up, a PM clarifies a deadline (information), praises a team member's recent win (motivation), asks how everyone's coping with the crunch (emotional expression), and reminds the team of the escalation process (control). How many functions is this one meeting actually performing?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! All four functions can and do co-occur in a single act of communication — none is more important than the others, and a well-run meeting routinely performs several at once, exactly as shown here.">All four at once — the functions routinely overlap in real communication</button>
+        <button class="q-option" data-correct="false" data-explanation="The module explicitly says none of the four functions is more important than the others, and nothing in the scenario suggests only one is 'real' — all four are genuinely occurring.">Only one — whichever the PM consciously intended as the main point</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – THE COMMUNICATION PROCESS
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Module 02 / 06</div>
+  <h1 class="mod-title">The Communication <span class="acc">Process</span> — and Why It Isn't Linear</h1>
+  <p class="mod-lede">Classic communication theory describes eight components running sender to receiver. Real communication adds two complications the clean diagram leaves out: interruptions, and the context both people are standing in.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The 8 components of the communication process, in order</li>
+      <li>Where "noise" sits in the model, and why feedback is what closes the loop</li>
+      <li>Why real communication is interrupted and context-dependent, not a clean pipe</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Eight Components</h2>
+  <p>Before communication can happen, it needs a purpose — a message to convey between a sender and a receiver. The sender <strong>encodes</strong> the message (converts it into a symbolic form — words, a chart, a gesture) and passes it through a <strong>channel</strong> (a medium) to the receiver, who <strong>decodes</strong> it. The receiver then gives the sender <strong>feedback</strong>, which lets the sender know whether the message landed correctly. <strong>Noise</strong> is the broad term for everything that disturbs this process along the way.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The communication process, with noise and the feedback loop</div>
+    <svg class="demo-svg" viewBox="0 0 680 220" role="img" aria-label="A flow diagram: Sender encodes a Message, sends it through a Channel (disrupted by Noise from above) to a Receiver who decodes it, with a Feedback arrow looping back from receiver to sender">
+      <rect x="10" y="80" width="90" height="56" rx="10" fill="var(--acc)"/>
+      <text x="55" y="113" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="#fff">SENDER</text>
+
+      <path d="M100 108 L135 108" stroke="var(--ink)" stroke-width="2" marker-end="url(#ac1)"/>
+      <rect x="138" y="86" width="90" height="44" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="183" y="112" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">Encoding</text>
+
+      <path d="M228 108 L263 108" stroke="var(--ink)" stroke-width="2" marker-end="url(#ac1)"/>
+      <rect x="266" y="86" width="90" height="44" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="311" y="112" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">Message</text>
+
+      <path d="M356 108 L391 108" stroke="var(--ink)" stroke-width="2" marker-end="url(#ac1)"/>
+      <rect x="394" y="86" width="90" height="44" rx="8" fill="var(--paper-2)" stroke="var(--tomato)" stroke-width="2"/>
+      <text x="439" y="112" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">Channel</text>
+
+      <path d="M484 108 L519 108" stroke="var(--ink)" stroke-width="2" marker-end="url(#ac1)"/>
+      <rect x="522" y="86" width="90" height="44" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+      <text x="567" y="112" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--ink)">Decoding</text>
+
+      <path d="M612 108 L647 108" stroke="var(--ink)" stroke-width="2" marker-end="url(#ac1)"/>
+      <rect x="580" y="12" width="90" height="56" rx="10" fill="var(--forest)"/>
+      <text x="625" y="45" text-anchor="middle" font-family="var(--fd)" font-size="12" font-weight="800" fill="#fff">RECEIVER</text>
+      <path d="M625 68 L625 86" stroke="var(--ink)" stroke-width="2" marker-end="url(#ac1)"/>
+
+      <path d="M439 86 L439 55" stroke="var(--tomato)" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ac2)"/>
+      <text x="439" y="46" text-anchor="middle" font-family="var(--fm)" font-size="10" letter-spacing="0.05em" fill="var(--tomato)">NOISE disrupts the channel</text>
+
+      <path d="M625 136 C 625 190, 55 190, 55 136" fill="none" stroke="var(--sea)" stroke-width="2" marker-end="url(#ac3)"/>
+      <text x="340" y="206" text-anchor="middle" font-family="var(--fb)" font-size="11" font-style="italic" fill="var(--sea)">Feedback — tells the sender whether the message landed correctly</text>
+
+      <defs>
+        <marker id="ac1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker>
+        <marker id="ac2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--tomato)"/></marker>
+        <marker id="ac3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--sea)"/></marker>
+      </defs>
+    </svg>
+    <div class="demo-caption">Eight components: sender, encoding, message, channel, decoding, receiver, noise, feedback. Without feedback, the sender has no way to know decoding actually succeeded.</div>
+  </div>
+
+  <h2 class="sh">Not Quite So Linear</h2>
+  <p>The eight-component diagram is a useful skeleton, but real communication rarely runs that cleanly in one direction. Two things complicate it in practice:</p>
+  <ul class="bl">
+    <li><strong>Interruptions.</strong> Real conversations are interrupted, restarted, and talked over — meaning gets built collaboratively in overlapping turns, not delivered in a single clean transmission.</li>
+    <li><strong>Context.</strong> The same message decodes differently depending on where, when, and under what pressure it's received — a status update read calmly at a desk lands differently than the identical words skimmed in a five-second gap between two meetings.</li>
+  </ul>
+
+  <div class="callout mango">
+    <strong>It depends — on timing as much as wording:</strong> a PM who has carefully encoded the "perfect" message can still have it land badly if the channel or the moment is wrong. Sending a nuanced piece of critical feedback by instant message, right before a stand-up the receiver is late for, all but guarantees it gets decoded through the lens of stress and rush rather than the content itself.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 2</div>
+
+    <div class="q-card">
+      <p class="q-text">A manager sends a clear written brief and gets no response at all from the recipient. Which component of the communication process is specifically missing?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Without any reply, the sender has no feedback — no way to confirm decoding succeeded. The message may have been sent and even understood, but the loop that would confirm this is missing.">Feedback — the sender has no way to confirm the message was decoded correctly</button>
+        <button class="q-option" data-correct="false" data-explanation="The message was sent (encoding happened) through a channel (written brief) — those components are present. What's missing is confirmation the loop closed, which is feedback.">Encoding — the brief was apparently never put into symbolic form</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A construction site's radio static regularly garbles safety instructions between the foreman and crew. In the 8-component model, what is this static?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Noise is the broad term for anything that disturbs the communication process along the way — radio static disrupting the channel is a textbook example.">Noise — it's disturbing the channel the message travels through</button>
+        <button class="q-option" data-correct="false" data-explanation="Decoding is the receiver's own interpretive act, not an external disturbance to the channel — static disrupting transmission is noise, not a decoding failure in itself (though it can certainly cause one).">Decoding — the crew is failing to interpret the instructions</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A project sponsor reads an identical risk memo twice: once calmly on a quiet Friday afternoon, and once rushed between back-to-back meetings on a stressful Monday. The module's "not quite so linear" point predicts what?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The module specifically notes that context shapes how the same message decodes — timing and surrounding pressure change interpretation even when the encoded message itself is identical.">The sponsor may interpret the identical memo quite differently each time, because context shapes decoding</button>
+        <button class="q-option" data-correct="false" data-explanation="This contradicts the module's central point — it explicitly argues the process is NOT a clean, context-independent pipe, so identical wording does not guarantee identical understanding.">The sponsor will understand the memo identically both times, since the wording hasn't changed</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – MODES OF COMMUNICATION
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Module 03 / 06</div>
+  <h1 class="mod-title">Modes of <span class="acc">Communication</span></h1>
+  <p class="mod-lede">Oral, written, and non-verbal communication each carry meaning differently — and the famous "55/38/7" statistic about how much of a message is words versus tone versus body language is one of the most widely cited <em>and</em> widely misapplied numbers in management training.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The three modes: oral, written, non-verbal, and what each is best suited for</li>
+      <li>The 55/38/7 rule — and the important limits on what it actually measured</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The Three Modes</h2>
+  <table class="pm-table">
+    <thead><tr><th>Mode</th><th>Includes</th><th>Best suited for</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Oral</td><td>Meetings, videoconferencing, phone calls</td><td>Fast back-and-forth, nuance, reading reactions in real time</td></tr>
+      <tr><td class="hl">Written</td><td>Memos, letters, email, instant messaging, periodicals</td><td>A durable record, precision, something the receiver can revisit</td></tr>
+      <tr><td class="hl">Non-verbal</td><td>Body movements, tone/emphasis, facial expressions, physical distance</td><td>Signalling feeling and attitude — often involuntarily</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo-box">
+    <div class="demo-label">The 55/38/7 split, as it's commonly (and over-broadly) cited</div>
+    <svg class="demo-svg" viewBox="0 0 640 140" role="img" aria-label="A horizontal stacked bar divided into three segments: 55 percent body language, 38 percent tone of voice, and 7 percent words">
+      <rect x="20" y="40" width="341" height="46" fill="var(--acc)"/>
+      <rect x="361" y="40" width="235" height="46" fill="var(--mango)"/>
+      <rect x="596" y="40" width="43" height="46" fill="var(--tomato)"/>
+      <text x="190" y="68" text-anchor="middle" font-family="var(--fd)" font-size="14" font-weight="800" fill="#fff">55% body language</text>
+      <text x="478" y="68" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#fff">38% tone</text>
+      <text x="617" y="68" text-anchor="middle" font-family="var(--fd)" font-size="10" font-weight="800" fill="#fff" transform="rotate(90 617 68)">7%</text>
+      <text x="320" y="118" text-anchor="middle" font-family="var(--fb)" font-size="11" font-style="italic" fill="var(--muted)">(see the caveat below before applying this split to every message you send)</text>
+    </svg>
+    <div class="demo-caption">The ratio everyone quotes — but it was measured under one specific condition, not as a universal law of communication.</div>
+  </div>
+
+  <div class="callout mango">
+    <strong>It depends — and in this case, a lot:</strong> this 55/38/7 split comes from research into communicating feelings and attitudes, specifically in cases where a listener had to judge sincerity when the verbal and non-verbal signals <em>conflicted</em> (e.g. someone saying "I'm fine" in a flat, unconvincing tone). It was never meant as a universal rule that words only carry 7% of the meaning of every message you send — a written risk register, a cost estimate, or a technical spec is almost entirely "words," and treating this split as gospel for all communication badly misreads the original research. Use it as a reminder that tone and body language carry real weight when feelings are involved, not as a formula.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 3</div>
+
+    <div class="q-card">
+      <p class="q-text">A junior analyst argues: "Since words are only 7% of meaning, we should stop bothering to write detailed technical documentation — tone and body language matter way more." What's wrong with this argument?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! The 55/38/7 figures come from research on judging sincerity in feelings/attitudes specifically where verbal and non-verbal cues conflicted — not a universal law for all content, including technical documentation where words carry nearly all the meaning.">It misapplies a statistic from feelings/attitude research (specifically where words and tone conflicted) to a completely different context — technical documentation, where words carry almost all the meaning</button>
+        <button class="q-option" data-correct="false" data-explanation="The issue isn't that the original statistic is fabricated — it's a real, specific research finding that gets routinely over-generalised far beyond its original scope.">Nothing — the 55/38/7 split applies equally to every kind of communication</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A stakeholder sends a one-line email reading "Sure, that's fine" after a scope-change request. Which mode of communication is this, and what does it lack compared to a phone call?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Written communication like this email carries no tone or facial-expression cues — a phone call would let you hear hesitation, sarcasm, or genuine enthusiasm that flat text can't convey.">Written — it lacks the tonal and non-verbal cues a phone call would carry, which could reveal real hesitation or enthusiasm</button>
+        <button class="q-option" data-correct="false" data-explanation="There is no body movement, facial expression, or physical distance signal in a one-line email — this is squarely written communication, not non-verbal.">Non-verbal — the brevity itself is a body-language signal</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A PM needs to deliver a nuanced, emotionally sensitive piece of feedback to an underperforming but valued team member. Based on what each mode is "best suited for," which should they choose?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Oral communication supports fast back-and-forth and reading reactions in real time — exactly what a nuanced, emotionally sensitive conversation needs, versus a flat written message with no room to read or adjust to the other person's reaction.">An oral conversation (ideally in person), so both people can read reactions and adjust in real time</button>
+        <button class="q-option" data-correct="false" data-explanation="Written communication is better suited to durable, precise records than to emotionally nuanced, real-time conversations where reading the other person's reaction matters most.">A written memo, since it creates a precise, durable record of exactly what was said</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – PERSUASION: ETHOS, PATHOS, LOGOS
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Module 04 / 06</div>
+  <h1 class="mod-title">Persuasion: Ethos, Pathos, <span class="acc">Logos</span></h1>
+  <p class="mod-lede">Aristotle's three appeals are over two thousand years old and still describe exactly how modern stakeholders get persuaded. Layered on top: which of two mental "processing modes" your audience is using determines whether facts or feelings will actually move them.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Aristotle's three modes of persuasion: ethos, pathos, logos</li>
+      <li>Automatic vs. controlled processing, and the four factors that predict which one your audience uses</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Ethos, Pathos, Logos</h2>
+  <p>Aristotle identified three distinct ways a speaker persuades an audience: <strong>ethos</strong> (an appeal to ethics — convincing via the authority or credibility of the persuader, e.g. an expert or a respected figure), <strong>pathos</strong> (an appeal to emotion — convincing via an impassioned plea or a compelling story), and <strong>logos</strong> (an appeal to logic — convincing with facts, figures, and reasoned argument).</p>
+
+  <div class="demo-box">
+    <div class="demo-label">The three classical appeals</div>
+    <svg class="demo-svg" viewBox="0 0 640 300" role="img" aria-label="Three circles arranged in a triangle, labelled Ethos, Pathos, and Logos, each with a short definition of that mode of persuasion">
+      <circle cx="320" cy="60" r="68" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="320" y="48" text-anchor="middle" font-family="var(--fd)" font-size="14" font-weight="800" fill="var(--acc-dim)">Ethos</text>
+      <text x="320" y="66" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">credibility &amp; authority</text>
+      <text x="320" y="80" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">of the speaker</text>
+
+      <circle cx="140" cy="220" r="68" fill="rgba(217,119,6,.10)" stroke="var(--mango)" stroke-width="2.5"/>
+      <text x="140" y="208" text-anchor="middle" font-family="var(--fd)" font-size="14" font-weight="800" fill="#B45F04">Pathos</text>
+      <text x="140" y="226" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">emotional appeal —</text>
+      <text x="140" y="240" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">story, impassioned plea</text>
+
+      <circle cx="500" cy="220" r="68" fill="rgba(45,111,179,.10)" stroke="var(--sea)" stroke-width="2.5"/>
+      <text x="500" y="208" text-anchor="middle" font-family="var(--fd)" font-size="14" font-weight="800" fill="var(--sea)">Logos</text>
+      <text x="500" y="226" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">logic — facts,</text>
+      <text x="500" y="240" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">figures, reasoning</text>
+
+      <path d="M275 108 L185 168" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="4 3"/>
+      <path d="M365 108 L455 168" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="4 3"/>
+      <path d="M208 220 L432 220" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="320" y="292" text-anchor="middle" font-family="var(--fb)" font-size="10" font-style="italic" fill="var(--muted)">Aristotle's three modes of persuasion — the strongest arguments usually combine all three</text>
+    </svg>
+    <div class="demo-caption">A business case with zero logos (no numbers) or zero ethos (an unknown, untrusted presenter) rarely survives contact with a steering committee, however moving the pathos.</div>
+  </div>
+
+  <h2 class="sh">Automatic vs. Controlled Processing</h2>
+  <p><strong>Automatic processing</strong> is a relatively superficial consideration of evidence, relying on heuristics — it's fast, low-effort, and vulnerable to tricks like a catchy jingle or a glamorous photo. <strong>Controlled processing</strong> is a detailed, effortful consideration of facts, figures, and logic — it takes more energy, but it's much harder to fool.</p>
+  <p>Four factors predict which mode an audience will use:</p>
+  <ul class="bl">
+    <li><strong>Interest level</strong> — the more a decision will actually affect someone's life, the more likely they are to engage controlled processing (think: choosing where to live vs. which soft drink to buy).</li>
+    <li><strong>Prior knowledge</strong> — well-informed people have already thought through the arguments, so they default to controlled processing and are harder to sway with superficial claims.</li>
+    <li><strong>Personality</strong> — people high in "need for cognition" are more naturally drawn to evidence and facts; those lower in it lean on intuition and emotion.</li>
+    <li><strong>Message characteristics (richness)</strong> — lean channels with little room for interaction (a fast TV ad) push the audience toward automatic processing; rich channels (a long, detailed article) invite controlled processing.</li>
+  </ul>
+
+  <div class="callout green">
+    <strong>The practical takeaway:</strong> match your persuasive approach to the processing mode your audience is actually likely to use. For a disengaged, poorly-informed audience consuming your message through a lean channel, lean on ethos and pathos — emotion-laden framing and credible, positive associations. For an engaged, well-informed audience with a rich channel (a detailed briefing document), lean on logos — rational argument and evidence carry the day.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 4</div>
+
+    <div class="q-card">
+      <p class="q-text">A project sponsor approves a budget increase mostly because the request came from a widely respected, long-tenured finance director, rather than because of the specific numbers presented. Which classical appeal is primarily at work?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Ethos is persuasion through the credibility or authority of the speaker — the sponsor is swayed by who is asking (a respected, long-tenured director) more than by the specific figures, which is textbook ethos.">Ethos — the director's credibility and authority is doing the persuading</button>
+        <button class="q-option" data-correct="false" data-explanation="Logos would mean the sponsor was persuaded primarily by the numbers and reasoning themselves — but the scenario specifically says it was the source's reputation, not the figures, that drove the approval.">Logos — the sponsor is persuaded primarily by the figures</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">You need to persuade two different audiences of the same scope change: (1) a disengaged executive skimming a one-slide summary between back-to-back meetings, and (2) a technical lead who will spend an hour reading your detailed written proposal. Per the four processing-mode factors, how should your approach differ?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Low interest/engagement and a lean channel (one slide, skimmed quickly) favour automatic processing — lead with a clear, emotionally resonant headline. High engagement and a rich channel (a detailed written proposal) favour controlled processing — lead with evidence and reasoning.">For the executive: lean on a clear, emotionally resonant headline (automatic processing). For the technical lead: lean on detailed evidence and reasoning (controlled processing)</button>
+        <button class="q-option" data-correct="false" data-explanation="Treating both audiences identically ignores the module's own point — interest level and message richness (lean one-slide skim vs. rich detailed document) predict which processing mode each audience will actually use.">Use the exact same dense, figures-heavy slide for both audiences, since the underlying facts don't change</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A team member with a high "need for cognition" personality trait is reviewing your project proposal. What should you expect?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! People high in need for cognition are specifically described as most likely to be persuaded by evidence and facts — they will engage controlled processing and scrutinise your reasoning rather than responding mainly to emotional framing.">They will scrutinise the evidence and reasoning carefully, and are more persuadable by solid facts than by emotional framing</button>
+        <button class="q-option" data-correct="false" data-explanation="This describes someone LOW in need for cognition, who is more likely to rely on automatic processing and emotional/intuitive cues — the opposite of a high-need-for-cognition reviewer.">They will mostly go with their gut feeling and respond best to a catchy, emotionally compelling pitch</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – BARRIERS TO EFFECTIVE COMMUNICATION
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Module 05 / 06</div>
+  <h1 class="mod-title">Barriers to Effective <span class="acc">Communication</span></h1>
+  <p class="mod-lede">Eight distinct barriers can distort or block communication on any given project — four about how information gets shaped and received, and four more specific, surprisingly common failure modes worth naming individually.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Filtering, selective perception, information overload, and emotions as distortion points</li>
+      <li>Language, silence, communication apprehension, and lying — and how common each actually is</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Four Barriers Along the Channel</h2>
+
+  <div class="demo-box">
+    <div class="demo-label">Where distortion enters the communication process</div>
+    <svg class="demo-svg" viewBox="0 0 680 180" role="img" aria-label="A horizontal flow from Sender to Receiver, with four labelled distortion points along the path: Filtering near the sender, then Selective Perception, Information Overload, and Emotions near the receiver">
+      <rect x="10" y="68" width="80" height="44" rx="8" fill="var(--acc)"/>
+      <text x="50" y="94" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="800" fill="#fff">SENDER</text>
+      <path d="M90 90 L590 90" stroke="var(--line-s)" stroke-width="3" stroke-dasharray="2 4"/>
+      <rect x="590" y="68" width="80" height="44" rx="8" fill="var(--forest)"/>
+      <text x="630" y="94" text-anchor="middle" font-family="var(--fd)" font-size="11" font-weight="800" fill="#fff">RECEIVER</text>
+
+      <circle cx="175" cy="90" r="7" fill="var(--tomato)"/>
+      <text x="175" y="45" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--tomato)">Filtering</text>
+      <circle cx="310" cy="90" r="7" fill="var(--mango)"/>
+      <text x="310" y="45" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="#B45F04">Selective</text>
+      <text x="310" y="58" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="#B45F04">perception</text>
+      <circle cx="445" cy="90" r="7" fill="var(--sea)"/>
+      <text x="445" y="45" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--sea)">Information</text>
+      <text x="445" y="58" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--sea)">overload</text>
+      <circle cx="555" cy="90" r="7" fill="var(--acc)"/>
+      <text x="555" y="45" text-anchor="middle" font-family="var(--fb)" font-size="10" fill="var(--acc)">Emotions</text>
+
+      <text x="340" y="150" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-style="italic" fill="var(--muted)">Each point can distort meaning independently — a message can survive one and still be wrecked by another</text>
+    </svg>
+    <div class="demo-caption">Filtering happens on the sender's side; selective perception, overload, and emotions happen on the receiver's.</div>
+  </div>
+
+  <ul class="bl">
+    <li><strong>Filtering</strong> — a sender manipulating information so the receiver sees it more favourably (a manager telling their boss what they think the boss wants to hear).</li>
+    <li><strong>Selective perception</strong> — receivers interpret what they see and hear based on their own needs, motivations, experience, and background, projecting their own expectations into the message.</li>
+    <li><strong>Information overload</strong> — a condition where information inflow exceeds an individual's processing capacity.</li>
+    <li><strong>Emotions</strong> — how a receiver feels when they get a message shapes how they interpret it; people in positive moods tend to accept communications more at face value, while people in negative moods scrutinise them more closely.</li>
+  </ul>
+
+  <h2 class="sh">Four More — Easy to Overlook</h2>
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">85%+</div>
+      <div class="stat-lbl">Of managers report staying silent about at least one significant workplace issue</div>
+      <div class="stat-sub">Silence as a barrier</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">5–20%</div>
+      <div class="stat-lbl">Of the population suffers debilitating communication apprehension (social anxiety about communicating)</div>
+      <div class="stat-sub">Communication apprehension</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">1–2</div>
+      <div class="stat-lbl">Lies the average person reports telling per day, in diary studies — a large amount of deception compounded across a whole organisation</div>
+      <div class="stat-sub">Lying</div>
+    </div>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🗣️</div>
+      <h4>Language</h4>
+      <p>Even within the same language, the same words mean different things to different people — age and context are two of the biggest sources of this difference.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🤐</div>
+      <h4>Silence</h4>
+      <p>Easy to overlook precisely because it's an absence — but withholding communication about significant issues is common, and genuinely problematic.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">😰</div>
+      <h4>Communication Apprehension</h4>
+      <p>Undue tension and anxiety about oral and/or written communication — severe enough in some people that they'll use a slower memo rather than a faster phone call just to avoid a live exchange.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🎭</div>
+      <h4>Lying</h4>
+      <p>Outright misrepresentation of information — and people genuinely differ in where they personally draw the line on what counts as "a lie" at all.</p>
+    </div>
+  </div>
+
+  <div class="callout tomato">
+    <strong>Why silence is the most dangerous barrier on this list:</strong> filtering, overload, and apprehension at least leave some trace. Silence leaves none — a PM who doesn't actively create space for dissent can run an entire project believing alignment exists, right up until the moment a withheld concern becomes a missed deadline or a blown budget.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Quick Check – Module 5</div>
+
+    <div class="q-card">
+      <p class="q-text">A regional manager tells head office only the positive parts of a struggling project's status, leaving out the parts that would look bad. Which barrier is this?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Filtering is specifically defined as a sender manipulating information so it will be seen more favourably by the receiver — exactly what's happening here.">Filtering — the sender is shaping the message to look more favourable</button>
+        <button class="q-option" data-correct="false" data-explanation="Selective perception is about how a RECEIVER interprets an already-sent message through their own lens, not about a sender deliberately shaping what gets sent in the first place.">Selective perception — the manager is interpreting the project through their own lens</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A stakeholder known to dread public speaking consistently sends terse emails instead of raising urgent concerns live in steering-committee meetings, even when speaking up would resolve the issue faster. What's most likely driving this pattern?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! This matches communication apprehension — undue anxiety about oral communication specifically, severe enough that the person routes around faster, more effective live communication to avoid it.">Communication apprehension — anxiety about oral communication specifically</button>
+        <button class="q-option" data-correct="false" data-explanation="Information overload is about data inflow exceeding processing capacity — it doesn't explain a specific, consistent avoidance of oral communication in favour of written channels.">Information overload — too much data to process in the meeting</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Given that over 85% of managers report staying silent about at least one significant issue, what's the module's implied lesson for a PM trying to surface real project risks?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Correct! Because silence leaves no trace and is this common, a PM can't assume 'nobody raised it' means 'nothing is wrong' — actively creating safe, low-cost ways to surface concerns is necessary precisely because silence is both common and invisible by default.">Assume real concerns are being withheld by default, and actively build low-friction ways for people to surface them</button>
+        <button class="q-option" data-correct="false" data-explanation="The 85%+ figure is precisely the opposite signal — it suggests silence about significant issues is extremely common, not that an absence of complaints is reliable evidence of genuine alignment.">Treat an absence of complaints as reliable evidence that the team is fully aligned</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">This part draws on classical rhetoric and established communication-theory research. The source lecture material itself (an unpublished postgraduate project-management unit) is not citable as a public source, so the references below point to the named theorists and foundational texts it draws from.</p>
+
+  <div class="ref-group-label">The Communication Process</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Robbins, Stephen P., and Timothy A. Judge. <em>Organisational Behaviour</em>. Various editions. Melbourne: Pearson Australia.</div>
+    <div class="ref-annotation">The evident textbook base for this module's structure (the four functions, the eight-component process, the modes, and the barriers list). Treated here as the canonical OB reference; check the latest edition for updated empirical citations.</div>
+    <a class="ref-link" href="https://www.pearson.com/en-au/subject-catalog/p/organisational-behaviour/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Shannon, Claude E., and Warren Weaver. <em>The Mathematical Theory of Communication</em>. Urbana: University of Illinois Press, 1949.</div>
+    <div class="ref-annotation">The foundational source of the sender–encoder–channel–decoder–receiver communication model underpinning Module 2 — originally developed for engineering/telecommunications, later adapted broadly into organisational communication theory.</div>
+    <a class="ref-link" href="https://www.press.uillinois.edu/books/?id=p054668" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Modes &amp; the 55/38/7 Rule</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Mehrabian, Albert. <em>Silent Messages</em>. Belmont, CA: Wadsworth, 1971.</div>
+    <div class="ref-annotation">The real origin of the 55/38/7 statistic covered in Module 3 — Mehrabian's own research concerned judging a speaker's sincerity about feelings/attitudes specifically when verbal and non-verbal cues conflicted. It is frequently over-generalised as a universal law for all communication; see the in-module caveat before quoting it as such.</div>
+    <a class="ref-link" href="https://www.google.com/search?q=Albert+Mehrabian+Silent+Messages+1971" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Persuasion</div>
+
+  <div class="ref-item" style="border-left-color:var(--mango)">
+    <div class="ref-citation">Aristotle. <em>Rhetoric</em>. Translated by W. Rhys Roberts. Any standard edition (e.g. Oxford World's Classics or the Internet Classics Archive).</div>
+    <div class="ref-annotation">The foundational source of ethos, pathos, and logos — the three modes of persuasion covered in Module 4, essentially unchanged in substance across over two thousand years of use.</div>
+    <a class="ref-link" href="http://classics.mit.edu/Aristotle/rhetoric.html" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--mango)">
+    <div class="ref-citation">Petty, Richard E., and John T. Cacioppo. "The Elaboration Likelihood Model of Persuasion." <em>Advances in Experimental Social Psychology</em> 19 (1986): 123–205.</div>
+    <div class="ref-annotation">The real foundational paper behind Module 4's automatic/controlled processing distinction, more formally known as the peripheral route (automatic) vs. central route (controlled) of the Elaboration Likelihood Model — this module's terminology maps directly onto that framework.</div>
+    <a class="ref-link" href="https://doi.org/10.1016/S0065-2601(08)60214-2" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> the source lecture slides cite statistics (e.g. the 85%+ managerial silence figure, the 5–20% communication apprehension range, the 1–2 lies/day figure) without full bibliographic detail for the underlying studies. These figures are presented here as reported in the source material; verify the original study details independently before using them in any formal academic or professional citation context.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Part 6 Complete! 💬</h2>
+    <p>You now have the four functions of communication, the eight-component process (and why it's never quite linear), the three modes and the real story behind the 55/38/7 rule, Aristotle's three appeals, and the eight barriers that quietly break communication down. Part 7 — Leadership in Projects — is next.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="6">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'project-people-part6';
+const TOTAL = 6;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
