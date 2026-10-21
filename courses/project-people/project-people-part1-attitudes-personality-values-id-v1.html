@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="id" data-course-id="project-people-part1-id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attitudes, Personality & Values in Projects (Bahasa Indonesia) · Project & People · Learn with Adhi</title>
+<meta name="description" content="Bagian 1 dari Project & People (Bahasa Indonesia): tiga komponen attitude, cognitive dissonance, job attitudes, model Big Five, Dark Triad, project-manager fit, serta terminal values dan instrumental values — istilah teknis tetap dalam Bahasa Inggris.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/project-people/project-people-part1-attitudes-personality-values-id-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attitudes, Personality & Values in Projects (ID) · Project & People">
+<meta property="og:description" content="Tiga komponen attitude, cognitive dissonance, Big Five, Dark Triad, dan terminal/instrumental values — dalam Bahasa Indonesia, istilah tetap Bahasa Inggris.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-indigo-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Project & People — Bagian 1: Attitudes, Personality & Values in Projects","description":"Tiga komponen attitude, cognitive dissonance, job attitudes, Big Five, Dark Triad, project-manager fit, dan terminal/instrumental values.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-series{padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-series a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.55);text-decoration:none;letter-spacing:.04em}
+.sb-series a:hover{color:var(--paper)}
+.sb-lang{padding:8px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-lang a{font-family:var(--fm);font-size:10px;color:var(--gold);text-decoration:none;letter-spacing:.04em}
+.sb-lang a:hover{text-decoration:underline}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:var(--acc)}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+#main{margin-left:268px;flex:1;min-height:100vh;overflow-y:auto}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--acc);letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.45);margin-top:6px;text-transform:uppercase}
+@media(max-width:720px){.stat-row{grid-template-columns:1fr}}
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+table.pm-table{width:100%;border-collapse:collapse;margin:16px 0 26px;font-size:13px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:20px;color:var(--acc)}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink)}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:var(--green);font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:var(--red)}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-group-label:first-of-type{margin-top:0}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 32px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.completed::before{content:'✓ '}
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#A78BFA);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.9;margin:0}
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 22px}
+  .mod-title{font-size:28px}
+  table.pm-table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Lompat ke konten</a>
+
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>KURSUS</span></a>
+  </div>
+  <div class="sb-series"><a href="project-people-hub-id.html">← Peta seri · Bagian 1 dari 11</a></div>
+  <div class="sb-lang"><a href="project-people-part1-attitudes-personality-values-v1.html">🇬🇧 Read in English</a></div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progres</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 6 modul</div>
+  </div>
+  <nav>
+    <div class="nav-item" data-module="1"><span class="nav-num">01</span><span class="nav-title">Attitudes: Komponen &amp; Cognitive Dissonance</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="2"><span class="nav-num">02</span><span class="nav-title">Job Attitudes</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="3"><span class="nav-num">03</span><span class="nav-title">Personality &amp; Big Five</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="4"><span class="nav-num">04</span><span class="nav-title">Dark Triad &amp; PM Fit</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="5"><span class="nav-num">05</span><span class="nav-title">Values: Terminal &amp; Instrumental</span><span class="nav-check">✓</span></div>
+    <div class="nav-item" data-module="6"><span class="nav-num">06</span><span class="nav-title">Referensi</span><span class="nav-check">✓</span></div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Kembali ke semua kursus</a>
+  </div>
+</aside>
+
+<div id="mob-header">
+  <button id="hamburger">☰</button>
+  <span class="mob-title">Project &amp; People · Bagian 1</span>
+</div>
+<div id="overlay"></div>
+
+<main id="main">
+
+<!-- MODULE 1 -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Modul 01 / 06</div>
+  <h1 class="mod-title">Attitudes: Komponen &amp; <span class="acc">Cognitive Dissonance</span></h1>
+  <p class="mod-lede">Sebuah <strong>attitude</strong> adalah pernyataan atau penilaian evaluatif — positif atau negatif — terhadap suatu objek, orang, atau peristiwa. Sebelum kamu bisa membaca sebuah tim, memprediksi reaksi stakeholder, atau memahami kenapa seorang kontraktor yang biasanya rasional tiba-tiba bersikukuh, kamu perlu memahami anatomi tiga bagian di balik setiap attitude.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">Yang akan kamu pelajari</div>
+    <ul class="obj-list">
+      <li>Tiga komponen sebuah attitude: cognitive, affective, behavioural</li>
+      <li>Apa itu cognitive dissonance, dan tiga cara orang menyelesaikannya</li>
+      <li>Kapan attitude benar-benar bisa memprediksi perilaku — dan kapan tidak</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Tiga Komponen Sebuah Attitude</h2>
+  <p>Sebuah attitude bukan satu hal — melainkan tiga hal yang bekerja bersama. <strong>Cognitive component</strong> adalah keyakinan: opini atau pemahaman intelektual tentang bagaimana sesuatu seharusnya. <strong>Affective component</strong> adalah bagian emosional atau "perasaan" — dan ini bagian yang paling kritis, karena inilah yang sebenarnya mendorong hasil perilaku. <strong>Behavioural component</strong> adalah niat untuk bertindak dengan cara tertentu terhadap seseorang atau sesuatu.</p>
+  <p>Perhatikan kata <em>niat</em>. Niat untuk berperilaku tidak sama dengan perilaku itu sendiri — perilaku itu bisa muncul atau tidak, tergantung banyak hal lain yang terjadi di sekitar attitude tersebut.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Contoh kasus — kesalahan kontraktor, dalam tiga lapis</div>
+    <svg class="demo-svg" viewBox="0 0 640 230" role="img" aria-label="Tiga kotak yang saling terhubung menunjukkan komponen cognitive, affective, dan behavioural dari sebuah attitude, dengan contoh keyakinan, perasaan, dan niat yang mengalir dari kiri ke kanan">
+      <rect x="18" y="30" width="184" height="150" rx="14" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2"/>
+      <text x="110" y="56" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc-dim)">COGNITIVE</text>
+      <text x="110" y="74" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.04em" fill="var(--muted)">keyakinannya</text>
+      <text x="110" y="104" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">"Kontraktor ini</text>
+      <text x="110" y="122" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">membuat kesalahan —</text>
+      <text x="110" y="140" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">proyekku jadi</text>
+      <text x="110" y="158" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">terlambat."</text>
+
+      <rect x="228" y="30" width="184" height="150" rx="14" fill="rgba(217,119,6,.10)" stroke="var(--mango)" stroke-width="2"/>
+      <text x="320" y="56" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#B45F04">AFFECTIVE</text>
+      <text x="320" y="74" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.04em" fill="var(--muted)">perasaannya (kritis)</text>
+      <text x="320" y="104" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">"Aku cemas dan</text>
+      <text x="320" y="122" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">kesal — deadline</text>
+      <text x="320" y="140" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">makin dekat dan ini</text>
+      <text x="320" y="158" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">bukan salahku."</text>
+
+      <rect x="438" y="30" width="184" height="150" rx="14" fill="rgba(31,157,85,.10)" stroke="var(--green)" stroke-width="2"/>
+      <text x="530" y="56" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#145e30">BEHAVIOURAL</text>
+      <text x="530" y="74" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.04em" fill="var(--muted)">niatnya</text>
+      <text x="530" y="104" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">"Aku akan tanya</text>
+      <text x="530" y="122" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">apakah kontraktor bisa</text>
+      <text x="530" y="140" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">mempercepat perbaikan</text>
+      <text x="530" y="158" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">agar deadline tetap."</text>
+
+      <path d="M202 105 L228 105" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrowA)"/>
+      <path d="M412 105 L438 105" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrowA)"/>
+      <text x="320" y="210" text-anchor="middle" font-family="var(--fb)" font-size="10.5" font-style="italic" fill="var(--muted)">Niat untuk berperilaku ≠ perilaku sebenarnya — apakah ia benar-benar bertindak masih tergantung apa yang terjadi selanjutnya.</text>
+      <defs><marker id="arrowA" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Situasi yang sama, tiga lapis berbeda. Lapis affective adalah yang benar-benar mengubah sebuah keyakinan menjadi dorongan untuk bertindak.</div>
+  </div>
+
+  <h2 class="sh">Cognitive Dissonance</h2>
+  <p><strong>Cognitive dissonance</strong> adalah ketidakcocokan antara dua atau lebih attitude, atau antara sebuah attitude dan perilaku. Ini menimbulkan ketidaknyamanan psikologis yang nyata — dan karena ketidaknyamanan ini tidak enak, orang jadi termotivasi untuk menguranginya dan mengembalikan konsistensi.</p>
+  <p>Ada tepat tiga cara untuk menyelesaikannya: <strong>mengubah attitude</strong> itu sendiri, <strong>memodifikasi perilaku</strong> agar sesuai dengan attitude, atau <strong>melakukan rasionalisasi</strong> atas kesenjangan tersebut (mencari pembenaran yang membuat ketidakkonsistenan terasa bisa diterima). Kebanyakan orang memilih rasionalisasi lebih dulu — ini perbaikan yang paling rendah usahanya, meski sebenarnya tidak benar-benar menutup kesenjangan itu.</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🔄</div>
+      <h4>Mengubah Attitude</h4>
+      <p>Perbaikan dengan usaha paling tinggi, tapi paling tahan lama: benar-benar memperbarui keyakinan atau perasaan agar sesuai dengan perilaku.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🛠️</div>
+      <h4>Memodifikasi Perilaku</h4>
+      <p>Berhenti melakukan hal yang bertentangan dengan attitude — menyelaraskan tindakan dengan keyakinan.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">💬</div>
+      <h4>Rasionalisasi</h4>
+      <p>Membangun pembenaran yang membuat ketidakkonsistenan terasa wajar, tanpa benar-benar mengubah salah satu sisi.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Skenario proyek:</strong> seorang project sponsor yang terang-terangan mendukung "keputusan berbasis data" terus-menerus mengabaikan dashboard demi keputusan insting. Itu adalah dissonance antara attitude yang dinyatakan dan perilaku. Perhatikan jalan penyelesaian mana yang mereka ambil — apakah mereka mulai mempercayai data (perubahan attitude), berhenti mengabaikannya (perubahan perilaku), atau mulai menjelaskan kenapa "kasus ini berbeda" setiap kali (rasionalisasi)? Pola ketiga, bila terus berulang, adalah pertanda kuat bahwa attitude yang dinyatakan itu sebenarnya tidak pernah benar-benar dipegang.
+  </div>
+
+  <h2 class="sh">Memprediksi Perilaku dari Attitude</h2>
+  <p>Memprediksi perilaku dari attitude lebih merupakan seni ketimbang ilmu pasti, tapi beberapa hubungan berikut cukup konsisten terbukti benar:</p>
+  <ul class="bl">
+    <li><strong>Kespesifikan cocok dengan kespesifikan.</strong> Attitude yang spesifik memprediksi perilaku yang spesifik; attitude yang umum hanya memprediksi pola perilaku yang umum.</li>
+    <li><strong>Values memperkuat hubungannya.</strong> Semakin erat sebuah attitude terhubung dengan value yang benar-benar dipegang seseorang, semakin kuat — dan semakin prediktif — hubungannya terhadap perilaku.</li>
+    <li><strong>Tekanan sosial melemahkan hubungan ini.</strong> Tekanan sosial yang tinggi bisa menekan hubungan attitude-perilaku, menghasilkan ketidaksesuaian antara apa yang diyakini seseorang dan apa yang terlihat mereka lakukan.</li>
+    <li><strong>Pengalaman memperkuat hubungan ini.</strong> Attitude yang terbentuk dari pengalaman pribadi langsung adalah prediktor perilaku masa depan yang lebih kuat ketimbang attitude yang didapat secara tidak langsung.</li>
+  </ul>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Cek Cepat – Modul 1</div>
+
+    <div class="q-card">
+      <p class="q-text">Seorang anggota tim berkata "aku percaya pada work-life balance" (keyakinan) tapi rutin bekerja sampai jam 10 malam tanpa diminta (perilaku). Berdasarkan tiga cara menyelesaikan dissonance, respons mana yang termasuk <em>rasionalisasi</em> bukan penyelesaian yang sesungguhnya?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Ini adalah memodifikasi perilaku — mengembalikan tindakan agar sesuai dengan attitude yang dinyatakan. Ini penyelesaian yang sesungguhnya, bukan rasionalisasi.">Mereka mulai pulang jam 6 sore agar sesuai dengan keyakinan yang dinyatakan</button>
+        <button class="q-option" data-correct="false" data-explanation="Ini adalah mengubah attitude itu sendiri — memperbarui keyakinan agar jujur mencerminkan apa yang sebenarnya mereka hargai sekarang. Ini juga penyelesaian yang sesungguhnya.">Mereka mengakui bahwa sebenarnya mereka lebih menghargai dedikasi yang terlihat ketimbang work-life balance, dan meninggalkan keyakinan lama</button>
+        <button class="q-option" data-correct="true" data-explanation="Benar! Mengatakan 'ini kan cuma untuk deadline ini saja, bukan soal balance' menjelaskan kesenjangan itu tanpa mengubah keyakinan maupun perilaku — ini definisi buku teks dari rasionalisasi. Kalau terus berulang tiap minggu, attitude yang dinyatakan itu sebenarnya tidak pernah benar-benar dipegang.">Mereka berkata "ini kan cuma karena deadline ini saja, bukan soal balance" — lalu tetap bekerja sampai malam setiap minggu</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Dua stakeholder sama-sama mengatakan mereka "mendukung sustainability." Satu orang sudah sepuluh tahun menjalankan LSM konservasi; satu lagi baru membaca satu artikel bulan lalu. Attitude siapa yang kemungkinan jadi prediktor <em>lebih kuat</em> untuk keputusan proyek mereka yang sebenarnya?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Attitude yang berakar pada pengalaman pribadi langsung adalah prediktor perilaku masa depan yang lebih kuat ketimbang attitude yang didapat secara tidak langsung — sepuluh tahun praktik nyata mengalahkan satu artikel yang baru dibaca, meski keduanya menyatakan attitude yang sama.">Si veteran LSM — attitude-nya berakar pada pengalaman pribadi langsung selama bertahun-tahun</button>
+        <button class="q-option" data-correct="false" data-explanation="Kebaruan dalam memperoleh sebuah attitude bukanlah yang memperkuat hubungan attitude-perilaku — kedalaman pengalaman pribadi langsunglah yang memperkuatnya. Satu artikel tidak mengalahkan sepuluh tahun praktik nyata.">Yang baru membaca artikel — karena itu paling segar di ingatannya</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Seorang site supervisor sebenarnya tidak setuju dengan jalan pintas keselamatan yang dipaksakan klien, tapi tetap menurutinya karena tekanan berat dari perwakilan klien. Apa yang digambarkan skenario ini?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Tekanan sosial yang tinggi bisa menekan hubungan antara attitude sesungguhnya dan perilaku yang terlihat — attitude asli supervisor (tidak setuju) dan perilaku yang terlihat (menuruti) telah terpisah karena tekanan eksternal, persis pola yang dijelaskan di atas.">Tekanan sosial yang tinggi sedang melemahkan hubungan antara attitude asli supervisor dan perilaku yang teramati</button>
+        <button class="q-option" data-correct="false" data-explanation="Ini bukan cognitive dissonance yang sedang diselesaikan — tidak ada tanda supervisor mengubah attitude-nya, memperbarui keyakinan yang dinyatakan, atau merasionalisasinya. Ia hanya patuh di bawah tekanan sementara attitude-nya tetap utuh dan tidak diungkapkan.">Supervisor telah menyelesaikan cognitive dissonance melalui rasionalisasi</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Sebelumnya</button>
+    <button class="done-btn" data-module="1">Tandai modul selesai →</button>
+    <button class="nav-btn" data-nav="next">Selanjutnya →</button>
+  </div>
+</section>
+
+<!-- MODULE 2 -->
+<section id="module-2" class="module-section">
+  <div class="mod-eyebrow">Modul 02 / 06</div>
+  <h1 class="mod-title">Job <span class="acc">Attitudes</span></h1>
+  <p class="mod-lede">Orang memiliki ribuan attitude, tapi studi organisational behaviour mempersempit pada sekelompok kecil attitude terkait pekerjaan. Empat yang paling penting untuk lingkungan proyek: job satisfaction, job involvement, psychological empowerment, dan organisational commitment.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">Yang akan kamu pelajari</div>
+    <ul class="obj-list">
+      <li>Apa yang sebenarnya diukur oleh job satisfaction dan job involvement</li>
+      <li>Psychological empowerment, dan bukti dari industri konstruksi di baliknya</li>
+      <li>Organisational commitment, dan kenapa ia memprediksi lebih dari sekadar "bertahan"</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Job Satisfaction &amp; Job Involvement</h2>
+  <p><strong>Job satisfaction</strong> adalah perasaan positif tentang pekerjaan, hasil dari evaluasi terhadap karakteristiknya. Orang dengan job satisfaction tinggi memiliki perasaan positif tentang pekerjaannya; yang rendah memiliki perasaan negatif. <strong>Job involvement</strong> terkait tapi berbeda — ia mengukur sejauh mana orang mengidentifikasi diri secara psikologis dengan pekerjaannya, dan seberapa besar mereka menganggap performa mereka penting bagi harga diri mereka sendiri. Seseorang dengan job involvement tinggi tidak hanya suka pekerjaannya; mereka menjadikan melakukannya dengan baik sebagai bagian dari jati diri mereka.</p>
+
+  <h2 class="sh">Psychological Empowerment</h2>
+  <p>Kerabat dekat dari job involvement adalah <strong>psychological empowerment</strong>: sejauh mana keyakinan karyawan memengaruhi lingkungan kerja mereka, rasa kompetensi mereka, kebermaknaan pekerjaan mereka, dan otonomi yang mereka rasakan. Ini bukan fasilitas yang diberikan manajemen — ini soal seberapa berdaya seorang karyawan benar-benar <em>merasa</em>, yang berbeda dari seberapa besar otoritas formal yang telah diberikan kepadanya.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">↑</div>
+      <div class="stat-lbl">Psychological empowerment berhubungan positif dengan task behaviours maupun contextual (discretionary) behaviours</div>
+      <div class="stat-sub">Tuuli &amp; Rowlinson, 2009</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">HK</div>
+      <div class="stat-lbl">Sampel studi: tim project management konstruksi di Hong Kong</div>
+      <div class="stat-sub">Studi yang sama</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">↓</div>
+      <div class="stat-lbl">Job involvement dan empowerment yang tinggi terkait dengan berkurangnya absen dan rendahnya tingkat resign</div>
+      <div class="stat-sub">Temuan umum riset OB</div>
+    </div>
+  </div>
+
+  <div class="callout blue">
+    <strong>Nuansa yang penting:</strong> satu studi tentang nursing manager di Singapura menemukan bahwa pemimpin yang baik memberdayakan staf dengan melibatkan mereka dalam keputusan dan memberi keleluasaan "melakukan cara mereka sendiri" — tapi studi lain menemukan bahwa untuk guru di India, kompetensi yang dirasakan diri sendiri tidak berubah menjadi perilaku yang lebih inovatif. Pelajarannya: inisiatif empowerment perlu disesuaikan dengan budaya dan hasil perilaku yang sebenarnya kamu inginkan, bukan diterapkan sebagai resep kepemimpinan yang satu untuk semua.
+  </div>
+
+  <h2 class="sh">Organisational Commitment</h2>
+  <p><strong>Commitment</strong> adalah sejauh mana seorang individu mengidentifikasi diri dengan suatu entitas tertentu — di sini, sebuah proyek — dan tujuannya, serta ingin tetap menjadi bagian dari entitas itu. Ini salah satu attitude dengan daya ungkit tertinggi yang bisa dibangun oleh seorang project manager, karena apa yang dihasilkannya secara konsisten.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Apa yang dihasilkan organisational commitment, secara berantai</div>
+    <svg class="demo-svg" viewBox="0 0 640 230" role="img" aria-label="Sebuah kotak pusat berlabel Commitment dengan enam panah menuju kotak-kotak berisi increased effort, discretionary behaviours, knowledge sharing, collaboration, conflict reduction, dan shared mental models, yang semuanya mengarah ke kotak akhir berlabel project success">
+      <rect x="260" y="20" width="120" height="50" rx="12" fill="var(--acc)" />
+      <text x="320" y="50" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#fff">Commitment</text>
+
+      <g font-family="var(--fb)" font-size="10" fill="var(--ink)">
+        <rect x="20" y="100" width="130" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="85" y="123" text-anchor="middle">Increased effort</text>
+        <rect x="165" y="100" width="150" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="240" y="123" text-anchor="middle">Discretionary behaviours</text>
+        <rect x="330" y="100" width="140" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="400" y="123" text-anchor="middle">Knowledge sharing</text>
+        <rect x="485" y="100" width="135" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="552" y="123" text-anchor="middle">Collaboration</text>
+        <rect x="85" y="150" width="150" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="160" y="173" text-anchor="middle">Conflict reduction</text>
+        <rect x="350" y="150" width="165" height="38" rx="8" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <text x="432" y="173" text-anchor="middle">Shared mental models</text>
+      </g>
+
+      <path d="M300 70 L85 100" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M305 70 L240 100" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M325 70 L400 100" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M335 70 L552 100" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M305 70 L160 150" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+      <path d="M330 70 L432 150" stroke="var(--acc)" stroke-width="1.5" opacity="0.6"/>
+
+      <path d="M320 198 L320 205" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="220" y="205" width="200" height="22" rx="8" fill="var(--ink)"/>
+      <text x="320" y="220" text-anchor="middle" font-family="var(--fm)" font-size="10" letter-spacing="0.06em" fill="var(--paper)">→ PROJECT SUCCESS</text>
+    </svg>
+    <div class="demo-caption">Enam mekanisme berbeda, semuanya berakar dari satu attitude — itulah kenapa tim yang committed secara konsisten mengungguli tim yang sekadar satisfied.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Cek Cepat – Modul 2</div>
+
+    <div class="q-card">
+      <p class="q-text">Seorang developer berkata: "Aku suka-suka saja sama pekerjaan ini, nine-to-five, tapi ini bukan jati diriku — passion sungguhanku ada di akhir pekan." Ini paling jelas menggambarkan apa?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Job satisfaction mungkin masih ada ('suka-suka saja') — sinyal kuncinya di sini soal identitas dan harga diri, yaitu job involvement, bukan satisfaction semata.">Job satisfaction yang tinggi</button>
+        <button class="q-option" data-correct="true" data-explanation="Benar! Job involvement mengukur seberapa besar seseorang mengidentifikasi diri secara psikologis dengan pekerjaan dan mengaitkan harga dirinya dengan performanya di sana. Secara terang-terangan berkata pekerjaan 'bukan jati diriku' adalah tanda jelas dari job involvement yang rendah, meski satisfaction-nya cukup tinggi.">Job involvement yang rendah — pekerjaan itu tidak terkait dengan harga dirinya</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Mengikuti temuan Tuuli &amp; Rowlinson (2009), seorang project manager ingin meningkatkan psychological empowerment di proyek konstruksi Hong Kong dengan cara yang sama persis seperti yang berhasil di studi nursing manager di Singapura — dengan sekadar menyalin taktik involvement yang sama persis. Apa peringatan dari temuan guru-guru India?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Studi guru-guru India menemukan kompetensi yang dirasakan diri sendiri tidak berubah menjadi perilaku inovatif di sana — menunjukkan efek empowerment bergantung pada budaya dan konteks. Menyalin taktik secara mentah-mentah berisiko tidak sesuai dengan budaya/industri yang berbeda.">Menyalin taktik secara mentah-mentah berisiko mengabaikan bahwa efek empowerment bergantung pada budaya dan konteks, bukan universal</button>
+        <button class="q-option" data-correct="false" data-explanation="Materi tidak mengklaim psychological empowerment hanya berlaku khusus untuk industri konstruksi — peringatannya soal kepekaan budaya/konteks secara umum, bukan aturan baku bahwa teknik konstruksi tidak pernah bisa diterapkan di tempat lain.">Psychological empowerment hanya berlaku untuk industri konstruksi dan tidak bisa diterapkan pada konteks nursing atau pengajaran</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Sebuah proyek tertinggal jadwal. Seorang anggota tim yang <em>committed</em> tinggi (bukan sekadar satisfied) lebih mungkin melakukan apa, khususnya karena efek berantai yang sudah terdokumentasi dari commitment?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Commitment terkait dengan discretionary behaviours dan increased effort — secara sukarela mengambil pekerjaan tambahan yang tidak ditugaskan untuk membantu deadline adalah persis jenis usaha discretionary yang diprediksi oleh commitment.">Secara sukarela mengambil pekerjaan tambahan yang tidak ditugaskan untuk membantu deadline tercapai</button>
+        <button class="q-option" data-correct="false" data-explanation="Commitment terkait dengan knowledge sharing dan collaboration, bukan menahan informasi — ini justru kebalikan dari apa yang diprediksi commitment.">Menahan informasi dari rekan tim untuk melindungi penilaian performanya sendiri</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Sebelumnya</button>
+    <button class="done-btn" data-module="2">Tandai modul selesai →</button>
+    <button class="nav-btn" data-nav="next">Selanjutnya →</button>
+  </div>
+</section>
+
+<!-- MODULE 3 -->
+<section id="module-3" class="module-section">
+  <div class="mod-eyebrow">Modul 03 / 06</div>
+  <h1 class="mod-title">Personality &amp; <span class="acc">Big Five</span></h1>
+  <p class="mod-lede">"Personality" bukan berarti karisma atau senyum yang menawan — psikolog memakai istilah ini untuk menggambarkan pertumbuhan dan perkembangan dinamis dari seluruh sistem psikologis seseorang, diukur lewat trait yang bisa diukur. Satu model, Big Five, punya basis riset terkuat di antara semua framework personality dalam organisational behaviour.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">Yang akan kamu pelajari</div>
+    <ul class="obj-list">
+      <li>Bagaimana personality sebenarnya diukur — self-report vs. observer-rating surveys</li>
+      <li>Lima dimensi dalam model Big Five, dan apa yang diprediksi masing-masing</li>
+      <li>Kenapa observer-ratings, bukan self-reports, lebih baik memprediksi kesuksesan kerja</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Mengukur Personality</h2>
+  <p>Riset menunjukkan tes personality benar-benar membantu manajer memperkirakan siapa yang paling cocok untuk suatu pekerjaan — makanya tes ini dipakai dalam keputusan perekrutan. Ada dua pendekatan pengukuran utama. <strong>Self-report surveys</strong> meminta individu mengevaluasi diri mereka sendiri (mis. "Aku sering khawatir soal masa depan"). <strong>Observer-rating surveys</strong> meminta rekan kerja atau pengamat lain yang menilai orang tersebut, kadang dengan sepengetahuan subjek, kadang tanpa.</p>
+
+  <table class="pm-table">
+    <thead><tr><th>Metode</th><th>Kekuatan</th><th>Kelemahan</th></tr></thead>
+    <tbody>
+      <tr><td class="hl">Self-report</td><td>Cepat, bisa diskalakan, dan menangkap wawasan orang itu sendiri tentang dirinya</td><td>Rentan terhadap impression management — orang bisa "fake good" saat tahu hasilnya memengaruhi keputusan perekrutan</td></tr>
+      <tr><td class="hl">Observer-rating</td><td>Independen dari cara subjek menampilkan dirinya sendiri</td><td>Hanya mencerminkan apa yang terlihat secara eksternal, yang bisa melewatkan trait internal</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout mango">
+    <strong>Temuan yang berlawanan dengan intuisi:</strong> self-report dan observer-rating surveys berkorelasi kuat, tapi tidak sempurna — dan korelasinya lebih kuat untuk trait yang lebih terlihat seperti Extraversion dan Conscientiousness. Meski self-report lebih umum dipakai, riset menunjukkan <strong>observer-ratings adalah prediktor kesuksesan kerja yang lebih baik.</strong> Kalau kamu hanya percaya apa kata kandidat tentang dirinya sendiri, kamu memakai sinyal yang lebih lemah.
+  </div>
+
+  <h2 class="sh">Model Big Five</h2>
+  <p>Ada kumpulan riset yang mengesankan yang mendukung lima dimensi dasar yang mendasari sebagian besar variasi signifikan dalam personality manusia — dan dimensi-dimensi ini benar-benar bagus dalam memprediksi bagaimana orang berperilaku dalam situasi nyata.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Big Five, sebagai lima kontinum yang independen</div>
+    <svg class="demo-svg" viewBox="0 0 640 290" role="img" aria-label="Lima batang horizontal, satu untuk tiap trait Big Five, masing-masing membentang dari label ujung rendah ke ujung tinggi: Extraversion dari reserved ke gregarious, Agreeableness dari antagonistic ke cooperative, Conscientiousness dari disorganised ke dependable, Emotional stability dari anxious ke secure, Openness dari conventional ke curious">
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="24" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Extraversion</text>
+        <rect x="150" y="12" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="12" width="300" height="14" rx="7" fill="var(--acc)" opacity="0.75"/>
+        <text x="150" y="40" fill="var(--muted)">reserved, timid, quiet</text>
+        <text x="610" y="40" text-anchor="end" fill="var(--muted)">gregarious, assertive, sociable</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="80" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Agreeableness</text>
+        <rect x="150" y="68" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="68" width="360" height="14" rx="7" fill="var(--sea)" opacity="0.75"/>
+        <text x="150" y="96" fill="var(--muted)">cold, disagreeable, antagonistic</text>
+        <text x="610" y="96" text-anchor="end" fill="var(--muted)">cooperative, warm, trusting</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="136" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Conscientiousness</text>
+        <rect x="150" y="124" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="124" width="410" height="14" rx="7" fill="var(--forest)" opacity="0.75"/>
+        <text x="150" y="152" fill="var(--muted)">distracted, disorganised, unreliable</text>
+        <text x="610" y="152" text-anchor="end" fill="var(--muted)">responsible, dependable, persistent</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="192" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Emotional Stability</text>
+        <rect x="150" y="180" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="180" width="260" height="14" rx="7" fill="var(--mango)" opacity="0.75"/>
+        <text x="150" y="208" fill="var(--muted)">nervous, anxious, insecure</text>
+        <text x="610" y="208" text-anchor="end" fill="var(--muted)">calm, self-confident, secure under stress</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5">
+        <text x="20" y="248" font-family="var(--fd)" font-weight="700" font-size="12" fill="var(--ink)">Openness to Experience</text>
+        <rect x="150" y="236" width="460" height="14" rx="7" fill="var(--paper-2)" stroke="var(--line-s)"/>
+        <rect x="150" y="236" width="340" height="14" rx="7" fill="var(--tomato)" opacity="0.75"/>
+        <text x="150" y="264" fill="var(--muted)">conventional, finds comfort in the familiar</text>
+        <text x="610" y="264" text-anchor="end" fill="var(--muted)">curious, imaginative, artistic</text>
+      </g>
+    </svg>
+    <div class="demo-caption">Setiap trait adalah kontinum, bukan kategori — tidak ada orang yang murni "seorang extravert"; semua orang berada di suatu titik pada kelima batang ini sekaligus. Bagian yang terisi di sini hanya ilustrasi, bukan profil "ideal" universal.</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">638</div>
+      <div class="stat-lbl">Kata sehari-hari dalam Bahasa Inggris yang menggambarkan trait personality — dari "Accessible" sampai "Zany"</div>
+      <div class="stat-sub">Menunjukkan skala yang dipadatkan Big Five menjadi hanya 5 dimensi</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-lbl">Dimensi yang menangkap sebagian besar variasi signifikan dalam personality manusia</div>
+      <div class="stat-sub">Model Big Five</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">½σ</div>
+      <div class="stat-lbl">Kira-kira seberapa lebih tinggi orang menilai conscientiousness mereka sendiri saat tahu ada keputusan perekrutan yang dipertaruhkan</div>
+      <div class="stat-sub">Efek impression management</div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Cek Cepat – Modul 3</div>
+
+    <div class="q-card">
+      <p class="q-text">Sebuah panel perekrutan sedang memutuskan apakah hanya mengandalkan tes self-report personality dari kandidat, atau juga meminta mantan rekan kerja kandidat untuk mengisi observer-rating survey. Berdasarkan riset, pendekatan mana yang lebih baik?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Self-report saja adalah prediktor kesuksesan kerja yang lebih lemah, dan khususnya rentan terhadap impression management saat kandidat tahu ada taruhannya.">Mengandalkan self-report saja — lebih cepat dan mencerminkan pengetahuan diri kandidat</button>
+        <button class="q-option" data-correct="true" data-explanation="Benar! Riset menunjukkan observer-ratings adalah prediktor kesuksesan kerja yang lebih baik ketimbang self-reports, dan tiap metode menambahkan informasi unik — jadi menggabungkan keduanya, bukan hanya mengandalkan self-report, adalah pendekatan yang lebih kuat.">Menggabungkan keduanya — observer-ratings adalah prediktor kesuksesan kerja yang lebih baik, tapi tiap metode menambahkan informasi unik</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Seorang anggota tim proyek mendapat skor rendah pada Emotional Stability dalam asesmen Big Five yang tervalidasi. Dalam istilah proyek yang praktis, apa yang harus diantisipasi oleh seorang project manager di bawah kondisi stres tinggi (mis. krisis deadline yang terlewat)?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Emotional stability yang rendah (neuroticism tinggi) didefinisikan sebagai kecenderungan ke respons yang nervous, anxious, depressed, dan insecure di bawah stres — persis yang harus diantisipasi dan disiapkan dukungannya oleh seorang PM saat krisis.">Kecenderungan lebih cemas, nervous, dan insecure di bawah tekanan</button>
+        <button class="q-option" data-correct="false" data-explanation="Profil tenang dan percaya diri di bawah stres itu menggambarkan orang dengan emotional stability tinggi, yang justru ujung berlawanan dari skor orang ini.">Ketenangan dan kepercayaan diri yang tidak biasa, karena skor rendah menangani stres lebih baik</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Seorang kandidat mengerjakan tes personality dua kali: sekali "iseng-iseng" di rumah, dan sekali sebagai bagian dari proses perekrutan sungguhan. Riset tentang impression management memprediksi perbedaan apa antara kedua hasil tersebut?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Bukti menunjukkan bahwa saat orang tahu skor personality mereka akan dipakai untuk keputusan perekrutan, mereka menilai diri sendiri kira-kira setengah standar deviasi lebih tinggi pada conscientiousness dan emotional stability ketimbang saat mengerjakannya sekadar untuk mengenal diri sendiri.">Tes dalam konteks perekrutan kemungkinan menunjukkan skor conscientiousness dan emotional stability yang lebih tinggi, karena impression management</button>
+        <button class="q-option" data-correct="false" data-explanation="Temuan risetnya justru menunjukkan skor bergeser lebih tinggi dalam kondisi taruhan perekrutan (impression management), bukan bahwa kedua konteks menghasilkan hasil yang identik dan tanpa bias.">Kedua tes seharusnya menghasilkan hasil identik, karena personality adalah trait yang stabil</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Sebelumnya</button>
+    <button class="done-btn" data-module="3">Tandai modul selesai →</button>
+    <button class="nav-btn" data-nav="next">Selanjutnya →</button>
+  </div>
+</section>
+
+<!-- MODULE 4 -->
+<section id="module-4" class="module-section">
+  <div class="mod-eyebrow">Modul 04 / 06</div>
+  <h1 class="mod-title">Dark Triad &amp; <span class="acc">Project-Manager Fit</span></h1>
+  <p class="mod-lede">Selain Big Five, para peneliti mengidentifikasi tiga trait yang secara sosial tidak diinginkan, yang dimiliki semua orang dengan kadar berbeda-beda — dan ini relevan langsung dengan bagaimana tim proyek sebenarnya berfungsi. Lalu: pertanyaan praktis soal fit, untuk orang yang kamu rekrut dan untuk dirimu sendiri.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">Yang akan kamu pelajari</div>
+    <ul class="obj-list">
+      <li>Machiavellianism, Narcissism, dan Psychopathy — Dark Triad, didefinisikan dengan tepat</li>
+      <li>Apa yang sebenarnya dikatakan bukti tentang apa yang diprediksi (dan tidak) oleh masing-masing di tempat kerja</li>
+      <li>Person-organisation fit, dan kenapa PM juga perlu mengevaluasi fit-nya sendiri</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Dark Triad</h2>
+  <p>Kecuali neuroticism, trait-trait Big Five secara sosial diinginkan — kita senang mendapat skor tinggi di sana. Dark Triad berbeda: tiga trait yang kita semua miliki dengan kadar berbeda-beda, yang dikelompokkan peneliti justru karena sifat negatifnya yang sama, meski ketiganya tidak selalu muncul bersamaan pada orang yang sama.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Tiga trait dalam Dark Triad</div>
+    <svg class="demo-svg" viewBox="0 0 640 300" role="img" aria-label="Tiga lingkaran membentuk segitiga, berlabel Machiavellianism, Narcissism, dan Psychopathy, masing-masing dengan definisi singkat, terhubung dengan garis untuk menunjukkan bahwa ketiganya terkait tapi independen">
+      <circle cx="320" cy="60" r="68" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="2.5"/>
+      <text x="320" y="48" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--acc-dim)">Machiavellianism</text>
+      <text x="320" y="66" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">pragmatis, berjarak</text>
+      <text x="320" y="80" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">secara emosional,</text>
+      <text x="320" y="94" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">"ends justify the means"</text>
+
+      <circle cx="140" cy="220" r="68" fill="rgba(224,62,45,.08)" stroke="var(--tomato)" stroke-width="2.5"/>
+      <text x="140" y="208" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="var(--tomato)">Narcissism</text>
+      <text x="140" y="226" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">rasa penting diri</text>
+      <text x="140" y="240" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">yang berlebihan,</text>
+      <text x="140" y="254" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">butuh kekaguman</text>
+
+      <circle cx="500" cy="220" r="68" fill="rgba(217,119,6,.10)" stroke="var(--mango)" stroke-width="2.5"/>
+      <text x="500" y="208" text-anchor="middle" font-family="var(--fd)" font-size="13" font-weight="800" fill="#B45F04">Psychopathy</text>
+      <text x="500" y="226" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">kurang peduli, tanpa</text>
+      <text x="500" y="240" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">rasa bersalah,</text>
+      <text x="500" y="254" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="var(--ink)">manipulatif</text>
+
+      <path d="M275 108 L185 168" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="4 3"/>
+      <path d="M365 108 L455 168" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="4 3"/>
+      <path d="M208 220 L432 220" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="320" y="292" text-anchor="middle" font-family="var(--fb)" font-size="10" font-style="italic" fill="var(--muted)">Terkait karena sama-sama tidak diinginkan secara sosial — tapi independen; seseorang bisa memiliki satu, dua, atau ketiganya</text>
+    </svg>
+    <div class="demo-caption">Semua orang memiliki masing-masing trait ini dalam kadar tertentu — Dark Triad menggambarkan sebuah spektrum, bukan diagnosis.</div>
+  </div>
+
+  <h3 class="sub">Apa yang Sebenarnya Ditunjukkan Bukti</h3>
+  <ul class="bl">
+    <li><strong>Machiavellianism (high Mach):</strong> lebih banyak memanipulasi, lebih sering menang, lebih sulit dipersuasi, dan lebih mampu mempersuasi orang lain ketimbang orang dengan low-Mach. High Mach bertindak lebih agresif dan terlibat lebih banyak counterproductive work behaviours — tapi Machiavellianism tidak secara signifikan memprediksi performa kerja secara keseluruhan. Mereka sering menang dalam jangka pendek dengan memanipulasi orang lain, lalu kehilangan keuntungan itu dalam jangka panjang karena tidak disukai.</li>
+    <li><strong>Narcissism:</strong> rasa berhak (entitlement) dan arogansi, dipadukan dengan kebutuhan akan kekaguman berlebihan — dan orang dengan narcissism cenderung <em>dinilai kurang efektif</em>, meski (atau justru karena) rasa percaya diri mereka.</li>
+    <li><strong>Psychopathy:</strong> temuannya tidak konsisten soal apakah ia berkorelasi dengan performa kerja, tapi ia terkait dengan penggunaan hard influence tactics (ancaman, manipulasi) dan perilaku bullying. Kelicikan yang dihasilkannya bisa membantu seseorang meraih kekuasaan dalam organisasi — tapi cenderung menghalangi mereka menggunakan kekuasaan itu untuk tujuan yang sehat.</li>
+  </ul>
+
+  <div class="callout tomato">
+    <strong>Kenapa ini penting bagi seorang PM:</strong> ketiga trait Dark Triad bisa terlihat seperti kepercayaan diri, ketegasan, atau orientasi hasil pada kesan pertama atau wawancara kerja — dan ketiganya memprediksi hasil tim jangka panjang yang lebih buruk daripada yang mereka janjikan di awal. Bobotkan observer-ratings (Modul 3) lebih berat ketimbang pesona dalam perekrutan berisiko tinggi, terutama untuk peran dengan otoritas nyata atas orang lain.
+  </div>
+
+  <h2 class="sh">Project-Manager Fit</h2>
+  <p>Dalam banyak proyek nyata, staf ditugaskan ke sebuah tim murni berdasarkan ketersediaan — siapa yang sedang kosong, itu yang dipakai. Tapi seorang PM yang memahami <strong>person-organisation fit</strong> punya peluang sukses yang jauh lebih terukur, karena ia bisa memakai pemahaman itu untuk secara aktif mengelola komposisi dan dinamika timnya, bukan menganggap susunan tim sebagai sesuatu yang tetap.</p>
+  <p>Sama pentingnya: ada baiknya PM juga mengevaluasi fit-nya <em>sendiri</em>, secara introspektif, dengan organisasi maupun dengan jenis proyek yang sedang ia jalankan. Seorang PM yang sukses menjalankan proyek konstruksi yang scope-nya ketat dan prediktif bisa jadi kesulitan — bukan karena kurang skill, tapi karena fit yang kurang cocok — saat ditempatkan dalam proyek inovasi yang ambigu dan serba cepat, begitu juga sebaliknya.</p>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Cek Cepat – Modul 4</div>
+
+    <div class="q-card">
+      <p class="q-text">Seorang anggota tim terus-menerus memanipulasi situasi demi keuntungannya sendiri, memenangkan sebagian besar negosiasi, dan jarang terpersuasi oleh orang lain — tapi review akhir tahun menunjukkan penilaian performa kerjanya secara keseluruhan biasa saja, dan rekan-rekannya makin menghindar bekerja dengannya. Temuan Dark Triad mana yang paling cocok?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Ini persis cocok dengan bukti soal Machiavellianism: high Mach lebih banyak memanipulasi, lebih sering menang, dan lebih sulit dipersuasi — tapi Machiavellianism tidak secara signifikan memprediksi performa kerja keseluruhan, dan kemenangan jangka pendek karyawan high-Mach terkikis seiring waktu karena mereka tidak disukai.">Machiavellianism tinggi — menang dan memanipulasi tanpa peningkatan performa, serta mengikis goodwill seiring waktu</button>
+        <button class="q-option" data-correct="false" data-explanation="Ciri khas narcissism adalah grandiositas dan kebutuhan akan kekaguman, bukan khususnya manipulasi untuk menang negosiasi — dan orang dengan narcissism cenderung dinilai kurang efektif, bukan netral terhadap performa.">Narcissism tinggi — grandiositasnya langsung menjelaskan tingkat kemenangannya</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Seorang PM ditugaskan ke proyek baru murni karena kebetulan sedang kosong, tanpa pertimbangan fit sama sekali. Apa yang direkomendasikan modul ini untuk dilakukan PM agar meningkatkan peluang suksesnya?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Modul ini secara khusus merekomendasikan PM mengevaluasi fit-nya sendiri secara introspektif — baik dengan organisasi maupun dengan jenis proyek ini — lalu memakai wawasan itu untuk mengelola tim, bukan sekadar menerima penugasan apa adanya.">Mengevaluasi fit-nya sendiri secara introspektif dengan organisasi dan jenis proyek ini, lalu memakai wawasan itu untuk mengelola tim</button>
+        <button class="q-option" data-correct="false" data-explanation="Panduannya bukan meminta reassignment secara otomatis — melainkan secara aktif mengevaluasi dan memakai informasi fit untuk mengelola situasi yang ada, yang merupakan langkah yang lebih praktis dan langsung bisa dilakukan.">Segera meminta reassignment, karena staffing berbasis ketersediaan menjamin fit yang buruk</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Kenapa bukti soal psychopathy khususnya memperingatkan organisasi untuk "berhati-hati" sebelum memakainya dalam keputusan perekrutan?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Basis risetnya digambarkan masih relatif baru dan literaturnya tidak konsisten soal hubungannya dengan performa kerja dan perilaku counterproductive — memakai ukuran yang belum matang dan belum mapan dalam keputusan perekrutan berisiko tinggi membawa risiko lebih besar ketimbang manfaatnya saat ini.">Riset tentang Dark Triad (termasuk psychopathy) masih relatif baru, dan temuan soal hubungannya dengan performa kerja masih tidak konsisten</button>
+        <button class="q-option" data-correct="false" data-explanation="Peringatannya bukan soal larangan hukum — melainkan soal belum matangnya dan tidak konsistennya basis bukti saat ini, yang membuatnya jadi dasar yang tidak bisa diandalkan untuk keputusan berisiko tinggi.">Karena memakai data personality apa pun dalam perekrutan secara universal ilegal</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Sebelumnya</button>
+    <button class="done-btn" data-module="4">Tandai modul selesai →</button>
+    <button class="nav-btn" data-nav="next">Selanjutnya →</button>
+  </div>
+</section>
+
+<!-- MODULE 5 -->
+<section id="module-5" class="module-section">
+  <div class="mod-eyebrow">Modul 05 / 06</div>
+  <h1 class="mod-title">Values: <span class="acc">Terminal</span> &amp; Instrumental</h1>
+  <p class="mod-lede">Values adalah lapisan paling dalam di bawah attitude dan motivasi — keyakinan dasar yang membentuk apa yang dianggap orang sebagai benar, baik, atau diinginkan, jauh sebelum attitude spesifik terbentuk tentang situasi tertentu.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">Yang akan kamu pelajari</div>
+    <ul class="obj-list">
+      <li>Apa itu values, dan kenapa ia begitu stabil setelah terbentuk</li>
+      <li>Terminal values (keadaan akhir yang diinginkan) vs. instrumental values (cara yang disukai)</li>
+      <li>Kenapa values penting untuk memprediksi attitude, motivasi, dan perception</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Apa Itu Values, dan Kenapa Ia Begitu Melekat</h2>
+  <p><strong>Values</strong> mewakili keyakinan dasar bahwa suatu mode tingkah laku atau keadaan akhir tertentu lebih disukai secara pribadi atau sosial ketimbang kebalikannya. Values menjadi fondasi untuk memahami attitude dan motivasi orang, dan secara langsung memengaruhi perception — menurut definisinya, values tidak netral. Ia membawa unsur penilaian tentang apa yang benar, baik, atau diinginkan.</p>
+  <p>Values juga luar biasa stabil. Sebagian besar values yang kita pegang terbentuk sejak dini — oleh orang tua, guru, dan teman — sering diajarkan dalam istilah yang mutlak, hitam-putih (kamu tidak pernah diajari untuk "sedikit jujur"). Pembelajaran mutlak sejak dini itulah yang justru membuat values begitu stabil dan bertahan lama hingga dewasa.</p>
+
+  <h2 class="sh">Terminal vs. Instrumental Values</h2>
+  <p><strong>Terminal values</strong> mengacu pada keadaan akhir yang diinginkan — tujuan yang ingin dicapai seseorang semasa hidupnya (kemakmuran dan kesuksesan ekonomi, kebebasan, kesehatan dan kesejahteraan, perdamaian dunia, makna hidup). <strong>Instrumental values</strong> mengacu pada mode tingkah laku yang disukai, atau cara untuk mencapai terminal values tersebut (otonomi dan kemandirian, disiplin pribadi, kebaikan hati, orientasi tujuan).</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Cara dan tujuan — sebuah rantai instrumental value menuju terminal value</div>
+    <svg class="demo-svg" viewBox="0 0 640 170" role="img" aria-label="Sebuah rantai horizontal menunjukkan instrumental values berupa disiplin diri dan orientasi tujuan yang mengarah melalui sebuah panah menuju terminal value berupa kemakmuran dan kesuksesan ekonomi">
+      <rect x="20" y="40" width="170" height="80" rx="12" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="2"/>
+      <text x="105" y="62" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.06em" fill="var(--sea)">INSTRUMENTAL</text>
+      <text x="105" y="84" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">Disiplin diri +</text>
+      <text x="105" y="100" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">orientasi tujuan</text>
+
+      <rect x="235" y="40" width="170" height="80" rx="12" fill="var(--paper-2)" stroke="var(--sea)" stroke-width="2"/>
+      <text x="320" y="62" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.06em" fill="var(--sea)">INSTRUMENTAL</text>
+      <text x="320" y="84" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">Otonomi +</text>
+      <text x="320" y="100" text-anchor="middle" font-family="var(--fb)" font-size="11" fill="var(--ink)">kemandirian</text>
+
+      <path d="M405 80 L445 80" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#arrowV)"/>
+
+      <rect x="450" y="30" width="170" height="100" rx="12" fill="var(--acc)" opacity="0.9"/>
+      <text x="535" y="56" text-anchor="middle" font-family="var(--fm)" font-size="9" letter-spacing="0.06em" fill="#fff" opacity="0.85">TERMINAL</text>
+      <text x="535" y="80" text-anchor="middle" font-family="var(--fb)" font-size="11.5" font-weight="700" fill="#fff">Kemakmuran &amp;</text>
+      <text x="535" y="98" text-anchor="middle" font-family="var(--fb)" font-size="11.5" font-weight="700" fill="#fff">kesuksesan ekonomi</text>
+      <text x="535" y="115" text-anchor="middle" font-family="var(--fb)" font-size="9.5" fill="#fff" opacity="0.8">(sebuah keadaan akhir)</text>
+
+      <defs><marker id="arrowV" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)"/></marker></defs>
+    </svg>
+    <div class="demo-caption">Instrumental values adalah "caranya"; terminal values adalah "untuk apa"nya. Instrumental value yang sama bisa melayani beberapa terminal value berbeda sekaligus.</div>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🏁</div>
+      <h4>Terminal Values</h4>
+      <p>Contoh: kemakmuran dan kesuksesan ekonomi, kebebasan, kesehatan dan kesejahteraan, perdamaian dunia, makna hidup.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🧭</div>
+      <h4>Instrumental Values</h4>
+      <p>Contoh: otonomi dan kemandirian, disiplin pribadi, kebaikan hati, orientasi tujuan.</p>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <strong>Penerapan di proyek:</strong> ketika sebuah konflik soal "cara yang benar untuk melakukan ini" terus muncul lagi bahkan setelah faktanya sudah jelas, seringkali itu bukan perbedaan soal informasi sama sekali — melainkan dua orang yang beroperasi dari instrumental values yang berbeda (satu menghargai otonomi, yang lain menghargai kepatuhan ketat pada proses) demi melayani terminal value yang <em>sama</em> (kesuksesan proyek). Menamai value yang mendasarinya, bukan sekadar perselisihan di permukaan, biasanya adalah yang membuka jalan percakapan.
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Cek Cepat – Modul 5</div>
+
+    <div class="q-card">
+      <p class="q-text">Kenapa, menurut modul ini, values jauh lebih stabil sepanjang hidup ketimbang attitude?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Values sebagian besar dipelajari sejak dini, dalam istilah yang mutlak (kamu tidak pernah diajari untuk 'sedikit jujur') — dan pembelajaran hitam-putih sejak dini itulah yang memberi values stabilitas dan daya tahannya yang khas.">Values sebagian besar terbentuk sejak dini, sering dalam istilah yang mutlak dan hitam-putih, yang membuatnya tahan terhadap perubahan</button>
+        <button class="q-option" data-correct="false" data-explanation="Modul ini tidak mengklaim values terpatri secara biologis sejak lahir dan tidak bisa berubah sama sekali — modul secara khusus menyebutkan values bisa berubah kalau dipertanyakan, meski mempertanyakannya lebih sering justru memperkuatnya.">Values terpatri secara biologis sejak lahir dan tidak bisa berubah dalam kondisi apa pun</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">"Ingin mencapai perdamaian dunia" dan "mempraktikkan disiplin pribadi setiap hari" — mana yang terminal value dan mana yang instrumental value?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Perdamaian dunia adalah sebuah keadaan akhir yang diinginkan (terminal value); disiplin pribadi adalah sebuah mode tingkah laku atau cara menuju tujuan yang lebih luas (instrumental value) — persis cocok dengan contoh-contoh modul ini untuk masing-masing.">Perdamaian dunia = terminal (sebuah keadaan akhir); disiplin pribadi = instrumental (sebuah cara)</button>
+        <button class="q-option" data-correct="false" data-explanation="Ini membalik definisinya — disiplin pribadi adalah sebuah mode tingkah laku (instrumental), sementara perdamaian dunia adalah jenis keadaan akhir yang diklasifikasikan modul ini sebagai terminal.">Disiplin pribadi = terminal (sebuah keadaan akhir); perdamaian dunia = instrumental (sebuah cara)</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Dua engineer dalam proyek yang sama sama-sama benar-benar ingin proyeknya sukses (terminal value yang sama), tapi terus berselisih soal apakah harus mengikuti proses yang terdokumentasi secara ketat atau berimprovisasi berdasarkan penilaian sendiri. Apa yang disarankan modul ini sebagai yang sebenarnya terjadi?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Benar! Ini persis poin penerapan di proyek dari modul ini: perselisihan yang terus muncul lagi bahkan setelah faktanya jelas seringkali adalah benturan instrumental values yang berbeda (kepatuhan proses vs. penilaian otonom) demi melayani terminal value bersama yang sama — menamainya biasanya yang membuka jalan percakapan.">Benturan antara dua instrumental values yang berbeda (proses ketat vs. penilaian otonom) yang sama-sama melayani terminal value yang sama</button>
+        <button class="q-option" data-correct="false" data-explanation="Kalaupun ada, terminal value bersama (ingin proyeknya sukses) justru yang mereka miliki sama — modul ini membingkai benturan tersebut sebagai soal perbedaan cara (instrumental values), bukan soal kurangnya informasi.">Sekadar perselisihan faktual yang akan selesai dengan informasi lebih banyak</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Sebelumnya</button>
+    <button class="done-btn" data-module="5">Tandai modul selesai →</button>
+    <button class="nav-btn" data-nav="next">Selanjutnya →</button>
+  </div>
+</section>
+
+<!-- MODULE 6 — REFERENCES -->
+<section id="module-6" class="module-section">
+  <div class="mod-eyebrow">Referensi</div>
+  <h1 class="mod-title">Sumber &amp; <span class="acc">Bacaan Lanjutan</span></h1>
+  <p class="mod-lede">Bagian ini mengacu pada literatur riset organisational behaviour yang sudah mapan. Materi kuliah sumbernya sendiri (sebuah unit project management pascasarjana yang belum dipublikasikan) tidak bisa dikutip sebagai sumber publik, jadi referensi di bawah ini merujuk pada studi dan teks kanonis yang menjadi dasarnya.</p>
+
+  <div class="ref-group-label">Teori &amp; Teks Fondasional Utama</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Robbins, Stephen P., and Timothy A. Judge. <em>Organisational Behaviour</em>. Various editions. Melbourne: Pearson Australia.</div>
+    <div class="ref-annotation">Buku teks yang tampaknya menjadi basis definisi-definisi di modul ini (attitude, tiga komponennya, job satisfaction/involvement, psychological empowerment, Big Five, dan Dark Triad). Diperlakukan sebagai referensi kanonis OB di seri ini; cek edisi terbaru untuk kutipan empiris yang terkini.</div>
+    <a class="ref-link" href="https://www.pearson.com/en-au/subject-catalog/p/organisational-behaviour/" target="_blank" rel="noopener">→ Sumber</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Festinger, Leon. <em>A Theory of Cognitive Dissonance</em>. Stanford, CA: Stanford University Press, 1957.</div>
+    <div class="ref-annotation">Teks fondasional tentang teori cognitive dissonance — ketidakcocokan antara attitude, atau antara attitude dan perilaku, serta dorongan untuk mengembalikan konsistensi yang dibahas di Modul 1.</div>
+    <a class="ref-link" href="https://www.sup.org/books/psychology/theory-cognitive-dissonance" target="_blank" rel="noopener">→ Sumber</a>
+  </div>
+
+  <div class="ref-group-label">Diterapkan pada Project Management</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Tuuli, Martin M., and Steve Rowlinson. "Performance Consequences of Psychological Empowerment." <em>Journal of Construction Engineering and Management</em> 135, no. 12 (2009): 1334–1347.</div>
+    <div class="ref-annotation">Studi tim project management konstruksi di Hong Kong yang dikutip di Modul 2, menghubungkan psychological empowerment dengan task dan contextual (discretionary) behaviours. Cek kembali detail volume/halaman yang tepat terhadap catatan penerbit sebelum dikutip dalam karya akademik formal.</div>
+    <a class="ref-link" href="https://ascelibrary.org/journal/jcemd4" target="_blank" rel="noopener">→ Sumber</a>
+  </div>
+
+  <div class="ref-group-label">Dark Triad</div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Paulhus, Delroy L., and Kevin M. Williams. "The Dark Triad of Personality: Narcissism, Machiavellianism, and Psychopathy." <em>Journal of Research in Personality</em> 36, no. 6 (2002): 556–563.</div>
+    <div class="ref-annotation">Paper yang mencetuskan dan menetapkan istilah "Dark Triad" sebagai istilah riset — sumber fondasional untuk tiga trait di Modul 4 dan cara pengukurannya.</div>
+    <a class="ref-link" href="https://doi.org/10.1016/S0092-6566(02)00505-6" target="_blank" rel="noopener">→ Sumber</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--tomato)">
+    <div class="ref-citation">Furnham, Adrian, Steven C. Richards, and Delroy L. Paulhus. "The Dark Triad of Personality: A 10 Year Review." <em>Social and Personality Psychology Compass</em> 7, no. 3 (2013): 199–216.</div>
+    <div class="ref-annotation">Review riset Dark Triad selama satu dekade, termasuk temuan narcissistic-leader yang dirujuk di Modul 4 soal perilaku kepemimpinan yang berani, agresif, dan mencari perhatian.</div>
+    <a class="ref-link" href="https://doi.org/10.1111/spc3.12018" target="_blank" rel="noopener">→ Sumber</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Catatan kualitas data:</strong> slide kuliah sumber menyebut beberapa studi dan tahun (mis. Tuuli &amp; Rowlinson 2009) tanpa detail bibliografi lengkap. Kutipan di atas direkonstruksi dari publikasi yang paling cocok dan sebaiknya diverifikasi ulang secara independen terhadap catatan jurnal asli sebelum dipakai dalam konteks kutipan akademik atau profesional formal apa pun.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Bagian 1 Selesai! 🧠</h2>
+    <p>Kamu sekarang paham anatomi sebuah attitude, cara kerja cognitive dissonance, empat job attitudes yang paling penting dalam sebuah proyek, Big Five dan Dark Triad, serta dua lapis values di baliknya semua. Bagian 2 — Emotions, Moods, Perception &amp; Individual Decision Making — selanjutnya.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Sebelumnya</button>
+    <button class="done-btn" data-module="6">Tandai modul selesai →</button>
+    <button class="nav-btn" data-nav="next" disabled>Selanjutnya →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'project-people-part1-id';
+const TOTAL = 6;
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem(COURSE_ID + ':done') || '{}'); } catch { return {}; }
+}
+function saveProgress(p) {
+  localStorage.setItem(COURSE_ID + ':done', JSON.stringify(p));
+}
+function markCourseComplete() {
+  try {
+    const all = JSON.parse(localStorage.getItem('lwa:completed') || '[]');
+    if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); localStorage.setItem('lwa:completed', JSON.stringify(all)); }
+  } catch {}
+}
+
+function renderProgress() {
+  const p = getProgress();
+  const count = Object.values(p).filter(Boolean).length;
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modul';
+  for (let m = 1; m <= TOTAL; m++) {
+    const item = document.querySelector('[data-module="' + m + '"]');
+    if (p[m]) item.classList.add('done'); else item.classList.remove('done');
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (btn && p[m]) { btn.textContent = 'Selesai'; btn.disabled = true; btn.classList.add('completed'); }
+  }
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('[data-module="' + m + '"]').classList.add('active');
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(b => b.disabled = m <= 1);
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(b => b.disabled = m >= TOTAL);
+  document.getElementById('main').scrollTo(0, 0);
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', function () {
+      const card = this.closest('.q-card');
+      if (card.dataset.answered) return;
+      card.dataset.answered = '1';
+      const isCorrect = this.dataset.correct === 'true';
+      const fb = card.querySelector('.q-feedback');
+      card.querySelectorAll('.q-option').forEach(o => {
+        o.disabled = true;
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+      });
+      this.classList.add(isCorrect ? 'correct' : 'wrong');
+      fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+      fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+      fb.style.display = 'block';
+    });
+  });
+}
+
+function setupChecklist() {
+  const saved = JSON.parse(localStorage.getItem(COURSE_ID + ':checklist') || '{}');
+  document.querySelectorAll('.check-item input').forEach((cb, i) => {
+    if (saved[i]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = {};
+      document.querySelectorAll('.check-item input').forEach((c, j) => { state[j] = c.checked; });
+      localStorage.setItem(COURSE_ID + ':checklist', JSON.stringify(state));
+    });
+  });
+}
+
+function init() {
+  goto(1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      const p = getProgress(); p[m] = true; saveProgress(p);
+      renderProgress();
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (hbg) {
+    hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+    ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

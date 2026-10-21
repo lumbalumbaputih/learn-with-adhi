@@ -344,3 +344,87 @@ scope for this series; just don't make it worse).
 | 9 — Conflict & Negotiation | `project-people-part9-conflict-negotiation-v1.html` | ✅ shipped |
 | 10 — Organisational Structure & Culture | `project-people-part10-culture-structure-v1.html` | ✅ shipped |
 | 11 — Organisational Change & Stress Management | `project-people-part11-change-stress-v1.html` | ✅ shipped |
+
+---
+
+## 6. Indonesian edition (Bahasa Indonesia) — same series, translated prose, English terms kept
+
+Adhi asked (2026-10-21) for a Bahasa Indonesia version of this same series, **keeping every
+technical/academic term in English** so he stays familiar with the vocabulary — the same
+"local-language UI + English technical terms" principle this repo already uses for Rayyan's
+coding courses ("mengajari robot" in Indonesian, `if`/`for`/`function` kept in English), just
+applied to OB/psychology terminology instead of programming keywords.
+
+### 6.1 Hard rule: what stays in English vs. what gets translated
+
+**Stays in English, embedded inside Indonesian sentences, exactly as capitalised/spelled in the
+English source files:**
+- Every named theory, model, or framework: Big Five, Dark Triad, Fiedler Contingency Model,
+  Leader-Member Exchange (LMX), Full Range of Leadership Model, Competing Values Framework,
+  Four-Drive theory, Thomas-Kilmann (five conflict-handling intentions), Maslow's hierarchy of
+  needs, Herzberg's two-factor theory, McClelland's learned needs theory, Lewin's three-step
+  model, Kotter's eight-step plan, social identity theory, attribution theory, expectancy theory,
+  reinforcement theory, bounded rationality.
+- Every named trait, bias, effect, or technical construct: cognitive dissonance, self-efficacy,
+  emotional intelligence (EI), emotional labour, surface acting, deep acting, hindsight bias,
+  anchoring bias, confirmation bias, availability bias, groupthink, groupshift, burnout,
+  satisficing, psychological contract, psychological empowerment.
+- Named sub-types/components that are themselves the technical vocabulary: Extraversion,
+  Agreeableness, Conscientiousness, Emotional Stability, Openness to Experience; Machiavellianism,
+  Narcissism, Psychopathy; hygiene factors, motivators; terminal values, instrumental values;
+  task/relationship/process conflict; distributive/integrative bargaining; coercive/reward/
+  legitimate/expert/referent power; Clan/Adhocracy/Market/Hierarchy; forming/storming/norming/
+  performing/adjourning; unfreezing/movement/refreezing; challenge/hindrance stressors.
+- Scholar names and citations (References module) — never translated, as is standard academic
+  practice.
+- UI chrome that's part of the shared template's own identity is fine to translate (e.g.
+  "Quick Check" → "Cek Cepat", "References" → "Referensi", "Mark module complete" → "Tandai modul
+  selesai") since these aren't OB/psychology vocabulary — translate these for a consistent
+  Indonesian reading experience, they're not "the term" the instruction is protecting.
+
+**Translate into natural Bahasa Indonesia:** everything else — all explanatory prose, the
+`mod-lede` hooks, `mod-objectives` bullets, quiz question text and answer explanations (quiz
+option *button text* can keep an embedded English term but the surrounding sentence is Indonesian),
+callout text, table cell prose (table headers/data that are the technical term stay English; a
+descriptive cell like "Responsible, dependable, persistent" gets translated), SVG diagram caption
+text and plain-English diagram labels that aren't themselves the named construct, references
+annotations (not the citations themselves), and all sidebar/nav/eyebrow/footer chrome text.
+
+**When genuinely unsure whether a word counts as "the term":** keep it in English. Under-
+translating a borderline term is harmless (Adhi reads English fine); over-translating a real
+technical term defeats the entire point of this edition.
+
+### 6.2 File & naming conventions
+- Hub: `project-people-hub-id.html`
+- Parts: `project-people-partN-<same-slug>-id-v1.html` (identical slug to the English file, just
+  insert `-id` before `-v1`), e.g. `project-people-part1-attitudes-personality-values-id-v1.html`.
+- `data-course-id="project-people-partN-id"` (distinct localStorage namespace from the English
+  edition — progress is tracked separately per language).
+- Same CSS/JS shell, same mawar accent, same module counts/structure/SVGs/quiz counts as the
+  English twin for that part — this is a translation, not a rewrite. Copy the English file as the
+  structural starting point and translate the text nodes in place; do not redesign layout, add/
+  remove modules, or change quiz logic/answer keys (only translate the question/option/
+  explanation text).
+- Cross-link: Indonesian hub's `.sb-series`-equivalent / footer links to the English hub and vice
+  versa (a simple "🇬🇧 English version" / "🇮🇩 Versi Bahasa Indonesia" link pair in each hub's
+  header area).
+- Manifest: a **separate** `assets/courses.json` entry, id `project-people-id`, pointing at
+  `project-people-hub-id.html` — a distinct card on the index page, not a toggle inside the
+  existing English card.
+
+### 6.3 Status
+
+| Part | File | Status |
+|---|---|---|
+| Hub (ID) | `project-people-hub-id.html` | ✅ shipped |
+| 1 — Attitudes, Personality & Values | `project-people-part1-attitudes-personality-values-id-v1.html` | ✅ shipped |
+| 2 — Emotions, Moods, Perception & Decision Making | `project-people-part2-emotions-perception-decisions-id-v1.html` | ⏳ |
+| 3 — Motivation | `project-people-part3-motivation-id-v1.html` | ⏳ |
+| 4 — Foundations of Group Behaviour | `project-people-part4-group-behaviour-id-v1.html` | ⏳ |
+| 5 — Understanding Project Teams | `project-people-part5-project-teams-id-v1.html` | ⏳ |
+| 6 — Communications in Projects | `project-people-part6-communications-id-v1.html` | ⏳ |
+| 7 — Leadership in Projects | `project-people-part7-leadership-id-v1.html` | ⏳ |
+| 8 — Power and Politics | `project-people-part8-power-politics-id-v1.html` | ⏳ |
+| 9 — Conflict & Negotiation | `project-people-part9-conflict-negotiation-id-v1.html` | ⏳ |
+| 10 — Organisational Structure & Culture | `project-people-part10-culture-structure-id-v1.html` | ⏳ |
+| 11 — Organisational Change & Stress Management | `project-people-part11-change-stress-id-v1.html` | ⏳ |

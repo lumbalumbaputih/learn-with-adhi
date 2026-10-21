@@ -12,6 +12,18 @@
     "duration": "Series"
   },
   {
+    "id": "project-people-id",
+    "n": "20",
+    "title": "Project & People (Bahasa Indonesia)",
+    "blurb": "Versi Bahasa Indonesia dari seri yang sama: sisi manusia dalam menjalankan proyek — attitudes, motivation, teams, leadership, power, conflict, culture, dan stress — dengan istilah teknis tetap dalam Bahasa Inggris agar familiar.",
+    "category": "Practice",
+    "tags": ["Series", "Bahasa Indonesia", "Leadership"],
+    "primitive": "wave",
+    "accent": "mawar",
+    "path": "courses/project-people/project-people-hub-id.html",
+    "duration": "Series"
+  },
+  {
     "id": "perth-transit-map",
     "n": "T4",
     "title": "Perth Transit Map",
