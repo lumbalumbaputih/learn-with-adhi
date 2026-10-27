@@ -109,7 +109,7 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 
 
 ### Adult courses in progress (manifest only)
-- **Working Well With Claude** (`courses/ai/working-with-claude-v1.html`, id `working-with-claude`, n `20`, Practice, mawar) – 🚧 **building** (started 2026-10-27): 7 modules + References on setup, briefing, checking, delegating and safety with the late-2026 Claude app, Cowork and Claude Code, researched from Anthropic's docs and independent studies. Quiz-gated progress (2/3 to pass). **Done: M1–M3 + References.** Next: M4–M7, one per commit, then fix the outdated facts in the April course `2026-04-18-claude-efficiency-course-v1.html` and link it here. Build log in `PROGRESS.md`.
+- **Working Well With Claude** (`courses/ai/working-with-claude-v1.html`, id `working-with-claude`, n `20`, Practice, mawar) – 🚧 **building** (started 2026-10-27): 7 modules + References on setup, briefing, checking, delegating and safety with the late-2026 Claude app, Cowork and Claude Code, researched from Anthropic's docs and independent studies. Quiz-gated progress (2/3 to pass). **Done: M1–M4 + References.** Next: M5–M7, one per commit, then fix the outdated facts in the April course `2026-04-18-claude-efficiency-course-v1.html` and link it here. Build log in `PROGRESS.md`.
 
 ---
 

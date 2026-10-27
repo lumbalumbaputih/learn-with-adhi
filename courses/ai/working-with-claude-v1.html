@@ -991,14 +991,196 @@ Don't start the work. When you have enough, write the brief to [BRIEF.md / a doc
 <!-- ═══════════════════════════════════════════
      MODULE 4 – THE LOOP
 ═══════════════════════════════════════════ -->
-<section id="module-4" class="module-section" data-pending="true">
+<section id="module-4" class="module-section">
   <div class="mod-eyebrow">Module 04 / 08</div>
   <h1 class="mod-title">The loop: plan, build, <span class="acc">check</span></h1>
-  <p class="mod-lede">How to run a piece of work from idea to verified result, and how to steer when it drifts.</p>
-  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <p class="mod-lede">Claude stops when the work looks done. If it has nothing to run that says whether the work really is done, "looks done" is all it has to go on, and you quietly become the quality check for everything. This module is about the loop that fixes that, and about steering a session when it starts to drift.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>A five-step loop for any real piece of work: explore, plan, build, check, review</li>
+      <li>How to give Claude a check that comes back pass or fail, for writing and research as well as code</li>
+      <li>Why you should ask for evidence, not reassurance</li>
+      <li>How to get an independent review without it turning into endless polishing</li>
+      <li>When to correct, when to rewind, and when to start over</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">"Looks done" is not done</h2>
+  <p>Anthropic's Claude Code guide names the most common way a session disappoints: "Claude said it was done and it wasn't quite, usually because it had no way to check its own work." Without a check, Anthropic says, "that makes you the test suite, and every mistake sits there until you happen to notice it."</p>
+  <p>Experienced users converge on the same answer. Simon Willison's list of habits for getting reliable work out of agents starts with automated tests and planning in advance, and includes a culture of review and good manual checking. In a January 2026 interview write-up, InfoQ reported that Boris Cherny, who created Claude Code, calls giving Claude a way to verify its work the most important tip, and that it can improve the final result "by a factor of 2–3". That figure is his estimate, not a measured study, but the direction matches everything else in this course.</p>
+
+  <div class="demo-box wide">
+    <div class="demo-label">The working loop, and who owns each step</div>
+    <svg class="demo-svg" viewBox="0 0 760 300" role="img" aria-label="A loop of five steps. Explore: Claude reads, you point it at the right material. Plan: Claude proposes, you approve. Build: Claude works in small steps. Check: Claude runs the check, you read the evidence. Review: a fresh reviewer compares the result against the brief. Gaps found in review go back to build. After review, you decide whether to ship.">
+      <defs><marker id="m4arrow" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="var(--ink)"/></marker></defs>
+      <g font-family="var(--fd)" font-weight="800" font-size="14" text-anchor="middle">
+        <rect x="20" y="70" width="120" height="76" rx="12" fill="#fff" stroke="var(--acc)" stroke-width="2"/><text x="80" y="100" fill="var(--acc-dim)">1 Explore</text>
+        <rect x="165" y="70" width="120" height="76" rx="12" fill="#fff" stroke="var(--acc)" stroke-width="2"/><text x="225" y="100" fill="var(--acc-dim)">2 Plan</text>
+        <rect x="310" y="70" width="120" height="76" rx="12" fill="var(--acc)" stroke="var(--acc)" stroke-width="2"/><text x="370" y="100" fill="#fff">3 Build</text>
+        <rect x="455" y="70" width="120" height="76" rx="12" fill="#fff" stroke="var(--green)" stroke-width="2"/><text x="515" y="100" fill="#145e30">4 Check</text>
+        <rect x="600" y="70" width="140" height="76" rx="12" fill="#fff" stroke="var(--sea)" stroke-width="2"/><text x="670" y="100" fill="var(--sea)">5 Review</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5" text-anchor="middle" fill="var(--muted)">
+        <text x="80" y="120">Claude reads;</text><text x="80" y="134">you point</text>
+        <text x="225" y="120">Claude proposes;</text><text x="225" y="134">you approve</text>
+        <text x="370" y="120" fill="#EDE4FD">small steps,</text><text x="370" y="134" fill="#EDE4FD">saved as it goes</text>
+        <text x="515" y="120">Claude runs it;</text><text x="515" y="134">you read evidence</text>
+        <text x="670" y="120">fresh eyes vs</text><text x="670" y="134">the brief</text>
+      </g>
+      <g stroke="var(--ink)" stroke-width="1.8" fill="none">
+        <path d="M140 108 H162" marker-end="url(#m4arrow)"/>
+        <path d="M285 108 H307" marker-end="url(#m4arrow)"/>
+        <path d="M430 108 H452" marker-end="url(#m4arrow)"/>
+        <path d="M575 108 H597" marker-end="url(#m4arrow)"/>
+        <path d="M500 146 C500 182 412 182 402 152" marker-end="url(#m4arrow)" stroke="var(--tomato)" stroke-dasharray="4 3"/>
+        <path d="M650 146 C650 236 350 236 342 152" marker-end="url(#m4arrow)" stroke="var(--tomato)" stroke-dasharray="4 3"/>
+        <path d="M740 108 C762 120 762 236 716 250" marker-end="url(#m4arrow)"/>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5" fill="var(--tomato)" text-anchor="middle">
+        <text x="456" y="196">check fails → fix</text>
+        <text x="496" y="246">gaps against the brief → fix</text>
+      </g>
+      <rect x="606" y="252" width="132" height="32" rx="16" fill="var(--ink)"/>
+      <text x="672" y="273" text-anchor="middle" font-family="var(--fd)" font-weight="700" font-size="12.5" fill="var(--paper)">You sign off</text>
+      <g font-family="var(--fm)" font-size="9.5" letter-spacing="0.05em" fill="var(--muted)" text-anchor="middle">
+        <text x="80" y="58">READ ONLY</text><text x="225" y="58">PLAN MODE / "PLAN FIRST"</text><text x="515" y="58">PASS OR FAIL</text><text x="670" y="58">SKIP STYLE</text>
+      </g>
+    </svg>
+    <div class="demo-caption">Small, well-scoped tasks can skip straight to build and check. Anything multi-step, unfamiliar or expensive to get wrong deserves the whole loop.</div>
+  </div>
+
+  <h2 class="sh">Explore and plan before anything changes</h2>
+  <p>For anything bigger than a quick edit, separate understanding from doing. First let Claude read: the files, the folder, the previous reports, the data. Then ask for a plan, and read it before any work starts. A plan costs a minute to read and is the cheapest place to catch a misunderstanding.</p>
+  <ul class="bl">
+    <li><strong>In Claude Code,</strong> plan mode (reached with <code>Shift+Tab</code>, which cycles through the modes) lets Claude read and propose without changing anything. Cherny's habit, as InfoQ reported it: go back and forth on the plan until he likes it, then let Claude build.</li>
+    <li><strong>In the app or Cowork,</strong> just ask: "Before you start, show me your plan as a numbered list and wait for my OK."</li>
+    <li><strong>For writing,</strong> the plan is an outline. Agreeing the outline first saves rewriting a whole draft.</li>
+  </ul>
+
+  <h2 class="sh">Give it a check</h2>
+  <p>Anthropic's rule is simple: "Give Claude something it can run that comes back pass or fail. Once it has that, it can keep going on its own and you don't have to watch." Code has obvious checks. Other work has them too, once you write them down.</p>
+
+  <div class="table-wrap">
+    <table class="pm-table">
+      <thead><tr><th>Kind of work</th><th>A check Claude can run</th><th>The evidence to ask for</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">Code</td><td>A test that reproduces the bug, the build, the linter, the type checker, a screenshot next to the mockup</td><td>The command it ran and the output</td></tr>
+        <tr><td class="hl">Writing</td><td>A rubric from your brief: word limit, required sections, reading level, every claim sourced</td><td>The rubric with each line marked met or not met</td></tr>
+        <tr><td class="hl">Research</td><td>Every claim linked to a source; a second search that tries to disprove the three strongest claims</td><td>The links, and what the disproof search found</td></tr>
+        <tr><td class="hl">Spreadsheets and data</td><td>Totals reconcile with the source; formulas, not typed-in numbers; five rows checked by hand</td><td>The reconciliation and the five rows</td></tr>
+        <tr><td class="hl">Slides</td><td>Every number matches its source; nothing overflows the slide; one message per slide</td><td>A list of numbers with their sources</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>How strictly you enforce the check is up to you. Anthropic describes a ladder, from Claude deciding for itself to the software enforcing it:</p>
+  <ol class="nl">
+    <li><strong>In the request:</strong> "run the tests after, and keep going until they pass." Works anywhere, today.</li>
+    <li><strong>As a goal (Claude Code):</strong> <code>/goal all tests in tests/auth pass</code> has a separate model check the condition after every turn and sends Claude back if it isn't met. Most useful for long runs nobody is watching.</li>
+    <li><strong>As a stop hook (Claude Code):</strong> a script that runs whenever Claude tries to finish, and refuses to let it finish until the check passes.</li>
+    <li><strong>By someone who didn't write it:</strong> a fresh reviewer, covered below.</li>
+  </ol>
+
+  <div class="callout">
+    <strong>Ask for evidence, not reassurance.</strong> "All tests pass" on its own tells you very little. Anthropic's advice is to ask for the command Claude ran and its output, or the screenshot. Reading the output is faster than redoing the check yourself, and for any work you didn't watch, it's the only evidence you have.
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">2–3×</div><div class="stat-lbl">better results from giving Claude a way to verify its work, as reported of Claude Code's creator. An expert's estimate, not a study.</div><div class="stat-sub">InfoQ, Jan 2026</div></div>
+    <div class="stat-card"><div class="stat-num">2</div><div class="stat-lbl">failed corrections is the signal to stop correcting and start over with one better request.</div><div class="stat-sub">Claude Code best practices</div></div>
+    <div class="stat-card"><div class="stat-num">~1 hr</div><div class="stat-lbl">is how long the prompt cache lasts on a subscription. After that, a long idle conversation is re-read at full price.</div><div class="stat-sub">Claude Code best practices</div></div>
+  </div>
+
+  <h2 class="sh">Independent review, without the polishing trap</h2>
+  <p>The person who wrote something is the worst person to check it, and that's true of Claude too: a reviewer that watched the work being done is swayed by the reasoning that produced it. A fresh reviewer isn't. In Claude Code, <code>/code-review</code> reviews your changes in a separate agent that never saw your conversation. A second session or a fresh chat does the same job anywhere.</p>
+  <p>There's a trap, and Anthropic names it: "A reviewer that's asked to find problems will always find <em>something</em>. If you fix every finding, you end up with extra abstraction layers and tests for cases that can't happen." So review against the brief, ask for problems that affect correctness, and say "skip style".</p>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · Review against the brief</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>You're reviewing work you didn't produce.
+Compare the attached [draft / changes / analysis] against the brief below.
+List only the places where it fails a requirement in the brief, or where something is factually wrong or unsupported.
+For each one: what's wrong, where, and why it matters.
+Skip style and wording preferences. If it meets the brief, say so in one line.
+
+&lt;brief&gt;
+[paste the brief or SPEC]
+&lt;/brief&gt;</pre>
+  </div>
+
+  <h2 class="sh">Steering: correct, rewind, or start over</h2>
+  <p>No setup replaces watching the first minute of a new task. Anthropic's guide puts it bluntly: "Watch the first minute, press <code>Esc</code> the moment Claude drifts, and after two failed corrections run <code>/clear</code> and write a better prompt instead of a third."</p>
+  <ul class="bl">
+    <li><strong>Stop early.</strong> <code>Esc</code> in Claude Code (or the stop button in the app) halts Claude mid-action and keeps what's done, so you can redirect without losing work.</li>
+    <li><strong>Rewind instead of arguing.</strong> In Claude Code, <code>/rewind</code> (or <code>Esc</code> twice on an empty prompt) rolls the files, the conversation or both back to an earlier point. That makes it cheap to try the bold approach first. Checkpoints only cover files Claude edited with its own editing tools, so keep using git (version history) as well.</li>
+    <li><strong>Start over after two misses.</strong> Each failed correction stays in the conversation, and Claude keeps re-reading it. A fresh start with one request that includes what you learned "works better almost every time".</li>
+  </ul>
+
+  <div class="callout tomato">
+    <strong>The worst habit is the long tangle.</strong> Twenty messages of "no, not like that" leave Claude working from a conversation that's mostly mistakes. If you notice you're explaining the same thing a third time, stop, write the improved brief, and start clean.
+  </div>
+
+  <h3 class="sub">Keep sessions clean</h3>
+  <p>The context window is rarely the limit now, but focus still matters, and so does cost: every message re-sends the whole conversation. Start a new conversation (<code>/clear</code> in Claude Code) between unrelated tasks; it costs nothing. In Claude Code, <code>/compact</code> with a focus ("keep the API changes and the test commands") shrinks a long session, and <code>/rename</code> plus <code>claude --resume</code> picks multi-day work back up by name. In the app, a project keeps shared files and instructions so each new chat starts informed.</p>
+  <p>For work that spans days, end each session with a handover note saved to a file or project. It's the cheapest way to make tomorrow's session start where today's ended.</p>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · End-of-session handover</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>Write a handover for a fresh session that has none of this conversation.
+Include: the goal, decisions made and why, what's finished, what's next (in order), open questions, and the files or links that matter.
+Under 300 words. No preamble. Save it as [HANDOVER.md / a doc in this project].</pre>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check: Module 4</div>
+    <p class="quiz-note">Answer all three. Two or more correct completes the module.</p>
+
+    <div class="q-card">
+      <p class="q-text">After a long task Claude reports: "Done! All tests pass." You weren't watching. What should you do?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="A summary isn't evidence. Claude can be wrong about its own work, especially on long runs.">Trust it. Current models are reliable enough</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Ask for the command it ran and the output (or look at it in the session). Reading the evidence is faster than redoing the check, and it's the only proof you have for work you didn't watch.">Ask for the exact command it ran and its output, and read them</button>
+        <button class="q-option" data-correct="false" data-explanation="Redoing everything yourself throws away the benefit of delegating. Reading the evidence is usually enough; spot-check when the stakes are high.">Ignore the claim and redo every check yourself by hand</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">You asked a fresh chat to "find problems" with your report. It returned 23 issues, mostly about wording and structure. What's the best move?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="A reviewer asked to find problems always finds something. Fixing everything leads to churn and over-engineering.">Fix all 23 before sending the report</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Re-run the review against the brief, asking only for failures of requirements and factual problems, and say 'skip style'. That separates real gaps from preferences.">Re-run the review against your brief, asking only for requirement failures and factual problems, and to skip style</button>
+        <button class="q-option" data-correct="false" data-explanation="Independent review is valuable. The fix is to aim it, not to abandon it.">Stop using reviews; they only create noise</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">You've corrected the same misunderstanding twice and the third attempt is still wrong. What now?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="A third correction adds to a conversation already full of failed attempts that Claude keeps re-reading.">Correct it a third time, more firmly</button>
+        <button class="q-option" data-correct="false" data-explanation="Effort doesn't fix a misunderstanding about what you want. The missing piece is information.">Switch effort to max and say "try again"</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Start fresh (/clear or a new chat) with one improved request that includes what the failed attempts taught you. Anthropic says this works better almost every time.">Start a fresh conversation with one improved request that includes what you've learned</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="quiz-status"><span class="quiz-score">0 / 3 answered</span><button class="retry-btn" type="button">Try again</button></div>
+  </div>
+
+  <h2 class="sh">Practise this week</h2>
+  <div class="checklist">
+    <div class="check-item"><input type="checkbox" id="c4-1"><label for="c4-1">For your next real task, ask for the plan first and read it before any work starts.</label></div>
+    <div class="check-item"><input type="checkbox" id="c4-2"><label for="c4-2">Write a check for one kind of work you do often (a rubric, a test, a reconciliation) and reuse it.</label></div>
+    <div class="check-item"><input type="checkbox" id="c4-3"><label for="c4-3">Once this week, reply "show me the evidence" instead of "thanks" when Claude says it's done.</label></div>
+    <div class="check-item"><input type="checkbox" id="c4-4"><label for="c4-4">Review one piece of work in a fresh chat against its brief, with "skip style".</label></div>
+    <div class="check-item"><input type="checkbox" id="c4-5"><label for="c4-5">End one multi-day piece of work with a saved handover note.</label></div>
+  </div>
+
   <div class="foot-nav">
     <button class="nav-btn" data-nav="prev">← Previous</button>
-    <button class="done-btn locked" data-module="4" disabled>Coming soon</button>
+    <button class="done-btn" data-module="4">Mark module complete →</button>
     <button class="nav-btn" data-nav="next">Next →</button>
   </div>
 </section>
@@ -1199,8 +1381,8 @@ Don't start the work. When you have enough, write the brief to [BRIEF.md / a doc
   </div>
 
   <div class="ref-item" style="border-left-color:var(--mango)">
-    <div class="ref-citation">InfoQ. "Inside the Development Workflow of Claude Code's Creator." InfoQ, January 2026. https://www.infoq.com/news/2026/01/claude-code-creator-workflow/.</div>
-    <div class="ref-annotation">A secondhand summary of how Boris Cherny, who created Claude Code, works: many parallel sessions, planning first, and always giving Claude a way to verify its work. Useful as one expert's habits, not as a rule; his original posts may differ in detail.</div>
+    <div class="ref-citation">De Simone, Sergio. "Inside the Development Workflow of Claude Code's Creator." InfoQ, January 10, 2026. https://www.infoq.com/news/2026/01/claude-code-creator-workflow/.</div>
+    <div class="ref-annotation">A secondhand summary of how Boris Cherny, who created Claude Code, works: plan first, many parallel sessions, a short shared CLAUDE.md (about 2.5k tokens) and, above all, a way for Claude to verify its work, which it says can improve results "by a factor of 2–3". That figure is one expert's estimate, not a measurement, and the habits date from the Opus 4.5 era.</div>
     <a class="ref-link" href="https://www.infoq.com/news/2026/01/claude-code-creator-workflow/" target="_blank" rel="noopener">→ Source</a>
   </div>
 
