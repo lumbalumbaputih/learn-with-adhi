@@ -1588,14 +1588,209 @@ End with two quick questions that check I really understood.</pre>
 <!-- ═══════════════════════════════════════════
      MODULE 7 – A REAL SETUP, HONESTLY REVIEWED
 ═══════════════════════════════════════════ -->
-<section id="module-7" class="module-section" data-pending="true">
+<section id="module-7" class="module-section">
   <div class="mod-eyebrow">Module 07 / 08</div>
   <h1 class="mod-title">A real setup, honestly <span class="acc">reviewed</span></h1>
-  <p class="mod-lede">The setup behind this website, checked against everything in this course, plus a starter kit you can copy.</p>
-  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <p class="mod-lede">Advice is easy to agree with and hard to apply. So this module turns the course on the setup that built this website: one person, Claude Code in cloud sessions, and a single instruction file that has grown for months. What works, what doesn't, measured against everything in Modules 1 to 6, and what to change first.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>Which habits of a long-running real setup match the guidance, and why they work</li>
+      <li>Where the same setup drifted, with measurements rather than impressions</li>
+      <li>How to restructure an overgrown instruction file without losing anything</li>
+      <li>A prompt pattern and a monthly review you can apply to your own setup</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The setup in one paragraph</h2>
+  <p>Learn with Adhi is a static website: plain HTML files, no build tools, hosted on Vercel. Almost all of it is built by Claude Code running in cloud sessions against a GitHub repository. Each session works on its own branch, opens a draft pull request early so every push gets a preview link, and is reviewed before merging. The owner's account-wide instruction asks Claude to be blunt and to ask a clarifying question when a request is ambiguous. A file called CLAUDE.md at the root of the repository holds the operating procedure, the standards for each kind of course, and the state of every project. A second file, PROGRESS.md, is a dated build log.</p>
+
+  <h2 class="sh">What it gets right</h2>
+  <p>Several habits in this setup are exactly what Anthropic and experienced users recommend, and they were in place before most of that guidance was written:</p>
+  <div class="table-wrap">
+    <table class="pm-table">
+      <thead><tr><th>Habit in this setup</th><th>Why it works</th><th>Module</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">One small, shippable step at a time, committed and pushed each time</td><td>Cloud sessions run in temporary containers. Anything not pushed is lost when one ends, and a small step is easy to check and to undo.</td><td>4</td></tr>
+        <tr><td class="hl">A written definition of done: works, standards intact, wired in everywhere, docs updated, pushed</td><td>Part 4 of the brief, written once instead of in every request.</td><td>3</td></tr>
+        <tr><td class="hl">Docs updated in the same step; a dated build log</td><td>Claude Code's own memory doesn't carry across cloud sessions, so the repository is the memory. The log doubles as a handover note.</td><td>2, 4</td></tr>
+        <tr><td class="hl">"Pick the recommended option, note it, don't block"</td><td>A clear line between the decisions Claude may make and the ones it must ask about.</td><td>3</td></tr>
+        <tr><td class="hl">Draft pull request early, human merges</td><td>A preview link to check, and a person signing off before anything goes live.</td><td>5</td></tr>
+        <tr><td class="hl">Scripted checks and independent review rounds on the transit map project</td><td>The build log records a second review round catching a major layout regression that the first fix had introduced, and a new test that failed 16 times on the broken version before passing on the fix.</td><td>4</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout green">
+    <strong>The honest headline:</strong> the working loop here is good. Small steps, a definition of done, docs as memory and human sign-off are the hard habits, and they're already in place. The problems are in the setup files around the loop, which is the easier thing to fix.
+  </div>
+
+  <h2 class="sh">Where it drifted</h2>
+  <h3 class="sub">1. The instruction file grew into a history book</h3>
+  <p>Anthropic's target for CLAUDE.md is under 200 lines, because "longer files consume more context and reduce adherence." The team that builds Claude Code is reported to keep theirs at about 2,500 tokens. Measured on 27 October 2026, this site's CLAUDE.md was 741 lines and about 87 KB. By Anthropic's rule of thumb for the current tokenizer (about 2.5 characters per token), that's roughly 35,000 tokens, read at the start of every session, whatever the task.</p>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">741</div><div class="stat-lbl">lines in this site's CLAUDE.md, against Anthropic's target of under 200.</div><div class="stat-sub">Measured 27 Oct 2026</div></div>
+    <div class="stat-card"><div class="stat-num">~35k</div><div class="stat-lbl">tokens it costs at the start of every session (an estimate from 87 KB at about 2.5 characters per token).</div><div class="stat-sub">Models overview ratio</div></div>
+    <div class="stat-card"><div class="stat-num">42%</div><div class="stat-lbl">of the file is finished roadmaps and improvement plans: history, not instructions.</div><div class="stat-sub">Measured by section</div></div>
+  </div>
+
+  <p>With a 1M-token window, the problem isn't space. It's attention and cost: every finished plan and every old release note sits next to the rules that matter, on every turn of every task. The chart shows where the file's weight is today, and one way to restructure it without deleting anything.</p>
+
+  <div class="demo-box wide">
+    <div class="demo-label">What loads at the start of every session: today vs. a suggested split</div>
+    <svg class="demo-svg" viewBox="0 0 760 300" role="img" aria-label="Two stacked bars. Today, all 87 kilobytes load every session: finished plans and roadmaps 36.5 kilobytes, the what's-already-built project log 30.1 kilobytes, the adult course standard 13.1 kilobytes, and rules that apply to every task 7.3 kilobytes. Suggested: about 8 kilobytes always loaded, about 18 kilobytes of standards loaded only when matching files are touched, and about 61 kilobytes moved to the build log and project readmes.">
+      <!-- scale: 87 KB = 600px, x0 = 140 → 1 KB = 6.9px -->
+      <text x="20" y="62" font-family="var(--fd)" font-weight="700" font-size="13" fill="var(--ink)">Today</text>
+      <text x="20" y="78" font-family="var(--fb)" font-size="10.5" fill="var(--muted)">all loaded, every task</text>
+      <g>
+        <rect x="140" y="44" width="50.4" height="40" fill="var(--acc)"/>
+        <rect x="190.4" y="44" width="90.4" height="40" fill="var(--mango)"/>
+        <rect x="280.8" y="44" width="207.7" height="40" fill="var(--sea)"/>
+        <rect x="488.5" y="44" width="251.5" height="40" fill="#9C9289"/>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5" fill="#fff" text-anchor="middle">
+        <text x="165" y="68">7</text>
+        <text x="235.6" y="68">13</text>
+        <text x="384.6" y="68">30</text>
+        <text x="614" y="68">36.5 KB</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5" fill="var(--ink)">
+        <rect x="140" y="98" width="10" height="10" fill="var(--acc)"/><text x="155" y="107">Rules for every task (procedure, mission, stack)</text>
+        <rect x="440" y="98" width="10" height="10" fill="var(--mango)"/><text x="455" y="107">Adult course standard</text>
+        <rect x="140" y="116" width="10" height="10" fill="var(--sea)"/><text x="155" y="125">Project-by-project status and release notes</text>
+        <rect x="440" y="116" width="10" height="10" fill="#9C9289"/><text x="455" y="125">Finished roadmaps and plans</text>
+      </g>
+      <text x="20" y="190" font-family="var(--fd)" font-weight="700" font-size="13" fill="var(--ink)">Suggested</text>
+      <text x="20" y="206" font-family="var(--fb)" font-size="10.5" fill="var(--muted)">same words</text>
+      <g>
+        <rect x="140" y="172" width="55.2" height="40" fill="var(--acc)"/>
+        <rect x="195.2" y="172" width="124.2" height="40" fill="none" stroke="var(--mango)" stroke-width="2" stroke-dasharray="5 3"/>
+        <rect x="319.4" y="172" width="420.6" height="40" fill="none" stroke="var(--line-s)" stroke-width="2" stroke-dasharray="2 3"/>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5" text-anchor="middle">
+        <text x="167.6" y="196" fill="#fff">~8</text>
+        <text x="257.3" y="196" fill="#B45F04">~18 KB</text>
+        <text x="529.7" y="196" fill="var(--muted)">~61 KB moved out</text>
+      </g>
+      <g font-family="var(--fb)" font-size="10.5" fill="var(--ink)">
+        <rect x="140" y="226" width="10" height="10" fill="var(--acc)"/><text x="155" y="235">Always loaded: core CLAUDE.md, about 150 lines</text>
+        <rect x="140" y="244" width="10" height="10" fill="none" stroke="var(--mango)" stroke-width="2"/><text x="155" y="253">Loaded only when matching files are touched (.claude/rules/)</text>
+        <rect x="140" y="262" width="10" height="10" fill="none" stroke="var(--muted)" stroke-width="2"/><text x="155" y="271">Moved to PROGRESS.md and each project's README: read when needed</text>
+      </g>
+      <text x="740" y="290" text-anchor="end" font-family="var(--fm)" font-size="9" fill="var(--muted)">SIZES IN KB, MEASURED 27 OCT 2026 · SUGGESTED SPLIT IS APPROXIMATE</text>
+    </svg>
+    <div class="demo-caption">Section sizes measured from the file itself. The suggested split keeps every word; it changes only when each part is read.</div>
+  </div>
+
+  <p>The restructure is mechanical, and it's exactly the kind of job to hand to Claude with a clear brief and a check:</p>
+  <ul class="bl">
+    <li><strong>Keep in CLAUDE.md</strong> (aim for about 150 lines): the operating procedure, the rules that apply to every task, how to check work, and a short index of where everything else lives.</li>
+    <li><strong>Move to path-scoped rules:</strong> the adult course standard, loaded only when Claude edits a course file; the children's course spec and wiring checklist, loaded only for children's courses.</li>
+    <li><strong>Move to the build log and project READMEs:</strong> finished plans, release-by-release notes, and anything that describes the past rather than instructs the present. The transit map project already has a detailed README for exactly this.</li>
+  </ul>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Example · a path-scoped rule (.claude/rules/adult-courses.md)</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>---
+paths:
+  - "courses/**/*.html"
+---
+# Adult course standard
+- One self-contained HTML file per course, sidebar layout, copied from the newest course in the folder.
+- Wire it in assets/courses.json only. Not in the children's hubs, sw.js or the dashboard.
+- Every module: eyebrow, title with one accent word, lede, objectives, at least one informative SVG, a 3-question quiz.
+- Last module is References: Chicago 17th, annotated, every source linked.
+(…the rest of the standard, moved here unchanged)</pre>
+  </div>
+
+  <h3 class="sub">2. Critical rules that are only words</h3>
+  <p>Two rules in this setup can't have exceptions: the children's courses must never show grade levels or call the activity "coding", and every new children's course must be wired into six separate files. Both live only as prose in CLAUDE.md. There's no hook, no check script and no automated check on pull requests for either. The procedure's own verify step says to "sanity-check the JS" and to "open it mentally", which is the "looks done" trap from Module 4 in writing.</p>
+  <p>The contrast inside the same repository is instructive. The transit map project has more than a dozen check scripts, and its build log shows them catching real bugs that a careful read had missed. The children's courses, which matter more, have none.</p>
+
+  <div class="callout tomato">
+    <strong>The fix:</strong> one small script that scans the children's pages for forbidden words and confirms each course's progress key appears in all six wiring places, run before every commit by a hook or on every pull request. That turns two preferences into two guarantees (Module 2), and replaces "open it mentally" with a check that comes back pass or fail (Module 4).
+  </div>
+
+  <h3 class="sub">3. Far more connected than the work needs</h3>
+  <p>In the session that built this course, more than 60 connector servers from role plugins (sales, finance, legal, marketing and others) tried to start. Several failed and many were waiting for sign-in. A website build used none of them. Current Claude Code loads tool details only when they're needed, so the cost per turn is smaller than it used to be, but each connection still adds names and instructions to the context, startup work, and one more way for untrusted content to reach a session (Module 6). Switch off the plugins this kind of work doesn't use; adding one back takes seconds.</p>
+
+  <h2 class="sh">Working together on a site like this</h2>
+  <p>Put the modules together and a request for the next step of a project looks like this. It's short because the procedure, standards and definition of done already live in the setup files:</p>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · Next step on a long-running project</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>Next step: [one shippable increment, e.g. "Module 3 of the new course"].
+Why: [what it's for, who it's for].
+Done means: the usual definition of done, plus [anything specific to this step].
+Check with: [script / browser check / review against the plan file].
+Be ambitious about: [the parts you want polished].
+Ask me about: [decisions you want to make]. Otherwise take the recommended option and note it in the PR.</pre>
+  </div>
+
+  <p>This course was itself built that way. It started with four clarifying questions (new course or rewrite, which products, who it's for, how big), then research from Anthropic's documentation and independent studies, then one module per commit, each checked by a browser script and a look at every diagram before pushing to a draft pull request.</p>
+
+  <h2 class="sh">Your monthly review</h2>
+  <p>Setups drift. Fifteen minutes a month keeps yours honest:</p>
+  <div class="checklist">
+    <div class="check-item"><input type="checkbox" id="c7-1"><label for="c7-1">Read your memory topics (Settings › Memory) and delete anything stale or wrong.</label></div>
+    <div class="check-item"><input type="checkbox" id="c7-2"><label for="c7-2">Count the lines in your account instructions and each CLAUDE.md. Move history and procedures out.</label></div>
+    <div class="check-item"><input type="checkbox" id="c7-3"><label for="c7-3">Run /doctor prompt-audit in each Claude Code project and apply the sensible suggestions.</label></div>
+    <div class="check-item"><input type="checkbox" id="c7-4"><label for="c7-4">List your must-never rules and how each is enforced. Anything enforced only by words, decide if that's good enough.</label></div>
+    <div class="check-item"><input type="checkbox" id="c7-5"><label for="c7-5">Switch off connectors and plugins you didn't use this month, and delete scheduled tasks you no longer read.</label></div>
+    <div class="check-item"><input type="checkbox" id="c7-6"><label for="c7-6">After any model launch, re-read Module 1's "advice you can stop following" and check your instructions for habits it made unnecessary.</label></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check: Module 7</div>
+    <p class="quiz-note">Answer all three. Two or more correct completes the module.</p>
+
+    <div class="q-card">
+      <p class="q-text">This site's CLAUDE.md is about 35,000 tokens, and the context window is 1M. What's the real cost of leaving it that size?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="3.5% of a 1M window is not a capacity problem. The cost is elsewhere.">It will fill the context window and sessions will fail</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Space isn't the issue. Every line is read on every turn of every task, so finished history dilutes the rules that matter and costs tokens each time. Anthropic: longer files 'reduce adherence'.">Attention and cost: old history sits beside the important rules on every turn, which lowers how reliably those rules are followed</button>
+        <button class="q-option" data-correct="false" data-explanation="The size matters even with a large window: adherence drops as instruction files grow, and the whole file is paid for on every session.">Nothing. With a 1M window, size no longer matters</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">"Children never see grade levels" is a rule with no exceptions, and today it lives only in CLAUDE.md. What's the strongest protection?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Emphasis doesn't turn a preference into a guarantee, and current models over-apply shouted rules.">Rewrite the line in capitals at the top of CLAUDE.md</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. A script that fails when a forbidden word appears, run by a hook or on every pull request, is enforced by software rather than remembered by a model.">A check script that scans the children's pages for forbidden words, run before every commit or on every pull request</button>
+        <button class="q-option" data-correct="false" data-explanation="Memory is Claude's own notes. It's helpful but not a guarantee, and in cloud sessions Claude Code's auto memory doesn't carry over at all.">Ask Claude to remember the rule in its memory</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A cloud session ends unexpectedly halfway through a task. Which habit of this setup means almost nothing is lost?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Right. Each small step is committed and pushed with the docs updated, so the repository holds both the work and the handover. Cloud containers are temporary, and Claude Code's memory doesn't follow you between them.">Committing and pushing each small step, with the build log updated in the same step</button>
+        <button class="q-option" data-correct="false" data-explanation="Claude Code's auto memory is stored per machine and isn't shared with cloud sessions, so it can't rescue work from an ended container.">Claude Code's auto memory, which carries the work into the next session</button>
+        <button class="q-option" data-correct="false" data-explanation="A long, detailed CLAUDE.md doesn't save unpushed work. Only what's committed and pushed survives a container ending.">The very detailed CLAUDE.md</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="quiz-status"><span class="quiz-score">0 / 3 answered</span><button class="retry-btn" type="button">Try again</button></div>
+  </div>
+
+  <h2 class="sh">All the templates in this course</h2>
+  <ul class="bl">
+    <li>Module 2: Instructions for Claude (account-wide) · a short CLAUDE.md</li>
+    <li>Module 3: the five-part brief · several documents, one question · interview me first</li>
+    <li>Module 4: review against the brief · end-of-session handover</li>
+    <li>Module 5: a scheduled task that can't embarrass you · the add-on for unattended runs</li>
+    <li>Module 6: an honest assessment · learning mode</li>
+    <li>Module 7: a path-scoped rule · next step on a long-running project</li>
+  </ul>
+
   <div class="foot-nav">
     <button class="nav-btn" data-nav="prev">← Previous</button>
-    <button class="done-btn locked" data-module="7" disabled>Coming soon</button>
+    <button class="done-btn" data-module="7">Mark module complete →</button>
     <button class="nav-btn" data-nav="next">Next →</button>
   </div>
 </section>
