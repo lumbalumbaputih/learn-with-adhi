@@ -107,6 +107,10 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 
 **Perth Transit v1.11 kids controls (2026-10-20):** Train Spotter opens at current Perth time at 1× instead of 10×. Now returns from playback/ride to today’s Perth time, respecting reduced-motion pause and the labelled pretend-day fallback. Me requests a one-shot device location only after a tap/browser permission and shows a blue dot in the Perth map area; no coordinate storage or URL sharing. Denial, timeout, outside-area and cancelled late responses are handled. This explicitly requested enhancement supersedes KIDS-PLAN’s original no-location rule; it does not change the Phase 1 real-kids gate. Vehicle positions remain timetable-based. Existing browser tests cover clock/reset, location/privacy/accessibility and the 8-size × 2-day card/ride layout matrix. Release queries: `?v=1.11`.
 
+
+### Adult courses (manifest only)
+- **Working Well With Claude** (`courses/ai/working-with-claude-v1.html`, id `working-with-claude`, n `20`, Practice, mawar) – ✅ **Done** (2026-10-27, PR #172): 7 modules + References on working with the late-2026 Claude app, Cowork and Claude Code (what changed; where instructions belong; the brief; plan-build-check; delegating; trust, safety and skill formation; this site's own setup reviewed). Researched from Anthropic's docs plus independent studies; 23 annotated references. Quiz-gated progress (2 of 3 to pass), 13 copyable templates. Module 7 critiques this repo's setup (CLAUDE.md size, prose-only critical rules, unused connectors); act on those separately. The April course `2026-04-18-claude-efficiency-course-v1.html` stays, with dated "Updated October 2026" corrections and a link to this one. **Product facts age fast:** re-check Module 1's model table and the Module 2/5 menu names after each model launch.
+
 ---
 
 ## The Build Plan – Roadmap to "3–5 Years Ahead"

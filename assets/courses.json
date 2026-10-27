@@ -1,5 +1,17 @@
 [
   {
+    "id": "working-with-claude",
+    "n": "20",
+    "title": "Working Well With Claude",
+    "blurb": "How to set Claude up, brief it, check its work and delegate safely in late 2026: the current models and effort settings, Cowork in every chat, Claude Code, memory, and the habits that make the partnership work.",
+    "category": "Practice",
+    "tags": ["Intermediate", "AI", "Claude"],
+    "primitive": "plus",
+    "accent": "mawar",
+    "path": "courses/ai/working-with-claude-v1.html",
+    "duration": "~4 days"
+  },
+  {
     "id": "project-people",
     "n": "19",
     "title": "Project & People",
