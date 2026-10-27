@@ -220,6 +220,9 @@ table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
   .demo-box{padding:14px}
   .q-card{padding:16px}
   table.pm-table{font-size:12px}
+  .demo-box.wide{overflow-x:auto}
+  .demo-box.wide .demo-svg{min-width:620px}
+  .demo-box.wide .demo-label::after{content:' · swipe sideways';text-transform:none;letter-spacing:0}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -316,7 +319,7 @@ table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
   <h2 class="sh">Seven months, one direction</h2>
   <p>Between April and October 2026 Anthropic shipped nine model launches and quietly changed what a "conversation" is. The timeline below shows the releases that matter for everyday users. You don't need the dates. Look at the direction instead: almost every step moved Claude from <em>answering</em> towards <em>doing</em>.</p>
 
-  <div class="demo-box">
+  <div class="demo-box wide">
     <div class="demo-label">Timeline: April to October 2026</div>
     <svg class="demo-svg" viewBox="0 0 940 270" role="img" aria-label="Timeline from April to October 2026. Above the line, model launches: Opus 4.7 on 16 April, Opus 4.8 on 28 May, Fable 5 on 9 June, Sonnet 5 on 30 June, Opus 5 on 24 July, Fable 5.1 and Mythos 5.1 on 1 September, Opus 5.5 on 22 September, Sonnet 5.5 on 28 September, Haiku 5.5 on 7 October. Below the line, product changes: Cowork generally available on desktop on 9 April, Cowork on web and mobile on 7 July, one shared memory with editable topics on 25 August, chat and Cowork merged with Docs, Slides and Design in any chat on 16 September, and the Duet proactive agent preview on 21 October.">
       <text x="20" y="22" font-family="var(--fm)" font-size="10" letter-spacing="0.08em" fill="var(--muted)">MODELS</text>
@@ -512,14 +515,252 @@ table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
 <!-- ═══════════════════════════════════════════
      MODULE 2 – SETUP: SAY IT ONCE
 ═══════════════════════════════════════════ -->
-<section id="module-2" class="module-section" data-pending="true">
+<section id="module-2" class="module-section">
   <div class="mod-eyebrow">Module 02 / 08</div>
   <h1 class="mod-title">Setup: say it <span class="acc">once</span></h1>
-  <p class="mod-lede">Where each kind of instruction belongs: account instructions, projects, memory, skills, and in Claude Code, CLAUDE.md, rules, hooks and settings.</p>
-  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <p class="mod-lede">Every time you re-explain who you are, how you like answers or how your project works, that's setup you haven't done yet. The Claude app, Cowork and Claude Code each give you places to say it once. The skill is knowing which place, because each one loads at a different moment and carries a different kind of weight.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The one test for deciding whether something is worth writing down at all</li>
+      <li>Where each kind of instruction belongs in the app, in Cowork and in Claude Code</li>
+      <li>The difference between a preference Claude weighs and a rule the software enforces</li>
+      <li>How to write short instructions that actually change behaviour, with templates to copy</li>
+      <li>How memory works now, and why you should read it once a month</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Write down only what Claude can't see</h2>
+  <p>Anthropic's Claude Code guide offers a two-question test before you write any instruction: could Claude find this out by reading what's in front of it, and would it actually go and look? If both answers are yes, leave it out. That test works everywhere, not only in code.</p>
+  <p>Current models are very good at reading. Give Claude a folder and it works out the file layout, the house style and the existing patterns faster than you could describe them. What it can't read is everything that was never written down:</p>
+  <ul class="bl">
+    <li><strong>Decisions made elsewhere:</strong> "we chose the cheaper supplier", "the client hates bullet points", "the deadline moved to Friday".</li>
+    <li><strong>Who it's for:</strong> the audience, their level, what they already know, what they'll do with the result.</li>
+    <li><strong>Your standards:</strong> the citation style, the spelling, the tone, the things you always check.</li>
+    <li><strong>Anything you've had to correct twice.</strong> That's the clearest signal a line belongs in your setup.</li>
+  </ul>
+  <p>The flip side matters just as much. Every line you add is read on every turn, whether or not it's relevant. A long instruction file doesn't just cost tokens; it dilutes the lines that matter. Anthropic's memory documentation says it plainly: "Longer files consume more context and reduce adherence."</p>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">200</div><div class="stat-lbl">lines: Anthropic's recommended ceiling for a CLAUDE.md file. Shorter is better.</div><div class="stat-sub">Claude Code memory docs</div></div>
+    <div class="stat-card"><div class="stat-num">25 KB</div><div class="stat-lbl">of Claude Code's own memory index loads at the start of a session (or 200 lines, whichever comes first).</div><div class="stat-sub">Claude Code memory docs</div></div>
+    <div class="stat-card"><div class="stat-num">40</div><div class="stat-lbl">enforced rules is Anthropic's warning sign: at that point most are preferences that Claude could have weighed itself.</div><div class="stat-sub">Claude Code best practices</div></div>
+  </div>
+
+  <h2 class="sh">The map: when it loads, and who has the last word</h2>
+  <p>Every place you can put an instruction differs on two things. <strong>When it loads:</strong> on every turn, only when it's relevant, or only when you call for it. <strong>Who decides:</strong> Claude, who reads the instruction and weighs it, or the software, which applies it no matter what Claude thinks. Keep this picture in your head and most setup questions answer themselves.</p>
+
+  <div class="demo-box wide">
+    <div class="demo-label">Where instructions live</div>
+    <svg class="demo-svg" viewBox="0 0 760 400" role="img" aria-label="A grid with three columns for when an instruction loads (every session, when relevant, only when you call it) and two rows for who decides. Software enforces: deny rules and the sandbox, hooks, and what you connect load every session; hooks matched to tools or paths load when relevant; skills only you can start load when you call them. Claude decides: Instructions for Claude, project instructions, the root CLAUDE.md and memory load every session; path-scoped rules, subfolder CLAUDE.md files, skills and subagents load when relevant; a style you choose and a skill you type load when you call them.">
+      <g font-family="var(--fm)" font-size="10" letter-spacing="0.06em" fill="var(--muted)" text-anchor="middle">
+        <text x="230" y="26">EVERY SESSION</text>
+        <text x="440" y="26">WHEN RELEVANT</text>
+        <text x="650" y="26">ONLY WHEN YOU CALL IT</text>
+      </g>
+      <!-- bands -->
+      <rect x="124" y="38" width="626" height="134" rx="10" fill="rgba(31,157,85,.08)" stroke="var(--green)" stroke-width="1.2"/>
+      <rect x="124" y="184" width="626" height="170" rx="10" fill="var(--acc-bg)" stroke="var(--acc)" stroke-width="1.2"/>
+      <g font-family="var(--fd)" font-weight="800" font-size="13">
+        <text x="12" y="98" fill="#145e30">SOFTWARE</text><text x="12" y="114" fill="#145e30">ENFORCES</text>
+        <text x="12" y="132" font-family="var(--fb)" font-weight="400" font-size="10" fill="var(--muted)">guaranteed</text>
+        <text x="12" y="262" fill="var(--acc-dim)">CLAUDE</text><text x="12" y="278" fill="var(--acc-dim)">DECIDES</text>
+        <text x="12" y="296" font-family="var(--fb)" font-weight="400" font-size="10" fill="var(--muted)">usually followed</text>
+      </g>
+      <line x1="335" y1="38" x2="335" y2="354" stroke="var(--line-s)" stroke-dasharray="3 3"/>
+      <line x1="545" y1="38" x2="545" y2="354" stroke="var(--line-s)" stroke-dasharray="3 3"/>
+      <g font-family="var(--fb)" font-size="11" fill="var(--ink)" text-anchor="middle">
+        <!-- enforced, every session -->
+        <rect x="135" y="50" width="190" height="30" rx="7" fill="#fff" stroke="var(--green)"/><text x="230" y="69">Deny rules + sandbox</text>
+        <rect x="135" y="88" width="190" height="30" rx="7" fill="#fff" stroke="var(--green)"/><text x="230" y="107">Hooks: always / never</text>
+        <rect x="135" y="126" width="190" height="30" rx="7" fill="#fff" stroke="var(--green)"/><text x="230" y="145">What you connect or allow</text>
+        <!-- enforced, when relevant -->
+        <rect x="345" y="50" width="190" height="30" rx="7" fill="#fff" stroke="var(--green)"/><text x="440" y="69">Hooks matched to tools/paths</text>
+        <!-- enforced, call -->
+        <rect x="555" y="50" width="185" height="30" rx="7" fill="#fff" stroke="var(--green)"/><text x="647" y="69">Skills only you can start</text>
+        <!-- claude decides, every session -->
+        <rect x="135" y="196" width="190" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="230" y="215">Instructions for Claude</text>
+        <rect x="135" y="234" width="190" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="230" y="253">Project instructions</text>
+        <rect x="135" y="272" width="190" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="230" y="291">CLAUDE.md (root)</text>
+        <rect x="135" y="310" width="190" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="230" y="329">Memory</text>
+        <!-- claude decides, relevant -->
+        <rect x="345" y="196" width="190" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="440" y="215">Path-scoped rules</text>
+        <rect x="345" y="234" width="190" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="440" y="253">Subfolder CLAUDE.md</text>
+        <rect x="345" y="272" width="190" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="440" y="291">Skills (body loads on use)</text>
+        <rect x="345" y="310" width="190" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="440" y="329">Subagents for side work</text>
+        <!-- claude decides, call -->
+        <rect x="555" y="196" width="185" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="647" y="215">A style you choose</text>
+        <rect x="555" y="234" width="185" height="30" rx="7" fill="#fff" stroke="var(--acc)"/><text x="647" y="253">A skill you type: /name</text>
+      </g>
+      <text x="380" y="384" text-anchor="middle" font-family="var(--fb)" font-size="11" font-style="italic" fill="var(--muted)">The left column is read on every turn, so it has to earn its place. The top row is the only one that's guaranteed.</text>
+    </svg>
+    <div class="demo-caption">Built from Anthropic's "Steering Claude Code" decision table and the Claude Code best-practices guide. Most app settings sit in the bottom-left: always loaded, and weighed by Claude rather than enforced.</div>
+  </div>
+
+  <h2 class="sh">In the Claude app and Cowork</h2>
+  <p>Since chat and Cowork merged, the same settings apply to both. Here's what each place is for. Menu names moved several times in 2026, so if a label below doesn't match your screen, look for the nearest equivalent.</p>
+
+  <div class="table-wrap">
+    <table class="pm-table">
+      <thead><tr><th>Place</th><th>Where to find it</th><th>Applies to</th><th>Put here</th><th>Keep out</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">Instructions for Claude</td><td>Settings › Your Claude › Instructions (older layout: profile preferences)</td><td>Every conversation and task. Cowork's old "global instructions" now live here.</td><td>Who you are, who you usually write for, how you like answers, standing rules.</td><td>Project details, long reference material.</td></tr>
+        <tr><td class="hl">Projects</td><td>Projects in the sidebar</td><td>Chats inside that project</td><td>Instructions and files for one ongoing piece of work. Chat search stays inside the project.</td><td>Unrelated work, which then drags this context along.</td></tr>
+        <tr><td class="hl">Folder instructions</td><td>When you connect a folder on the desktop app</td><td>Tasks in that folder</td><td>How files in that folder are organised and named, and what not to touch.</td><td>Anything that applies everywhere.</td></tr>
+        <tr><td class="hl">Memory</td><td>Settings › Memory (topics)</td><td>Everything. Chat and Cowork share one memory.</td><td>Nothing directly. Claude adds topics as you talk. Your job is to read and correct them.</td><td>Anything you need guaranteed.</td></tr>
+        <tr><td class="hl">Skills</td><td>The Customize or Settings area, depending on your app version</td><td>Loads when relevant, or when you call it</td><td>A repeatable procedure: your report structure, a review checklist, a house format.</td><td>One-off requests.</td></tr>
+        <tr><td class="hl">Connectors</td><td>The + menu, or Customize › Connectors</td><td>Where enabled</td><td>Only the apps this kind of work needs.</td><td>"Just in case" connections. Each one adds context and risk.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout blue">
+    <strong>Plugins bundle it all.</strong> A plugin packages skills, connectors and helper agents for a role or team, and Anthropic says plugins saved to your account work in chat, Cowork and Claude Code alike. If you find yourself copying the same setup between people, that's what plugins are for.
+  </div>
+
+  <h2 class="sh">In Claude Code</h2>
+  <p>Claude Code has the same ideas with more precise tools, because code is where the cost of a forgotten rule shows up fastest.</p>
+  <div class="table-wrap">
+    <table class="pm-table">
+      <thead><tr><th>If the instruction is…</th><th>Put it in</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>A fact needed in most sessions: the test command, a misleading folder, a team decision</td><td class="hl">CLAUDE.md at the project root</td><td>Loaded every session. Keep it under 200 lines.</td></tr>
+        <tr><td>Your personal preference for this project</td><td class="hl">CLAUDE.local.md (gitignored)</td><td>Yours alone, not pushed to the team.</td></tr>
+        <tr><td>Your preference across every project</td><td class="hl">~/.claude/CLAUDE.md</td><td>Follows you, not the repo.</td></tr>
+        <tr><td>A rule for one part of the codebase</td><td class="hl">.claude/rules/ with a <code>paths:</code> filter</td><td>Loads only when Claude touches matching files.</td></tr>
+        <tr><td>A multi-step procedure: release, review, report</td><td class="hl">A skill in .claude/skills/</td><td>Only its name and description load until it's used.</td></tr>
+        <tr><td>Something that must always or never happen</td><td class="hl">A hook, a deny rule or the sandbox</td><td>Enforced by the software, whatever the model decides.</td></tr>
+        <tr><td>Noisy side work, or a reviewer that can't edit</td><td class="hl">A subagent in .claude/agents/</td><td>Runs separately and returns a summary.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Three commands keep this honest. <code>/init</code> drafts a CLAUDE.md from your project (the work after that is mostly deleting lines). <code>/context</code> shows what actually loaded. <code>/doctor prompt-audit</code> flags instructions written for older models, references to files that no longer exist, and lines that contradict each other.</p>
+
+  <h2 class="sh">A preference is not a lock</h2>
+  <p>This is the single most useful idea in the setup chapter. Anything you write in words, whether in your instructions, a project, CLAUDE.md or a skill, is something Claude reads and weighs. It follows good instructions nearly every time. But "nearly" is the operative word, and Anthropic is candid about it: "no matter how strongly you word it, whether Claude follows that line on a given turn is still Claude's call."</p>
+  <p>For the few rules where "nearly" isn't good enough, use something the software enforces:</p>
+
+  <div class="compare">
+    <div class="cmp bad"><div class="cmp-tag">A preference (Claude decides)</div><code>NEVER read the .env file!!!</code> written in CLAUDE.md, in capitals.<span class="why">Followed most of the time. Capitals make it worse, not better: current models over-apply shouted rules elsewhere.</span></div>
+    <div class="cmp good"><div class="cmp-tag">A guarantee (software enforces)</div><code>"deny": ["Read(./.env)"]</code> in .claude/settings.json.<span class="why">Blocks the read in every permission mode, including auto. The model's opinion doesn't matter.</span></div>
+  </div>
+
+  <p>The app has the same distinction, just with different controls. In Cowork the guarantees are which folders you connect, which connectors you switch on, and the permission mode you pick: Manual asks before actions, Auto lets a safety check review each action, and Skip checks nothing. Permanently deleting files always needs your explicit Allow. The simplest lock of all is not granting access in the first place.</p>
+
+  <div class="callout tomato">
+    <strong>Don't rely on a sentence for safety.</strong> "Never send emails without asking me" in your instructions is a good habit. Not giving Claude send access to your email is a guarantee. If a mistake would be expensive, embarrassing or permanent, use the guarantee.
+  </div>
+
+  <div class="callout mango">
+    <strong>It cuts both ways.</strong> Anthropic's advice also warns against over-enforcing. If you have hooks or rules for things that are really preferences, like "prefer short functions", delete them and let Claude judge. Rules have exceptions, and with the actual work in front of it, Claude is often better placed to spot them than a rule you wrote months ago.
+  </div>
+
+  <h2 class="sh">Writing instructions that work</h2>
+  <p>Good instructions share four habits, all straight from Anthropic's prompting guide:</p>
+  <ol class="nl">
+    <li><strong>Concrete enough to check.</strong> "Use Australian spelling" beats "write properly". "Run the link checker before saying you're done" beats "test your changes".</li>
+    <li><strong>Give the reason.</strong> "Never use ellipses" works less well than "This will be read aloud by a text-to-speech engine, so never use ellipses, because it can't pronounce them." Claude generalises from the reason.</li>
+    <li><strong>Say what to do, not only what to avoid.</strong> "Write in flowing paragraphs" works better than "don't use markdown".</li>
+    <li><strong>Plain words, no shouting, no contradictions.</strong> If two lines disagree, Claude may pick either one.</li>
+  </ol>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · Instructions for Claude (account-wide)</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>About me
+- I'm a [role] working on [kinds of work]. My readers are usually [audience].
+- I write in [languages]. Reply in the language I write in.
+
+How I like answers
+- Lead with the answer or recommendation, then the reasoning.
+- Be direct. If my plan has a flaw, say so plainly and suggest something better.
+- If my request is ambiguous and the answer would change the work, ask me one short question first. Otherwise make a sensible assumption and tell me what it was.
+- When it matters, say how sure you are, and which parts you checked versus recalled.
+
+Standards
+- Back factual claims with sources I can open. Never invent a reference; if you can't find one, say so.
+- [House style: spelling, citation style, formatting you like or dislike, with the reason.]
+
+Boundaries
+- Ask before sending, publishing, deleting or paying for anything.</pre>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · CLAUDE.md (project root, aim for well under 200 lines)</span><button class="copy-btn" type="button">Copy</button></div>
+<pre># How to check work here
+- Run locally: [command]
+- Check one page or file: [command]
+- Full check before a commit: [command]
+
+# Decisions that aren't in the code
+- [e.g. "Each course is one self-contained HTML file. No build tools."]
+- [e.g. "New courses are wired in assets/courses.json only."]
+
+# Places where the code misleads
+- [e.g. "courses/_archive/ is old. Don't copy its patterns."]
+
+# Corrected twice already
+- [Anything you've had to say in two different sessions.]</pre>
+  </div>
+
+  <p>Notice what's missing from both: no description of the folder layout, no "be helpful", no "think carefully". Claude can see the layout, already tries to help, and gets its thoroughness from the effort setting.</p>
+
+  <h2 class="sh">Memory: useful, so check it</h2>
+  <p>Memory changed twice this year. Since July, Claude's memory is a set of separate entries it updates as you talk, rather than a daily summary. Since August, those entries appear as topics you can open, edit and delete in Settings › Memory, and chat and Cowork share one memory. By default it doesn't store sensitive topics such as health, religion, politics or gender identity; you can opt in. On Free, Pro and Max it's on by default; on Team and Enterprise your admin decides.</p>
+  <p>Claude Code keeps a separate "auto memory": notes Claude writes about your corrections and preferences, stored per project on that machine. It isn't shared across computers or cloud sessions, so in cloud sessions the files in your project are the only memory that carries over. Write important things into CLAUDE.md, not into hope.</p>
+
+  <div class="callout">
+    <strong>A wrong memory is worse than none.</strong> An outdated entry ("works at the old company", "prefers long reports") quietly bends every answer, and you won't see why. Read your memory topics once a month and delete anything stale. Anything that really matters belongs in your written instructions, where you can see it.
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check: Module 2</div>
+    <p class="quiz-note">Answer all three. Two or more correct completes the module.</p>
+
+    <div class="q-card">
+      <p class="q-text">Your CLAUDE.md says "NEVER read the .env file" in capitals, and once in a while Claude still opens it. What's the right fix?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="More emphasis doesn't turn a preference into a guarantee, and current models tend to over-apply shouted rules elsewhere.">Add more emphasis: bold, capitals and "THIS IS CRITICAL"</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. A deny rule such as Read(./.env) in .claude/settings.json is enforced by the software in every permission mode. For a must-never rule, that's the tool.">Add a deny rule for the file in .claude/settings.json</button>
+        <button class="q-option" data-correct="false" data-explanation="Moving the sentence changes when it loads, not who enforces it. A skill is still words that Claude weighs.">Move the sentence into a skill so it gets more attention</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Once a month you write a board report with a fixed structure and a 12-step checklist. Where should those steps live?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Account-wide instructions load in every conversation. Twelve steps you use once a month would weigh on every unrelated chat.">In your account-wide Instructions for Claude</button>
+        <button class="q-option" data-correct="false" data-explanation="Memory is Claude's own notes. You can't rely on it to capture and follow a precise 12-step procedure.">Nowhere. Memory will pick it up after a couple of reports</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. A procedure you use sometimes is exactly what skills are for: only the name and description load until the task calls for it.">In a skill, so it loads only when you're writing the report</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A teammate's CLAUDE.md is 600 lines, mostly a description of every folder and file. What's the best advice?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="true" data-explanation="Right. Claude reads the layout itself. Long files reduce adherence, so cut to what it can't see (commands, decisions, gotchas) and move procedures into skills and area rules into path-scoped rules.">Cut the layout description. Keep commands, decisions and gotchas, aim for under 200 lines, and move procedures into skills</button>
+        <button class="q-option" data-correct="false" data-explanation="Imports help organise a file, but imported files load together with it, so the context cost is the same.">Keep it, but split it into imported files so it's tidier</button>
+        <button class="q-option" data-correct="false" data-explanation="More context isn't free. Every line is read on every turn and long files reduce how reliably the important lines are followed.">Keep it. More context always helps with a 1M-token window</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="quiz-status"><span class="quiz-score">0 / 3 answered</span><button class="retry-btn" type="button">Try again</button></div>
+  </div>
+
+  <h2 class="sh">Set up this week</h2>
+  <div class="checklist">
+    <div class="check-item"><input type="checkbox" id="c2-1"><label for="c2-1">Open Settings › Memory, read every topic, and delete anything wrong or stale.</label></div>
+    <div class="check-item"><input type="checkbox" id="c2-2"><label for="c2-2">Write or trim your Instructions for Claude using the template. Aim for under 20 lines.</label></div>
+    <div class="check-item"><input type="checkbox" id="c2-3"><label for="c2-3">Switch off connectors you haven't used this month.</label></div>
+    <div class="check-item"><input type="checkbox" id="c2-4"><label for="c2-4">In each Claude Code project, run /context, count the CLAUDE.md lines, and cut towards 200.</label></div>
+    <div class="check-item"><input type="checkbox" id="c2-5"><label for="c2-5">Move one must-never rule out of prose and into a deny rule, a hook, or simply not granting access.</label></div>
+  </div>
+
   <div class="foot-nav">
     <button class="nav-btn" data-nav="prev">← Previous</button>
-    <button class="done-btn locked" data-module="2" disabled>Coming soon</button>
+    <button class="done-btn" data-module="2">Mark module complete →</button>
     <button class="nav-btn" data-nav="next">Next →</button>
   </div>
 </section>
