@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en" data-course-id="working-with-claude">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Working Well With Claude · Learn with Adhi</title>
+<meta name="description" content="How to set Claude up, brief it and check its work in late 2026: the current models and effort settings, Cowork in every chat, Claude Code, memory, safety, and the habits that make the partnership work.">
+<meta name="author" content="Adhi">
+<link rel="canonical" href="https://learnwithadhi.com/courses/ai/working-with-claude-v1.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Working Well With Claude · Learn with Adhi">
+<meta property="og:description" content="Setup, briefing, checking and delegating: a practical course on working with Claude's late-2026 tools, built from Anthropic's own guidance and independent research.">
+<meta property="og:image" content="https://learnwithadhi.com/assets/on-mawar-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Working Well With Claude","description":"How to set Claude up, brief it, check its work and delegate safely, using the late-2026 Claude app, Cowork and Claude Code.","provider":{"@type":"Person","name":"Adhi","url":"https://learnwithadhi.com"}}</script>
+<link rel="icon" href="../../assets/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acc:#7C3AED; --acc-dim:#6D28D9; --acc-bg:rgba(124,58,237,0.08);
+  --gold:#FFC234; --green:#1F9D55; --red:#FF5C39; --tomato:#E03E2D; --sea:#2D6FB3; --indigo:#1C5DDC; --mawar:#7C3AED; --forest:#1F9D55; --mango:#D97706;
+  --ink:#1A1614; --paper:#FBF4E6; --paper-2:#F4ECD8;
+  --muted:#6B6259; --line:rgba(26,22,20,0.10); --line-s:rgba(26,22,20,0.16);
+  --fd:'Bricolage Grotesque',sans-serif; --fb:'Inter',sans-serif; --fm:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+#sidebar{width:268px;min-height:100vh;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s var(--ease)}
+.sb-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo a{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper);text-decoration:none;letter-spacing:-.02em}
+.sb-logo span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-top:3px}
+.sb-course{padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.1);font-family:var(--fd);font-size:15px;font-weight:700;line-height:1.25;color:var(--paper)}
+.sb-prog{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-prog-label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.4);margin-bottom:8px;text-transform:uppercase}
+.sb-bar-wrap{background:rgba(255,255,255,.1);border-radius:99px;height:4px;overflow:hidden}
+.sb-bar-fill{height:100%;background:var(--acc);border-radius:99px;transition:width .5s var(--ease);width:0%}
+.sb-pct{font-family:var(--fm);font-size:11px;color:rgba(251,244,230,.5);margin-top:6px}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-item{cursor:pointer;padding:10px 20px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent;transition:background .15s,border-color .15s;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--acc)}
+.nav-item.done{border-left-color:var(--green)}
+.nav-num{font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:rgba(251,244,230,.35);min-width:22px}
+.nav-item.active .nav-num{color:#B79CF6}
+.nav-item.done .nav-num{color:var(--green)}
+.nav-title{font-size:12px;font-weight:500;color:rgba(251,244,230,.75);line-height:1.3}
+.nav-item.active .nav-title{color:var(--paper)}
+.nav-check{margin-left:auto;font-size:13px;color:var(--green);opacity:0;transition:opacity .2s}
+.nav-item.done .nav-check{opacity:1}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-footer a{font-family:var(--fm);font-size:10px;color:rgba(251,244,230,.45);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sb-footer a:hover{color:var(--paper)}
+
+/* ── MOBILE HEADER ── */
+#mob-header{display:none;position:fixed;top:0;left:0;right:0;z-index:150;background:var(--ink);padding:14px 20px;align-items:center;gap:12px}
+#hamburger{background:none;border:none;cursor:pointer;padding:4px;color:var(--paper);font-size:20px;line-height:1}
+.mob-title{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--paper)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190}
+
+/* ── MAIN ── */
+#main{margin-left:268px;flex:1;min-width:0;min-height:100vh}
+.module-section{display:none;padding:48px 56px;max-width:900px}
+.module-section.active{display:block}
+
+/* ── MODULE HERO ── */
+.mod-eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:14px;text-transform:uppercase}
+.mod-title{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+.mod-title .acc{color:var(--acc)}
+.mod-lede{font-size:16px;color:var(--muted);line-height:1.65;max-width:640px;margin-bottom:24px}
+.mod-objectives{background:var(--paper-2);border-radius:12px;padding:20px 24px;border:1px solid var(--line-s);margin-bottom:40px}
+.obj-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
+.obj-list{list-style:none}
+.obj-list li{font-size:13px;padding:4px 0 4px 18px;position:relative;color:var(--ink)}
+.obj-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:12px}
+
+/* ── CONTENT ── */
+h2.sh{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:40px 0 12px;padding-top:40px;border-top:1px solid var(--line)}
+h2.sh:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-family:var(--fd);font-size:17px;font-weight:600;margin:28px 0 8px;color:var(--ink)}
+p{margin-bottom:14px;font-size:15px;line-height:1.7;max-width:680px}
+a{color:var(--acc-dim)}
+code{font-family:var(--fm);font-size:.86em;background:rgba(26,22,20,.06);padding:1px 5px;border-radius:4px}
+ul.bl{margin:0 0 18px 0;padding-left:0;list-style:none;max-width:680px}
+ul.bl li{font-size:14px;padding:4px 0 4px 18px;position:relative;line-height:1.6}
+ul.bl li::before{content:'•';position:absolute;left:0;color:var(--acc)}
+ol.nl{margin:0 0 18px 0;padding-left:0;list-style:none;counter-reset:ol;max-width:680px}
+ol.nl li{font-size:14px;padding:4px 0 4px 28px;position:relative;line-height:1.6;counter-increment:ol}
+ol.nl li::before{content:counter(ol)'.';position:absolute;left:0;color:var(--acc);font-family:var(--fm);font-size:12px}
+
+/* ── CALLOUTS (default + 4 variants) ── */
+.callout{border-left:3px solid var(--acc);background:var(--acc-bg);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:14px;line-height:1.65;max-width:680px}
+.callout strong{font-weight:600}
+.callout.tomato{border-left-color:var(--tomato);background:rgba(224,62,45,.08)}
+.callout.green{border-left-color:var(--green);background:rgba(31,157,85,.08)}
+.callout.blue{border-left-color:var(--sea);background:rgba(45,111,179,.08)}
+.callout.mango{border-left-color:var(--mango);background:rgba(217,119,6,.10)}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat-card{background:var(--ink);color:var(--paper);border-radius:12px;padding:18px 18px 16px}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:#B79CF6;letter-spacing:-.02em;line-height:1}
+.stat-lbl{font-size:12px;line-height:1.45;color:rgba(251,244,230,.85);margin-top:8px}
+.stat-sub{font-family:var(--fm);font-size:9px;letter-spacing:.06em;color:rgba(251,244,230,.5);margin-top:6px;text-transform:uppercase}
+
+/* ── CONCEPT GRID ── */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:20px 0 28px}
+.concept-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:18px 20px}
+.concept-card .icon{font-size:24px;margin-bottom:10px}
+.concept-card h4{font-family:var(--fd);font-size:15px;font-weight:700;margin-bottom:6px}
+.concept-card p{font-size:13px;color:var(--muted);margin:0}
+.concept-card .where{font-family:var(--fm);font-size:9.5px;letter-spacing:.05em;color:var(--acc-dim);margin-top:10px;text-transform:uppercase}
+
+/* ── DEMO BOXES ── */
+.demo-box{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:24px;margin:20px 0 28px}
+.demo-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.demo-caption{font-size:12px;color:var(--muted);margin-top:12px;font-style:italic}
+.demo-svg{width:100%;height:auto;display:block;background:#fff;border-radius:8px}
+
+/* ── COMPARE (before / after) ── */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 26px}
+.cmp{border-radius:10px;padding:14px 16px;border:1.5px solid var(--line-s);background:#fff;font-size:13px;line-height:1.55}
+.cmp-tag{font-family:var(--fm);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;font-weight:500}
+.cmp.bad{border-color:rgba(224,62,45,.45)}
+.cmp.bad .cmp-tag{color:var(--tomato)}
+.cmp.good{border-color:rgba(31,157,85,.5)}
+.cmp.good .cmp-tag{color:var(--green)}
+.cmp .why{display:block;margin-top:8px;color:var(--muted);font-size:12px}
+
+/* ── COPYABLE TEMPLATES ── */
+.tpl{border-radius:12px;overflow:hidden;margin:18px 0 26px;border:1px solid var(--ink);background:#221d1a}
+.tpl-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;background:var(--ink);border-bottom:1px solid rgba(255,255,255,.08)}
+.tpl-name{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(251,244,230,.6)}
+.copy-btn{font-family:var(--fm);font-size:10px;letter-spacing:.06em;padding:5px 10px;border-radius:6px;border:1px solid rgba(251,244,230,.25);background:transparent;color:var(--paper);cursor:pointer}
+.copy-btn:hover{border-color:#B79CF6;color:#D9C9FB}
+.tpl pre{margin:0;padding:16px 18px;font-family:var(--fm);font-size:12.5px;line-height:1.65;color:#F1E9D8;white-space:pre-wrap;word-break:break-word}
+
+/* ── DATA TABLES ── */
+.table-wrap{overflow-x:auto;margin:16px 0 26px;max-width:100%}
+table.pm-table{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}
+table.pm-table th,table.pm-table td{border:1px solid var(--line-s);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.55}
+table.pm-table th{background:var(--ink);color:var(--paper);font-family:var(--fm);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+table.pm-table td.hl{font-weight:700;color:var(--acc-dim)}
+table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
+
+/* ── QUIZZES ── */
+.quiz-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.quiz-title{font-family:var(--fd);font-size:16px;font-weight:700;margin-bottom:6px;color:var(--acc)}
+.quiz-note{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+.q-card{background:var(--paper-2);border:1px solid var(--line-s);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+.q-text{font-size:14px;font-weight:600;margin-bottom:16px;max-width:none}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-option{background:#fff;border:1.5px solid var(--line-s);border-radius:8px;padding:10px 16px;font-size:13px;font-family:var(--fb);text-align:left;cursor:pointer;transition:border-color .15s,background .15s;color:var(--ink);line-height:1.5}
+.q-option:hover:not(:disabled){border-color:var(--acc);background:var(--acc-bg)}
+.q-option.correct{border-color:var(--green);background:rgba(31,157,85,.1);color:#145e30;font-weight:600}
+.q-option.wrong{border-color:var(--red);background:rgba(255,92,57,.1);color:#a02a10}
+.q-option:disabled{cursor:default}
+.q-feedback{margin-top:12px;font-size:13px;padding:10px 14px;border-radius:8px;display:none}
+.q-feedback.correct{background:rgba(31,157,85,.12);color:#145e30}
+.q-feedback.wrong{background:rgba(255,92,57,.12);color:#a02a10}
+.quiz-status{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px;padding:12px 16px;border-radius:10px;background:#fff;border:1px solid var(--line-s);font-size:13px}
+.quiz-score{font-family:var(--fm);font-size:12px}
+.quiz-status.pass{border-color:rgba(31,157,85,.5);background:rgba(31,157,85,.08)}
+.quiz-status.fail{border-color:rgba(255,92,57,.5);background:rgba(255,92,57,.06)}
+.retry-btn{display:none;font-family:var(--fb);font-size:12px;font-weight:600;padding:6px 14px;border-radius:99px;border:1.5px solid var(--ink);background:#fff;cursor:pointer}
+
+/* ── CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:6px;margin:20px 0}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--line-s);background:var(--paper-2);cursor:pointer;transition:background .15s}
+.check-item:hover{background:#ede7d8}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc);margin-top:2px;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;cursor:pointer;line-height:1.5}
+.check-item.checked label{color:var(--muted);text-decoration:line-through}
+
+/* ── REFERENCES ── */
+.ref-group-label{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.ref-item{border:1px solid var(--line-s);border-left-width:4px;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:12px;background:#fff;max-width:720px}
+.ref-citation{font-size:13px;line-height:1.65;color:var(--ink);margin-bottom:7px;overflow-wrap:anywhere}
+.ref-annotation{font-size:12.5px;line-height:1.6;color:var(--muted);margin-bottom:8px}
+.ref-link{font-family:var(--fm);font-size:10px;color:var(--sea);text-decoration:none;letter-spacing:.03em}
+.ref-link:hover{text-decoration:underline}
+
+/* ── PREV/NEXT + DONE ── */
+.foot-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.nav-btn{padding:10px 20px;border-radius:99px;font-family:var(--fb);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--line-s);background:#fff;color:var(--ink);transition:border-color .15s,transform .1s}
+.nav-btn:hover:not(:disabled){border-color:var(--acc);transform:translateY(-1px)}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.done-btn{padding:14px 28px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:14px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.done-btn:hover:not(:disabled){background:var(--acc-dim);transform:translateY(-1px)}
+.done-btn:disabled{background:var(--green);cursor:default}
+.done-btn.locked:disabled{background:#E4DAC3;color:var(--muted)}
+.done-btn.completed::before{content:'✓ '}
+
+/* ── PLACEHOLDER (module still being written) ── */
+.pending-box{border:2px dashed var(--line-s);border-radius:14px;padding:28px;background:#fff;max-width:680px}
+.pending-box p{margin:0;color:var(--muted)}
+
+/* ── COMPLETION BANNER ── */
+#completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#A78BFA);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
+#completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
+#completion-banner p{font-size:15px;opacity:.95;margin:0 auto;max-width:560px;color:#fff}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-268px)}
+  #sidebar.open{transform:translateX(0)}
+  #overlay.open{display:block}
+  #mob-header{display:flex}
+  #main{margin-left:0;padding-top:56px}
+  .module-section{padding:28px 18px}
+  .mod-title{font-size:28px}
+  .stat-row{grid-template-columns:1fr}
+  .compare{grid-template-columns:1fr}
+  .demo-box{padding:14px}
+  .q-card{padding:16px}
+  table.pm-table{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;z-index:999;background:#1A1614;color:#FBF4E6;padding:12px 16px;font-family:monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase" onfocus="this.style.left='8px';this.style.top='8px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <a href="../../index.html">Learn with Adhi<span>COURSE</span></a>
+  </div>
+  <div class="sb-course">Working Well With Claude</div>
+  <div class="sb-prog">
+    <div class="sb-prog-label">Progress</div>
+    <div class="sb-bar-wrap"><div class="sb-bar-fill" id="prog-fill"></div></div>
+    <div class="sb-pct" id="prog-pct">0 / 8 modules</div>
+  </div>
+  <nav aria-label="Modules">
+    <div class="nav-item" data-module="1" tabindex="0" role="button">
+      <span class="nav-num">01</span>
+      <span class="nav-title">What Changed, and What Didn't</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="2" tabindex="0" role="button">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Setup: Say It Once</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="3" tabindex="0" role="button">
+      <span class="nav-num">03</span>
+      <span class="nav-title">The Brief: Prompting a Capable Colleague</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="4" tabindex="0" role="button">
+      <span class="nav-num">04</span>
+      <span class="nav-title">The Loop: Plan, Build, Check</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="5" tabindex="0" role="button">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Delegating Bigger Work</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="6" tabindex="0" role="button">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Trust, Safety &amp; Staying Sharp</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="7" tabindex="0" role="button">
+      <span class="nav-num">07</span>
+      <span class="nav-title">A Real Setup, Honestly Reviewed</span>
+      <span class="nav-check">✓</span>
+    </div>
+    <div class="nav-item" data-module="8" tabindex="0" role="button">
+      <span class="nav-num">08</span>
+      <span class="nav-title">References</span>
+      <span class="nav-check">✓</span>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <a href="../../index.html">← Back to all courses</a>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div id="mob-header">
+  <button id="hamburger" aria-label="Open module menu">☰</button>
+  <span class="mob-title">Working Well With Claude</span>
+</div>
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 – WHAT CHANGED, AND WHAT DIDN'T
+═══════════════════════════════════════════ -->
+<section id="module-1" class="module-section">
+  <div class="mod-eyebrow">Module 01 / 08</div>
+  <h1 class="mod-title">What changed, and what <span class="acc">didn't</span></h1>
+  <p class="mod-lede">In early 2026, using Claude mostly meant typing into a chat box and copying the answer out. By October it means handing work to a colleague that can read your files, work for an hour on its own, and keep going after you close the laptop. The skill that matters has moved from writing clever prompts to briefing, checking and deciding.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The current Claude models, and how to pick a model and an effort level for a task</li>
+      <li>The shift from asking Claude questions to delegating work to it</li>
+      <li>Six pieces of advice that newer models have made unnecessary</li>
+      <li>How to split the work: what stays yours and what Claude can own</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Seven months, one direction</h2>
+  <p>Between April and October 2026 Anthropic shipped nine model launches and quietly changed what a "conversation" is. The timeline below shows the releases that matter for everyday users. You don't need the dates. Look at the direction instead: almost every step moved Claude from <em>answering</em> towards <em>doing</em>.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Timeline: April to October 2026</div>
+    <svg class="demo-svg" viewBox="0 0 940 270" role="img" aria-label="Timeline from April to October 2026. Above the line, model launches: Opus 4.7 on 16 April, Opus 4.8 on 28 May, Fable 5 on 9 June, Sonnet 5 on 30 June, Opus 5 on 24 July, Fable 5.1 and Mythos 5.1 on 1 September, Opus 5.5 on 22 September, Sonnet 5.5 on 28 September, Haiku 5.5 on 7 October. Below the line, product changes: Cowork generally available on desktop on 9 April, Cowork on web and mobile on 7 July, one shared memory with editable topics on 25 August, chat and Cowork merged with Docs, Slides and Design in any chat on 16 September, and the Duet proactive agent preview on 21 October.">
+      <text x="20" y="22" font-family="var(--fm)" font-size="10" letter-spacing="0.08em" fill="var(--muted)">MODELS</text>
+      <text x="20" y="262" font-family="var(--fm)" font-size="10" letter-spacing="0.08em" fill="var(--muted)">HOW YOU WORK</text>
+      <!-- axis -->
+      <line x1="60" y1="150" x2="900" y2="150" stroke="var(--ink)" stroke-width="2"/>
+      <g font-family="var(--fm)" font-size="9.5" fill="var(--muted)" text-anchor="middle">
+        <line x1="60" y1="145" x2="60" y2="155" stroke="var(--ink)"/><text x="60" y="169">APR</text>
+        <line x1="178" y1="145" x2="178" y2="155" stroke="var(--ink)"/><text x="178" y="169">MAY</text>
+        <line x1="301" y1="145" x2="301" y2="155" stroke="var(--ink)"/><text x="301" y="169">JUN</text>
+        <line x1="419" y1="145" x2="419" y2="155" stroke="var(--ink)"/><text x="419" y="169">JUL</text>
+        <line x1="541" y1="145" x2="541" y2="155" stroke="var(--ink)"/><text x="541" y="169">AUG</text>
+        <line x1="663" y1="145" x2="663" y2="155" stroke="var(--ink)"/><text x="663" y="169">SEP</text>
+        <line x1="782" y1="145" x2="782" y2="155" stroke="var(--ink)"/><text x="782" y="169">OCT</text>
+      </g>
+      <!-- models (above) -->
+      <g font-family="var(--fb)" font-size="11" font-weight="600" fill="var(--indigo)" text-anchor="middle">
+        <line x1="119" y1="150" x2="119" y2="104" stroke="var(--indigo)" stroke-dasharray="2 2"/><circle cx="119" cy="150" r="5" fill="var(--indigo)"/><text x="119" y="98">Opus 4.7</text>
+        <line x1="285" y1="150" x2="285" y2="104" stroke="var(--indigo)" stroke-dasharray="2 2"/><circle cx="285" cy="150" r="5" fill="var(--indigo)"/><text x="285" y="98">Opus 4.8</text>
+        <line x1="332" y1="150" x2="332" y2="74" stroke="var(--indigo)" stroke-dasharray="2 2"/><circle cx="332" cy="150" r="5" fill="var(--indigo)"/><text x="332" y="68">Fable 5</text>
+        <line x1="415" y1="150" x2="415" y2="104" stroke="var(--indigo)" stroke-dasharray="2 2"/><circle cx="415" cy="150" r="5" fill="var(--indigo)"/><text x="415" y="98">Sonnet 5</text>
+        <line x1="510" y1="150" x2="510" y2="104" stroke="var(--indigo)" stroke-dasharray="2 2"/><circle cx="510" cy="150" r="5" fill="var(--indigo)"/><text x="510" y="98">Opus 5</text>
+        <line x1="663" y1="150" x2="663" y2="104" stroke="var(--indigo)" stroke-dasharray="2 2"/><circle cx="663" cy="150" r="5" fill="var(--indigo)"/><text x="640" y="98">Fable 5.1 + Mythos 5.1</text>
+        <line x1="746" y1="150" x2="746" y2="74" stroke="var(--indigo)" stroke-dasharray="2 2"/><circle cx="746" cy="150" r="5" fill="var(--indigo)"/><text x="746" y="68">Opus 5.5</text>
+        <line x1="770" y1="150" x2="770" y2="46" stroke="var(--indigo)" stroke-dasharray="2 2"/><circle cx="770" cy="150" r="5" fill="var(--indigo)"/><text x="770" y="40">Sonnet 5.5</text>
+        <line x1="805" y1="150" x2="805" y2="104" stroke="var(--indigo)" stroke-dasharray="2 2"/><circle cx="805" cy="150" r="5" fill="var(--indigo)"/><text x="826" y="98">Haiku 5.5</text>
+      </g>
+      <!-- product changes (below) -->
+      <g font-family="var(--fb)" font-size="10.5" fill="var(--ink)">
+        <line x1="92" y1="150" x2="92" y2="180" stroke="var(--acc)" stroke-dasharray="2 2"/><rect x="87" y="145" width="10" height="10" fill="var(--acc)" transform="rotate(45 92 150)"/>
+        <text x="74" y="194" font-weight="600" fill="var(--acc-dim)">Cowork GA</text><text x="74" y="207" fill="var(--muted)">desktop app</text>
+        <line x1="443" y1="150" x2="443" y2="180" stroke="var(--acc)" stroke-dasharray="2 2"/><rect x="438" y="145" width="10" height="10" fill="var(--acc)" transform="rotate(45 443 150)"/>
+        <text x="400" y="194" font-weight="600" fill="var(--acc-dim)">Cowork on web</text><text x="400" y="207" fill="var(--muted)">and mobile</text>
+        <line x1="636" y1="150" x2="636" y2="180" stroke="var(--acc)" stroke-dasharray="2 2"/><rect x="631" y="145" width="10" height="10" fill="var(--acc)" transform="rotate(45 636 150)"/>
+        <text x="560" y="194" font-weight="600" fill="var(--acc-dim)">One memory,</text><text x="560" y="207" fill="var(--muted)">editable topics</text>
+        <line x1="723" y1="150" x2="723" y2="222" stroke="var(--acc)" stroke-dasharray="2 2"/><rect x="718" y="145" width="10" height="10" fill="var(--acc)" transform="rotate(45 723 150)"/>
+        <text x="682" y="236" font-weight="600" fill="var(--acc-dim)">Chat + Cowork = one Claude</text><text x="682" y="249" fill="var(--muted)">Docs, Slides, Design in any chat</text>
+        <line x1="861" y1="150" x2="861" y2="180" stroke="var(--acc)" stroke-dasharray="2 2"/><rect x="856" y="145" width="10" height="10" fill="var(--acc)" transform="rotate(45 861 150)"/>
+        <text x="900" y="194" text-anchor="end" font-weight="600" fill="var(--acc-dim)">Duet preview</text><text x="900" y="207" text-anchor="end" fill="var(--muted)">proactive agent</text>
+      </g>
+    </svg>
+    <div class="demo-caption">Dates from Anthropic's release notes. Model launches above the line (blue), changes to how you work below it (purple). The September cluster is the big one: three model launches and a merged app in four weeks.</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">9</div><div class="stat-lbl">model launches in seven months. Any advice written before September is probably about an older model.</div><div class="stat-sub">Release notes, Apr–Oct 2026</div></div>
+    <div class="stat-card"><div class="stat-num">1M</div><div class="stat-lbl">tokens of context on every current model, about 555,000 words of English.</div><div class="stat-sub">Models overview, 2026</div></div>
+    <div class="stat-card"><div class="stat-num">16 Sep</div><div class="stat-lbl">the day chat and Cowork merged into one Claude, starting with Pro and Max plans.</div><div class="stat-sub">Claude blog, 2026</div></div>
+  </div>
+
+  <h2 class="sh">The lineup, and the two dials</h2>
+  <p>There are four current models. Think of them as one team with different strengths, not as "good, better, best". You choose two things for any piece of work: <strong>which model</strong> (how capable) and <strong>how much effort</strong> (how thorough).</p>
+
+  <div class="table-wrap">
+    <table class="pm-table">
+      <thead><tr><th>Model</th><th>Use it for</th><th>Default effort (API)</th><th>API price per million tokens (in / out)</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">Fable 5.1</td><td>The hardest reasoning and very long agent runs. Slower.</td><td>high</td><td>$10 / $50</td></tr>
+        <tr><td class="hl">Opus 5.5</td><td>The default for serious work: long coding and knowledge tasks.</td><td>medium</td><td>$4 / $20</td></tr>
+        <tr><td class="hl">Sonnet 5.5</td><td>Fast everyday work at lower cost.</td><td>high</td><td>$2 / $10</td></tr>
+        <tr><td class="hl">Haiku 5.5</td><td>High-volume, simple jobs: sorting, extracting, routing.</td><td>medium</td><td>from $0.10 / $0.50</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>On a Pro or Max plan you don't pay per token, but your usage limits are counted in tokens. The same logic applies: a bigger model and a higher effort spend your allowance faster.</p>
+
+  <div class="callout blue">
+    <strong>Anthropic's own starting point:</strong> "start with Claude Opus 5.5 for most workloads," and move up to Fable 5.1 only when Opus at a higher effort still falls short. Claude Code follows the same rule: on most plans, new sessions run Opus 5.5 at medium effort, and Fable is something you choose on purpose (<code>/model fable</code>).
+  </div>
+
+  <h3 class="sub">The second dial: effort</h3>
+  <p>Effort sets how thoroughly Claude works before it answers: how much it thinks, how many tools it calls, how much it checks itself. Thinking is now "adaptive". Claude decides how much to think, steered by the effort level and by how hard the question looks. In the Claude app, effort sits in the model menu next to the send button, for the models that offer it. In Claude Code you type <code>/effort</code>.</p>
+  <ul class="bl">
+    <li><strong>Lower it</strong> for fast back-and-forth where you review every result anyway: brainstorming, a first sketch, tidying a list.</li>
+    <li><strong>Keep the default</strong> for everyday work with a clear scope.</li>
+    <li><strong>Raise it</strong> when getting it right depends on cases that are easy to miss: an unfamiliar bug, a contract clause, a change that touches many files.</li>
+    <li><strong>Max</strong> is for a hard problem you want worked through without you. On ordinary tasks it overthinks, and you pay for an answer that is no better.</li>
+  </ul>
+
+  <div class="callout">
+    <strong>Model for capability, effort for thoroughness.</strong> Anthropic's tutorial on effort makes a point that surprises people: "a frontier model at medium or low effort often outperforms an older model at high or maximum effort." Upgrading the model usually beats turning the dial to the top on an old one.
+  </div>
+
+  <div class="callout mango">
+    <strong>"Think hard" is now just words.</strong> Phrases like <em>think step by step</em> or <em>be thorough</em> nudge Claude within its effort setting, but they don't raise it. If you want deeper reasoning, change the effort. In Claude Code, putting <code>ultrathink</code> in one message still asks for deeper reasoning on that turn only.
+  </div>
+
+  <h2 class="sh">From asking to delegating</h2>
+  <p>The bigger change isn't the models. It's what a conversation can do. Since 16 September (Pro and Max first, Enterprise from 23 October), Cowork's agent abilities live inside every chat. Claude can work through a multi-step task, use your files and connected apps, and keep running after you leave. Claude Docs, Slides and Design also open inside any conversation. On the coding side, Claude Code sessions run in the cloud, can be steered from your phone, and can run on a schedule.</p>
+  <p>It helps to see four ways of working side by side:</p>
+
+  <div class="concept-grid">
+    <div class="concept-card"><div class="icon">💬</div><h4>Ask</h4><p>A question, an explanation, a second opinion. You read the answer and decide.</p><div class="where">Any chat</div></div>
+    <div class="concept-card"><div class="icon">📝</div><h4>Make</h4><p>A document, deck, page or design you shape together, revising in place.</p><div class="where">Docs · Slides · Design · artifacts</div></div>
+    <div class="concept-card"><div class="icon">🛠️</div><h4>Do</h4><p>A multi-step task with files, tools and connected apps, with you approving risky steps.</p><div class="where">Cowork in any chat · Claude Code</div></div>
+    <div class="concept-card"><div class="icon">🌙</div><h4>Run without you</h4><p>Scheduled or background work you review later.</p><div class="where">Scheduled tasks · cloud sessions</div></div>
+  </div>
+
+  <p>Each step to the right gives Claude more room, and asks more of you up front: a clearer goal, a way to check the result, and limits on what it may touch. Modules 4 and 5 cover exactly that. (Duet, a "proactive" agent that reaches out to you first, opened as a waitlisted research preview on 21 October. It's too new to teach as a habit yet.)</p>
+  <p>Ethan Mollick put the shift well in January 2026: working with agents is really a management problem. Can you state the goal, give the context, split the work and give feedback? His summary: "What's scarce is knowing what to ask for." That's good news. Briefing, scoping and checking work are skills most working adults already have, and they transfer directly.</p>
+
+  <h2 class="sh">Advice you can stop following</h2>
+  <p>Every item below was sensible once. Some of it was taught on this site in April 2026, in <a href="2026-04-18-claude-efficiency-course-v1.html">Claude Without Burning Tokens</a>. The models caught up, and Anthropic's own Claude Code guide now lists most of these as habits to drop.</p>
+
+  <div class="table-wrap">
+    <table class="pm-table">
+      <thead><tr><th>Old advice</th><th>What's true now</th><th>Do this instead</th></tr></thead>
+      <tbody>
+        <tr><td>"The context window (200K) is your main limit. Manage it aggressively."</td><td>Current models hold 1M tokens and compact long sessions automatically. Running out is rare.</td><td>Still start fresh between unrelated tasks. A focused conversation is cheaper and gives sharper answers.</td></tr>
+        <tr><td>"Write IMPORTANT or ALL CAPS when Claude ignores a rule."</td><td>Current models follow plainly worded instructions. Shouting makes them over-apply the rule.</td><td>Shorten the instruction file, or turn a must-never rule into a real setting (Module 2).</td></tr>
+        <tr><td>"Say 'think step by step' or 'think harder'."</td><td>Effort controls thinking depth. These phrases are ordinary text.</td><td>Raise the effort, or use <code>ultrathink</code> for one turn in Claude Code.</td></tr>
+        <tr><td>"Tell it to keep going and not be lazy."</td><td>Current models carry an agreed task through. Lines like this cause over-work.</td><td>Give it a check it has to pass (Module 4).</td></tr>
+        <tr><td>"Explain your whole folder structure and architecture up front."</td><td>Claude reads the project itself, usually faster than you can describe it.</td><td>Write down only what it can't see: decisions, deadlines, reasons, taste.</td></tr>
+        <tr><td>"Hand it to a subagent for a better answer."</td><td>A subagent is usually the same model on the same task. You get parallel work or fresh eyes, not more intelligence.</td><td>Use subagents for parallel work, noisy searches or an independent review.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tomato">
+    <strong>What has not changed.</strong> Claude can still be confidently wrong, especially about citations, numbers and anything after its training cutoff (June 2026 for the current models). It can still agree with you too easily. And you still own whatever you send, publish or merge. Module 6 is entirely about this.
+  </div>
+
+  <h2 class="sh">Who does what</h2>
+  <p>The healthiest way to work with Claude now is a division of labour you set on purpose, rather than one that drifts.</p>
+
+  <div class="compare">
+    <div class="cmp good" style="border-color:var(--ink)">
+      <div class="cmp-tag" style="color:var(--ink)">Stays with you</div>
+      Deciding what's worth doing, and why.<br>The context only you have: decisions, audience, constraints, taste.<br>What "done" means, and how it will be checked.<br>Judgement calls and trade-offs.<br>Sign-off on anything public, permanent or costly.
+    </div>
+    <div class="cmp good" style="border-color:var(--acc)">
+      <div class="cmp-tag" style="color:var(--acc-dim)">Claude can own</div>
+      Reading, searching and summarising.<br>First drafts and first builds.<br>Running the checks you gave it, and fixing what fails.<br>Reporting evidence: what it ran and what came back.<br>Flagging what it couldn't do or isn't sure about.
+    </div>
+  </div>
+
+  <div class="callout green">
+    <strong>A quick test before you delegate:</strong> could you explain to a new colleague what "done" looks like? If not, you're not ready to hand the work over yet. That's exactly the moment to ask Claude to interview you first (Module 3).
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check: Module 1</div>
+    <p class="quiz-note">Answer all three. Two or more correct completes the module.</p>
+
+    <div class="q-card">
+      <p class="q-text">You're in Claude Code chasing a bug in code you didn't write, and Claude keeps missing an edge case. What's the most effective change?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Shouting doesn't raise how hard Claude thinks. Current models tend to over-apply capitalised rules, and 'think harder' is ordinary text that only nudges within the effort setting.">Add "THINK VERY HARD ABOUT EDGE CASES" in capitals to your message</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Effort is the control for thoroughness: /effort high or xhigh makes Claude check more cases and verify more before answering. For a single tricky turn, ultrathink does the same without changing the setting.">Raise the effort with /effort high, or put ultrathink in that one message</button>
+        <button class="q-option" data-correct="false" data-explanation="A subagent is usually the same (or a smaller) model on the same task. It brings parallel work or fresh eyes, not a smarter answer.">Hand the bug to a subagent so a smarter model looks at it</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">A colleague says: "Keep every chat short, because Claude can only hold 200K tokens." What's the accurate reply in late 2026?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="The reason is out of date. Current models have a 1M-token window and compact automatically, so running out is rare.">"Agreed, the window is the main limit, so trim aggressively."</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. The window is no longer the bottleneck, but every message still re-sends the conversation. Clearing between unrelated tasks keeps answers focused and spends less of your allowance.">"The window is 1M now and long chats compact themselves, but still start fresh between unrelated tasks, because focused context is cheaper and sharper."</button>
+        <button class="q-option" data-correct="false" data-explanation="Length still costs something. Each new message re-reads the whole conversation, so unrelated history makes every turn slower, pricier and less focused.">"Length doesn't matter at all any more. One endless chat is fine."</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Which of these jobs is the best fit for Haiku 5.5, or for a lower effort level?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Designing a method is multi-factor judgement work. That's where a capable model at default or higher effort earns its cost.">Designing the method for a research project</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Sorting many short items into fixed categories is repetitive, well-defined and easy to spot-check. That's exactly what the small, fast model is built for.">Sorting 500 short survey comments into six fixed categories</button>
+        <button class="q-option" data-correct="false" data-explanation="A flaky test in unfamiliar code is the textbook case for raising effort, not lowering it.">Tracking down a flaky test in code nobody on the team wrote</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="quiz-status"><span class="quiz-score">0 / 3 answered</span><button class="retry-btn" type="button">Try again</button></div>
+  </div>
+
+  <h2 class="sh">Try this week</h2>
+  <div class="checklist">
+    <div class="check-item"><input type="checkbox" id="c1-1"><label for="c1-1">Find the model and effort menu next to the send button, and note what your defaults are.</label></div>
+    <div class="check-item"><input type="checkbox" id="c1-2"><label for="c1-2">Run one routine task twice: at the default effort and one level lower. Was the cheaper answer good enough?</label></div>
+    <div class="check-item"><input type="checkbox" id="c1-3"><label for="c1-3">Pick one job you'd normally do yourself and hand it over as a task, not a question.</label></div>
+    <div class="check-item"><input type="checkbox" id="c1-4"><label for="c1-4">Find one ALL-CAPS or "think hard" line in your saved instructions and reword it plainly.</label></div>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev" disabled>← Previous</button>
+    <button class="done-btn" data-module="1">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 – SETUP: SAY IT ONCE
+═══════════════════════════════════════════ -->
+<section id="module-2" class="module-section" data-pending="true">
+  <div class="mod-eyebrow">Module 02 / 08</div>
+  <h1 class="mod-title">Setup: say it <span class="acc">once</span></h1>
+  <p class="mod-lede">Where each kind of instruction belongs: account instructions, projects, memory, skills, and in Claude Code, CLAUDE.md, rules, hooks and settings.</p>
+  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn locked" data-module="2" disabled>Coming soon</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 – THE BRIEF
+═══════════════════════════════════════════ -->
+<section id="module-3" class="module-section" data-pending="true">
+  <div class="mod-eyebrow">Module 03 / 08</div>
+  <h1 class="mod-title">The brief: prompting a capable <span class="acc">colleague</span></h1>
+  <p class="mod-lede">What a good request contains, what to leave out, and when to let Claude interview you instead.</p>
+  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn locked" data-module="3" disabled>Coming soon</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 – THE LOOP
+═══════════════════════════════════════════ -->
+<section id="module-4" class="module-section" data-pending="true">
+  <div class="mod-eyebrow">Module 04 / 08</div>
+  <h1 class="mod-title">The loop: plan, build, <span class="acc">check</span></h1>
+  <p class="mod-lede">How to run a piece of work from idea to verified result, and how to steer when it drifts.</p>
+  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn locked" data-module="4" disabled>Coming soon</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 – DELEGATING BIGGER WORK
+═══════════════════════════════════════════ -->
+<section id="module-5" class="module-section" data-pending="true">
+  <div class="mod-eyebrow">Module 05 / 08</div>
+  <h1 class="mod-title">Delegating <span class="acc">bigger</span> work</h1>
+  <p class="mod-lede">Tasks, permission modes, background and scheduled work, parallel sessions, and the five questions to answer before you walk away.</p>
+  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn locked" data-module="5" disabled>Coming soon</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 – TRUST, SAFETY & STAYING SHARP
+═══════════════════════════════════════════ -->
+<section id="module-6" class="module-section" data-pending="true">
+  <div class="mod-eyebrow">Module 06 / 08</div>
+  <h1 class="mod-title">Trust, safety and staying <span class="acc">sharp</span></h1>
+  <p class="mod-lede">Checking facts and citations, prompt injection, privacy, and how to keep your own skills growing while Claude does more.</p>
+  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn locked" data-module="6" disabled>Coming soon</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 7 – A REAL SETUP, HONESTLY REVIEWED
+═══════════════════════════════════════════ -->
+<section id="module-7" class="module-section" data-pending="true">
+  <div class="mod-eyebrow">Module 07 / 08</div>
+  <h1 class="mod-title">A real setup, honestly <span class="acc">reviewed</span></h1>
+  <p class="mod-lede">The setup behind this website, checked against everything in this course, plus a starter kit you can copy.</p>
+  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn locked" data-module="7" disabled>Coming soon</button>
+    <button class="nav-btn" data-nav="next">Next →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE 8 – REFERENCES
+═══════════════════════════════════════════ -->
+<section id="module-8" class="module-section">
+  <div class="mod-eyebrow">References</div>
+  <h1 class="mod-title">Sources &amp; <span class="acc">Further Reading</span></h1>
+  <p class="mod-lede">Every claim in this course traces back to a source. Product facts come from Anthropic's own documentation, read on 27 October 2026. Claims about what works come from independent research and experienced practitioners, and they're labelled as such.</p>
+
+  <div class="ref-group-label">Anthropic documentation: models and prompting</div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Anthropic. "Models Overview." Claude Platform Docs. Accessed October 27, 2026. https://platform.claude.com/docs/en/models/overview.</div>
+    <div class="ref-annotation">The source for the model lineup, default effort levels, 1M-token context windows, prices and the "start with Opus 5.5" advice. Prices are API list prices; subscription plans count usage differently. Check the page again before relying on any number, because it changes with each launch.</div>
+    <a class="ref-link" href="https://platform.claude.com/docs/en/models/overview" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Anthropic. "Prompting Best Practices." Claude Platform Docs. Accessed October 27, 2026. https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices.</div>
+    <div class="ref-annotation">Anthropic's reference for prompting current models: be clear and direct, explain why, use examples and XML tags, put long documents before the question, and ask explicitly for action. Written mainly for developers using the API, so some advice (system prompts, prefill) doesn't apply in the chat app.</div>
+    <a class="ref-link" href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--acc)">
+    <div class="ref-citation">Anthropic. "How to Select the Right Effort Setting for Claude Cowork and Chat." Claude Academy. Accessed October 27, 2026. https://academy.claude.com/tutorials/how-to-select-the-right-effort-setting-for-claude-cowork-and-chat.</div>
+    <div class="ref-annotation">A short tutorial on the effort dial, including the point that a newer model at lower effort often beats an older one at maximum. Undated, and it doesn't say which models offer the selector in the app.</div>
+    <a class="ref-link" href="https://academy.claude.com/tutorials/how-to-select-the-right-effort-setting-for-claude-cowork-and-chat" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Anthropic documentation: the Claude app and Cowork</div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Anthropic. "Release Notes." Claude Help Center. Accessed October 27, 2026. https://support.claude.com/en/articles/12138966-release-notes.</div>
+    <div class="ref-annotation">The dated record behind the Module 1 timeline: model launches, Cowork on web and mobile, memory changes, the chat and Cowork merger and the Duet preview. Release notes describe what launched, not how well it works, and rollouts can reach accounts weeks later.</div>
+    <a class="ref-link" href="https://support.claude.com/en/articles/12138966-release-notes" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Anthropic. "Claude Cowork and Chat Are Now One Claude." Claude Blog, September 16, 2026, updated October 23, 2026. https://claude.com/blog/cowork-is-now-claude.</div>
+    <div class="ref-annotation">The announcement that Cowork and Design work from any conversation, with Docs and Slides added. A launch post: it describes intended behaviour and rollout order (Pro and Max first, Enterprise generally available from 23 October), not measured outcomes.</div>
+    <a class="ref-link" href="https://claude.com/blog/cowork-is-now-claude" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Anthropic. "Claude's Memory Works Everywhere, and You Decide What's in It." Claude Blog, August 25, 2026. https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it.</div>
+    <div class="ref-annotation">How memory now works: editable topic files in Settings, shared between chat and Cowork, with sensitive topics excluded by default. Doesn't cover incognito chats or project memory, which other help articles describe.</div>
+    <a class="ref-link" href="https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Anthropic. "Getting Started with Cowork." Claude Help Center. Accessed October 27, 2026. https://support.claude.com/en/articles/13345190-getting-started-with-cowork.</div>
+    <div class="ref-annotation">Practical detail on starting Cowork tasks, folder and global instructions, permission modes (Manual, Auto, Skip), scheduled tasks that run in the cloud, and usage tips. Marked only "updated this week", so details may shift.</div>
+    <a class="ref-link" href="https://support.claude.com/en/articles/13345190-getting-started-with-cowork" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Anthropic. "Use Cowork Safely." Claude Help Center. Accessed October 27, 2026. https://support.claude.com/en/articles/13364135-use-cowork-safely.</div>
+    <div class="ref-annotation">Anthropic's safety guidance for agent work: prompt injection, keeping sensitive files out of reach, trusting only known connectors and sites. Different versions of this page have disagreed on details such as audit logging, so read the live page.</div>
+    <a class="ref-link" href="https://support.claude.com/en/articles/13364135-use-cowork-safely" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--sea)">
+    <div class="ref-citation">Anthropic. "Understanding Claude's Personalization Features." Claude Help Center. Accessed October 27, 2026. https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features.</div>
+    <div class="ref-annotation">Where account-wide "Instructions for Claude", project instructions and skills live and what each is for. The page contradicts itself on whether project instructions need a paid plan, and doesn't say which setting wins when they conflict.</div>
+    <a class="ref-link" href="https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Anthropic documentation: Claude Code and agents</div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Anthropic. "Best Practices for Claude Code." Claude Code Docs. Accessed October 27, 2026. https://code.claude.com/docs/en/best-practices.</div>
+    <div class="ref-annotation">The most useful single page behind this course: tell Claude what it can't see, give it a check to run, enforce must-never rules in settings rather than prose, and a table of old advice to drop. Written for Claude Code, but most of it carries over to Cowork.</div>
+    <a class="ref-link" href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Anthropic. "How Claude Remembers Your Project." Claude Code Docs. Accessed October 27, 2026. https://code.claude.com/docs/en/memory.</div>
+    <div class="ref-annotation">CLAUDE.md scopes, the under-200-lines target, path-scoped rules, and auto memory (which is stored per machine and doesn't follow you into cloud sessions). The audit command it describes needs a recent Claude Code version.</div>
+    <a class="ref-link" href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Segner, Michael. "Steering Claude Code: When to Use CLAUDE.md, Skills, Hooks, and Subagents." Claude, June 18, 2026. https://claude.com/resources/articles/steering-claude-code-skills-hooks-rules-subagents-and-more.</div>
+    <div class="ref-annotation">A decision table for where an instruction belongs, organised by when it loads and how much authority it carries. Written by Anthropic staff; doesn't cover MCP connectors.</div>
+    <a class="ref-link" href="https://claude.com/resources/articles/steering-claude-code-skills-hooks-rules-subagents-and-more" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--indigo)">
+    <div class="ref-citation">Rajasekaran, Prithvi, Ethan Dixon, Carly Ryan, and Jeremy Hadfield. "Effective Context Engineering for AI Agents." Anthropic Engineering, September 29, 2025. https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents.</div>
+    <div class="ref-annotation">The idea that what's in the context matters more than prompt wording: context rot, loading information just in time, compaction and note-taking. Predates the 1M-token models, so its urgency about running out of space is now weaker than its point about focus.</div>
+    <a class="ref-link" href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Independent research</div>
+
+  <div class="ref-item" style="border-left-color:var(--green)">
+    <div class="ref-citation">Shen, Judy Hanwen, and Alex Tamkin. "How AI Impacts Skill Formation." arXiv:2601.20245, January 28, 2026. https://doi.org/10.48550/arXiv.2601.20245.</div>
+    <div class="ref-annotation">A randomised trial with 52 mostly junior developers learning a new library: the AI group scored 50% on a follow-up quiz against 67% for hand-coders, and how people used the AI mattered a lot. Run by Anthropic researchers; small sample, short horizon, one library.</div>
+    <a class="ref-link" href="https://doi.org/10.48550/arXiv.2601.20245" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--green)">
+    <div class="ref-citation">Becker, Joel, Nate Rush, Elizabeth Barnes, and David Rein. "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity." arXiv:2507.09089, July 12, 2025. https://doi.org/10.48550/arXiv.2507.09089.</div>
+    <div class="ref-annotation">The METR trial in which 16 experienced developers expected AI to speed them up by 24%, felt 20% faster afterwards, and were measured 19% slower. Tools from early 2025; METR's own 2026 follow-up (next entry) suggests the picture has since changed.</div>
+    <a class="ref-link" href="https://doi.org/10.48550/arXiv.2507.09089" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--green)">
+    <div class="ref-citation">METR. "We Are Changing Our Developer Productivity Experiment Design." METR Blog, February 24, 2026. https://metr.org/blog/2026-02-24-uplift-update/.</div>
+    <div class="ref-annotation">METR explains why its follow-up became unreliable (many developers refused to work without AI) and says developers are "likely" more sped up in 2026 than in 2025, while calling its own numbers weak evidence for how much.</div>
+    <a class="ref-link" href="https://metr.org/blog/2026-02-24-uplift-update/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--green)">
+    <div class="ref-citation">Cabezas-Clavijo, Álvaro, and Pavel Sidorenko-Bautista. "Assessing the Performance of 8 AI Chatbots in Bibliographic Reference Retrieval: Grok and DeepSeek Outperform ChatGPT, but None Are Fully Accurate." arXiv:2505.18059, May 23, 2025. https://doi.org/10.48550/arXiv.2505.18059.</div>
+    <div class="ref-annotation">Of 400 references requested from eight free chatbots, 26.5% were fully correct and 39.8% were wrong or invented; Claude was among the three worst. Tested 2025 free versions, apparently without web search, so current models with search should do better, but the lesson stands: check every citation.</div>
+    <a class="ref-link" href="https://doi.org/10.48550/arXiv.2505.18059" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--green)">
+    <div class="ref-citation">Retraction Watch. "One in 277 PubMed-Indexed Papers in 2026 Shows Fabricated References, Says Analysis." Retraction Watch, May 7, 2026. https://retractionwatch.com/2026/05/07/one-in-277-pubmed-indexed-papers-in-2026-shows-fabricated-references-says-analysis/.</div>
+    <div class="ref-annotation">Reports a Lancet letter (lead author Maxim Topaz) that checked about 2.5 million papers and found citations to non-existent papers rose from 1 in 2,828 papers (2023) to 1 in 277 (early 2026). Correlation with AI writing tools, not proof of cause; the method is AI-assisted and likely undercounts.</div>
+    <a class="ref-link" href="https://retractionwatch.com/2026/05/07/one-in-277-pubmed-indexed-papers-in-2026-shows-fabricated-references-says-analysis/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--green)">
+    <div class="ref-citation">Sharma, Mrinank, Meg Tong, Tomasz Korbak, David Duvenaud, Amanda Askell, Samuel R. Bowman, Newton Cheng, et al. "Towards Understanding Sycophancy in Language Models." arXiv:2310.13548, 2023. https://doi.org/10.48550/arXiv.2310.13548.</div>
+    <div class="ref-annotation">Shows that AI assistants trained on human feedback tend to tell people what they want to hear, partly because people rate agreeable answers higher. Tested 2023 models; the tendency is reduced in newer models but not gone, which is why Module 6 teaches you to ask for disagreement.</div>
+    <a class="ref-link" href="https://doi.org/10.48550/arXiv.2310.13548" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-group-label">Practitioners</div>
+
+  <div class="ref-item" style="border-left-color:var(--mango)">
+    <div class="ref-citation">Mollick, Ethan. "Management as AI Superpower: Thriving in a World of Agentic AI." One Useful Thing, January 27, 2026. https://www.oneusefulthing.org/p/management-as-ai-superpower.</div>
+    <div class="ref-annotation">Argues that delegating to agents is a management skill: say what you're trying to achieve and why, where authority ends, and what "done" looks like. An essay by a Wharton professor, not a study; persuasive, but the framing is his.</div>
+    <a class="ref-link" href="https://www.oneusefulthing.org/p/management-as-ai-superpower" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--mango)">
+    <div class="ref-citation">Willison, Simon. "Vibe Engineering." Simon Willison's Weblog, October 7, 2025. https://simonwillison.net/2025/Oct/7/vibe-engineering/.</div>
+    <div class="ref-annotation">A list of the habits that let experienced people get reliable work out of coding agents: tests, planning, documentation, version control, review and manual checking. Aimed at software engineers; the habits generalise to most knowledge work.</div>
+    <a class="ref-link" href="https://simonwillison.net/2025/Oct/7/vibe-engineering/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--mango)">
+    <div class="ref-citation">Willison, Simon. "The Lethal Trifecta for AI Agents: Private Data, Untrusted Content, and External Communication." Simon Willison's Weblog, June 16, 2025. https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/.</div>
+    <div class="ref-annotation">The clearest explanation of why connecting an agent to your private data, untrusted content and the outside world at the same time is dangerous. Written before Cowork's safety classifiers existed; the core logic still holds.</div>
+    <a class="ref-link" href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="ref-item" style="border-left-color:var(--mango)">
+    <div class="ref-citation">InfoQ. "Inside the Development Workflow of Claude Code's Creator." InfoQ, January 2026. https://www.infoq.com/news/2026/01/claude-code-creator-workflow/.</div>
+    <div class="ref-annotation">A secondhand summary of how Boris Cherny, who created Claude Code, works: many parallel sessions, planning first, and always giving Claude a way to verify its work. Useful as one expert's habits, not as a rule; his original posts may differ in detail.</div>
+    <a class="ref-link" href="https://www.infoq.com/news/2026/01/claude-code-creator-workflow/" target="_blank" rel="noopener">→ Source</a>
+  </div>
+
+  <div class="callout tomato" style="max-width:none;margin-top:32px">
+    <strong>Data quality note:</strong> most product facts here come from Anthropic, the company that sells Claude, and describe intended behaviour rather than independently measured results. Features in this course changed monthly through 2026, and rollouts differ by plan and region, so check the live pages before relying on a menu name or a limit. The independent research is thin: small samples, short time frames, mostly software developers, and older models than the ones you're using now. Treat it as a reason for care, not as a precise measure of what will happen to you.
+  </div>
+
+  <div id="completion-banner">
+    <h2>Course complete 🎉</h2>
+    <p>You know what changed, where each instruction belongs, how to brief and check, how far to delegate, and where trust has to stop. Come back when the next model launches: the principles will hold even when the menus move.</p>
+  </div>
+
+  <div class="foot-nav">
+    <button class="nav-btn" data-nav="prev">← Previous</button>
+    <button class="done-btn" data-module="8">Mark module complete →</button>
+    <button class="nav-btn" data-nav="next" disabled>Next →</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const COURSE_ID = 'working-with-claude';
+const TOTAL = 8;
+const PASS_MARK = 2;
+
+function readJSON(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key) || '') || fallback; } catch { return fallback; }
+}
+function writeJSON(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+}
+function getProgress() { return readJSON(COURSE_ID + ':done', {}); }
+function saveProgress(p) { writeJSON(COURSE_ID + ':done', p); }
+function markCourseComplete() {
+  const all = readJSON('lwa:completed', []);
+  if (!all.includes(COURSE_ID)) { all.push(COURSE_ID); writeJSON('lwa:completed', all); }
+}
+function markModuleDone(m) {
+  const p = getProgress(); p[m] = true; saveProgress(p);
+  renderProgress();
+}
+
+function hasQuiz(m) { return !!document.querySelector('#module-' + m + ' .quiz-section'); }
+function isPending(m) { return document.getElementById('module-' + m).dataset.pending === 'true'; }
+
+function renderProgress() {
+  const p = getProgress();
+  let count = 0;
+  for (let m = 1; m <= TOTAL; m++) {
+    const done = !!p[m] && !isPending(m);
+    if (done) count++;
+    const item = document.querySelector('.nav-item[data-module="' + m + '"]');
+    item.classList.toggle('done', done);
+    const btn = document.querySelector('#module-' + m + ' .done-btn');
+    if (!btn || isPending(m)) continue;
+    if (done) {
+      btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); btn.classList.remove('locked');
+    } else if (hasQuiz(m)) {
+      btn.textContent = 'Pass the quick check to complete'; btn.disabled = true; btn.classList.add('locked');
+    }
+  }
+  document.getElementById('prog-fill').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('prog-pct').textContent = count + ' / ' + TOTAL + ' modules done';
+  if (count >= TOTAL) {
+    document.getElementById('completion-banner').style.display = 'block';
+    markCourseComplete();
+  }
+}
+
+let currentModule = 1;
+
+function goto(m) {
+  if (m < 1 || m > TOTAL) return;
+  currentModule = m;
+  document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('module-' + m).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelector('.nav-item[data-module="' + m + '"]').classList.add('active');
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  try { history.replaceState(null, '', '#m' + m); } catch {}
+}
+
+function setupQuizzes() {
+  document.querySelectorAll('.quiz-section').forEach(section => {
+    const m = parseInt(section.closest('.module-section').id.split('-')[1]);
+    const cards = Array.from(section.querySelectorAll('.q-card'));
+    const status = section.querySelector('.quiz-status');
+    const scoreEl = section.querySelector('.quiz-score');
+    const retry = section.querySelector('.retry-btn');
+
+    function update() {
+      const answered = cards.filter(c => c.dataset.answered).length;
+      const correct = cards.filter(c => c.dataset.answered === 'correct').length;
+      status.classList.remove('pass', 'fail');
+      retry.style.display = 'none';
+      if (answered < cards.length) {
+        scoreEl.textContent = correct + ' / ' + cards.length + ' correct · ' + answered + ' of ' + cards.length + ' answered';
+        return;
+      }
+      if (correct >= PASS_MARK) {
+        status.classList.add('pass');
+        scoreEl.textContent = correct + ' / ' + cards.length + ' correct. Passed: module complete.';
+        markModuleDone(m);
+      } else {
+        status.classList.add('fail');
+        scoreEl.textContent = correct + ' / ' + cards.length + ' correct. You need ' + PASS_MARK + ' to complete this module.';
+        retry.style.display = 'inline-block';
+      }
+    }
+
+    cards.forEach(card => {
+      card.querySelectorAll('.q-option').forEach(opt => {
+        opt.addEventListener('click', function () {
+          if (card.dataset.answered) return;
+          const isCorrect = this.dataset.correct === 'true';
+          card.dataset.answered = isCorrect ? 'correct' : 'wrong';
+          const fb = card.querySelector('.q-feedback');
+          card.querySelectorAll('.q-option').forEach(o => {
+            o.disabled = true;
+            if (o.dataset.correct === 'true') o.classList.add('correct');
+          });
+          if (!isCorrect) this.classList.add('wrong');
+          fb.textContent = (isCorrect ? '✓ ' : '✗ ') + this.dataset.explanation;
+          fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+          fb.style.display = 'block';
+          update();
+        });
+      });
+    });
+
+    retry.addEventListener('click', () => {
+      cards.forEach(card => {
+        delete card.dataset.answered;
+        card.querySelectorAll('.q-option').forEach(o => { o.disabled = false; o.classList.remove('correct', 'wrong'); });
+        const fb = card.querySelector('.q-feedback');
+        fb.style.display = 'none'; fb.textContent = '';
+      });
+      update();
+      cards[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    if (getProgress()[m]) scoreEl.textContent = 'Passed earlier ✓ You can retake it any time.';
+    else update();
+  });
+}
+
+function setupChecklist() {
+  const saved = readJSON(COURSE_ID + ':checklist', {});
+  document.querySelectorAll('.check-item input').forEach(cb => {
+    if (saved[cb.id]) { cb.checked = true; cb.closest('.check-item').classList.add('checked'); }
+    cb.addEventListener('change', function () {
+      this.closest('.check-item').classList.toggle('checked', this.checked);
+      const state = readJSON(COURSE_ID + ':checklist', {});
+      state[this.id] = this.checked;
+      writeJSON(COURSE_ID + ':checklist', state);
+    });
+  });
+}
+
+function setupCopyButtons() {
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const text = btn.closest('.tpl').querySelector('pre').innerText;
+      let ok = false;
+      try { await navigator.clipboard.writeText(text); ok = true; } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { ok = document.execCommand('copy'); } catch {}
+        ta.remove();
+      }
+      btn.textContent = ok ? 'Copied ✓' : 'Select and copy';
+      setTimeout(() => { btn.textContent = 'Copy'; }, 1800);
+    });
+  });
+}
+
+function init() {
+  const fromHash = parseInt((location.hash.match(/^#m(\d+)$/) || [])[1]);
+  goto(fromHash >= 1 && fromHash <= TOTAL ? fromHash : 1);
+  renderProgress();
+  setupQuizzes();
+  setupChecklist();
+  setupCopyButtons();
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goto(parseInt(item.dataset.module)));
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goto(parseInt(item.dataset.module)); }
+    });
+  });
+  document.querySelectorAll('.done-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const m = parseInt(this.dataset.module);
+      if (hasQuiz(m) || isPending(m)) return;
+      markModuleDone(m);
+      if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
+    });
+  });
+  document.querySelectorAll('.foot-nav [data-nav="prev"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule - 1));
+  });
+  document.querySelectorAll('.foot-nav [data-nav="next"]').forEach(btn => {
+    btn.addEventListener('click', () => goto(currentModule + 1));
+  });
+
+  const hbg = document.getElementById('hamburger');
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  hbg.addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+  ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

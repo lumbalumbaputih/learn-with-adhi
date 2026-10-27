@@ -17,6 +17,15 @@ Each course/feature ships as its own commit. Update this file as each lands.
 
 ---
 
+## 2026-10-27
+
+- 🚧 **Working Well With Claude, step 1: course shell, Module 1 and References.** Adhi asked for a new course on how to work well with Claude now that the products have changed, built on research rather than memory. Decisions (asked, 2026-10-27): a **new** course that keeps the April token course (its wrong facts get fixed later in this build); covers the Claude app, Cowork and Claude Code; written for any reader with Adhi's own setup as a final module without private details; one course of about 7 modules.
+  - **Research:** Anthropic's models overview, prompting best practices, Claude Code best practices and memory docs, help-center release notes, Cowork and memory articles, plus independent sources (Anthropic's skill-formation RCT, METR 2025 trial and 2026 update, chatbot citation accuracy, fabricated-reference audit, sycophancy research, Mollick, Willison). Every reference URL checked to resolve.
+  - **Built:** `courses/ai/working-with-claude-v1.html` (sidebar standard, mawar accent so the default callout can't be confused with the tomato warning callout). Module 1 "What changed, and what didn't": April–October 2026 release timeline SVG, model and effort table, the four ways of working, a table of old advice to drop (including some from the April course), division of labour, quiz, checklist. References module with 23 annotated sources. Modules 2–7 are visible placeholders. Progress is quiz-gated: 2 of 3 correct completes a module, with a retry; References completes by button. Copy buttons are ready for the prompt templates in later modules.
+  - **Wiring:** `assets/courses.json` (id `working-with-claude`, n `20`), `sitemap.xml`, `README.md`. Not featured (the featured course is unchanged).
+  - **Checks:** headless Chromium script: no console errors, navigation, fail-then-retry-then-pass quiz flow, progress count, every reference has a link, no sideways scrolling at 360 px (fixed one 18 px overflow from unbroken URLs). Timeline screenshot reviewed by eye.
+  - **Next:** Module 2 (setup: where each instruction belongs).
+
 ## 2026-10-20
 
 - ✅ **Perth Transit v1.11: current-time and location controls for kids.** At Adhi’s request, Train Spotter now opens at current Perth time at normal speed. Now returns from playback or a ride to the current clock, retaining reduced-motion pause and the labelled pretend-day fallback. Me requests an optional one-shot browser position, centres the map and draws a blue dot; location is never requested on opening or saved in storage/links. Friendly denial, timeout and outside-Perth messages; newer map/train actions cancel late results. The timetable/not-live wording remains explicit.
