@@ -1188,14 +1188,192 @@ Under 300 words. No preamble. Save it as [HANDOVER.md / a doc in this project].<
 <!-- ═══════════════════════════════════════════
      MODULE 5 – DELEGATING BIGGER WORK
 ═══════════════════════════════════════════ -->
-<section id="module-5" class="module-section" data-pending="true">
+<section id="module-5" class="module-section">
   <div class="mod-eyebrow">Module 05 / 08</div>
   <h1 class="mod-title">Delegating <span class="acc">bigger</span> work</h1>
-  <p class="mod-lede">Tasks, permission modes, background and scheduled work, parallel sessions, and the five questions to answer before you walk away.</p>
-  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <p class="mod-lede">The big change of 2026 is that Claude can keep working when you stop watching: tasks that run in the cloud, jobs on a schedule, several sessions in parallel. That's powerful, and it moves your job from typing to setting things up well. Every step away from the screen needs a clearer goal, a check, and limits.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>A quick test for whether a job is worth delegating at all</li>
+      <li>The autonomy ladder: what you need in place before each step away from the screen</li>
+      <li>Cowork tasks, permission modes and scheduled tasks in the Claude app</li>
+      <li>Cloud sessions, parallel work and subagents in Claude Code, and what they cost</li>
+      <li>The five questions to answer before you leave anything running</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">Is it worth delegating?</h2>
+  <p>Ethan Mollick offers a useful way to think about this. He weighs three things: how long the job would take you, how likely the AI is to succeed, and how long the AI's attempt takes. Every failed attempt costs that last one again, and in practice your time spent briefing and checking belongs in it too. In practice, a job is a good candidate when:</p>
+  <ul class="bl">
+    <li><strong>You can say what "done" looks like.</strong> If you can't, start with the interview from Module 3, not with delegation.</li>
+    <li><strong>Checking is much cheaper than doing.</strong> Reading a reconciled spreadsheet takes minutes; building it takes hours.</li>
+    <li><strong>Mistakes are cheap to undo.</strong> A draft, a branch, a document in a folder. Not a sent email, a payment or a public post.</li>
+  </ul>
+  <p>Keep it yourself when the work is mostly judgement only you can make, when the step can't be undone, or when the point is for <em>you</em> to learn the skill. Module 6 covers that last one.</p>
+
+  <h2 class="sh">The autonomy ladder</h2>
+  <p>Think of delegation as four rungs. Each rung up gives Claude more room and needs more in place before you climb it. Anthropic's checklist for unattended runs asks five questions; the diagram shows which ones each rung needs.</p>
+
+  <div class="demo-box wide">
+    <div class="demo-label">What each level of autonomy needs before you use it</div>
+    <svg class="demo-svg" viewBox="0 0 760 290" role="img" aria-label="A table of four autonomy levels against five requirements. Level 1, watch every step in manual mode: needs a clear goal and human sign-off. Level 2, working with automatic safety checks while you're nearby: needs a clear goal, a check, and sign-off. Level 3, background or cloud work while you're away: needs a clear goal, a check, limits on access, and sign-off. Level 4, scheduled or recurring unattended work: needs all five, a clear goal, a check, limits on access, a stop condition, and sign-off.">
+      <g font-family="var(--fm)" font-size="9.5" letter-spacing="0.04em" fill="var(--muted)" text-anchor="middle">
+        <text x="378" y="34">DONE IS</text><text x="378" y="46">DEFINED</text>
+        <text x="458" y="34">IT CAN</text><text x="458" y="46">CHECK ITSELF</text>
+        <text x="538" y="34">LIMITS ON</text><text x="538" y="46">ACCESS</text>
+        <text x="618" y="34">SOMETHING</text><text x="618" y="46">STOPS IT</text>
+        <text x="698" y="34">A HUMAN</text><text x="698" y="46">SIGNS OFF</text>
+      </g>
+      <!-- staircase rungs -->
+      <g font-family="var(--fb)">
+        <rect x="20" y="62" width="300" height="48" rx="10" fill="#EFE7FD"/>
+        <text x="36" y="83" font-family="var(--fd)" font-weight="700" font-size="13" fill="var(--acc-dim)">1 · Watch every step</text>
+        <text x="36" y="100" font-size="10.5" fill="var(--muted)">Manual mode: you approve each action</text>
+        <rect x="20" y="118" width="300" height="48" rx="10" fill="#DCCBFB"/>
+        <text x="36" y="139" font-family="var(--fd)" font-weight="700" font-size="13" fill="var(--acc-dim)">2 · Work while I'm nearby</text>
+        <text x="36" y="156" font-size="10.5" fill="var(--muted)">Auto mode: a safety check reviews each action</text>
+        <rect x="20" y="174" width="300" height="48" rx="10" fill="#B792F6"/>
+        <text x="36" y="195" font-family="var(--fd)" font-weight="700" font-size="13" fill="#fff">3 · Work while I'm away</text>
+        <text x="36" y="212" font-size="10.5" fill="#F4EEFE">Background and cloud tasks, laptop closed</text>
+        <rect x="20" y="230" width="300" height="48" rx="10" fill="var(--acc)"/>
+        <text x="36" y="251" font-family="var(--fd)" font-weight="700" font-size="13" fill="#fff">4 · Run on its own</text>
+        <text x="36" y="268" font-size="10.5" fill="#F4EEFE">Scheduled or recurring, nobody watching</text>
+      </g>
+      <g stroke="var(--line-s)">
+        <line x1="338" y1="114" x2="740" y2="114"/><line x1="338" y1="170" x2="740" y2="170"/><line x1="338" y1="226" x2="740" y2="226"/>
+      </g>
+      <!-- dots: filled = needed -->
+      <g>
+        <circle cx="378" cy="86" r="8" fill="var(--acc)"/><circle cx="458" cy="86" r="8" fill="none" stroke="var(--line-s)" stroke-width="2"/><circle cx="538" cy="86" r="8" fill="none" stroke="var(--line-s)" stroke-width="2"/><circle cx="618" cy="86" r="8" fill="none" stroke="var(--line-s)" stroke-width="2"/><circle cx="698" cy="86" r="8" fill="var(--acc)"/>
+        <circle cx="378" cy="142" r="8" fill="var(--acc)"/><circle cx="458" cy="142" r="8" fill="var(--acc)"/><circle cx="538" cy="142" r="8" fill="none" stroke="var(--line-s)" stroke-width="2"/><circle cx="618" cy="142" r="8" fill="none" stroke="var(--line-s)" stroke-width="2"/><circle cx="698" cy="142" r="8" fill="var(--acc)"/>
+        <circle cx="378" cy="198" r="8" fill="var(--acc)"/><circle cx="458" cy="198" r="8" fill="var(--acc)"/><circle cx="538" cy="198" r="8" fill="var(--acc)"/><circle cx="618" cy="198" r="8" fill="none" stroke="var(--line-s)" stroke-width="2"/><circle cx="698" cy="198" r="8" fill="var(--acc)"/>
+        <circle cx="378" cy="254" r="8" fill="var(--acc)"/><circle cx="458" cy="254" r="8" fill="var(--acc)"/><circle cx="538" cy="254" r="8" fill="var(--acc)"/><circle cx="618" cy="254" r="8" fill="var(--acc)"/><circle cx="698" cy="254" r="8" fill="var(--acc)"/>
+      </g>
+    </svg>
+    <div class="demo-caption">The columns are Anthropic's five questions for unattended runs. Which rung needs which is this course's suggestion, not an Anthropic rule: filled dots are the minimum. A human signing off is the one requirement that never goes away.</div>
+  </div>
+
+  <h2 class="sh">In the Claude app: tasks, modes and schedules</h2>
+  <p>On plans with the merged experience, any conversation can take on a Cowork task. If your message box still shows separate "Chat" and "Cowork" options, pick Cowork for multi-step work. Either way you describe the outcome, and Claude plans and works through the steps, using your connected apps and files.</p>
+  <ul class="bl">
+    <li><strong>Where it runs.</strong> Tasks run on Anthropic's servers in an isolated environment and are saved to your account, so you can check on them from your phone. Anything that touches files on your computer, or your own browser, goes through the desktop app, which has to be open and connected.</li>
+    <li><strong>Permission modes.</strong> <em>Manual</em> asks before actions. <em>Auto</em> (the default on Pro, Max and Team) has a safety check review each action and block unsafe ones; if it keeps hitting blocks it falls back to asking you. <em>Skip</em> checks nothing, and Anthropic says to use it "only when you completely trust" everything involved. Permanently deleting files always needs your explicit Allow.</li>
+    <li><strong>Scheduled tasks.</strong> Type <code>/schedule</code> in a task, or open Scheduled in the sidebar. They run in the cloud, so they don't need your computer awake. Weekly reports, Monday briefings and regular checks are the classic uses.</li>
+  </ul>
+
+  <div class="callout mango">
+    <strong>Usage adds up quietly.</strong> Anthropic's own guidance: multi-step tasks use much more of your allowance than quick questions. Group related work into one task, start new conversations for unrelated work, say when you only need a quick answer, and check Settings › Usage. A schedule that runs daily is a cost every day, so delete the ones you no longer read.
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · A scheduled task that can't embarrass you</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>Every [Monday at 8am]:
+1. Read [the folder / project / connected source] for anything new since last week.
+2. List [overdue items / changes / new messages about X], with a link to each.
+3. Write a one-page summary to [a doc in this project]. Lead with what needs my decision.
+
+Done means: every item in the summary links to its source.
+Don't send, post, reply, delete or pay for anything. Drafts only.
+If a source can't be reached, say so at the top of the summary rather than skipping it.</pre>
+  </div>
+
+  <h2 class="sh">In Claude Code: cloud, phone and parallel work</h2>
+  <p>Claude Code has grown the same abilities, with more control:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><div class="icon">☁️</div><h4>Cloud sessions</h4><p>Start a session at claude.ai/code or from the desktop app; it works on your GitHub repository in the cloud, keeps going with the laptop closed, and delivers a pull request.</p><div class="where">claude.ai/code · desktop · phone</div></div>
+    <div class="concept-card"><div class="icon">📱</div><h4>Steer from your phone</h4><p>Check on and answer sessions from the Claude mobile app; Remote Control does the same for a session running on your own computer.</p><div class="where">Claude app · Remote Control</div></div>
+    <div class="concept-card"><div class="icon">🔀</div><h4>Parallel sessions</h4><p>Separate jobs each get their own copy of the code (a worktree), so edits can't collide. <code>/batch</code> splits one big mechanical change into 5 to 30 units, each with its own pull request.</p><div class="where">claude -w · desktop · /batch</div></div>
+    <div class="concept-card"><div class="icon">⏰</div><h4>Schedules and loops</h4><p><code>/schedule</code> sets up a cloud task on a timer or a GitHub event. <code>/loop</code> repeats a prompt inside an open session, so don't leave one running in a long conversation.</p><div class="where">/schedule · /loop</div></div>
+  </div>
+  <p>Two newer options are still rolling out: <strong>Projects</strong> in Claude Code (public beta on Pro and Max), where one conversation coordinates a stream of related tasks as parallel cloud threads with shared instructions, and <strong>agent view</strong> (a research preview), one screen for everything running in the background. Both are worth trying once they reach your account; neither is required for anything in this course.</p>
+
+  <div class="callout tomato">
+    <strong>Before a scheduled code task runs unattended:</strong> Anthropic's own warning is to protect your main branch with a GitHub rule the task can't bypass, and to watch the first few runs of anything new before trusting it. A task that can merge its own work has no human sign-off at all.
+  </div>
+
+  <h3 class="sub">Subagents: when they're worth it</h3>
+  <p>Claude Code delegates to helper agents on its own: broad searches go to a built-in explorer, side tasks get split off, and they run in the background. They pay off for genuinely parallel work, for keeping long noisy output (a full test run, a wide search) out of your main conversation, and for a reviewer that hasn't seen your reasoning. They cost tokens, since every subagent sends its own requests, and they can even be slower because a fresh agent has to gather context first. And as Module 1 noted, "it's the same model (or a smaller one) on the same task. You get parallelism or a fresh pair of eyes out of it, but not a smarter answer." For simple jobs, Anthropic suggests setting a subagent to Haiku; <code>/usage</code> shows what each one is costing you.</p>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">3</div><div class="stat-lbl">blocked actions in a row (or 20 in total) and Claude Code's auto mode stops and goes back to asking you.</div><div class="stat-sub">Claude Code best practices</div></div>
+    <div class="stat-card"><div class="stat-num">5–30</div><div class="stat-lbl">units: how /batch splits one large mechanical change, each in its own copy with its own pull request.</div><div class="stat-sub">Claude Code best practices</div></div>
+    <div class="stat-card"><div class="stat-num">10–20%</div><div class="stat-lbl">of the cloud sessions started by Claude Code's creator end up abandoned, InfoQ reported. Parallel work includes throwaway work.</div><div class="stat-sub">InfoQ, Jan 2026</div></div>
+  </div>
+
+  <h2 class="sh">Five questions before you walk away</h2>
+  <p>Anthropic's checklist for any run you won't be watching is the best single summary of this module. Answer all five for that specific task, every time:</p>
+  <ol class="nl">
+    <li><strong>Does it know what done looks like?</strong> A spec, a goal condition, a failing test it has to turn green, a rubric.</li>
+    <li><strong>Can it check its own work?</strong> Tests, a check script, a review step.</li>
+    <li><strong>What's it allowed to touch?</strong> Which folders, connectors, branches; the permission mode.</li>
+    <li><strong>What stops it?</strong> A cap on turns or spend, a spend limit on your account, or "stop after three failed attempts and report".</li>
+    <li><strong>Where does the result go, and who signs off?</strong> A pull request, a doc, a draft, and then a person approving anything you can't take back.</li>
+  </ol>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · Add this to any brief you'll leave running</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>This will run while I'm away.
+Done means: [condition you can check].
+Check your work by: [test / script / rubric], and include the evidence in your report.
+You may touch: [folders, branch, connectors]. Don't touch: [everything else that matters].
+Stop and report if: [you fail the check three times / you need a decision / anything looks off].
+Deliver: [a draft PR / a doc / a summary]. Don't [merge, send, publish, delete] anything. I'll review and sign off.</pre>
+  </div>
+
+  <div class="callout">
+    <strong>Boundaries you say in conversation are softer than settings.</strong> In Claude Code's auto mode, a line like "don't push until I've reviewed" is treated as a block signal, but it's still a model reading the transcript, and the sentence can drop out when a long conversation is compacted. Anything that really matters belongs in a deny rule, a protected branch or simply in access you never granted (Module 2).
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check: Module 5</div>
+    <p class="quiz-note">Answer all three. Two or more correct completes the module.</p>
+
+    <div class="q-card">
+      <p class="q-text">You want a summary of your project folder every Monday morning, ready before you wake up, with your laptop closed. What's the right setup?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="A conversation doesn't wake itself up, and a laptop that's closed can't keep an interactive session going.">Leave a chat open on Sunday night with the request typed in</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Scheduled tasks run in the cloud on a timer, so they don't need your computer. Saying what done looks like, drafts only and no sending keeps it safe to leave alone. (Files that live only on your computer still need the desktop app connected.)">A scheduled task with a clear definition of done, drafts only, and nothing sent</button>
+        <button class="q-option" data-correct="false" data-explanation="/loop repeats a prompt inside an open session. It isn't for work that should happen while your computer is off.">Run /loop in a terminal on your laptop before you close it</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Auto mode keeps stopping to ask about the same action that is routine and safe in your setup. What's the best fix?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Skip checks nothing at all. Anthropic says to use it only when you completely trust everything involved. Fixing one false alarm doesn't justify removing every check.">Switch to Skip so it never asks about anything</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Allow that specific action (in Claude Code, add it to the auto-mode allow list or describe your trusted setup). The safety check stays on for everything else.">Allow that specific action, so the safety check stays on for everything else</button>
+        <button class="q-option" data-correct="false" data-explanation="Approving without reading defeats the purpose of being asked. It's exactly the habit Anthropic warns turns Manual mode into rubber-stamping.">Keep clicking approve without reading. It's faster than configuring</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">Which of these is NOT a good reason to hand work to a subagent?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="This is a good reason: independent pieces of work running at the same time finish sooner.">Running three independent searches at the same time</button>
+        <button class="q-option" data-correct="false" data-explanation="This is a good reason: a reviewer that hasn't seen your reasoning isn't swayed by it.">Getting a review from an agent that didn't write the code</button>
+        <button class="q-option" data-correct="true" data-explanation="Right, this is the bad reason. A subagent is usually the same model, or a smaller one, on the same task. You get parallelism or fresh eyes, not more intelligence, and you pay extra tokens.">Getting a smarter answer to the same question</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="quiz-status"><span class="quiz-score">0 / 3 answered</span><button class="retry-btn" type="button">Try again</button></div>
+  </div>
+
+  <h2 class="sh">Try this week</h2>
+  <div class="checklist">
+    <div class="check-item"><input type="checkbox" id="c5-1"><label for="c5-1">Pick one recurring job and check it against the three delegation tests: done is definable, checking is cheaper than doing, mistakes are reversible.</label></div>
+    <div class="check-item"><input type="checkbox" id="c5-2"><label for="c5-2">Set up one scheduled task with the "can't embarrass you" template, and read its first three runs closely.</label></div>
+    <div class="check-item"><input type="checkbox" id="c5-3"><label for="c5-3">Check which permission mode you're actually using in Cowork and Claude Code, and decide if it's the right one.</label></div>
+    <div class="check-item"><input type="checkbox" id="c5-4"><label for="c5-4">Look at Settings › Usage (or /usage) and find the one habit costing you the most.</label></div>
+    <div class="check-item"><input type="checkbox" id="c5-5"><label for="c5-5">Before your next unattended run, answer the five questions in writing.</label></div>
+  </div>
+
   <div class="foot-nav">
     <button class="nav-btn" data-nav="prev">← Previous</button>
-    <button class="done-btn locked" data-module="5" disabled>Coming soon</button>
+    <button class="done-btn" data-module="5">Mark module complete →</button>
     <button class="nav-btn" data-nav="next">Next →</button>
   </div>
 </section>
