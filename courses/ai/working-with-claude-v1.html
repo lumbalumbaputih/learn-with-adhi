@@ -768,14 +768,222 @@ Boundaries
 <!-- ═══════════════════════════════════════════
      MODULE 3 – THE BRIEF
 ═══════════════════════════════════════════ -->
-<section id="module-3" class="module-section" data-pending="true">
+<section id="module-3" class="module-section">
   <div class="mod-eyebrow">Module 03 / 08</div>
   <h1 class="mod-title">The brief: prompting a capable <span class="acc">colleague</span></h1>
-  <p class="mod-lede">What a good request contains, what to leave out, and when to let Claude interview you instead.</p>
-  <div class="pending-box"><p>This module is being written and will appear here soon.</p></div>
+  <p class="mod-lede">Anthropic's own advice is to treat Claude like "a brilliant but new employee who lacks context on your norms and workflows." Most disappointing results come from a missing piece of context, not from clumsy wording. This module gives you a five-part brief, shows what each part prevents, and covers the handful of wording habits that still matter.</p>
+  <div class="mod-objectives">
+    <div class="obj-label">What you'll learn</div>
+    <ul class="obj-list">
+      <li>The new-colleague test, and a five-part brief you can reuse for any task</li>
+      <li>How to hand over materials and examples instead of describing them</li>
+      <li>How to lay out long documents so Claude uses them well</li>
+      <li>The words that still change results ("change", "be ambitious") and the ones that don't</li>
+      <li>When to stop writing the brief and let Claude interview you instead</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">The new-colleague test</h2>
+  <p>Before you send anything important, run Anthropic's test: imagine showing your request to a capable colleague who has never seen this project. Would they know what you want, who it's for, and when they're finished? If they'd be confused, Claude will be too.</p>
+  <p>The test works because Claude is in exactly that colleague's position. It's highly capable and starts every task knowing only what's in front of it: your message, your saved instructions, the files you connected, and the memory it has. Everything else (the meeting where the plan changed, the reader's level, the reason this matters) has to come from you.</p>
+  <p>Ethan Mollick's version of the same idea comes from management, not software. A good delegation answers: "What are we trying to accomplish, and why?" and "What does 'done' look like?" Those two questions are the spine of every good brief.</p>
+
+  <h2 class="sh">The five-part brief</h2>
+  <p>You don't need all five parts for a quick question. For any piece of work you'd hand to a person, you do. Each part prevents a specific, common failure:</p>
+
+  <div class="demo-box wide">
+    <div class="demo-label">Anatomy of a brief, and what each part prevents</div>
+    <svg class="demo-svg" viewBox="0 0 720 330" role="img" aria-label="Five stacked parts of a brief, each linked to the failure it prevents. Goal and why prevents solving the wrong problem. Context only you have prevents generic output. Constraints prevent building too much or too little. Done means prevents work that only looks finished. Ask me if, or you may decide, prevents both stalls and silent wrong assumptions.">
+      <g font-family="var(--fd)" font-weight="700" font-size="13" fill="#fff">
+        <rect x="20" y="20" width="250" height="50" rx="10" fill="var(--acc)"/><text x="40" y="51">1 · Goal, and why</text>
+        <rect x="20" y="82" width="250" height="50" rx="10" fill="#8B50F0"/><text x="40" y="113">2 · Context only you have</text>
+        <rect x="20" y="144" width="250" height="50" rx="10" fill="#9A66F2"/><text x="40" y="175">3 · Constraints</text>
+        <rect x="20" y="206" width="250" height="50" rx="10" fill="#A97CF4"/><text x="40" y="237">4 · Done means…</text>
+        <rect x="20" y="268" width="250" height="50" rx="10" fill="#B792F6"/><text x="40" y="299">5 · Ask me if / you may decide</text>
+      </g>
+      <g stroke="var(--muted)" stroke-width="1.5" fill="none">
+        <path d="M270 45 H330"/><path d="M270 107 H330"/><path d="M270 169 H330"/><path d="M270 231 H330"/><path d="M270 293 H330"/>
+      </g>
+      <g font-family="var(--fm)" font-size="9" letter-spacing="0.06em" fill="var(--tomato)">
+        <text x="340" y="36">PREVENTS</text><text x="340" y="98">PREVENTS</text><text x="340" y="160">PREVENTS</text><text x="340" y="222">PREVENTS</text><text x="340" y="284">PREVENTS</text>
+      </g>
+      <g font-family="var(--fb)" font-size="12" fill="var(--ink)">
+        <text x="340" y="53" font-weight="600">Solving the wrong problem well</text>
+        <text x="340" y="68" font-size="10.5" fill="var(--muted)">e.g. a polished summary when you needed a decision</text>
+        <text x="340" y="115" font-weight="600">Generic, could-be-anyone output</text>
+        <text x="340" y="130" font-size="10.5" fill="var(--muted)">audience, decisions already made, the materials to use</text>
+        <text x="340" y="177" font-weight="600">Building too much, or too little</text>
+        <text x="340" y="192" font-size="10.5" fill="var(--muted)">scope, length, format, what must not change</text>
+        <text x="340" y="239" font-weight="600">Work that only looks finished</text>
+        <text x="340" y="254" font-size="10.5" fill="var(--muted)">a check it can run, or the criteria you'll judge by</text>
+        <text x="340" y="301" font-weight="600">Stalls, and silent wrong guesses</text>
+        <text x="340" y="316" font-size="10.5" fill="var(--muted)">which calls are yours, which are Claude's</text>
+      </g>
+    </svg>
+    <div class="demo-caption">Adapted from Anthropic's prompting guide and Claude Code best practices, and from Mollick's delegation questions. Parts 1 and 4 matter most: a goal without a definition of done is a wish.</div>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · The five-part brief</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>Goal: [what you want, in one sentence] because [why it matters / what it's for].
+
+Context:
+- Audience: [who reads or uses this, and what they already know]
+- Already decided: [choices that are not up for debate]
+- Use: [files, links, examples, data, attached or connected]
+
+Constraints:
+- Scope: [what's in, what's out]
+- Format and length: [e.g. one page, a table, under 150 words]
+- Don't change: [anything that must stay as it is]
+
+Done means: [the check, e.g. "every figure has a source I can open", "all tests in tests/auth pass", "fits on one slide"]
+
+Ask me if: [the decisions you want to make yourself]
+You may decide: [the calls you're happy for Claude to make, and to tell you about]</pre>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">30%</div><div class="stat-lbl">better responses in Anthropic's tests when long documents come first and the question comes last.</div><div class="stat-sub">Prompting best practices</div></div>
+    <div class="stat-card"><div class="stat-num">3–5</div><div class="stat-lbl">examples is Anthropic's recommendation when you want a particular format, tone or structure.</div><div class="stat-sub">Prompting best practices</div></div>
+    <div class="stat-card"><div class="stat-num">1</div><div class="stat-lbl">phrase still reliably changes scope: "be ambitious". Claude otherwise builds the smallest thing that fits.</div><div class="stat-sub">Claude Code best practices</div></div>
+  </div>
+
+  <h2 class="sh">Before and after</h2>
+  <p>Three real-world requests, rewritten. Notice that the better versions aren't cleverer. They just carry the information the first versions left in the writer's head.</p>
+
+  <h3 class="sub">Research</h3>
+  <div class="compare">
+    <div class="cmp bad"><div class="cmp-tag">Vague</div>Tell me about the circular economy in construction.<span class="why">Invites a long, general essay. You'll then ask for a shorter, more specific one and pay for both.</span></div>
+    <div class="cmp good"><div class="cmp-tag">Briefed</div>I'm preparing a 10-minute talk for council planners on reusing building materials in Western Australia. Find the 5 strongest pieces of evidence from 2020 onwards, peer-reviewed or government only, with a link for each. Put them in a table: claim, source, why it matters to a planner. Done means every row has a source I can open. If the WA evidence is thin, tell me rather than filling the gap with other places.<span class="why">Goal, audience, sources, format, a check, and permission to say "not enough evidence".</span></div>
+  </div>
+
+  <h3 class="sub">Code</h3>
+  <div class="compare">
+    <div class="cmp bad"><div class="cmp-tag">Vague</div>fix the login bug<span class="why">Claude has to guess which bug, where, and what "fixed" means.</span></div>
+    <div class="cmp good"><div class="cmp-tag">Briefed (Anthropic's own example)</div>users report login fails after the session times out. look at token refresh in src/auth/, write a failing test that reproduces it, then fix it<span class="why">The symptom, where to look, and a check that comes back pass or fail.</span></div>
+  </div>
+
+  <h3 class="sub">Writing</h3>
+  <div class="compare">
+    <div class="cmp bad"><div class="cmp-tag">Vague</div>Make this email better.<span class="why">Better how? Shorter, friendlier, firmer? Claude will pick one and you'll correct it.</span></div>
+    <div class="cmp good"><div class="cmp-tag">Briefed</div>Rewrite this email to a supplier who is late for the second time. Goal: a firm delivery date without damaging the relationship. Under 120 words, warm but firm, Australian English. Don't apologise. End with one clear question they can answer with a date.<span class="why">One sentence of goal and four constraints, all things only you knew.</span></div>
+  </div>
+
+  <h2 class="sh">Hand it over, don't describe it</h2>
+  <p>If you already have the thing Claude needs, give it the thing. Attach the file, paste the screenshot, connect the folder, or in Claude Code type <code>@</code> and the path. A screenshot of an error beats a paragraph describing it. A past report you liked beats three adjectives about the style you want.</p>
+  <p><strong>Examples are the strongest steering tool you have.</strong> Anthropic calls them "one of the most reliable ways to steer Claude's output format, tone, and structure," and recommends three to five that are relevant, varied, and clearly marked so they don't get mistaken for instructions. Varied matters: if every example is about the same topic, Claude may copy the topic instead of the style.</p>
+
+  <h3 class="sub">Long documents: material first, question last</h3>
+  <p>When you give Claude long material (several reports, a contract, a transcript), put it at the top and your question at the bottom. In Anthropic's tests, putting the query at the end improved response quality by up to 30%, especially with several documents. Label each document, and for careful work ask Claude to quote the relevant passages first and then answer from those quotes. That one step keeps the answer anchored to the text rather than to Claude's general knowledge.</p>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · Several documents, one question</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>&lt;documents&gt;
+  &lt;document index="1"&gt;
+    &lt;source&gt;[file name or link]&lt;/source&gt;
+    &lt;document_content&gt;[paste or attach]&lt;/document_content&gt;
+  &lt;/document&gt;
+  &lt;document index="2"&gt;
+    &lt;source&gt;[file name or link]&lt;/source&gt;
+    &lt;document_content&gt;[paste or attach]&lt;/document_content&gt;
+  &lt;/document&gt;
+&lt;/documents&gt;
+
+First, quote the passages from these documents that bear on the question, in &lt;quotes&gt; tags, each with its document number.
+Then answer the question using only those quotes. If the documents don't answer it, say so.
+
+Question: [your question]</pre>
+  </div>
+
+  <div class="callout blue">
+    <strong>Why the tags?</strong> When a message mixes instructions, background and pasted material, XML-style tags such as <code>&lt;context&gt;</code> or <code>&lt;document&gt;</code> tell Claude which part is which. The tag names don't need to be special; they need to be consistent and descriptive. For a short, single-purpose request, tags add nothing.
+  </div>
+
+  <h2 class="sh">Words that still matter, and words that don't</h2>
+  <h3 class="sub">Still matter</h3>
+  <ul class="bl">
+    <li><strong>Ask for the action you want.</strong> Current models follow instructions precisely. "Can you suggest some changes?" gets you suggestions. "Change this to…" or "Rewrite this so…" gets you the change.</li>
+    <li><strong>"Be ambitious" when you want the fuller version.</strong> Claude reads requests conservatively and builds the smallest thing that satisfies them, because it can't see how much you were hoping for. Anthropic's example: "build the settings page from the mockup. be ambitious: empty and error states, the save flow wired up, keyboard navigation, not just the layout." That's information about scope, which only you have.</li>
+    <li><strong>Say what to do, not only what to avoid.</strong> "Write in flowing paragraphs" works better than "no bullet points". And the style of your request rubs off: a message full of headings and bullets tends to get one back.</li>
+    <li><strong>A role that carries information.</strong> "Review this as a sceptical finance director who has to approve the budget" tells Claude what to look for. "You are a world-class expert" tells it nothing.</li>
+  </ul>
+  <h3 class="sub">No longer needed</h3>
+  <ul class="bl">
+    <li>"Think step by step", "think harder", "be thorough": effort controls this now (Module 1).</li>
+    <li>CAPITALS and "CRITICAL": current models over-apply shouted rules.</li>
+    <li>"Don't be lazy", "keep going": they cause over-work. Give a check instead (Module 4).</li>
+    <li>Long descriptions of things Claude can open and read for itself.</li>
+  </ul>
+
+  <div class="callout mango">
+    <strong>Which language?</strong> Write in whatever language you think most clearly in. Claude works well across many languages, and a clear request in Bahasa Indonesia beats a muddled one in English. If you want the result in a different language from your request, say so explicitly.
+  </div>
+
+  <h2 class="sh">When you don't know yet: let Claude interview you</h2>
+  <p>Sometimes you can't write part 4 of the brief because you haven't worked out what "done" is. Don't force it. Anthropic's Claude Code guide recommends flipping the roles: ask Claude to interview you until it could write the specification, then write it down. Claude comes back with questions about the parts you haven't pinned down, often as multiple-choice options, and keeps going until the answers add up.</p>
+
+  <div class="tpl">
+    <div class="tpl-head"><span class="tpl-name">Template · Interview me first</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>I want to [rough goal] but I haven't thought it through yet.
+Interview me one question at a time, with options where that helps, until you could write a one-page brief: goal and why, audience, constraints, what done looks like, and what's out of scope.
+Don't start the work. When you have enough, write the brief to [BRIEF.md / a doc] and stop so I can check it.</pre>
+  </div>
+
+  <p>Then start a fresh conversation or session to do the work from that brief. The doing starts with a clean context and a written definition of done, and the brief becomes the thing you check the result against in Module 4.</p>
+
+  <div class="callout green">
+    <strong>Set your default once.</strong> Do you want Claude to act on a reasonable reading of your request, or to check with you first? Neither is wrong, and Anthropic publishes ready-made instructions for both. Pick one and put it in your account instructions (the Module 2 template uses a middle path: ask one short question only when the answer would change the work).
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">✍️ Quick check: Module 3</div>
+    <p class="quiz-note">Answer all three. Two or more correct completes the module.</p>
+
+    <div class="q-card">
+      <p class="q-text">You type "Can you suggest improvements to my introduction?" and get a list of tips, but you wanted the paragraph rewritten. What's the best next message?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Claude did what you literally asked. Repeating the same wording with more emphasis invites the same result.">"Please, I REALLY need better suggestions."</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Current models follow the request precisely: ask for the action and give the goal and constraints, and you get the rewrite.">"Rewrite the introduction so a non-specialist gets the main point in two sentences. Keep it under 90 words and keep the citation."</button>
+        <button class="q-option" data-correct="false" data-explanation="Effort changes thoroughness, not whether Claude suggests or acts. The fix is in what you ask for.">Raise the effort to max and send the same message again</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">You want Claude to compare three long reports and recommend one. How should you lay out the message?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="Anthropic's tests found the opposite works better: long material first, the question at the end.">Ask the question first, then paste the three reports underneath</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Material first and the question last improved quality by up to 30% in Anthropic's tests, and labelled documents plus quoting first keeps the answer anchored to the text.">Reports first, each labelled with its source, then ask Claude to quote the relevant passages and answer from them, with the question at the end</button>
+        <button class="q-option" data-correct="false" data-explanation="That's the old token-saving instinct. Splitting the reports across messages makes the comparison harder, and with a 1M-token window, space isn't the problem.">Send each report in a separate message over three days to save space</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="q-card">
+      <p class="q-text">You asked for a landing page and got a clean but bare layout: no form handling, no mobile menu, no empty states. What's the most effective follow-up?</p>
+      <div class="q-options">
+        <button class="q-option" data-correct="false" data-explanation="A flattering role carries no information about what you wanted included.">"You are a world-class designer. Try again."</button>
+        <button class="q-option" data-correct="false" data-explanation="Thinking harder doesn't tell Claude what scope you had in mind. The gap was information, not effort.">"Think harder this time."</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Claude reads requests conservatively. Saying 'be ambitious' and naming the parts you expect gives it scope, which only you know.">"Be ambitious: wire up the form, add the mobile menu, and handle empty and error states, not just the layout."</button>
+      </div>
+      <div class="q-feedback"></div>
+    </div>
+
+    <div class="quiz-status"><span class="quiz-score">0 / 3 answered</span><button class="retry-btn" type="button">Try again</button></div>
+  </div>
+
+  <h2 class="sh">Practise this week</h2>
+  <div class="checklist">
+    <div class="check-item"><input type="checkbox" id="c3-1"><label for="c3-1">Take your last disappointing result and rewrite the request with the five-part brief. Compare the two answers.</label></div>
+    <div class="check-item"><input type="checkbox" id="c3-2"><label for="c3-2">Save the brief template somewhere you can paste it in two seconds (a text snippet, a note, a keyboard shortcut).</label></div>
+    <div class="check-item"><input type="checkbox" id="c3-3"><label for="c3-3">For one output you produce often, collect three good past examples and keep them in a project.</label></div>
+    <div class="check-item"><input type="checkbox" id="c3-4"><label for="c3-4">Next time you're unsure what you want, start with "Interview me first" instead of a half-formed request.</label></div>
+  </div>
+
   <div class="foot-nav">
     <button class="nav-btn" data-nav="prev">← Previous</button>
-    <button class="done-btn locked" data-module="3" disabled>Coming soon</button>
+    <button class="done-btn" data-module="3">Mark module complete →</button>
     <button class="nav-btn" data-nav="next">Next →</button>
   </div>
 </section>
