@@ -203,7 +203,7 @@
 <aside>
   <div class="sidebar-content">
     <h1>Claude Without Burning Tokens</h1>
-    <div class="subtitle">A practical deep-dive course for Ris · v1 · 2026-04-18</div>
+    <div class="subtitle">A practical deep-dive course for Ris · v1 · 2026-04-18 · facts updated 2026-10-27</div>
 
     <div class="progress-wrap">
       <div class="progress-label">Progress</div>
@@ -220,7 +220,7 @@
         <li><a href="#m5" data-mod="5"><span class="num">05</span><span>Files over chat: the biggest lever</span><span class="check">✓</span></a></li>
         <li><a href="#m6" data-mod="6"><span class="num">06</span><span>Tools, MCPs, and agents (Cowork + Code)</span><span class="check">✓</span></a></li>
         <li><a href="#m7" data-mod="7"><span class="num">07</span><span>Skills, memory, and caching</span><span class="check">✓</span></a></li>
-        <li><a href="#m8" data-mod="8"><span class="num">08</span><span>Model selection &amp; extended thinking</span><span class="check">✓</span></a></li>
+        <li><a href="#m8" data-mod="8"><span class="num">08</span><span>Model selection &amp; effort</span><span class="check">✓</span></a></li>
         <li><a href="#m9" data-mod="9"><span class="num">09</span><span>Anti-patterns: how tokens actually get burned</span><span class="check">✓</span></a></li>
         <li><a href="#m10" data-mod="10"><span class="num">10</span><span>Your personal playbook</span><span class="check">✓</span></a></li>
       </ol>
@@ -238,6 +238,11 @@
 <section class="module" id="m1" data-mod="1">
   <h2><span class="module-num">Module 01</span>What a token actually is</h2>
   <p class="lead">Before you can save tokens, you need to see what they are. This is the single concept that reframes everything else.</p>
+
+  <div class="callout info">
+    <div class="callout-label">Updated October 2026</div>
+    This course was written in April 2026. A few facts have changed since: model names, the size of the context window, and how Claude's thinking is controlled. Those are corrected below and marked "Updated October 2026". The token-saving habits still hold. For the bigger picture of working with Claude now (setup, briefing, checking and delegating), see the newer course <a href="working-with-claude-v1.html">Working Well With Claude</a>.
+  </div>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
@@ -301,7 +306,7 @@
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    Every Claude session has a maximum context (currently 200K tokens for most Claude models, and larger for some). Once you fill it, old turns fall out, performance degrades, and every new message pushes you closer to a wall. The real cost of a bloated session isn't just money – it's that Claude gets worse the fuller it gets.
+    Every Claude session has a maximum context. (Updated October 2026: in April this was 200K tokens for most models; every current model now has a 1M-token window, and long sessions are compacted automatically, so running out is rare.) A fuller context still costs more per message and dilutes Claude's attention. The real cost of a bloated session isn't just money – it's that Claude gets worse the fuller it gets.
   </div>
 
   <h3>What lives in the window?</h3>
@@ -347,6 +352,11 @@
   <div class="callout warn">
     <div class="callout-label">Rule of thumb</div>
     If a conversation has gone past ~30 turns or ~80K tokens, you're paying 3–10× more per message than you were at the start, and the answers are getting worse. That's the moment to start a fresh session with a summary file.
+  </div>
+
+  <div class="callout info">
+    <div class="callout-label">Updated October 2026</div>
+    The direction of this rule still holds, but the numbers are softer now. Repeated history is discounted by the prompt cache while it's warm (about an hour on a subscription, five minutes on an API key), and current models handle long context better. The reason to start fresh between unrelated tasks is now mainly focus and cost, not running out of room.
   </div>
 
   <h3>Seeing your usage</h3>
@@ -597,7 +607,7 @@ Max 400 words. No preamble.</code></pre>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    Every loaded tool schema costs context. Having 80 MCP tools loaded "just in case" can eat 20K+ tokens of every turn. Connect only what you need, per project. For heavy/sprawling work, spawn subagents so the main conversation doesn't eat all the raw search/exploration output.
+    Every loaded tool schema costs context. Having 80 MCP tools loaded "just in case" can eat 20K+ tokens of every turn. (Updated October 2026: Claude Code now loads most tool details only when they are needed, so the per-turn cost is lower, but connected servers still add their names and instructions.) Connect only what you need, per project. For heavy/sprawling work, spawn subagents so the main conversation doesn't eat all the raw search/exploration output.
   </div>
 
   <h3>Tool schemas live in your context</h3>
@@ -721,42 +731,44 @@ Max 400 words. No preamble.</code></pre>
   </table>
 
   <button class="done-btn" onclick="markDone(7, this)"><span class="dot"></span><span>Mark module complete</span></button>
-  <div class="foot-nav"><button onclick="goTo(6)">← Previous</button><button onclick="goTo(8)">Next: Model &amp; thinking →</button></div>
+  <div class="foot-nav"><button onclick="goTo(6)">← Previous</button><button onclick="goTo(8)">Next: Model &amp; effort →</button></div>
 </section>
 
 <!-- ========================= MODULE 8 ========================= -->
 <section class="module" id="m8" data-mod="8">
-  <h2><span class="module-num">Module 08</span>Model selection &amp; extended thinking</h2>
+  <h2><span class="module-num">Module 08</span>Model selection &amp; effort</h2>
   <p class="lead">Not every task needs the biggest, smartest, most expensive model. Picking the right one is one of the easiest cost cuts.</p>
 
   <div class="tldr">
     <div class="tldr-label">TL;DR</div>
-    Opus is for hard reasoning and high-stakes writing. Sonnet is the workhorse for most tasks. Haiku is for fast/cheap work (triage, reformatting, classification). Extended thinking (more tokens spent on internal reasoning) costs more – use it for hard problems, not for "rewrite this email".
+    Opus is for hard reasoning and high-stakes writing. Sonnet is the workhorse for most tasks. Haiku is for fast/cheap work (triage, reformatting, classification). Higher effort (more thinking and self-checking) costs more – use it for hard problems, not for "rewrite this email".
   </div>
 
   <h3>The current lineup</h3>
-  <p>As of mid-2026, the Claude family you'll interact with includes Opus 4.6, Sonnet 4.6, and Haiku 4.5. Naming can change, so when in doubt check Anthropic's docs. What doesn't change is the shape of the trade-off:</p>
+  <p><strong>Updated October 2026:</strong> the current models are Fable 5.1 (the hardest problems), Opus 5.5 (Anthropic's suggested starting point for most work), Sonnet 5.5 and Haiku 5.5. (In April this page listed Opus 4.6, Sonnet 4.6 and Haiku 4.5.) Naming will change again, so when in doubt check Anthropic's docs. What doesn't change is the shape of the trade-off:</p>
 
   <table>
     <tr><th>Model</th><th>Best for</th><th>Relative cost</th><th>Your use case</th></tr>
-    <tr><td>Opus</td><td>Hard reasoning, nuanced writing, long-horizon coding, research synthesis</td><td>Highest</td><td>Thesis chapters; methodology design; risk analysis</td></tr>
+    <tr><td>Fable</td><td>The hardest reasoning and very long agent runs; slower</td><td>Highest</td><td>Rarely needed: try Opus at a higher effort first</td></tr>
+    <tr><td>Opus</td><td>Hard reasoning, nuanced writing, long-horizon coding, research synthesis</td><td>High</td><td>Thesis chapters; methodology design; risk analysis</td></tr>
     <tr><td>Sonnet</td><td>General work, coding, writing, analysis</td><td>Mid</td><td>Most of your daily work</td></tr>
     <tr><td>Haiku</td><td>Classification, extraction, reformatting, quick lookups</td><td>Lowest</td><td>"Turn these notes into bullet points"; tagging CSV rows; short email drafts</td></tr>
   </table>
 
-  <h3>Extended thinking</h3>
-  <p>Newer Claude models can "think" before answering – they produce internal reasoning tokens before the final answer. This genuinely helps on hard problems (complex math, multi-step debugging, legal analysis) but it adds tokens. On easy tasks, it's pure waste.</p>
-  <p>Rule of thumb: if the question has a clear right answer a human expert could give in under 30 seconds, you don't need extended thinking. If it needs whiteboarding, you do.</p>
+  <h3>Thinking and effort</h3>
+  <p>Claude models "think" before answering – they produce internal reasoning tokens before the final answer. This genuinely helps on hard problems (complex math, multi-step debugging, legal analysis) but it adds tokens. On easy tasks, it's pure waste.</p>
+  <p><strong>Updated October 2026:</strong> the main control is now <em>effort</em>, not a thinking switch. Current models use adaptive thinking: Claude decides how much to think, steered by the effort setting (low, medium, high, max) in the model menu, or <code>/effort</code> in Claude Code. On Opus 5.5 and Fable 5.1 thinking is always on. Phrases like "think hard" in a prompt don't raise the effort.</p>
+  <p>Rule of thumb: if the question has a clear right answer a human expert could give in under 30 seconds, keep effort at the default or lower. If it needs whiteboarding, raise it.</p>
 
   <h3>Practical routing for your work</h3>
   <table>
     <tr><th>Task</th><th>Pick</th><th>Why</th></tr>
     <tr><td>Rewriting an email</td><td>Sonnet or Haiku</td><td>Mechanical</td></tr>
-    <tr><td>Designing a research methodology</td><td>Opus, thinking on</td><td>Multi-factor, needs nuance</td></tr>
+    <tr><td>Designing a research methodology</td><td>Opus, higher effort</td><td>Multi-factor, needs nuance</td></tr>
     <tr><td>Formatting a CV to a job ad</td><td>Sonnet</td><td>Good balance</td></tr>
     <tr><td>Classifying 59 fish into colour bins</td><td>Haiku</td><td>Repetitive, structured</td></tr>
     <tr><td>Literature review synthesis across 20 papers</td><td>Opus</td><td>Hard integration task</td></tr>
-    <tr><td>Fixing a Vercel deployment bug</td><td>Sonnet, thinking on</td><td>Debugging benefits from thinking</td></tr>
+    <tr><td>Fixing a Vercel deployment bug</td><td>Sonnet, higher effort</td><td>Debugging benefits from thinking</td></tr>
     <tr><td>Turning notes into an HTML one-pager</td><td>Sonnet</td><td>Standard craft task</td></tr>
   </table>
 
@@ -798,8 +810,8 @@ Max 400 words. No preamble.</code></pre>
   <h3>7. Using Opus for email drafts</h3>
   <p>Premium model, trivial task. Fix: Sonnet or Haiku for mechanical work.</p>
 
-  <h3>8. Extended thinking for easy asks</h3>
-  <p>Thinking on, question is "what's a synonym for 'utilise'". Waste. Fix: reserve thinking for hard problems.</p>
+  <h3>8. Maximum effort for easy asks</h3>
+  <p>Effort on max, question is "what's a synonym for 'utilise'". Waste. Fix: keep effort at the default or lower for easy asks, and raise it for hard problems.</p>
 
   <h3>9. The unstructured dump</h3>
   <p>"Here's everything I've done this semester, what should I do next?" You've just sent 40K tokens of context to ask a 50-token question. Fix: summarise first (even in your own head), then ask.</p>
