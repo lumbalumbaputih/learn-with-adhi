@@ -197,10 +197,6 @@ table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
 .done-btn.locked:disabled{background:#E4DAC3;color:var(--muted)}
 .done-btn.completed::before{content:'✓ '}
 
-/* ── PLACEHOLDER (module still being written) ── */
-.pending-box{border:2px dashed var(--line-s);border-radius:14px;padding:28px;background:#fff;max-width:680px}
-.pending-box p{margin:0;color:var(--muted)}
-
 /* ── COMPLETION BANNER ── */
 #completion-banner{display:none;background:linear-gradient(135deg,var(--acc),#A78BFA);color:#fff;padding:28px 32px;border-radius:16px;margin:40px 0;text-align:center}
 #completion-banner h2{font-family:var(--fd);font-size:28px;font-weight:800;margin-bottom:8px}
@@ -428,7 +424,7 @@ table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
     <table class="pm-table">
       <thead><tr><th>Old advice</th><th>What's true now</th><th>Do this instead</th></tr></thead>
       <tbody>
-        <tr><td>"The context window (200K) is your main limit. Manage it aggressively."</td><td>Current models hold 1M tokens and compact long sessions automatically. Running out is rare.</td><td>Still start fresh between unrelated tasks. A focused conversation is cheaper and gives sharper answers.</td></tr>
+        <tr><td>"The context window (200K) is your main limit. Manage it aggressively."</td><td>Current models hold 1M tokens, and Claude Code compacts long sessions automatically. Running out is rare.</td><td>Still start fresh between unrelated tasks. A focused conversation is cheaper and gives sharper answers.</td></tr>
         <tr><td>"Write IMPORTANT or ALL CAPS when Claude ignores a rule."</td><td>Current models follow plainly worded instructions. Shouting makes them over-apply the rule.</td><td>Shorten the instruction file, or turn a must-never rule into a real setting (Module 2).</td></tr>
         <tr><td>"Say 'think step by step' or 'think harder'."</td><td>Effort controls thinking depth. These phrases are ordinary text.</td><td>Raise the effort, or use <code>ultrathink</code> for one turn in Claude Code.</td></tr>
         <tr><td>"Tell it to keep going and not be lazy."</td><td>Current models carry an agreed task through. Lines like this cause over-work.</td><td>Give it a check it has to pass (Module 4).</td></tr>
@@ -467,8 +463,8 @@ table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
     <div class="q-card">
       <p class="q-text">You're in Claude Code chasing a bug in code you didn't write, and Claude keeps missing an edge case. What's the most effective change?</p>
       <div class="q-options">
-        <button class="q-option" data-correct="false" data-explanation="Shouting doesn't raise how hard Claude thinks. Current models tend to over-apply capitalised rules, and 'think harder' is ordinary text that only nudges within the effort setting.">Add "THINK VERY HARD ABOUT EDGE CASES" in capitals to your message</button>
         <button class="q-option" data-correct="true" data-explanation="Right. Effort is the control for thoroughness: /effort high or xhigh makes Claude check more cases and verify more before answering. For a single tricky turn, ultrathink does the same without changing the setting.">Raise the effort with /effort high, or put ultrathink in that one message</button>
+        <button class="q-option" data-correct="false" data-explanation="Shouting doesn't raise how hard Claude thinks. Current models tend to over-apply capitalised rules, and 'think harder' is ordinary text that only nudges within the effort setting.">Add "THINK VERY HARD ABOUT EDGE CASES" in capitals to your message</button>
         <button class="q-option" data-correct="false" data-explanation="A subagent is usually the same (or a smaller) model on the same task. It brings parallel work or fresh eyes, not a smarter answer.">Hand the bug to a subagent so a smarter model looks at it</button>
       </div>
       <div class="q-feedback"></div>
@@ -477,8 +473,8 @@ table.pm-table tr:nth-child(even) td{background:rgba(26,22,20,.02)}
     <div class="q-card">
       <p class="q-text">A colleague says: "Keep every chat short, because Claude can only hold 200K tokens." What's the accurate reply in late 2026?</p>
       <div class="q-options">
-        <button class="q-option" data-correct="false" data-explanation="The reason is out of date. Current models have a 1M-token window and compact automatically, so running out is rare.">"Agreed, the window is the main limit, so trim aggressively."</button>
-        <button class="q-option" data-correct="true" data-explanation="Right. The window is no longer the bottleneck, but every message still re-sends the conversation. Clearing between unrelated tasks keeps answers focused and spends less of your allowance.">"The window is 1M now and long chats compact themselves, but still start fresh between unrelated tasks, because focused context is cheaper and sharper."</button>
+        <button class="q-option" data-correct="false" data-explanation="The reason is out of date. Current models have a 1M-token window, and Claude Code compacts long sessions automatically, so running out is rare.">"Agreed, the window is the main limit, so trim aggressively."</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. The window is no longer the bottleneck, but every message still re-sends the conversation. Clearing between unrelated tasks keeps answers focused and spends less of your allowance.">"The window is 1M now, so running out is rare, but still start fresh between unrelated tasks, because focused context is cheaper and sharper."</button>
         <button class="q-option" data-correct="false" data-explanation="Length still costs something. Each new message re-reads the whole conversation, so unrelated history makes every turn slower, pricier and less focused.">"Length doesn't matter at all any more. One endless chat is fine."</button>
       </div>
       <div class="q-feedback"></div>
@@ -719,8 +715,8 @@ Boundaries
     <div class="q-card">
       <p class="q-text">Your CLAUDE.md says "NEVER read the .env file" in capitals, and once in a while Claude still opens it. What's the right fix?</p>
       <div class="q-options">
-        <button class="q-option" data-correct="false" data-explanation="More emphasis doesn't turn a preference into a guarantee, and current models tend to over-apply shouted rules elsewhere.">Add more emphasis: bold, capitals and "THIS IS CRITICAL"</button>
         <button class="q-option" data-correct="true" data-explanation="Right. A deny rule such as Read(./.env) in .claude/settings.json is enforced by the software in every permission mode. For a must-never rule, that's the tool.">Add a deny rule for the file in .claude/settings.json</button>
+        <button class="q-option" data-correct="false" data-explanation="More emphasis doesn't turn a preference into a guarantee, and current models tend to over-apply shouted rules elsewhere.">Add more emphasis: bold, capitals and "THIS IS CRITICAL"</button>
         <button class="q-option" data-correct="false" data-explanation="Moving the sentence changes when it loads, not who enforces it. A skill is still words that Claude weighs.">Move the sentence into a skill so it gets more attention</button>
       </div>
       <div class="q-feedback"></div>
@@ -954,8 +950,8 @@ Don't start the work. When you have enough, write the brief to [BRIEF.md / a doc
       <p class="q-text">You want Claude to compare three long reports and recommend one. How should you lay out the message?</p>
       <div class="q-options">
         <button class="q-option" data-correct="false" data-explanation="Anthropic's tests found the opposite works better: long material first, the question at the end.">Ask the question first, then paste the three reports underneath</button>
-        <button class="q-option" data-correct="true" data-explanation="Right. Material first and the question last improved quality by up to 30% in Anthropic's tests, and labelled documents plus quoting first keeps the answer anchored to the text.">Reports first, each labelled with its source, then ask Claude to quote the relevant passages and answer from them, with the question at the end</button>
         <button class="q-option" data-correct="false" data-explanation="That's the old token-saving instinct. Splitting the reports across messages makes the comparison harder, and with a 1M-token window, space isn't the problem.">Send each report in a separate message over three days to save space</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Material first and the question last improved quality by up to 30% in Anthropic's tests, and labelled documents plus quoting first keeps the answer anchored to the text.">Reports first, each labelled with its source, then ask Claude to quote the relevant passages and answer from them, with the question at the end</button>
       </div>
       <div class="q-feedback"></div>
     </div>
@@ -1139,8 +1135,8 @@ Under 300 words. No preamble. Save it as [HANDOVER.md / a doc in this project].<
     <div class="q-card">
       <p class="q-text">After a long task Claude reports: "Done! All tests pass." You weren't watching. What should you do?</p>
       <div class="q-options">
-        <button class="q-option" data-correct="false" data-explanation="A summary isn't evidence. Claude can be wrong about its own work, especially on long runs.">Trust it. Current models are reliable enough</button>
         <button class="q-option" data-correct="true" data-explanation="Right. Ask for the command it ran and the output (or look at it in the session). Reading the evidence is faster than redoing the check, and it's the only proof you have for work you didn't watch.">Ask for the exact command it ran and its output, and read them</button>
+        <button class="q-option" data-correct="false" data-explanation="A summary isn't evidence. Claude can be wrong about its own work, especially on long runs.">Trust it. Current models are reliable enough</button>
         <button class="q-option" data-correct="false" data-explanation="Redoing everything yourself throws away the benefit of delegating. Reading the evidence is usually enough; spot-check when the stakes are high.">Ignore the claim and redo every check yourself by hand</button>
       </div>
       <div class="q-feedback"></div>
@@ -1342,8 +1338,8 @@ Deliver: [a draft PR / a doc / a summary]. Don't [merge, send, publish, delete] 
     <div class="q-card">
       <p class="q-text">Auto mode keeps stopping to ask about the same action that is routine and safe in your setup. What's the best fix?</p>
       <div class="q-options">
-        <button class="q-option" data-correct="false" data-explanation="Skip checks nothing at all. Anthropic says to use it only when you completely trust everything involved. Fixing one false alarm doesn't justify removing every check.">Switch to Skip so it never asks about anything</button>
         <button class="q-option" data-correct="true" data-explanation="Right. Allow that specific action (in Claude Code, add it to the auto-mode allow list or describe your trusted setup). The safety check stays on for everything else.">Allow that specific action, so the safety check stays on for everything else</button>
+        <button class="q-option" data-correct="false" data-explanation="Skip checks nothing at all. Anthropic says to use it only when you completely trust everything involved. Fixing one false alarm doesn't justify removing every check.">Switch to Skip so it never asks about anything</button>
         <button class="q-option" data-correct="false" data-explanation="Approving without reading defeats the purpose of being asked. It's exactly the habit Anthropic warns turns Manual mode into rubber-stamping.">Keep clicking approve without reading. It's faster than configuring</button>
       </div>
       <div class="q-feedback"></div>
@@ -1749,8 +1745,8 @@ Ask me about: [decisions you want to make]. Otherwise take the recommended optio
       <p class="q-text">This site's CLAUDE.md is about 35,000 tokens, and the context window is 1M. What's the real cost of leaving it that size?</p>
       <div class="q-options">
         <button class="q-option" data-correct="false" data-explanation="3.5% of a 1M window is not a capacity problem. The cost is elsewhere.">It will fill the context window and sessions will fail</button>
-        <button class="q-option" data-correct="true" data-explanation="Right. Space isn't the issue. Every line is read on every turn of every task, so finished history dilutes the rules that matter and costs tokens each time. Anthropic: longer files 'reduce adherence'.">Attention and cost: old history sits beside the important rules on every turn, which lowers how reliably those rules are followed</button>
         <button class="q-option" data-correct="false" data-explanation="The size matters even with a large window: adherence drops as instruction files grow, and the whole file is paid for on every session.">Nothing. With a 1M window, size no longer matters</button>
+        <button class="q-option" data-correct="true" data-explanation="Right. Space isn't the issue. Every line is read on every turn of every task, so finished history dilutes the rules that matter and costs tokens each time. Anthropic: longer files 'reduce adherence'.">Attention and cost: old history sits beside the important rules on every turn, which lowers how reliably those rules are followed</button>
       </div>
       <div class="q-feedback"></div>
     </div>
@@ -1992,18 +1988,17 @@ function markModuleDone(m) {
 }
 
 function hasQuiz(m) { return !!document.querySelector('#module-' + m + ' .quiz-section'); }
-function isPending(m) { return document.getElementById('module-' + m).dataset.pending === 'true'; }
 
 function renderProgress() {
   const p = getProgress();
   let count = 0;
   for (let m = 1; m <= TOTAL; m++) {
-    const done = !!p[m] && !isPending(m);
+    const done = !!p[m];
     if (done) count++;
     const item = document.querySelector('.nav-item[data-module="' + m + '"]');
     item.classList.toggle('done', done);
     const btn = document.querySelector('#module-' + m + ' .done-btn');
-    if (!btn || isPending(m)) continue;
+    if (!btn) continue;
     if (done) {
       btn.textContent = 'Completed'; btn.disabled = true; btn.classList.add('completed'); btn.classList.remove('locked');
     } else if (hasQuiz(m)) {
@@ -2144,7 +2139,7 @@ function init() {
   document.querySelectorAll('.done-btn').forEach(btn => {
     btn.addEventListener('click', function () {
       const m = parseInt(this.dataset.module);
-      if (hasQuiz(m) || isPending(m)) return;
+      if (hasQuiz(m)) return;
       markModuleDone(m);
       if (m < TOTAL) setTimeout(() => goto(m + 1), 600);
     });
