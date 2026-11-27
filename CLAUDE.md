@@ -11,14 +11,14 @@ This project is built in **small, fully-shippable steps**. The #1 rule: **never 
 
 **The loop for EVERY change (no exceptions):**
 1. **One small step at a time.** A "step" = one self-contained, working increment (e.g. *one* course gets the boss engine; *one* Track-D feature). Don't batch unrelated work into a giant commit.
-2. **Verify it works** before moving on: grep your change, sanity-check the JS, confirm the disguise rules + wiring are intact (open it mentally / check the obvious failure modes).
+2. **Verify it works** before moving on: run `python3 scripts/check-kids-courses.py` and get `OK: all checks passed.` It checks the disguise rule (no grade level or "coding"/"programming" word in text a child sees, incl. JS-built text) and the kids' wiring (every progress key in every place below, every kids' file linked + precached, every count pill right), and prints file:line for each problem. A Stop hook (`.claude/settings.json`) runs it at the end of every Claude turn and blocks while it fails, so ask Adhi mid-step with the AskUserQuestion tool, not a plain-text question; the PR check (`.github/workflows/kids-courses-check.yml`) runs it on every pull request. The script can't judge behaviour or tone: still play the change in a headless browser and check the obvious failure modes.
 3. **Update the docs in the SAME step** (non-negotiable – this is why the doc went stale before):
    - Move shipped items into **"What's Already Built"** and update their **Status** column.
    - Append a dated entry to **`PROGRESS.md`** (what changed, files touched, what's next).
 4. **Commit + push** the step. Small, descriptive message. Every commit must leave the tree in a *working* state so a dropped session never loses or half-bakes anything.
 5. Only then start the next step.
 
-**Definition of Done** for any course/feature = it works **+** disguise intact **+** wired in all required places (see the wiring checklist below) **+** docs updated **+** committed & pushed. "Done" is never just "code written."
+**Definition of Done** for any course/feature = it works **+** disguise intact **+** wired in all required places (see the wiring checklist below; both proven by `scripts/check-kids-courses.py`) **+** docs updated **+** committed & pushed. "Done" is never just "code written."
 
 **Sources of truth:** this CLAUDE.md "What's Already Built" + Status = the current high-level state. `PROGRESS.md` = the chronological build log (newest on top). Keep BOTH current, every step.
 
@@ -732,7 +732,7 @@ Rules:
 - Always keep the "disguise" intact – no grade numbers visible to Rayyan in the adventure courses
 - The math and coding ladder should feel like ONE continuous adventure world, not separate subjects
 - Raya is younger (PAUD) – her content is visual-only, minimal reading, tap/drag interactions
-- **Wiring a new Rayyan (kids) course:** update the `ADVENTURES`/`GAMES` array in `rayyan.html`, add its key to `sumStars([...])` in `kids.html` AND to `PROGRESS_KEYS_BY_TYPE` in `assets/js/auth.js` (for cloud sync) AND to `COURSE_NAMES` in `dashboard.html` (for the parent view), add the course file to `PRECACHE` in `sw.js` (offline layer, since plan-v4 B1), and bump the count pills — incl. the kids-strip counts on `index.html` (since plan-v4 A1). (For *adult* courses instead, update `assets/courses.json` only — the index hub derives chips/counts/featured from the manifest.)
+- **Wiring a new Rayyan (kids) course:** update the `ADVENTURES`/`GAMES` array in `rayyan.html`, add its key to `sumStars([...])` in `kids.html` AND to `PROGRESS_KEYS_BY_TYPE` in `assets/js/auth.js` (for cloud sync) AND to `COURSE_NAMES` in `dashboard.html` (for the parent view), add the course file to `PRECACHE` in `sw.js` (offline layer, since plan-v4 B1), and bump the count pills — incl. the kids-strip counts on `index.html` (since plan-v4 A1). `scripts/check-kids-courses.py` enforces this list: if you add a wiring place, a count pill or a family/front-door game (its `FAMILY_GAMES` list), update the script in the same step. (For *adult* courses instead, update `assets/courses.json` only — the index hub derives chips/counts/featured from the manifest.)
 - **2026-06-04 audit:** all 12 Rayyan adventures (incl. the Track C Bridge) + 2 Raya courses are shipped & wired (this doc previously under-counted them). Math answers spot-checked correct. Fixed disguise leaks: the Gr2–5 `<title>` and bug-report `courseName` no longer show "Kelas N" (theme names only). Biggest remaining gaps: the Track D retention layer, and the faked "real code"/"real game" payoffs in coding v3/v5.
 - **Dead code:** ~~`assets/js/sync.js`~~ **deleted 2026-06-10** (plan-v2 R4) — it duplicated `assets/js/auth.js` (the live per-kid Firestore sync) and was never initialized; its lone `<script>` tag in `rayyan.html` was removed with it.
 - **Tutor name:** ✅ unified to **"Kapi"** across all math courses (Gr2–4 were "Kai"/"Nova" → now Kapi; Gr5–7 already Kapi; Gr7 keeps the "Detektif Kapi" themed variant). The internal CSS classes/ids (`kai-name`, `nova-msg`, etc.) were left as-is (not visible to Rayyan).
