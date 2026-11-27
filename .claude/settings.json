@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/scripts/check-kids-courses.py\" --quiet 1>&2 || exit 2"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+# Runs scripts/check-kids-courses.py on every pull request: the kids'
+# disguise rule (no grade levels, no "coding"/"programming" in text a child
+# sees) and the kids' wiring/count checks from CLAUDE.md. Fails the PR check
+# on any problem; the log lists each one as file:line.
+name: Kids' course check
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Disguise + wiring check
+        run: python3 scripts/check-kids-courses.py
