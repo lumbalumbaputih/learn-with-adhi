@@ -364,7 +364,7 @@
     <div class="hero-stats">
       <div class="stat-pill">⭐ <span id="totalStars">0</span> bintang terkumpul</div>
       <div class="stat-pill" id="streakPill">🔥 <span id="streakCount">0</span> hari beruntun</div>
-      <div class="stat-pill">🗺️ <span id="doneCount">0</span> / 14 petualangan selesai</div>
+      <div class="stat-pill">🗺️ <span id="doneCount">0</span> / 15 petualangan selesai</div>
       <div class="sync-pill" id="syncPill" title="Status sinkronisasi">
         <span id="syncIcon">☁️</span> <span id="syncLabel">Sinkron</span>
       </div>
@@ -409,7 +409,7 @@
   <section class="section">
     <div class="section-hdr">
       <h2 class="section-title">🎮 Ayo Main!</h2>
-      <div class="section-sub">2 game tersedia</div>
+      <div class="section-sub">3 game tersedia</div>
     </div>
     <div class="grid-2" id="gameGrid"></div>
   </section>
@@ -576,9 +576,24 @@
       progressKey: 'rayyanBridge',
       totalChapters: 6,
     },
+    {
+      emoji: '🌻',
+      title: 'Kebun Ajaib',
+      blurb: 'Rawat kebunmu sendiri! Tanam bibit, isi tangki air, rangkai bunga, bangun pagar — lalu kalahkan Awan Badai!',
+      href: 'courses/games/kebun-ajaib-v1.html?p=rayyan',
+      progressKey: 'rayyanKebun',
+      totalChapters: 6,
+    },
   ];
 
   const GAMES = [
+    {
+      emoji: '🌻',
+      title: 'Kebun Ajaib',
+      thumbBg: '#E3F5D6',
+      blurb: 'Kebun ajaib milikmu! Selesaikan misi kebun dan kalahkan Awan Badai. Bintangnya masuk ke petualanganmu.',
+      href: 'courses/games/kebun-ajaib-v1.html?p=rayyan',
+    },
     {
       emoji: '🚂',
       title: 'Kereta Rayyan: Lari Cepat!',
@@ -618,7 +633,7 @@
     rayyanMath:'#FFE0D6', rayyanMath3:'#E3F5EB', rayyanMath4:'#E6E7FA', rayyanMath5:'#D6F0F7',
     rayyanCoding:'#FCE8C8', rayyanMath6:'#ECECF2', rayyanCoding2:'#E6E7FA', rayyanMath7:'#EFE0F7',
     rayyanCoding3:'#F7E0EC', rayyanCoding4:'#FFF3C4', rayyanCoding5:'#D9F0FF', rayyanBridge:'#DCEFE6',
-    rayyanBalance:'#EFE0F7', rayyanMasinis:'#E8EBF8',
+    rayyanBalance:'#EFE0F7', rayyanMasinis:'#E8EBF8', rayyanKebun:'#E3F5D6',
   };
   function buildMap() {
     // Determine status of each stop
@@ -864,6 +879,9 @@
     'rayyanMath5:int-numbers':'kurang',
     'rayyanMath6:integers':'kurang',         'rayyanMath6:ratio-prop':'pecahan',
     'rayyanMath7:number-ops':'pecahan',      'rayyanMath7:equations':'pola',
+    'rayyanKebun:petak':'kali',              'rayyanKebun:air':'pecahan',
+    'rayyanKebun:tumbuh':'pola',             'rayyanKebun:rangkai':'bagi',
+    'rayyanKebun:pagar':'kali',              'rayyanKebun:badai':'pola',
   };
   function weakTopicWeights() {
     const w = {};
