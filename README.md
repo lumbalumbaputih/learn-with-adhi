@@ -34,6 +34,7 @@ learn-with-adhi/
     ├── ai/
     │   ├── ai-capability-course.html – Bridging the AI Gap (live)
     │   ├── 2026-04-18-claude-efficiency-course-v1.html – Claude Without Burning Tokens (live)
+    │   ├── working-with-claude-v1.html – Working Well With Claude (live)
     │   └── ai-capability-v2.html     – v2 in progress
     ├── carbon-accounting/
     │   ├── carbon-accounting-course.html – Carbon Accounting (live)
