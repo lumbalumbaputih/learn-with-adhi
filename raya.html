@@ -180,7 +180,7 @@
     <div class="hero-stats">
       <div class="stat-pill">⭐ <span id="totalStars">0</span> bintang terkumpul</div>
       <div class="stat-pill">📚 7 kursus tersedia</div>
-      <div class="stat-pill">🎮 3 game seru</div>
+      <div class="stat-pill">🎮 5 game seru</div>
     </div>
   </section>
 
@@ -197,7 +197,7 @@
   <section class="section">
     <div class="section-hdr">
       <h2 class="section-title">🎮 Ayo Main!</h2>
-      <div class="section-sub">3 game</div>
+      <div class="section-sub">5 game</div>
     </div>
     <div class="grid-1" id="gameGrid"></div>
   </section>
@@ -285,6 +285,17 @@
 
   const GAMES = [
     {
+      emoji: '🐥',
+      title: 'Pawai Hewan',
+      thumbBg: '#FFF1C9',
+      blurb: 'Ikut pawai hewan bersama Kiki! Tiru barisannya, tebak siapa selanjutnya, dan perbaiki yang salah tempat. 50 level di 5 tempat, semua pakai suara.',
+      href: 'courses/games/raya-pawai-v1.html',
+      progressKey: 'rayaPawai',
+      totalChapters: 50,
+      unit: 'level',
+      type: 'game',
+    },
+    {
       emoji: '🌷',
       title: 'Kebun Ajaib',
       thumbBg: '#FFE1EE',
@@ -334,11 +345,11 @@
     } catch(e) { return { done: 0, stars: 0 }; }
   }
 
-  function progText(key, total) {
+  function progText(key, total, unit) {
     const { done } = getProgress(key, total);
     if (done === 0) return 'Belum dimulai';
     if (done >= total) return '✅ Selesai!';
-    return `📖 ${done}/${total} bab`;
+    return `📖 ${done}/${total} ${unit || 'bab'}`;
   }
 
   function render() {
@@ -368,7 +379,7 @@
           <div class="card-title">${g.title}</div>
           <div class="card-blurb">${g.blurb}</div>
           <div class="card-foot">
-            ${g.progressKey ? `<div class="card-prog">${progText(g.progressKey, g.totalChapters)}</div>` : ''}
+            ${g.progressKey ? `<div class="card-prog">${progText(g.progressKey, g.totalChapters, g.unit)}</div>` : ''}
             <div class="card-cta">Main →</div>
           </div>
         </div>

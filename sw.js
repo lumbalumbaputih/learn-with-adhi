@@ -12,7 +12,7 @@
    (see the wiring checklist in CLAUDE.md). Bump CACHE_VERSION when
    removing/renaming files so old entries get cleaned up. */
 
-const CACHE_VERSION = 'lwa-v4';
+const CACHE_VERSION = 'lwa-v5';
 
 const PRECACHE = [
   /* hubs */
@@ -53,6 +53,7 @@ const PRECACHE = [
   '/courses/games/raya-find-it-v1.html',
   '/courses/games/raya-akuarium-v1.html',
   '/courses/games/raya-kereta-v1.html',
+  '/courses/games/raya-pawai-v1.html',
   /* shared – Kebun Ajaib (one file, a Raya mode and a Rayyan mode) */
   '/courses/games/kebun-ajaib-v1.html',
   /* vendored Three.js (the Akuarium 3D game depends on these) */
