@@ -33,7 +33,7 @@
     #scene svg.on { opacity: 1; }
 
     /* ---------- HUD ---------- */
-    .hud { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; gap: 8px; padding: calc(8px + var(--st)) 10px 6px; pointer-events: none; }
+    .hud { position: fixed; top: 0; left: 0; right: 0; z-index: 35; /* above the win card, so mute/back still work */ display: flex; align-items: center; gap: 8px; padding: calc(8px + var(--st)) 10px 6px; pointer-events: none; }
     .hud > * { pointer-events: auto; }
     .ib { flex: none; width: 44px; height: 44px; border-radius: 14px; border: 2.5px solid var(--ink); background: #fff; font-size: 20px; line-height: 1; display: grid; place-items: center; box-shadow: 3px 3px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
     .ib:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
@@ -341,6 +341,145 @@
 
 <canvas id="fx"></canvas>
 
+<!-- Every line the game speaks. scripts/pawai-voice-build.py turns these into recorded clips
+     in assets/audio/pawai/; a line whose text changed since it was recorded falls back to the device voice. -->
+<script type="application/json" id="voiceLines">
+{
+"a_kucing": "kucing",
+"a_katak": "katak",
+"a_kelinci": "kelinci",
+"a_monyet": "monyet",
+"a_anakayam": "anak ayam",
+"a_panda": "panda",
+"a_kepiting": "kepiting",
+"a_penguin": "penguin",
+"a_singa": "singa",
+"a_burunghantu": "burung hantu",
+"a_tikus": "tikus",
+"a_sapi": "sapi",
+"a_ayam": "ayam",
+"c_merah": "merah",
+"c_biru": "biru",
+"c_kuning": "kuning",
+"c_ungu": "ungu",
+"s_besar": "besar",
+"s_kecil": "kecil",
+"w_hmm": "hmm",
+"n_1": "satu",
+"n_2": "dua",
+"n_3": "tiga",
+"n_4": "empat",
+"n_5": "lima",
+"k_kucing": "Ayo, ketuk kucing!",
+"k_katak": "Ayo, ketuk katak!",
+"k_kelinci": "Ayo, ketuk kelinci!",
+"k_monyet": "Ayo, ketuk monyet!",
+"k_anakayam": "Ayo, ketuk anak ayam!",
+"k_panda": "Ayo, ketuk panda!",
+"k_kepiting": "Ayo, ketuk kepiting!",
+"k_penguin": "Ayo, ketuk penguin!",
+"k_singa": "Ayo, ketuk singa!",
+"k_burunghantu": "Ayo, ketuk burung hantu!",
+"k_tikus": "Ayo, ketuk tikus!",
+"k_sapi": "Ayo, ketuk sapi!",
+"k_ayam": "Ayo, ketuk ayam!",
+"k_merah": "Ayo, ketuk yang merah!",
+"k_biru": "Ayo, ketuk yang biru!",
+"k_kuning": "Ayo, ketuk yang kuning!",
+"k_ungu": "Ayo, ketuk yang ungu!",
+"k_besar": "Ayo, ketuk yang besar!",
+"k_kecil": "Ayo, ketuk yang kecil!",
+"b_kucing": "Lihat yang bersinar: kucing!",
+"b_katak": "Lihat yang bersinar: katak!",
+"b_kelinci": "Lihat yang bersinar: kelinci!",
+"b_monyet": "Lihat yang bersinar: monyet!",
+"b_anakayam": "Lihat yang bersinar: anak ayam!",
+"b_panda": "Lihat yang bersinar: panda!",
+"b_kepiting": "Lihat yang bersinar: kepiting!",
+"b_penguin": "Lihat yang bersinar: penguin!",
+"b_singa": "Lihat yang bersinar: singa!",
+"b_burunghantu": "Lihat yang bersinar: burung hantu!",
+"b_tikus": "Lihat yang bersinar: tikus!",
+"b_sapi": "Lihat yang bersinar: sapi!",
+"b_ayam": "Lihat yang bersinar: ayam!",
+"tl_next_animal": "selanjutnya siapa?",
+"tl_next_color": "selanjutnya warna apa?",
+"tl_next_size": "selanjutnya besar atau kecil?",
+"tl_miss_animal": "siapa yang hilang?",
+"tl_miss_color": "warna apa yang hilang?",
+"tl_miss_size": "besar atau kecil?",
+"tl_fix": "siapa yang salah?",
+"tl_unit": "kelompok mana yang diulang-ulang?",
+"tl_unit2": "kelompok mana?",
+"tl_copy": "Ayo tiru!",
+"tl_trans": "Ayo buat yang sama!",
+"tl_trans_h1": "Lagunya harus sama.",
+"tl_trans_h2": "Yang sama, harus sama!",
+"tl_grow": "Mobil berikutnya, berapa hewannya?",
+"tl_grow2": "Tambah satu lagi!",
+"ld_belum": "Hmm, belum. Dengar lagi:",
+"ld_coba": "Coba lagi ya. Dengar lagi:",
+"ld_kelompok": "Lihat kelompoknya!",
+"ld_dengar": "Dengar lagi:",
+"ld_lagu": "Hmm. Dengar lagu pawai Kiki:",
+"ld_benar": "Aku sudah benar! Dengar lagi:",
+"ld_hitung": "Hmm, belum. Hitung lagi:",
+"ld_angka": "Lihat angkanya!",
+"p_hore": "Hore!",
+"p_pintar": "Pintar!",
+"p_hebat": "Hebat!",
+"p_betul": "Betul sekali!",
+"p_keren": "Keren!",
+"p_mantap": "Mantap!",
+"p_sama": "Sama!",
+"p_lagu": "Lagunya sama! Hore!",
+"p_fix": "Sekarang sudah benar!",
+"p_unit": "Ya! Kelompok itu diulang-ulang!",
+"p_penuh": "Mobilnya makin penuh!",
+"in_copy": "Ayo tiru pawai Kiki! Lihat hewan yang bersinar, lalu ketuk hewan yang sama.",
+"in_next": "Dengarkan pawainya. Siapa yang datang selanjutnya?",
+"in_middle": "Ada yang hilang dari pawai! Dengarkan, lalu cari yang hilang.",
+"in_gaps": "Ada dua yang hilang! Isi satu per satu ya.",
+"in_fix": "Ups! Ada hewan yang salah barisan. Ketuk hewan yang salah!",
+"in_translate": "Ayo buat pawai yang sama dengan teman baru! Lagunya harus sama dengan pawai Kiki.",
+"in_unit": "Pawai ini punya kelompok yang diulang-ulang. Kelompok yang mana?",
+"in_grow": "Lihat! Mobil hiasnya makin penuh. Mobil berikutnya ada berapa?",
+"in_color": "Sekarang lihat warna balonnya!",
+"in_size": "Sekarang lihat besar dan kecilnya!",
+"h_ini": "Lihat yang ini! Apakah dia benar?",
+"h_kartu": "Lihat kartu yang bergoyang!",
+"wn_1": "Hebat! Kamu dapat satu bintang!",
+"wn_2": "Hore! Satu bintang untuk Raya!",
+"wn_3": "Pintar! Ini bintangmu!",
+"wn_r1": "Hebat! Kamu makin jago!",
+"wn_r2": "Hore! Pawainya keren!",
+"wn_final": "Hore! Raya sudah menyelesaikan semua pawai! Raya juara pola!",
+"mp_lockplace": "Selesaikan pesta di tempat sebelumnya dulu ya!",
+"mp_locklevel": "Yang ini belum terbuka. Main yang bersinar dulu ya!",
+"st_new": "Halo Raya! Ayo ikut pawai hewan bersama Kiki! Ketuk tombol main!",
+"st_back": "Halo Raya! Ayo lanjut pawai! Ketuk tombol main!",
+"bi_taman": "Selamat datang di taman! Ayo mulai pawai hewan bersama Kiki!",
+"bs_taman": "Pesta Taman! Ayo tunjukkan semua yang sudah kamu bisa!",
+"mp_taman": "Taman!",
+"wn_boss_taman": "Hore! Pesta Taman selesai! Sekarang pawai pergi ke Pantai!",
+"bi_pantai": "Pawai sampai di pantai! Ada kepiting dan penguin!",
+"bs_pantai": "Pesta Pantai! Ayo tunjukkan semua yang sudah kamu bisa!",
+"mp_pantai": "Pantai!",
+"wn_boss_pantai": "Hore! Pesta Pantai selesai! Sekarang pawai pergi ke Hutan!",
+"bi_hutan": "Pawai masuk ke hutan! Ssst, ada burung hantu dan singa!",
+"bs_hutan": "Pesta Hutan! Ayo tunjukkan semua yang sudah kamu bisa!",
+"mp_hutan": "Hutan!",
+"wn_boss_hutan": "Hore! Pesta Hutan selesai! Sekarang pawai pergi ke Sawah!",
+"bi_sawah": "Pawai lewat sawah! Halo sapi, halo ayam!",
+"bs_sawah": "Pesta Sawah! Ayo tunjukkan semua yang sudah kamu bisa!",
+"mp_sawah": "Sawah!",
+"wn_boss_sawah": "Hore! Pesta Sawah selesai! Sekarang pawai pergi ke Pawai Malam!",
+"bi_malam": "Sudah malam! Ayo pawai lampion!",
+"bs_malam": "Pesta Pawai Malam! Ayo tunjukkan semua yang sudah kamu bisa!",
+"mp_malam": "Pawai Malam!"
+}
+</script>
+
 <script>
 (function () {
   'use strict';
@@ -430,7 +569,9 @@
       fanfare: function () { [523, 523, 659, 784, 659, 784, 1047].forEach(function (f, i) { tone(f, i * 0.14, 0.3, 'square', 0.035); tone(f, i * 0.14, 0.35, 'triangle', 0.1); }); },
       set: function (v) { on = v; try { localStorage.setItem('rayaPawaiMuted', on ? '0' : '1'); } catch (_) {} if (on) ac(); },
       isOn: function () { return on; },
-      prime: function () { ac(); }
+      prime: function () { ac(); },
+      ctx: function () { return ac(); },
+      out: function () { ac(); return master; }
     };
   })();
 
@@ -481,40 +622,123 @@
     }
   };
   if (Suara.on) { try { speechSynthesis.onvoiceschanged = function () { Suara.pickVoice(); }; Suara.pickVoice(); } catch (_) {} }
-  function sayP(text, rate) {
+  /* ============================================================
+     RECORDED VOICE (natural voice clips, generated once by scripts/pawai-voice-build.py)
+     Every spoken line has an id in the voiceLines block. A clip is used only when the
+     manifest says it was recorded from the line's current text; otherwise, or when the
+     clips can't load (offline on first visit, old browser), the device voice reads the text.
+     ============================================================ */
+  var LINES = {}; try { LINES = JSON.parse($('voiceLines').textContent); } catch (_) {}
+  function flat(ids) { var o = []; [].concat(ids || []).forEach(function (x) { o = o.concat(x); }); return o.filter(Boolean); }
+  function txt(ids) { return flat(ids).map(function (id) { return LINES[id] || ''; }).join(' ').replace(/\s+/g, ' ').trim(); }
+  function lineHash(str) { var h = 5381; for (var i = 0; i < str.length; i++) h = (Math.imul(h, 33) + str.charCodeAt(i)) >>> 0; return ('0000000' + h.toString(16)).slice(-8); }
+  var VO = (function () {
+    var BASE = '../../assets/audio/pawai/', clips = {}, started = false, srcs = [], timers = [], pend = [];
+    function trim(b) {   /* skip the silence the voice service leaves around each line */
+      var d = b.getChannelData(0), n = d.length, th = 0.012, a = 0, z = n - 1;
+      while (a < n && Math.abs(d[a]) < th) a++;
+      while (z > a && Math.abs(d[z]) < th) z--;
+      var pad = Math.floor(0.03 * b.sampleRate);
+      a = Math.max(0, a - pad); z = Math.min(n - 1, z + pad);
+      return { buf: b, off: a / b.sampleRate, dur: Math.max(0.05, (z - a) / b.sampleRate) };
+    }
+    function load() {
+      if (started) return; started = true;
+      if (FAST && QS.get('vo') !== '1') return;
+      var c = AX.ctx(); if (!c || !window.fetch) return;
+      fetch(BASE + 'manifest.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (m) {
+        if (!m || !m.clips) return;
+        Object.keys(m.clips).forEach(function (id) {
+          if (!LINES[id] || m.clips[id] !== lineHash(LINES[id])) return;
+          fetch(BASE + id + '.mp3?h=' + m.clips[id]).then(function (r) { if (!r.ok) throw new Error('missing'); return r.arrayBuffer(); })
+            .then(function (ab) { c.decodeAudioData(ab, function (b) { clips[id] = trim(b); }, function () {}); }).catch(function () {});
+        });
+      }).catch(function () {});
+    }
+    function ready(ids) { ids = flat(ids); return ids.length > 0 && AX.isOn() && ids.every(function (id) { return clips[id]; }); }
+    function stop() {
+      srcs.forEach(function (x) { try { x.stop(); } catch (_) {} }); srcs = [];
+      timers.forEach(clearTimeout); timers = [];
+      var p = pend; pend = []; p.forEach(function (r) { r(); });
+    }
+    /* plan: [{ids, gap, minDur, onStart}], played back to back; resolves at the end or when stopped */
+    function play(plan) {
+      stop();
+      var c = AX.ctx(), out = AX.out(), t = c.currentTime + 0.05;
+      return new Promise(function (res) {
+        var done = false; function fin() { if (!done) { done = true; res(); } }
+        pend.push(fin);
+        plan.forEach(function (p) {
+          var at = t;
+          if (p.onStart) timers.push(setTimeout(p.onStart, Math.max(0, (at - c.currentTime) * 1000)));
+          flat(p.ids).forEach(function (id) {
+            var k = clips[id], x = c.createBufferSource(); x.buffer = k.buf; x.connect(out); x.start(t, k.off, k.dur); srcs.push(x);
+            t += k.dur;
+          });
+          if (p.minDur) t = Math.max(t, at + p.minDur);
+          t += p.gap || 0;
+        });
+        timers.push(setTimeout(fin, Math.max(0, (t - c.currentTime) * 1000) + 30));
+      });
+    }
+    return { load: load, ready: ready, stop: stop, play: play, count: function () { return Object.keys(clips).length; } };
+  })();
+
+  /* say one or more lines (ids); resolves when finished */
+  function sayP(ids, rate) {
+    if (VO.ready(ids)) { Suara.stop(); return VO.play([{ ids: ids }]); }
+    var text = txt(ids);
     return new Promise(function (res) {
       var done = false; function fin() { if (!done) { done = true; res(); } }
       var v = Suara.speak(text, { rate: rate, onend: fin });
       setTimeout(fin, v ? 2200 + text.length * 90 : T(350));
     });
   }
+  function pickPraise() { return pick(['p_hore', 'p_pintar', 'p_hebat', 'p_betul', 'p_keren', 'p_mantap']); }
 
   /* chant: reads the parade in rhythm ("kucing, katak, kucing, katak... selanjutnya siapa?")
-     while each animal hops and plays its note. Word-boundary events move the spotlight
-     where the browser supports them; otherwise a steady timer does. */
+     while each animal hops and plays its note. With recorded clips every animal hops exactly
+     on its word and groups get a small pause; with the device voice, word-boundary events
+     move the spotlight where the browser supports them, otherwise a steady timer does. */
   var CH = { tok: 0 };
-  function stopChant() { CH.tok++; Suara.stop(); }
+  function stopChant() { CH.tok++; Suara.stop(); VO.stop(); }
   function hopEl(el) { if (!el) return; el.classList.remove('hop'); void el.offsetWidth; el.classList.add('hop'); setTimeout(function () { el.classList.remove('hop'); }, 480); }
   function chant(entries, tail, o) {
     o = o || {};
     stopChant();
-    var tok = CH.tok;
+    var tok = CH.tok, leadIds = flat(o.lead), tailIds = flat(tail);
+    function wordIds(e) { return e.w ? flat(e.w) : ['w_hmm']; }
+    function fx(e, loud) {
+      hopEl(e.el); hopEl(e.el2);
+      if (e.fx) e.fx(); else if (e.role) AX.note(e.role, loud ? 0.11 : 0.05); else AX.qnote();
+    }
+    var all = leadIds.concat(tailIds); entries.forEach(function (e) { all = all.concat(wordIds(e)); });
+    if (VO.ready(all)) {
+      Suara.stop();
+      var plan = [];
+      if (leadIds.length) plan.push({ ids: leadIds, gap: 0.3 });
+      entries.forEach(function (e, i) {
+        var unitEnd = !o.unit || (i + 1) % o.unit === 0;
+        plan.push({ ids: wordIds(e), minDur: (o.per || 640) * 0.0007, gap: o.unit ? (unitEnd ? 0.34 : 0.03) : 0.1,
+          onStart: function () { if (tok === CH.tok) fx(e, false); } });
+      });
+      if (tailIds.length) plan.push({ ids: tailIds, gap: 0 });
+      return VO.play(plan);
+    }
     return new Promise(function (res) {
       var idx = -1, done = false, timer = null, bmode = false, voiced = false;
-      var lead = o.lead ? o.lead + ' ' : '', text = lead, offs = [];
+      var lead = leadIds.length ? txt(leadIds) + ' ' : '', text = lead, offs = [];
       entries.forEach(function (e, i) {
         offs.push(text.length);
         var sep = (o.unit && (i + 1) % o.unit !== 0) ? ' ' : ', ';
-        text += (e.word || 'hmm') + (i < entries.length - 1 ? sep : '');
+        text += txt(wordIds(e)) + (i < entries.length - 1 ? sep : '');
       });
       var tailAt = text.length;
-      if (tail) text += '... ' + tail;
+      if (tailIds.length) text += '... ' + txt(tailIds);
       var per = T(o.per || 640);
       function step(i) {
         if (tok !== CH.tok || i <= idx || i >= entries.length) return;
-        idx = i; var e = entries[i];
-        hopEl(e.el); hopEl(e.el2);
-        if (e.fx) e.fx(); else if (e.role) AX.note(e.role, voiced ? 0.05 : 0.11); else AX.qnote();
+        idx = i; fx(entries[i], !voiced);
       }
       function finish() { if (done) return; done = true; if (timer && timer !== -1) clearInterval(timer); res(); }
       function runTimer() {
@@ -569,15 +793,15 @@
   var COLORS = { merah: '#E8413A', biru: '#2F7CF0', kuning: '#FFD02E', ungu: '#9B5DE5' };
   var B = [
     { id: 'taman', icon: '🌳', name: 'Taman', road: '#E6CF9B', roadD: '#C9AE73', fl: '#FF8FB8', theme: '#78C6F7',
-      intro: 'Selamat datang di taman! Ayo mulai pawai hewan bersama Kiki!', pool: ['kucing', 'katak', 'kelinci', 'monyet', 'anakayam', 'panda'] },
+      pool: ['kucing', 'katak', 'kelinci', 'monyet', 'anakayam', 'panda'] },
     { id: 'pantai', icon: '🏖️', name: 'Pantai', road: '#F1D9A0', roadD: '#D2B474', fl: '#5EC8F2', theme: '#5FC0F2',
-      intro: 'Pawai sampai di pantai! Ada kepiting dan penguin!', pool: ['kepiting', 'penguin', 'kucing', 'katak', 'anakayam', 'monyet'] },
+      pool: ['kepiting', 'penguin', 'kucing', 'katak', 'anakayam', 'monyet'] },
     { id: 'hutan', icon: '🌲', name: 'Hutan', road: '#C9A26E', roadD: '#9F7A4A', fl: '#FFB74D', theme: '#93D9C3',
-      intro: 'Pawai masuk ke hutan! Ssst, ada burung hantu dan singa!', pool: ['monyet', 'singa', 'katak', 'burunghantu', 'panda', 'kelinci', 'tikus'] },
+      pool: ['monyet', 'singa', 'katak', 'burunghantu', 'panda', 'kelinci', 'tikus'] },
     { id: 'sawah', icon: '🌾', name: 'Sawah', road: '#D9B97F', roadD: '#B8955A', fl: '#FF8A65', theme: '#82CDF6',
-      intro: 'Pawai lewat sawah! Halo sapi, halo ayam!', pool: ['sapi', 'ayam', 'katak', 'kucing', 'anakayam', 'monyet', 'tikus'] },
+      pool: ['sapi', 'ayam', 'katak', 'kucing', 'anakayam', 'monyet', 'tikus'] },
     { id: 'malam', icon: '🏮', name: 'Pawai Malam', road: '#5A5FA0', roadD: '#3E4280', fl: '#B39DFF', theme: '#16214D',
-      intro: 'Sudah malam! Ayo pawai lampion!', pool: ['burunghantu', 'kucing', 'katak', 'panda', 'singa', 'kelinci', 'penguin', 'kepiting'] }
+      pool: ['burunghantu', 'kucing', 'katak', 'panda', 'singa', 'kelinci', 'penguin', 'kepiting'] }
   ];
 
   /* Level specs. k = kind; core = the repeating unit (A, B, C, D are roles);
@@ -660,20 +884,8 @@
 
   var PROMPT = { copy: 'Tiru pawainya!', next: 'Siapa selanjutnya?', middle: 'Siapa yang hilang?', gaps: 'Siapa yang hilang?', fix: 'Siapa yang salah barisan?', translate: 'Buat pawai yang sama!', unit: 'Kelompok mana yang diulang?', grow: 'Berapa di mobil berikutnya?' };
   var CUE = { copy: '👀', next: '❓', middle: '🔍', gaps: '🔍', fix: '🙈', translate: '🎶', unit: '🔁', grow: '➕' };
-  var INTRO = {
-    copy: 'Ayo tiru pawai Kiki! Lihat hewan yang bersinar, lalu ketuk hewan yang sama.',
-    next: 'Dengarkan pawainya. Siapa yang datang selanjutnya?',
-    middle: 'Ada yang hilang dari pawai! Dengarkan, lalu cari yang hilang.',
-    gaps: 'Ada dua yang hilang! Isi satu per satu ya.',
-    fix: 'Ups! Ada hewan yang salah barisan. Ketuk hewan yang salah!',
-    translate: 'Ayo buat pawai yang sama dengan teman baru! Lagunya harus sama dengan pawai Kiki.',
-    unit: 'Pawai ini punya kelompok yang diulang-ulang. Kelompok yang mana?',
-    grow: 'Lihat! Mobil hiasnya makin penuh. Mobil berikutnya ada berapa?'
-  };
-  var ATTR_INTRO = { color: 'Sekarang lihat warna balonnya! ', size: 'Sekarang lihat besar dan kecilnya! ' };
-  var TAIL_NEXT = { animal: 'selanjutnya siapa?', color: 'selanjutnya warna apa?', size: 'selanjutnya besar atau kecil?' };
-  var TAIL_MISS = { animal: 'siapa yang hilang?', color: 'warna apa yang hilang?', size: 'besar atau kecil?' };
-  var PRAISE = ['Hore!', 'Pintar!', 'Hebat!', 'Betul sekali!', 'Keren!', 'Mantap!'];
+  /* spoken intro for a round kind (+ "look at the balloon colours / the sizes" when that's new) */
+  function introIds(sp) { return (sp.attr === 'color' ? ['in_color'] : sp.attr === 'size' ? ['in_size'] : []).concat(['in_' + sp.k]); }
   /* wrong answers for "which group repeats?": same animals, different groups (never a rotation of the right one) */
   var UNIT_DIS = { AB: ['AAB', 'ABB'], AAB: ['AB', 'ABB'], ABB: ['AB', 'AAB'], ABC: ['AB', 'ACB'], AABB: ['AB', 'AAB'], ABCD: ['ABC', 'ABDC'] };
 
@@ -685,16 +897,16 @@
     if (out.length < n) take(shuffle(Object.keys(ANIMALS)));
     return out;
   }
-  function animalEl(k) { var a = ANIMALS[k]; return { key: k, em: a.em, word: a.name, tap: a.name, snd: a.snd, z: 1 }; }
+  function animalEl(k) { var a = ANIMALS[k]; return { key: k, em: a.em, word: a.name, tap: a.name, w: 'a_' + k, tw: 'k_' + k, bw: 'b_' + k, snd: a.snd, z: 1 }; }
   function makeElems(attr, roles, nCh, b) {
     var els;
     if (attr === 'color') {
       var a = ANIMALS[pickAnimals(B[b].pool, 1)[0]];
       var cols = nCh <= 2 ? pick([['merah', 'biru'], ['kuning', 'biru'], ['merah', 'kuning'], ['ungu', 'kuning']]) : ['merah', 'biru', 'kuning', 'ungu'].slice(0, nCh);
-      els = shuffle(cols).map(function (c) { return { key: c, em: a.em, word: c, tap: 'yang ' + c, snd: a.snd, z: 1, bc: COLORS[c] }; });
+      els = shuffle(cols).map(function (c) { return { key: c, em: a.em, word: c, tap: 'yang ' + c, w: 'c_' + c, tw: 'k_' + c, snd: a.snd, z: 1, bc: COLORS[c] }; });
     } else if (attr === 'size') {
       var a2 = ANIMALS[pickAnimals(B[b].pool, 1)[0]];
-      els = shuffle([{ key: 'besar', em: a2.em, word: 'besar', tap: 'yang besar', snd: a2.snd, z: 1 }, { key: 'kecil', em: a2.em, word: 'kecil', tap: 'yang kecil', snd: a2.snd, z: 0.55 }]);
+      els = shuffle([{ key: 'besar', em: a2.em, word: 'besar', tap: 'yang besar', w: 's_besar', tw: 'k_besar', snd: a2.snd, z: 1 }, { key: 'kecil', em: a2.em, word: 'kecil', tap: 'yang kecil', w: 's_kecil', tw: 'k_kecil', snd: a2.snd, z: 0.55 }]);
     } else {
       els = pickAnimals(B[b].pool, nCh).map(animalEl);
     }
@@ -907,7 +1119,7 @@
   function alive(R) { return R === G.run; }
   function newRound() { G.rt++; G.tapLock = false; G.touched = -1; G.onTap = null; G.want = null; G.wrong = null; return G.rt; }
   function tap(type, i, el) {
-    Suara.unlock(); AX.prime();
+    Suara.unlock(); AX.prime(); VO.load();
     if (G.tapLock || !G.onTap) return;
     G.touched = G.rt;
     G.onTap(type, i, el);
@@ -926,8 +1138,8 @@
     await sleep(250);
     if (!alive(R)) return;
     AX.sparkle();
-    var ent = els.map(function (el, i) { return { el: el, el2: els2 ? els2[i] : null, role: seq[i].role, word: seq[i].word }; });
-    await chant(ent, tail || pick(PRAISE), { rate: 0.95, per: 430, unit: unit });
+    var ent = els.map(function (el, i) { return { el: el, el2: els2 ? els2[i] : null, role: seq[i].role, w: seq[i].w }; });
+    await chant(ent, tail || [pickPraise()], { rate: 0.95, per: 430, unit: unit });
     if (!alive(R)) return;
     await sleep(300);
   }
@@ -950,15 +1162,15 @@
     function entries() {
       var out = [];
       for (var j = 0; j < t; j++) {
-        if (!filled[j]) { out.push({ el: els[j], word: null }); if (sp.k === 'next' || j === t - 1) break; continue; }
-        out.push({ el: els[j], role: seq[j].role, word: seq[j].word });
+        if (!filled[j]) { out.push({ el: els[j], w: null }); if (sp.k === 'next' || j === t - 1) break; continue; }
+        out.push({ el: els[j], role: seq[j].role, w: seq[j].w });
       }
       return out;
     }
-    function tail() { return sp.k === 'next' ? TAIL_NEXT[sp.attr] : TAIL_MISS[sp.attr]; }
+    function tail() { return (sp.k === 'next' ? 'tl_next_' : 'tl_miss_') + sp.attr; }
     G.replay = function () { chant(entries(), tail()); };
     prompt(PROMPT[sp.k], CUE[sp.k]);
-    intro(R, rt, first ? (ATTR_INTRO[sp.attr] || '') + INTRO[sp.k] : null, G.replay);
+    intro(R, rt, first ? introIds(sp) : null, G.replay);
     await waitDone(function (done) {
       G.want = function () { return btns[idxOfKey(choices, seq[blanks[bi]].key)]; };
       G.wrong = function () { for (var j = 0; j < choices.length; j++) if (choices[j].key !== seq[blanks[bi]].key) return btns[j]; return null; };
@@ -980,9 +1192,9 @@
         } else {
           misses++; missHere++; wig(btn); AX.voice(c.snd); AX.soft();
           var target = btns[idxOfKey(choices, want.key)];
-          if (missHere === 1) chant(entries(), tail(), { lead: pick(['Hmm, belum.', 'Coba lagi ya.']) + ' Dengar lagi:' });
-          else if (missHere === 2) { $('mainRow').classList.add('units'); target.classList.add('glow'); chant(entries(), tail(), { lead: 'Lihat kelompoknya!', unit: core.length }); }
-          else { target.classList.add('glow', 'strong'); stopChant(); sayP('Ayo, ketuk ' + want.tap + '!'); }
+          if (missHere === 1) chant(entries(), tail(), { lead: pick(['ld_belum', 'ld_coba']) });
+          else if (missHere === 2) { $('mainRow').classList.add('units'); target.classList.add('glow'); chant(entries(), tail(), { lead: 'ld_kelompok', unit: core.length }); }
+          else { target.classList.add('glow', 'strong'); stopChant(); sayP([want.tw]); }
         }
       };
     });
@@ -1009,7 +1221,7 @@
     var rt = newRound(), k = 0, missHere = 0, misses = 0;
     function mark() { mEls.forEach(function (m, i) { m.classList.toggle('lit', i === k); }); els.forEach(function (c, i) { c.classList.toggle('cur', i === k); }); }
     mark();
-    function modelEntries() { return seq.map(function (e, i) { return { el: mEls[i], role: e.role, word: e.word }; }); }
+    function modelEntries() { return seq.map(function (e, i) { return { el: mEls[i], role: e.role, w: e.w }; }); }
     function okIdx() {
       var ro = seq[k].role, j;
       if (!translate) return idxOfKey(tray, seq[k].key);
@@ -1017,9 +1229,9 @@
       for (j = 0; j < tray.length; j++) if (!used[tray[j].key]) return j;
       return 0;
     }
-    G.replay = function () { chant(modelEntries(), translate ? 'Ayo buat yang sama!' : 'Ayo tiru!'); };
+    G.replay = function () { chant(modelEntries(), translate ? 'tl_trans' : 'tl_copy'); };
     prompt(PROMPT[sp.k], CUE[sp.k]);
-    intro(R, rt, first ? (ATTR_INTRO[sp.attr] || '') + INTRO[sp.k] : null, G.replay);
+    intro(R, rt, first ? introIds(sp) : null, G.replay);
     await waitDone(function (done) {
       G.want = function () { return btns[okIdx()]; };
       G.wrong = function () { var g = okIdx(); for (var j = 0; j < tray.length; j++) if (j !== g && (!translate || used[tray[j].key])) return btns[j]; return null; };
@@ -1042,16 +1254,16 @@
           misses++; missHere++; wig(btn); AX.voice(c.snd); AX.soft();
           var target = btns[okIdx()];
           if (missHere === 1) {
-            if (translate) chant(modelEntries(), 'Lagunya harus sama.', { lead: 'Hmm. Dengar lagu pawai Kiki:' });
-            else { stopChant(); hopEl(mEls[k]); AX.voice(seq[k].snd); sayP('Lihat yang bersinar: ' + seq[k].word + '!'); }
+            if (translate) chant(modelEntries(), 'tl_trans_h1', { lead: 'ld_lagu' });
+            else { stopChant(); hopEl(mEls[k]); AX.voice(seq[k].snd); sayP([seq[k].bw || seq[k].tw]); }
           } else if (missHere === 2) {
             target.classList.add('glow'); $('modelRow').classList.add('units'); $('mainRow').classList.add('units');
-            chant(modelEntries(), translate ? 'Yang sama, harus sama!' : 'Ayo tiru!', { lead: 'Dengar lagi:', unit: core.length });
-          } else { target.classList.add('glow', 'strong'); stopChant(); sayP('Ayo, ketuk ' + tray[okIdx()].tap + '!'); }
+            chant(modelEntries(), translate ? 'tl_trans_h2' : 'tl_copy', { lead: 'ld_dengar', unit: core.length });
+          } else { target.classList.add('glow', 'strong'); stopChant(); sayP([tray[okIdx()].tw]); }
         }
       };
     });
-    await praise(R, els, placed, mEls, translate ? 'Lagunya sama! Hore!' : 'Sama! ' + pick(PRAISE), core.length);
+    await praise(R, els, placed, mEls, translate ? ['p_lagu'] : ['p_sama', pickPraise()], core.length);
     return { misses: misses, els: els, seq: placed };
   }
 
@@ -1071,10 +1283,10 @@
     });
     clearTray(); layout();
     var rt = newRound(), missHere = 0, misses = 0;
-    function entries() { return shown.map(function (e, i) { return { el: els[i], role: e.role, word: e.word }; }); }
-    G.replay = function () { chant(entries(), 'siapa yang salah?'); };
+    function entries() { return shown.map(function (e, i) { return { el: els[i], role: e.role, w: e.w }; }); }
+    G.replay = function () { chant(entries(), 'tl_fix'); };
     prompt(PROMPT.fix, CUE.fix);
-    intro(R, rt, first ? INTRO.fix : null, G.replay);
+    intro(R, rt, first ? introIds(sp) : null, G.replay);
     await waitDone(function (done) {
       G.want = function () { return els[w]; };
       G.wrong = function () { return els[w === 0 ? 1 : 0]; };
@@ -1091,13 +1303,13 @@
           }, T(480));
         } else {
           misses++; missHere++; wig(el); AX.voice(shown[i].snd); AX.soft();
-          if (missHere === 1) chant(entries(), 'siapa yang salah?', { lead: 'Aku sudah benar! Dengar lagi:' });
-          else if (missHere === 2) { $('mainRow').classList.add('units'); chant(entries(), 'siapa yang salah?', { lead: 'Lihat kelompoknya!', unit: core.length }); }
-          else { els[w].classList.add('cellglow'); stopChant(); sayP('Lihat yang ini! Apakah dia benar?'); }
+          if (missHere === 1) chant(entries(), 'tl_fix', { lead: 'ld_benar' });
+          else if (missHere === 2) { $('mainRow').classList.add('units'); chant(entries(), 'tl_fix', { lead: 'ld_kelompok', unit: core.length }); }
+          else { els[w].classList.add('cellglow'); stopChant(); sayP(['h_ini']); }
         }
       };
     });
-    await praise(R, els, seq, null, 'Sekarang sudah benar! ' + pick(PRAISE), core.length);
+    await praise(R, els, seq, null, ['p_fix', pickPraise()], core.length);
     return { misses: misses, els: els, seq: seq };
   }
 
@@ -1114,10 +1326,10 @@
     }));
     layout();
     var rt = newRound(), missHere = 0, misses = 0, good = opts.indexOf(core);
-    function entries() { return seq.map(function (e, i) { return { el: els[i], role: e.role, word: e.word }; }); }
-    G.replay = function () { chant(entries(), 'kelompok mana yang diulang-ulang?'); };
+    function entries() { return seq.map(function (e, i) { return { el: els[i], role: e.role, w: e.w }; }); }
+    G.replay = function () { chant(entries(), 'tl_unit'); };
     prompt(PROMPT.unit, CUE.unit);
-    intro(R, rt, first ? INTRO.unit : null, G.replay);
+    intro(R, rt, first ? introIds(sp) : null, G.replay);
     await waitDone(function (done) {
       G.want = function () { return btns[good]; };
       G.wrong = function () { return btns[good === 0 ? 1 : 0]; };
@@ -1129,13 +1341,13 @@
           done();
         } else {
           misses++; missHere++; wig(el); AX.soft();
-          if (missHere === 1) chant(entries(), 'kelompok mana yang diulang-ulang?', { lead: 'Hmm, belum. Dengar lagi:' });
-          else if (missHere === 2) { $('mainRow').classList.add('units'); chant(entries(), 'kelompok mana?', { lead: 'Lihat kelompoknya!', unit: core.length }); }
-          else { btns[good].classList.add('glow', 'strong'); stopChant(); sayP('Lihat kartu yang bergoyang!'); }
+          if (missHere === 1) chant(entries(), 'tl_unit', { lead: 'ld_belum' });
+          else if (missHere === 2) { $('mainRow').classList.add('units'); chant(entries(), 'tl_unit2', { lead: 'ld_kelompok', unit: core.length }); }
+          else { btns[good].classList.add('glow', 'strong'); stopChant(); sayP(['h_kartu']); }
         }
       };
     });
-    await praise(R, els, seq, null, 'Ya! Kelompok itu diulang-ulang! ' + pick(PRAISE), core.length);
+    await praise(R, els, seq, null, ['p_unit', pickPraise()], core.length);
     return { misses: misses, els: els, seq: seq };
   }
 
@@ -1159,13 +1371,13 @@
     layout();
     var rt = newRound(), missHere = 0, misses = 0, good = opts.indexOf(ans);
     function entries() {
-      return floats.map(function (f, i) { return { el: f, word: NUM[counts[i]] + ' ' + a.word, fx: function () { AX.count(counts[i]); } }; })
-        .concat([{ el: qcell, word: null }]);
+      return floats.map(function (f, i) { return { el: f, w: ['n_' + counts[i], a.w], fx: function () { AX.count(counts[i]); } }; })
+        .concat([{ el: qcell, w: null }]);
     }
-    var tl = 'mobil berikutnya, berapa ' + a.word + '?';
+    var tl = 'tl_grow';
     G.replay = function () { chant(entries(), tl, { per: 900 }); };
     prompt(PROMPT.grow, CUE.grow);
-    intro(R, rt, first ? INTRO.grow : null, G.replay);
+    intro(R, rt, first ? introIds(sp) : null, G.replay);
     await waitDone(function (done) {
       G.want = function () { return btns[good]; };
       G.wrong = function () { return btns[good === 0 ? 1 : 0]; };
@@ -1184,14 +1396,14 @@
           })();
         } else {
           misses++; missHere++; wig(el); AX.soft();
-          if (missHere === 1) chant(entries(), tl, { lead: 'Hmm, belum. Hitung lagi:', per: 900 });
-          else if (missHere === 2) { row.classList.add('counts'); chant(entries(), 'satu lagi dari ' + NUM[counts[2]] + '!', { lead: 'Lihat angkanya!', per: 900 }); }
-          else { btns[good].classList.add('glow', 'strong'); stopChant(); sayP('Lihat kartu yang bergoyang!'); }
+          if (missHere === 1) chant(entries(), tl, { lead: 'ld_hitung', per: 900 });
+          else if (missHere === 2) { row.classList.add('counts'); chant(entries(), 'tl_grow2', { lead: 'ld_angka', per: 900 }); }
+          else { btns[good].classList.add('glow', 'strong'); stopChant(); sayP(['h_kartu']); }
         }
       };
     });
     G.tapLock = true; await sleep(200);
-    if (alive(R)) await sayP(NUM[ans] + ' ' + a.word + '! Mobilnya makin penuh! ' + pick(PRAISE));
+    if (alive(R)) await sayP(['n_' + ans, a.w, 'p_penuh', pickPraise()]);
     await sleep(300);
     var allCells = Array.prototype.slice.call(row.querySelectorAll('.float'));
     return { misses: misses, els: allCells, seq: allCells.map(function () { return a; }) };
@@ -1212,8 +1424,8 @@
     var extra = false, totalMiss = 0, tough = 0, last = null, vi = 0;
     renderDots(0, specs.length);
     clearTray(); showModel(false); $('mainRow').innerHTML = ''; $('mainRow')._info = null;
-    if (L.boss) { prompt('Pesta ' + B[G.b].name + '!', '🎉'); AX.fanfare(); await sayP('Pesta ' + B[G.b].name + '! Ayo tunjukkan semua yang sudah kamu bisa!'); }
-    else if (i % 10 === 0) { prompt(B[G.b].name + '!', B[G.b].icon); await sayP(B[G.b].intro); }
+    if (L.boss) { prompt('Pesta ' + B[G.b].name + '!', '🎉'); AX.fanfare(); await sayP(['bs_' + B[G.b].id]); }
+    else if (i % 10 === 0) { prompt(B[G.b].name + '!', B[G.b].icon); await sayP(['bi_' + B[G.b].id]); }
     if (!alive(R)) return;
     for (var r = 0; r < specs.length; r++) {
       renderDots(r, specs.length);
@@ -1263,11 +1475,9 @@
     $('wSub').textContent = sub;
     $('win').classList.remove('hidden');
     AX.win(); FX.rain(last ? 220 : 80);
-    var msg = last ? 'Hore! Raya sudah menyelesaikan semua pawai! Raya juara pola!' :
-      L.boss ? 'Hore! Pesta ' + B[L.b].name + ' selesai! Sekarang pawai pergi ke ' + B[L.b + 1].name + '!' :
-      replay ? pick(['Hebat! Kamu makin jago!', 'Hore! Pawainya keren!']) :
-      pick(['Hebat! Kamu dapat satu bintang!', 'Hore! Satu bintang untuk Raya!', 'Pintar! Ini bintangmu!']);
-    sayP(msg);
+    var msg = last ? 'wn_final' : L.boss ? 'wn_boss_' + B[L.b].id :
+      replay ? pick(['wn_r1', 'wn_r2']) : pick(['wn_1', 'wn_2', 'wn_3']);
+    sayP([msg]);
     $('wNext').classList.toggle('hidden', last);
     $('wNext').classList.add('pulse');
   }
@@ -1316,21 +1526,21 @@
   $('stops').addEventListener('click', function (e) {
     var b = e.target.closest('.stop'); if (!b) return;
     AX.tap(); var j = +b.dataset.b;
-    if (!isOpen(j * 10)) { wig(b); sayP('Selesaikan pesta di tempat sebelumnya dulu ya!'); return; }
-    showMap(j); sayP(B[j].name + '!');
+    if (!isOpen(j * 10)) { wig(b); sayP(['mp_lockplace']); return; }
+    showMap(j); sayP(['mp_' + B[j].id]);
   });
   $('lvgrid').addEventListener('click', function (e) {
     var b = e.target.closest('.lv'); if (!b) return;
-    var i = +b.dataset.i; Suara.unlock(); AX.prime();
-    if (!isOpen(i)) { wig(b); AX.soft(); sayP('Yang ini belum terbuka. Main yang bersinar dulu ya!'); return; }
+    var i = +b.dataset.i; Suara.unlock(); AX.prime(); VO.load();
+    if (!isOpen(i)) { wig(b); AX.soft(); sayP(['mp_locklevel']); return; }
     AX.tap(); playLevel(i);
   });
-  $('goBtn').addEventListener('click', function () { Suara.unlock(); AX.prime(); var nx = nextLevel(); if (nx != null) { AX.tap(); playLevel(nx); } });
+  $('goBtn').addEventListener('click', function () { Suara.unlock(); AX.prime(); VO.load(); var nx = nextLevel(); if (nx != null) { AX.tap(); playLevel(nx); } });
   $('startBtn').addEventListener('click', function () {
-    Suara.unlock(); AX.prime(); AX.tap();
+    Suara.unlock(); AX.prime(); AX.tap(); VO.load();
     showMap(null);
     var nx = nextLevel();
-    sayP(nx === 0 ? 'Halo Raya! Ayo ikut pawai hewan bersama Kiki! Ketuk tombol main!' : 'Halo Raya! Ayo lanjut pawai! Ketuk tombol main!');
+    sayP([nx === 0 ? 'st_new' : 'st_back']);
   });
   $('backBtn').addEventListener('click', function () {
     AX.tap();
@@ -1339,7 +1549,7 @@
     else if (G.screen === 'map') { G.run++; stopChant(); showScreen('start'); }
     else location.href = '../../raya.html';
   });
-  $('replayBtn').addEventListener('click', function () { Suara.unlock(); AX.prime(); if (G.replay && !G.tapLock) { G.touched = G.rt; G.replay(); } });
+  $('replayBtn').addEventListener('click', function () { Suara.unlock(); AX.prime(); VO.load(); if (G.replay && !G.tapLock) { G.touched = G.rt; G.replay(); } });
   function syncMute() { var on = AX.isOn(); $('muteBtn').textContent = on ? '🔔' : '🔕'; $('muteBtn').setAttribute('aria-label', on ? 'Suara nyala' : 'Suara mati'); }
   $('muteBtn').addEventListener('click', function () { AX.set(!AX.isOn()); if (!AX.isOn()) stopChant(); else AX.tap(); syncMute(); });
   syncMute();
@@ -1384,7 +1594,7 @@
   })();
 
   showScreen('start');
-  if (FAST) window.__pawai = { G: G, levels: LEVELS.length, target: function () { return G.want ? G.want() : null; }, wrong: function () { return G.wrong ? G.wrong() : null; }, play: playLevel, map: showMap };
+  if (FAST) window.__pawai = { G: G, levels: LEVELS.length, lines: LINES, voClips: function () { return VO.count(); }, target: function () { return G.want ? G.want() : null; }, wrong: function () { return G.wrong ? G.wrong() : null; }, play: playLevel, map: showMap };
 })();
 </script>
 </body>
